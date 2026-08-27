@@ -103,3 +103,12 @@ xcuserdata/
 
 ### Compound Engineering ###
 .context/compound-engineering/
+
+### Swift / SPM ###
+.build/
+.swiftpm/
+*.xcresult
+DerivedData/
+
+### Claude Code (per-user, never committed) ###
+.claude/settings.local.json
