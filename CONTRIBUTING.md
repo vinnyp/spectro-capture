@@ -19,6 +19,7 @@ These apply to every contribution, code or otherwise. See [AGENTS.md](AGENTS.md)
 
 - **Never commit vendor SDK binaries, headers, or license keys.** The instrument SDK is a licensed dependency pulled at build time, not something this repository can distribute. If your change needs the SDK, add it as a package dependency — don't vendor any part of it.
 - **No cloud features.** This is an offline-first, local-first app. A local SQLite file the user owns is the entire sync strategy — don't propose adding a server, an account system, or a sync service.
+- **Product non-negotiables.** Corrections must never destroy prior data, and out-of-gamut colors must be marked honestly rather than silently substituted. These are product commitments, not implementation details up for debate.
 
 ## Workflow
 

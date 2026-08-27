@@ -8,7 +8,7 @@ It is not verification software. Every existing desktop app for this hardware cl
 
 What it isn't, on purpose:
 - Not a color-matching tool — no PANTONE, RAL, or NCS library lookup.
-- Not cross-platform — macOS only in v1; iOS and Windows/Linux ports are explicit non-goals for now.
+- Not a cloud product — no account, no server, no sync service. The SQLite file you get back *is* the sync strategy.
 - Not a way to hide reality — colors that fall outside your monitor's gamut are marked as such, not silently rendered as the "closest" color.
 
 ## Why this exists
