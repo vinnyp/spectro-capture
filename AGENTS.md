@@ -38,7 +38,7 @@ Source of truth, in this order:
 - Swift 6 strict concurrency on the app target
 - Swift Testing for new tests, XCTest retained for UI tests
 - Developer ID signing + notarization, Sparkle for updates
-- gitleaks + pre-commit + CI with a project-specific licence-key rule
+- gitleaks + pre-commit + CI with a project-specific license-key rule
 - a `needs-hardware-verify` PR label — proposed, not yet created; whoever opens the first device-touching PR that needs it creates the label
 
 **Open** — no direction yet, don't assume one and don't build as if one exists:
@@ -62,8 +62,8 @@ Source of truth, in this order:
 
 The v1 instrument family is the Nix Spectro 2 / Spectro L (Nix Sensor), connected over BLE or USB. The vendor SDK is a **package dependency, never vendored**.
 
-- No SDK binaries, headers, or licence keys go in this repo, ever, in any commit.
-- CI can build this project. CI **cannot** exercise any device code path — there is no hardware or licence key available to it.
+- No SDK binaries, headers, or license keys go in this repo, ever, in any commit.
+- CI can build this project. CI **cannot** exercise any device code path — there is no hardware or license key available to it.
 - Every PR that touches device-facing code needs a human with real hardware to verify it before merge.
 - All device access must go through the `SpectroDevice` seam so that everything above it is testable against the mock implementation without hardware. If you're writing code that talks to the instrument directly instead of through that seam, stop and reconsider.
 
@@ -98,7 +98,7 @@ Where source code lands, and how it's modularized, is not yet decided beyond the
 - **ΔE / ΔE2000** — the color-difference metric used for QC comparisons.
 - **Gamut-clipped** — the flag on a derived sRGB value that fell outside the display gamut.
 - **Dead-letter / deferred-error queue** — failed scan items set aside and resolved at the end of a session, not mid-queue.
-- **Pre-authorization window** — the offline licence-validity period for the vendor SDK.
+- **Pre-authorization window** — the offline license-validity period for the vendor SDK.
 - **Version history** — prior measurements kept, never destroyed, after a correction.
 
 ## 9. Agent-specific notes

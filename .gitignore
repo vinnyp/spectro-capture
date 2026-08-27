@@ -109,3 +109,6 @@ xcuserdata/
 .swiftpm/
 *.xcresult
 DerivedData/
+
+### Claude Code (per-user, never committed) ###
+.claude/settings.local.json

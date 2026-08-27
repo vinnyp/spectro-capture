@@ -8,13 +8,12 @@ It is not verification software. Every existing desktop app for this hardware cl
 
 What it isn't, on purpose:
 - Not a color-matching tool — no PANTONE, RAL, or NCS library lookup.
-- Not a cloud product — no account, no server, no sync service. The SQLite file you get back *is* the sync strategy.
 - Not cross-platform — macOS only in v1; iOS and Windows/Linux ports are explicit non-goals for now.
 - Not a way to hide reality — colors that fall outside your monitor's gamut are marked as such, not silently rendered as the "closest" color.
 
 ## Why this exists
 
-If you search for software that talks to a consumer spectrophotometer, what you'll find — Nix's own Print Pro, SpotOn Spec, MeasureColor, and the RIP/tinting tools around them — is all built the same way: measure one sample, compare it to a standard, report the delta. That's the right tool if you're checking a print against a reference. It's the wrong shape if you're trying to get a 200-item collection into a database, one scan at a time, stopping to enter metadata between every item. Nobody — first-party, partner, or open source — builds for inventory-first bulk capture. That gap is what SpectroCapture is for.
+If you search for software that talks to a consumer spectrophotometer, what you'll find — Nix Print Pro, SpotOn Spec, MeasureColor, and the RIP/tinting tools around them — is all built the same way: measure one sample, compare it to a standard, report the delta. That's the right tool if you're checking a print against a reference. It's the wrong shape if you're trying to get a 200-item collection into a database, one scan at a time, stopping to enter metadata between every item. Nobody — first-party, partner, or open source — builds for inventory-first bulk capture. That gap is what SpectroCapture is for.
 
 ## Status
 
@@ -32,16 +31,7 @@ Read the docs before assuming anything about how this will be built:
 
 ## Hardware
 
-v1 targets the **Nix Spectro 2 / Spectro L** (Nix Sensor), over BLE or USB. The vendor SDK is a licensed dependency, not something this repository can include — you'll need your own vendor licence to run the app against real hardware. The SDK is architecturally single-device and single-session: one instrument, one scan in flight, at a time, so that's what v1 supports.
-
-## Docs
-
-| Doc | Covers |
-|---|---|
-| [`docs/product/vision.md`](docs/product/vision.md) | Product vision, competitive position, personas, user journeys, v1/v2 scope, non-goals |
-| [`docs/briefs/acquisition-experience-research-brief.md`](docs/briefs/acquisition-experience-research-brief.md) + [`-results.md`](docs/briefs/acquisition-experience-research-results.md) + [`-results-v2.md`](docs/briefs/acquisition-experience-research-results-v2.md) | Capture-mode design: the scan queue, error handling, the capture/collection seam |
-| [`docs/briefs/browsing-a-collection-at-scale-research-brief.md`](docs/briefs/browsing-a-collection-at-scale-research-brief.md) + [`-results.md`](docs/briefs/browsing-a-collection-at-scale-research-results.md) | Collection-mode design: data model at scale, rendering, color honesty |
-| [`docs/briefs/macos-swiftui-app-architecture-research-brief.md`](docs/briefs/macos-swiftui-app-architecture-research-brief.md) + [`-results.md`](docs/briefs/macos-swiftui-app-architecture-research-results.md) | App chassis: module boundaries, state ownership, concurrency, testability without hardware |
+v1 targets the **Nix Spectro 2 / Spectro L** (Nix Sensor), over BLE or USB. The vendor SDK is a licensed dependency, not something this repository can include — you'll need your own vendor license to run the app against real hardware. The SDK is architecturally single-device and single-session: one instrument, one scan in flight, at a time, so that's what v1 supports.
 
 ## Contributing
 

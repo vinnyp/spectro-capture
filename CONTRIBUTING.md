@@ -17,9 +17,8 @@ If you show up with a PR that adds source code before an architecture ADR exists
 
 These apply to every contribution, code or otherwise. See [AGENTS.md](AGENTS.md) §4 for the full list; the ones most likely to bite a contributor:
 
-- **Never commit vendor SDK binaries, headers, or licence keys.** The instrument SDK is a licensed dependency pulled at build time, not something this repository can distribute. If your change needs the SDK, add it as a package dependency — don't vendor any part of it.
+- **Never commit vendor SDK binaries, headers, or license keys.** The instrument SDK is a licensed dependency pulled at build time, not something this repository can distribute. If your change needs the SDK, add it as a package dependency — don't vendor any part of it.
 - **No cloud features.** This is an offline-first, local-first app. A local SQLite file the user owns is the entire sync strategy — don't propose adding a server, an account system, or a sync service.
-- **No per-item metadata entry during capture**, corrections must never destroy prior data, and out-of-gamut colors must be marked honestly rather than silently substituted. These are product non-negotiables, not implementation details up for debate.
 
 ## Workflow
 
@@ -37,7 +36,7 @@ The recommended architecture (see the app-architecture research results) puts al
 
 - The mock device is the default for local development and CI. You should not need real hardware to contribute to most of the app.
 - If your change does touch a real-hardware code path, say so explicitly in the PR body, and describe what you verified on a real instrument (or flag that it still needs verification from someone who owns one).
-- CI can build the project but cannot exercise any device code path — there's no hardware or licence key available to it. Human verification is the only check for that surface.
+- CI can build the project but cannot exercise any device code path — there's no hardware or license key available to it. Human verification is the only check for that surface.
 
 ## Decisions
 
@@ -60,4 +59,4 @@ Not yet defined. SwiftFormat/SwiftLint configuration will land with the first co
 
 ## Reporting issues
 
-Use GitHub Issues. If your issue involves a licence or SDK problem, describe the symptom — **do not paste your vendor licence key** or any other credential into an issue, comment, or log excerpt.
+Use GitHub Issues. If your issue involves a license or SDK problem, describe the symptom — **do not paste your vendor license key** or any other credential into an issue, comment, or log excerpt.
