@@ -1,0 +1,8 @@
+pre-commit:
+  commands:
+    gitleaks:
+      run: gitleaks git --pre-commit --staged --redact --no-banner --config .gitleaks.toml
+      fail_text: |
+        gitleaks detected a possible secret in your staged changes. See
+        CONTRIBUTING.md#secret-scanning for how to handle a false positive
+        or a real leaked credential.

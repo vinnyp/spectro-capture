@@ -38,7 +38,7 @@ Source of truth, in this order:
 - Swift 6 strict concurrency on the app target
 - Swift Testing for new tests, XCTest retained for UI tests
 - Developer ID signing + notarization, Sparkle for updates
-- gitleaks + pre-commit + CI with a project-specific license-key rule
+- gitleaks secret scanning — in place, not a design decision: `.gitleaks.toml` (default rules + a format-agnostic vendor-license-key rule), `lefthook.yml` pre-commit, `.github/workflows/gitleaks.yml` CI. Run `lefthook install` once per clone.
 - a `needs-hardware-verify` PR label — proposed, not yet created; whoever opens the first device-touching PR that needs it creates the label
 
 **Open** — no direction yet, don't assume one and don't build as if one exists:
@@ -66,6 +66,7 @@ The v1 instrument family is the Nix Spectro 2 / Spectro L (Nix Sensor), connecte
 - CI can build this project. CI **cannot** exercise any device code path — there is no hardware or license key available to it.
 - Every PR that touches device-facing code needs a human with real hardware to verify it before merge.
 - All device access must go through the `SpectroDevice` seam so that everything above it is testable against the mock implementation without hardware. If you're writing code that talks to the instrument directly instead of through that seam, stop and reconsider.
+- Never bypass the pre-commit secret scan (`--no-verify`) to get past a gitleaks finding. If it's a false positive, add a narrow allowlist entry and say why in the PR.
 
 ## 6. How work lands
 
@@ -81,6 +82,9 @@ docs/
   briefs/                    — research briefs + results (see §2)
 docs/decisions/               — ADRs (planned, not yet created)
 .compound-engineering/        — Compound Engineering config; docs/ is the CE artifact root
+.gitleaks.toml                 — gitleaks config: default rules + vendor license-key rule
+lefthook.yml                   — pre-commit hook config (runs gitleaks)
+.github/workflows/gitleaks.yml — CI: gitleaks on push/PR
 LICENSE                       — MIT
 ```
 

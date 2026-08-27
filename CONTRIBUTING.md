@@ -39,6 +39,23 @@ The recommended architecture (see the app-architecture research results) puts al
 - If your change does touch a real-hardware code path, say so explicitly in the PR body, and describe what you verified on a real instrument (or flag that it still needs verification from someone who owns one).
 - CI can build the project but cannot exercise any device code path — there's no hardware or license key available to it. Human verification is the only check for that surface.
 
+## Secret scanning
+
+This is a public repo, and its one bespoke secret risk is the Nix Sensor vendor SDK license key (see [AGENTS.md](AGENTS.md) §5) — a format GitHub's partner-pattern scanning doesn't know about. Every commit is checked locally and in CI with [gitleaks](https://github.com/gitleaks/gitleaks) against `.gitleaks.toml`.
+
+Setup, once per clone:
+
+```
+brew install gitleaks lefthook
+lefthook install
+```
+
+`lefthook install` wires up a `pre-commit` hook that runs `gitleaks git --pre-commit --staged --redact --no-banner --config .gitleaks.toml` against your staged changes before each commit. CI runs the same config (`.github/workflows/gitleaks.yml`) against every push to `main` and every PR, so a bypassed or missing local hook still gets caught.
+
+If the hook fires on a real key: remove it from the staged change before committing. Do not bypass the hook with `--no-verify`. If the key was ever committed (even locally, even if you amend it away), treat it as leaked and rotate it.
+
+If the hook fires on a false positive: prefer a narrow, rule-scoped allowlist entry in `.gitleaks.toml` (under the specific rule's `[rules.allowlist]`, not a global allowlist) and explain why in the PR body. A `# gitleaks:allow` comment on the exact line is acceptable for a single provably-fake test fixture, but isn't a substitute for a proper allowlist entry when the pattern recurs.
+
 ## Decisions
 
 Proposing an architecture change means writing an **ADR** (Architectural Decision Record) in `docs/decisions/` (this directory doesn't exist yet — the first ADR creates it). Use the Nygard format, one file per decision:

@@ -1,0 +1,55 @@
+# SpectroCapture gitleaks config.
+#
+# What this does: extends gitleaks' default secret-detection ruleset with one
+# project-specific rule for the Nix Sensor vendor SDK license key (see
+# AGENTS.md §5 — the SDK is a package dependency, never vendored, and its
+# license key must never land in this repo).
+#
+# Who uses this file: both the `gitleaks` pre-commit hook (lefthook.yml) and
+# CI (.github/workflows/gitleaks.yml) run `gitleaks ... --config .gitleaks.toml`
+# against this exact file, so a local pre-commit pass and a CI pass agree.
+#
+# Adding a justified allowlist entry: prefer a narrow, rule-scoped entry over
+# a global one. Add a `[[rules.allowlist.regexes]]` or `paths` entry under the
+# specific rule below (or add a `# gitleaks:allow` comment on the exact line
+# for a single provably-fake fixture), and explain why in the PR body. See
+# CONTRIBUTING.md#secret-scanning for the full procedure.
+
+[extend]
+useDefault = true
+
+# The real Nix Sensor license key format is not documented anywhere and is
+# not known at the time this rule was written — do not invent one. This rule
+# is intentionally format-agnostic: it fires on any assignment of a
+# long-enough token to an identifier that looks like a license/activation
+# key, in any of the file types this repo is likely to hold one. Tighten the
+# pattern (or replace it with the real format) once the vendor's actual key
+# shape is known.
+[[rules]]
+id = "spectrocapture-vendor-license-key"
+description = '''
+Possible Nix Sensor vendor SDK license/activation key. The real key format
+is undocumented, so this rule matches format-agnostically on an identifier
+containing license/licence/activation plus key/code/token, assigned to a
+long opaque token. Tighten this pattern once the actual key format is known.
+'''
+regex = '''(?i)(?:nix|spectro)?[_-]?(?:license|licence|activation)[_-]?(?:key|code|token)['"]?\s*(?:=|:|:=)\s*['"]?([A-Za-z0-9._-]{20,})['"]?'''
+secretGroup = 1
+keywords = [
+  "license",
+  "licence",
+  "activation",
+]
+entropy = 3.0
+
+[rules.allowlist]
+regexTarget = "match"
+regexes = [
+  '''(?i)(your|example|placeholder|xxx+|<[^>]+>)''',
+]
+# Prose in docs/ discusses license keys but never contains a real one — scope
+# this allowlist to the rule above only, not global, so a leaked key elsewhere
+# in the repo is still caught.
+paths = [
+  '''^docs/''',
+]
