@@ -103,3 +103,9 @@ xcuserdata/
 
 ### Compound Engineering ###
 .context/compound-engineering/
+
+### Swift / SPM ###
+.build/
+.swiftpm/
+*.xcresult
+DerivedData/
