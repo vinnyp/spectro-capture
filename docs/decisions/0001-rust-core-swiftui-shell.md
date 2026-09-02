@@ -1,8 +1,8 @@
 # ADR-0001: Rust core + SwiftUI shell
 
-**Status:** Proposed — pending the boundary spike below and ratification by the project owner.
+**Status:** Accepted — ratified 2026-09-01 by the project owner on the boundary-spike evidence. The spike completed with all four exit criteria holding (criteria 1, 2, 4 *works-with-workaround*; criterion 3 *works*); the all-Swift fallback did not trigger.
 **Date:** 2026-09-01 (revised same day per peer-architecture review)
-**Evidence:** [`docs/briefs/rust-primary-language-research-results.md`](../briefs/rust-primary-language-research-results.md) (53-question research pass); prior baseline in [`docs/briefs/macos-swiftui-app-architecture-research-results.md`](../briefs/macos-swiftui-app-architecture-research-results.md).
+**Evidence:** [`docs/briefs/rust-boundary-spike-results.md`](../briefs/rust-boundary-spike-results.md) (the spike gate, all criteria measured); [`docs/briefs/rust-primary-language-research-results.md`](../briefs/rust-primary-language-research-results.md) (53-question research pass); prior baseline in [`docs/briefs/macos-swiftui-app-architecture-research-results.md`](../briefs/macos-swiftui-app-architecture-research-results.md).
 
 ## Context
 
@@ -23,7 +23,7 @@ Adopt **shape A**: business logic, data layer, and color math in Rust; the UI sh
 
 **This ADR may be ratified only after a time-boxed boundary spike (1–2 weeks) retires or prices its four known design costs.** Spike code is decision evidence: it lives in a scratch worktree and is never merged.
 
-Spike exit criteria — all four answered with working evidence; the fallback triggers if **any** fails or prices the boundary above its worth:
+Spike exit criteria — all four were answered with working evidence (see the spike results). Per the falsification semantics adopted during planning, the fallback trigger is a criterion that **does not work**; workaround-class findings are documented costs, and pricing alone does not trigger it:
 
 1. **Streaming + payloads, both directions.** Rust→Swift: a mock-device Rust crate emits scan events consumed in Swift as an `AsyncStream`. Swift→Rust: a Swift-side hardware-free fake implements the same UniFFI foreign trait the live device layer will implement, feeding raw-payload byte buffers of realistic size into the Rust core — the live topology's actual ingestion direction, and the path CI can never exercise with real hardware. Copy behavior measured both ways (UniFFI's zero-copy path is documented for Kotlin, unverified for Swift).
 2. **Cancellation.** Mid-scan cancellation built from UniFFI's drop-callback hook, demonstrated from the Swift side against the mock device (UniFFI has no built-in cancellation).
@@ -32,13 +32,14 @@ Spike exit criteria — all four answered with working evidence; the fallback tr
 
 Additionally the spike **prices** (does not gate on) the boundary edit-compile-run tax: the three-way measurement the research's Question Status already scripts — a Rust-only change, a Swift-only change, and a `#[uniffi::export]` signature change — timed through to a runnable app.
 
-**Fallback:** if the spike fails, this ADR is rewritten to all-Swift with a mandatory enforcement regime — strict concurrency from first commit, typed throws at module boundaries, exhaustive `switch` in state machines, schema-enforced version history, property tests against reference fixtures, and a platform-scoped core SPM target isolated from the UI for maximal headless testing — and the failure evidence is recorded here.
+**Fallback (not triggered — kept as the standing escape hatch should a criterion later prove unworkable in practice):** a *does-not-work* outcome rewrites this ADR to all-Swift with a mandatory enforcement regime — strict concurrency from first commit, typed throws at module boundaries, exhaustive `switch` in state machines, schema-enforced version history, property tests against reference fixtures, and a platform-scoped core SPM target isolated from the UI for maximal headless testing — and the failure evidence is recorded here.
 
 ### Enforcement gates (part of this decision)
 
 - Rust core: `#![forbid(unsafe_code)]` in logic crates; `clippy -D warnings`; `cargo nextest` + property tests (color math validated against Munsell renotation fixtures) in hardware-free CI on every PR.
 - Swift shell and device layer: Swift 6 strict concurrency on from the first commit; Swift Testing for shell unit tests; XCTest for UI tests.
 - **Cross-boundary contract test, permanent:** the spike's Swift-side fake (criterion 1) is kept as a CI test that exercises the *actual generated bindings* in both directions on every PR. UniFFI's generation-from-one-source and checksums close structural drift; this test is what catches semantic drift (threading, ordering, cancellation timing) that checksums cannot.
+- From the spike's sabotage evidence: a TSan test lane (`swift test --sanitize thread`) in CI; **zero handwritten `@unchecked Sendable`** enforced by a grep gate (the spike proved it unnecessary — criterion 3); debug thread/executor assertions in callback sinks; stream tests bounded by timeouts so a dropped continuation reads as a failure.
 - The `SpectroDevice` seam is also the FFI boundary: the mock implementation is pure Rust so agents and CI exercise the full core without hardware or a license key. Device-touching PRs still require human hardware verification — the one builder-side step agents cannot perform.
 
 ## Consequences
