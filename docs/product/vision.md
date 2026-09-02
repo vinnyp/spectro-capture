@@ -151,7 +151,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 
 | Pri | Feature                                          | Serves | Notes                                                                               |
 | --- | ------------------------------------------------ | ------ | ----------------------------------------------------------------------------------- |
-| P0  | Spectro 2/L connect (BLE + USB)                  | U3     | The only real instrument family in v1 (ADR-0002)                                    |
+| P0  | Spectro 2/L connect (BLE + USB)                  | U3     | The only real instrument family in v1                                               |
 | P0  | Known-device management                          | U3     | Serial number is the durable device identity                                        |
 | P0  | Tile calibration with due-prompts                | U3     | Prompted before a session, not mid-queue                                            |
 | P0  | CSV inventory import with column mapping         | U1     | The inventory-first wedge                                                           |
@@ -171,14 +171,14 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 ### v2 candidates
 
 
-| Feature                               | Builds on                   | Notes                                                                                                                                                                                |
-| ------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Printer/output-profile gamut analysis | U7                          | Needs ICC profile handling                                                                                                                                                           |
-| Sheets/Excel direct import            | U1                          | CSV covers v1                                                                                                                                                                        |
-| Density data for print workflows      | New persona: print operator | A license feature; also nearer the QC turf we avoid                                                                                                                                  |
-| Multi-collection compare              | U7                          |                                                                                                                                                                                      |
-| CxF import/export                     | U6, J7                      | Industry interchange; migration path in from vendor apps                                                                                                                             |
-| Multi-instrument support              | J2 on more hardware         | One expansion step brings ~30 instruments across X-Rite, Klein, JETI, Datacolor into scope (sequencing: ADR-0002, linked below); also unties the product's fate from a single vendor |
+| Feature                               | Builds on                   | Notes                                                                                                                                           |
+| ------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Printer/output-profile gamut analysis | U7                          | Needs ICC profile handling                                                                                                                      |
+| Sheets/Excel direct import            | U1                          | CSV covers v1                                                                                                                                   |
+| Density data for print workflows      | New persona: print operator | A license feature; also nearer the QC turf we avoid                                                                                             |
+| Multi-collection compare              | U7                          |                                                                                                                                                 |
+| CxF import/export                     | U6, J7                      | Industry interchange; migration path in from vendor apps                                                                                        |
+| Multi-instrument support (core team)  | J2 on more hardware         | One expansion step brings ~30 instruments across X-Rite, Klein, JETI, Datacolor into scope; also unties the product's fate from a single vendor. v2 sequences the *core team's* investment only — per STRATEGY.md, the device seam is open to community instrument contributions at any time, merged when a hardware owner verifies them; the core team builds and validates Nix Spectro 2/L only through v1 |
 
 
 ### Non-goals
