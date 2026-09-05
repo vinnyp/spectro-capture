@@ -68,7 +68,7 @@ quadrantChart
 | U5  | **Fix a bad scan without losing history** | Cataloger                 | re-scan updates the canonical value; prior values kept as version history            |
 | U6  | **Use the data outside the app**          | Data consumer             | CSV export (metadata + wavelengths + Lab/XYZ/LCh/Luv/sRGB/HSL) · direct SQLite query |
 | U7  | **See the collection honestly**           | Data consumer / Cataloger | 3D absolute-space plot + gamut-aware swatch grid (renderable vs not, marked)         |
-| U8  | **Scan where there is no internet**       | Cataloger                 | offline-first design + per-device pre-authorization ("valid until ⟨date⟩")           |
+| U8  | **Scan where there is no internet**       | Cataloger                 | offline-first design + per-device pre-authorization ("Offline use through ⟨date⟩")           |
 | U9  | **Contribute code without hardware**      | Contributor               | mock-device layer behind the device-service interface; what CI exercises             |
 
 
@@ -91,7 +91,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 1. Import the inventory CSV
 2. Map identifier + metadata columns
 3. The queue opens on row 1
-4. Scan 1–5 samples, haptic buzz confirms, row auto-advances
+4. Scan 1–5 samples, haptic buzz confirms where available, row auto-advances
 5. Repeat heads-down to the end
 6. Collection is browsable, exportable, plotted. Target pace: limited by the device's scan cycle, not by the UI.
 
@@ -128,7 +128,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 ### J6. The offline session (cataloger)
 
 1. Before leaving connectivity (storage unit, studio, archive, anywhere without wifi), open the device panel
-2. Check "authorization valid until 〈date〉" and pre-authorize if the window is short
+2. Check "Offline use through 〈date〉" and pre-authorize if the window is short
 3. Go offline; run a full bulk session (J2) with no internet at all, since activation and scanning are both local within the window
 4. Return online later; the next authorization check happens silently
 
@@ -155,12 +155,12 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 | P0  | Known-device management                          | U3     | Serial number is the durable device identity                                        |
 | P0  | Tile calibration with due-prompts                | U3     | Prompted before a session, not mid-queue                                            |
 | P0  | CSV inventory import with column mapping         | U1     | The inventory-first wedge                                                           |
-| P0  | Queued bulk scan, 1–5 samples averaged           | U1     | Heads-down; haptic confirm; row auto-advance                                        |
+| P0  | Queued bulk scan, 1–5 samples averaged           | U1     | Heads-down; haptic confirm where available; row auto-advance                        |
 | P0  | Inline scan-failure handling                     | U1     | Retry / skip / flag-row for light, battery, temperature errors                      |
 | P0  | Collections + version history                    | U5     | Corrections never destroy data                                                      |
 | P0  | CSV export, spectral + derived spaces            | U6     | Lab/XYZ/LCh/Luv/sRGB/HSL; sRGB/HSL flagged as gamut-clipped                         |
 | P0  | Local SQLite store, raw payload canonical        | U5, U6 | The file is the whole system: portable, queryable                                   |
-| P0  | Offline operation + per-device pre-authorization | U8     | "Authorized until 〈date〉" surfaced in the device panel                              |
+| P0  | Offline operation + per-device pre-authorization | U8     | "Offline use through 〈date〉" surfaced in the device panel                           |
 | P0  | Mock-device layer                                | U9     | App runs, tests, and takes contributions with no hardware or key; what CI exercises |
 | P1  | Ad-hoc single capture                            | U2     | Metadata-first, into a chosen collection                                            |
 | P1  | QC delta E vs canonical                          | U4     | ΔE2000 default; parity-minimum by design (competitive position)                     |
