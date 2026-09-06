@@ -205,3 +205,30 @@ Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026
 | R2-D11 | Nits: `:377` cites F12 for the remembered-row rule (F15); `:406`, `:470` "the row the session remembers"; "empty-queue state" vs "nothing-to-capture state"; lifecycle edges missing (Item → Paused, Gate → Complete, Halted → Interrupted, Flag self-edge); whether an operator Flag counts toward N_CONSEC_FLAGGED; a one-row session has no Flag-after-landing window; each ad-hoc item re-runs the gate; `#open-questions` legend link | PM, Staff, Test, Arch (Nit) | Confirmed. | accept — Nit; the legend link waits for the requirements pass. |
 
 **Round-2 status:** no fence re-opened; every round-1 and round-1-delta finding closed. Round 3 is a wording pass (fix file `prd-capture-mode-round-3-fixes.md`, one owner decision F17) followed by a closing delta check.
+
+### Round 3 — wording pass and closing check
+
+**Fix pass:** commit `6e0c03d`, applied by `operator-agents:product-manager` from `docs/product/prd-capture-mode-round-3-fixes.md` (12 items, all ticked) under fences F1–F17. From this round on, in-line dispatches run on Opus at the owner's instruction.
+
+**Closing check** against `6e0c03d`, same lenses (Claude on Opus; agy PM and architecture). Every R2-D item is RESOLVED or RESOLVED-BY-FENCE on both routes (test lens: R2-D2 PARTIAL on anchor wording only). Both agy reviews returned rc 8 (short body) but carry conforming per-item verdicts and a YES; the Claude lenses stand as primary.
+
+| lens | route | R2-D items | new findings | ready? |
+|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED | 1 Major, 1 Minor contradiction | NO (one sentence) |
+| staff engineer | Claude/Opus | all RESOLVED | 1 Major, 1 Minor contradiction | YES |
+| test (retargeted) | Claude/Opus | all RESOLVED (R2-D2 PARTIAL, wording) | 1 Major, 2 Minor | YES |
+| architecture | Claude/Opus | all RESOLVED | 1 Major, 1 Minor contradiction | NO (one sentence) |
+| product manager | agy | all RESOLVED | none | YES |
+| architecture | agy | all RESOLVED | none | YES |
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R3-D1 | Quitting from the operator's own Pause has no status (not interrupted, not ended); with the new cross-collection block, collection B is unreachable "until that session is ended or complete" after a relaunch (`:116`, `:261`, lifecycle `:63-72`) | PM (Major) | Confirmed: "quit means quitting while capturing"; Paused has only Resume and End session out-edges. | **accept — Major.** Quit or crash from the operator's Pause interrupts the session exactly as from Capturing; `Paused --> Interrupted` edge. |
+| R3-D2 | The review-selected remembered row never reverts: after the last deferred row is re-captured and the app quits, the next session must both open the review at that row and be the nothing-to-capture state (`:118`, `:257`, `:395`) | Arch (Major) | Confirmed. | **accept — Major.** The review exception holds only while that row is still deferred; once captured or the review is left, the ordinary rule applies. Invalidation added to the Data Foundation hand-off. |
+| R3-D3 | "At most one unresumed interrupted session per collection" vs a one-row session beside an interrupted bulk session being itself interrupted until relaunch (`:116`, `:400`); and an interrupted one-row session has no status that fits | Staff (Major), Arch (Minor), Test (risk) | Confirmed. | **accept — Major.** The invariant counts interrupted bulk sessions only; an interrupted one-row session is closed as ended on relaunch. |
+| R3-D4 | UJ3.9 step 5 quits the app while still halted, so the device PRD's End-session warning fires and UJ3.5 is never walked (`:479` vs `:393`, device PRD `:441`) | Test (Major) | Confirmed. | **accept — Major.** Resume scanning before quitting; add the force-quit-during-halt variant. |
+| R3-D5 | Nothing-to-capture state offers re-scan unconditionally in UJ3 step 2 but only with captured rows in UJ1 step 6 (`:133` vs `:258`) | PM, Staff (Minor contradiction) | Confirmed. | accept — Minor. |
+| R3-D6 | N_CONSEC_FLAGGED trigger clause "rows are deferred" contradicts the exclusion of operator deferrals two lines later (`:306` vs `:308`) | Test (Minor contradiction) | Confirmed. | accept — Minor; owner confirmed the scope as fence F18. |
+| R3-D7 | Pass anchor "current when the queue last wrapped" reads two ways (`:287`, `:450`) | Test (Minor) | Confirmed. | accept — Minor: "current when the previous wrap-check ended (or when the session started)". |
+
+**Round-3 status:** no fence re-opened; residue is seven wording items (`prd-capture-mode-round-4-fixes.md`) and one owner confirmation (F18). Round 4 is the final wording pass, verified by the two lenses that said NO.

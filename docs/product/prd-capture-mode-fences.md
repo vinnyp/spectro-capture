@@ -115,6 +115,12 @@ Owner-locked row IDs: (none — no requirement rows yet)
 
 **Why:** Both cross-model lenses objected: a Cataloger doing a one-off scan was forced through the full bulk-session resume and left inside the live queue. The owner chose the simplest rule.
 
+### F18 — The consecutive-failure guard counts only instrument-caused deferrals (2026-09-06, round-3 closing check)
+
+**Decision:** N_CONSEC_FLAGGED counts consecutive rows the instrument's own failed readings set aside (a row deferred after K_FAILED_ATTEMPTS, or by Skip after a failed attempt, or by a set that disagreed). Rows the operator deferred by choice — Flag as missing or damaged, Skip mid-set with no failure, Flag on a row that just landed — never count. The guard watches the instrument, not the operator's decisions. The constant's trigger clause reads "deferred by the instrument".
+
+**Why:** Flagging five missing markers in a row must not pause the session and prompt recalibration; the guard exists to catch a systemic instrument problem.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
