@@ -3,7 +3,7 @@
 Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. Format per `operator-agents:writing-prds`.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
-Owner-locked row IDs: (none — no requirement rows yet)
+Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist at ⌛️ Ready for Alignment as of commit 6e0ec45; none locked)
 
 ## Fences
 
@@ -120,6 +120,48 @@ Owner-locked row IDs: (none — no requirement rows yet)
 **Decision:** N_CONSEC_FLAGGED counts consecutive rows the instrument's own failed readings set aside (a row deferred after K_FAILED_ATTEMPTS, or by Skip after a failed attempt, or by a set that disagreed). Rows the operator deferred by choice — Flag as missing or damaged, Skip mid-set with no failure, Flag on a row that just landed — never count. The guard watches the instrument, not the operator's decisions. The constant's trigger clause reads "deferred by the instrument".
 
 **Why:** Flagging five missing markers in a row must not pause the session and prompt recalibration; the guard exists to catch a systemic instrument problem.
+
+### F19 — Entering the deferred-row review mid-session discards the current item's partial set (2026-09-06, requirements fill, fork 1)
+
+**Decision:** The one partial-set rule has no look-only exception: opening the review puts a different item under the instrument, so the samples taken so far on the current item are discarded and the row returns to "sample 0 of N". Closes OQ 18.
+
+**Why:** The rule's value is that it has no exceptions; a look-only entry is a later refinement if dogfood asks for it.
+
+### F20 — The review's surface and the session summary's form follow the seam decision (2026-09-06, requirements fill, forks 2 and 3)
+
+**Decision:** Where the deferred-row review lives relative to the recents strip (same surface, adjacent, separate) and whether the end-of-session summary is a state or a dialog are settled together with the seam (OQ 8, ADR-0004), by the Demo Device prototype of each reading. Until then the summary is specified as a state on the collection surface so counts and items-per-hour stay readable, and the review rows stay gated on OQ 8. OQ 10 and OQ 17 are folded into OQ 8's closer.
+
+**Why:** Both are the same surface question the seam decides; answering them first would pre-decide part of ADR-0004.
+
+### F21 — Find matches code, name, and both alternates (2026-09-06, requirements fill, fork 4)
+
+**Decision:** Find on the capture surface matches Swatch Code (from the start), Swatch Name (any part), and the alternate code and alternate name the same way, all under the one matching rule (F11); when a hit matched an alternate, the result says which field matched. Closes OQ 15.
+
+**Why:** A swatch is known by more than one name; that is why the alternates exist.
+
+### F22 — Capture owns the queue order; Collection Mode inherits the pre-session sort and drag controls (2026-09-06, requirements fill, fork 5)
+
+**Decision:** This PRD defines what a reorder does to the queue (F5, §6). The sort and drag controls the operator uses on the collection view before a session are an inherited obligation for the Collection Mode PRD; R6.8 carries the marker. The capture surface's queue list remains this PRD's.
+
+**Why:** Keeps ownership clean between the two PRDs.
+
+### F23 — Guard mode: record-only in dogfood, enabled at v1; a dogfood build is not a release (2026-09-06, requirements fill, fork 6)
+
+**Decision:** The consecutive-failure guard ships record-only during the dogfood phase (it counts and records, never pauses) so the constants can be tuned from real sessions, and ships enabled at v1 once OQ 3's data exists. A dogfood build does not count as a release for the Legend's rule that no provisional constant ships with its OQ unresolved. Closes the default half of OQ 6.
+
+**Why:** The guard's numbers are clinical-analyser numbers until tuned; pausing dogfood sessions on untuned constants would poison the tuning data.
+
+### F24 — Priority split: bulk critical path and version history P0; re-scan, ad-hoc capture, and reordering P1 (2026-09-06, requirements fill, fork 7)
+
+**Decision:** Collections, import, the session, the scan loop, per-scan failure and the guard, queue navigation by find and skip, pause/end/interruption/resume, the deferred review, the Demo Device rows, and the version-history record shape (R8.13) are P0. The correction path (re-scan rows in §8), ad-hoc capture and one-row sessions (§9), and reordering (§6 reorder rows) are P1. Priority is build order within v1, not a cut line.
+
+**Why:** Matches the vision's feature list; Data Foundation needs the record shape in the first build even though the re-scan journey that fills it comes second.
+
+### F25 — The seam rows are P0 and the ADR-0004 prototype is first-build work (2026-09-06, requirements fill, fork 8)
+
+**Decision:** R10.1–R10.7 stay P0, gated on OQ 8. A Demo Device prototype of each reading (A: modal takeover; B: capture as a state of the live collection) is part of the first build phase and is what closes OQ 8 and ADR-0004's gate. The research default (Reading B) is recorded as the default to confirm or overrule, not adopted.
+
+**Why:** The first build needs the seam answered; deciding it without a prototype would forfeit the evidence the two research passes disagree on.
 
 ## Rejected findings
 
