@@ -135,6 +135,42 @@ Blockers: R1-F1, R1-F2, R1-F3. Majors: R1-F4 through R1-F19. Corrected to Minor:
 
 Minor findings (PM, Staff S10–S18, Test T13–T20, Arch A5–A12, agy-Staff nit) are carried into the round-1 fix file for the editing dispatch; none blocks the round.
 
-### Verification note
+### Verification note — round-1 fix pass and delta verification
 
-Pending: the round-1 fix pass has not run. Delta-verification (Phase 4 step e) appends here.
+**Fix pass:** commit `f09c90e`, applied by `operator-agents:product-manager` from `docs/product/prd-capture-mode-round-1-fixes.md` (48 items, all ticked) under fences F6–F13. A first attempt by a general-purpose editor was stopped and reverted at the owner's instruction that the journeys be written by the PM operator in the Cataloger's words, WHAT not HOW.
+
+**Delta verification:** the same lenses re-dispatched against `f09c90e` with the fence file, this log, and the fix file as sources, asked per finding for RESOLVED / PARTIAL / UNRESOLVED plus any regression.
+
+| lens | route | round-1 findings | new findings |
+|---|---|---|---|
+| product manager | Claude | all RESOLVED (6 by fence) | 1 Blocker, 3 Major, 2 Minor |
+| staff engineer | Claude | all RESOLVED (S1–S18, nits, Q1–Q20) | 5 Major, 1 Minor, 1 Nit |
+| test (retargeted) | Claude | all RESOLVED; T12 PARTIAL (the new partial-set rule contradicts two other steps) | 5 Major, 2 Minor |
+| architecture | Claude | all RESOLVED (A1–A12) | 2 Major, 2 Minor |
+| product manager | agy | all RESOLVED; none new | — |
+| staff engineer | agy | rc 8, empty body — not run; Claude staff lens stands | — |
+| architecture | agy | all RESOLVED (A1–A12) | 1 "Blocker", corrected to Nit (R1-D15) |
+
+**Regressions introduced by the fix pass, verified against `f09c90e` and consolidated (the round-2 fix file `prd-capture-mode-round-2-fixes.md` maps each to a box):**
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R1-D1 | System sleep defined as both a session interruption (`:105`, `:271`, `:377`, `:412`) and a device-PRD halt (`:383`); the locked device PRD `:441` says halt with authorization excluded | PM (Blocker), Test N3, Arch N1, Staff NEW-1 (Major) | Confirmed at all cited lines. | **accept — Blocker.** Sleep is a halt; interrupted = quit, crash, force-quit, power loss. Recorded under fence F14. |
+| R1-D2 | "Resume capture is a new session start" vs "tallies carry forward"; no terminal status for the old session | Staff NEW-2 (Major) | `:384` confirmed. | **accept — Major.** Owner chose: new session, old closed as "interrupted — resumed by the next", tallies inherited. Fence F14; F12 amended. |
+| R1-D3 | UJ3 step 2 "fresh session opens at the first pending row" (`:244`) vs UJ3.4 step 4 / flowchart "opens at the row the operator was on" (`:367`, `:418`) | Staff NEW-3 (Major), Arch N3 (Minor, review selection) | Confirmed. | **accept — Major.** Owner chose: the collection remembers the last current row; every new session opens there. Fence F15. |
+| R1-D4 | Flag key targets the current pending row after auto-advance; a reflexive Flag after "that one was wrong" defers the next row | PM NEW-3 (Major) | `:288-289` confirmed. | **accept — Major.** Owner chose: until the next trigger press, Flag targets the row that just landed. Fence F16. |
+| R1-D5 | Review re-scan: "if the re-scan fails again → the review moves to the next row" contradicts F6 hold-and-retry (`:353`); UJ3.8 `:444` likewise silent on K exhaustion | PM NEW-5 (Minor), Test N4 (Major), Staff NEW-5 (Major) | Confirmed; `:353` unchanged since `e5c43d1`. | **accept — Major.** F6 propagated to UJ3.3 and UJ3.8. |
+| R1-D6 | UJ3.8 re-scan with disagreeing samples has no Accept-average path (`:444`) | PM NEW-2 (Major) | Confirmed. | **accept — Major.** F10 applied to UJ3.8. |
+| R1-D7 | Partial-set rule (`:107`) says any device halt discards held samples, but a completed set awaiting save is held for "Try saving again" (`:265`, `:398`, device PRD `:433`) | Test N1 (Major) | Confirmed. | **accept — Major.** Clause added: a completed set awaiting its save is not a partial set. |
+| R1-D8 | Partial-set rule says held samples survive only reorder, but Skip/Flag/K defer "with good samples kept" (`:286-288`) and the review shows how many were kept | Test N2 (Major) | Confirmed. | **accept — Major.** Samples on a row that becomes deferred are kept as its record. |
+| R1-D9 | Guard pause vs explicit Pause: partial-set survival and counter reset unstated (`:291-294`, `:60`) | PM NEW-4 (Major), Test N6, Staff NEW-6 (Minor) | Confirmed. | **accept — Major.** Guard pause keeps the held samples; force-resume resets the guard counters, not the row's K count; two Paused states in the diagram. |
+| R1-D10 | One-row session has no exit except capture or halt; a stranded one-row session blocks the next bulk session (`:440`, `:481`, `:495`) | Test N5 (Major), PM NEW-6 (Minor) | Confirmed. | **accept — Major.** Ends on capture, deferral, abandonment, or operator end. |
+| R1-D11 | Session attach rules unstated: ad-hoc into another collection while one is paused; attaching to an interrupted (unbound) session without a gate (`:105`, `:440`, `:481`) | Arch N2 (Major), Staff NEW-4 (Major) | Confirmed. | **accept — Major.** Cross-collection blocked while another session is active; attaching to interrupted = resume first (F14). |
+| R1-D12 | UJ1 step 6 requires a pending row (`:119`) while UJ3 step 2 allows zero pending with deferred rows (`:246`) | Arch N4 (Minor) | Confirmed. | accept — Minor. |
+| R1-D13 | "Skipped without an attempt in this pass": "pass" and jumped-away rows undefined (`:272`, `:430`) | Test N7 (Minor) | Confirmed. | accept — Minor. |
+| R1-D14 | Row-state diagram omits Skip-after-failure as a Pending → Deferred cause (`:92`) | Staff NEW-7 (Nit) | Confirmed. | accept — Nit. |
+| R1-D15 | "Cursor stack contradiction": after an inserted item (UJ4.1 step 3/5) or a mid-session re-scan (UJ3.8 step 5) the journey promises to return to the held row, which "linear advance from the inserted row" would skip | agy-Arch (Blocker) | The journeys promise a user-visible return to the held row; they do not mandate a single sequential cursor — that is the reviewer's mechanism, not the document's. The promise is satisfiable (the app remembers the held row). One real gap: after the held row is then captured, the journey does not say the queue continues with the next pending row after the inserted item. | **corrected to Nit — accept as a one-sentence clarification** (round-2 FX2-16). Not a Blocker: a HOW objection to a WHAT promise. |
+
+Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026-09-06). R1-D1 is corrected by the locked device PRD, not by a new owner call.
+
+**Round-1 status:** every round-1 finding is closed. The round is not aligned until the round-2 fix pass lands and delta-verifies; that appends below as "Round 2".

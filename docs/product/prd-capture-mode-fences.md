@@ -81,11 +81,33 @@ Owner-locked row IDs: (none — no requirement rows yet)
 
 **Why:** The inherited "first row with no durably written reading" definition breaks after a jump or reorder (fence F5), teleporting the operator on the common halt-resume path. The reference-white rationale for device binding is intra-session; across days it no longer holds, and releasing it at quit avoids immortal device-bound sessions.
 
+**Amended 2026-09-06 (round-1 delta verification, fence F14):** "Resume capture after a relaunch is a new session start" stands, and is sharpened: the interrupted session is closed with status "interrupted — resumed by the next session" and the new session inherits its tallies and elapsed capture time. See F14.
+
 ### F13 — UJ4.1 (insert an unplanned item mid-session) stays in v1 (2026-09-06, round 1, R1-F24)
 
 **Decision:** Mid-session insert with typed metadata remains a v1 journey. INSERT_POSITION stays an open question, with "append to the end and jump to it" recorded as the simpler alternative.
 
 **Why:** Typing is the operator's choice, never demanded by the queue; the "Add item" control for a physically present item missing from the worklist is a shipped precedent. The cross-model product lens's concern (creeping UI on the capture surface) is recorded as input to the seam decision.
+
+### F14 — Resume after a relaunch is a new session; the old one is closed as interrupted (2026-09-06, round-1 delta, NEW-J)
+
+**Decision:** When the app relaunches after a quit or crash and the operator chooses "Resume capture", a new session starts against the remembered row: the full pre-flight gate runs, including authorization, and whichever device is connected is bound. The previous session is closed with status "interrupted — resumed by the next session" and never returns to active. The new session inherits the old session's tallies and elapsed capture time so the summary reads as one run. A day with two crashes produces three session records, linked. "At most one interrupted session per collection" therefore means at most one *unresumed* interrupted session.
+
+**Why:** Reviewers found F12's "new session start" and "tallies carry forward" contradictory without a stated entity rule. The owner chose the chain of sessions over re-activating the old one; a per-session device identity stays simple and every session has exactly one instrument.
+
+**Not a session interruption:** system sleep. Sleep mid-session is a device-PRD halt (device PRD §5: the disconnect halts, the authorization check is excluded for the in-flight session, "Resume scanning" is the way back). Only quit, crash, force-quit, and power loss make a session interrupted. This corrects the round-1 fix pass, not a new owner call.
+
+### F15 — The collection remembers the last current row; every new session opens there (2026-09-06, round-1 delta, NEW-K)
+
+**Decision:** The remembered current row belongs to the collection, not only to an interrupted session. After a session ends early, is interrupted, or completes, the next session on that collection opens at the last remembered row, falling back to the next pending row in queue order if that row is no longer pending. Jumps and reorders made in an earlier session are honoured on day two. Selecting a row in the deferred-row review also updates the remembered row.
+
+**Why:** UJ3 step 2 ("a fresh session opens at the first pending row") and UJ3.4 step 4 ("the next session opens at the row the operator was on") contradicted each other after the round-1 fix. A hue-sorted run that stopped at row 150 must not restart at the first skipped row.
+
+### F16 — Flag targets the row that just landed until the next trigger press (2026-09-06, round-1 delta, NEW-C)
+
+**Decision:** After a row-success confirmation and before any trigger press on the new current row, "Flag row" demotes the row that just landed (Captured → Deferred, reading kept as history, per F9). Once the operator has pressed the trigger on the new row, Flag targets the current row (a pending row is deferred as "flagged: missing or damaged"; a row mid-set is deferred with its good samples kept). No timing constant; the boundary is the operator's own next action.
+
+**Why:** The queue auto-advances on the row-success confirmation, so a reflexive Flag after "that one was wrong" would otherwise defer the next row as missing while the bad reading stayed live — the mis-attribution F6 exists to prevent.
 
 ## Rejected findings
 
