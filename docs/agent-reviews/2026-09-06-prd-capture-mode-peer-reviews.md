@@ -232,3 +232,23 @@ Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026
 | R3-D7 | Pass anchor "current when the queue last wrapped" reads two ways (`:287`, `:450`) | Test (Minor) | Confirmed. | accept — Minor: "current when the previous wrap-check ended (or when the session started)". |
 
 **Round-3 status:** no fence re-opened; residue is seven wording items (`prd-capture-mode-round-4-fixes.md`) and one owner confirmation (F18). Round 4 is the final wording pass, verified by the two lenses that said NO.
+
+### Round 4 — final wording pass and final check
+
+**Fix pass:** commit `abc429c`, applied by `operator-agents:product-manager` (Opus) from `docs/product/prd-capture-mode-round-4-fixes.md` (8 items, all ticked) under fences F1–F18; the jargon sweep returned zero hits across the whole document, hand-off lists included.
+
+**Final check** against `abc429c` by the two lenses that returned NO in round 3 (Claude on Opus).
+
+| lens | R3-D items | new findings | ready? |
+|---|---|---|---|
+| product manager | R3-D1, R3-D5 RESOLVED | 1 Minor (flowchart label) | YES |
+| architecture | R3-D2, R3-D3 RESOLVED | 2 Minor (flowchart label; review-mark rule stated three ways) | YES |
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R4-D1 | Session-core flowchart node K still reads "deferred rows reach N_CONSEC_FLAGGED" against fence F18 (`:342`) | PM, Arch (Minor) | Confirmed; FX4-6 scoped the prose, constants, and assumptions, not the diagram. | accept — fixed by the orchestrator in place: "instrument-caused deferrals reach N_CONSEC_FLAGGED". |
+| R4-D2 | Review-mark invalidation stated three ways: three conditions at `:124`, "still deferred" at `:263`, `:402`, `:652` — after "Leave deferred" the weaker rule re-opens the review, and `:652` is the line Data Foundation inherits | Arch (Minor) | Confirmed. | accept — fixed by the orchestrator in place: all four sites carry the three conditions (captured, deliberately left deferred, or the operator leaves the review). |
+
+Both edits re-parsed (six mermaid blocks OK) and committed with this log entry.
+
+**Gate outcome for the journeys phase: aligned.** Every finding from rounds 1–4 on both routes is RESOLVED, RESOLVED-BY-FENCE, or owner-rejected on the record; every lens that ran the final or closing check says the journeys are ready for the requirements pass. No requirement, error/state, or success-metric rows exist yet, so no row flipped; the requirements pass creates them at pre-alignment and round 5 of this log reviews them. Fences F1–F18 and the `#open-questions` legend link carry forward.
