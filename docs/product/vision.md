@@ -83,7 +83,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 1. Install &amp; open the app
 2. Paste license key once (stored locally, auto-activated silently every launch)
 3. Discover the device (~20s scan, strongest signal first) → connect
-  - **Risk points:** Bluetooth permission denial; the device's *first-ever* connect needs internet (serial authorization); a missing usage string is an app crash, caught in CI rather than by users.
+  - **Risk points:** Bluetooth permission denial; the device's *first-ever* connect needs internet (serial authorization); a missing usage string may crash the app, caught in CI rather than by users.
 4. Walk the QR-tile calibration → ready.
 
 ### J2. The bulk session (cataloger)
