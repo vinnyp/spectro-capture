@@ -2,7 +2,7 @@
 
 Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. Format per `operator-agents:writing-prds`.
 
-Review log: (not yet created — round 1 has not run)
+Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
 Owner-locked row IDs: (none — no requirement rows yet)
 
 ## Fences
