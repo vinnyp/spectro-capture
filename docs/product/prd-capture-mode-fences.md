@@ -39,6 +39,56 @@ Owner-locked row IDs: (none — no requirement rows yet)
 
 **Why:** Physical order rarely matches CSV order for a whole run (a marker set sorted by hue). Jump-by-code alone means a 200-item hue-sorted set is navigated one search at a time.
 
+### F6 — A per-scan failure holds the row (2026-09-06, round 1, R1-F1)
+
+**Decision:** When a sample fails for a per-scan reason (ambient light leakage, out-of-range temperature, set disagreement), the queue holds on the current row. The next trigger press is the retry. Moving on is a deliberate queue action (Skip, Flag). After K_FAILED_ATTEMPTS consecutive failed attempts on one row (provisional, candidate 3, OQ) the row auto-defers with a distinct "moved on" cue and the queue advances. Skip after a failure advances exactly once. The same rule governs the sample-disagreement branch.
+
+**Why:** Three lenses found UJ3.1 step 3 self-contradictory (defer-and-advance and retry-in-place). A heads-down operator's reflexive re-press after a warning tone must never land on the next row. Holding is the only rule under which the next reading cannot be mis-attributed.
+
+### F7 — Calibration drift and no-reading are device-PRD halts; no per-scan timeout (2026-09-06, round 1, R1-F2)
+
+**Decision:** The per-scan failure set owned by this PRD is exactly: ambient light leakage, out-of-range temperature, set disagreement, and operator flag. Calibration drift (the scan-delta error) and a device that returns no reading are halts under the device PRD §5, handled in UJ3.6. SCAN_TIMEOUT is removed; there is no per-scan timer.
+
+**Why:** The locked device PRD routes scan-delta drift under its halt taxonomy (§3) and halts a silent device after its liveness timeout (§5). One timer, one owner; no new injection is needed.
+
+### F8 — N_CONSEC_DRIFT is dropped from v1 (2026-09-06, round 1, R1-F14)
+
+**Decision:** The Westgard 10:x drift rule is removed from the consecutive-failure guard, the constants list, and the open questions. Drift detection relies on the device PRD's SDK-signalled calibration-due state and scan-delta halt, plus the within-item sample spread.
+
+**Why:** 10:x presumes repeated measurement of one control; a bulk queue measures a different colour on every row, so there is no baseline and a hue-sorted set would pause a healthy session. Five lenses agreed.
+
+### F9 — Flag row moves a captured row to Deferred with its reading kept as history (2026-09-06, round 1, R1-F5)
+
+**Decision:** "Flag row" acts on the current pending row (no reading yet: deferred, cause "flagged: missing or damaged") or on the most recent captured row on the recents strip (Captured → Deferred; the flagged reading is demoted to version history; the row has no canonical value until re-scanned). The row-state diagram gains the Captured → Deferred edge. Flagged rows are resolved in the end-of-session review like any deferred row.
+
+**Why:** Flag-row is a P0 feature that was undefined on the state model; one place resolves all problem rows, and a suspect value is never live in the collection.
+
+### F10 — Accept average with the spread recorded (2026-09-06, round 1, R1-F8)
+
+**Decision:** When the N samples of one item disagree beyond SAMPLE_TOLERANCE, the operator has three choices at the caution and in the review: re-take, defer, or "Accept average", which writes the canonical measurement set with the sample spread recorded on the reading so Collection Mode can show it (inherited obligation). SAMPLE_TOLERANCE stays one provisional constant, not a per-collection setting. N = 1 skips the agreement check.
+
+**Why:** Textured paint, fabric, and metallic swatches disagree on every attempt; without this path a whole material class can never reach Captured.
+
+### F11 — Swatch Code normalisation (2026-09-06, round 1, R1-F9)
+
+**Decision:** Wherever a Swatch Code or a collection name is compared (uniqueness, re-import match, find, ad-hoc duplicate), the comparison trims leading and trailing whitespace, collapses internal whitespace runs to one space, and is case-insensitive. The display value is preserved as entered. Stated once in UJ2.2 and cited everywhere else.
+
+**Why:** A re-export from Numbers or an Excel autocorrect must not double the queue on an idempotent re-import. The owner chose the forgiving rule over the research default (case-sensitive) because spreadsheet drift is the common case for this persona.
+
+### F12 — The session is a named entity; device binding is released at quit (2026-09-06, round 1, R1-F4, R1-F11)
+
+**Decision:** A capture session is an entity owned by a collection: the bound device identity, started and ended times, status (active, interrupted, ended, complete), elapsed capture time, and a persisted cursor (the current row's identity, updated on advance, jump, and insert). At most one active session per app and one interrupted session per collection; two collections may each hold an interrupted session. On resume, if the cursor row is still pending the session resumes there; otherwise at the next pending row in queue order. Quitting or crashing releases the device binding: "Resume capture" after a relaunch is a new session start against the persisted cursor, runs the full pre-flight gate including authorization, and binds whichever device is connected. An interrupted session can be ended from the collection. The device PRD §5 "current item" definition applies to the un-jumped case; this PRD records the cursor refinement as an inherited note for the device PRD.
+
+**Why:** The inherited "first row with no durably written reading" definition breaks after a jump or reorder (fence F5), teleporting the operator on the common halt-resume path. The reference-white rationale for device binding is intra-session; across days it no longer holds, and releasing it at quit avoids immortal device-bound sessions.
+
+### F13 — UJ4.1 (insert an unplanned item mid-session) stays in v1 (2026-09-06, round 1, R1-F24)
+
+**Decision:** Mid-session insert with typed metadata remains a v1 journey. INSERT_POSITION stays an open question, with "append to the end and jump to it" recorded as the simpler alternative.
+
+**Why:** Typing is the operator's choice, never demanded by the queue; the "Add item" control for a physically present item missing from the worklist is a shipped precedent. The cross-model product lens's concern (creeping UI on the capture surface) is recorded as input to the seam decision.
+
 ## Rejected findings
 
-(none yet)
+- **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
+- **R1-F23** (agy product-manager, Major, round 1): "Cut mid-session drag reordering." Rejected as re-litigating fence F5 ("before or during a session"); the one-handed drag ergonomics concern is already a named open question.
+- **R1-F25** (agy test lens, round 1): the whole review cites journeys and text that do not exist in the document (UJ5.2, UJ5.4, a 15-second timeout, a manifest). Non-conforming; not counted as the lens having run on that route. The Claude test lens stands.
