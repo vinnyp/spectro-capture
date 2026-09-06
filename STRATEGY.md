@@ -32,7 +32,7 @@ _Resist a change when:_ it makes SpectroCapture better at verifying than at acqu
 
 ## Key metrics
 
-All measured by dogfooding real sessions (offline-first product, no telemetry); adoption metrics deliberately start at first public release.
+All measured by dogfooding real sessions plus opt-in telemetry (off by default; forks ship their own provider ID, so no fork data reaches the project); adoption metrics deliberately start at first public release.
 
 - **Seconds per item, bulk session** — median wall-clock per scanned item across a real session; target: bounded by the device's scan cycle, not the UI.
 - **Launch-to-first-scan** — seconds from app open to first successful scan on a known device, with calibration gates intact.
