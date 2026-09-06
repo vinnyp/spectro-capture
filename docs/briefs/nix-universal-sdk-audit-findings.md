@@ -49,7 +49,7 @@ Discover → pair → scan a surface → see color/spectral result → occasiona
 
 ### Journey C: the non-Apple-native team
 
-A full C/C++ wrapper project ships for macOS (~85 exported functions, JSON-serialized measurement output, dylib + framework loaded via `dlopen`). No official plugins for React Native / Flutter / Unity / Xamarin — bridging is documented as possible and is left to the integrator. Android and Windows SDK variants exist as separate products.
+A full C/C++ wrapper project ships for macOS (~85 exported functions, JSON-serialized measurement output, dylib + framework loaded via `dlopen`). No official plugins for React Native / Flutter / Unity / Xamarin — bridging is documented as possible and is left to the integrator. Android and Windows SDK variants exist as separate products. For SpectroCapture, the C/C++ wrapper is explicitly not a path to reach the SDK from the Rust core: it would put JSON serialization on the scan hot path and add a third artifact neither compiler checks (see ADR-0001); the Swift device layer over the UniFFI boundary is the decided route.
 
 ## 4. The licensing system
 
