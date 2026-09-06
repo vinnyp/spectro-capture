@@ -109,6 +109,12 @@ Owner-locked row IDs: (none — no requirement rows yet)
 
 **Why:** The queue auto-advances on the row-success confirmation, so a reflexive Flag after "that one was wrong" would otherwise defer the next row as missing while the bad reading stayed live — the mis-attribution F6 exists to prevent.
 
+### F17 — A quick re-scan or ad-hoc add never wakes an interrupted bulk session (2026-09-06, round-2 delta, R2-D1)
+
+**Decision:** When a collection holds an unresumed interrupted bulk session, a re-scan or an ad-hoc capture runs as a one-row session of its own and ends itself; the interrupted session is untouched and still waits for a deliberate "Resume capture". This replaces round-2 attach rule (c) ("resuming comes first … the bulk session stays active"). The other two attach rules stand: blocked while another collection's session is active or paused; attaches to a paused bulk session on this collection for that one row. An interrupted session is not in flight, so a one-row session beside it does not break "one in-flight session per collection". A one-row session that is itself interrupted (crash mid-scan) is simply closed on relaunch: its row stays as it was, and there is no resume ceremony for it.
+
+**Why:** Both cross-model lenses objected: a Cataloger doing a one-off scan was forced through the full bulk-session resume and left inside the live queue. The owner chose the simplest rule.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.

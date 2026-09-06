@@ -174,3 +174,34 @@ Minor findings (PM, Staff S10–S18, Test T13–T20, Arch A5–A12, agy-Staff ni
 Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026-09-06). R1-D1 is corrected by the locked device PRD, not by a new owner call.
 
 **Round-1 status:** every round-1 finding is closed. The round is not aligned until the round-2 fix pass lands and delta-verifies; that appends below as "Round 2".
+
+### Round 2 — fix pass and delta verification
+
+**Fix pass:** commit `7a465d2`, applied by `operator-agents:product-manager` from `docs/product/prd-capture-mode-round-2-fixes.md` (16 items, all ticked) under fences F14–F16 and the F12 amendment.
+
+**Delta verification** against `7a465d2`, same lenses, same sources plus the round-2 fix file; each asked per finding for RESOLVED / PARTIAL / UNRESOLVED, any regression, and a YES/NO on readiness for the requirements pass.
+
+| lens | route | round-1 delta findings | new findings | ready? |
+|---|---|---|---|---|
+| product manager | Claude | all RESOLVED (R1-D1, D4, D5, D6, D9, D10) | 4 Minor, 2 Nit | YES |
+| staff engineer | Claude | all RESOLVED (R1-D1, D2, D3, D5, D9, D11, D14) | 3 Minor, 2 Nit | YES |
+| test (retargeted) | Claude | all RESOLVED; N7 (pass definition) PARTIAL | 1 Major, 5 Minor, 1 Nit | YES |
+| architecture | Claude | all RESOLVED (R1-D1, D3, D11, D12, D15) | 1 Major, 3 Minor, 2 Nit | YES |
+| product manager | agy | all RESOLVED | 1 Major | YES |
+| architecture | agy | all RESOLVED | 1 "Blocker" (same subject as the agy PM Major) | NO |
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R2-D1 | Attach rule (c): a re-scan or ad-hoc add against an interrupted bulk session forces a full resume and leaves the bulk session active; a one-off scan lands the Cataloger in the live queue (`:454`, `:496`) | agy-PM (Major), agy-Arch (Blocker), Test (Minor, `:395` vs `:454`) | Confirmed at `:454` and `:496`. Not a strict contradiction (the "one-row session of its own" clause is scoped to "no session open"), but a real product defect. The agy-Arch line numbers do not match the document; the substance does. | **accept — Major (corrected from Blocker).** Owner chose: the one-row session runs on its own; the interrupted session is untouched. Fence F17. |
+| R2-D2 | "A pass is one trip from the remembered row, around, and back to it" — the remembered row moves on every advance, so the pass is zero-length and the wrap-exhausted check can never fire (`:282`, `:441`, `:114`) | Arch (Major), Staff (Minor), Test N7 (PARTIAL) | Confirmed. | **accept — Major.** Redefine without the remembered row: a pass begins at the row current when the last wrap-check ended (or the session started) and ends when the queue returns to that position; jumps do not restart it. |
+| R2-D3 | UJ4.1 step 5 "continues with the next pending row after the inserted item" hard-codes the INSERT_POSITION candidate; under "append and jump" it skips every row between the held row and the end (`:524`) | Test (Major), Arch (Minor) | Confirmed. | **accept — Major.** "Continues in queue order from the held row". |
+| R2-D4 | UJ3 step 2 has no branch for starting a bulk session on collection B while collection A's session is active or paused, though one-row sessions have it (`:253-256` vs `:452`) | Staff (Minor), Arch (Minor) | Confirmed. | accept — Minor. |
+| R2-D5 | Flag pressed after a "moved on" cue and before any trigger press would defer the next row as missing (`:298-299`) | PM (Minor) | Confirmed by reading F16's boundary. | accept — Minor: after a moved-on cue Flag is inert until the next trigger press. |
+| R2-D6 | Partial-set list omits the mid-session re-scan entered via find; UJ3.8 step 5 lacks "at sample 0 of N" (`:116`, `:442`, `:461`) | PM, Staff, Test (Minor) | Confirmed. | accept — Minor. |
+| R2-D7 | An interrupted session with nothing pending or deferred needs the full gate to reach "complete" (`:395`) | PM (Minor), Test (Minor) | Confirmed. | accept — Minor: closed as complete from the collection on relaunch, no gate. |
+| R2-D8 | "Quit" listed unconditionally as an interruption; the device PRD routes quit-from-a-halt through End session; no Halted → Interrupted edge (`:112`, `:387`, `:72`) | Arch (Minor) | Confirmed against device PRD `:441`. | accept — Minor. |
+| R2-D9 | Trigger press during the guard's pause unstated (`:301-304`) | Test (Minor) | Confirmed. | accept — Minor: not accepted, surfaces the pause. |
+| R2-D10 | Review-selected remembered row has no observable effect because resume falls back to the next pending row (`:362`, `:389`) | Test (Minor), Staff Q3 | Confirmed. | accept — Minor: a resume or next session whose remembered row was review-selected opens the review at that row. |
+| R2-D11 | Nits: `:377` cites F12 for the remembered-row rule (F15); `:406`, `:470` "the row the session remembers"; "empty-queue state" vs "nothing-to-capture state"; lifecycle edges missing (Item → Paused, Gate → Complete, Halted → Interrupted, Flag self-edge); whether an operator Flag counts toward N_CONSEC_FLAGGED; a one-row session has no Flag-after-landing window; each ad-hoc item re-runs the gate; `#open-questions` legend link | PM, Staff, Test, Arch (Nit) | Confirmed. | accept — Nit; the legend link waits for the requirements pass. |
+
+**Round-2 status:** no fence re-opened; every round-1 and round-1-delta finding closed. Round 3 is a wording pass (fix file `prd-capture-mode-round-3-fixes.md`, one owner decision F17) followed by a closing delta check.
