@@ -81,7 +81,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 ### J1. First run (cataloger)
 
 1. Install &amp; open the app
-2. Paste license key once (stored locally, auto-activated silently every launch)
+2. Enter the license credential once (stored locally, silently re-activated offline every launch)
 3. Discover the device (~20s scan, strongest signal first) → connect
   - **Risk points:** Bluetooth permission denial; the device's *first-ever* connect needs internet (serial authorization); a missing usage string may crash the app, caught in CI rather than by users.
 4. Walk the QR-tile calibration → ready.
@@ -128,11 +128,12 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 ### J6. The offline session (cataloger)
 
 1. Before leaving connectivity (storage unit, studio, archive, anywhere without wifi), open the device panel
-2. Check "Offline use through 〈date〉" and pre-authorize if the window is short
+2. Check "Offline use through 〈date〉" and extend offline use if the window is short
 3. Go offline; run a full bulk session (J2) with no internet at all, since activation and scanning are both local within the window
 4. Return online later; the next authorization check happens silently
 
 - **Risk point:** an expired window away from connectivity surfaces as a clear "reconnect to internet once" state before the session starts, never as a mystery disconnect mid-queue.
+- **Risk point:** whether the offline window can be extended proactively (rather than only renewed by an online reconnect) is unverified against the vendor SDK — the device-management PRD's open questions track it; if it cannot, this journey degrades to "connect once every authorization cycle."
 
 ### J7. Migrating in from the vendor apps (cataloger; v2 candidate)
 
