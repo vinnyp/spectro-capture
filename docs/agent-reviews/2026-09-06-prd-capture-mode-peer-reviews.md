@@ -636,3 +636,36 @@ Minor (Staff Q3: R7.11's enumeration names only a settle decision as the mid-run
 Flip rule as in round 6. Of the 8 open rows, **5 stay ⌛️** (an objection stands): R7.1, R8.1, R8.6, R8.15, E39. **3 flip to 🤝 Aligned**: R3.11, R7.11, E25. **Re-opened** by findings against 🤝 rows: E42 (R14-F6). Any 🤝 row a round-14 fix edits returns to ⌛️ "edited in round 14, re-review" (expected: R3.6, R8.3, R3.8 if its wording changes).
 
 **Round-14 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (8 items + FX14-0; no new rows; each seam rule now lives in one row — entry states R8.1, exit precedence R8.6, leave-all effects R8.15, interrupted closure R7.11 — and the others cite it). After the pass: 188 🤝, 11 ⌛️ of 199 — R3.11 and E25 flipped; R7.11 flipped then re-opened by FX14-7; E42 re-opened; R3.6, R3.8, R8.3, R11.12 edited from 🤝; the five held rows edited. Open: R3.6 R3.8 R7.1 R7.11 R8.1 R8.3 R8.6 R8.15 R11.12 E39 E42. Operator residue for round 15: R8.6's unconditional-looking first sentence precedes its scope; R8.1's "never on the surface" sits near the detour test that names the collection surface; Arch's per-state × per-exit table suggestion stands. Next: round 15 delta verification over the 11 open rows.
+
+## Round 15 — delta verification of round 14 (2026-09-07)
+
+**Subject:** the round-14 commit (144 R, 44 E, 11 M; 188 🤝, 11 ⌛️). **Lenses:** the same five on Claude/Opus over the 11 open rows plus any 🤝 row a round-14 edit broke, with the operator's two residue items put to every lens; agy on four, advisory (three of four returned at logging; PM objected R8.1/R8.6 on items coinciding with R15-F1/F2; summary saved with the scratchpad reviews).
+
+| lens | route | round-14 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED | 1 Major | 1 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major, 4 questions | 3 | none |
+| test (retargeted) | Claude/Opus | all RESOLVED | 2 Major | 2 | none |
+| architecture | Claude/Opus | all RESOLVED | 1 Major | 2 | none |
+| marketing (copy) | Claude/Opus | all RESOLVED | 2 Major | 3 | none |
+| agy (PM rc 8; staff, arch, marketing rc 0) | agy | all RESOLVED | staff: R8.1/R8.6 items coinciding with R15-F1/F2; marketing: two Minors restating the operator residue (judged false positives by all five Claude lenses); arch none | R8.1, R8.6 | none |
+
+Operator residue judged by all five: both false positives — R8.6's early-end sentence is scoped by the next sentence; R8.1's "never on the surface" answers how the list opens, the detour test which exit a review has. No change.
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R15-F1 | R8.15's new one-row exception discards a part-finished set on settling, and cites R7.1, which does not carry that trigger (its exception list closes at "Two of the operator's own actions") | Arch R15-A1, Test R15-F2 (Major) | `:753`, `:784` confirmed. | accept — Major. R7.1 owns the trigger; "Two" becomes "Three". |
+| R15-F2 | R8.6's exit precedence enumerates two end-of-run entries and one detour; R3.8's resume into the review at a review-selected row is neither, and is reachable with rows still pending via the summary's "now" | PM PM15-1, PMM PMM15-2 (Major) | `:783`, `:660`, `:780` confirmed. | accept — Major. **F44 clarification (2)** recorded: three ways in; a resume into the review with rows pending is the detour. |
+| R15-F3 | A partial set let go off a captured row mid-re-scan (R8.7) by a halt or jump: R7.1 says the row "returns to sample 0 and stays pending" and E42 has no true variant, contradicting R8.8/R8.10 (the row stays captured with its value) | Staff S15-1 (Major) | `:753`, `:919`, `:793`, `:795` confirmed. | accept — Major. E42 gains a third variant; R7.1 scopes "stays pending" to a row that was pending. |
+| R15-F4 | E39 promises "with everything the instrument did read" while the one-row exception lets the part-finished set go at that confirm | PMM PMM15-1 (Major) | `:916`, `:784` confirmed. | accept — Major, copy; conditional line enumerated in R11.12. |
+| R15-F5 | R8.15's exception is attached to the interrupted sub-case only, and "No other row under the instrument is touched by either of them" is false for a review-selected row holding a part-finished set (R8.3, R8.4) | Test R15-F1 (Major) | `:784`, `:780`, `:781` confirmed. | accept — Major. **F31 clarification (3)** recorded: leave-all settles the row under the instrument too; its samples go under R7.1. |
+
+Minors: Staff Q4 (R8.15's rows-pending branch should say the session ends on leaving, per R8.6, not on the keypress); PM and Test both note the session state diagram lacks the detour edges (Capturing → Review from the collection surface; Review → Capturing) — accepted as a Minor since F44 made the detour a rule. Staff Q2 (paused look-through abandonment uses E42's set-aside variant) — yes; covered by R7.1's governing clause, one cite added. Recorded, not fixed: Arch's pre-lock pass asserting every discard is in R7.1, every exit in R8.6, every entry state in R8.1; R8.15's held-case reason is imprecise for a save-failure halt (R7.2) — a word if edited; E27 carries the same "everything the instrument did read" phrase (owner's eye).
+
+### Row flips
+
+Flip rule as in round 6. Of the 11 open rows, **7 stay ⌛️** (an objection stands): R3.8, R7.1, R8.6, R8.15, R11.12, E39, E42. **4 flip to 🤝 Aligned**: R3.6, R7.11, R8.1, R8.3. No 🤝 row was broken by a round-14 edit. Any 🤝 row a round-15 fix edits returns to ⌛️ "edited in round 15, re-review" (expected: R8.1 if its one-row sentence is changed to cite R7.1; R3.11 if cited wording changes).
+
+**Round-15 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (7 items + FX15-0; no new rows; the session diagram gained the two detour edges). After the pass: 191 🤝, 8 ⌛️ of 199 — R3.6, R7.11, R8.3 flipped; R8.1 flipped then re-opened by FX15-1/2; the other held rows edited. Open: R3.8 R7.1 R8.1 R8.6 R8.15 R11.12 E39 E42. Residue: R3.6's gloss of the end-of-run review names two of R8.6's three ways in; E27 keeps "everything the instrument did read" while E39 now says "already kept on them"; R8.15's held-case reason imprecise for a save-failure halt. **Owner decision, same day (fence F45):** every §7 row is compacted to at most two sentences, concise over prose, the table shrinking not growing; the compaction is one pass, after which round 16 verifies every row against the before-and-after diff. The three residue items are folded into that pass. Measured before compaction: 144 R rows, 17,253 words, mean 120 per row, 13 rows over 250 words, longest 1,035 (R8.1).

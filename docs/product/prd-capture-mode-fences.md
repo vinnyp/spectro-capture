@@ -285,6 +285,12 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** Under the live-collection reading the review can be reached mid-run from the collection surface; ending the session because the operator glanced at the set-aside rows would cost the heads-down loop a resume for nothing.
 
+### F45 — Requirement rows are at most two sentences, and concise over prose (2026-09-07, round 15, owner)
+
+**Decision:** Every §7 requirement row is at most two sentences, and the whole table gets shorter, not longer. Each row states one rule plainly; a second sentence is allowed only where the observable a test reads back is not obvious from the rule. Rationale, precedent, fence citations, and restatements of other rows' rules leave the rows — fences to the Traceability paragraph, research to the briefs. A row is split into new rows only where it carries rules that genuinely differ and a builder needs each on its own; nuance that can be dropped is dropped, and the row count must not grow beyond what those splits strictly require. The set-aside seam (R8.1, R8.6, R8.15) becomes one compact state-by-exit table rather than prose. The §12 copy table and the §9 metrics are exempt. Applied as one compaction pass after the round-15 fix, then verified by a full round over every row with the before-and-after diff in hand.
+
+**Why:** The PRD is read by agents building plans, not by humans. Long prose rows carrying several rules were restated in sibling rows and diverged every round; ambiguity is reduced by saying less, precisely, not by saying more. Compaction is not licence to expand the requirements.
+
 ### F36 — clarification (2026-09-07, round 7, R7-F2)
 
 **Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
@@ -320,6 +326,14 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 ### F44 — clarification (2026-09-07, round 14, R14-F1, R14-F2)
 
 **Recorded by the orchestrator as the plain consequence of F44's own words, flagged for the owner:** (1) the end-early summary's "now" is the end-of-run review whatever is still pending, because the operator has already asked to stop; F44's detour rule covers only a review the operator opened from the collection surface while the bulk session was still capturing. (2) A detour review moves nothing: it does not update the collection's remembered row or mark a row review-selected — those belong to the end-of-queue review (R3.6, R8.3, R3.8) — so leaving it returns the operator to the row they were on when they entered, as UJ3.3 promises.
+
+### F44 — clarification (2) (2026-09-07, round 15, R15-F2)
+
+**Recorded by the orchestrator as the plain consequence of F44 and F15, flagged for the owner:** the end-of-run review has three ways in — the queue exhausted, the end-early summary's "now", and a resume that opens into the review at a review-selected row (R3.8) with the queue already exhausted. A resume that opens into the review at a review-selected row while rows are still pending is the detour: the operator pressed "Resume capture" rather than asking to stop, so leaving that review returns them to the queue at the row they were on and the session goes on.
+
+### F31 — clarification (3) (2026-09-07, round 15, R15-F5)
+
+**Recorded by the orchestrator as the plain consequence of F19 and F31, flagged for the owner:** "Leave them all set aside" settles every set-aside row still outstanding, the one under the instrument included. Where that row holds a part-finished set — a review-selected row in the end-of-run or detour review, or the row of a one-row session started from the look-through list — those samples are let go under the one partial-set rule, with the discard cue and E42's set-aside line, and the one-row session ends. R7.1 owns that discard; R8.15 cites it.
 
 ## Rejected findings
 
