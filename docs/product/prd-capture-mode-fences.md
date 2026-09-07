@@ -295,6 +295,10 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Owner decision, on the orchestrator's questions:** (1) A scan from the browse-opened set-aside list is a re-scan by choice and never moves the collection's remembered row (R3.11 holds); the review-selected update of R3.6 and R8.3 applies only to a row selected in a review entered inside a session. (2) Where the collection's bulk session is paused, a scan from the browse-opened list is a row inside that session (R9.6), mirroring R8.7; with no session open it is a one-row session. The browse itself has no partial set to discard.
 
+### F42 — clarification (3) (2026-09-07, round 11, R11-F1)
+
+**Recorded by the orchestrator as the plain consequence of F19, F42, and UJ3.3/UJ3.4, flagged for the owner:** browse versus in-session review is decided by whether a session is capturing on the collection, not by which surface the offer was taken from. With no session open, with an unresumed interrupted session (a one-row session beside it, F17), or with the bulk session paused (its partial set already let go at Pause, R7.3), the list opens as a browse: no gate, no session of its own, no change to the remembered row, nothing to discard. While the bulk session is capturing — whether the offer is taken from the collection surface under Reading B or from the end-early summary (E23, "now") — it opens the in-session review of UJ3.3: the partial set is discarded with the cue and the header line (F19), a selected row becomes the remembered row marked review-selected (R3.6, R8.3), and the session goes on to complete (R8.6) or end early (R7.5).
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.

@@ -508,3 +508,33 @@ Minors (Arch A10-2: R8.1's enumeration of the self-acting ways in omits R3.8's; 
 Flip rule as in round 6. Of the 18 open rows, **7 stay ⌛️** (an objection stands): R7.1, R8.1, R8.2, R8.15, R11.12, E23, E39. **11 flip to 🤝 Aligned**: R1.7, R4.22, R5.9, R7.5, R7.13, R8.5, R11.9, E2, E25, E27, E43. **Re-opened** by findings against 🤝 rows: R3.6, R8.3, R3.11 (R10-F1), E24 (R10-F6). Any 🤝 row a round-10 fix edits returns to ⌛️ "edited in round 10, re-review" (expected: R7.15, and E2/R1.7 if FX10-9 touches them).
 
 **Round-10 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (10 items + FX10-0; no new rows). After the pass: 186 🤝, 13 ⌛️ of 199 — 10 of the 11 listed rows flipped (E2 stayed ⌛️ because FX10-9 edited it); R3.6, R3.11, R8.3, E24 re-opened; R7.15 edited from 🤝; R8.2 and R8.15 held untouched. Open: R3.6 R3.11 R7.1 R7.15 R8.1 R8.2 R8.3 R8.15 R11.12 E2 E23 E24 E39. Operator residue for round 11: R7.1's discard list still names "entering the deferred-row review" unqualified while R8.1 scopes the discard to the in-session review; R1.7 states the offer condition in prose rather than quoting the action cell. Next: round 11 delta verification over the 13 open rows.
+
+## Round 11 — delta verification of round 10 (2026-09-07)
+
+**Subject:** commit `738af8b` (144 R, 44 E, 11 M; 186 🤝, 13 ⌛️). **Lenses:** the same five on Claude/Opus over the 13 open rows plus any 🤝 row a round-10 edit broke, with the operator's two residue items put to every lens; agy on four (PM, staff, architecture, marketing), advisory.
+
+| lens | route | round-10 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED (E33 note parked) | 2 Major, 1 Minor | 4 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major, 2 questions | 2 | none |
+| test (retargeted) | Claude/Opus | all RESOLVED | 2 Major | 1 | none |
+| architecture | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major | 2 | none |
+| marketing (copy) | Claude/Opus | all RESOLVED / BY-FENCE | 1 Blocker, 1 Major, 1 Minor | 8 | none |
+| agy (PM, staff, arch, marketing) | agy | all RESOLVED | PM, staff, arch: the R7.1/R8.1 contradiction (same as R11-F1) | R7.1, R8.1 | none |
+
+agy: PM, staff, architecture rc 0 with tables; marketing rc 8 (short body). Advisory; the Claude lenses stand for each. Every agy finding coincides with R11-F1. Both operator residue items were judged: R7.1's unqualified "entering the deferred-row review" is the same defect as R11-F1 seen from the other row (PM, PMM) or vacuous (staff, test, arch); R1.7's prose condition is not a defect (all five).
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R11-F1 | FX10-2's browse clause keys browse-versus-review on the surface the offer was taken from and asserts "no session is running behind it"; false in the paused case the same row enumerates, and under Reading B (R10.4 keeps the collection surface live during a session) the same act is R7.1/F19's in-session review with a discard; the end-early summary's "now" route is covered by neither branch | PMM PMM11-1 (Blocker), PM PM11-1, Staff S11-F1, Arch A11-1, Test R11-T1 and R11-T2 (Major), agy PM/staff/arch | `:775`, `:750`, `:655`, `:660`, `:777`, `:834`, `:522-529`, `:897`, UJ3.4 step 4 confirmed. | **accept — Blocker.** **F42 clarification (3)** recorded by the orchestrator, flagged for the owner: keyed on whether a session is capturing; four states enumerated; the E23 "now" route is the in-session review of UJ3.3. |
+| R11-F2 | E39's "if you're in a session, it finishes it" and R8.15's "satisfies R8.6's completion condition in a single keypress" over-claim when rows are still pending (R8.6 completes only when every row is captured or left) | PMM PMM11-2 (Major) | `:913`, `:781`, `:780` confirmed. | accept — Major. |
+
+Minors (PM PM11-2 with the copy lens's zero-count family: E23's widened sentence orphans at zero and the Placeholders rule needs a multi-count clause; PM PM11-3: R11.12 words "Leave them all set aside" as per-row; PMM PMM11-3 with Arch's note: E24's "Open the collection" action on a state that is already on the collection surface) are in `prd-capture-mode-round-11-fixes.md`. Recorded, not fixed: Arch's note that F43's rule sits inside R7.15 and may belong beside the Surfaces table if meant generally; E33's third home for the review offer (parked since round 10); PM's note that R8.1 now carries five rules in one row (authoring convenience, not gated).
+
+### Row flips
+
+Flip rule as in round 6. Of the 13 open rows, **10 stay ⌛️** (an objection stands): R3.6, R3.11, R7.1, R8.1, R8.3, R8.15, R11.12, E23, E24, E39. **3 flip to 🤝 Aligned**: R7.15, R8.2, E2. No 🤝 row was broken by a round-10 edit. Any 🤝 row a round-11 fix edits returns to ⌛️ "edited in round 11, re-review" (expected: R7.15 if FX11-5 touches it).
+
+**Round-11 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (5 items + FX11-0; no new rows). After the pass: 188 🤝, 11 ⌛️ of 199 — R8.2 and E2 flipped; R7.15 flipped then re-opened because FX11-5 edited it; the 10 held rows all edited. Open: R3.6 R3.11 R7.1 R7.15 R8.1 R8.3 R8.15 R11.12 E23 E24 E39. Operator residue for round 12: R7.1's later sentence still says "mid-session" where R8.1 now says "while a session is capturing"; "Done" added to the Labels paragraph though E24 names it; E24's headline and action both read "Done". Next: round 12 delta verification over the 11 open rows.
