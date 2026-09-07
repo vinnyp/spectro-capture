@@ -163,8 +163,60 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** The first build needs the seam answered; deciding it without a prototype would forfeit the evidence the two research passes disagree on.
 
+### F26 — A cue at the moment held samples are discarded; no confirm (2026-09-06, round 5, R5-F13)
+
+**Decision:** When an action discards the samples taken so far on the current item (the operator's Pause, a jump, Add item, entering the review, a mid-session re-scan by find), a distinct two-sense cue fires at the moment of discard and the resulting state's copy says how many samples were dropped. No confirmation dialog: the heads-down loop stays free of prompts, and the operator always knows. R8.13's promise is bounded to readings that reached a saved set or a deferred row's record.
+
+**Why:** Three lenses found the silent discard at odds with "corrections never destroy data" in spirit; a confirm would cost a keypress on every navigation.
+
+### F27 — The agreement check is record-only through dogfood and prompts at v1 (2026-09-06, round 5, R5-F15)
+
+**Decision:** Like the guard (F23), the sample-agreement check has an explicit mode: record-only (every set is accepted, its spread recorded, no prompt) through the dogfood phase, and enabled (the three-way choice of F10) at v1 once OQ 3's data has tuned SAMPLE_TOLERANCE. A dogfood build is not a release for the no-unresolved-constant rule.
+
+**Why:** SAMPLE_TOLERANCE is a placeholder with no evidence behind it; prompting on it during dogfood would shape the data meant to tune it and break the heads-down path.
+
+### F28 — The agreement check uses fixed D50/2°, recorded on the reading; the display default is D50/2° (2026-09-06, round 5, R5-F5)
+
+**Decision:** The agreement check always computes ΔE2000 under D50/2° regardless of the collection's display illuminant and observer, and that basis is recorded on the reading with the spread. Display defaults stay display-only (F2). The collection's display defaults arrive pre-filled at D50/2°, as F2 named and the row had dropped.
+
+**Why:** An acquisition gate must not key off a viewing preference; changing display defaults would otherwise change future capture outcomes and make tuning data incomparable.
+
+### F29 — A lost-unflushed-writes stand-in makes the power-loss promise assertable (2026-09-06, round 5, R5-F8)
+
+**Decision:** This PRD adds an obligation on the simulated layer (implemented by Data Foundation's store): a test can induce the loss of everything not durably flushed at an arbitrary point, and assert that every row the operator was told landed is present afterwards; drive detachment is the same stand-in. The row-success confirmation's cost is floored by the durable-commit time on the user's volume, so ROW_CONFIRM_BUDGET is measured on real volume classes, not only on the Demo Device.
+
+**Why:** A force-quit test passes on a build that flushes lazily; without a stand-in the promise in R4.13 is unverifiable in CI.
+
+### F30 — Session completion is measured per collection over session chains (2026-09-06, round 5, R5-F14)
+
+**Decision:** M3 becomes the share of collections fully adjudicated plus days-to-adjudication; a resumed chain counts once. Session endings are split into "ended deliberately" and "abandoned mid-queue after a failure", and the second is its own metric. M2 and M5 likewise count over chains, with a re-scan attributed to the session it occurred in against a cumulative captured-row denominator.
+
+**Why:** The metric as written scored the two-sitting behaviour §7 is built for, and any crash chain, as failure.
+
+### F31 — The review offers "Leave all set aside" with one optional note (2026-09-06, round 5, R5-F39)
+
+**Decision:** The deferred-row review offers a single action that marks every remaining set-aside row as deliberately left, recording one note for all; per-row "Leave it set aside" with its own note remains. Session completion after "Flag remaining as missing" is one keypress.
+
+**Why:** A hundred rows flagged missing must not need a hundred decisions.
+
+### F32 — The trigger lockout lasts until the in-flight reading returns or fails (2026-09-06, round 5, R5-F3)
+
+**Decision:** A trigger press is rejected, with the rejection cue, until the in-flight measurement completes or fails; OQ 4 narrows to whether any additional dead time follows. A measurement already in flight when any queue action fires belongs to the row that was current at its accepted trigger; if that row no longer accepts samples when the reading arrives, the reading is discarded and recorded as an attempt in that row's history, never applied to another row. The simulated layer gains a per-measurement delay/hang injection so this is assertable, and its measurement record carries the row current at the accepted trigger and the row the reading was saved to.
+
+**Why:** A fixed dead time shorter than the scan cycle would accept a second press mid-measurement; an in-flight reading with no owner is the mis-attribution F6 and F16 exist to prevent.
+
+### F33 — The average is taken across the spectral curves (2026-09-06, round 5, R5-F4)
+
+**Decision:** The mean of a set is the average of the samples' reflectance curves; colour values, including the ones the agreement check compares, are derived from that mean under the fixed reference (F28). The basis and a derivation version are recorded on the reading so the average can be recomputed. Individual readings are never discarded in favour of the average.
+
+**Why:** Two builds would otherwise give different agreement verdicts and different canonical averages; the spectral mean matches raw-payload-as-canonical.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
 - **R1-F23** (agy product-manager, Major, round 1): "Cut mid-session drag reordering." Rejected as re-litigating fence F5 ("before or during a session"); the one-handed drag ergonomics concern is already a named open question.
+- **R5-X1** (agy product-manager, Blocker, round 5): "The Open Questions table lacks an Owner column." Rejected: the house table's "Evidence source" column names the closer (owner, hardware, SDK, dogfood), as the locked device PRD does.
+- **R5-X2** (agy staff engineer, Blocker, round 5): quotes the SDK audit as saying scan() while scanning throws IllegalStateException, that no physical button event is exposed, and that every measurement returns all modes simultaneously. None of those sentences is in the audit (it records a "busy" status and a result dictionary keyed by scan mode). The substance about the lockout is carried by R5-F3 / fence F32; OQ 1 and OQ 2 stay open pending hardware.
+- **R5-X3** (agy architecture, Major, round 5): global collection-name uniqueness contradicts portable per-collection files. Rejected: rests on the per-collection-file reading that R5-F2 removes; under F1 one file holds the collections and uniqueness within it is well-defined.
+- **R5-X4** (agy architecture, Minor, round 5): a column sort mutating every row's queue order synchronously is "architecturally ugly". Rejected as HOW; the WHAT (queue order is a per-row attribute changed only by explicit reorder) stands.
 - **R1-F25** (agy test lens, round 1): the whole review cites journeys and text that do not exist in the document (UJ5.2, UJ5.4, a 15-second timeout, a manifest). Non-conforming; not counted as the lens having run on that route. The Claude test lens stands.

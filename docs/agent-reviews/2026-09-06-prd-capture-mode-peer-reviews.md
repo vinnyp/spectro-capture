@@ -252,3 +252,72 @@ Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026
 Both edits re-parsed (six mermaid blocks OK) and committed with this log entry.
 
 **Gate outcome for the journeys phase: aligned.** Every finding from rounds 1–4 on both routes is RESOLVED, RESOLVED-BY-FENCE, or owner-rejected on the record; every lens that ran the final or closing check says the journeys are ready for the requirements pass. No requirement, error/state, or success-metric rows exist yet, so no row flipped; the requirements pass creates them at pre-alignment and round 5 of this log reviews them. Fences F1–F18 and the `#open-questions` legend link carry forward.
+
+## Round 5 — first full round over the requirement rows
+
+**Subject:** `docs/product/prd-capture-mode.md` and `docs/product/prd-capture-mode-oq-results.md` at commit `4a07a80` (132 R rows, 37 E rows, 8 M rows, 18 OQs, all ⌛️). **Fences:** F1–F25 as `--source`. **Lenses:** Claude on Opus — product manager, staff engineer, test (retargeted), architecture, product-marketing (added: end-user copy now exists in §12); agy cross-model on all five briefs (the first full round's offer, taken at the owner's standing instruction). **tier-rationale:** PRD tier always-on plus architecture (boundaries with decided architecture and the two hand-off PRDs) plus marketing (§12 copy); privacy/security/database/plan not triggered.
+
+**Per-row dispositions:** every lens returned a full 177-row table. Rows with no OBJECT from any non-abstaining lens this round: none flip yet — the flip rule requires the round's fix pass to land and the objections to be verified resolved; all rows stay ⌛️ pending round 6's delta verification.
+
+| lens | route | verdict | Blockers | Majors | rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | builds the right thing; no Blockers | 0 | 7 | 22 R, 7 E, 2 M |
+| staff engineer | Claude/Opus | not ready | 3 | 14 | 45 R, 6 E, 4 M |
+| test (retargeted) | Claude/Opus | tests don't prove the behaviour | 5 | 13 | 37 R, 12 E, 5 M |
+| architecture | Claude/Opus | build after addressing the Blocker | 1 | 5 | 21 R, 2 E, 2 M |
+| marketing (copy) | Claude/Opus | lands after fixing Blockers | 1 | 8 | 8 R, 19 E |
+| product manager | agy | wrong thing (on one rejected Blocker) | 1 (rejected) | 2 | 4 |
+| staff engineer | agy | ready with Blockers | 1 (rejected: misquotes the SDK audit) | 1 (rejected) | 5 |
+| test | agy | rc 8, short body; 3 items folded | — | — | 11 |
+| architecture | agy | needs redesign | 2 (1 accepted as Major, 1 as Minor) | 2 (1 accepted, 1 rejected) | 10 |
+| marketing | agy | outstanding copy | 0 | 2 | 3 |
+
+### Verify-the-reviewer dispositions (Blockers and Majors, consolidated)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R5-F1 | E10 and R2.7's test teach that "cg-3" and "CG 3" match; F11's rule makes them differ | PMM (Blocker) | `:861`, `:618` confirmed. | **accept — Blocker.** |
+| R5-F2 | R1.9 asserts a per-collection file ("moving it moves everything"); R7.9, E26 likewise; contradicts F1, the vision, device PRD `:412`; regresses FX34 | Arch (Blocker), Test m8 | `:601` confirmed. | **accept — Blocker.** Strike the clause; storage granularity → Data Foundation OQ. |
+| R5-F3 | An in-flight measurement has no owner when a queue action fires; R4.3 conflates "in flight" with a 0.5 s dead time | Staff B1 (Blocker), Test M1, Test M8, agy-Staff (Blocker, substance only) | `:668` confirmed: only a trigger press is covered. | **accept — Blocker.** Fence F32. |
+| R5-F4 | The set's mean has no decided basis (spectral vs colour) and no OQ | Staff B2 (Blocker), Test M10 | `:674`, `:677` confirmed. | **accept — Blocker.** Fence F33. |
+| R5-F5 | R1.5 drops F2's D50/2° default; the check is parameterised on a mutable display preference | Staff B3 (Blocker), PM5-6, Arch A4 | `:597`, `:674` confirmed. | **accept — Blocker.** Fence F28. |
+| R5-F6 | No read-back observable: version history, kept samples, attempts, session chain unverifiable | Test B1 (Blocker) | `:839` confirmed: R11.6 declares only. | **accept — Blocker.** |
+| R5-F7 | No presented-state or surface-contents observable; absence claims unassertable | Test B2 (Blocker) | `:847` claim vs no row; confirmed. | **accept — Blocker.** |
+| R5-F8 | Power-loss durability has no injection; force-quit is a false green; durability vs latency tension on removable media | Test B3 (Blocker), Staff M-K, agy-Arch (Blocker) | `:678`, `:843` confirmed. | **accept — Blocker.** Fence F29. |
+| R5-F9 | Timing budgets measured on the controllable clock are vacuous | Test B4 (Blocker) | `:840` confirmed. | **accept — Blocker.** |
+| R5-F10 | Re-take sample / Restart item have no rows; E36 unbacked | Test B5 (Blocker), PM5-10, Staff M-G | `:659`, `:887` confirmed. | **accept — Blocker.** |
+| R5-F11 | "row r of R" as defined never advances | PM5-1, Staff M-C, Test M4 | `:680` confirmed. | accept — Major. |
+| R5-F12 | Flag after a Skip or Flag-as-missing defers the next row | PM5-2 | `:700-701` confirmed. | accept — Major. |
+| R5-F13 | Partial sets discarded with no disclosure before the act; R8.13 overpromises | PM5-3, Staff m5 | `:739`, `:782` confirmed. | accept — Major. Fence F26 (cue, no confirm). |
+| R5-F14 | M3 (and M2, M5) penalise multi-day and crash chains | PM5-4, Arch A10, Staff M-I, Test M7, agy-PM | `:902` confirmed. | accept — Major. Fence F30. |
+| R5-F15 | SAMPLE_TOLERANCE prompts on a placeholder during dogfood | PM5-5 | `:675`, `:705` confirmed. | accept — Major. Fence F27. |
+| R5-F16 | E24 has no requirement row; zero-state copy broken; no items per hour | PM5-7, Staff m9, Test m4, PMM7, agy-PMM2 | `:875` confirmed. | accept — Major. |
+| R5-F17 | Action labels diverge between rows and §12 | PMM8, agy-PMM1 | confirmed. | accept — Major: "Accept the average"; §12 governs. |
+| R5-F18 | R1.7 internally contradictory; E2 wrong for a finished collection | PMM2, PM5-8, Staff M-F | `:599`, `:853` confirmed. | accept — Major. |
+| R5-F19 | A file missing at commit gets the encoding recovery | PMM3, Staff m2 | `:614`, `:856` confirmed. | accept — Major. |
+| R5-F20 | E32/E28 hide a mandated discard | PMM4, PMM5, PM5-9 | confirmed. | accept — Major (with F26). |
+| R5-F21 | E19 blames the instrument for textured material; ⟨n⟩ wrong for the flagged counter | PMM6, Staff m3, Test m2, agy-Staff | `:870` confirmed. | accept — Major. |
+| R5-F22 | E35 overclaims parity | PMM9, Test n3 | `:886` vs R11.1 confirmed. | accept — Major. |
+| R5-F23 | Seven P0 hand-offs land on tables ADR-0003 defers to ADR-0004 | Arch A2 | decisions/README `:22` confirmed. | accept — Major: R10.1/R10.3 release the schema. |
+| R5-F24 | Attach-to-paused creates a second session entity and could release the binding | Arch A3, Staff M-H, agy-Arch | `:798`, `:800`, `:645` confirmed. | accept — Major. |
+| R5-F25 | Collection/session fixture routed through the device mock | Arch A5 | `:839` confirmed. | accept — Major. |
+| R5-F26 | ADR-0004 observables lack reorder, a mode-slip protocol, a tie-break, and a focus/dispatch observable | Arch A6, Staff M-N, Test M11, PM5-14 | `:822` confirmed. | accept — Major. |
+| R5-F27 | Guard counters have no reset rule; "failed attempt" unit undefined | PM5-12, Staff M-A, M-B, Test M2 | `:697`, `:702` confirmed. | accept — Major. |
+| R5-F28 | Matching rule lacks Unicode normalisation, case-folding basis, whitespace class | Staff M-D, Test M9 | `:618` confirmed. | accept — Major. |
+| R5-F29 | Default for changed metadata on captured rows unspecified | Staff M-E | `:631` confirmed. | accept — Major. |
+| R5-F30 | Two-sense promise has no fallback if device OQ 20 resolves negative | Staff M-J | `:672` confirmed. | accept — Major. |
+| R5-F31 | Legal illuminant/observer set unspecified; spectral entitlement | Staff M-L | `:597` confirmed. | accept — Major. |
+| R5-F32 | Which scan mode feeds the agreement check | Staff M-M | `:670`, `:674` confirmed. | accept — Major. |
+| R5-F33 | Pass anchor by row identity can leave the pending set | Test M3, PM5-19 | `:720` confirmed. | accept — Major. |
+| R5-F34 | Elapsed capture time undefined | Test M5 | `:644` confirmed. | accept — Major. |
+| R5-F35 | M1 target double-counts | Staff m1, Test M6 | `:900` confirmed. | accept — Major. |
+| R5-F36 | Measurement record lacks the target row | Test M8 | `:838` confirmed. | accept — Major (with R5-F3). |
+| R5-F37 | Accessibility announcements not observable | Test M12, agy-Test | `:682` confirmed. | accept — Major. |
+| R5-F38 | Scale constants with no verifiable property | Test M13, Staff m8 | `:655` confirmed. | accept — Major. |
+| R5-F39 | No bulk "Leave all set aside" | agy-PM (Major) | R8.6 + E21 confirmed. | accept — Major. Fence F31. |
+| R5-F40 | A one-row session beside an interrupted bulk session could move the remembered row | agy-Arch (Blocker) | plausible; F17 silent on it. | accept — corrected to Minor. |
+| R5-X1..X4 | agy items rejected on verification | agy-PM, agy-Staff, agy-Arch | see the fence file's rejected list. | **reject.** |
+
+Minors and nits from every lens are carried in `prd-capture-mode-round-5-fixes.md` (68 items, item-for-item map at its end). Owner adjudication: eight forks → fences F26–F33.
+
+**Round-5 status:** not aligned; fix pass dispatched; round 6 delta-verifies per row and per finding.
