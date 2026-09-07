@@ -26,6 +26,8 @@ Connect (BLE + USB), known-device management, licensing and offline pre-authoriz
 
 The heads-down loop, and the product bet made tangible. CSV inventory import with column mapping · the scan queue and row auto-advance · 1–5 sample averaging · inline per-scan failure handling (retry / skip / flag-row) and the dead-letter queue · ad-hoc single capture · session durability and resumability across launches.
 
+The PRD is [prd-capture-mode.md](prd-capture-mode.md), with two companion files: the user journeys in [prd-capture-mode-journeys.md](prd-capture-mode-journeys.md) and the shipping error and state copy in [prd-capture-mode-copy.md](prd-capture-mode-copy.md). Owner decisions are in [prd-capture-mode-fences.md](prd-capture-mode-fences.md).
+
 **Also owns the seam re-open.** The two capture-mode research passes disagree on whether capture is a modal takeover that hands off at session end, or writes directly into the live collection; the v2 pass reverses the first and says explicitly to re-open it before the ADR is written. This PRD is where that gets settled at the product level, which is the sole gate on ADR-0004.
 
 ### 3. Data Foundation
