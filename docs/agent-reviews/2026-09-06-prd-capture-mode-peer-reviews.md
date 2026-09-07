@@ -365,3 +365,40 @@ Minors and nits (Arch A-N2, A-N6, A-N7; Staff S6-F4, S6-F5, Q19; Test T5 and nit
 Flip rule: a row flips to 🤝 Aligned when no Claude lens OBJECTed to it in round 6 and at least one ALIGNed (the agy tables object to nothing and are advisory). **36 rows stay ⌛️** because at least one round-6 objection stands against them: R1.7, R3.7, R3.9, R3.12, R4.12, R4.18, R4.21, R5.4, R5.9, R6.3, R7.1, R7.15, R8.1, R8.3, R8.6, R8.7, R8.10, R8.13, R8.15, R9.9, R9.10, R10.7, R11.3, R11.9, R11.11, R11.12, R11.13, E2, E17, E18, E20, E24, M4, M5, M9, M11. **Every other row (159 of 195) flips to 🤝 Aligned** with this log entry as the recorded authorization; any aligned row the round-6 fix pass edits returns to ⌛️ for re-review.
 
 **Round-6 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (23 items + FX6-0; one new row E42; PROTOTYPE_RUNS named). After the pass: 144 🤝 Aligned, 52 ⌛️ (the 36 held here, 15 returned to ⌛️ because the fixes edited them — R1.5, R4.4, R4.9, R4.14, R4.17, R5.7, R5.10, R6.2, R7.11, R8.5, R11.1, E19, E32, E39, E41 — and E42). Round 7 delta-verifies those 52.
+
+## Round 7 — delta verification of round 6 (2026-09-07)
+
+**Subject:** commit `9ea4c57` (143 R, 42 E, 11 M; 144 🤝, 52 ⌛️). **Lenses:** the same five on Claude/Opus; agy on four (all-ALIGN, no findings, advisory).
+
+| lens | route | round-6 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | 2 RESOLVED, PM6-2 PARTIAL | 3 Major | 5 | E28 |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE | 3 Major | 3 | none |
+| test (retargeted) | Claude/Opus | all RESOLVED, T2 PARTIAL | 1 Blocker, 4 Major, 1 Minor | 8 | none |
+| architecture | Claude/Opus | A-N1–A-N7 all RESOLVED / BY-FENCE | 3 Major, 4 Minor | 7 | none |
+| marketing (copy) | Claude/Opus | all RESOLVED, PMM2 PARTIAL | 1 Blocker, 3 Major | 4 | E27 |
+| agy (PM, staff, arch, marketing) | agy | all RESOLVED | none | 0 | none |
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R7-F1 | R11.13's interaction record carries no time and no current row, so R10.7's time/steps and M11's per-row count are not derivable; and it is an unbounded durable write on the hot path with no owner | Test F7-B1 (Blocker), Arch A7-2 (Major) | `:857`, `:833`, `:934` confirmed. | **accept — Blocker.** Add time and current row; need not be durable before the ack; bounded to the session and instrumented/dogfood builds; hand to Data Foundation. |
+| R7-F2 | F36's capture-proceeds path contradicts the locked device PRD's copy ("None (requires a license change)"); nothing handed forward; no capture-side indicator | PMM7-1 (Blocker), PM7-A (Major) | device PRD `:367`, `:499` confirmed. | **accept — Blocker.** F36 clarification recorded. |
+| R7-F3 | R4.21's post-landing window asserts "captured and confirmed" even after a moved-on cue, Skip, or Flag-as-missing | PM7-B, Test F7-M3, Arch A7-1, Staff S7-F3 (Major) | `:689`, `:707` confirmed. | accept — Major. |
+| R7-F4 | E28 says the samples were let go at the re-scan offer; R7.1 discards at the re-scan itself | PM7-C (Major) | `:898`, `:746`, `:725` confirmed. | accept — Major; E28 re-opens. |
+| R7-F5 | F6 still says "consecutive"; R5.4 now counts across accepted samples | Test F7-M1 (Major) | confirmed. | accept — Major. F6 amendment recorded. |
+| R7-F6 | R11.9's interleaved step names no guard setting; vacuous in record-only | Test F7-M2 (Major) | `:853` confirmed. | accept — Major. |
+| R7-F7 | R7.1's disclosure promise covers a device halt whose copy is the device PRD's and carries no count | Test F7-M4, Arch A7-3 (Major), Staff Q5 | `:746`, `:862` confirmed. | accept — Major. E42's line on the capture surface, which stays visible under a halt. |
+| R7-F8 | E24's conditional review action is unreachable at completion | PMM7-3, Staff S7-F2 (Major), Arch A7-4, PM | `:894`, `:776` confirmed. | accept — Major. |
+| R7-F9 | E27 "or just not today" promises impermanence; F31 settles the row | PMM7-4 (Major) | `:897` confirmed. | accept — Major; E27 re-opens. |
+| R7-F10 | R1.7 and E2 disagree on the finished variant's actions | PMM7-2 (Major) | `:601`, `:872` confirmed. | accept — Major. |
+| R7-F11 | R8.1 route 1, UJ3 step 11, and the diagram still say "queue exhausted with rows set aside" without "unsettled" | Staff S7-F1 (Major) | `:771`, `:274`, `:84` confirmed. | accept — Major. |
+
+Minors (Test F7-m1; Arch A7-5, A7-6, A7-7, the two missing notes; Staff Q4, Q6, Q7; PM's E24/M11 notes; Test's binding-table observable) are in `prd-capture-mode-round-7-fixes.md`. Staff Q7 is answered by the F38 clarification (PROTOTYPE_RUNS fixed at 3).
+
+### Row flips
+
+Flip rule as in round 6. Of the 52 open rows, **16 stay ⌛️** (an objection stands): R1.5, R1.7, R4.12, R4.17, R4.21, R5.4, R6.3, R7.1, R8.1, R10.7, R11.3, R11.9, R11.13, E2, E24, M11. **36 flip to 🤝 Aligned**: R3.7, R3.9, R3.12, R4.4, R4.9, R4.14, R4.18, R5.7, R5.9, R5.10, R6.2, R7.11, R7.15, R8.3, R8.5, R8.6, R8.7, R8.10, R8.13, R8.15, R9.9, R9.10, R11.1, R11.11, R11.12, E17, E18, E19, E20, E32, E39, E41, E42, M4, M5, M9. Two aligned rows re-open on a round-7 objection: **E27** (PMM7-4) and **E28** (PM7-C). Net after this round's flips and before the fix pass: 178 🤝, 18 ⌛️.
+
+**Round-7 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (22 items + FX7-0; new rows R4.22 and E43; OQ 24, OQ 25). After the pass: 169 🤝, 29 ⌛️ of 198 — the 16 held, E27 and E28 re-opened, 5 listed rows that stayed ⌛️ because a fix edited them (R3.12, R5.7, R11.12, E17, E42), 4 aligned rows a fix edited (R5.6, R7.5, R8.14, E23), and the two new rows. Round 8 delta-verifies those 29.

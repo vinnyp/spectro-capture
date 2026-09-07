@@ -245,6 +245,18 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Recorded by the orchestrator as the plain consequence of F31, flagged for the owner:** a row the operator deliberately left set aside (singly or with "Leave them all set aside") is settled. Routing and completion treat settled rows as adjudicated: a collection whose set-aside rows are all settled is finished (E2's finished variant, "Every swatch here is scanned or set aside for good"), and starting capture on it does not reopen the review. A settled row can still be re-scanned from the collection or the set-aside list by choice.
 
+### F6 — amendment (2026-09-07, round 7, R7-F5)
+
+**Recorded by the orchestrator as the consequence of F37, flagged for the owner:** K_FAILED_ATTEMPTS counts failed attempts on one row across any accepted samples that fall between them ("consecutive" in F6's original wording is withdrawn); an accepted sample neither resets nor counts. The guard's counters (F37) count rows, so a row with interleaved failures contributes at most one to them.
+
+### F36 — clarification (2026-09-07, round 7, R7-F2)
+
+**Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
+
+### F38 — clarification (2026-09-07, round 7, R7-F20)
+
+**Recorded by the orchestrator, flagged for the owner:** PROTOTYPE_RUNS = 3 is the owner's fixed number, like PROTOTYPE_PARTICIPANTS (F35), not a provisional constant closed by OQ 8 — the prototype cannot both consume and close it.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
