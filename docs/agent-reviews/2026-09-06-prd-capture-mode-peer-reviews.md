@@ -538,3 +538,35 @@ Minors (PM PM11-2 with the copy lens's zero-count family: E23's widened sentence
 Flip rule as in round 6. Of the 13 open rows, **10 stay ⌛️** (an objection stands): R3.6, R3.11, R7.1, R8.1, R8.3, R8.15, R11.12, E23, E24, E39. **3 flip to 🤝 Aligned**: R7.15, R8.2, E2. No 🤝 row was broken by a round-10 edit. Any 🤝 row a round-11 fix edits returns to ⌛️ "edited in round 11, re-review" (expected: R7.15 if FX11-5 touches it).
 
 **Round-11 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (5 items + FX11-0; no new rows). After the pass: 188 🤝, 11 ⌛️ of 199 — R8.2 and E2 flipped; R7.15 flipped then re-opened because FX11-5 edited it; the 10 held rows all edited. Open: R3.6 R3.11 R7.1 R7.15 R8.1 R8.3 R8.15 R11.12 E23 E24 E39. Operator residue for round 12: R7.1's later sentence still says "mid-session" where R8.1 now says "while a session is capturing"; "Done" added to the Labels paragraph though E24 names it; E24's headline and action both read "Done". Next: round 12 delta verification over the 11 open rows.
+
+## Round 12 — delta verification of round 11 (2026-09-07)
+
+**Subject:** commit `46e9afb` (144 R, 44 E, 11 M; 188 🤝, 11 ⌛️). **Lenses:** the same five on Claude/Opus over the 11 open rows plus any 🤝 row a round-11 edit broke, with the operator's three residue items put to every lens; agy on four, advisory.
+
+| lens | route | round-11 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED | 1 Major, 1 Minor | 4 | none |
+| staff engineer | Claude/Opus | all RESOLVED | 2 Major, 1 Minor | 2 | R7.5 |
+| test (retargeted) | Claude/Opus | all RESOLVED | 1 Blocker, 2 Major | 6 | R7.5 |
+| architecture | Claude/Opus | A11-1 PARTIAL (predicate), rest RESOLVED / parked | 1 Blocker, 1 Major | 6 | none |
+| marketing (copy) | Claude/Opus | all RESOLVED | 1 Blocker, 2 Major, 2 Minor | 3 | R7.5, Labels paragraph |
+| agy (PM, staff, arch, marketing) | agy | all RESOLVED | PM, staff: R7.1's "mid-session" vs R8.1 (= R12-F4); arch: three items on R7.1, R7.15, E24 (residue restated) | R7.1, R8.1, E24 | none |
+
+Operator residue judged by all five: R7.1's "mid-session" sentence is vacuous in the look-through states (staff, test, arch, PM) but is a message defect worth aligning (PMM) — folded into the predicate fix; "Done" in the Labels paragraph is right, the paragraph's framing is what is false (PMM, staff, arch, PM); E24's headline/action "Done" is a copy call (all) — accepted as a Minor.
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R12-F1 | The new discriminator "while a session is capturing on the collection" (R3.6, R3.11, R8.3, R7.1, R8.1) is (a) unqualified where R8.1's fourth state says "bulk", so a one-row session under way is covered by no state and answered twice (R3.11/R9.4 vs R3.6/R8.3), and (b) a term R3.1 defines to exclude time in the set-aside list, so read literally it is false at the moment it is evaluated; R3.11's re-keyed closing clause also conflates a one-row session with a row inside a paused session | Test R12-T1, Arch A12-1 (Blocker), PM PM12-1, Staff R12-2 (Major) | `:655`, `:777`, `:660`, `:650`, `:775`, `:811` confirmed. | **accept — Blocker.** **F42 clarification (4)** recorded by the orchestrator, flagged for the owner: the discriminator is a *live bulk session*, defined once in the Vocabulary; the one-row-session case is a look-through. |
+| R12-F2 | R7.5 and E23 promise the partial set survives "until the session actually ends" / "when you stop", but R8.1's fourth state makes E23's "Review the set-aside swatches" the in-session review that lets it go on entry | PMM PMM12-1 (Blocker), Staff R12-1, Test R12-T3 (Major) | `:754`, `:897`, `:775` confirmed. | accept — Blocker by the copy lens's scale. R7.5 re-opens. |
+| R12-F3 | E39's "if that was the last thing waiting, it finishes your session" and R8.15's completion clause are asserted where no session exists (R8.1's look-through states) and "the queue simply goes on" describes a queue that is not running | Test R12-T2, Arch A12-2 (Major), PM PM12-2 (Minor) | `:913`, `:781`, `:775` confirmed. | accept — Major. |
+| R12-F4 | R7.1's later sentence "opening the set-aside list mid-session discards" keeps the retired key inside the row that carries the new one | PMM PMM12-3 (Major); staff, test, arch, PM: vacuous, not a contradiction | `:750` confirmed. | accept as a Minor wording fix inside R12-F1. |
+
+Minors (PMM PMM12-4: E24's headline and action both "Done"; PMM PMM12-5 / Staff R12-3 / Arch note: the Labels paragraph's framing) are in `prd-capture-mode-round-12-fixes.md`. Recorded, not fixed: Arch's deferred question of what closes an unresumed interrupted session once a look-through leave-all leaves nothing pending and nothing unsettled (R7.11 covers relaunch only) — carried as a note for the Data Foundation hand-off; E33's third home (parked); F43's placement inside R7.15 (parked); R8.1's density (parked).
+
+### Row flips
+
+Flip rule as in round 6. Of the 11 open rows, **9 stay ⌛️** (an objection stands): R3.6, R3.11, R7.1, R8.1, R8.3, R8.15, E23, E24, E39. **2 flip to 🤝 Aligned**: R7.15, R11.12. **Re-opened** by findings against 🤝 rows: R7.5 (R12-F2). Any 🤝 row a round-12 fix edits returns to ⌛️ "edited in round 12, re-review" (expected: the Vocabulary is not a row; R3.1 is cited, not edited).
+
+**Round-12 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (6 items + FX12-0; no new rows; the Vocabulary gains "live bulk session"). After the pass: 189 🤝, 10 ⌛️ of 199 — R7.15 and R11.12 flipped; R7.5 re-opened; the 9 held rows all edited. Open: R3.6 R3.11 R7.1 R7.5 R8.1 R8.3 R8.15 E23 E24 E39. Operator residue for round 13: R4.22 still opens "While a session is capturing on a license…" (a different sense, the only surviving use of the retired phrase); E24's headline "That's the lot" over a body opening "That's ⟨rate⟩ an hour"; R7.5 is long; R8.15 says an unresumed interrupted session is "left exactly as it was" (Arch's deferred closure question, Data Foundation hand-off). Next: round 13 delta verification over the 10 open rows.
