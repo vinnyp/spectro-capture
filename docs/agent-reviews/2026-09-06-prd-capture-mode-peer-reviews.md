@@ -402,3 +402,39 @@ Minors (Test F7-m1; Arch A7-5, A7-6, A7-7, the two missing notes; Staff Q4, Q6, 
 Flip rule as in round 6. Of the 52 open rows, **16 stay ⌛️** (an objection stands): R1.5, R1.7, R4.12, R4.17, R4.21, R5.4, R6.3, R7.1, R8.1, R10.7, R11.3, R11.9, R11.13, E2, E24, M11. **36 flip to 🤝 Aligned**: R3.7, R3.9, R3.12, R4.4, R4.9, R4.14, R4.18, R5.7, R5.9, R5.10, R6.2, R7.11, R7.15, R8.3, R8.5, R8.6, R8.7, R8.10, R8.13, R8.15, R9.9, R9.10, R11.1, R11.11, R11.12, E17, E18, E19, E20, E32, E39, E41, E42, M4, M5, M9. Two aligned rows re-open on a round-7 objection: **E27** (PMM7-4) and **E28** (PM7-C). Net after this round's flips and before the fix pass: 178 🤝, 18 ⌛️.
 
 **Round-7 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (22 items + FX7-0; new rows R4.22 and E43; OQ 24, OQ 25). After the pass: 169 🤝, 29 ⌛️ of 198 — the 16 held, E27 and E28 re-opened, 5 listed rows that stayed ⌛️ because a fix edited them (R3.12, R5.7, R11.12, E17, E42), 4 aligned rows a fix edited (R5.6, R7.5, R8.14, E23), and the two new rows. Round 8 delta-verifies those 29.
+
+## Round 8 — delta verification of round 7 (2026-09-07)
+
+**Subject:** commit `e3991a7` (144 R, 43 E, 11 M; 169 🤝, 29 ⌛️). **Lenses:** the same five on Claude/Opus over the 29 open rows plus any 🤝 row a round-7 edit broke; agy on four (PM, staff, architecture, marketing), advisory.
+
+| lens | route | round-7 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED / BY-FENCE, PM6-2 RESOLVED | 1 Major, 1 Minor | 3 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE | 3 Major, 4 questions | 4 | E20 |
+| test (retargeted) | Claude/Opus | all RESOLVED except R7-F3, R7-F4, R7-F2 PARTIAL (each carried by a new finding) | 3 Major, 1 Minor | 4 | E20 |
+| architecture | Claude/Opus | all RESOLVED, A7-2 PARTIAL (carried by A8-3) | 4 Major, 1 missing journey line | 5 | E20 |
+| marketing (copy) | Claude/Opus | all RESOLVED / BY-FENCE, PMM2 RESOLVED | 2 Major, 1 Minor | 4 | Surfaces table (not a row) |
+| agy (PM, staff, arch, marketing) | agy | all RESOLVED | none | 0 | none |
+
+agy: all four briefs returned rc 8 (short bodies, 1.0–2.1 KB). The PM body carried a full all-ALIGN table; staff, architecture, and marketing returned "Aligned rows: no objection" with an empty table. Advisory, as in rounds 5–7; the Claude lenses stand for each. Saved under the scratchpad reviews.
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R8-F1 | R4.21 routes "Re-take sample" and "Restart item" in a non-landing F16 window to E20, whose name and both bodies are written for Flag ("There's nothing here to flag"); R11.12 cannot tell the origins apart; UJ3.2 step 4 has no line for the branch | Staff S8-F1, Test R8-T1, Arch A8-1 (Major) | `:691`, `:893`, `:859`, `:299-301` confirmed. | **accept — Major.** E20 re-opens. New state for the undo actions rather than a third Flag variant. |
+| R8-F2 | Three conditions gate one offer: R8.1 route 2 "unsettled", E23 "any set aside", R7.5 "deferred rows exist"; R7.13 "deferred rows waiting"; E23's action label differs from the Labels paragraph; the summary route is not among R8.1's "four ways"; and the unsettled gate strands F31's settled-row re-scan from the list (R3.9, R8.5, R8.15, E33) | PM PM8-1, Staff S8-F2, Arch A8-2, PMM PMM8-1 (Major) | `:774`, `:896`, `:753`, `:761`, `:867`, `:129`, `:657`, `:778`, `:780`, `:906` confirmed; fence F31 clarification confirmed. | **accept — Major.** Owner fork adjudicated: **fence F39** (offered while any set-aside row exists; "unsettled" governs completion and auto-entry only). |
+| R8-F3 | R11.9 claims no OQ 3 tuning can invalidate its interleaved step, but at N_CONSEC_HARD = 1 the guard pauses on that row's auto-deferral; R5.9's no-pause promise fails the same way; F37 left no floor | Staff S8-F3 (Major) | `:856`, `:712`, `:948` confirmed. | **accept — Major.** Owner fork adjudicated: **fence F40** (N_CONSEC_HARD ≥ 2). |
+| R8-F4 | R4.22 asserts the missing entitlement never blocks a scan, but no row states that the pre-flight authorization check warns rather than blocks on it; device PRD §7 copy is still a dead end | Test R8-T3 (Major) | `:692`, `:682`; device PRD `:409`, `:412`, `:499` confirmed. | accept — Major. Stated in R4.22 under F36 (capture runs); added to the closing hand-off note. |
+| R8-F5 | R7.1's opening sentence says samples survive "only a reorder and looking at the queue list", but R6.3/E28 add a cancelled re-scan offer; and a cancelled "Add a swatch" (R9.10, E32) discards while a cancelled re-scan keeps, with no reason | Test R8-T2 (Major) | `:749`, `:728`, `:816`, `:905` confirmed. | **accept — Major.** Owner fork adjudicated: **fence F41** (cancelled add keeps the samples). R9.10 and E32 re-open. |
+| R8-F6 | R4.22's test cannot run against the Demo Device: the device PRD exempts licensing for it, its simulated state surface has no settable spectral entitlement, and the "spectral entitlement absent" outcome sits under the simulated authorization service | Arch A8-4 (Major), Staff Q4 | device PRD `:460`, `:463`, `:464`; `:851` confirmed. | accept — Major. Inherited note for device PRD §6 on the R11.3 pattern; OQ 16 already feeds R4.22. |
+| R8-F7 | R11.13 says the record reads back "per session and per session chain" and, later, "covers one session at a time"; OQ 24 repeats the bound | Arch A8-3 (Major) | `:860`, `:969`, `:760` confirmed. | accept — Major. Per-session record; a chain's read follows R7.12's links, and the row says so instead of claiming two scopes. |
+| R8-F8 | E43 names "colour is worked out under D50/2°" as the consequence of the missing entitlement, which is true with or without it (R4.9, R4.12); the real loss (no reflectance curve kept, so the reading cannot be re-derived under another light) is unsaid | PMM PMM8-2 (Major) | `:916`, `:679`, `:682` confirmed. | accept — Major, copy. |
+
+Minors (PM PM8-2 / Test R8-T4: E23 names the count but not the swatch R7.5 requires; PMM PMM8-3: the Surfaces table's Capture "Shows" column lacks the non-spectral indicator; Arch's missing UJ3.2 step 4 line) are in `prd-capture-mode-round-8-fixes.md`. Arch's risk note on R3.12 (a wall-clock soak that cannot sit in per-PR CI) is recorded here as a note for the engineering plan, not a finding; R3.12 is unchanged.
+
+### Row flips
+
+Flip rule as in round 6 (every non-abstaining Claude lens ALIGN, at least one opined; agy advisory). Of the 29 open rows, **9 stay ⌛️** (an objection stands): R4.21, R4.22, R7.1, R7.5, R8.1, R11.9, R11.13, E23, E43. **20 flip to 🤝 Aligned**: R1.5, R1.7, R3.12, R4.12, R4.17, R5.4, R5.6, R5.7, R6.3, R8.14, R10.7, R11.3, R11.12, E2, E17, E24, E27, E28, E42, M11. **Re-opened** by findings against 🤝 rows: E20 (R8-F1), R9.10 and E32 (R8-F5). Any 🤝 row a round-8 fix edits returns to ⌛️ "edited in round 8, re-review" (expected: R5.9, R7.13, R11.12, R3.9/R8.5/R8.15/E33 only if their wording changes).
+
+**Round-8 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (12 items + FX8-0; new row E44 "Nothing to undo"; FX8-12 added mid-pass for the UJ3 flowchart edges the pass surfaced). After the pass: 182 🤝, 17 ⌛️ of 199 — the 9 held rows edited and re-review; E20, R9.10, E32 re-opened; R5.7, R11.12 stayed ⌛️ because a fix edited them; R5.9, R7.13 edited from 🤝; E44 new. Fences F39–F41 recorded. Next: round 9 delta verification over the 17 open rows.

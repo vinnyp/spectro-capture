@@ -249,6 +249,24 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Recorded by the orchestrator as the consequence of F37, flagged for the owner:** K_FAILED_ATTEMPTS counts failed attempts on one row across any accepted samples that fall between them ("consecutive" in F6's original wording is withdrawn); an accepted sample neither resets nor counts. The guard's counters (F37) count rows, so a row with interleaved failures contributes at most one to them.
 
+### F39 — The set-aside review is offered while any set-aside row exists (2026-09-07, round 8, R8-F2)
+
+**Decision:** "Review the set-aside swatches" is offered whenever the collection holds any set-aside row, settled or not, and is not offered when none is. The end-early summary (R7.5, E23) uses the same condition. "Unsettled" governs only completion and automatic entry: the queue running out or a session starting on a collection with only settled set-aside rows completes or shows the finished variant rather than opening the review (R8.1 routes 1 and 3, R8.6, R3.9).
+
+**Why:** F31 as clarified promises that a row the operator left for good can still be re-scanned from the set-aside list. An offer gated on unsettled rows would leave no door into that list once every row was settled, stranding the promise in R3.9, R8.5, R8.15, and E33.
+
+### F40 — N_CONSEC_HARD has a floor of 2 (2026-09-07, round 8, R8-F3)
+
+**Decision:** Whatever OQ 3 tunes, N_CONSEC_HARD is never below 2. Stated once in R5.9 and in OQ 3; R11.9 cites the floor rather than claiming that no tuning can invalidate its interleaved-failures step.
+
+**Why:** A guard that pauses on a single row's auto-deferral is not watching for a run of instrument failures; it would also make the auto-defer-without-pause path of R5.9 unreachable and falsify R11.9's step.
+
+### F41 — Cancelling a mid-session "Add a swatch" keeps the partial set (2026-09-07, round 8, R8-F5)
+
+**Decision:** Any offer the operator cancels leaves the samples taken so far in place: cancelling the mid-session re-scan offer (R6.3, E28) and cancelling "Add a swatch" (R9.10, E32) both return the operator to the row they were on with its samples intact. Only an add the operator sees through, or a confirmed re-scan, discards them, with the discard cue and E42's line.
+
+**Why:** Neither cancel puts a different item under the instrument, which is the one reason R7.1 gives for a discard. One rule is easier to hold than two that differ by which dialog was open.
+
 ### F36 — clarification (2026-09-07, round 7, R7-F2)
 
 **Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
