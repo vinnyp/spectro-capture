@@ -602,3 +602,37 @@ Minors (Test: R7.1's "no exception for looking" is narrowed to live bulk session
 Flip rule as in round 6. Of the 10 open rows, **4 stay ⌛️** (an objection stands): R3.11, R8.1, R8.15, E39. **6 flip to 🤝 Aligned**: R3.6, R7.1, R7.5, R8.3, E23, E24. **Re-opened** by findings against 🤝 rows: R7.11 (R13-F1), E25 (R13-F1). Any 🤝 row a round-13 fix edits returns to ⌛️ "edited in round 13, re-review" (expected: R8.6, R7.1, and the Vocabulary entry which is not a row).
 
 **Round-13 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (6 items + FX13-0; no new rows). After the pass: 191 🤝, 8 ⌛️ of 199 — R3.6, R7.5, R8.3, E23, E24 flipped; R7.1 flipped then re-opened by FX13-5; R7.11 and E25 re-opened; R8.6 edited from 🤝; R3.11, R8.1, R8.15, E39 edited. Orchestrator hygiene edit, not a WHAT change: the F42 citation count in R3.6 and R8.3 bumped from "four times" to "five times" after the flip (status kept). Open: R3.11 R7.1 R7.11 R8.1 R8.6 R8.15 E25 E39. Operator judgment calls for round 14: R8.1's held state gained a sentence that under the guard's pause or a halt there is nothing to scan from the list until the cause is dealt with (R4.2, R5.11); E25 gained no variant because the withdrawn offer means it is never shown for an empty session; rows leaning on the first F31 clarification still cite "as clarified" (only R7.11, R8.15 cite "twice"). Next: round 14 delta verification over the 8 open rows.
+
+## Round 14 — delta verification of round 13 (2026-09-07)
+
+**Subject:** the round-13 commit (144 R, 44 E, 11 M; 191 🤝, 8 ⌛️). **Lenses:** the same five on Claude/Opus over the 8 open rows plus any 🤝 row a round-13 edit broke, with the operator's three residue items put to every lens; agy on four, advisory (three of four returned at logging time; the summary is saved with the scratchpad reviews).
+
+| lens | route | round-13 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major | 3 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE; R13-3 PARTIAL (carried by S14-1) | 1 Blocker, 1 Major, 1 Minor, 4 questions | 4 | E42 |
+| test (retargeted) | Claude/Opus | all RESOLVED | 3 Major | 3 | none (UJ3.3 step 4, not a row) |
+| architecture | Claude/Opus | all RESOLVED / BY-FENCE | 2 Major | 4 | none |
+| marketing (copy) | Claude/Opus | all RESOLVED | 1 Blocker, 1 Major | 4 | none |
+| agy (PM, staff rc 8; arch, marketing rc 0) | agy | all RESOLVED | marketing: two Major copy/logic items on R8.15 and E39 (coincide with R14-F3) | R8.15, E39 | none |
+
+Operator residue judged by all five: R8.1's held-state sentence is right in substance (device PRD §5, R5.11) but its reason and its "until" are defective (R14-F4); E25 correctly gained no variant (all five); the F31 citation split is precise (all five).
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R14-F1 | FX13-3 wrote F44 under two keys: R8.6 and R8.1 class the end-early summary's "now" with the end-of-run rule, while UJ3.3 step 4 and R8.15 key on rows pending and send that same route to the detour | PMM PMM14-1, Staff S14-1 (Blocker), PM PM14-1 (Major) | `:351`, `:783`, `:778`, `:784`, `:900` confirmed; F44's own text names the summary's "now" as end-of-run. | **accept — Blocker.** **F44 clarification (1)** recorded: the summary's "now" is the end-of-run review whatever is pending. |
+| R14-F2 | The detour exit "back on the queue at the remembered row" names a pointer the review's own selection has moved (R3.6, R8.3), so leaving lands on the adjudicated row, not where the operator was; UJ3.3 says "where I was"; R8.12/R9.11 say it correctly | Arch A14-1, Test F14-1 (Major) | `:783`, `:778`, `:784`, `:658`, `:780`, `:660`, `:351` confirmed. | **accept — Major.** **F44 clarification (2)** recorded: a detour review moves nothing; returns to the row the operator left; the review-selected update belongs to the end-of-queue review. R3.6 and R8.3 will be scoped. |
+| R14-F3 | R8.15's look-through branch says "finishes no session of the operator's" and then closes an interrupted one as complete; a one-row session already under way from the list is a session the operator is capturing in, and nothing says what settling its row does; E39 says nothing about the summary that then appears | Arch A14-2, PMM PMM14-2 (Major) | `:784`, `:916`, `:778` confirmed. | accept — Major. |
+| R14-F4 | R8.1's new held-state clause cites R4.2, which lists the operator's pause in the same breath, so the reason proves too much; its "until the operator has dealt with the cause" opens a state (force-resume or "Resume scanning" with the list still open) no row covers | Test F14-2 (Major), Staff S14-3 (Minor) | `:778`, `:676`, `:663` confirmed. | accept — Major: the reason is the lift mechanism; dealing with the cause closes the look-through. |
+| R14-F5 | UJ3.3 step 4's third bullet says "the run I was on is already complete, or there was none", false for a paused/held or interrupted session | Test F14-3 (Major) | `:352`, `:778`, `:784` confirmed. | accept — Major, journey wording. |
+| R14-F6 | R7.1 routes the abandoned look-through one-row session to E42, whose body says the swatch "is still waiting in the queue"; it goes back to the set-aside list | Staff S14-2 (Major) | `:753`, `:919`, `:779` confirmed. | accept — Major; E42 re-opens with a set-aside variant. |
+
+Minor (Staff Q3: R7.11's enumeration names only a settle decision as the mid-run trigger while its headline covers a capture clearing the last row) is in `prd-capture-mode-round-14-fixes.md`. Staff Q2 (R7.8's unqualified offer) judged the general-row convention by test and arch; no change. Recorded, not fixed: Arch's suggestion of a per-state × per-exit table for R8.1/R8.15 (authoring aid; consider before lock).
+
+### Row flips
+
+Flip rule as in round 6. Of the 8 open rows, **5 stay ⌛️** (an objection stands): R7.1, R8.1, R8.6, R8.15, E39. **3 flip to 🤝 Aligned**: R3.11, R7.11, E25. **Re-opened** by findings against 🤝 rows: E42 (R14-F6). Any 🤝 row a round-14 fix edits returns to ⌛️ "edited in round 14, re-review" (expected: R3.6, R8.3, R3.8 if its wording changes).
+
+**Round-14 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (8 items + FX14-0; no new rows; each seam rule now lives in one row — entry states R8.1, exit precedence R8.6, leave-all effects R8.15, interrupted closure R7.11 — and the others cite it). After the pass: 188 🤝, 11 ⌛️ of 199 — R3.11 and E25 flipped; R7.11 flipped then re-opened by FX14-7; E42 re-opened; R3.6, R3.8, R8.3, R11.12 edited from 🤝; the five held rows edited. Open: R3.6 R3.8 R7.1 R7.11 R8.1 R8.3 R8.6 R8.15 R11.12 E39 E42. Operator residue for round 15: R8.6's unconditional-looking first sentence precedes its scope; R8.1's "never on the surface" sits near the detour test that names the collection surface; Arch's per-state × per-exit table suggestion stands. Next: round 15 delta verification over the 11 open rows.

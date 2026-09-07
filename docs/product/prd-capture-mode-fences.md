@@ -317,6 +317,10 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Recorded by the orchestrator, flagged for the owner:** a bulk session held by the guard's pause (R5.11) or by a device halt is not a live bulk session, and the set-aside list opens to look through under both. A pause lifted for a single row (R9.6) is still a pause for this purpose: whether a live bulk session is on the collection is decided when the list opens and holds until it closes, so a scan started from the look-through list never turns the list into the in-session review part-way.
 
+### F44 — clarification (2026-09-07, round 14, R14-F1, R14-F2)
+
+**Recorded by the orchestrator as the plain consequence of F44's own words, flagged for the owner:** (1) the end-early summary's "now" is the end-of-run review whatever is still pending, because the operator has already asked to stop; F44's detour rule covers only a review the operator opened from the collection surface while the bulk session was still capturing. (2) A detour review moves nothing: it does not update the collection's remembered row or mark a row review-selected — those belong to the end-of-queue review (R3.6, R8.3, R3.8) — so leaving it returns the operator to the row they were on when they entered, as UJ3.3 promises.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
