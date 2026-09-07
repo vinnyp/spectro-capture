@@ -279,6 +279,12 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** The reversal is said everywhere else (E2, E23, E27) and E24 is where a Cataloger most plausibly reads "for good" as final; a second copy of the offer inside E24 would give the same door two homes.
 
+### F44 — Leaving a review entered with rows still pending returns to the queue (2026-09-07, round 13, R13-F3)
+
+**Decision:** A set-aside review entered while rows are still pending is a detour: leaving it returns to the queue at the remembered row and the session goes on. "Leaving the review before every row is captured or left ends the session early" (R8.6, UJ3.3) applies only to the end-of-queue review — one entered with the queue exhausted, or taken from the end-early summary's "now".
+
+**Why:** Under the live-collection reading the review can be reached mid-run from the collection surface; ending the session because the operator glanced at the set-aside rows would cost the heads-down loop a resume for nothing.
+
 ### F36 — clarification (2026-09-07, round 7, R7-F2)
 
 **Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
@@ -302,6 +308,14 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 ### F42 — clarification (4) (2026-09-07, round 12, R12-F1)
 
 **Recorded by the orchestrator, flagged for the owner:** the discriminator in clarification (3) is a *live bulk session* on the collection — a bulk session that is active and neither paused nor interrupted, its open set-aside review included — and never the capture-time accounting of R3.1, which excludes time in the set-aside list from elapsed capture time for a different reason. A one-row session that is itself under way (an ad-hoc add, a re-scan, or a scan started from the look-through list) is not a live bulk session: with one under way the list is still a look-through, the remembered row does not move, and selecting another row ends or abandons that one-row session (R3.11) with its own partial set let go under R7.1. The term is defined once, in the Vocabulary, and R3.6, R3.11, R7.1, R8.1, R8.3 use it.
+
+### F31 — clarification (2) (2026-09-07, round 13, R13-F1)
+
+**Recorded by the orchestrator as the plain consequence of F31 and R7.11, flagged for the owner:** an unresumed interrupted bulk session on a collection that has nothing pending and no set-aside row unsettled is closed as complete whenever that becomes true — on relaunch, as R7.11 already says, or at the moment a look-through decision settles the last row — and its "Resume capture" offer is withdrawn, so the collection reads finished with no stale session beside it.
+
+### F42 — clarification (5) (2026-09-07, round 13, R13-F2)
+
+**Recorded by the orchestrator, flagged for the owner:** a bulk session held by the guard's pause (R5.11) or by a device halt is not a live bulk session, and the set-aside list opens to look through under both. A pause lifted for a single row (R9.6) is still a pause for this purpose: whether a live bulk session is on the collection is decided when the list opens and holds until it closes, so a scan started from the look-through list never turns the list into the in-session review part-way.
 
 ## Rejected findings
 

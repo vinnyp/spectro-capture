@@ -570,3 +570,35 @@ Minors (PMM PMM12-4: E24's headline and action both "Done"; PMM PMM12-5 / Staff 
 Flip rule as in round 6. Of the 11 open rows, **9 stay ⌛️** (an objection stands): R3.6, R3.11, R7.1, R8.1, R8.3, R8.15, E23, E24, E39. **2 flip to 🤝 Aligned**: R7.15, R11.12. **Re-opened** by findings against 🤝 rows: R7.5 (R12-F2). Any 🤝 row a round-12 fix edits returns to ⌛️ "edited in round 12, re-review" (expected: the Vocabulary is not a row; R3.1 is cited, not edited).
 
 **Round-12 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (6 items + FX12-0; no new rows; the Vocabulary gains "live bulk session"). After the pass: 189 🤝, 10 ⌛️ of 199 — R7.15 and R11.12 flipped; R7.5 re-opened; the 9 held rows all edited. Open: R3.6 R3.11 R7.1 R7.5 R8.1 R8.3 R8.15 E23 E24 E39. Operator residue for round 13: R4.22 still opens "While a session is capturing on a license…" (a different sense, the only surviving use of the retired phrase); E24's headline "That's the lot" over a body opening "That's ⟨rate⟩ an hour"; R7.5 is long; R8.15 says an unresumed interrupted session is "left exactly as it was" (Arch's deferred closure question, Data Foundation hand-off). Next: round 13 delta verification over the 10 open rows.
+
+## Round 13 — delta verification of round 12 (2026-09-07)
+
+**Subject:** the round-12 commit (144 R, 44 E, 11 M; 189 🤝, 10 ⌛️). **Lenses:** the same five on Claude/Opus over the 10 open rows plus any 🤝 row a round-12 edit broke, with the operator's four residue items put to every lens; agy on four, advisory.
+
+| lens | route | round-12 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED | 2 Major | 2 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE | 2 Major, 1 Minor, 3 questions | 3 | R7.11 |
+| test (retargeted) | Claude/Opus | all RESOLVED / BY-FENCE; R12-T2 PARTIAL (carried by R13-1) | 1 Major | 1 | R7.11 |
+| architecture | Claude/Opus | all RESOLVED / BY-FENCE | 2 Major | 2 | R7.11, E25 |
+| marketing (copy) | Claude/Opus | all RESOLVED | 1 Major | 2 | E25 |
+| agy (PM, staff, marketing; arch rc 8) | agy | all RESOLVED | PM: 1 Blocker (= R13-F1) plus nits on R7.5, R4.22, E24 | R8.15, R4.22 | none |
+
+Operator residue judged by all five: R4.22's "While a session is capturing on a license…" is a different sense and not a live instance of the retired key (no change); E24's "That's the lot / That's ⟨rate⟩" echo is copy cadence (deferred); R7.5's length is readability, every clause assertable (no change); R8.15's "left exactly as it was" is the defect R13-F1 names.
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R13-F1 | A look-through "Leave them all set aside" that settles the last unsettled row beside an unresumed interrupted session leaves the session "exactly as it was" while the collection reads finished: R1.7 shows E2's finished variant, R7.8 shows E25 with no renderable variant, R7.11 closes the session on relaunch only, E39 says nothing is waiting | PMM PMM13-1, Test R13-1, Arch A13-1, Staff R13-2 (Major), agy PM (Blocker) | `:782`, `:761`, `:758`, `:900`, `:605`, `:369` confirmed. | **accept — Major.** **F31 clarification (2)** recorded by the orchestrator, flagged for the owner: closed as complete whenever the condition becomes true. R7.11 and E25 re-open. |
+| R13-F2 | "Live bulk session" does not say whose pause: the guard's pause (R5.11) and a device halt are neither an operator Pause nor an interruption, and a pause lifted for one row (R9.6) makes the predicate flip mid-scan, moving the remembered row on a swatch selected from a look-through | PM PM13-1, Staff R13-1 (Major) | `:132`, `:716`, `:814`, `:776`; device PRD `:421`, `:439` confirmed. | **accept — Major.** **F42 clarification (5)** recorded by the orchestrator, flagged for the owner: guard pause and halt are not live; the classification is fixed when the list opens. |
+| R13-F3 | R8.15's "rows still pending … the queue simply goes on" contradicts R8.6 and UJ3.3 step 4, which end the session early on leaving the review before completion, for a review entered mid-run | PM PM13-2 (Major), Staff R13-3 (Minor, UJ3.3) | `:782`, `:781`, `:349` confirmed. | **accept — Major.** Owner fork adjudicated: **fence F44** (leaving a review entered with rows pending returns to the queue; the end-early rule is the end-of-queue review's). |
+| R13-F4 | E39's "in a session you're running" is true of an interrupted session E25 offers to resume and of a paused one, so it promises a finish R8.15 denies | Arch A13-2 (Major) | `:914`, `:782` confirmed. | accept — Major, copy: "in the session you're capturing in". |
+
+Minors (Test: R7.1's "no exception for looking" is narrowed to live bulk sessions while R8.1 gives the one-row case one and cites R7.1; Arch: R7.1's cue placement does not name the one-row case's surface) are in `prd-capture-mode-round-13-fixes.md`. agy's nits on R7.5 and R4.22 restate residue already judged; not raised.
+
+### Row flips
+
+Flip rule as in round 6. Of the 10 open rows, **4 stay ⌛️** (an objection stands): R3.11, R8.1, R8.15, E39. **6 flip to 🤝 Aligned**: R3.6, R7.1, R7.5, R8.3, E23, E24. **Re-opened** by findings against 🤝 rows: R7.11 (R13-F1), E25 (R13-F1). Any 🤝 row a round-13 fix edits returns to ⌛️ "edited in round 13, re-review" (expected: R8.6, R7.1, and the Vocabulary entry which is not a row).
+
+**Round-13 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (6 items + FX13-0; no new rows). After the pass: 191 🤝, 8 ⌛️ of 199 — R3.6, R7.5, R8.3, E23, E24 flipped; R7.1 flipped then re-opened by FX13-5; R7.11 and E25 re-opened; R8.6 edited from 🤝; R3.11, R8.1, R8.15, E39 edited. Orchestrator hygiene edit, not a WHAT change: the F42 citation count in R3.6 and R8.3 bumped from "four times" to "five times" after the flip (status kept). Open: R3.11 R7.1 R7.11 R8.1 R8.6 R8.15 E25 E39. Operator judgment calls for round 14: R8.1's held state gained a sentence that under the guard's pause or a halt there is nothing to scan from the list until the cause is dealt with (R4.2, R5.11); E25 gained no variant because the withdrawn offer means it is never shown for an empty session; rows leaning on the first F31 clarification still cite "as clarified" (only R7.11, R8.15 cite "twice"). Next: round 14 delta verification over the 8 open rows.
