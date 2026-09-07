@@ -211,6 +211,18 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** Two builds would otherwise give different agreement verdicts and different canonical averages; the spectral mean matches raw-payload-as-canonical.
 
+### F34 — Each collection carries a chosen scan mode, default M1 (2026-09-06, round-5 fix pass, fork 2)
+
+**Decision:** A collection carries a chosen scan mode (M0, M1, or M2 as the instrument's firmware offers), default M1 on Spectro 2, set at creation beside samples-per-row and editable between sessions. The agreement check runs on that mode and the derived colour values shown by default come from it; every recorded mode is kept with the reading. Whether one measurement returns every supported mode, or the app must choose, stays OQ 1 (per SDK docs; confirm on hardware).
+
+**Why:** The round-5 fix pass introduced "the collection's chosen scan mode" without a home; F2 covered only samples-per-row and display defaults.
+
+### F35 — The seam prototype's scripted protocol runs with the owner only (2026-09-06, round-5 fix pass, fork 5)
+
+**Decision:** PROTOTYPE_PARTICIPANTS = 1: the owner runs the scripted task on both readings of the seam. The tie-break and observables in R10.7 stand; the count is the owner's, not a placeholder.
+
+**Why:** Fastest path to closing OQ 8; outside participants are hard to recruit for an unreleased tool.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
