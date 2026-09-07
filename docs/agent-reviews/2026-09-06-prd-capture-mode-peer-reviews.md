@@ -321,3 +321,47 @@ Both edits re-parsed (six mermaid blocks OK) and committed with this log entry.
 Minors and nits from every lens are carried in `prd-capture-mode-round-5-fixes.md` (68 items, item-for-item map at its end). Owner adjudication: eight forks → fences F26–F33.
 
 **Round-5 status:** not aligned; fix pass dispatched; round 6 delta-verifies per row and per finding.
+
+**Round-5 fix pass:** commits `e0336fc` (68 items) and `425038e` (fences F34, F35 plus three orchestrator-decided items), applied by `operator-agents:product-manager` on Opus. Rows after the pass: 143 R, 41 E, 11 M, 23 OQs.
+
+## Round 6 — delta verification of round 5 (2026-09-07)
+
+**Subject:** commit `425038e`. **Lenses:** the same five on Claude/Opus; agy on four (its test lens skipped after two non-conforming rounds). Each lens returned per-finding verdicts on its round-5 items and a complete 195-row disposition table.
+
+| lens | route | round-5 items | new findings | rows OBJECT |
+|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED / BY-FENCE | 3 Major | 4 |
+| staff engineer | Claude/Opus | 38 of 40 RESOLVED; m7 PARTIAL; Q19 not in the log | 2 Blocker, 1 Major, 2 Minor | 4 |
+| test (retargeted) | Claude/Opus | 30 of 33 RESOLVED; B2, M13 PARTIAL | 1 Blocker, 3 Major, 1 Minor | 14 |
+| architecture | Claude/Opus | A1–A12 all RESOLVED / BY-FENCE | 4 Major, 3 Minor | 15 |
+| marketing (copy) | Claude/Opus | all RESOLVED; PMM2, PMM8 PARTIAL | 5 Major, 1 Minor | 12 |
+| product manager | agy | all RESOLVED | none | 0 |
+| staff / architecture / marketing | agy | rc 8, short bodies, all-ALIGN tables; advisory only | none | 0 |
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R6-F1 | R11.12's surface enumeration covers only the capture surface; R8.3, R8.7, R7.15 cite it for other surfaces, so blind re-capture and E24's conditional lines are unassertable | Test T1 (Blocker) | `:856`, `:773`, `:785`, `:760` confirmed. | **accept — Blocker.** |
+| R6-F2 | The spectral mean (F33) has no basis when the license lacks the spectral entitlement, a state the locked device PRD lets reach capture | Staff S6-F1 (Blocker) | `:680`, `:599`; device PRD `:367`, `:412` confirmed. | **accept — Blocker.** Owner: capture proceeds on the colour-value mean, reading marked non-spectral. Fence F36. |
+| R6-F3 | R11.9's interleaved case asserts the row must not defer while accepted samples intervene; R5.4 says accepted samples do not reset the count, so it does defer | Staff S6-F2 (Blocker) | `:853` vs `:704` confirmed. | **accept — Blocker.** |
+| R6-F4 | A deliberately-left row stays deferred, so a collection completed by adjudication reopens the review forever and never shows the finished message | Arch A-N1 (Major), PMM-2 (Major) | `:601`, `:655`, `:775-777`, `:894` confirmed. | **accept — Major.** F31 clarified: a left row is settled; routing and completion treat settled rows as adjudicated. |
+| R6-F5 | R11.3 claims the Demo trigger source is in the device PRD's closed exception list; it is not, and neither that nor the latency-row pull is handed forward | Arch A-N3, Staff S6-F3, Test T4 (Major) | `:847` vs device PRD `:460` confirmed. | **accept — Major.** Inherited notes for the device PRD §6. |
+| R6-F6 | With the guard enabled, N_CONSEC_HARD (presses) trips before any row can auto-defer | Arch A-N4 (Major) | `:709`, `:853` confirmed. | **accept — Major.** Owner: count consecutive rows. Fence F37. |
+| R6-F7 | The seam tie-break disqualifies Reading B on one slip with n = 1; asymmetric | Arch A-N5 (Major) | `:833` confirmed. | **accept — Major.** Owner: symmetric, repeated (PROTOTYPE_RUNS). Fence F38. |
+| R6-F8 | After a Skip-before-any-attempt the row is pending, but E20 says it is already set aside | PM6-1 (Major) | `:890`, `:705`, `:726` confirmed. | accept — Major. |
+| R6-F9 | Re-take / Restart in the post-landing window either do nothing or name the new row | PM6-2 (Major) | `:689`, `:682` confirmed. | accept — Major. |
+| R6-F10 | ⟨dropped⟩ is carried by three states; a jump, review entry, and a completed Add item disclose nothing; R11.12 enumerates no such field | PM6-3, PMM-6 (Major) | `:746`, `:771`, `:856` confirmed. | accept — Major. |
+| R6-F11 | Rows quote "Add item" / "Leave all set aside" where §12 writes "Add a swatch" / "Leave them all set aside" | PMM-1 (Major) | `:725`, `:813`, `:777`, `:909` confirmed. | accept — Major. |
+| R6-F12 | E18 offers "Set it aside" on a re-scan where R8.10 says abandon keeps the existing value | PMM-3 (Major) | `:888`, `:788` confirmed. | accept — Major. |
+| R6-F13 | The placeholder rule "⟨code⟩ always names the swatch the operator will land on" is false for E17 and E20 | PMM-4 (Major) | `:866`, `:887`, `:890` confirmed. | accept — Major. |
+| R6-F14 | R11.13 is a test affordance, not a record of a human run; R10.7 and M11 depend on a record | Test T2 (Major) | `:857` confirmed. | accept — Major. |
+| R6-F15 | Attempt records carry no session or time, so M4, M5, M9 are not computable from the read-back they cite | Test T3 (Major) | `:791`, `:855` confirmed. | accept — Major. |
+
+Minors and nits (Arch A-N2, A-N6, A-N7; Staff S6-F4, S6-F5, Q19; Test T5 and nits; PMM-5 and nits) are carried in `prd-capture-mode-round-6-fixes.md`. Staff Q19 ("is amending 🤝 Aligned device-PRD rows an agreed process?") is answered here: yes — through inherited notes recorded in this PRD's closing paragraph and OQ 16, applied to the device PRD only by an owner-approved amendment.
+
+### Row flips
+
+Flip rule: a row flips to 🤝 Aligned when no Claude lens OBJECTed to it in round 6 and at least one ALIGNed (the agy tables object to nothing and are advisory). **36 rows stay ⌛️** because at least one round-6 objection stands against them: R1.7, R3.7, R3.9, R3.12, R4.12, R4.18, R4.21, R5.4, R5.9, R6.3, R7.1, R7.15, R8.1, R8.3, R8.6, R8.7, R8.10, R8.13, R8.15, R9.9, R9.10, R10.7, R11.3, R11.9, R11.11, R11.12, R11.13, E2, E17, E18, E20, E24, M4, M5, M9, M11. **Every other row (159 of 195) flips to 🤝 Aligned** with this log entry as the recorded authorization; any aligned row the round-6 fix pass edits returns to ⌛️ for re-review.
+
+**Round-6 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (23 items + FX6-0; one new row E42; PROTOTYPE_RUNS named). After the pass: 144 🤝 Aligned, 52 ⌛️ (the 36 held here, 15 returned to ⌛️ because the fixes edited them — R1.5, R4.4, R4.9, R4.14, R4.17, R5.7, R5.10, R6.2, R7.11, R8.5, R11.1, E19, E32, E39, E41 — and E42). Round 7 delta-verifies those 52.

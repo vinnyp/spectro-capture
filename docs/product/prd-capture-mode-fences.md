@@ -223,6 +223,28 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** Fastest path to closing OQ 8; outside participants are hard to recruit for an unreleased tool.
 
+### F36 — Without the spectral entitlement, capture proceeds on the colour-value mean (2026-09-07, round 6, R6-F2)
+
+**Decision:** When the license lacks the spectral-data entitlement, capture still runs: the set's mean is taken across the instrument's colour values under the fixed D50/2° reference (F28), that basis is recorded on the reading, and the reading is marked non-spectral. With the entitlement present the spectral mean of F33 applies. A collection may hold both kinds; the mark says which.
+
+**Why:** The locked device PRD lets a valid license without spectral data reach capture; a Cataloger with a basic license must still be able to digitize a collection.
+
+### F37 — The guard counts consecutive rows the instrument failed on, not consecutive presses (2026-09-07, round 6, R6-F6)
+
+**Decision:** N_CONSEC_HARD counts consecutive rows that each ended in an instrument-caused deferral (auto-deferred after K_FAILED_ATTEMPTS, or skipped after a failed attempt); repeated failures on one swatch are that swatch's problem and auto-defer it without pausing the session. N_CONSEC_FLAGGED keeps its meaning (F18) and the two counters may merge if tuning shows them redundant (OQ 3). The N_CONSEC_HARD < K_FAILED_ATTEMPTS invariant is withdrawn.
+
+**Why:** Counting presses meant two light-leaks on one awkward swatch paused a heads-down run before the row could auto-defer.
+
+### F38 — The seam tie-break is symmetric and repeated (2026-09-07, round 6, R6-F7)
+
+**Decision:** The owner (F35) runs the same scripted task on each reading PROTOTYPE_RUNS times (candidate 3, OQ 8), alternating order; the reading with fewer mode slips across all runs wins, and a tie goes to fewer steps-to-the-just-captured-row. No single slip decides ADR-0004. The pre-commitment stands.
+
+**Why:** The zero-tolerance rule applied only to Reading B and would have decided the document's costliest one-way door on one observation.
+
+### F31 — clarification (2026-09-07, round 6, R6-F4)
+
+**Recorded by the orchestrator as the plain consequence of F31, flagged for the owner:** a row the operator deliberately left set aside (singly or with "Leave them all set aside") is settled. Routing and completion treat settled rows as adjudicated: a collection whose set-aside rows are all settled is finished (E2's finished variant, "Every swatch here is scanned or set aside for good"), and starting capture on it does not reopen the review. A settled row can still be re-scanned from the collection or the set-aside list by choice.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
