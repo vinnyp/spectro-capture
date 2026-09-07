@@ -438,3 +438,38 @@ Minors (PM PM8-2 / Test R8-T4: E23 names the count but not the swatch R7.5 requi
 Flip rule as in round 6 (every non-abstaining Claude lens ALIGN, at least one opined; agy advisory). Of the 29 open rows, **9 stay ⌛️** (an objection stands): R4.21, R4.22, R7.1, R7.5, R8.1, R11.9, R11.13, E23, E43. **20 flip to 🤝 Aligned**: R1.5, R1.7, R3.12, R4.12, R4.17, R5.4, R5.6, R5.7, R6.3, R8.14, R10.7, R11.3, R11.12, E2, E17, E24, E27, E28, E42, M11. **Re-opened** by findings against 🤝 rows: E20 (R8-F1), R9.10 and E32 (R8-F5). Any 🤝 row a round-8 fix edits returns to ⌛️ "edited in round 8, re-review" (expected: R5.9, R7.13, R11.12, R3.9/R8.5/R8.15/E33 only if their wording changes).
 
 **Round-8 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (12 items + FX8-0; new row E44 "Nothing to undo"; FX8-12 added mid-pass for the UJ3 flowchart edges the pass surfaced). After the pass: 182 🤝, 17 ⌛️ of 199 — the 9 held rows edited and re-review; E20, R9.10, E32 re-opened; R5.7, R11.12 stayed ⌛️ because a fix edited them; R5.9, R7.13 edited from 🤝; E44 new. Fences F39–F41 recorded. Next: round 9 delta verification over the 17 open rows.
+
+## Round 9 — delta verification of round 8 (2026-09-07)
+
+**Subject:** commit `9aa4b0f` (144 R, 44 E, 11 M; 182 🤝, 17 ⌛️). **Lenses:** the same five on Claude/Opus over the 17 open rows plus any 🤝 row a round-8 edit broke; agy on four (PM, staff, architecture, marketing), advisory.
+
+| lens | route | round-8 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major, 1 Minor | 1 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE (R8-F2 with residue) | 2 Major, 2 Minor, 5 questions | 2 | R1.7, E2, R8.2, E27 |
+| test (retargeted) | Claude/Opus | all RESOLVED; R8-F2, R8-F3 PARTIAL (carried by R9-T2, R9-T1) | 2 Major | 4 | none |
+| architecture | Claude/Opus | all RESOLVED / BY-FENCE | 1 Minor | 1 | none |
+| marketing (copy) | Claude/Opus | all RESOLVED / BY-FENCE | 2 Major | 3 | E27 |
+| agy (PM, staff, arch, marketing) | agy | all RESOLVED | 1 Blocker (PM; rejected, R9-X1) | E23 (rejected) | none |
+
+agy: PM, staff, and architecture returned rc 0 with per-row tables (all ALIGN except the PM's E23); marketing rc 8 (short body). Advisory on the same terms as rounds 5–8; the Claude lenses stand for each. The agy PM Blocker — "UJ3.4 step 3 says End session has no cancel button, but E23 offers Keep scanning" — is **rejected** (R9-X1, fence file): UJ3.4 step 3, R4.16, and R7.4 say the *capture surface* carries no cancel or abandon control, so a session cannot be thrown away from the counting surface; E23 is the confirmation the same journey's step 4 says the operator gives, and declining a confirmation is not an abandon control. Its tense point is PM9-1, already accepted (R9-F4).
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R9-F1 | Under F39 the review offer stands on the collection surface whenever any set-aside row exists, but E2's finished variant fixes three actions with no review door, R1.7 says "the three actions", and R11.12's surface enumeration never lists the collection surface, so a finished collection with no way into the list passes every observable | Staff R9-F1, Test R9-T2 (Major), Arch risk note | `:604`, `:876`, `:775`, `:860`, `:581` confirmed. | **accept — Major.** E2's finished variant gains the conditional action; R1.7 and R11.12 follow. R1.7 and E2 re-open. |
+| R9-F2 | Under F39 the list can be opened with every row settled and no row says what it shows or offers there (settled mark, leave actions on settled rows, "Leave them all" with nothing outstanding, session or browse) | Staff R9-F2 (Major), Staff Q2–Q4 | `:776`, `:779`, `:781`, `:913` confirmed. | **accept — Major.** Owner fork adjudicated: **fence F42** (browse, not a session; leave actions only on unsettled rows; settled rows show their decision). R8.2 re-opens. |
+| R9-F3 | F40 floors N_CONSEC_HARD only, but one auto-deferred row counts toward both counters, so N_CONSEC_FLAGGED tuned to 1 still pauses on a single row and falsifies R5.9's promise and R11.9's step | Test R9-T1 (Major) | `:713` ("by either of those routes"), `:857`, `:950` confirmed. | **accept — Major.** Owner asked: **F40 clarification** recorded — no guard counter below 2. |
+| R9-F4 | E23 is a prompt the operator can back out of, yet says the samples "were let go"; under F41 and R7.1 they are still there while it is up | PM PM9-1 (Major) | `:897`, `:750` confirmed; E22's past tense correct (Pause discards at once). | accept — Major, copy tense. |
+| R9-F5 | E23 and E25 promise "picks up at ⟨code⟩" but a session with nothing pending and an unsettled set-aside row opens into the set-aside list at no row (R3.7, R3.9); R7.5 and R7.13 mandate the wording; the Placeholders rule inherits the gap | PMM PMM9-1 (Major) | `:897`, `:899`, `:656`, `:658`, `:870` confirmed. | accept — Major. Second variant on both states. |
+| R9-F6 | E27 "It won't come back in the review; you can scan it any time from your collection" is false under F39 (the list still shows it; R8.5 names the list as a place to re-scan from) | PMM PMM9-2 (Major), Staff R9-F3 (Minor) | `:901`, `:775`, `:779` confirmed. | accept — Major, copy. E27 re-opens. |
+| R9-F7 | E43's license wording is shown on a Demo Device session started without spectral data, to a contributor who has no license (R4.22 says the indicator shows exactly as live) | Staff R9-F4 (Minor, contradiction), Staff Q5 | `:917`, `:693`; device PRD `:457` confirmed. | accept as Major for the fix pass (a simulated variant of E43), since it is a row-level contradiction. |
+
+Minors (Arch A9-1: R4.22's "nothing to set" clause vs device PRD `:464`; PM PM9-2: R7.1's Pause exception) are in `prd-capture-mode-round-9-fixes.md`. Recorded here, not fixed: PM's watch that three places say colour is shown under D50/2° while R1.5 offers illuminant/observer as display defaults (OQ 21 and R8.14 own it); Arch's note that E20 and E44 share headline strings (copy lens's call, not raised); PMM's residue that E23's "deal with them now or another day" is thin when every row is settled.
+
+### Row flips
+
+Flip rule as in round 6. Of the 17 open rows, **9 stay ⌛️** (an objection stands): R4.22, R5.9, R7.5, R7.13, R8.1, R11.9, R11.12, E23, E43. **8 flip to 🤝 Aligned**: R4.21, R5.7, R7.1, R9.10, R11.13, E20, E32, E44. **Re-opened** by findings against 🤝 rows: R1.7, E2 (R9-F1), R8.2 (R9-F2), E27 (R9-F6). Any 🤝 row a round-9 fix edits returns to ⌛️ "edited in round 9, re-review" (expected: R7.1, R8.5, R8.15, E25, E39).
+
+**Round-9 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (10 items + FX9-0; no new rows). After the pass: 181 🤝, 18 ⌛️ of 199 — 7 of the 8 listed rows flipped (R7.1 stayed ⌛️ because FX9-9 edited it); R1.7, E2, R8.2, E27 re-opened; the 9 held rows edited and re-review; R8.5, R8.15, E25, E39 edited from 🤝. Fence F42 and the F40 clarification recorded; agy R9-X1 rejected. Operator residue for round 10: E2 and E23 word the same offer condition two ways; E27/E39 do not carry the "only on unsettled rows" condition in their action cells as E23/E2 do; E24 (session complete) carries no review offer under F39 (owner call). Next: round 10 delta verification over the 18 open rows.

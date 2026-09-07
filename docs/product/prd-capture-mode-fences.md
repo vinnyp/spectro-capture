@@ -267,6 +267,12 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** Neither cancel puts a different item under the instrument, which is the one reason R7.1 gives for a discard. One rule is easier to hold than two that differ by which dialog was open.
 
+### F42 — Opening the set-aside list from the collection is a browse; the leave actions are offered only on unsettled rows (2026-09-07, round 9, R9-F2)
+
+**Decision:** The set-aside list shows every set-aside row, and where a row was settled it shows the decision and its note. "Leave it set aside" and "Leave them all set aside" are offered only on rows not yet settled. Choosing "Review the set-aside swatches" from the collection surface opens the list as a browse, not a session: no pre-flight gate runs and no session starts until the operator scans a row from it, which runs as a one-row session (R3.11) with the gate. A session that opens into the review on its own (R3.9) is unchanged.
+
+**Why:** F39 keeps the door open on a finished collection so a row left for good can still be re-scanned from the list; that door must not offer decisions about rows already decided, and looking at the list must not cost a session.
+
 ### F36 — clarification (2026-09-07, round 7, R7-F2)
 
 **Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
@@ -274,6 +280,10 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 ### F38 — clarification (2026-09-07, round 7, R7-F20)
 
 **Recorded by the orchestrator, flagged for the owner:** PROTOTYPE_RUNS = 3 is the owner's fixed number, like PROTOTYPE_PARTICIPANTS (F35), not a provisional constant closed by OQ 8 — the prototype cannot both consume and close it.
+
+### F40 — clarification (2026-09-07, round 9, R9-T1)
+
+**Owner decision, on the orchestrator's question:** the floor of 2 is a property of the guard, not of one counter. One auto-deferred row counts toward both N_CONSEC_HARD and N_CONSEC_FLAGGED, so no guard counter is ever below 2, whatever OQ 3 tunes. R5.9, OQ 3, and R11.9 state it that way.
 
 ## Rejected findings
 
@@ -284,3 +294,4 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 - **R5-X3** (agy architecture, Major, round 5): global collection-name uniqueness contradicts portable per-collection files. Rejected: rests on the per-collection-file reading that R5-F2 removes; under F1 one file holds the collections and uniqueness within it is well-defined.
 - **R5-X4** (agy architecture, Minor, round 5): a column sort mutating every row's queue order synchronously is "architecturally ugly". Rejected as HOW; the WHAT (queue order is a per-row attribute changed only by explicit reorder) stands.
 - **R1-F25** (agy test lens, round 1): the whole review cites journeys and text that do not exist in the document (UJ5.2, UJ5.4, a 15-second timeout, a manifest). Non-conforming; not counted as the lens having run on that route. The Claude test lens stands.
+- **R9-X1** (agy product-manager, Blocker, round 9): "UJ3.4 step 3 says End session has no cancel button, but E23 adds a Keep scanning action." Rejected: the no-cancel rule (UJ3.4 step 3, R4.16, R7.4) is about the capture surface — no control abandons a session or a row from the counting surface — while E23 is the confirmation that UJ3.4 step 4 has the operator give; declining a confirmation is not an abandon control. The finding's tense point is PM9-1, accepted as R9-F4.
