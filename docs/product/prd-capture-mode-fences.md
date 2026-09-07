@@ -273,6 +273,12 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** F39 keeps the door open on a finished collection so a row left for good can still be re-scanned from the list; that door must not offer decisions about rows already decided, and looking at the list must not cost a session.
 
+### F43 — A state shown on the collection surface never hides that surface's entry points; E24 says set-aside rows stay reachable (2026-09-07, round 10, R10-F6)
+
+**Decision:** The completion summary (E24) gains one sentence saying the rows left set aside are still there, still marked, and can be scanned again any time; it carries no review action of its own. The document states once that a state rendered on the collection surface never hides that surface's entry points, so the door fence F39 puts on the collection surface is there while E24 shows.
+
+**Why:** The reversal is said everywhere else (E2, E23, E27) and E24 is where a Cataloger most plausibly reads "for good" as final; a second copy of the offer inside E24 would give the same door two homes.
+
 ### F36 — clarification (2026-09-07, round 7, R7-F2)
 
 **Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
@@ -285,6 +291,10 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Owner decision, on the orchestrator's question:** the floor of 2 is a property of the guard, not of one counter. One auto-deferred row counts toward both N_CONSEC_HARD and N_CONSEC_FLAGGED, so no guard counter is ever below 2, whatever OQ 3 tunes. R5.9, OQ 3, and R11.9 state it that way.
 
+### F42 — clarification (2026-09-07, round 10, R10-F1, R10-F2)
+
+**Owner decision, on the orchestrator's questions:** (1) A scan from the browse-opened set-aside list is a re-scan by choice and never moves the collection's remembered row (R3.11 holds); the review-selected update of R3.6 and R8.3 applies only to a row selected in a review entered inside a session. (2) Where the collection's bulk session is paused, a scan from the browse-opened list is a row inside that session (R9.6), mirroring R8.7; with no session open it is a one-row session. The browse itself has no partial set to discard.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
@@ -295,3 +305,5 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 - **R5-X4** (agy architecture, Minor, round 5): a column sort mutating every row's queue order synchronously is "architecturally ugly". Rejected as HOW; the WHAT (queue order is a per-row attribute changed only by explicit reorder) stands.
 - **R1-F25** (agy test lens, round 1): the whole review cites journeys and text that do not exist in the document (UJ5.2, UJ5.4, a 15-second timeout, a manifest). Non-conforming; not counted as the lens having run on that route. The Claude test lens stands.
 - **R9-X1** (agy product-manager, Blocker, round 9): "UJ3.4 step 3 says End session has no cancel button, but E23 adds a Keep scanning action." Rejected: the no-cancel rule (UJ3.4 step 3, R4.16, R7.4) is about the capture surface — no control abandons a session or a row from the counting surface — while E23 is the confirmation that UJ3.4 step 4 has the operator give; declining a confirmation is not an abandon control. The finding's tense point is PM9-1, accepted as R9-F4.
+- **R10-X1** (agy product-marketing, Major, round 10): "E27 and E39 omit the 'only on unsettled rows' condition from their action cells." Rejected: the condition governs whether the set-aside list offers the leave actions (R8.5, R8.15, fence F42), not an action inside the confirmation those offers open; reaching E27 or E39 presupposes the offer was made. All four Claude lenses that judged it called it a false positive.
+- **R10-X2** (agy product-marketing, Major, round 10): "E24 must carry the review action F39 requires." Overruled by the owner as fence F43: E24 says the rows stay reachable and carries no review action; the door lives on the collection surface it renders on.

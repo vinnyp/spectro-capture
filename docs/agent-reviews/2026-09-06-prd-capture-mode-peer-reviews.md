@@ -473,3 +473,38 @@ Minors (Arch A9-1: R4.22's "nothing to set" clause vs device PRD `:464`; PM PM9-
 Flip rule as in round 6. Of the 17 open rows, **9 stay ⌛️** (an objection stands): R4.22, R5.9, R7.5, R7.13, R8.1, R11.9, R11.12, E23, E43. **8 flip to 🤝 Aligned**: R4.21, R5.7, R7.1, R9.10, R11.13, E20, E32, E44. **Re-opened** by findings against 🤝 rows: R1.7, E2 (R9-F1), R8.2 (R9-F2), E27 (R9-F6). Any 🤝 row a round-9 fix edits returns to ⌛️ "edited in round 9, re-review" (expected: R7.1, R8.5, R8.15, E25, E39).
 
 **Round-9 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (10 items + FX9-0; no new rows). After the pass: 181 🤝, 18 ⌛️ of 199 — 7 of the 8 listed rows flipped (R7.1 stayed ⌛️ because FX9-9 edited it); R1.7, E2, R8.2, E27 re-opened; the 9 held rows edited and re-review; R8.5, R8.15, E25, E39 edited from 🤝. Fence F42 and the F40 clarification recorded; agy R9-X1 rejected. Operator residue for round 10: E2 and E23 word the same offer condition two ways; E27/E39 do not carry the "only on unsettled rows" condition in their action cells as E23/E2 do; E24 (session complete) carries no review offer under F39 (owner call). Next: round 10 delta verification over the 18 open rows.
+
+## Round 10 — delta verification of round 9 (2026-09-07)
+
+**Subject:** commit `701ec4e` (144 R, 44 E, 11 M; 181 🤝, 18 ⌛️). **Lenses:** the same five on Claude/Opus over the 18 open rows plus any 🤝 row a round-9 edit broke, with the operator's three residue items put to every lens; agy on four (PM, staff, architecture, marketing), advisory.
+
+| lens | route | round-9 items | new findings | open rows OBJECT | aligned rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED | 2 Major | 3 | none |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE (R9-F2 with residue) | 4 Major, 5 questions | 3 | none |
+| test (retargeted) | Claude/Opus | all RESOLVED; R9-F2 PARTIAL (carried by R10-T1, R10-T2) | 1 Blocker, 2 Major, 1 Minor | 6 | R3.11, R3.6, R8.3 |
+| architecture | Claude/Opus | all RESOLVED | 1 Major, 2 Minor | 1 | E24 (on referral) |
+| marketing (copy) | Claude/Opus | all RESOLVED; residue carried | 1 Blocker, 2 Major | 2 | E24 |
+| agy (PM, staff, arch, marketing) | agy | all RESOLVED | staff: 2 Major (same as Claude's); marketing: 3 Major (1 accepted as hygiene, 1 rejected, 1 overruled) | R8.1, E2, E23, E27, E39 | E24 |
+
+agy: PM, staff, and marketing rc 0; architecture rc 8 (short body). Advisory; the Claude lenses stand for each. The agy staff's two Majors coincide with R10-F1 and R10-F4. The agy marketing lens's three Majors: unify E2/E23's condition wording — accepted as hygiene (FX10-9); E27/E39 action cells lacking the unsettled condition — **rejected** (R10-X1, fence file; four Claude lenses judged it a false positive); E24 must carry the review action — **overruled** by the owner (fence F43).
+
+### Verify-the-reviewer dispositions (Blockers and Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R10-F1 | R8.1's F42 clause calls a scan from the browse-opened list a one-row session "like any other (R3.11)"; R3.11 says a one-row session never moves the remembered row, while R3.6 and R8.3 say selecting a row in the review always sets it review-selected and R3.8 routes the next session there | Test R10-T1 (Blocker), Staff R10-F2, Arch A10-1 (Major) | `:775`, `:660`, `:655`, `:777`, `:657` confirmed. | **accept — Blocker.** Owner fork adjudicated: **F42 clarification (1)** — the browse never moves the remembered row; R3.6/R8.3 scoped to an in-session review. R3.6, R8.3, R3.11 re-open. |
+| R10-F2 | The same clause has no carve-out for a paused bulk session, where R9.6 says any capture is a row inside that session; R3.2 makes the two exclusive; R8.7 already carries the right carve-out | Staff R10-F1 (Major), agy staff | `:775`, `:813`, `:777` (R8.7) confirmed. | **accept — Major.** Owner fork adjudicated: **F42 clarification (2)** — row inside the paused session, mirroring R9.6/R8.7. |
+| R10-F3 | R8.2 now requires the list to show each row's settled mark, decision, and note and cites R11.12 for it; R11.12's set-aside-list clause is unchanged (cause, attempts, samples kept) and enumerates none of the list's actions, so F42's leave-action conditions have no observable | PM PM10-2, Test R10-T2 (Major), Arch and PMM notes | `:776`, `:860` confirmed. | accept — Major. |
+| R10-F4 | E39's new body says "That clears the list"; R8.2 says the list shows every set-aside row, settled or not; E27's corrected body contradicts it | PMM PMM10-1 (Blocker), PM PM10-1, Test R10-T3, Staff R10-F4 (Major), agy staff | `:913`, `:776`, `:781` confirmed; round-9 FX9-2 wording. | accept — Blocker by the copy lens's scale; copy fix. |
+| R10-F5 | R7.1 now calls Pause "the one deliberate exception" to the discard reason, but ending a session early also discards (R7.5, E23, UJ3.4) and puts nothing under the instrument | Staff R10-F3 (Major) | `:750`, `:754`, `:897` confirmed. | accept — Major. |
+| R10-F6 | E24 says "set aside for good" flat and offers only "Open the collection" while E2, E23, E27 now carry the reversal; two lenses say no change is needed, two want it said | PMM PMM10-3 (Major), Arch A10-3 (Minor); PM and Test judged no defect | `:898`, `:764` confirmed. | Owner fork adjudicated: **fence F43** — one reversibility sentence, no new action, one rule that a collection-surface state never hides the surface's entry points. E24 re-opens. |
+| R10-F7 | E23 "you can deal with them now or another day" renders when every set-aside row is settled; E2 has the honest line | PMM PMM10-2 (Major), Test R10-T4 (Minor) | `:897`, `:876` confirmed. | accept — Major, copy. |
+
+Minors (Arch A10-2: R8.1's enumeration of the self-acting ways in omits R3.8's; agy PMM10-1 / operator residue: E2 and E23 word one condition two ways) are in `prd-capture-mode-round-10-fixes.md`. Recorded, not fixed: PM's note that E33's set-aside variant offers the review from the queue list, a third home R8.1 does not enumerate (reconcile when F39 is next touched); Test's note that E24's "Open the collection" reads as if E24 were not on the collection (pre-existing); Staff's question whether E25's three-count sentence should drop at ⟨pending⟩ = 0 (copy lens, later).
+
+### Row flips
+
+Flip rule as in round 6. Of the 18 open rows, **7 stay ⌛️** (an objection stands): R7.1, R8.1, R8.2, R8.15, R11.12, E23, E39. **11 flip to 🤝 Aligned**: R1.7, R4.22, R5.9, R7.5, R7.13, R8.5, R11.9, E2, E25, E27, E43. **Re-opened** by findings against 🤝 rows: R3.6, R8.3, R3.11 (R10-F1), E24 (R10-F6). Any 🤝 row a round-10 fix edits returns to ⌛️ "edited in round 10, re-review" (expected: R7.15, and E2/R1.7 if FX10-9 touches them).
+
+**Round-10 status:** partially aligned. **Fix pass:** applied by `operator-agents:product-manager` on Opus (10 items + FX10-0; no new rows). After the pass: 186 🤝, 13 ⌛️ of 199 — 10 of the 11 listed rows flipped (E2 stayed ⌛️ because FX10-9 edited it); R3.6, R3.11, R8.3, E24 re-opened; R7.15 edited from 🤝; R8.2 and R8.15 held untouched. Open: R3.6 R3.11 R7.1 R7.15 R8.1 R8.2 R8.3 R8.15 R11.12 E2 E23 E24 E39. Operator residue for round 11: R7.1's discard list still names "entering the deferred-row review" unqualified while R8.1 scopes the discard to the in-session review; R1.7 states the offer condition in prose rather than quoting the action cell. Next: round 11 delta verification over the 13 open rows.
