@@ -975,3 +975,34 @@ Minors accepted: "F1–F49"; F4/F11 map wording "copied"; the duplicated enginee
 All rows in both PRDs hold 🤝 except import R4.1 and the new R4.2, held for round 26 (staff, interface, test over R4.1, R4.2, the cross-PRD cites, and the edited Legend/Traceability/obligations/README paragraphs).
 
 **Round-25 status:** the split verified intact; one Blocker (the dropped observability rule) and one Major (bare cross-PRD IDs). **Fix pass:** applied by `operator-agents:product-manager` on Opus (7 items + FX25-0). After the pass: capture PRD 18,425 words, 146 🤝; import PRD 3,065 words, 15 🤝, 2 ⌛️ (R4.1, R4.2); copy files 31/31 and 13/13; 820 links checked, the three device-PRD `&amp;` misses only; zero bare cross-PRD row labels.
+
+## Round 26 — delta on the round-25 fixes (2026-09-08)
+
+**Subject:** commit `861105a`. **Lenses:** staff engineer, interface, and test (retargeted) on Claude/Opus over import R4.1, R4.2, M1, the cross-PRD citation convention, and the edited Legend, Traceability, obligations, fence, and README paragraphs. All three independently diffed both PRDs against the pre-split tree: no rule text changed on any 🤝 row.
+
+| lens | round-25 items | new findings | rows OBJECT |
+|---|---|---|---|
+| staff engineer | all RESOLVED | 1 Major, 2 Minor, 1 Nit | import R3.2 by proxy (its E40 route has no owning rule across the two PRDs) |
+| interface | all RESOLVED; R25-F2 PARTIAL (one M-family label) | 2 Minor, 2 Nit | none — "contract sound" |
+| test (retargeted) | all RESOLVED; R4.2 verified an exact carry of R11.12's only clause over the import states | 2 Minor, 3 Nit | none — "tests trustworthy" |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R26-F1 | E40 offers "End that session" against an active, paused, or interrupted session; capture's R7.13 covers only the interrupted case from outside the capture surface, and no line in either PRD says the active/paused route follows capture's end-early path (E23 confirmation, R7.16 discard, R7.5 summary). Pre-existing inside the locked capture PRD; the split put the offer and the rules in different documents | Staff (Major) | import `:140`, copy `:24`; capture `:270` (R7.13), no other row. | accept — one clause on import's "Capture Mode" obligations line: the routes E40 offers resolve to capture §7's paths, an active or paused session ended from there following the capture PRD's R7.5. A pointer to the rule that already governs every session end, not a new rule. |
+| R26-F2 | Capture's "Inventory import" obligations line lists R3.12 in its Rows cell with no matching obligation text, and omits R6.1, which depends on the matching rule exactly as R1.2 and R9.2 do | Interface, Staff, Test (Minor) | `:426`, `:235`, fences `:362`. | accept — R6.1 added; the obligation text names the scale constants R3.12 imposes. |
+| R26-F3 | F4 and F11 exist byte-identical in both fence files with no canonicity rule; F49's Decision still says M8 and OQ 13 leave, three lines above the clarification that keeps them | Test (Minor), Staff (Minor), Interface (Nit) | import fences `:5`; capture fences `:374`, `:378`. | accept — the import fence preamble names the capture text canonical; F49's Decision gains a parenthetical pointing at clarification (1), history unrewritten. |
+
+Nits accepted: the M8 label at import `:189` moves inside the link; the import Legend's status paragraph is rewritten to the lock state. Post-lock list (consolidated in the lock record below): no row obliges a test to list the actions a non-preview import state offers (E40's three routes); import §4's Traces line; the Swatch field terms undefined in either Vocabulary; the device PRD's literal `&amp;` headings; the earlier post-lock items from rounds 21–24.
+
+### Lock pass (editorial edits, verified by orchestrator check, not a further round)
+
+The edits above touch no requirement row's text. Under the round-25 log's own finding that index and wording repairs should not re-open rows, they are applied as a lock pass, checked by grep and link resolution, and recorded here rather than sent through a round 27.
+
+- [ ] **LP-1** — import `prd-inventory-import.md`, Inherited obligations, the "Capture Mode" line: append "; an import is refused while a session on that collection is in flight, and the routes [E40] offers resolve to the capture PRD's §7 paths — an active or paused session ended from there follows [the capture PRD's R7.5](../capture-mode/prd-capture-mode.md#7-pause-end-interruption-and-resume)".
+- [ ] **LP-2** — capture `prd-capture-mode.md:426`, the "Inventory import" line: Rows cell adds `[R6.1](#6-queue-navigation-and-reordering)`; Obligation cell appends "; and the design scale an import holds up under — ROWS_TARGET within IMPORT_BUDGET, ROWS_CEILING warned about and imported anyway ([R3.12](#3-the-capture-session), OQ 13)".
+- [ ] **LP-3** — import fences `:5`: append "The capture file's text is canonical; an amendment lands there and is re-copied here." Capture fences F49 Decision: after "metrics M7 and M8, open questions 12 and 13" insert "(M8 and OQ 13 stay — clarification (1))".
+- [ ] **LP-4** — import `:189`: the label reads `[the capture PRD's M8](…)` with the possessive removed from outside the link. Import Legend "Status of this document": every row 🤝 Aligned; the F49 verification rounds (25, 26) are recorded in the capture review log; the document is locked with the capture PRD.
+- [ ] **LP-5** — Flip import R4.1 and R4.2 → 🤝 Aligned (unanimous ALIGN, rounds 26). `docs/product/README.md` row 3: **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet.
+- [ ] **LP-6** — checks: links and anchors in all eleven files; `grep -o '\[\(R\|E\|M\)[0-9.]*\](\.\./' docs/product/*/prd-*.md` returns nothing; no `&amp;`; two-sentence rule; six mermaid blocks; counts.
