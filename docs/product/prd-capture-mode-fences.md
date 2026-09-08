@@ -257,9 +257,9 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 ### F40 — N_CONSEC_HARD has a floor of 2 (2026-09-07, round 8, R8-F3)
 
-**Decision:** Whatever OQ 3 tunes, N_CONSEC_HARD is never below 2. Stated once in R5.9 and in OQ 3; R11.9 cites the floor rather than claiming that no tuning can invalidate its interleaved-failures step.
+**Decision:** Whatever OQ 3 tunes, N_CONSEC_HARD is never below 2. Stated once in R5.9 and in OQ 3; [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script cites the floor rather than claiming that no tuning can invalidate its interleaved-failures step.
 
-**Why:** A guard that pauses on a single row's auto-deferral is not watching for a run of instrument failures; it would also make the auto-defer-without-pause path of R5.9 unreachable and falsify R11.9's step.
+**Why:** A guard that pauses on a single row's auto-deferral is not watching for a run of instrument failures; it would also make the auto-defer-without-pause path of R5.9 unreachable and falsify that step.
 
 ### F41 — Cancelling a mid-session "Add a swatch" keeps the partial set (2026-09-07, round 8, R8-F5)
 
@@ -297,6 +297,18 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** The document is read by agents building plans. At 33k words with 54% outside the rows it was twice what a builder needs; the moves lose no rule, and the E-ID contract keeps copy and rows in sync.
 
+### F47 — The first build phases its offers; fence F24 stands (2026-09-07, round 18, priority pass)
+
+**Decision:** A P0 row's state that offers an action whose rows are P1 — "Re-scan" (R8.7–R8.10, R8.12), "Add a swatch" (R9.1–R9.11), mid-session reorder (R6.8, R6.11) — is shown in the first build without that action; the offer arrives with the P1 rows. R11.15's surface lists and R7.19's entry points are asserted per phase. R10.7's reorder observable is recorded once reordering lands; R10.8's tie-break (mode slips, then steps to the just-captured row) is unaffected, so the seam prototype still closes OQ 8 in the first build. M5 is measured from the P1 build onward.
+
+**Why:** Six lenses found the P0 set offering doors with nothing behind them; phasing the offers keeps the owner-confirmed P0/P1 split (F24) and costs one Legend sentence rather than twenty rows.
+
+### F48 — One guard counter (2026-09-07, round 18, R18-F2)
+
+**Decision:** The consecutive-failure guard has one counter, N_CONSEC_HARD (candidate 2, floor 2 — OQ 3), counting consecutive rows the instrument set aside by any route: auto-deferred after K_FAILED_ATTEMPTS, "Skip" after a failed attempt, or a set that disagreed. N_CONSEC_FLAGGED is retired; F18, F37, and F40 read as one counter; OQ 3 tunes one number.
+
+**Why:** The two counters had identical event sets — a disagreeing set is a failed attempt and its only set-aside route is a Skip after it — so the second could never fire first and no test could tell it from its absence. OQ 3 already said they might merge.
+
 ### F36 — clarification (2026-09-07, round 7, R7-F2)
 
 **Recorded by the orchestrator as the consequence of F36, flagged for the owner:** the non-spectral capture path is handed to the device PRD as an inherited note — its "License missing spectral data" state becomes a capability notice with a forward action (capture continues, readings marked non-spectral, colour shown under D50/2°) and its §2 "core payload" wording is softened — and this PRD adds a capture-surface indicator while a session runs non-spectral, with the mark's surfacing in Collection Mode handed to that PRD.
@@ -307,7 +319,7 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 ### F40 — clarification (2026-09-07, round 9, R9-T1)
 
-**Owner decision, on the orchestrator's question:** the floor of 2 is a property of the guard, not of one counter. One auto-deferred row counts toward both N_CONSEC_HARD and N_CONSEC_FLAGGED, so no guard counter is ever below 2, whatever OQ 3 tunes. R5.9, OQ 3, and R11.9 state it that way.
+**Owner decision, on the orchestrator's question:** the floor of 2 is a property of the guard, not of one counter. One auto-deferred row counts toward both N_CONSEC_HARD and N_CONSEC_FLAGGED, so no guard counter is ever below 2, whatever OQ 3 tunes. R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script state it that way.
 
 ### F42 — clarification (2026-09-07, round 10, R10-F1, R10-F2)
 
@@ -348,12 +360,13 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. The
 - **F1** no Library — R1.1. **F2** measurement-settings scope — R1.3, R1.5, R1.10, R4.6. **F3** rename and delete are Collection Mode's — R1.8. **F4** the import target is chosen in the app — R2.5. **F5** jump by code plus manual reordering — R6.7, R6.8, R6.11.
 - **F6** a per-scan failure holds the row, as amended — R5.3, R5.4, R5.13, R8.4. **F7** drift and no-reading are device halts, no per-scan timeout — R5.1, R5.2. **F8** N_CONSEC_DRIFT dropped — R5.10. **F9** "Flag" moves a captured row to set aside — R5.6, R5.8, R9.9. **F10** accept the average with the spread recorded — R1.4, R4.10, R4.11, R8.10.
 - **F11** Swatch Code normalisation — R1.2, R2.7, R2.8, R6.1, R9.2. **F12** the session is a named entity, the binding released at quit — R3.1, R3.2, R3.3, R3.11, R3.13, R7.12. **F13** the mid-session insert stays in v1 — R9.10, R9.11. **F14** a resume is a new session and the old one is closed — R3.2, R3.4, R7.12, R7.18. **F15** the collection remembers the last current row — R3.1, R3.6, R3.7, R3.8, R7.5.
-- **F16** "Flag" targets the row that just landed — R4.21, R5.6, R5.7, R5.8. **F17** a quick re-scan never wakes an interrupted session — R3.11, R3.13, R7.13, R9.7, R8.1b, R8.1e. **F18** the guard counts only instrument-caused deferrals — R5.10. **F19** entering the review discards the part-finished set — R7.1, R8.1f, R8.1g, R8.1j. **F20** the review's surface and the summary's form follow the seam — R4.15, R7.15, R8.1.
+- **F16** "Flag" targets the row that just landed — R4.21, R5.6, R5.7, R5.8. **F17** a quick re-scan never wakes an interrupted session — R3.11, R3.13, R7.13, R9.7, R8.1b, R8.1e. **F18** the guard's one counter counts only instrument-caused deferrals, as amended by F48 — R5.9, R5.10, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script. **F19** entering the review discards the part-finished set — R7.1, R8.1f, R8.1g, R8.1j. **F20** the review's surface and the summary's form follow the seam — R4.15, R7.15, R8.1.
 - **F21** find matches code, name, and both alternates — R6.1. **F22** capture owns the queue order — R6.7, R6.8. **F23** the guard is record-only in dogfood — R5.12. **F24** the priority split — the Pri column throughout, and the [Legend](prd-capture-mode.md#legend). **F25** the seam rows are P0 and the prototype is first-build work — [§10](prd-capture-mode.md#10-the-seam-capture-to-collection)'s preamble, R10.6, R10.7.
 - **F26** a cue at the moment samples are discarded, no confirm — R7.17, R8.13. **F27** the agreement check is record-only through dogfood — R4.23. **F28** the check runs at a fixed D50/2° — R1.5, R4.9, R4.24. **F29** the lost-unflushed-writes stand-in — R4.13, R11.10. **F30** completion measured per collection over chains — M2, M3, M5, M9.
 - **F31** "Leave them all set aside", as clarified three times — R1.7, R3.9, R7.11, R7.16, R8.5, R8.15, R8.1f, R8.1g, R8.1h, R8.1i. **F32** the trigger lockout lasts until the reading returns — R4.3, R4.18, R11.5. **F33** the average is taken across the spectral curves — R4.12. **F34** each collection carries a chosen scan mode — R1.6, R1.10, R4.5. **F35** the prototype protocol runs with the owner only — R10.8.
-- **F36** capture proceeds without the spectral entitlement, as clarified — R4.22, R4.24, R4.26, R8.14. **F37** the guard counts rows, not presses — R5.9, R5.14, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s contributor-walk script. **F38** the seam tie-break is symmetric and repeated, as clarified — R10.8. **F39** the review is offered while any set-aside row exists — R8.16 (and [E2](prd-capture-mode-copy.md#error--state-copy)'s finished variant). **F40** the guard has a floor of 2, as clarified — R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script.
+- **F36** capture proceeds without the spectral entitlement, as clarified — R4.22, R4.24, R4.26, R8.14. **F37** that one counter counts rows, not presses, as amended by F48 — R5.9, R5.14, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script. **F38** the seam tie-break is symmetric and repeated, as clarified — R10.8. **F39** the review is offered while any set-aside row exists — R8.16 (and [E2](prd-capture-mode-copy.md#error--state-copy)'s finished variant). **F40** that one counter has a floor of 2, as clarified and as amended by F48 — R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script.
 - **F41** cancelling an offer keeps the part-finished set — R6.3, R7.1, R9.10. **F42** look-through versus in-session review, as clarified five times — R3.6, R3.11, R8.1, R8.2, R8.5, R8.15, R8.1a–R8.1k. **F43** a collection-surface state never hides that surface's entry points — R7.19. **F44** leaving a detour returns to the queue, as clarified twice — R3.8, R8.1, R8.6, R8.1j, R8.1k. **F45** every requirement row is at most two sentences — every row in [§1](prd-capture-mode.md#1-collections) through [§11](prd-capture-mode.md#11-demo-device-and-verifiability). **F46** the restructure — the two companion files, the trims, and the retired IDs listed in the [Legend](prd-capture-mode.md#legend).
+- **F47** the first build phases its offers — the [Legend](prd-capture-mode.md#legend)'s priority paragraph, R10.7, M5. **F48** one guard counter — R4.21, R5.9, R5.10, R5.11, R5.14, and OQ 3.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings
@@ -365,6 +378,6 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. The
 - **R5-X3** (agy architecture, Major, round 5): global collection-name uniqueness contradicts portable per-collection files. Rejected: rests on the per-collection-file reading that R5-F2 removes; under F1 one file holds the collections and uniqueness within it is well-defined.
 - **R5-X4** (agy architecture, Minor, round 5): a column sort mutating every row's queue order synchronously is "architecturally ugly". Rejected as HOW; the WHAT (queue order is a per-row attribute changed only by explicit reorder) stands.
 - **R1-F25** (agy test lens, round 1): the whole review cites journeys and text that do not exist in the document (UJ5.2, UJ5.4, a 15-second timeout, a manifest). Non-conforming; not counted as the lens having run on that route. The Claude test lens stands.
-- **R9-X1** (agy product-manager, Blocker, round 9): "UJ3.4 step 3 says End session has no cancel button, but E23 adds a Keep scanning action." Rejected: the no-cancel rule (UJ3.4 step 3, R4.16, R7.4) is about the capture surface — no control abandons a session or a row from the counting surface — while E23 is the confirmation that UJ3.4 step 4 has the operator give; declining a confirmation is not an abandon control. The finding's tense point is PM9-1, accepted as R9-F4.
+- **R9-X1** (agy product-manager, Blocker, round 9): "UJ3.4 step 3 says End session has no cancel button, but E23 adds a Keep scanning action." Rejected: the no-cancel rule (UJ3.4 step 3, R4.16) is about the capture surface — no control abandons a session or a row from the counting surface — while E23 is the confirmation that UJ3.4 step 4 has the operator give; declining a confirmation is not an abandon control. The finding's tense point is PM9-1, accepted as R9-F4.
 - **R10-X1** (agy product-marketing, Major, round 10): "E27 and E39 omit the 'only on unsettled rows' condition from their action cells." Rejected: the condition governs whether the set-aside list offers the leave actions (R8.5, R8.15, fence F42), not an action inside the confirmation those offers open; reaching E27 or E39 presupposes the offer was made. All four Claude lenses that judged it called it a false positive.
 - **R10-X2** (agy product-marketing, Major, round 10): "E24 must carry the review action F39 requires." Overruled by the owner as fence F43: E24 says the rows stay reachable and carries no review action; the door lives on the collection surface it renders on.

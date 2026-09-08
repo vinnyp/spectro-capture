@@ -258,7 +258,7 @@ flowchart TD
     F2 -- "no: the next press retries the same row" --> D
     F2 -- "no: Skip or Flag, deliberate keys" --> F3["Row deferred with cause, good samples kept; queue advances"]
     F2 -- "yes: distinct moved-on cue" --> F3
-    F3 --> K{"Consecutive rows the instrument set aside reach N_CONSEC_HARD or N_CONSEC_FLAGGED?"}
+    F3 --> K{"Consecutive rows the instrument set aside reach N_CONSEC_HARD?"}
     K -- "yes, guard enabled" --> L["Guard pauses: row held, samples kept; check placement or recalibrate; force-resume resets the guard's counters"]
     L --> C
     K -- no --> C
