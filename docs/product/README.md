@@ -11,7 +11,7 @@ Six PRDs remain to be written to cover v1. Priority is authoring order, not a cu
 | # | PRD | Use cases | Status |
 |---|---|---|---|
 | 1 | [Device Management](prd-device-management.md) | U3, U8, U9 | **Written** |
-| 2 | [Capture Mode](prd-capture-mode.md) | U1, U2 | **Drafted** — in the review rounds, not yet locked |
+| 2 | [Capture Mode](prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
 | 3 | Data Foundation | U5, U6 | queued |
 | 4 | Collection Mode | U5, U7 | queued |
 | 5 | QC &amp; Comparison | U4 | queued |

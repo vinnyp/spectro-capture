@@ -923,3 +923,29 @@ Everything else raised this round is post-lock and listed in the round-23 fix fi
 Consented by every lens: R11.8, R11.12 → 🤝. Held: R5.9, R8.4 (test OBJECT by proxy of step 4). Round 24 is a delta by the test and architecture lenses over step 4, F47's and F48's lines, and those two rows; then the document locks.
 
 **Round-23 status:** lock consented on 2 of 4 rows; R5.9/R8.4 held by proxy of §11 step 4. **Fix pass:** applied by `operator-agents:product-manager` on Opus (3 items + FX23-0). After the pass: PRD 19,622 words; 159 🤝, 2 ⌛️ (R5.9 R8.4); copy 44/44. Checks clean.
+
+## Round 24 — last delta (2026-09-07)
+
+**Subject:** the round-23 commit `0c9b23f` (PRD 19,622 words; 159 🤝, 2 ⌛️; copy 44/44). **Lenses:** test (retargeted) and architecture on Claude/Opus over R5.9, R8.4, §11's step 4, and F47's and F48's lines. agy did not run.
+
+| lens | round-23 items | new findings | rows OBJECT |
+|---|---|---|---|
+| test (retargeted) | all RESOLVED | 1 Minor (post-lock), 2 Nit | none — "tests trustworthy" |
+| architecture | all RESOLVED; A23-2 PARTIAL as a class (E42) | 1 Nit | none — "sound, lock it" |
+
+No Blocker or Major. Both lenses ALIGN on R5.9 and R8.4; the proxy objection is discharged — a contributor can run §11 step 4 on a default Demo Device build, and it fails both naive guards. Post-lock items added to the round-23 fix file's list: F47's map files E18's and E42's marks as action-level where they are body-variant marks; UJ 3.9 step 4's gloss omits the agreement-check setting; step 4's negatives inherit N_CONSEC_HARD by ellipsis.
+
+### Row flips
+
+R5.9, R8.4 → 🤝 (unanimous ALIGN; orchestrator flip recorded here).
+
+## Lock record (2026-09-07)
+
+- **Every row aligned:** 161 R and M rows 🤝 (150 requirement rows, R11.15's eight lettered rows, R8.1's eleven lettered cells are cells of R8.1, 11 M rows); 44 of 44 copy rows 🤝. No owner overrule stands on any row.
+- **Mandatory pre-lock round:** round 18 ran the retargeted `peer-plan-reviewer` ("proceed to lock") plus the fresh interface lens; rounds 19–24 were deltas on the edits those rounds produced.
+- **OQ contract:** every answered open question has a results section (OQ 15, OQ 18, OQ 10 and 17 folded into OQ 8); the 21 open ones carry an interim rule and a closer in the table.
+- **Zero unresolved placeholders; template guidance comments deleted** (checked across the PRD, the copy file, and the journeys file).
+- **Mechanical checks:** anchors and citations resolve (the device PRD's literal `&amp;` §7 heading is the one known miss, on the post-lock list); no literal `&amp;` in the capture files; six mermaid blocks render; every requirement row at most two sentences (F45).
+- **Fences:** F1–F48 with clarifications; fence → row map in the fence file.
+- **Post-lock list:** in `prd-capture-mode-round-23-fixes.md`.
+- **Next:** owner review of the artifact set. No PR until the owner says so. The PRD header's `Status:` line is the owner's to flip.
