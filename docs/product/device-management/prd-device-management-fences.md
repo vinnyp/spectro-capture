@@ -50,7 +50,7 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 ## Fence → row map
 
-Where a fence is named in the PRD, for provenance only. A row not listed here is not silently governed by a fence; it simply does not cite one.
+Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.
 
 | Fence | Named by |
 | :--- | :--- |
@@ -62,7 +62,7 @@ Where a fence is named in the PRD, for provenance only. A row not listed here is
 | F6 | [R2.14](prd-device-management.md#2-licensing--pre-authorization); [OQ 12, OQ 13, OQ 14](prd-device-management.md#open-questions) |
 | F7 | the [Legend](prd-device-management.md#legend)'s provisional-constants paragraph, which every TBD-on-spike constant's row inherits |
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
-| F9 | every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
+| F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
 ## Rejected findings
 

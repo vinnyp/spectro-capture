@@ -1,6 +1,6 @@
 # Device Management PRD — open-question results
 
-One `## OQ <n>` section per question in [prd-device-management.md](prd-device-management.md)'s [Open Questions](prd-device-management.md#open-questions) table that already carries evidence: the eight questions the [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) part-answered, each marked `residual` in that table, and the three it bears on without answering — OQ 4, OQ 19, OQ 25 — which stay `open`. An OQ's status may change only when its section exists here, and a section existing is necessary but not sufficient: a `residual` question keeps its section and its status until the hardware spike closes the remainder, and an `open` one keeps both until an answer rather than evidence arrives. The table keeps a one-line "Decision so far" and this file carries the evidence. Owner decisions that close a question are recorded as fences in [prd-device-management-fences.md](prd-device-management-fences.md).
+One `## OQ <n>` section per question in [prd-device-management.md](prd-device-management.md)'s [Open Questions](prd-device-management.md#open-questions) table that already carries evidence: the eight questions the [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) part-answered, each marked `residual` in that table, and three of the questions it bears on without answering — OQ 4, OQ 19, OQ 25 — which stay `open`. An OQ's status may change only when its section exists here, and a section existing is necessary but not sufficient: a `residual` question keeps its section and its status until the hardware spike closes the remainder, and an `open` one keeps both until an answer rather than evidence arrives. The table keeps a one-line "Decision so far" and this file carries the evidence. Owner decisions that close a question are recorded as fences in [prd-device-management-fences.md](prd-device-management-fences.md).
 
 ## OQ 1 — Activation-before-discovery sequencing
 
@@ -84,7 +84,7 @@ One `## OQ <n>` section per question in [prd-device-management.md](prd-device-ma
 
 ## OQ 19 — Sandbox entitlement conflict
 
-**Evidence (SDK audit):** The vendor documents four required macOS sandbox entitlements — Bluetooth, serial, USB, and network client ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs) — while Apple's current entitlement reference does not list the serial one.
+**Evidence (SDK audit):** The vendor documents four required macOS sandbox entitlements — Bluetooth, serial, USB, and network client ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs). That Apple's current entitlement reference does not list the serial one is the [Open Questions](prd-device-management.md#open-questions) table's claim, not the audit's.
 
 **Still open, and what closes it:** whether a sandboxed build can hold all four, and whether the app ships sandboxed at all. An owner decision plus a sandboxed build experiment; the experiment needs a Mac, not an instrument.
 
