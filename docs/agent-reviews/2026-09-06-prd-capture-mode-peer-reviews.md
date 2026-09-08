@@ -871,3 +871,27 @@ Minors accepted: R5.9's lead gloss "rows the instrument set aside by any route" 
 Consented by every lens and untouched by the fix: R11.15, E19, E22, E23, E32, E34 → 🤝. Held for round 22 (edited by the fix): R5.9, R8.4, R11.12, E29, E30, E31, E33. Round 22 is a delta by the test, architecture, and interface lenses over those seven rows, §11's script, the copy header, and F47's map; then the document locks.
 
 **Round-21 status:** lock consented on 6 of 13 rows; 7 edited. **Fix pass:** applied by `operator-agents:product-manager` on Opus (5 items + FX21-0). After the pass: PRD 19,585 words; 158 🤝, 3 ⌛️ (R5.9 R8.4 R11.12); copy 40 🤝, 4 ⌛️ (E29 E30 E31 E33). Checks clean (anchors, citations, no `&amp;`, six mermaid blocks, two-sentence rule). Post-lock list adds: the device PRD's literal `&amp;` §7 heading breaks two cross-file links.
+
+## Round 22 — delta on the round-21 edits (2026-09-07)
+
+**Subject:** the round-21 commit `2cf2b4f` (PRD 19,585 words; 158 🤝, 3 ⌛️; copy 40/44). **Lenses:** test (retargeted), architecture, and interface on Claude/Opus over R5.9, R8.4, R11.12, E29, E30, E31, E33, §11's script step 4, the copy header's E29 clause, and F47's map. The staff lens consented to lock in round 21 with no open item; PM and marketing as in round 21. agy did not run.
+
+| lens | round-21 items | new findings | rows OBJECT |
+|---|---|---|---|
+| test (retargeted) | T21-1 PARTIAL, rest RESOLVED, F47 map PARTIAL | 3 Major, 2 Minor, 1 Nit | R5.9, R8.4 |
+| architecture | all RESOLVED, F47 map PARTIAL | 2 Minor, 2 Nit (outside the row set) | none |
+| interface | all RESOLVED, F47 map PARTIAL | 4 Minor, 1 Nit | none |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R22-F1 | §11 step 4 exercises two of R5.9's three routes — "Skip" after a failed attempt is walked nowhere — and its new disagreeing-set clause has no negative twin, so a build that pauses on any two "Leave it set aside"s passes | Test T22-1, T22-2 (Major); Arch A22-2 (Minor: "two" pins the open constant) | `:411` confirmed: positives name K_FAILED_ATTEMPTS and the disagreeing set only; the sole negative is "Skip" with no attempt. | accept — step 4 asserts each of R5.9's three routes and both exclusions, against N_CONSEC_HARD rather than "two". |
+| R22-F2 | No Demo Device control produces a disagreeing set: the device PRD's settable surface (`prd-device-management.md:463`) covers device state, not reading content; R11.8 fixes only a reading's shape; the parity-gate obligation (`:462`) carries the twin only generically | Test T22-3 (Major) | Confirmed by grep: no row lets a test set a generated set's spread; R4.23 promises both paths are walked without hardware. Same shape as R8-F6, fixed by R4.26. | accept — one clause on R11.8 (a test sets a generated set's spread against SAMPLE_TOLERANCE), which also makes R4.9's boundary producible. R11.8 re-opens. |
+| R22-F3 | FX21-4's enumeration "E29–E34" is narrower than the "its marked states" it replaced: E2, E18, E28, E36, E37, E42 carry action-level ‹P1› marks under F47 | Arch A22-1, Interface I22-1, Test T22-4 (Minor) | copy file grep: twelve marked states. | accept — the map names the state-level and the action-level sets. |
+
+Minors accepted: F48's Decision gloss "the instrument set aside" amended to match R5.9 (Interface I22-2); the copy preamble's "every promise is backed by a requirement row" gains the E29 exception (Interface I22-3); the Surfaces table's three "QC or correction" cells carry the copy file's ‹QC & Comparison PRD› mark (Test T22-5, Arch nit); R11.12 "[E18]'s and [E42]'s re-scan" (Interface nit); the Legend's per-phase list adds R11.12 (Arch nit). Post-lock list: the review's "Leave it set aside" with no attempt as an engineering-plan test-matrix item; E29's adoption, not re-authoring, by the QC & Comparison PRD.
+
+### Row flips
+
+Consented by every lens and untouched by the fix: E29, E30, E31, E33 → 🤝. Held for round 23 (test OBJECT or edited): R5.9, R8.4, R11.8, R11.12. Round 23 is a delta by the test, architecture, and interface lenses over those four rows, §11's step 4, the Surfaces cells, the Legend list, the copy preamble, and F47/F48's lines; then the document locks.
