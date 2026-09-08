@@ -869,3 +869,5 @@ Minors accepted: R5.9's lead gloss "rows the instrument set aside by any route" 
 ### Row flips
 
 Consented by every lens and untouched by the fix: R11.15, E19, E22, E23, E32, E34 → 🤝. Held for round 22 (edited by the fix): R5.9, R8.4, R11.12, E29, E30, E31, E33. Round 22 is a delta by the test, architecture, and interface lenses over those seven rows, §11's script, the copy header, and F47's map; then the document locks.
+
+**Round-21 status:** lock consented on 6 of 13 rows; 7 edited. **Fix pass:** applied by `operator-agents:product-manager` on Opus (5 items + FX21-0). After the pass: PRD 19,585 words; 158 🤝, 3 ⌛️ (R5.9 R8.4 R11.12); copy 40 🤝, 4 ⌛️ (E29 E30 E31 E33). Checks clean (anchors, citations, no `&amp;`, six mermaid blocks, two-sentence rule). Post-lock list adds: the device PRD's literal `&amp;` §7 heading breaks two cross-file links.
