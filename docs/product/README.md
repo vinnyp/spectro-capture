@@ -6,17 +6,18 @@ A PRD is not a decision about *how*. Architecture is decided only in [`docs/deci
 
 ## The PRD set
 
-Six PRDs remain to be written to cover v1. Priority is authoring order, not a cut line.
+Five PRDs remain to be written to cover v1. Priority is authoring order, not a cut line.
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
-| 3 | Data Foundation | U5, U6 | queued |
-| 4 | Collection Mode | U5, U7 | queued |
-| 5 | QC &amp; Comparison | U4 | queued |
-| 6 | Color Visualization | U7 | queued |
-| 7 | Telemetry | — | queued — v1.x, gated on the provider spike |
+| 3 | [Inventory Import](import/prd-inventory-import.md) | U1 | **Drafted** from the locked capture rows under fence F49, pending its verification round |
+| 4 | Data Foundation | U5, U6 | queued |
+| 5 | Collection Mode | U5, U7 | queued |
+| 6 | QC &amp; Comparison | U4 | queued |
+| 7 | Color Visualization | U7 | queued |
+| 8 | Telemetry | — | queued — v1.x, gated on the provider spike |
 
 ### 1. Device Management — written
 
@@ -24,31 +25,39 @@ Connect (BLE + USB), known-device management, licensing and offline pre-authoriz
 
 ### 2. Capture Mode
 
-The heads-down loop, and the product bet made tangible. CSV inventory import with column mapping · the scan queue and row auto-advance · 1–5 sample averaging · inline per-scan failure handling (retry / skip / flag-row) and the dead-letter queue · ad-hoc single capture · session durability and resumability across launches.
+The heads-down loop, and the product bet made tangible. The scan queue and row auto-advance · 1–5 sample averaging · inline per-scan failure handling (retry / skip / flag-row) and the dead-letter queue · ad-hoc single capture · session durability and resumability across launches.
 
-The PRD is [prd-capture-mode.md](capture-mode/prd-capture-mode.md), with three companion files: the user journeys in [prd-capture-mode-journeys.md](capture-mode/prd-capture-mode-journeys.md), the shipping error and state copy in [prd-capture-mode-copy.md](capture-mode/prd-capture-mode-copy.md), and the answers to closed open questions in [prd-capture-mode-oq-results.md](capture-mode/prd-capture-mode-oq-results.md). Owner decisions are in [prd-capture-mode-fences.md](capture-mode/prd-capture-mode-fences.md).
+The PRD is [prd-capture-mode.md](capture-mode/prd-capture-mode.md), with three companion files: the user journeys in [prd-capture-mode-journeys.md](capture-mode/prd-capture-mode-journeys.md), the shipping error and state copy in [prd-capture-mode-copy.md](capture-mode/prd-capture-mode-copy.md), and the answers to closed open questions in [prd-capture-mode-oq-results.md](capture-mode/prd-capture-mode-oq-results.md). Owner decisions are in [prd-capture-mode-fences.md](capture-mode/prd-capture-mode-fences.md). CSV inventory import moved out of this PRD under fence F49 and is now [Inventory Import](#3-inventory-import).
 
 **Also owns the seam re-open.** The two capture-mode research passes disagree on whether capture is a modal takeover that hands off at session end, or writes directly into the live collection; the v2 pass reverses the first and says explicitly to re-open it before the ADR is written. This PRD is where that gets settled at the product level, which is the sole gate on ADR-0004.
 
-### 3. Data Foundation
+### 3. Inventory Import
+
+Reading a spreadsheet export, mapping its columns onto swatches, and landing every row in a collection as pending — the step that fills the queue a bulk session then scans. Import ends at ready-to-capture and never starts a session. Owns the one matching rule for Swatch Codes and collection names, the all-or-none commit, and the idempotent re-import that never costs the Cataloger a measurement.
+
+The PRD is [prd-inventory-import.md](import/prd-inventory-import.md), with four companion files: the user journeys in [prd-inventory-import-journeys.md](import/prd-inventory-import-journeys.md), the shipping error and state copy in [prd-inventory-import-copy.md](import/prd-inventory-import-copy.md), the answers to closed open questions in [prd-inventory-import-oq-results.md](import/prd-inventory-import-oq-results.md), and the owner decisions in [prd-inventory-import-fences.md](import/prd-inventory-import-fences.md).
+
+Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed; they arrived 🤝 Aligned and one verification round over both documents is still owed.
+
+### 4. Data Foundation
 
 The user-owned SQLite file. Canonical raw payload · version history and the correction-vs-re-measurement model · derived spaces (Lab/XYZ/LCh/Luv/sRGB/HSL) and the gamut-clipped flag · CSV export · what the app guarantees to someone querying the file directly.
 
 Gates ADR-0003, the sharpest one-way door in the project: this schema ships inside users' own files.
 
-### 4. Collection Mode
+### 5. Collection Mode
 
 Browsing and working with a collection after capture. Browse at scale · search, filter, facet, sort · editing surfaces · selection and bulk operations · the version-history UI · the gamut-aware swatch grid.
 
-### 5. QC &amp; Comparison
+### 6. QC &amp; Comparison
 
 QC scan against a saved item, ΔE2000 verdict versus the canonical value, the delta stored as its own record, canonical never overwritten. Small by design — this is where the strategy deliberately holds at parity rather than building QC depth, and the PRD's job is as much to draw that line as to specify the feature.
 
-### 6. Color Visualization
+### 7. Color Visualization
 
 The 3D absolute-space plot (P2). Unserved anywhere in the market, per the competitive analysis.
 
-### 7. Telemetry
+### 8. Telemetry
 
 Opt-in and off by default · per-fork provider ID so no fork data reaches the project · the opt-in UX · fire-and-forget delivery that can never block, delay, or halt capture. v1.x, and gated on a provider spike (device PRD [OQ 12](device-management/prd-device-management.md#open-questions)).
 
@@ -60,7 +69,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 | # | Use case | Owner |
 |---|---|---|
-| U1 | Bulk-digitize a predefined inventory | Capture Mode |
+| U1 | Bulk-digitize a predefined inventory | Capture Mode — its first step is [Inventory Import](import/prd-inventory-import.md) |
 | U2 | Capture a single new item ad hoc | Capture Mode |
 | U3 | Start a session with a healthy device | [Device Management](device-management/prd-device-management.md) |
 | U4 | Verify a color still matches | QC &amp; Comparison |
@@ -77,7 +86,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 | P0 | Spectro 2/L connect (BLE + USB) | [Device Management](device-management/prd-device-management.md) |
 | P0 | Known-device management | [Device Management](device-management/prd-device-management.md) |
 | P0 | Tile calibration with due-prompts | [Device Management](device-management/prd-device-management.md) |
-| P0 | CSV inventory import with column mapping | Capture Mode |
+| P0 | CSV inventory import with column mapping | [Inventory Import](import/prd-inventory-import.md) |
 | P0 | Queued bulk scan, 1–5 samples averaged | Capture Mode |
 | P0 | Inline scan-failure handling | Capture Mode |
 | P0 | Collections + version history | Data Foundation (model) · Collection Mode (UI) |
