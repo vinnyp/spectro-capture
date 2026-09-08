@@ -949,3 +949,27 @@ R5.9, R8.4 → 🤝 (unanimous ALIGN; orchestrator flip recorded here).
 - **Fences:** F1–F48 with clarifications; fence → row map in the fence file.
 - **Post-lock list:** in `prd-capture-mode-round-23-fixes.md`.
 - **Next:** owner review of the artifact set. No PR until the owner says so. The PRD header's `Status:` line is the owner's to flip.
+
+## Round 25 — F49 split verification (2026-09-08)
+
+**Subject:** commit `c45570e` — inventory import split out of the locked capture PRD into `docs/product/import/` (five files) after the directory move at `36ef9f4`. **Lenses:** staff engineer, interface, and test (retargeted) on Claude/Opus over both PRDs and all companions. Each lens independently diffed the moved rows against the pre-split tree: 14 rows, 13 copy states, 3 journeys, M7, OQ 12, F4/F11 all arrived intact and exactly once, byte-identical apart from citation targets.
+
+| lens | new findings | rows OBJECT |
+|---|---|---|
+| test (retargeted) | 1 Blocker, 1 Major, 2 Minor, 3 Nit | R4.1, M8, OQ 13, the capture Legend/obligations paragraphs |
+| staff engineer | 1 Major, 5 Minor, 1 Nit | R4.1, R11.15, the capture Legend/obligations paragraphs |
+| interface | 5 Major, 3 Minor, 1 Nit | R4.1, R11.15, the capture Legend/Traceability/obligations paragraphs |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R25-F1 | The import PRD's copy pointer and copy header cite R4.1 for "a named state whose identity is stable… asserted independently of copy"; pre-split that sentence cited R11.12, which stayed in capture, so no row now obliges a test to observe which of the thirteen import states is up | Test (Blocker), Staff (Major), Interface (Major) | import `:174`, copy `:8` cite R4.1; `84e9964` cited R11.12; R4.1 states only the preview rule. | accept — restore the rule as import R4.2 (a carried obligation, not a new rule); both sentences cite it. |
+| R25-F2 | Cross-PRD row cites are bare IDs (`[R3.1]`, `[R3.2]`, `[R1.2]`) that also name live capture rows; the Data Foundation obligations cell and OQ 13's Feeds read coherently and wrongly | Test, Interface (Major) | eleven bare cross-PRD labels in capture, two in import; capture has live R1.2, R3.1, R3.2. | accept — labels name the owning PRD; both Legends state the rule. |
+| R25-F3 | M7 retired nowhere; F49's retired list omits M7 and R11.15h; Traceability still declares R11.15a–h; Legend line 78 still lists capture's OQ 12 | Interface (Major ×3), Staff (Minor ×2) | `:81`, fences `:374`, `:103`, `:78` confirmed. | accept — all four. |
+
+Minors accepted: "F1–F49"; F4/F11 map wording "copied"; the duplicated engineering-plan entry; the Legend's P0 list; the Labels "this table" clause; R3.12 on the obligations line; obligations owned once and the added Collection Mode clause dropped; README use-case ownership and authoring-order text; the import Vocabulary's unused borrowed terms. Post-lock: §4's UJ 3.9 trace; the Swatch field terms; the device PRD's `&amp;` headings.
+
+### Row flips
+
+All rows in both PRDs hold 🤝 except import R4.1 and the new R4.2, held for round 26 (staff, interface, test over R4.1, R4.2, the cross-PRD cites, and the edited Legend/Traceability/obligations/README paragraphs).
