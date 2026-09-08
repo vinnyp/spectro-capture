@@ -1,11 +1,11 @@
 # Inventory Import PRD — error & state copy
 
 Companion to [prd-inventory-import.md](prd-inventory-import.md): the shipping copy for every state that PRD names.
-Each `E<n>` ID is the contract between a state and the rows that cite it; IDs never renumber, and these thirteen kept the numbers they carried in the capture PRD when they moved here under fence F49. The Labels and Placeholders rules that govern this table are the [capture PRD's §12](../capture-mode/prd-capture-mode.md#12-error--state-copy)'s, and the Status column here holds a value from this PRD's [Legend](prd-inventory-import.md#legend).
+Each `E<n>` ID is the contract between a state and the rows that cite it; IDs never renumber, and these thirteen kept the numbers they carried in the capture PRD when they moved here under fence F49. The Labels and Placeholders rules that govern this table are the [capture PRD's §12](../capture-mode/prd-capture-mode.md#12-error--state-copy)'s, read with "this table" meaning the table below, and the Status column here holds a value from this PRD's [Legend](prd-inventory-import.md#legend).
 
 ## Error & state copy
 
-The shipping copy for every error, waiting, choice, and confirmation state in this PRD, written in the Cataloger's vocabulary: plain language, names the recovery, never SDK-speak. Every state is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R4.1](prd-inventory-import.md#4-demo-device-and-verifiability)). Every promise made below is backed by a requirement row in the PRD.
+The shipping copy for every error, waiting, choice, and confirmation state in this PRD, written in the Cataloger's vocabulary: plain language, names the recovery, never SDK-speak. Every state is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R4.2](prd-inventory-import.md#4-demo-device-and-verifiability)). Every promise made below is backed by a requirement row in the PRD.
 
 | ID | State | Headline | Body | Primary action | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |

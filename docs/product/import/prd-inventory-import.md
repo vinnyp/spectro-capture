@@ -18,7 +18,7 @@ Every journey — UJ 2, UJ 2.1, UJ 2.2, and the flow diagram that covers all thr
 
 ### Vocabulary
 
-The terms the rows below use that the [capture PRD's Vocabulary](../capture-mode/prd-capture-mode.md#vocabulary) does not define ([AGENTS.md §8](../../../AGENTS.md#8-vocabulary)). Pending, Captured, Deferred, Settled, Skip, Session, and the remembered row are defined there and are not restated here.
+The terms the rows below use that the [capture PRD's Vocabulary](../capture-mode/prd-capture-mode.md#vocabulary) does not define ([AGENTS.md §8](../../../AGENTS.md#8-vocabulary)). Pending, Captured, and Session are defined there and are not restated here.
 
 
 - **Swatch Code** — the one column an import must map; it is how a file row is matched to a collection row on a re-import, and how the Cataloger finds a swatch later ([R2.2](#2-target-mapping-and-the-matching-rule), [R3.3](#3-preview-and-commit)).
@@ -33,7 +33,7 @@ The terms the rows below use that the [capture PRD's Vocabulary](../capture-mode
 
 Priority is build order within v1, not a cut line — everything in this document ships in v1, and every row here is P0, the first build phase, because a bulk session has nothing to scan until an inventory has landed. The P0/P1 split is fence F24, recorded in the [capture fence file](../capture-mode/prd-capture-mode-fences.md).
 
-Provisional constants: every TBD-on-spike constant is a named provisional constant carrying its candidate value and its Open Questions id; mechanisms build against these constants, and no provisional constant ships in a release without its OQ resolved. Two bear on import and neither is closed here: IMPORT_BUDGET, at candidate TBD, and ROWS_CEILING, which [R3.1](#3-preview-and-commit) warns against — both are the capture PRD's [R3.12](../capture-mode/prd-capture-mode.md#3-the-capture-session)'s and are closed by its OQ 13. An "OQ n" written without a qualifier is this document's; another PRD's are named as its own.
+Provisional constants: every TBD-on-spike constant is a named provisional constant carrying its candidate value and its Open Questions id; mechanisms build against these constants, and no provisional constant ships in a release without its OQ resolved. Two bear on import and neither is closed here: IMPORT_BUDGET, at candidate TBD, and ROWS_CEILING, which [R3.1](#3-preview-and-commit) warns against — both are [the capture PRD's R3.12](../capture-mode/prd-capture-mode.md#3-the-capture-session)'s and are closed by its OQ 13. An "OQ n" written without a qualifier is this document's; another PRD's are named as its own. A row ID written without a qualifier is this document's; a row cited from another PRD names that PRD in the link.
 
 **For the engineering plan.** These are the plan's to answer, not this document's.
 
@@ -42,7 +42,7 @@ Provisional constants: every TBD-on-spike constant is a named provisional consta
 
 **Row IDs.** This document numbers its requirement rows from R1.1 under fence F49 and keeps the `E<n>` numbers it inherited; the IDs those rows carried in the capture PRD are retired there and never reused ([Traceability](#traceability)).
 
-**Status of this document.** Every row here arrived at 🤝 Aligned: it moved from the locked capture PRD with its rule unchanged, and only its citations were rewritten (fence F49). The Commit PR column is empty throughout, and one verification round over both documents is still owed before this one locks.
+**Status of this document.** Every moved row arrived at 🤝 Aligned: it came from the locked capture PRD with its rule unchanged, and only its citations were rewritten (fence F49). [R4.1](#4-demo-device-and-verifiability) and [R4.2](#4-demo-device-and-verifiability) sit at ⌛️ Ready for Alignment for the round that verifies them. The Commit PR column is empty throughout, and one verification round over both documents is still owed before this one locks.
 
 **Status**
 
@@ -87,6 +87,8 @@ The Commit PR column is where a row maps onto the work that lands it. Owner deci
 | R11.15h | [R4.1](#4-demo-device-and-verifiability) |
 | M7 | [M1](#success-metrics) |
 | OQ 12 | [OQ 1](#open-questions) |
+
+[R4.2](#4-demo-device-and-verifiability) is not in the map. It carries over these states the obligation the [capture PRD's R11.12](../capture-mode/prd-capture-mode.md#11-demo-device-and-verifiability) held before the split, and that row stays live there.
 
 ### Surfaces
 
@@ -134,7 +136,7 @@ Traces [UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-vi
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| R3.1 | v1 | P0 | A preview precedes every commit, showing the row count — for an existing collection the three-way count new / updated / unchanged plus a line reading "N rows in the collection are not in this file — left untouched" — and the issue list. A file that changed on disk between being read and being committed is re-read and re-previewed ([E13](prd-inventory-import-copy.md#error--state-copy)), and a file that would take the collection past ROWS_CEILING ([R3.12](../capture-mode/prd-capture-mode.md#3-the-capture-session)) is warned about by number in the preview and imported anyway. | 🤝 Aligned |  |
+| R3.1 | v1 | P0 | A preview precedes every commit, showing the row count — for an existing collection the three-way count new / updated / unchanged plus a line reading "N rows in the collection are not in this file — left untouched" — and the issue list. A file that changed on disk between being read and being committed is re-read and re-previewed ([E13](prd-inventory-import-copy.md#error--state-copy)), and a file that would take the collection past ROWS_CEILING ([the capture PRD's R3.12](../capture-mode/prd-capture-mode.md#3-the-capture-session)) is warned about by number in the preview and imported anyway. | 🤝 Aligned |  |
 | R3.2 | v1 | P0 | A commit is all-or-none, so a failure partway leaves the collection exactly as it was, and every imported row lands pending, in file order, appended after any existing rows. Import ends at ready-to-capture and never starts a session, and importing into a collection whose session is active, paused, or interrupted is refused, naming that session and offering both a way to it and a way to end it from here, so a blocked import is never a dead end ([E40](prd-inventory-import-copy.md#error--state-copy)). (Inherited obligation for the Data Foundation PRD: an import that either lands whole or not at all.) | 🤝 Aligned |  |
 
 
@@ -157,7 +159,8 @@ Traces [UJ 3.9](../capture-mode/prd-capture-mode-journeys.md#uj-39-capture-with-
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| R4.1 | v1 | P0 | A test lists what the import preview shows, without matching wording ([R3.1](#3-preview-and-commit)). | 🤝 Aligned |  |
+| R4.1 | v1 | P0 | A test lists what the import preview shows, without matching wording ([R3.1](#3-preview-and-commit)). | ⌛️ Ready for Alignment |  |
+| R4.2 | v1 | P0 | A test observes, without matching wording, which named [copy](prd-inventory-import-copy.md#error--state-copy) state is up. | ⌛️ Ready for Alignment |  |
 
 ### Inherited obligations
 
@@ -166,12 +169,12 @@ Each line is a requirement on the document named, not a suggestion. A row cited 
 | Target PRD | Obligation | Rows |
 | :--- | :--- | :--- |
 | Data Foundation | The one matching rule for Swatch Codes and collection names, and an import that either lands whole or not at all | [R2.3](#2-target-mapping-and-the-matching-rule), [R3.2](#3-preview-and-commit) |
-| Collection Mode | Renaming an imported column, and surfacing the extra metadata an import brings in | [R2.2](#2-target-mapping-and-the-matching-rule) |
+| Collection Mode | Renaming an imported column | [R2.2](#2-target-mapping-and-the-matching-rule) |
 | Capture Mode | A collection's pending rows, in file order, are what a session scans, and an import is refused while a session on that collection is in flight | [R3.2](#3-preview-and-commit) |
 
 ### 5. Error & State Copy
 
-The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-inventory-import-copy.md](prd-inventory-import-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R4.1](#4-demo-device-and-verifiability)). The Labels and Placeholders rules that govern that table are the [capture PRD's §12](../capture-mode/prd-capture-mode.md#12-error--state-copy)'s and are not restated here.
+The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-inventory-import-copy.md](prd-inventory-import-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R4.2](#4-demo-device-and-verifiability)). The Labels and Placeholders rules that govern that table are the [capture PRD's §12](../capture-mode/prd-capture-mode.md#12-error--state-copy)'s, read with "this table" meaning that one, and are not restated here.
 
 ## Success Metrics
 

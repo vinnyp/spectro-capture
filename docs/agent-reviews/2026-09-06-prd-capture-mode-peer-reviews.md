@@ -973,3 +973,5 @@ Minors accepted: "F1–F49"; F4/F11 map wording "copied"; the duplicated enginee
 ### Row flips
 
 All rows in both PRDs hold 🤝 except import R4.1 and the new R4.2, held for round 26 (staff, interface, test over R4.1, R4.2, the cross-PRD cites, and the edited Legend/Traceability/obligations/README paragraphs).
+
+**Round-25 status:** the split verified intact; one Blocker (the dropped observability rule) and one Major (bare cross-PRD IDs). **Fix pass:** applied by `operator-agents:product-manager` on Opus (7 items + FX25-0). After the pass: capture PRD 18,425 words, 146 🤝; import PRD 3,065 words, 15 🤝, 2 ⌛️ (R4.1, R4.2); copy files 31/31 and 13/13; 820 links checked, the three device-PRD `&amp;` misses only; zero bare cross-PRD row labels.

@@ -12,7 +12,7 @@ Five PRDs remain to be written to cover v1. Priority is authoring order, not a c
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
-| 3 | [Inventory Import](import/prd-inventory-import.md) | U1 | **Drafted** from the locked capture rows under fence F49, pending its verification round |
+| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Drafted** from the locked capture rows under fence F49, pending its verification round |
 | 4 | Data Foundation | U5, U6 | queued |
 | 5 | Collection Mode | U5, U7 | queued |
 | 6 | QC &amp; Comparison | U4 | queued |
@@ -101,9 +101,9 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 ## Authoring order
 
-**Capture Mode is next.** It is the product bet, it is holding the largest set of inherited obligations from the device PRD, and it is the only thing that unblocks ADR-0004.
+**Capture Mode is locked** — its review gate closed after 24 rounds, with owner sign-off on the artifact set still pending — and **Inventory Import**, split out of it under fence F49, is awaiting the verification round over both documents. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
 
-**Data Foundation can be authored in parallel.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004.
+**Data Foundation is next.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004.
 
 Collection Mode follows both, since it renders what the data model defines and inherits the seam's outcome. QC &amp; Comparison and Color Visualization are P1/P2 and can follow at any point. Telemetry is last regardless — it is v1.x and blocked on a spike.
 
