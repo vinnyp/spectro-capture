@@ -844,3 +844,28 @@ Minors accepted: E19 "or you set one aside because its samples wouldn't agree" (
 Consented by every lens: R5.10, R11.12, R11.15, M5, and E2, E18, E19, E28, E29, E30, E31, E32, E33, E36, E37, E42 → 🤝 (E19, E22, E23, E29–E34, R11.12, R11.15 are then edited by the round-20 fix and re-verified in round 21). Held: R5.9, R8.4. Round 21 is a short delta by the staff, test, architecture, and interface lenses over R5.9, R8.4, the edited copy rows, R11.12, R11.15, and the diagram; then the document locks.
 
 **Round-20 status:** lock consented on 16 of 18 rows. **Fix pass:** applied by `operator-agents:product-manager` on Opus (6 items + FX20-0). After the pass: PRD 19,555 words; 157 🤝, 4 ⌛️ (R5.9 R8.4 R11.12 R11.15); copy 35 🤝, 9 ⌛️ (E19 E22 E23 E29 E30 E31 E32 E33 E34). Orchestrator hygiene edit: the state-level ‹P1› mark moved from the ID cell to the state-name cell on E30–E34 so ID-scanning scripts still see `| E30 |`; the header sentence reads "A state whose name is marked ‹P1›". Next: round 21, a short delta by the staff, test, architecture, and interface lenses over the 13 edited rows and the UJ3.1 diagram; then lock. Owner instruction stands: no PR until the owner has reviewed the artifact set.
+
+## Round 21 — delta on the round-20 edits (2026-09-07)
+
+**Subject:** the round-20 commit (PRD 19,555 words; 157 🤝, 4 ⌛️; copy 35/44). **Lenses:** staff engineer, test (retargeted), architecture, and interface on Claude/Opus over R5.9, R8.4, R11.12, R11.15, E19, E22, E23, E29–E34, and the UJ3.1 diagram. The product-manager and marketing lenses did not run this round: every round-20 item they raised was verified RESOLVED by the four that did, and no copy wording changed beyond the two sentence splits they had asked for. agy did not run (advisory; rc 8 on every prior round).
+
+| lens | round-20 items | new findings | rows OBJECT |
+|---|---|---|---|
+| staff engineer | all RESOLVED | 1 Minor (post-lock), 1 Nit | none — "ready, proceed to lock" |
+| test (retargeted) | all RESOLVED | 2 Major, 1 Minor | R8.4, R11.12 |
+| architecture | all RESOLVED; A20-5 PARTIAL (E29) | 1 Major, 1 Minor, 1 Nit | E29 |
+| interface | all RESOLVED | 2 Minor, 1 Nit | none — "contract sound" |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R21-F1 | §11's script step 4 covers the review's K_FAILED_ATTEMPTS and "Skip" routes but not its third route — a set that disagrees again and is left set aside — which R5.9 counts | Test T21-1 (Major) | `:411` confirmed: step 4 names two routes; `:253` names three. | accept — one clause added to step 4. |
+| R21-F2 | R11.12 asserts E33's variants and E18/E42's re-scan variants, all P1-only, with no per-phase clause, while R11.15 gained one in round 20; F47's map omits R11.12 | Test T21-2, Arch A21-2 (Major / Minor) | `:429`, `:436`, fences `:369` confirmed. | accept — the clause is folded into R11.12's first sentence (F45 holds at two); F47's map adds R11.12. |
+| R21-F3 | E29's state name is unmarked although no row in this PRD produces it (its only reference is the QC & Comparison obligations line; the P1 re-scan path goes through E28), so the copy header asserts it appears in the first build with zero live actions | Arch A21-1 (Major); the residue of A20-5 | copy `:40`, `:4`; PRD `:460`, `:351` confirmed — no R row cites E29. | accept — the name cell carries the handing-over PRD and the header gains one clause; no new notation beyond the mark already in use. |
+
+Minors accepted: R5.9's lead gloss "rows the instrument set aside by any route" contradicts its own operator route → "rows set aside by any of these routes" (Test, Arch nit); E30/E31/E33 drop the redundant action-level ‹P1› marks (Interface); F47's map enumerates E29–E34 (Interface nit). Declined: the interface lens's optional Legend clause — redundant with the copy header and R11.15's lead row, and F45 says never expand. Post-lock list: whether N_CONSEC_HARD carries across consecutive one-row sessions in a look-through review (Staff, Minor).
+
+### Row flips
+
+Consented by every lens and untouched by the fix: R11.15, E19, E22, E23, E32, E34 → 🤝. Held for round 22 (edited by the fix): R5.9, R8.4, R11.12, E29, E30, E31, E33. Round 22 is a delta by the test, architecture, and interface lenses over those seven rows, §11's script, the copy header, and F47's map; then the document locks.
