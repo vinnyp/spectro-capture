@@ -776,3 +776,38 @@ Minors and nits accepted into the fix file: stale status notes on R3.12/R11.13 (
 Of the 8 open rows: R4.4, R10.4 flip to 🤝; R3.12 and R11.13 flip once their stale notes are removed (their only objection); R4.15, R5.9, R8.1, R11.15 stay ⌛️ and are edited. Rows the lock pass edits under F47/F48 and the interface findings (R4.10, R8.4, R6.3, R7.19, R10.7, R5.10, R5.12, R5.14, M5, E18, E23 and any row whose status note is stripped) are re-verified in round 19, the final delta round before lock.
 
 **Round-18 status:** priority pass answered and fenced (F47); pre-lock round run with the retargeted plan reviewer (verdict: proceed to lock) and the fresh interface lens. **Lock pass:** applied by `operator-agents:product-manager` on Opus (10 items + FX18-0). After the pass: PRD 19,396 words; 150 R + 11 M rows; every status cell a bare Legend value; 147 🤝, 14 ⌛️ (R4.10 R4.15 R4.21 R5.9 R5.10 R5.11 R5.14 R6.12 R8.1 R8.4 R10.7 R11.12 R11.15 M5) plus E18 in the copy file; lock checks clean (no placeholders, no template comments, OQ results complete, citations and anchors resolve). Orchestrator hygiene edit: the retired counter name removed from one UJ3.1 diagram node in the journeys file. Operator notes: the obligations §5 line marks two clauses as amendments (current item; resume is a new session start); §10's "seven" obligations were eight rows and are now cited by ID. Next: round 19, the final delta verification over the 15 edited rows before lock. Owner instruction: no PR until the owner has reviewed the final artifact set.
+
+## Round 19 — final delta verification before lock (2026-09-07)
+
+**Subject:** the round-18 lock-pass commit (PRD 19,396 words; 150 R + 11 M; 147 🤝, 14 ⌛️; copy 43/44). **Lenses:** the five usual lenses plus the interface lens on Claude/Opus, each verifying its round-18 findings and the 14 edited rows and E18; agy on four, advisory (PM rc 0 with a Blocker on R5.9's wording vs R4.10/R5.14 — the same operator-agency wording the architecture and interface lenses raised as Minors, folded into FX19-6 — and an objection on M5's F30 citation, folded into FX19-8; the other three briefs returned short bodies).
+
+| lens | route | round-18 items | new findings | rows OBJECT |
+|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED / BY-FENCE | 2 Major, 2 Minor, 1 Nit | R8.4 |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE; R18-F5 PARTIAL (E28/E29 home) | 3 Major, 2 Minor, 2 Nit, 5 questions | R5.10, E18 |
+| test (retargeted) | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major, 4 Minor, 2 Nit | R11.12 |
+| architecture | Claude/Opus | all RESOLVED / BY-FENCE | 1 Major, 3 Minor, 2 Nit | R5.9, R5.10, R11.15 |
+| marketing (copy) | Claude/Opus | all RESOLVED / BY-FENCE | 2 Major, 2 Minor, 2 Nit | none |
+| interface (fresh lens, delta) | Claude/Opus | I18-1..I18-9 and Minors RESOLVED | 1 Major, 2 Minor, 1 Nit | copy table (11 states), R11.15 |
+
+Every lens consents to lock every edited row that it did not object to; no lens objects to a 🤝 row inside the PRD. The remaining findings are consistency repairs, most of them outside the requirement rows.
+
+### Verify-the-reviewer dispositions (Majors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R19-F1 | Traceability still says "F1–F46" and "the rows do not cite them" while F47/F48 exist and M2/M3/M5/M9 cite F30 | Arch A19-1, PMM PMM19-2 (Major), Test, Staff nits | `:105` confirmed. | accept. |
+| R19-F2 | The journeys file's UJ3.1 diagram still offers "Skip" for a disagreeing set where R4.10/E18 now say "Set it aside"; two plurals of "counters" survive F48 | PMM PMM19-1, PM PM19-2, Staff S19-3 (Major), Arch A19-4, Test | journeys `:271`, `:274`, `:42`, `:262` confirmed. | accept. |
+| R19-F3 | The merged counter's event list covers only transitions into set-aside, so R8.4's "the guard applies here exactly as in the queue" has no event in the review; R8.4's "moves on only after…" omits a clean capture and "Accept the average"; its "Leave it set aside" is not tied to R8.5 | PM PM19-1 (Major), Test, Interface | `:339`, `:253` confirmed. | accept. |
+| R19-F4 | E18's review variant offers "Leave it set aside" on a settled row re-scanned from the list, which F42 forbids | Staff S19-2 (Major) | copy `:29`, `:340`, F42 confirmed. | accept — the action is offered only while the row is unsettled (plain consequence of F42). |
+| R19-F5 | F47's phasing lives only in the Legend: the copy states whose only action is P1 carry no phase mark, R11.15's list has no per-phase clause, and some bodies name the withheld action | Interface NEW-1 (Major), Arch A19-3, PM PM19-4 | copy file, `:441-448` confirmed; device PRD `:412` sets the precedent ("render with guidance but no action"). | accept — a ‹P1› mark on the affected action cells, one sentence in the copy file's header and in R11.15's lead row; bodies stay as guidance per the device PRD's convention. |
+| R19-F6 | R5.10 says a test can "read back the counter untouched (R11.11)" but R11.11's read-back list has no counter | Staff S19-1 (Major), Test | `:255`, `:427` confirmed. | accept — restate behaviourally (no pause). |
+| R19-F7 | R11.12's conditional-line list has E39's samples-let-go line but not E23's (the round-18 Blocker's own line) | Test T19-1 (Major), Staff, Interface | `:428` confirmed. | accept. |
+
+Minors accepted: R5.10 gains "a disagreeing set the operator sets aside is not one of these and counts (R5.9)" and R5.9's route reads "a disagreeing set the operator set aside" (Arch A19-2, Interface, agy); E19's body names the three routes without attributing all to the instrument (PMM19-4); the Surfaces column heading says it lists a surface's flow including its entry offer and cancel notice, and E28/E29 are homed where they render (Staff S19-4, Test, PM nit); M5 cites F47 for its phase clause (PMM, Staff); the companion line names the OQ results file (PMM); F18/F37 bodies and F40's clarification gain "(superseded by F48)" markers (Staff, Arch, Interface nits); R4.10 "as the first one did" (Test nit).
+
+### Row flips
+
+Of the 14 ⌛️ rows and E18: **R4.10, R4.15, R4.21, R5.11, R5.14, R6.12, R8.1, R10.7 flip to 🤝**; **R5.9, R5.10, R8.4, R11.12, R11.15, M5, E18 stay ⌛️** and are edited by the round-19 fix pass, together with the 🤝 rows E19 and the Legend/Traceability/Surfaces paragraphs. Round 20 verifies those edits only, then the document locks.
+
+**Round-19 status:** lock consented on every unedited row. **Fix pass:** applied by `operator-agents:product-manager` on Opus (9 items + FX19-0). After the pass: PRD 19,502 words; 155 🤝, 6 ⌛️ (R5.9 R5.10 R8.4 R11.12 R11.15 M5); the copy file 32 🤝, 12 ⌛️ (E18, E19, and the ten states that gained a ‹P1› mark under F47: E2 E28 E29 E30 E31 E32 E33 E36 E37 E42); the journeys diagram relabelled and checked; R4.10 flipped though FX19-8 added four words to it. Next: round 20, a final delta over exactly those 18 rows, then lock. Owner instruction stands: no PR until the owner has reviewed the artifact set.

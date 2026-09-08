@@ -39,7 +39,7 @@ stateDiagram-v2
     Item --> Paused: explicit Pause mid-set (the partial set is discarded)
     Paused --> Capturing: explicit Resume
     Item --> GuardPaused: consecutive-failure guard pauses (guard enabled)
-    GuardPaused --> Item: check placement or recalibrate, then force-resume (guard counters reset, row still held)
+    GuardPaused --> Item: check placement or recalibrate, then force-resume (guard counter reset, row still held)
     Capturing --> Halted: device failure, or the Mac sleeps
     Item --> Halted: device failure mid-set, partial set discarded (a completed set awaiting its save is held)
     Halted --> Capturing: Resume scanning (device PRD)
@@ -259,7 +259,7 @@ flowchart TD
     F2 -- "no: Skip or Flag, deliberate keys" --> F3["Row deferred with cause, good samples kept; queue advances"]
     F2 -- "yes: distinct moved-on cue" --> F3
     F3 --> K{"Consecutive rows the instrument set aside reach N_CONSEC_HARD?"}
-    K -- "yes, guard enabled" --> L["Guard pauses: row held, samples kept; check placement or recalibrate; force-resume resets the guard's counters"]
+    K -- "yes, guard enabled" --> L["Guard pauses: row held, samples kept; check placement or recalibrate; force-resume resets the guard's counter"]
     L --> C
     K -- no --> C
     E -- "device failure, no reading, or calibration drift" --> X["Halt (device PRD UJ5, see UJ3.6)"]
@@ -268,10 +268,10 @@ flowchart TD
     H -- no --> D
     G -. "Re-take sample n, or restart the item (UJ3.2)" .-> D
     H -- yes --> I{"Two or more samples, and they agree within SAMPLE_TOLERANCE?"}
-    I -- "no: caution, row holds" --> I1{"Re-take, Accept the average, or Skip?"}
+    I -- "no: caution, row holds" --> I1{"Take it again, Accept the average, or Set it aside?"}
     I1 -- "re-take" --> D
     I1 -- "Accept the average, spread recorded" --> J
-    I1 -- "Skip: deferred with samples kept" --> C
+    I1 -- "Set it aside: row set aside with its samples" --> C
     I -- "yes, or a single sample" --> J["Every sample saved, average worked out, then row-success confirm; queue advances"]
     J --> M{Queue exhausted?}
     M -- no --> C

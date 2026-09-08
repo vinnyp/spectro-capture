@@ -117,7 +117,7 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 ### F18 — The consecutive-failure guard counts only instrument-caused deferrals (2026-09-06, round-3 closing check)
 
-**Decision:** N_CONSEC_FLAGGED counts consecutive rows the instrument's own failed readings set aside (a row deferred after K_FAILED_ATTEMPTS, or by Skip after a failed attempt, or by a set that disagreed). Rows the operator deferred by choice — Flag as missing or damaged, Skip mid-set with no failure, Flag on a row that just landed — never count. The guard watches the instrument, not the operator's decisions. The constant's trigger clause reads "deferred by the instrument".
+**Decision (superseded by F48: one counter):** N_CONSEC_FLAGGED counts consecutive rows the instrument's own failed readings set aside (a row deferred after K_FAILED_ATTEMPTS, or by Skip after a failed attempt, or by a set that disagreed). Rows the operator deferred by choice — Flag as missing or damaged, Skip mid-set with no failure, Flag on a row that just landed — never count. The guard watches the instrument, not the operator's decisions. The constant's trigger clause reads "deferred by the instrument".
 
 **Why:** Flagging five missing markers in a row must not pause the session and prompt recalibration; the guard exists to catch a systemic instrument problem.
 
@@ -231,7 +231,7 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 ### F37 — The guard counts consecutive rows the instrument failed on, not consecutive presses (2026-09-07, round 6, R6-F6)
 
-**Decision:** N_CONSEC_HARD counts consecutive rows that each ended in an instrument-caused deferral (auto-deferred after K_FAILED_ATTEMPTS, or skipped after a failed attempt); repeated failures on one swatch are that swatch's problem and auto-defer it without pausing the session. N_CONSEC_FLAGGED keeps its meaning (F18) and the two counters may merge if tuning shows them redundant (OQ 3). The N_CONSEC_HARD < K_FAILED_ATTEMPTS invariant is withdrawn.
+**Decision (superseded by F48: one counter):** N_CONSEC_HARD counts consecutive rows that each ended in an instrument-caused deferral (auto-deferred after K_FAILED_ATTEMPTS, or skipped after a failed attempt); repeated failures on one swatch are that swatch's problem and auto-defer it without pausing the session. N_CONSEC_FLAGGED keeps its meaning (F18) and the two counters may merge if tuning shows them redundant (OQ 3). The N_CONSEC_HARD < K_FAILED_ATTEMPTS invariant is withdrawn.
 
 **Why:** Counting presses meant two light-leaks on one awkward swatch paused a heads-down run before the row could auto-defer.
 
@@ -319,7 +319,7 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 ### F40 — clarification (2026-09-07, round 9, R9-T1)
 
-**Owner decision, on the orchestrator's question:** the floor of 2 is a property of the guard, not of one counter. One auto-deferred row counts toward both N_CONSEC_HARD and N_CONSEC_FLAGGED, so no guard counter is ever below 2, whatever OQ 3 tunes. R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script state it that way.
+**Owner decision, on the orchestrator's question (superseded by F48: one counter):** the floor of 2 is a property of the guard, not of one counter. One auto-deferred row counts toward both N_CONSEC_HARD and N_CONSEC_FLAGGED, so no guard counter is ever below 2, whatever OQ 3 tunes. R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script state it that way.
 
 ### F42 — clarification (2026-09-07, round 10, R10-F1, R10-F2)
 
