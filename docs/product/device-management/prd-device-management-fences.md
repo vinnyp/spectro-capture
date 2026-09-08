@@ -30,6 +30,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Decision:** No provisional number ships in a row; each constant carries its candidate value and its open-question id.
 
+**Clarification (1), 2026-09-08 (round 1 of the F9 refactor):** A dogfood build is not a release for this rule, so the first sessions run on candidate values and produce the halt-log data the thresholds' closers need; the Legend reads "carrying its candidate value where one exists, and its Open Questions id". Mirrors the capture PRD's fence F23.
+
 ### F8 — Priority is build order within v1, not scope (2026-09-05, review arc)
 
 **Decision:** P0 is the pre-spike build phase (Demo Device, test seams, the capture/halt/resume core, the pre-flight gate, the device-identity model); P1 is the post-spike hardware wave; P2 last.
@@ -40,9 +42,11 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Why:** The owner's standing instruction for every PRD: "Simple, concise, designed for agents"; and the capture and import PRDs already cite this document by section, journey, and copy state, so one shape across the three keeps those cites mechanical.
 
+**Clarification (1), 2026-09-08 (round 1):** (a) The pairing and calibration retry counts get one open question, OQ 28, cited from R1.8 and R3.5. (b) R6.9's settable state gains "system audio output muted / not muted" so R4.1's advisory is testable without hardware; the one rule addition of this refactor, on the model of the capture PRD's R4.26. (c) R2.14 keeps "forks ship their own provider ID" — fence F6's text, promoted from OQ 13; not drift. (d) The copy file takes the capture copy file's conventions: a Status cell per row and ‹P1› marks on states and actions whose only citing rows are P1.
+
 ## Fence → row map
 
-F1–F8: the rows that carry them are the record; this pass adds no provenance marks. F9: every row in §1–§6, every copy state, every metric.
+(filled by the round-1 fix pass: the rows that name each of F1–F8 for provenance, and F9 over every row in §1–§6, every copy state, every metric.)
 
 ## Rejected findings
 
