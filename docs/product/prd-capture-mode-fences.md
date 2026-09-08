@@ -369,6 +369,12 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F47** the first build phases its offers — the [Legend](prd-capture-mode.md#legend)'s priority paragraph, R10.7, M5, R11.12, R11.15, and the [copy file](prd-capture-mode-copy.md#error--state-copy)'s header, its state-level ‹P1› marks (E30–E34), E29's handing-over mark, and its action-level marks (E2, E18, E28, E29, E36, E37, E42). **F48** one guard counter — R4.21, R5.9, R5.10, R5.11, R5.14, R8.4, and OQ 3.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
+### F49 — Inventory import becomes its own PRD; every PRD lives in a feature directory (2026-09-08, post-lock)
+
+**Decision:** §2 (R2.1–R2.14), the thirteen copy states only §2 cites (E4–E14, E38, E40), journeys UJ 2, UJ 2.1 and UJ 2.2, metrics M7 and M8, open questions 12 and 13, fences F4 and F11, and surface row R11.15h leave this PRD for `prd-inventory-import.md`, which takes the same three-file shape as this one (PRD, `-journeys.md`, `-copy.md`) plus its own `-fences.md` and `-oq-results.md`. Every PRD lives under a feature directory: `docs/product/capture-mode/`, `docs/product/import/`, `docs/product/device-management/`; `vision.md` and `README.md` stay at `docs/product/`. Retired here, never reused: R2.1–R2.14, E4–E14, E38, E40 (listed in the Legend as F46's retired IDs are); the import PRD numbers its own rows from R1.1 and keeps the E numbers it inherits. Citations of a moved row from this PRD become links into the import PRD, and the Inherited-obligations table gains an "Inventory import" line. F4 and F11 are copied into the import fence file with provenance. No rule changes; every moved row keeps its 🤝 status with the note "moved under F49"; one verification round (staff, interface, test) over both documents, then both re-lock.
+
+**Why:** Import is small and self-contained (14 rows, ~1,100 words, no copy state shared with capture), the owner wants every PRD in the same three-file shape, and per-feature directories keep each PRD's companions together as the set of PRDs grows.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
