@@ -895,3 +895,5 @@ Minors accepted: F48's Decision gloss "the instrument set aside" amended to matc
 ### Row flips
 
 Consented by every lens and untouched by the fix: E29, E30, E31, E33 → 🤝. Held for round 23 (test OBJECT or edited): R5.9, R8.4, R11.8, R11.12. Round 23 is a delta by the test, architecture, and interface lenses over those four rows, §11's step 4, the Surfaces cells, the Legend list, the copy preamble, and F47/F48's lines; then the document locks.
+
+**Round-22 status:** lock consented on 5 of 7 rows; R5.9/R8.4 held by the test lens; R11.8 re-opened. **Fix pass:** applied by `operator-agents:product-manager` on Opus (8 items + FX22-0). After the pass: PRD 19,614 words; 157 🤝, 4 ⌛️ (R5.9 R8.4 R11.8 R11.12); copy 44 🤝, 0 ⌛️. Checks clean (anchors, citations, no `&amp;`, six mermaid blocks, two-sentence rule).
