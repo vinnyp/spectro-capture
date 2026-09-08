@@ -897,3 +897,27 @@ Minors accepted: F48's Decision gloss "the instrument set aside" amended to matc
 Consented by every lens and untouched by the fix: E29, E30, E31, E33 → 🤝. Held for round 23 (test OBJECT or edited): R5.9, R8.4, R11.8, R11.12. Round 23 is a delta by the test, architecture, and interface lenses over those four rows, §11's step 4, the Surfaces cells, the Legend list, the copy preamble, and F47/F48's lines; then the document locks.
 
 **Round-22 status:** lock consented on 5 of 7 rows; R5.9/R8.4 held by the test lens; R11.8 re-opened. **Fix pass:** applied by `operator-agents:product-manager` on Opus (8 items + FX22-0). After the pass: PRD 19,614 words; 157 🤝, 4 ⌛️ (R5.9 R8.4 R11.8 R11.12); copy 44 🤝, 0 ⌛️. Checks clean (anchors, citations, no `&amp;`, six mermaid blocks, two-sentence rule).
+
+## Round 23 — delta on the round-22 edits (2026-09-07)
+
+**Subject:** the round-22 commit `8313c2e` (PRD 19,614 words; 157 🤝, 4 ⌛️; copy 44/44). **Lenses:** test (retargeted), architecture, and interface on Claude/Opus over R5.9, R8.4, R11.8, R11.12, §11's step 4, the Surfaces cells, the Legend list, the copy preamble, and F47/F48's lines. agy did not run.
+
+| lens | round-22 items | new findings | rows OBJECT |
+|---|---|---|---|
+| test (retargeted) | RESOLVED except T22-2 and I22-2 PARTIAL | 1 Major, 3 Minor, 1 Nit | R5.9, R8.4 (by proxy: their text is correct; §11 step 4 cannot run route 3) |
+| architecture | RESOLVED except T22-1 PARTIAL (quantifier) | 1 Minor, 3 Nit | none — "sound, lock it" |
+| interface | all RESOLVED | 2 Minor, 4 Nit, all post-lock | none — "contract sound" |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R23-F1 | §11 step 4's third route (a disagreeing set the operator set aside) needs the agreement check enabled, and the walk names only the guard's setting; R4.23 makes the check a separate setting, record-only through dogfood, so a default build cannot produce the route and the step ticks green with it unwalked. Separately, "N_CONSEC_HARD rows … by each of three routes" admits a one-mixed-run reading at N = 2 | Test T23-1 (Major); Arch A23-1 (Minor) | `:411`, `:218` (R4.23), OQ 3 `:505` confirmed. | accept — step 4 opens "with the agreement check enabled ([R4.23])" and reads "each route on its own run". Rows unchanged. |
+| R23-F2 | F48's route-3 gloss "a set that disagreed" is broader than R5.9's "a disagreeing set the operator set aside", under a parenthetical asserting parity | Test T23 Minor | fences `:308` confirmed. | accept — the gloss names the set-aside. |
+| R23-F3 | F47's map buckets E29 as a state-level ‹P1› mark, but its state mark is the handing-over mark and its F47 carrier is the action-level "Correct it ‹P1›" | Arch A23-2, Interface nit, Test nit | fences `:369`, copy `:40` confirmed. | accept — the map names the ‹P1› state set (E30–E34), E29's handing-over mark, and E29 in the action-level set. |
+
+Everything else raised this round is post-lock and listed in the round-23 fix file: R11.8's verb (Interface Minor; Architecture and Test read "against" as R4.9's term and praised the clause, so it stays), F47's Decision marker, the Surfaces table's ‹P1› symmetry, the simulated-layer obligation cell, OQ 18's pre-F42 phrasing, the Legend's serial comma, and four engineering-plan test-matrix items.
+
+### Row flips
+
+Consented by every lens: R11.8, R11.12 → 🤝. Held: R5.9, R8.4 (test OBJECT by proxy of step 4). Round 24 is a delta by the test and architecture lenses over step 4, F47's and F48's lines, and those two rows; then the document locks.
