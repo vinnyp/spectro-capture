@@ -1,8 +1,6 @@
 # PRD: Capture Mode
 
-Author: Vinny Pasceri
-
-Status: draft
+Status: locked (2026-09-08)
 
 Companion files: the journeys are in [prd-capture-mode-journeys.md](prd-capture-mode-journeys.md), the shipping copy in [prd-capture-mode-copy.md](prd-capture-mode-copy.md), the answers to closed open questions in [prd-capture-mode-oq-results.md](prd-capture-mode-oq-results.md), and the owner's decisions in [prd-capture-mode-fences.md](prd-capture-mode-fences.md).
 

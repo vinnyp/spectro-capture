@@ -1,8 +1,6 @@
 # PRD: Inventory Import
 
-Author: Vinny Pasceri
-
-Status: draft
+Status: locked (2026-09-08)
 
 Companion files: the journeys are in [prd-inventory-import-journeys.md](prd-inventory-import-journeys.md), the shipping copy in [prd-inventory-import-copy.md](prd-inventory-import-copy.md), the answers to closed open questions in [prd-inventory-import-oq-results.md](prd-inventory-import-oq-results.md), and the owner's decisions in [prd-inventory-import-fences.md](prd-inventory-import-fences.md).
 
