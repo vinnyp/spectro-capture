@@ -46,7 +46,19 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 ## Fence → row map
 
-(filled by the round-1 fix pass: the rows that name each of F1–F8 for provenance, and F9 over every row in §1–§6, every copy state, every metric.)
+Where a fence is named in the PRD, for provenance only. A row not listed here is not silently governed by a fence; it simply does not cite one.
+
+| Fence | Named by |
+| :--- | :--- |
+| F1 | [§3](prd-device-management.md#3-calibration)'s section note and [R3.4](prd-device-management.md#3-calibration) |
+| F2 | [R5.7](prd-device-management.md#5-mid-session-device-failure) |
+| F3 | [R5.8](prd-device-management.md#5-mid-session-device-failure), [R5.10](prd-device-management.md#5-mid-session-device-failure) |
+| F4 | [R5.15](prd-device-management.md#5-mid-session-device-failure) |
+| F5 | [R2.17](prd-device-management.md#2-licensing--pre-authorization); [OQ 11](prd-device-management.md#open-questions) |
+| F6 | [R2.14](prd-device-management.md#2-licensing--pre-authorization); [OQ 12, OQ 13, OQ 14](prd-device-management.md#open-questions) |
+| F7 | the [Legend](prd-device-management.md#legend)'s provisional-constants paragraph, which every TBD-on-spike constant's row inherits |
+| F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
+| F9 | every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
 ## Rejected findings
 

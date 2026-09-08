@@ -3,7 +3,7 @@
 Companion to [prd-device-management.md](prd-device-management.md): what the Cataloger does and sees, journey by journey.
 The requirement rows in that file are the rules; nothing here adds one, and the shipping copy is in [prd-device-management-copy.md](prd-device-management-copy.md).
 
-States are named here in plain language and each links to its copy state. Persona is the Cataloger unless the title says otherwise. Citation shorthand: [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) is the vendor SDK audit.
+States are named here in plain language; the shipping copy for each is in [prd-device-management-copy.md](prd-device-management-copy.md#error--state-copy). Persona is the Cataloger unless the title says otherwise. Citation shorthand: [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) is the vendor SDK audit.
 
 ## Device workflow
 

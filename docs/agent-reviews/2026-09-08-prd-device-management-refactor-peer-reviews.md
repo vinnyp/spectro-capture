@@ -6,19 +6,19 @@
 
 ### peer-product-manager-reviewer
 
-(paste findings)
+See the round sections below: each lens's findings are consolidated in the verify-the-reviewer table and the "Minors accepted" paragraph of the round in which they were raised; the reviewers' full outputs are kept outside the repo.
 
 ### peer-staff-software-engineer-reviewer
 
-(paste findings)
+See the round sections below: each lens's findings are consolidated in the verify-the-reviewer table and the "Minors accepted" paragraph of the round in which they were raised; the reviewers' full outputs are kept outside the repo.
 
 ### peer-test-reviewer
 
-(paste findings)
+See the round sections below: each lens's findings are consolidated in the verify-the-reviewer table and the "Minors accepted" paragraph of the round in which they were raised; the reviewers' full outputs are kept outside the repo.
 
 ### peer-interface-reviewer
 
-(paste findings)
+See the round sections below: each lens's findings are consolidated in the verify-the-reviewer table and the "Minors accepted" paragraph of the round in which they were raised; the reviewers' full outputs are kept outside the repo.
 
 ## Verify-the-reviewer dispositions
 
@@ -51,12 +51,19 @@ Minors accepted (all editorial): R2.6, R4.3, E7 carry a pointer to the pending s
 
 ### Fix pass (resume point)
 
-- [ ] **DF-1** — OQ 28 "Pairing and calibration retry counts": Decision so far "None"; Interim rule "None — the consecutive-failure counts stay unset"; Closer "Owner decision with dogfood data — owner"; Feeds R1.8, R3.5; Status open. R1.8, R3.5, and the Legend's bullet cite it.
-- [ ] **DF-2** — Legend `:53`: "carrying its candidate value where one exists, and its Open Questions id … no provisional constant ships in a release without its OQ resolved (fence F7); a dogfood build is not a release for that rule, so the first sessions run on candidate values and produce the data those questions need (F7, clarification (1))".
-- [ ] **DF-3** — Obligations `:305`: "the configurable-latency row ([R6.27]), P1 here, must move into the first build phase with the amendment carrying these notes, pacing at that PRD's DEMO_SCAN_CYCLE".
-- [ ] **DF-4** — R6.9's settable list gains "system audio output muted / not muted ([R4.1])"; R4.1's advisory cites R6.9. Two sentences max.
-- [ ] **DF-5** — The editorial Minors and Nits listed above, each the smallest edit; the two capture-file label changes and the one capture-file link retarget are the only edits outside the device files.
-- [ ] **DF-6** — Copy file: a Status column ("🤝 Aligned" on every row); ‹P1› marks per clarification (1d) with one header sentence as the capture copy header's; the Placeholders paragraph (in §7, cited from the copy header).
-- [ ] **DF-7** — Checks as RP-8, plus: OQ 28 resolves from both rows; `grep -c '⌛️'` is 0 in every device file; R rows still 100 (DF-4 edits a row, adds none); counts and word counts.
+- [x] **DF-1** — OQ 28 "Pairing and calibration retry counts": Decision so far "None"; Interim rule "None — the consecutive-failure counts stay unset"; Closer "Owner decision with dogfood data — owner"; Feeds R1.8, R3.5; Status open. R1.8, R3.5, and the Legend's bullet cite it.
+  - _Result:_ Done: OQ 28 added at `:373` as the table's 30th question; R1.8 `:123`, R3.5 `:200` and the Legend's bullet `:63` cite it, and its Feeds cell cites both rows back.
+- [x] **DF-2** — Legend `:53`: "carrying its candidate value where one exists, and its Open Questions id … no provisional constant ships in a release without its OQ resolved (fence F7); a dogfood build is not a release for that rule, so the first sessions run on candidate values and produce the data those questions need (F7, clarification (1))".
+  - _Result:_ Done: the Legend's provisional-constants paragraph `:53` now reads "where one exists" and carries the dogfood carve-out, F7 clarification (1) — the only rule the six candidate-less constants were failing.
+- [x] **DF-3** — Obligations `:305`: "the configurable-latency row ([R6.27]), P1 here, must move into the first build phase with the amendment carrying these notes, pacing at that PRD's DEMO_SCAN_CYCLE".
+  - _Result:_ Done: the Capture Mode §6 obligations line now takes the R5.18 form — "[R6.27], P1 here, must move into the first build phase with the amendment carrying these notes, pacing at that PRD's DEMO_SCAN_CYCLE".
+- [x] **DF-4** — R6.9's settable list gains "system audio output muted / not muted ([R4.1])"; R4.1's advisory cites R6.9. Two sentences max.
+  - _Result:_ Done: R6.9's settable list gains "settable system audio output muted / not muted ([R4.1])" and R4.1's advisory cites R6.9 back; both rows still two sentences, R rows still 100.
+- [x] **DF-5** — The editorial Minors and Nits listed above, each the smallest edit; the two capture-file label changes and the one capture-file link retarget are the only edits outside the device files.
+  - _Result:_ Done: all fourteen Minors and four Nits, each the smallest edit — R2.6/R4.3/E7 amendment pointers, R5.1→E23, R4.4→E19/E20, the inbound-obligations preamble line, R4.1→OQ 3, OQ 22↔R6.22, R2.15's approximate-date clause, Legend bullets 3 and 5, the fence → row map, §7's Placeholders, the OQ 4/19/25 results sections, the engineering-plan roll-up, §2's UJ1.1, the R5.19 cite dropped, the journeys header. Outside the device files: the two "device PRD's copy file" labels and the persistence cite retargeted to `#inherited-obligations`.
+- [x] **DF-6** — Copy file: a Status column ("🤝 Aligned" on every row); ‹P1› marks per clarification (1d) with one header sentence as the capture copy header's; the Placeholders paragraph (in §7, cited from the copy header).
+  - _Result:_ Done: the copy file takes a Status column (🤝 Aligned on all 32 rows), ‹P1› on E11, E13, E15, E32 and on E18's "Extend offline use" action, a header sentence matching the capture copy header's, and a cite to §7's new Placeholders paragraph; §7's whole-table status sentence becomes per-row.
+- [x] **DF-7** — Checks as RP-8, plus: OQ 28 resolves from both rows; `grep -c '⌛️'` is 0 in every device file; R rows still 100 (DF-4 edits a row, adds none); counts and word counts.
+  - _Result:_ Done: 1,233 links and anchors resolve across the device files and every inbound file (the only 4 misses stay the pre-existing quoted excerpts in the 2026-09-06 capture review log); `&amp;` survives only where the refactor log and F9 name the string itself; 0 bare cross-PRD row labels; every requirement row two sentences or fewer (R6.1's third "sentence" is the period inside its quoted helper text); all 11 mermaid blocks render; R 100 (R1 22, R2 19, R3 5, R4 6, R5 20, R6 28), all 🤝 Aligned; E 32, each with a 🤝 Aligned Status cell; M 5, all 🤝; OQ 30; `⌛️` appears once per PRD, in the Legend's value list, on no row.
 
 Rows edited by the pass and re-verified in round 2: R1.8, R2.6, R2.11, R2.15, R3.5, R4.1, R4.3, R4.4, R5.1, R6.9, R6.22, R6.27, E7, E11, E13, E15, E18, E23, E32; every other row is consented by all four lenses and stays 🤝.

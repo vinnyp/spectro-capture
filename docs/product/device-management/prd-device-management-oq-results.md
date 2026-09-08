@@ -1,6 +1,6 @@
 # Device Management PRD — open-question results
 
-One `## OQ <n>` section per question in [prd-device-management.md](prd-device-management.md)'s [Open Questions](prd-device-management.md#open-questions) table that already carries evidence — today the eight questions the [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) part-answered, each marked `residual` in that table. An OQ's status may change only when its section exists here, and a section existing is necessary but not sufficient: a `residual` question keeps its section and its status until the hardware spike closes the remainder. The table keeps a one-line "Decision so far" and this file carries the evidence. Owner decisions that close a question are recorded as fences in [prd-device-management-fences.md](prd-device-management-fences.md).
+One `## OQ <n>` section per question in [prd-device-management.md](prd-device-management.md)'s [Open Questions](prd-device-management.md#open-questions) table that already carries evidence: the eight questions the [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) part-answered, each marked `residual` in that table, and the three it bears on without answering — OQ 4, OQ 19, OQ 25 — which stay `open`. An OQ's status may change only when its section exists here, and a section existing is necessary but not sufficient: a `residual` question keeps its section and its status until the hardware spike closes the remainder, and an `open` one keeps both until an answer rather than evidence arrives. The table keeps a one-line "Decision so far" and this file carries the evidence. Owner decisions that close a question are recorded as fences in [prd-device-management-fences.md](prd-device-management-fences.md).
 
 ## OQ 1 — Activation-before-discovery sequencing
 
@@ -21,6 +21,16 @@ One `## OQ <n>` section per question in [prd-device-management.md](prd-device-ma
 **Evidence source:** SDK docs. **Gated on:** hardware.
 
 **Carried by:** [R3.2](prd-device-management.md#3-calibration); the due-signal seam in [R6.9](prd-device-management.md#6-mock-device-layer).
+
+## OQ 4 — Battery level capability
+
+**Evidence (SDK audit):** Low battery arrives in the measurement status ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs) — evidence that a level exists, not that one can be read outside a measurement.
+
+**Still open, and what closes it:** whether a battery level is pollable without taking a measurement, and at what granularity. Probe the battery surface on hardware.
+
+**Evidence source:** SDK docs. **Gated on:** hardware.
+
+**Carried by:** [R4.1](prd-device-management.md#4-pre-flight-device-health) and [R4.5](prd-device-management.md#4-pre-flight-device-health) (the last-known-level-with-its-age fallback), [R5.1](prd-device-management.md#5-mid-session-device-failure) and [R5.14](prd-device-management.md#5-mid-session-device-failure) (the battery halt and its user-initiated clear). The thresholds themselves are OQ 4b, which has no evidence yet.
 
 ## OQ 6 — Discovery timeout
 
@@ -72,6 +82,16 @@ One `## OQ <n>` section per question in [prd-device-management.md](prd-device-ma
 
 **Carried by:** [R2.15](prd-device-management.md#2-licensing--pre-authorization) and [R2.16](prd-device-management.md#2-licensing--pre-authorization); the not-covered state [E8](prd-device-management-copy.md#error--state-copy); the simulated outcome in [R6.10](prd-device-management.md#6-mock-device-layer).
 
+## OQ 19 — Sandbox entitlement conflict
+
+**Evidence (SDK audit):** The vendor documents four required macOS sandbox entitlements — Bluetooth, serial, USB, and network client ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs) — while Apple's current entitlement reference does not list the serial one.
+
+**Still open, and what closes it:** whether a sandboxed build can hold all four, and whether the app ships sandboxed at all. An owner decision plus a sandboxed build experiment; the experiment needs a Mac, not an instrument.
+
+**Evidence source:** SDK docs. **Gated on:** owner.
+
+**Carried by:** the sandboxing ADR, not yet written ([AGENTS.md §3](../../../AGENTS.md#3-decided--recommended--open) lists it open); [UJ1.1](prd-device-management-journeys.md#uj-11-cannot-complete-a-first-run)'s USB fallback.
+
 ## OQ 23 — macOS SDK USB: remaining half
 
 **Evidence (SDK audit):** USB IS supported on macOS and each discovery entry reports its transport ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs).
@@ -81,3 +101,13 @@ One `## OQ <n>` section per question in [prd-device-management.md](prd-device-ma
 **Evidence source:** SDK docs. **Gated on:** hardware.
 
 **Carried by:** [R1.10](prd-device-management.md#1-device-pairing), [R1.11](prd-device-management.md#1-device-pairing), [R1.16](prd-device-management.md#1-device-pairing); the transport assertions in [R6.19](prd-device-management.md#6-mock-device-layer).
+
+## OQ 25 — Entitlement change mid-session
+
+**Evidence (SDK audit):** An entitlement change invalidates open connections ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs), so a licensing event can drop a live session exactly as a link loss does.
+
+**Still open, and what closes it:** whether the app can tell the two apart, and so whether the disconnect copy can name a licensing cause instead of a link one. Change entitlements against a live session on hardware.
+
+**Evidence source:** SDK docs. **Gated on:** hardware.
+
+**Carried by:** [R5.1](prd-device-management.md#5-mid-session-device-failure), whose halt taxonomy absorbs it; the disconnect halt state [E23](prd-device-management-copy.md#error--state-copy).
