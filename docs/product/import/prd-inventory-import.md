@@ -42,7 +42,7 @@ Provisional constants: every TBD-on-spike constant is a named provisional consta
 
 **Row IDs.** This document numbers its requirement rows from R1.1 under fence F49 and keeps the `E<n>` numbers it inherited; the IDs those rows carried in the capture PRD are retired there and never reused ([Traceability](#traceability)).
 
-**Status of this document.** Every moved row arrived at 🤝 Aligned: it came from the locked capture PRD with its rule unchanged, and only its citations were rewritten (fence F49). [R4.1](#4-demo-device-and-verifiability) and [R4.2](#4-demo-device-and-verifiability) sit at ⌛️ Ready for Alignment for the round that verifies them. The Commit PR column is empty throughout, and one verification round over both documents is still owed before this one locks.
+**Status of this document.** Every row is 🤝 Aligned: the moved rows came from the locked capture PRD with their rules unchanged and only their citations rewritten (fence F49), and the F49 verification rounds (25, 26) are recorded in the [capture review log](../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md). The Commit PR column is empty throughout, and this document is locked with the capture PRD.
 
 **Status**
 
@@ -159,8 +159,8 @@ Traces [UJ 3.9](../capture-mode/prd-capture-mode-journeys.md#uj-39-capture-with-
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| R4.1 | v1 | P0 | A test lists what the import preview shows, without matching wording ([R3.1](#3-preview-and-commit)). | ⌛️ Ready for Alignment |  |
-| R4.2 | v1 | P0 | A test observes, without matching wording, which named [copy](prd-inventory-import-copy.md#error--state-copy) state is up. | ⌛️ Ready for Alignment |  |
+| R4.1 | v1 | P0 | A test lists what the import preview shows, without matching wording ([R3.1](#3-preview-and-commit)). | 🤝 Aligned |  |
+| R4.2 | v1 | P0 | A test observes, without matching wording, which named [copy](prd-inventory-import-copy.md#error--state-copy) state is up. | 🤝 Aligned |  |
 
 ### Inherited obligations
 
@@ -170,7 +170,7 @@ Each line is a requirement on the document named, not a suggestion. A row cited 
 | :--- | :--- | :--- |
 | Data Foundation | The one matching rule for Swatch Codes and collection names, and an import that either lands whole or not at all | [R2.3](#2-target-mapping-and-the-matching-rule), [R3.2](#3-preview-and-commit) |
 | Collection Mode | Renaming an imported column | [R2.2](#2-target-mapping-and-the-matching-rule) |
-| Capture Mode | A collection's pending rows, in file order, are what a session scans, and an import is refused while a session on that collection is in flight | [R3.2](#3-preview-and-commit) |
+| Capture Mode | A collection's pending rows, in file order, are what a session scans; an import is refused while a session on that collection is in flight, and the routes [E40](prd-inventory-import-copy.md#error--state-copy) offers resolve to the capture PRD's §7 paths — an active or paused session ended from there follows [the capture PRD's R7.5](../capture-mode/prd-capture-mode.md#7-pause-end-interruption-and-resume) | [R3.2](#3-preview-and-commit) |
 
 ### 5. Error & State Copy
 
@@ -186,7 +186,7 @@ Numeric targets below are proposals, not commitments.
 | M1 | Import success on real exports | Start: picking a file. End: a committed import. Statistic: the share of files that imported without the user editing the file first. Population: a corpus of real exports from the spreadsheets catalogers actually use — Numbers, Excel, Sheets. | ≥ 90% (proposal); the failures are what write the detection rules for OQ 1 | Timed walkthroughs against the corpus, n stated with the result | 🤝 Aligned |
 
 
-How long an import takes to show up as capture is the capture PRD's [M8](../capture-mode/prd-capture-mode.md#success-metrics), which starts at [R3.2](#3-preview-and-commit)'s commit.
+How long an import takes to show up as capture is [the capture PRD's M8](../capture-mode/prd-capture-mode.md#success-metrics), which starts at [R3.2](#3-preview-and-commit)'s commit.
 
 ## Open Questions
 

@@ -2,7 +2,7 @@
 
 Owner decisions for `prd-inventory-import.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. Format per `operator-agents:writing-prds`.
 
-Copied from the capture fence file under F49; the capture file remains the record of the decision date.
+Copied from the capture fence file under F49; the capture file remains the record of the decision date. The capture file's text is canonical; an amendment lands there and is re-copied here.
 
 F49 itself — the split that made this document, and its clarification (1) — stays in the [capture fence file](../capture-mode/prd-capture-mode-fences.md) and is cited from here rather than restated. So do F24, the priority split, and F45, the two-sentence rule, both of which bind every row in this PRD.
 

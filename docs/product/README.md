@@ -12,7 +12,7 @@ Five PRDs remain to be written to cover v1. Priority is authoring order, not a c
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
-| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Drafted** from the locked capture rows under fence F49, pending its verification round |
+| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet |
 | 4 | Data Foundation | U5, U6 | queued |
 | 5 | Collection Mode | U5, U7 | queued |
 | 6 | QC &amp; Comparison | U4 | queued |
@@ -37,7 +37,7 @@ Reading a spreadsheet export, mapping its columns onto swatches, and landing eve
 
 The PRD is [prd-inventory-import.md](import/prd-inventory-import.md), with four companion files: the user journeys in [prd-inventory-import-journeys.md](import/prd-inventory-import-journeys.md), the shipping error and state copy in [prd-inventory-import-copy.md](import/prd-inventory-import-copy.md), the answers to closed open questions in [prd-inventory-import-oq-results.md](import/prd-inventory-import-oq-results.md), and the owner decisions in [prd-inventory-import-fences.md](import/prd-inventory-import-fences.md).
 
-Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed; they arrived 🤝 Aligned and one verification round over both documents is still owed.
+Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed; they arrived 🤝 Aligned and its verification rounds (25–26) are recorded in the capture review log.
 
 ### 4. Data Foundation
 
@@ -101,7 +101,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 ## Authoring order
 
-**Capture Mode is locked** — its review gate closed after 24 rounds, with owner sign-off on the artifact set still pending — and **Inventory Import**, split out of it under fence F49, is awaiting the verification round over both documents. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
+**Capture Mode is locked** — its review gate closed after 24 rounds, with owner sign-off on the artifact set still pending — and **Inventory Import**, split out of it under fence F49, is locked with it after verification rounds 25–26. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
 
 **Data Foundation is next.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004.
 
