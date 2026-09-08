@@ -122,7 +122,7 @@ The product thesis: import first, then scan heads-down with no per-item metadata
   - If only set-aside swatches are left and any of them is still unsettled → the session opens straight into the review ([UJ3.3](#uj-33-resolve-the-deferred-error-queue-at-session-end))
   - If a session for this collection is already running → the app takes me back to it
   - If another collection's session is active or paused → the instrument-held state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
-2. The pre-flight gate runs — battery, calibration, authorization, storage, and the muted-audio advisory ([device PRD UJ2](../device-management/prd-device-management.md#uj-2-start-acquisition)).
+2. The pre-flight gate runs — battery, calibration, authorization, storage, and the muted-audio advisory ([device PRD UJ2](../device-management/prd-device-management-journeys.md#uj-2-start-acquisition)).
   - If a check blocks → the device PRD's blocked state; my session has not started and my queue is untouched
   - If the Demo Device is connected → the simulated indicator is on the capture surface for the whole session ([UJ3.9](#uj-39-capture-with-the-demo-device-contributor))
 3. The session starts. I see the current row's code and name, where I am in the queue, the sample counter, my tallies, and the last few rows I captured.
@@ -253,9 +253,9 @@ flowchart TD
 
 ### UJ 3.6 Device fails mid-session
 
-> Scope boundary: device-level failure — disconnect, not responding, low battery, save failure — is detect → alert → reconnect → resume in the [device PRD UJ5](../device-management/prd-device-management.md#uj-5-device-failure-during-a-session) and [§5](../device-management/prd-device-management.md#5-mid-session-device-failure). This journey states only what capture does around that halt.
+> Scope boundary: device-level failure — disconnect, not responding, low battery, save failure — is detect → alert → reconnect → resume in the [device PRD UJ5](../device-management/prd-device-management-journeys.md#uj-5-device-failure-during-a-session) and [§5](../device-management/prd-device-management.md#5-mid-session-device-failure). This journey states only what capture does around that halt.
 
-1. Mid-queue the device fails, or the Mac sleeps. Capture halts immediately and the alert reaches me through two senses ([device PRD UJ5](../device-management/prd-device-management.md#uj-5-device-failure-during-a-session)).
+1. Mid-queue the device fails, or the Mac sleeps. Capture halts immediately and the alert reaches me through two senses ([device PRD UJ5](../device-management/prd-device-management-journeys.md#uj-5-device-failure-during-a-session)).
   - If I press the trigger during the halt → nothing is asked of the instrument; the halt state surfaces instead
 2. The capture surface shows the halt as paused, with the device PRD's recovery path. My current row, tallies, and recents stay visible.
 3. When the cause clears, "Resume scanning" puts me back on my row. A part-finished set restarts from its first sample.
@@ -311,7 +311,7 @@ flowchart TD
 
 ### UJ 3.9 Capture with the Demo Device (Contributor)
 
-1. With no instrument and no license, I choose "Demo Device (simulated — no instrument)" ([device PRD UJ1.2](../device-management/prd-device-management.md#uj-12-first-run-with-no-hardware-contributor)).
+1. With no instrument and no license, I choose "Demo Device (simulated — no instrument)" ([device PRD UJ1.2](../device-management/prd-device-management-journeys.md#uj-12-first-run-with-no-hardware-contributor)).
 2. I import a sample inventory and start a session. Everything looks and behaves as it does with a real instrument, apart from a short list of hardware-only differences, with a simulated indicator always on screen and every reading permanently marked simulated ([device PRD §6](../device-management/prd-device-management.md#6-mock-device-layer)).
 3. I trigger scans on screen or from the keyboard, at the real instrument's pace.
 4. I make it fail — light leakage, then out-of-range temperature — and walk [UJ3.1](#uj-31-a-scan-fails-mid-queue) end to end: the caution, hold and retry, Skip and Flag, the automatic set-aside with its moved-on cue, the guard's pause, and the review ([§11](prd-capture-mode.md#11-demo-device-and-verifiability) sequences the guard's two modes).
@@ -339,7 +339,7 @@ flowchart TD
   - If that code is already in the collection → the duplicate-code state ([copy, §12](prd-capture-mode-copy.md#error--state-copy)), offering a re-scan of the existing row or a different code
   - If the code is blank → the code-required state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
 3. I save. The item is a pending row in my collection.
-4. I choose to acquire from the device, which runs the pre-flight gate as any capture does ([device PRD UJ2](../device-management/prd-device-management.md#uj-2-start-acquisition)).
+4. I choose to acquire from the device, which runs the pre-flight gate as any capture does ([device PRD UJ2](../device-management/prd-device-management-journeys.md#uj-2-start-acquisition)).
   - If another collection's session is active or paused → the instrument-held state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
 5. I take the collection's number of samples, with the same confirmation, agreement check, and failure handling as [UJ3](#uj-3-run-a-bulk-capture-session).
   - If samples keep failing, or I skip → the item is set aside, marked in my collection, and resolved by a re-scan later

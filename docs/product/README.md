@@ -10,18 +10,20 @@ Five PRDs remain to be written to cover v1. Priority is authoring order, not a c
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
-| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** |
+| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** — refactored under fence F9 to the capture PRD's shape, with four companion files: [journeys](device-management/prd-device-management-journeys.md), [copy](device-management/prd-device-management-copy.md), [open-question results](device-management/prd-device-management-oq-results.md), [fences](device-management/prd-device-management-fences.md); re-lock pending |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet |
 | 4 | Data Foundation | U5, U6 | queued |
 | 5 | Collection Mode | U5, U7 | queued |
-| 6 | QC &amp; Comparison | U4 | queued |
+| 6 | QC & Comparison | U4 | queued |
 | 7 | Color Visualization | U7 | queued |
 | 8 | Telemetry | — | queued — v1.x, gated on the provider spike |
 
 ### 1. Device Management — written
 
 Connect (BLE + USB), known-device management, licensing and offline pre-authorization, guided calibration, the pre-flight readiness gate, mid-session device failure and recovery, and the mock-device layer. Owns device-level failure end-to-end: detect → alert → reconnect → resume.
+
+The PRD is [prd-device-management.md](device-management/prd-device-management.md), with four companion files: the user journeys in [prd-device-management-journeys.md](device-management/prd-device-management-journeys.md), the shipping error and state copy in [prd-device-management-copy.md](device-management/prd-device-management-copy.md), the answers to part-closed open questions in [prd-device-management-oq-results.md](device-management/prd-device-management-oq-results.md), and the owner decisions in [prd-device-management-fences.md](device-management/prd-device-management-fences.md). Fence F9 split the journeys and the copy out, gave every requirement row, copy state, and metric a stable ID, and compacted the rows; no rule changed in that pass.
 
 ### 2. Capture Mode
 
@@ -49,7 +51,7 @@ Gates ADR-0003, the sharpest one-way door in the project: this schema ships insi
 
 Browsing and working with a collection after capture. Browse at scale · search, filter, facet, sort · editing surfaces · selection and bulk operations · the version-history UI · the gamut-aware swatch grid.
 
-### 6. QC &amp; Comparison
+### 6. QC & Comparison
 
 QC scan against a saved item, ΔE2000 verdict versus the canonical value, the delta stored as its own record, canonical never overwritten. Small by design — this is where the strategy deliberately holds at parity rather than building QC depth, and the PRD's job is as much to draw that line as to specify the feature.
 
@@ -72,7 +74,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 | U1 | Bulk-digitize a predefined inventory | Capture Mode — its first step is [Inventory Import](import/prd-inventory-import.md) |
 | U2 | Capture a single new item ad hoc | Capture Mode |
 | U3 | Start a session with a healthy device | [Device Management](device-management/prd-device-management.md) |
-| U4 | Verify a color still matches | QC &amp; Comparison |
+| U4 | Verify a color still matches | QC & Comparison |
 | U5 | Fix a bad scan without losing history | Data Foundation (storage) · Collection Mode (UI) |
 | U6 | Use the data outside the app | Data Foundation |
 | U7 | See the collection honestly | Collection Mode (swatch grid) · Color Visualization (3D plot) |
@@ -95,7 +97,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 | P0 | Offline operation + per-device pre-authorization | [Device Management](device-management/prd-device-management.md) |
 | P0 | Mock-device layer | [Device Management](device-management/prd-device-management.md) §6 |
 | P1 | Ad-hoc single capture | Capture Mode |
-| P1 | QC delta E vs canonical | QC &amp; Comparison |
+| P1 | QC delta E vs canonical | QC & Comparison |
 | P2 | 3D absolute-space plot | Color Visualization |
 | P2 | Gamut-aware swatch grid | Collection Mode |
 
@@ -105,7 +107,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 **Data Foundation is next.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004.
 
-Collection Mode follows both, since it renders what the data model defines and inherits the seam's outcome. QC &amp; Comparison and Color Visualization are P1/P2 and can follow at any point. Telemetry is last regardless — it is v1.x and blocked on a spike.
+Collection Mode follows both, since it renders what the data model defines and inherits the seam's outcome. QC & Comparison and Color Visualization are P1/P2 and can follow at any point. Telemetry is last regardless — it is v1.x and blocked on a spike.
 
 ## PRD → ADR gates
 

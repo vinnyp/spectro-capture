@@ -5,7 +5,7 @@ Each `E<n>` ID is the contract between a state and the rows that cite it; IDs ne
 
 ## Error & state copy
 
-The shipping copy for every error, waiting, choice, and confirmation state in this PRD, written in the Cataloger's vocabulary: plain language, names the recovery, never SDK-speak. Every state is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R11.12](prd-capture-mode.md#11-demo-device-and-verifiability)). Every promise made below is backed by a requirement row in the PRD, except a state this PRD hands over whole ([E29](#error--state-copy)). Halt copy is the [device PRD §7](../device-management/prd-device-management.md#7-error--state-copy)'s and is not restated here.
+The shipping copy for every error, waiting, choice, and confirmation state in this PRD, written in the Cataloger's vocabulary: plain language, names the recovery, never SDK-speak. Every state is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R11.12](prd-capture-mode.md#11-demo-device-and-verifiability)). Every promise made below is backed by a requirement row in the PRD, except a state this PRD hands over whole ([E29](#error--state-copy)). Halt copy is the [device PRD §7](../device-management/prd-device-management-copy.md#error--state-copy)'s and is not restated here.
 
 | ID | State | Headline | Body | Primary action | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
