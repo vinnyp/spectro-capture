@@ -811,3 +811,36 @@ Minors accepted: R5.10 gains "a disagreeing set the operator sets aside is not o
 Of the 14 ⌛️ rows and E18: **R4.10, R4.15, R4.21, R5.11, R5.14, R6.12, R8.1, R10.7 flip to 🤝**; **R5.9, R5.10, R8.4, R11.12, R11.15, M5, E18 stay ⌛️** and are edited by the round-19 fix pass, together with the 🤝 rows E19 and the Legend/Traceability/Surfaces paragraphs. Round 20 verifies those edits only, then the document locks.
 
 **Round-19 status:** lock consented on every unedited row. **Fix pass:** applied by `operator-agents:product-manager` on Opus (9 items + FX19-0). After the pass: PRD 19,502 words; 155 🤝, 6 ⌛️ (R5.9 R5.10 R8.4 R11.12 R11.15 M5); the copy file 32 🤝, 12 ⌛️ (E18, E19, and the ten states that gained a ‹P1› mark under F47: E2 E28 E29 E30 E31 E32 E33 E36 E37 E42); the journeys diagram relabelled and checked; R4.10 flipped though FX19-8 added four words to it. Next: round 20, a final delta over exactly those 18 rows, then lock. Owner instruction stands: no PR until the owner has reviewed the artifact set.
+
+## Round 20 — last delta before lock (2026-09-07)
+
+**Subject:** the round-19 commit (PRD 19,502 words; 155 🤝, 6 ⌛️; copy 32/44). **Lenses:** the five usual lenses plus the interface lens on Claude/Opus over the 18 edited rows; agy on four, advisory.
+
+| lens | round-19 items | new findings | rows OBJECT |
+|---|---|---|---|
+| product manager | all RESOLVED | 1 Major, 2 Nit | R8.4 |
+| staff engineer | all RESOLVED | 1 Blocker, 2 Major, 2 Minor, 2 Nit | R5.9, R8.4 |
+| test (retargeted) | all RESOLVED / PARTIAL on R8.4 and the diagram | 2 Major, 2 Minor | R5.9, R8.4 |
+| architecture | A19-1 PARTIAL (fence file), rest RESOLVED | 1 Major, 3 Minor, 1 Nit | R8.4 |
+| marketing (copy) | all RESOLVED; PMM19-4 PARTIAL | 2 Major, 1 Minor, 1 Nit | R8.4 |
+| interface | NEW-1, Minors, Nit RESOLVED | 2 Major, 2 Minor | copy header, E29–E34 |
+| agy (advisory) | — | objections on R8.4 (= R20-F1) and E18 (the diagram item) | R8.4, E18 |
+
+Every lens consents to lock every edited row except the two below; sixteen of the eighteen rows are consented by all six.
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R20-F1 | R8.4's new clause "or by 'Skip'" is unqualified and R5.9's list is closed "and nothing else" over queue set-asides, so the two rows disagree on whether and what the guard counts in the review | Staff S20-1 (Blocker), PM PM20-1, Test T20-1, Arch A20-1, PMM PMM20-1 (Major) | `:339`, `:253`, `:255`, F48 confirmed. | accept — Blocker. R8.4 counts "on the same routes as a queue row (R5.9)" without restating them; R5.9's closing clause reads "and nothing else, in the queue and in the review (R8.4)"; §11's script gains the review case. |
+| R20-F2 | The UJ3.1 diagram's relabelled "Set it aside" edge runs to the next row and bypasses the guard node, while R5.9 counts that route | PMM PMM20-2, Test T20-2, Staff S20-2 (Major) | journeys `:274`, `:261` confirmed. | accept — route the edge to the deferred-with-cause node; the guard node's label names R5.9's routes; "re-take" → "Take it again". |
+| R20-F3 | The ‹P1› notation is action-level but E30–E34 have no P0 existence (their only rows are P1); E32 marks "None"; E34 is unmarked; E29's "Check it" belongs to the QC PRD | Interface I20-1, I20-2 (Major), Staff S20-4, Arch A20-4/A20-5, Test note | copy `:40-45` confirmed. | accept — a state-level ‹P1› on E30–E34 with one header clause ("a state or surface whose own rows are all P1 does not appear until they land"); E32's "None" unmarked; E29 marks "Correct it" and notes "Check it" as the QC PRD's; R11.15g marks its two P1 entry points and the lead row covers surfaces d/e. |
+| R20-F4 | E22's (and E23's) ⟨dropped⟩ clause is joined to a non-count clause that the drop-whole rule would take at zero, losing the resume row | Staff S20-3 (Major), Arch A20-3 | copy `:33`, `:34`, `:474` confirmed. | accept — split each into two sentences; no wording changes. |
+
+Minors accepted: E19 "or you set one aside because its samples wouldn't agree" (PMM, Test); R11.12 adds E2's finished-variant set-aside line (Test, Arch, PM nit); the fence file's map for F47 and F48 lists the rows and states that now carry them and its :358 sentence mirrors the PRD's (Arch, Staff, Interface); Traceability "amendments and clarifications" (Staff nit).
+
+### Row flips
+
+Consented by every lens: R5.10, R11.12, R11.15, M5, and E2, E18, E19, E28, E29, E30, E31, E32, E33, E36, E37, E42 → 🤝 (E19, E22, E23, E29–E34, R11.12, R11.15 are then edited by the round-20 fix and re-verified in round 21). Held: R5.9, R8.4. Round 21 is a short delta by the staff, test, architecture, and interface lenses over R5.9, R8.4, the edited copy rows, R11.12, R11.15, and the diagram; then the document locks.
+
+**Round-20 status:** lock consented on 16 of 18 rows; fix pass applied (`prd-capture-mode-round-20-fixes.md`, FX20-1 … FX20-6 then FX20-0, all ticked). After it: PRD 19,555 words, 157 🤝 / 4 ⌛️ (R5.9, R8.4, R11.12, R11.15); copy 35 🤝 / 9 ⌛️ (E19, E22, E23, E29–E34). Checks: 0 broken anchors, 0 dangling R/E/M citations, 0 literal `&amp;`, all six mermaid blocks render, 0 requirement rows over two sentences. Carried to round 21 for the owner: the device PRD's §7 heading is literally "Error &amp; State Copy", so this PRD's and the copy file's `#7-error--state-copy` citations do not resolve — a pre-existing defect in a read-only file, left unchanged. Owner instruction stands: no PR until the owner has reviewed the artifact set.

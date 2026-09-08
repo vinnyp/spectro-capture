@@ -258,7 +258,7 @@ flowchart TD
     F2 -- "no: the next press retries the same row" --> D
     F2 -- "no: Skip or Flag, deliberate keys" --> F3["Row deferred with cause, good samples kept; queue advances"]
     F2 -- "yes: distinct moved-on cue" --> F3
-    F3 --> K{"Consecutive rows the instrument set aside reach N_CONSEC_HARD?"}
+    F3 --> K{"Consecutive rows set aside by R5.9's routes reach N_CONSEC_HARD?"}
     K -- "yes, guard enabled" --> L["Guard pauses: row held, samples kept; check placement or recalibrate; force-resume resets the guard's counter"]
     L --> C
     K -- no --> C
@@ -269,9 +269,9 @@ flowchart TD
     G -. "Re-take sample n, or restart the item (UJ3.2)" .-> D
     H -- yes --> I{"Two or more samples, and they agree within SAMPLE_TOLERANCE?"}
     I -- "no: caution, row holds" --> I1{"Take it again, Accept the average, or Set it aside?"}
-    I1 -- "re-take" --> D
+    I1 -- "Take it again" --> D
     I1 -- "Accept the average, spread recorded" --> J
-    I1 -- "Set it aside: row set aside with its samples" --> C
+    I1 -- "Set it aside: row set aside with its samples" --> F3
     I -- "yes, or a single sample" --> J["Every sample saved, average worked out, then row-success confirm; queue advances"]
     J --> M{Queue exhausted?}
     M -- no --> C
