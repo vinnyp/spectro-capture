@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 9 fixes
 
-Resume point for round 9 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 9"). One box per new finding from every lens. Fences F1–F42 (F42 and the F40 clarification recorded this round) plus the earlier amendments (F6, F31, F36, F38) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected this round. Line numbers refer to commit `9aa4b0f`. WHAT not HOW; the operator's vocabulary; no technical jargon.
+Resume point for round 9 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 9"). One box per new finding from every lens. Fences F1–F42 (F42 and the F40 clarification recorded this round) plus the earlier amendments (F6, F31, F36, F38) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected this round. Line numbers refer to commit `9aa4b0f`. WHAT not HOW; the operator's vocabulary; no technical jargon.
 
 ## Status flips (authorized by the round-9 dispositions in the log)
 

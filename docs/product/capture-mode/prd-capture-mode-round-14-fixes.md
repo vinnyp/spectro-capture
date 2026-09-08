@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 14 fixes
 
-Resume point for round 14 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 14"). One box per new finding from every lens. Fences F1–F44 plus the amendments (F6, F31 (1)–(2), F36, F38, F40, F42 (1)–(5), F44 clarification) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to the round-13 commit. WHAT not HOW; the operator's vocabulary; no technical jargon. Read R3.6, R3.7, R3.8, R3.11, R7.1, R7.11, R8.1, R8.3, R8.6, R8.12, R8.15, R9.6, R9.11, E23, E39, E42 and UJ3.3 step 4 together first. R8.1 and R8.15 are long: replace sentences, do not add, and never restate a rule that lives in another row.
+Resume point for round 14 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 14"). One box per new finding from every lens. Fences F1–F44 plus the amendments (F6, F31 (1)–(2), F36, F38, F40, F42 (1)–(5), F44 clarification) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to the round-13 commit. WHAT not HOW; the operator's vocabulary; no technical jargon. Read R3.6, R3.7, R3.8, R3.11, R7.1, R7.11, R8.1, R8.3, R8.6, R8.12, R8.15, R9.6, R9.11, E23, E39, E42 and UJ3.3 step 4 together first. R8.1 and R8.15 are long: replace sentences, do not add, and never restate a rule that lives in another row.
 
 ## Status flips (authorized by the round-14 dispositions in the log)
 

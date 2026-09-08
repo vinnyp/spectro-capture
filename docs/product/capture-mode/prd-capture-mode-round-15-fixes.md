@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 15 fixes
 
-Resume point for round 15 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 15"). One box per new finding from every lens. Fences F1–F44 plus the amendments (F6, F31 (1)–(3), F36, F38, F40, F42 (1)–(5), F44 (1)–(2)) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to the round-14 commit. WHAT not HOW; the operator's vocabulary; no technical jargon. One rule, one row: every discard is enumerated in R7.1, every exit in R8.6, every entry state in R8.1, every leave-all effect in R8.15 — the others cite.
+Resume point for round 15 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 15"). One box per new finding from every lens. Fences F1–F44 plus the amendments (F6, F31 (1)–(3), F36, F38, F40, F42 (1)–(5), F44 (1)–(2)) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to the round-14 commit. WHAT not HOW; the operator's vocabulary; no technical jargon. One rule, one row: every discard is enumerated in R7.1, every exit in R8.6, every entry state in R8.1, every leave-all effect in R8.15 — the others cite.
 
 ## Status flips (authorized by the round-15 dispositions in the log)
 

@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 11 fixes
 
-Resume point for round 11 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 11"). One box per new finding from every lens. Fences F1–F43 plus the amendments (F6, F31, F36, F38, F40, F42 (1)–(3)) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to commit `738af8b`. WHAT not HOW; the operator's vocabulary; no technical jargon. Read R3.6, R3.11, R7.1, R8.1, R8.3, R8.7, R9.6, R9.7 together before FX11-1, and E2, E23, E24, E25, E39 together before the copy items.
+Resume point for round 11 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 11"). One box per new finding from every lens. Fences F1–F43 plus the amendments (F6, F31, F36, F38, F40, F42 (1)–(3)) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to commit `738af8b`. WHAT not HOW; the operator's vocabulary; no technical jargon. Read R3.6, R3.11, R7.1, R8.1, R8.3, R8.7, R9.6, R9.7 together before FX11-1, and E2, E23, E24, E25, E39 together before the copy items.
 
 ## Status flips (authorized by the round-11 dispositions in the log)
 

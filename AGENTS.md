@@ -79,6 +79,10 @@ There is no code yet. Current tree:
 ```
 docs/
   product/vision.md          — product vision, scope, personas, journeys
+  product/README.md          — the PRD index
+  product/capture-mode/      — the Capture Mode PRD and its companions
+  product/import/            — the Inventory Import PRD (not yet written)
+  product/device-management/ — the Device Management PRD
   briefs/                    — research briefs + results (see §2)
 docs/decisions/               — ADRs (planned, not yet created)
 .compound-engineering/        — Compound Engineering config; docs/ is the CE artifact root

@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 10 fixes
 
-Resume point for round 10 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 10"). One box per new finding from every lens. Fences F1–F43 (F43 and the F42 clarification recorded this round) plus the earlier amendments (F6, F31, F36, F38, F40) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to commit `701ec4e`. WHAT not HOW; the operator's vocabulary; no technical jargon. Read E2, E23, E24, E27, E39 together before editing any one of them: they tell the set-aside story in five places and must agree on what is reversible.
+Resume point for round 10 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 10"). One box per new finding from every lens. Fences F1–F43 (F43 and the F42 clarification recorded this round) plus the earlier amendments (F6, F31, F36, F38, F40) are the authorization. Tick each box as it lands. Row IDs never renumber; no new rows are expected. Line numbers refer to commit `701ec4e`. WHAT not HOW; the operator's vocabulary; no technical jargon. Read E2, E23, E24, E27, E39 together before editing any one of them: they tell the set-aside story in five places and must agree on what is reversible.
 
 ## Status flips (authorized by the round-10 dispositions in the log)
 

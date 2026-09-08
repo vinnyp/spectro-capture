@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 5 fixes
 
-Resume point for round 5, the first full round over the requirement rows (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 5"). One box per finding from every review that ran: Claude product manager (PM5-*), staff engineer (B*/M-*/m*/n*), test (T5-*), architecture (A*), marketing (PMM*); agy product manager, staff, architecture, marketing (the agy test review was short; its substantive items are folded where noted). Fences F1–F33 are the authorization (F26–F33 are this round's owner decisions). Tick each box as it lands in `prd-capture-mode.md`. Row IDs are stable; new rows take the next number in their section. Every touched row stays ⌛️ Ready for Alignment. Line numbers refer to commit `4a07a80`.
+Resume point for round 5, the first full round over the requirement rows (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 5"). One box per finding from every review that ran: Claude product manager (PM5-*), staff engineer (B*/M-*/m*/n*), test (T5-*), architecture (A*), marketing (PMM*); agy product manager, staff, architecture, marketing (the agy test review was short; its substantive items are folded where noted). Fences F1–F33 are the authorization (F26–F33 are this round's owner decisions). Tick each box as it lands in `prd-capture-mode.md`. Row IDs are stable; new rows take the next number in their section. Every touched row stays ⌛️ Ready for Alignment. Line numbers refer to commit `4a07a80`.
 
 ## Blockers (consolidated)
 

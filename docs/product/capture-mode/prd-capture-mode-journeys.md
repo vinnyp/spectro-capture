@@ -5,7 +5,7 @@ The requirement rows in that file are the rules; nothing here adds one, and the 
 
 ## User Journeys
 
-States are named here in plain language; the shipping copy for each is in [prd-capture-mode-copy.md](prd-capture-mode-copy.md), and the vocabulary these journeys use is defined once in the [PRD](prd-capture-mode.md#vocabulary). Persona is the Cataloger unless the title says otherwise. Citation shorthand: [acq v1](../briefs/acquisition-experience-research-results.md) and [acq v2](../briefs/acquisition-experience-research-results-v2.md) are the two acquisition-experience research passes (v2 supersedes v1 where they conflict); [browsing](../briefs/browsing-a-collection-at-scale-research-results.md) is the collection-browsing research; [SDK audit](../briefs/nix-universal-sdk-audit-findings.md) is the vendor SDK audit; [device PRD](prd-device-management.md) is the locked device-management PRD.
+States are named here in plain language; the shipping copy for each is in [prd-capture-mode-copy.md](prd-capture-mode-copy.md), and the vocabulary these journeys use is defined once in the [PRD](prd-capture-mode.md#vocabulary). Persona is the Cataloger unless the title says otherwise. Citation shorthand: [acq v1](../../briefs/acquisition-experience-research-results.md) and [acq v2](../../briefs/acquisition-experience-research-results-v2.md) are the two acquisition-experience research passes (v2 supersedes v1 where they conflict); [browsing](../../briefs/browsing-a-collection-at-scale-research-results.md) is the collection-browsing research; [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) is the vendor SDK audit; [device PRD](../device-management/prd-device-management.md) is the locked device-management PRD.
 
 ### The session, end to end
 
@@ -91,7 +91,7 @@ UJ1.1 was folded into UJ1 when Library was dropped (fence F1).
 
 ### UJ 1.2 Manage collections — rename, delete
 
-> Scope boundary — handed to Collection Mode. Per the [product README](README.md#4-collection-mode), Collection Mode owns editing surfaces, selection, and bulk operations; rename and delete are collection management, not capture. The steps below are kept verbatim so nothing the owner wrote is lost, and so the Collection Mode PRD inherits them with the two failure branches this pass adds. Ownership is decided by fence F3 ([fences](prd-capture-mode-fences.md)); they generate no requirement rows here beyond the inherited-obligation row [R1.8](prd-capture-mode.md#1-collections).
+> Scope boundary — handed to Collection Mode. Per the [product README](../README.md#4-collection-mode), Collection Mode owns editing surfaces, selection, and bulk operations; rename and delete are collection management, not capture. The steps below are kept verbatim so nothing the owner wrote is lost, and so the Collection Mode PRD inherits them with the two failure branches this pass adds. Ownership is decided by fence F3 ([fences](prd-capture-mode-fences.md)); they generate no requirement rows here beyond the inherited-obligation row [R1.8](prd-capture-mode.md#1-collections).
 
 **Rename a collection**
 
@@ -185,14 +185,14 @@ flowchart TD
 
 ### UJ 3. Run a bulk capture session
 
-The product thesis: import first, then scan heads-down with no per-item metadata entry between scans ([AGENTS.md §4](../../AGENTS.md#4-non-negotiables); vision [J2](vision.md#j2-the-bulk-session-cataloger)). The target pace is the instrument's scan cycle, not the app.
+The product thesis: import first, then scan heads-down with no per-item metadata entry between scans ([AGENTS.md §4](../../../AGENTS.md#4-non-negotiables); vision [J2](../vision.md#j2-the-bulk-session-cataloger)). The target pace is the instrument's scan cycle, not the app.
 
 1. I start a capture session on my collection. It opens at the row I was last on ([§3](prd-capture-mode.md#3-the-capture-session), fence F15).
   - If nothing is pending, and every swatch I set aside I already left set aside for good → the nothing-to-capture state ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); the review does not open again (fence F31 as clarified)
   - If only set-aside swatches are left and any of them is still unsettled → the session opens straight into the review ([UJ3.3](#uj-33-resolve-the-deferred-error-queue-at-session-end))
   - If a session for this collection is already running → the app takes me back to it
   - If another collection's session is active or paused → the instrument-held state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
-2. The pre-flight gate runs — battery, calibration, authorization, storage, and the muted-audio advisory ([device PRD UJ2](prd-device-management.md#uj-2-start-acquisition)).
+2. The pre-flight gate runs — battery, calibration, authorization, storage, and the muted-audio advisory ([device PRD UJ2](../device-management/prd-device-management.md#uj-2-start-acquisition)).
   - If a check blocks → the device PRD's blocked state; my session has not started and my queue is untouched
   - If the Demo Device is connected → the simulated indicator is on the capture surface for the whole session ([UJ3.9](#uj-39-capture-with-the-demo-device-contributor))
 3. The session starts. I see the current row's code and name, where I am in the queue, the sample counter, my tallies, and the last few rows I captured.
@@ -311,7 +311,7 @@ flowchart TD
 3. On relaunch my collection reopens with its counts and "Resume capture" at the row I was on ([copy, §12](prd-capture-mode-copy.md#error--state-copy)).
   - If the app cannot remember which collection I had open → I open it; it carries its own counts and the same offer
   - If the file holding the collection has moved → the collection-unavailable state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
-  - If a device halt was open when the app died → it is closed as unresolved, so I see the interrupted session and not a stale halt ([device PRD §5](prd-device-management.md#5-mid-session-device-failure))
+  - If a device halt was open when the app died → it is closed as unresolved, so I see the interrupted session and not a stale halt ([device PRD §5](../device-management/prd-device-management.md#5-mid-session-device-failure))
   - If nothing is pending and every set-aside swatch is settled → there is nothing to resume; the session is closed as complete and I see its summary
   - If what was cut short was a one-row re-scan or ad-hoc add → it is simply closed; its row is exactly as it was and nothing waits for me (fence F17)
 4. "Resume capture" starts a fresh session at that row: the full pre-flight gate runs and whichever instrument is connected is used. My tallies and elapsed time carry over, so the summary reads as one run (fence F14).
@@ -323,9 +323,9 @@ flowchart TD
 
 ### UJ 3.6 Device fails mid-session
 
-> Scope boundary: device-level failure — disconnect, not responding, low battery, save failure — is detect → alert → reconnect → resume in the [device PRD UJ5](prd-device-management.md#uj-5-device-failure-during-a-session) and [§5](prd-device-management.md#5-mid-session-device-failure). This journey states only what capture does around that halt.
+> Scope boundary: device-level failure — disconnect, not responding, low battery, save failure — is detect → alert → reconnect → resume in the [device PRD UJ5](../device-management/prd-device-management.md#uj-5-device-failure-during-a-session) and [§5](../device-management/prd-device-management.md#5-mid-session-device-failure). This journey states only what capture does around that halt.
 
-1. Mid-queue the device fails, or the Mac sleeps. Capture halts immediately and the alert reaches me through two senses ([device PRD UJ5](prd-device-management.md#uj-5-device-failure-during-a-session)).
+1. Mid-queue the device fails, or the Mac sleeps. Capture halts immediately and the alert reaches me through two senses ([device PRD UJ5](../device-management/prd-device-management.md#uj-5-device-failure-during-a-session)).
   - If I press the trigger during the halt → nothing is asked of the instrument; the halt state surfaces instead
 2. The capture surface shows the halt as paused, with the device PRD's recovery path. My current row, tallies, and recents stay visible.
 3. When the cause clears, "Resume scanning" puts me back on my row. A part-finished set restarts from its first sample.
@@ -373,16 +373,16 @@ flowchart TD
   - If this collection's bulk session is interrupted → the re-scan runs on its own and leaves that session waiting (fence F17)
 2. The app tells me the row is captured and offers "Re-scan". I am not shown its current value ([copy, §12](prd-capture-mode-copy.md#error--state-copy)).
 3. I take a full set exactly as in [UJ3](#uj-3-run-a-bulk-capture-session), with the same failure handling ([UJ3.1](#uj-31-a-scan-fails-mid-queue)).
-4. The new set becomes the row's value and the reading I had is kept as history — never overwritten, never deleted ([AGENTS.md §4](../../AGENTS.md#4-non-negotiables)). The confirmation says so.
+4. The new set becomes the row's value and the reading I had is kept as history — never overwritten, never deleted ([AGENTS.md §4](../../../AGENTS.md#4-non-negotiables)). The confirmation says so.
   - If samples keep failing, or I skip → the re-scan is abandoned; the row keeps the value it had and the attempt is kept in its history
   - If the new samples disagree → the set-disagreement choice ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); abandoning never changes the value I already had
-  - If I meant "does this still match?" rather than "this one is wrong" → the QC-or-correction choice ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); QC is the QC & Comparison PRD's journey (vision [J3](vision.md#j3-the-qc-pass-re-checker))
+  - If I meant "does this still match?" rather than "this one is wrong" → the QC-or-correction choice ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); QC is the QC & Comparison PRD's journey (vision [J3](../vision.md#j3-the-qc-pass-re-checker))
 5. If I did this mid-session, the queue puts me back on the row I left, at its first sample, and carries on from there.
 
 ### UJ 3.9 Capture with the Demo Device (Contributor)
 
-1. With no instrument and no license, I choose "Demo Device (simulated — no instrument)" ([device PRD UJ1.2](prd-device-management.md#uj-12-first-run-with-no-hardware-contributor)).
-2. I import a sample inventory and start a session. Everything looks and behaves as it does with a real instrument, apart from a short list of hardware-only differences, with a simulated indicator always on screen and every reading permanently marked simulated ([device PRD §6](prd-device-management.md#6-mock-device-layer)).
+1. With no instrument and no license, I choose "Demo Device (simulated — no instrument)" ([device PRD UJ1.2](../device-management/prd-device-management.md#uj-12-first-run-with-no-hardware-contributor)).
+2. I import a sample inventory and start a session. Everything looks and behaves as it does with a real instrument, apart from a short list of hardware-only differences, with a simulated indicator always on screen and every reading permanently marked simulated ([device PRD §6](../device-management/prd-device-management.md#6-mock-device-layer)).
 3. I trigger scans on screen or from the keyboard, at the real instrument's pace.
 4. I make it fail — light leakage, then out-of-range temperature — and walk [UJ3.1](#uj-31-a-scan-fails-mid-queue) end to end: the caution, hold and retry, Skip and Flag, the automatic set-aside with its moved-on cue, the guard's pause, and the review ([§11](prd-capture-mode.md#11-demo-device-and-verifiability) sequences the guard's two modes).
   - If a live per-scan error has no simulated twin → that is a build failure under the device PRD's parity gate, not a gap this journey can reach
@@ -409,7 +409,7 @@ flowchart TD
   - If that code is already in the collection → the duplicate-code state ([copy, §12](prd-capture-mode-copy.md#error--state-copy)), offering a re-scan of the existing row or a different code
   - If the code is blank → the code-required state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
 3. I save. The item is a pending row in my collection.
-4. I choose to acquire from the device, which runs the pre-flight gate as any capture does ([device PRD UJ2](prd-device-management.md#uj-2-start-acquisition)).
+4. I choose to acquire from the device, which runs the pre-flight gate as any capture does ([device PRD UJ2](../device-management/prd-device-management.md#uj-2-start-acquisition)).
   - If another collection's session is active or paused → the instrument-held state ([copy, §12](prd-capture-mode-copy.md#error--state-copy))
 5. I take the collection's number of samples, with the same confirmation, agreement check, and failure handling as [UJ3](#uj-3-run-a-bulk-capture-session).
   - If samples keep failing, or I skip → the item is set aside, marked in my collection, and resolved by a re-scan later
@@ -452,11 +452,11 @@ flowchart TD
 
 ### UJ 5. Session ends and the collection is reviewed (the seam)
 
-> This is the open question this PRD must settle for ADR-0004 ([product README](README.md#prd--adr-gates); [AGENTS.md §3](../../AGENTS.md#3-decided--recommended--open)). The two research passes disagree on the navigation model and the v2 pass says explicitly to re-open it before the ADR is written. The journey is written twice so the fork is visible; it does not pick, and [§10](prd-capture-mode.md#10-the-seam-capture-to-collection) holds the rows that must be true under either reading.
+> This is the open question this PRD must settle for ADR-0004 ([product README](../README.md#prd--adr-gates); [AGENTS.md §3](../../../AGENTS.md#3-decided--recommended--open)). The two research passes disagree on the navigation model and the v2 pass says explicitly to re-open it before the ADR is written. The journey is written twice so the fork is visible; it does not pick, and [§10](prd-capture-mode.md#10-the-seam-capture-to-collection) holds the rows that must be true under either reading.
 
 Common to both readings: each reading lands in the real collection the moment it is saved, an always-visible recents strip makes the just-captured item findable, and only the adjudication of deferred rows waits for session end ([§10](prd-capture-mode.md#10-the-seam-capture-to-collection)). The fork is about navigation and what I see, not about when my data lands.
 
-**Reading A — capture is a modal takeover; hand-off at session end** ([acq v1 §11](../briefs/acquisition-experience-research-results.md); cited no shipped product)
+**Reading A — capture is a modal takeover; hand-off at session end** ([acq v1 §11](../../briefs/acquisition-experience-research-results.md); cited no shipped product)
 
 1. "Start capture session" replaces my collection with a full-window capture surface; I cannot see the collection during the session.
 2. The session runs ([UJ3](#uj-3-run-a-bulk-capture-session)); the recents strip is my only view of what has landed.
@@ -464,7 +464,7 @@ Common to both readings: each reading lands in the real collection the moment it
 4. I browse, sort, open the rows that were set aside, and export.
   - If the app crashes mid-session → I land in my collection on relaunch, see the counts, and choose "Resume capture" to re-enter the takeover ([UJ3.5](#uj-35-resume-an-interrupted-session))
 
-**Reading B — capture is a state of the live collection** ([acq v2 §11 Q11.6](../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection); Lightroom Classic, Capture One, Dynamics 365)
+**Reading B — capture is a state of the live collection** ([acq v2 §11 Q11.6](../../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection); Lightroom Classic, Capture One, Dynamics 365)
 
 1. "Start capture session" puts my collection into capture: the same window, the same rows, with the capture surface attached and at least two unmistakable mode indicators showing.
 2. The session runs ([UJ3](#uj-3-run-a-bulk-capture-session)); each row appears in the collection as it lands, and the view follows the newest until I pin it.
@@ -485,4 +485,4 @@ Common to both readings: each reading lands in the real collection the moment it
 | "Two apps bolted together" risk | Higher — two places, one data model | Lower — one place, one vocabulary, one set of row states |
 | Mid-session reorder and the queue list ([UJ3.10](#uj-310-reorder-the-queue)) | A second list inside the takeover | The collection's own list |
 
-Under either reading the row states, the identifier vocabulary, and the counts are the same on both surfaces — the data-model finding ([acq v2 §11 Q11.6](../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection)) — and it holds whichever navigation model the ADR picks. What decides it is a Demo Device prototype of each reading measured against the observables in [R10.7](prd-capture-mode.md#10-the-seam-capture-to-collection), then the owner's product call, written as ADR-0004 (OQ 8). The research default, for the owner to confirm or overrule, is Reading B — the only reading with shipped precedent. Recorded as input: the cross-model product lens preferred Reading A; mid-session reordering is cheap under Reading B and costs a second list inside the takeover under Reading A; and [UJ4.1](#uj-41-insert-an-unplanned-item-mid-session)'s typed metadata sits on the capture surface (fence F13).
+Under either reading the row states, the identifier vocabulary, and the counts are the same on both surfaces — the data-model finding ([acq v2 §11 Q11.6](../../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection)) — and it holds whichever navigation model the ADR picks. What decides it is a Demo Device prototype of each reading measured against the observables in [R10.7](prd-capture-mode.md#10-the-seam-capture-to-collection), then the owner's product call, written as ADR-0004 (OQ 8). The research default, for the owner to confirm or overrule, is Reading B — the only reading with shipped precedent. Recorded as input: the cross-model product lens preferred Reading A; mid-session reordering is cheap under Reading B and costs a second list inside the takeover under Reading A; and [UJ4.1](#uj-41-insert-an-unplanned-item-mid-session)'s typed metadata sits on the capture surface (fence F13).

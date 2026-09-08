@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 6 fixes
 
-Resume point for round 6, the delta verification of round 5 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 6"). Every round-5 finding verified RESOLVED or RESOLVED-BY-FENCE by its own lens on both routes, with three PARTIALs closed below. One box per new finding from every lens. Fences F1–F38 (F36–F38 and the F31 clarification are this round's) are the authorization. Tick each box as it lands. Row IDs never renumber; new rows take the next number. Line numbers refer to commit `425038e`.
+Resume point for round 6, the delta verification of round 5 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 6"). Every round-5 finding verified RESOLVED or RESOLVED-BY-FENCE by its own lens on both routes, with three PARTIALs closed below. One box per new finding from every lens. Fences F1–F38 (F36–F38 and the F31 clarification are this round's) are the authorization. Tick each box as it lands. Row IDs never renumber; new rows take the next number. Line numbers refer to commit `425038e`.
 
 ## Status flips (authorized by the round-6 dispositions in the log)
 

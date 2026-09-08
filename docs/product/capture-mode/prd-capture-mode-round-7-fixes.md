@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 7 fixes
 
-Resume point for round 7 (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 7"). One box per new finding from every lens. Fences F1–F38 plus this round's recorded amendments (F6, F36, F38) are the authorization. Tick each box as it lands. Row IDs never renumber; new rows take the next number. Line numbers refer to commit `9ea4c57`.
+Resume point for round 7 (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 7"). One box per new finding from every lens. Fences F1–F38 plus this round's recorded amendments (F6, F36, F38) are the authorization. Tick each box as it lands. Row IDs never renumber; new rows take the next number. Line numbers refer to commit `9ea4c57`.
 
 ## Status flips (authorized by the round-7 dispositions in the log)
 

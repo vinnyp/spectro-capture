@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 2 fixes
 
-Resume point for round 2. These are the regressions and gaps the round-1 delta verification found in the round-1 fix pass (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 1 — delta verification"). One box per new finding from every lens that ran the delta pass. The fence file `prd-capture-mode-fences.md` (F1–F16) is the owner's written authorization. Tick each box as the fix lands in `prd-capture-mode.md`. Line numbers refer to commit `f09c90e`.
+Resume point for round 2. These are the regressions and gaps the round-1 delta verification found in the round-1 fix pass (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`, "Round 1 — delta verification"). One box per new finding from every lens that ran the delta pass. The fence file `prd-capture-mode-fences.md` (F1–F16) is the owner's written authorization. Tick each box as the fix lands in `prd-capture-mode.md`. Line numbers refer to commit `f09c90e`.
 
 Every round-1 finding was verified RESOLVED or RESOLVED-BY-FENCE by its own lens; the one PARTIAL (test T12, the partial-set rule) is closed by FX2-4 and FX2-5 below.
 

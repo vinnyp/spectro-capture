@@ -1,6 +1,6 @@
 # Peer-review gate — prd-capture-mode (2026-09-06)
 
-**Mode:** requirements. **Subject:** `docs/product/prd-capture-mode.md` at commit `e5c43d1` (journeys only — no Requirements, Error & State, Success Metrics, or Open Questions tables yet, so every per-row disposition this round is ABSTAIN and findings are journey-level). **Fence file:** `docs/product/prd-capture-mode-fences.md` (F1–F5, passed as `--source`). **Reviewers:** peer-product-manager-reviewer, peer-staff-software-engineer-reviewer, peer-test-reviewer (retargeted), peer-architecture-reviewer. **persona-version:** cache/1.4.0. **Caller:** `operator-agents:writing-prds`, Phase 4 round 1.
+**Mode:** requirements. **Subject:** `docs/product/capture-mode/prd-capture-mode.md` at commit `e5c43d1` (journeys only — no Requirements, Error & State, Success Metrics, or Open Questions tables yet, so every per-row disposition this round is ABSTAIN and findings are journey-level). **Fence file:** `docs/product/capture-mode/prd-capture-mode-fences.md` (F1–F5, passed as `--source`). **Reviewers:** peer-product-manager-reviewer, peer-staff-software-engineer-reviewer, peer-test-reviewer (retargeted), peer-architecture-reviewer. **persona-version:** cache/1.4.0. **Caller:** `operator-agents:writing-prds`, Phase 4 round 1.
 
 **tier-rationale:** PRD tier always-on lenses (product manager, staff engineer, retargeted test). Tier 3 by document shape: `peer-architecture-reviewer` ran because the seam journey (UJ5, gating ADR-0004), the queue-in-the-store durability model, and the flat-collection model after F1 interact with decided architecture (ADR-0001, device PRD §5). Skipped: `peer-product-marketing-manager-reviewer` (no end-user copy yet — copy rows come with the requirements pass), `peer-privacy-reviewer` (no personal data or network paths in scope), Tier 2 security/database/plan (no code, no schema, no plan). `peer-plan-reviewer` is reserved for the mandatory pre-lock round.
 
@@ -137,7 +137,7 @@ Minor findings (PM, Staff S10–S18, Test T13–T20, Arch A5–A12, agy-Staff ni
 
 ### Verification note — round-1 fix pass and delta verification
 
-**Fix pass:** commit `f09c90e`, applied by `operator-agents:product-manager` from `docs/product/prd-capture-mode-round-1-fixes.md` (48 items, all ticked) under fences F6–F13. A first attempt by a general-purpose editor was stopped and reverted at the owner's instruction that the journeys be written by the PM operator in the Cataloger's words, WHAT not HOW.
+**Fix pass:** commit `f09c90e`, applied by `operator-agents:product-manager` from `docs/product/capture-mode/prd-capture-mode-round-1-fixes.md` (48 items, all ticked) under fences F6–F13. A first attempt by a general-purpose editor was stopped and reverted at the owner's instruction that the journeys be written by the PM operator in the Cataloger's words, WHAT not HOW.
 
 **Delta verification:** the same lenses re-dispatched against `f09c90e` with the fence file, this log, and the fix file as sources, asked per finding for RESOLVED / PARTIAL / UNRESOLVED plus any regression.
 
@@ -177,7 +177,7 @@ Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026
 
 ### Round 2 — fix pass and delta verification
 
-**Fix pass:** commit `7a465d2`, applied by `operator-agents:product-manager` from `docs/product/prd-capture-mode-round-2-fixes.md` (16 items, all ticked) under fences F14–F16 and the F12 amendment.
+**Fix pass:** commit `7a465d2`, applied by `operator-agents:product-manager` from `docs/product/capture-mode/prd-capture-mode-round-2-fixes.md` (16 items, all ticked) under fences F14–F16 and the F12 amendment.
 
 **Delta verification** against `7a465d2`, same lenses, same sources plus the round-2 fix file; each asked per finding for RESOLVED / PARTIAL / UNRESOLVED, any regression, and a YES/NO on readiness for the requirements pass.
 
@@ -208,7 +208,7 @@ Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026
 
 ### Round 3 — wording pass and closing check
 
-**Fix pass:** commit `6e0c03d`, applied by `operator-agents:product-manager` from `docs/product/prd-capture-mode-round-3-fixes.md` (12 items, all ticked) under fences F1–F17. From this round on, in-line dispatches run on Opus at the owner's instruction.
+**Fix pass:** commit `6e0c03d`, applied by `operator-agents:product-manager` from `docs/product/capture-mode/prd-capture-mode-round-3-fixes.md` (12 items, all ticked) under fences F1–F17. From this round on, in-line dispatches run on Opus at the owner's instruction.
 
 **Closing check** against `6e0c03d`, same lenses (Claude on Opus; agy PM and architecture). Every R2-D item is RESOLVED or RESOLVED-BY-FENCE on both routes (test lens: R2-D2 PARTIAL on anchor wording only). Both agy reviews returned rc 8 (short body) but carry conforming per-item verdicts and a YES; the Claude lenses stand as primary.
 
@@ -235,7 +235,7 @@ Owner adjudication of R1-D2, R1-D3, R1-D4 recorded as fences F14, F15, F16 (2026
 
 ### Round 4 — final wording pass and final check
 
-**Fix pass:** commit `abc429c`, applied by `operator-agents:product-manager` (Opus) from `docs/product/prd-capture-mode-round-4-fixes.md` (8 items, all ticked) under fences F1–F18; the jargon sweep returned zero hits across the whole document, hand-off lists included.
+**Fix pass:** commit `abc429c`, applied by `operator-agents:product-manager` (Opus) from `docs/product/capture-mode/prd-capture-mode-round-4-fixes.md` (8 items, all ticked) under fences F1–F18; the jargon sweep returned zero hits across the whole document, hand-off lists included.
 
 **Final check** against `abc429c` by the two lenses that returned NO in round 3 (Claude on Opus).
 
@@ -255,7 +255,7 @@ Both edits re-parsed (six mermaid blocks OK) and committed with this log entry.
 
 ## Round 5 — first full round over the requirement rows
 
-**Subject:** `docs/product/prd-capture-mode.md` and `docs/product/prd-capture-mode-oq-results.md` at commit `4a07a80` (132 R rows, 37 E rows, 8 M rows, 18 OQs, all ⌛️). **Fences:** F1–F25 as `--source`. **Lenses:** Claude on Opus — product manager, staff engineer, test (retargeted), architecture, product-marketing (added: end-user copy now exists in §12); agy cross-model on all five briefs (the first full round's offer, taken at the owner's standing instruction). **tier-rationale:** PRD tier always-on plus architecture (boundaries with decided architecture and the two hand-off PRDs) plus marketing (§12 copy); privacy/security/database/plan not triggered.
+**Subject:** `docs/product/capture-mode/prd-capture-mode.md` and `docs/product/capture-mode/prd-capture-mode-oq-results.md` at commit `4a07a80` (132 R rows, 37 E rows, 8 M rows, 18 OQs, all ⌛️). **Fences:** F1–F25 as `--source`. **Lenses:** Claude on Opus — product manager, staff engineer, test (retargeted), architecture, product-marketing (added: end-user copy now exists in §12); agy cross-model on all five briefs (the first full round's offer, taken at the owner's standing instruction). **tier-rationale:** PRD tier always-on plus architecture (boundaries with decided architecture and the two hand-off PRDs) plus marketing (§12 copy); privacy/security/database/plan not triggered.
 
 **Per-row dispositions:** every lens returned a full 177-row table. Rows with no OBJECT from any non-abstaining lens this round: none flip yet — the flip rule requires the round's fix pass to land and the objections to be verified resolved; all rows stay ⌛️ pending round 6's delta verification.
 

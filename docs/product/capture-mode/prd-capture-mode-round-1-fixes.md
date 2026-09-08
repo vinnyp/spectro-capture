@@ -1,6 +1,6 @@
 # Capture Mode PRD — round 1 fixes
 
-Resume point for round 1 of the peer-review gate. One box per finding from every review that ran (log: `../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`). The fence file `prd-capture-mode-fences.md` (F1–F13) is the owner's written authorization for every change below. Tick each box as the fix lands in `prd-capture-mode.md`. Line numbers refer to the document at commit `e5c43d1`.
+Resume point for round 1 of the peer-review gate. One box per finding from every review that ran (log: `../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md`). The fence file `prd-capture-mode-fences.md` (F1–F13) is the owner's written authorization for every change below. Tick each box as the fix lands in `prd-capture-mode.md`. Line numbers refer to the document at commit `e5c43d1`.
 
 Source key: PM / Staff (S#) / Test (T#) / Arch (A#) = Claude lenses; agy-PM / agy-Staff / agy-Arch = cross-model lenses. R1-F# = consolidated finding in the log.
 

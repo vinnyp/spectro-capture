@@ -10,8 +10,8 @@ Six PRDs remain to be written to cover v1. Priority is authoring order, not a cu
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
-| 1 | [Device Management](prd-device-management.md) | U3, U8, U9 | **Written** |
-| 2 | [Capture Mode](prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
+| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** |
+| 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
 | 3 | Data Foundation | U5, U6 | queued |
 | 4 | Collection Mode | U5, U7 | queued |
 | 5 | QC &amp; Comparison | U4 | queued |
@@ -26,7 +26,7 @@ Connect (BLE + USB), known-device management, licensing and offline pre-authoriz
 
 The heads-down loop, and the product bet made tangible. CSV inventory import with column mapping · the scan queue and row auto-advance · 1–5 sample averaging · inline per-scan failure handling (retry / skip / flag-row) and the dead-letter queue · ad-hoc single capture · session durability and resumability across launches.
 
-The PRD is [prd-capture-mode.md](prd-capture-mode.md), with three companion files: the user journeys in [prd-capture-mode-journeys.md](prd-capture-mode-journeys.md), the shipping error and state copy in [prd-capture-mode-copy.md](prd-capture-mode-copy.md), and the answers to closed open questions in [prd-capture-mode-oq-results.md](prd-capture-mode-oq-results.md). Owner decisions are in [prd-capture-mode-fences.md](prd-capture-mode-fences.md).
+The PRD is [prd-capture-mode.md](capture-mode/prd-capture-mode.md), with three companion files: the user journeys in [prd-capture-mode-journeys.md](capture-mode/prd-capture-mode-journeys.md), the shipping error and state copy in [prd-capture-mode-copy.md](capture-mode/prd-capture-mode-copy.md), and the answers to closed open questions in [prd-capture-mode-oq-results.md](capture-mode/prd-capture-mode-oq-results.md). Owner decisions are in [prd-capture-mode-fences.md](capture-mode/prd-capture-mode-fences.md).
 
 **Also owns the seam re-open.** The two capture-mode research passes disagree on whether capture is a modal takeover that hands off at session end, or writes directly into the live collection; the v2 pass reverses the first and says explicitly to re-open it before the ADR is written. This PRD is where that gets settled at the product level, which is the sole gate on ADR-0004.
 
@@ -50,7 +50,7 @@ The 3D absolute-space plot (P2). Unserved anywhere in the market, per the compet
 
 ### 7. Telemetry
 
-Opt-in and off by default · per-fork provider ID so no fork data reaches the project · the opt-in UX · fire-and-forget delivery that can never block, delay, or halt capture. v1.x, and gated on a provider spike (device PRD [OQ 12](prd-device-management.md#open-questions)).
+Opt-in and off by default · per-fork provider ID so no fork data reaches the project · the opt-in UX · fire-and-forget delivery that can never block, delay, or halt capture. v1.x, and gated on a provider spike (device PRD [OQ 12](device-management/prd-device-management.md#open-questions)).
 
 ## Coverage
 
@@ -62,29 +62,29 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 |---|---|---|
 | U1 | Bulk-digitize a predefined inventory | Capture Mode |
 | U2 | Capture a single new item ad hoc | Capture Mode |
-| U3 | Start a session with a healthy device | [Device Management](prd-device-management.md) |
+| U3 | Start a session with a healthy device | [Device Management](device-management/prd-device-management.md) |
 | U4 | Verify a color still matches | QC &amp; Comparison |
 | U5 | Fix a bad scan without losing history | Data Foundation (storage) · Collection Mode (UI) |
 | U6 | Use the data outside the app | Data Foundation |
 | U7 | See the collection honestly | Collection Mode (swatch grid) · Color Visualization (3D plot) |
-| U8 | Scan where there is no internet | [Device Management](prd-device-management.md) |
-| U9 | Contribute code without hardware | [Device Management](prd-device-management.md) §6 |
+| U8 | Scan where there is no internet | [Device Management](device-management/prd-device-management.md) |
+| U9 | Contribute code without hardware | [Device Management](device-management/prd-device-management.md) §6 |
 
 ### v1 features
 
 | Pri | Feature | Owner |
 |---|---|---|
-| P0 | Spectro 2/L connect (BLE + USB) | [Device Management](prd-device-management.md) |
-| P0 | Known-device management | [Device Management](prd-device-management.md) |
-| P0 | Tile calibration with due-prompts | [Device Management](prd-device-management.md) |
+| P0 | Spectro 2/L connect (BLE + USB) | [Device Management](device-management/prd-device-management.md) |
+| P0 | Known-device management | [Device Management](device-management/prd-device-management.md) |
+| P0 | Tile calibration with due-prompts | [Device Management](device-management/prd-device-management.md) |
 | P0 | CSV inventory import with column mapping | Capture Mode |
 | P0 | Queued bulk scan, 1–5 samples averaged | Capture Mode |
 | P0 | Inline scan-failure handling | Capture Mode |
 | P0 | Collections + version history | Data Foundation (model) · Collection Mode (UI) |
 | P0 | CSV export, spectral + derived spaces | Data Foundation |
 | P0 | Local SQLite store, raw payload canonical | Data Foundation |
-| P0 | Offline operation + per-device pre-authorization | [Device Management](prd-device-management.md) |
-| P0 | Mock-device layer | [Device Management](prd-device-management.md) §6 |
+| P0 | Offline operation + per-device pre-authorization | [Device Management](device-management/prd-device-management.md) |
+| P0 | Mock-device layer | [Device Management](device-management/prd-device-management.md) §6 |
 | P1 | Ad-hoc single capture | Capture Mode |
 | P1 | QC delta E vs canonical | QC &amp; Comparison |
 | P2 | 3D absolute-space plot | Color Visualization |
@@ -141,8 +141,8 @@ Two boundaries were judgment calls rather than readings of the vision. Both are 
 
 ## Deliberately not PRDs
 
-- **Contributor experience (J5).** The mock-device layer is [device PRD §6](prd-device-management.md); the rest is [CONTRIBUTING.md](../../CONTRIBUTING.md) and the `needs-hardware-verify` workflow. Engineering process, not product.
-- **Distribution, sandboxing, minimum macOS version.** ADRs 0006–0008 carry no PRD gate. The only user-facing residue is the software-update check, already constrained by [device PRD §2](prd-device-management.md#2-licensing--pre-authorization). Write one only if the sandbox decision changes where the user's SQLite file lives — that would be a product question about file ownership, not a packaging detail.
+- **Contributor experience (J5).** The mock-device layer is [device PRD §6](device-management/prd-device-management.md); the rest is [CONTRIBUTING.md](../../CONTRIBUTING.md) and the `needs-hardware-verify` workflow. Engineering process, not product.
+- **Distribution, sandboxing, minimum macOS version.** ADRs 0006–0008 carry no PRD gate. The only user-facing residue is the software-update check, already constrained by [device PRD §2](device-management/prd-device-management.md#2-licensing--pre-authorization). Write one only if the sandbox decision changes where the user's SQLite file lives — that would be a product question about file ownership, not a packaging detail.
 - **App architecture, module layout, state ownership.** ADR territory (0001, 0005).
 
 ## v2 backlog

@@ -8,7 +8,7 @@ Companion files: the journeys are in [prd-capture-mode-journeys.md](prd-capture-
 
 # Background
 
-SpectroCapture's value is quick bulk capture of colour with a spectrophotometer, and this document holds every requirement for that experience. The use cases it serves and the features that serve them are defined in the [vision doc](vision.md#use-cases): U1, bulk-digitize a predefined inventory, and U2, capture a single new item ad hoc. The diagram below is the life of one queue row.
+SpectroCapture's value is quick bulk capture of colour with a spectrophotometer, and this document holds every requirement for that experience. The use cases it serves and the features that serve them are defined in the [vision doc](../vision.md#use-cases): U1, bulk-digitize a predefined inventory, and U2, capture a single new item ad hoc. The diagram below is the life of one queue row.
 
 ```mermaid
 stateDiagram-v2
@@ -49,7 +49,7 @@ Every journey — UJ1–UJ5, their clusters, and the five flow diagrams — is i
 
 ### Vocabulary
 
-The terms the rows below use ([AGENTS.md §8](../../AGENTS.md#8-vocabulary)).
+The terms the rows below use ([AGENTS.md §8](../../../AGENTS.md#8-vocabulary)).
 
 
 - **Pending** — a queue row with no confirmed reading yet.
@@ -74,7 +74,7 @@ Provisional constants: every TBD-on-spike constant is a named provisional consta
 
 - Five constants sit at "candidate TBD": FIND_BUDGET and IMPORT_BUDGET (OQ 13), RESULT_CUE_LATENCY and ROW_CONFIRM_BUDGET (OQ 5), DEMO_SCAN_CYCLE (OQ 22).
 - P0 rows that defer, in whole or in part, to an open question with no interim rule: [R1.3](#1-collections) (OQ 9), [R1.5](#1-collections) (OQ 21: only the selectable pair list has no interim rule), [R2.2](#2-inventory-import) (OQ 12), [R4.17](#4-the-scan-loop) (OQ 14); [R4.15](#4-the-scan-loop) and [R8.1](#8-deferred-row-review-and-corrections) likewise wait on OQ 8's placement half.
-- Phase-0 predecessors: ADR-0003, the module-layout ADR, the device-PRD amendment carrying OQ 16's notes, and the stale seam gate in two places — the [decision queue](../decisions/README.md#decision-queue)'s note and its second copy in the [product README](README.md#authoring-order). The Data Foundation and Collection Mode PRDs this document hands obligations to are not yet written.
+- Phase-0 predecessors: ADR-0003, the module-layout ADR, the device-PRD amendment carrying OQ 16's notes, and the stale seam gate in two places — the [decision queue](../../decisions/README.md#decision-queue)'s note and its second copy in the [product README](../README.md#authoring-order). The Data Foundation and Collection Mode PRDs this document hands obligations to are not yet written.
 - The hardware spike's scope (OQ 1, 2, 4, 5, 21, 22 and the device PRD's OQ 10 and OQ 20) and the dogfood entry point (OQ 3, 6, 12, 23, 25) are work the plan defines.
 - [§10](#10-the-seam-capture-to-collection)'s two-reading prototype needs a build order.
 
@@ -82,7 +82,7 @@ Provisional constants: every TBD-on-spike constant is a named provisional consta
 
 **Status**
 
-A status cell in this document and in the [copy file](prd-capture-mode-copy.md#error--state-copy) holds one of the six values below and nothing else; which round a row was last edited in lives in the [review log](../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md). The [Open Questions](#open-questions) table has its own two values, open and answered.
+A status cell in this document and in the [copy file](prd-capture-mode-copy.md#error--state-copy) holds one of the six values below and nothing else; which round a row was last edited in lives in the [review log](../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md). The [Open Questions](#open-questions) table has its own two values, open and answered.
 
 - ⌛️ Ready for Alignment - Waiting for cross-functional team to align on requirements
 - ✋ Needs Discussion - Cross-functional team needs to discuss with PM
@@ -123,7 +123,7 @@ Where the capture surface lives relative to the collection surface is the seam, 
 
 ### 1. Collections
 
-Traces [UJ1](prd-capture-mode-journeys.md#uj-1-create-a-collection), [UJ1.2](prd-capture-mode-journeys.md#uj-12-manage-collections--rename-delete); serves [U1](vision.md#use-cases).
+Traces [UJ1](prd-capture-mode-journeys.md#uj-1-create-a-collection), [UJ1.2](prd-capture-mode-journeys.md#uj-12-manage-collections--rename-delete); serves [U1](../vision.md#use-cases).
 
 #### As a Cataloger, I can create a collection to capture into so that my swatch book has one place to land.
 
@@ -143,7 +143,7 @@ Traces [UJ1](prd-capture-mode-journeys.md#uj-1-create-a-collection), [UJ1.2](prd
 
 ### 2. Inventory import
 
-Traces [UJ2](prd-capture-mode-journeys.md#uj-2-full-collection-bootstrap-via-csv-import), [UJ2.1](prd-capture-mode-journeys.md#uj-21-import-additional-rows-into-an-existing-collection), [UJ2.2](prd-capture-mode-journeys.md#uj-22-mapping-metadata-fields); serves [U1](vision.md#use-cases), the inventory-first wedge.
+Traces [UJ2](prd-capture-mode-journeys.md#uj-2-full-collection-bootstrap-via-csv-import), [UJ2.1](prd-capture-mode-journeys.md#uj-21-import-additional-rows-into-an-existing-collection), [UJ2.2](prd-capture-mode-journeys.md#uj-22-mapping-metadata-fields); serves [U1](../vision.md#use-cases), the inventory-first wedge.
 
 #### As a Cataloger, I can import my inventory from a spreadsheet export so that I never type my swatch list into the app.
 
@@ -175,7 +175,7 @@ Traces [UJ2](prd-capture-mode-journeys.md#uj-2-full-collection-bootstrap-via-csv
 
 ### 3. The capture session
 
-Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3.5](prd-capture-mode-journeys.md#uj-35-resume-an-interrupted-session); inherits from the [device PRD §5](prd-device-management.md#5-mid-session-device-failure) the obligation that a session and its queue survive an app relaunch.
+Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3.5](prd-capture-mode-journeys.md#uj-35-resume-an-interrupted-session); inherits from the [device PRD §5](../device-management/prd-device-management.md#5-mid-session-device-failure) the obligation that a session and its queue survive an app relaunch.
 
 #### As a Cataloger, I can pick a run up where I left it so that a swatch book is one job and not two.
 
@@ -198,7 +198,7 @@ Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3
 
 ### 4. The scan loop
 
-Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3.2](prd-capture-mode-journeys.md#uj-32-undo-or-redo-the-current-item); serves [U1](vision.md#use-cases), queued bulk scan with 1–5 samples averaged.
+Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3.2](prd-capture-mode-journeys.md#uj-32-undo-or-redo-the-current-item); serves [U1](../vision.md#use-cases), queued bulk scan with 1–5 samples averaged.
 
 #### As a Cataloger, I can scan row after row without touching the Mac so that my pace is the instrument's and not the app's.
 
@@ -234,7 +234,7 @@ Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3
 
 ### 5. Per-scan failure and the consecutive-failure guard
 
-Traces [UJ3.1](prd-capture-mode-journeys.md#uj-31-a-scan-fails-mid-queue); serves [U1](vision.md#use-cases), inline scan-failure handling. The per-scan error experience and the set-aside list (the dead-letter queue) are handed here by the [device PRD §5](prd-device-management.md#5-mid-session-device-failure).
+Traces [UJ3.1](prd-capture-mode-journeys.md#uj-31-a-scan-fails-mid-queue); serves [U1](../vision.md#use-cases), inline scan-failure handling. The per-scan error experience and the set-aside list (the dead-letter queue) are handed here by the [device PRD §5](../device-management/prd-device-management.md#5-mid-session-device-failure).
 
 #### As a Cataloger, when a scan fails I can retry without looking up so that a reading never lands on the wrong swatch.
 
@@ -258,7 +258,7 @@ Traces [UJ3.1](prd-capture-mode-journeys.md#uj-31-a-scan-fails-mid-queue); serve
 
 ### 6. Queue navigation and reordering
 
-Traces [UJ3.7](prd-capture-mode-journeys.md#uj-37-jump-to-a-different-row), [UJ3.10](prd-capture-mode-journeys.md#uj-310-reorder-the-queue); both are v1 by fence F5. Reordering is original design: the research supports the identifier as the entry point and gives no precedent for reordering ([acq v2 §11 Q11.4](../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection)).
+Traces [UJ3.7](prd-capture-mode-journeys.md#uj-37-jump-to-a-different-row), [UJ3.10](prd-capture-mode-journeys.md#uj-310-reorder-the-queue); both are v1 by fence F5. Reordering is original design: the research supports the identifier as the entry point and gives no precedent for reordering ([acq v2 §11 Q11.4](../../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection)).
 
 #### As a Cataloger, I can reach the swatch in my hand and put the queue in the order my swatches are actually in so that I scan the book rather than the spreadsheet.
 
@@ -281,7 +281,7 @@ Traces [UJ3.7](prd-capture-mode-journeys.md#uj-37-jump-to-a-different-row), [UJ3
 
 ### 7. Pause, end, interruption, and resume
 
-Traces [UJ3.4](prd-capture-mode-journeys.md#uj-34-pause-and-end-a-session-early), [UJ3.5](prd-capture-mode-journeys.md#uj-35-resume-an-interrupted-session), [UJ3.6](prd-capture-mode-journeys.md#uj-36-device-fails-mid-session). Defines the un-scanned remainder the [device PRD §5](prd-device-management.md#5-mid-session-device-failure) hands here.
+Traces [UJ3.4](prd-capture-mode-journeys.md#uj-34-pause-and-end-a-session-early), [UJ3.5](prd-capture-mode-journeys.md#uj-35-resume-an-interrupted-session), [UJ3.6](prd-capture-mode-journeys.md#uj-36-device-fails-mid-session). Defines the un-scanned remainder the [device PRD §5](../device-management/prd-device-management.md#5-mid-session-device-failure) hands here.
 
 #### As a Cataloger, I can stop for the day, or lose the app entirely, without losing anything so that a swatch book can take two sittings.
 
@@ -307,7 +307,7 @@ Traces [UJ3.4](prd-capture-mode-journeys.md#uj-34-pause-and-end-a-session-early)
 
 ### 8. Deferred-row review and corrections
 
-Traces [UJ3.3](prd-capture-mode-journeys.md#uj-33-resolve-the-deferred-error-queue-at-session-end), [UJ3.8](prd-capture-mode-journeys.md#uj-38-re-scan-an-already-captured-row); serves [U1](vision.md#use-cases) and vision [U5](vision.md#use-cases). The set-aside list — the dead-letter queue — is handed here by the [device PRD §5](prd-device-management.md#5-mid-session-device-failure).
+Traces [UJ3.3](prd-capture-mode-journeys.md#uj-33-resolve-the-deferred-error-queue-at-session-end), [UJ3.8](prd-capture-mode-journeys.md#uj-38-re-scan-an-already-captured-row); serves [U1](../vision.md#use-cases) and vision [U5](../vision.md#use-cases). The set-aside list — the dead-letter queue — is handed here by the [device PRD §5](../device-management/prd-device-management.md#5-mid-session-device-failure).
 
 #### As a Cataloger, I can clear everything that went wrong in one pass at the end so that a bad reading never stops my run.
 
@@ -360,7 +360,7 @@ Traces [UJ3.3](prd-capture-mode-journeys.md#uj-33-resolve-the-deferred-error-que
 
 ### 9. Ad-hoc capture and one-row sessions
 
-Traces [UJ4](prd-capture-mode-journeys.md#uj-4-capture-a-single-new-item-into-a-collection), [UJ4.1](prd-capture-mode-journeys.md#uj-41-insert-an-unplanned-item-mid-session); serves [U2](vision.md#use-cases). The thinnest-evidenced cluster: no research pass elaborates it, and the one adjacent precedent is a control for adding something physically present but missing from the worklist ([acq v2 §11 Q11.4](../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection)).
+Traces [UJ4](prd-capture-mode-journeys.md#uj-4-capture-a-single-new-item-into-a-collection), [UJ4.1](prd-capture-mode-journeys.md#uj-41-insert-an-unplanned-item-mid-session); serves [U2](../vision.md#use-cases). The thinnest-evidenced cluster: no research pass elaborates it, and the one adjacent precedent is a control for adding something physically present but missing from the worklist ([acq v2 §11 Q11.4](../../briefs/acquisition-experience-research-results-v2.md#11-the-seam--capture-to-collection)).
 
 #### As a Cataloger, I can capture one new swatch into a collection so that a single find does not need a spreadsheet.
 
@@ -381,9 +381,9 @@ Traces [UJ4](prd-capture-mode-journeys.md#uj-4-capture-a-single-new-item-into-a-
 
 ### 10. The seam (capture to collection)
 
-Traces [UJ5](prd-capture-mode-journeys.md#uj-5-session-ends-and-the-collection-is-reviewed-the-seam). This section is the product-level input to ADR-0004 ([product README](README.md#prd--adr-gates)). Every row here is gated on OQ 8 and none of them decides it. A Demo Device prototype of each reading — A, capture as a modal takeover; B, capture as a state of the live collection — is first-build work rather than a later exercise, and it is what closes OQ 8 and ADR-0004's gate; the research default, Reading B, is recorded for the owner to confirm or overrule, not adopted (fence F25). That is why these rows are P0 alongside the bulk critical path (fence F24).
+Traces [UJ5](prd-capture-mode-journeys.md#uj-5-session-ends-and-the-collection-is-reviewed-the-seam). This section is the product-level input to ADR-0004 ([product README](../README.md#prd--adr-gates)). Every row here is gated on OQ 8 and none of them decides it. A Demo Device prototype of each reading — A, capture as a modal takeover; B, capture as a state of the live collection — is first-build work rather than a later exercise, and it is what closes OQ 8 and ADR-0004's gate; the research default, Reading B, is recorded for the owner to confirm or overrule, not adopted (fence F25). That is why these rows are P0 alongside the bulk critical path (fence F24).
 
-[R10.1](#10-the-seam-capture-to-collection) and [R10.3](#10-the-seam-capture-to-collection) close the data half of the seam under either reading: every reading lands in the live collection as it is saved, and the row states, the identifier vocabulary, and the counts are the same on both surfaces. What the app keeps around a session — the sessions themselves, the queue order, the remembered row, and the records of rows set aside — therefore does not wait on the navigation call, and belongs with the rest of what the app keeps rather than behind ADR-0004's gate. The [decision queue](../decisions/README.md#decision-queue)'s note that the session-adjacent tables wait for ADR-0004's seam re-open is the line that has to change; until it does, the P0 obligations this document hands the Data Foundation PRD for what the app keeps around a session — [R3.1](#3-the-capture-session), [R3.6](#3-the-capture-session), [R3.8](#3-the-capture-session), [R6.7](#6-queue-navigation-and-reordering), [R7.18](#7-pause-end-interruption-and-resume), [R8.5](#8-deferred-row-review-and-corrections), [R8.13](#8-deferred-row-review-and-corrections), [R8.17](#8-deferred-row-review-and-corrections) — sit behind a gate that no longer applies to them.
+[R10.1](#10-the-seam-capture-to-collection) and [R10.3](#10-the-seam-capture-to-collection) close the data half of the seam under either reading: every reading lands in the live collection as it is saved, and the row states, the identifier vocabulary, and the counts are the same on both surfaces. What the app keeps around a session — the sessions themselves, the queue order, the remembered row, and the records of rows set aside — therefore does not wait on the navigation call, and belongs with the rest of what the app keeps rather than behind ADR-0004's gate. The [decision queue](../../decisions/README.md#decision-queue)'s note that the session-adjacent tables wait for ADR-0004's seam re-open is the line that has to change; until it does, the P0 obligations this document hands the Data Foundation PRD for what the app keeps around a session — [R3.1](#3-the-capture-session), [R3.6](#3-the-capture-session), [R3.8](#3-the-capture-session), [R6.7](#6-queue-navigation-and-reordering), [R7.18](#7-pause-end-interruption-and-resume), [R8.5](#8-deferred-row-review-and-corrections), [R8.13](#8-deferred-row-review-and-corrections), [R8.17](#8-deferred-row-review-and-corrections) — sit behind a gate that no longer applies to them.
 
 #### As a Cataloger, I can get from scanning to browsing without losing my place so that capture and the collection feel like one app.
 
@@ -401,7 +401,7 @@ Traces [UJ5](prd-capture-mode-journeys.md#uj-5-session-ends-and-the-collection-i
 
 ### 11. Demo Device and verifiability
 
-Traces [UJ3.9](prd-capture-mode-journeys.md#uj-39-capture-with-the-demo-device-contributor); serves [U9](vision.md#use-cases) and vision [J5](vision.md#j5-first-contribution-contributor). Builds on the [device PRD §6](prd-device-management.md#6-mock-device-layer) mock-device layer; the rows marked inherited are obligations this PRD adds to that layer.
+Traces [UJ3.9](prd-capture-mode-journeys.md#uj-39-capture-with-the-demo-device-contributor); serves [U9](../vision.md#use-cases) and vision [J5](../vision.md#j5-first-contribution-contributor). Builds on the [device PRD §6](../device-management/prd-device-management.md#6-mock-device-layer) mock-device layer; the rows marked inherited are obligations this PRD adds to that layer.
 
 The contributor walk runs in this fixed order, and after each step the counts are unchanged, the current row is the remembered row, and no row appears twice:
 
@@ -456,10 +456,10 @@ Each line is a requirement on the document named, not a suggestion. A row cited 
 | :--- | :--- | :--- |
 | Data Foundation | What the app keeps, that nothing is ever destroyed, and that a test can read it all back | [R1.9](#1-collections), [R2.7](#2-inventory-import), [R2.10](#2-inventory-import), [R3.1](#3-the-capture-session), [R3.6](#3-the-capture-session), [R3.8](#3-the-capture-session), [R4.6](#4-the-scan-loop), [R4.11](#4-the-scan-loop), [R4.12](#4-the-scan-loop), [R4.13](#4-the-scan-loop), [R4.24](#4-the-scan-loop), [R6.7](#6-queue-navigation-and-reordering), [R6.9](#6-queue-navigation-and-reordering), [R7.12](#7-pause-end-interruption-and-resume), [R7.18](#7-pause-end-interruption-and-resume), [R8.5](#8-deferred-row-review-and-corrections), [R8.9](#8-deferred-row-review-and-corrections), [R8.13](#8-deferred-row-review-and-corrections), [R8.17](#8-deferred-row-review-and-corrections), [R11.6](#11-demo-device-and-verifiability), [R11.10](#11-demo-device-and-verifiability), [R11.11](#11-demo-device-and-verifiability), [R11.16](#11-demo-device-and-verifiability) |
 | Collection Mode | Rename and delete a collection; renaming an imported column; the sort and drag controls the operator orders the queue with; showing the simulated-readings banner, a recorded spread, and the non-spectral mark | [R1.8](#1-collections), [R2.6](#2-inventory-import), [R4.11](#4-the-scan-loop), [R6.8](#6-queue-navigation-and-reordering), [R8.14](#8-deferred-row-review-and-corrections) |
-| Collection Mode, Data Foundation | Marking a colour that falls outside what a display can show — Collection Mode for the showing, Data Foundation for what is kept on the reading. Capture keeps every reading exactly as the instrument produced it ([AGENTS.md §4](../../AGENTS.md#4-non-negotiables)) | — |
+| Collection Mode, Data Foundation | Marking a colour that falls outside what a display can show — Collection Mode for the showing, Data Foundation for what is kept on the reading. Capture keeps every reading exactly as the instrument produced it ([AGENTS.md §4](../../../AGENTS.md#4-non-negotiables)) | — |
 | QC & Comparison | The check-it path: checking a swatch against the reading it already has never touches the canonical value, and the choice between checking and correcting is offered rather than guessed ([E29](prd-capture-mode-copy.md#error--state-copy)) | — |
 | Device PRD, simulated layer | The record of every measurement asked for and a measurement a test can hold open; a declared starting device state; a clock a test controls and an observable, closed cue set; per-mode measurements identical to a live reading | [R11.5](#11-demo-device-and-verifiability), [R11.6](#11-demo-device-and-verifiability), [R11.7](#11-demo-device-and-verifiability), [R11.8](#11-demo-device-and-verifiability) |
-| Device PRD, parity gate | Capture flows, states, and error surfaces identical against the Demo Device and a live instrument, within that PRD's closed list of exceptions, as amended by [R11.3](#11-demo-device-and-verifiability) and [R4.26](#4-the-scan-loop); every failure this PRD relies on producing on demand has a simulated twin, and CI exercises that simulated twin on every PR, a live error without one failing the build. The live half is the human `needs-hardware-verify` gate ([AGENTS.md §5](../../AGENTS.md#5-hardware--the-public-repo-boundary)), not CI. Also the always-visible simulated indicator and the permanent simulated mark on every Demo Device reading ([E35](prd-capture-mode-copy.md#error--state-copy)) | [R11.3](#11-demo-device-and-verifiability), [R4.26](#4-the-scan-loop), and this line, which carries the retired R11.1, R11.2, and R11.4 |
+| Device PRD, parity gate | Capture flows, states, and error surfaces identical against the Demo Device and a live instrument, within that PRD's closed list of exceptions, as amended by [R11.3](#11-demo-device-and-verifiability) and [R4.26](#4-the-scan-loop); every failure this PRD relies on producing on demand has a simulated twin, and CI exercises that simulated twin on every PR, a live error without one failing the build. The live half is the human `needs-hardware-verify` gate ([AGENTS.md §5](../../../AGENTS.md#5-hardware--the-public-repo-boundary)), not CI. Also the always-visible simulated indicator and the permanent simulated mark on every Demo Device reading ([E35](prd-capture-mode-copy.md#error--state-copy)) | [R11.3](#11-demo-device-and-verifiability), [R4.26](#4-the-scan-loop), and this line, which carries the retired R11.1, R11.2, and R11.4 |
 | Device PRD §5 | Ending a session from a halt routes through the End-session warning first, the held unsaved reading discarded and its row left pending (restates §5); a halt left open at termination is closed as "unresolved — app terminated" (restates §5); system sleep is a halt, not an interruption (restates §5); its "current item" is this document's remembered row (amends §2/§5); a resume is a new session start (amends §2/§5). The quit-from-halt row this document relies on is P1 in that PRD and must move with the OQ 16 amendment | [R3.4](#3-the-capture-session), [R7.5](#7-pause-end-interruption-and-resume), [R7.14](#7-pause-end-interruption-and-resume) |
 | Device PRD §6 | The Demo Device's trigger source joins the closed exception list (OQ 2); the configurable-latency row moves from P1 into the first build phase; the settable state surface gains a spectral-data-available-or-absent switch | [R4.26](#4-the-scan-loop), [R11.3](#11-demo-device-and-verifiability) |
 | Device PRD §2, §4, §7 | A license valid in every other way but carrying no spectral data is a capability the app tells the user about, not a dead end: the gate shows the shortfall as an indicator rather than blocking, §7's state gains a way forward, and §2's wording is softened (OQ 16) | [R4.22](#4-the-scan-loop), [R4.24](#4-the-scan-loop) |
@@ -468,7 +468,7 @@ One wording note for the device PRD, not a behaviour: this document says "the in
 
 ### 12. Error & State Copy
 
-The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-capture-mode-copy.md](prd-capture-mode-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R11.12](#11-demo-device-and-verifiability)). Halt copy is the [device PRD §7](prd-device-management.md#7-error--state-copy)'s and is not restated.
+The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-capture-mode-copy.md](prd-capture-mode-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R11.12](#11-demo-device-and-verifiability)). Halt copy is the [device PRD §7](../device-management/prd-device-management.md#7-error--state-copy)'s and is not restated.
 
 **Labels.** This table is the one place a user-facing label is written. A requirement row that names an action quotes the wording used here, and every action a row names appears in that state's copy in the copy file; where the two ever differ, this table is right. A few labels are fixed here as well as, or instead of, in a state there — because the control belongs to no state of its own, or because it appears across several: "Start capture session", which begins a session on a collection; "Add a swatch", which adds one, from the collection or mid-session, and is the same wording the copy file's states use for it; "Re-take sample"; "Restart item"; "Skip"; "Flag"; "Pause"; "Resume"; "End session"; "Review the set-aside swatches"; and "Done", which dismisses a summary shown on the collection surface and nothing else ([R7.15](#7-pause-end-interruption-and-resume), [E24](prd-capture-mode-copy.md#error--state-copy)).
 
@@ -488,7 +488,7 @@ Numeric targets below are proposals, not commitments. The instrument's own scan 
 | M5 | Rework rate | Start: a row reaching captured. End: any later re-scan of that row. Statistic: re-scans divided by captured rows, each re-scan counted in the session it happened in and measured against the collection's cumulative captured-row count at that moment, so a correction made on day two is not divided by day two's small numerator. Population: dogfood session chains (fence F30) from the P1 build onward, since re-scan is P1 (fence F47). | ≤ 3% (proposal) — a high rate means the app let a bad reading land, not that the operator is fussy | [R8.13](#8-deferred-row-review-and-corrections), [R8.17](#8-deferred-row-review-and-corrections), [R11.11](#11-demo-device-and-verifiability) | 🤝 Aligned |
 | M6 | Mis-attributed readings | Start: an accepted trigger press. End: the reading being saved. Statistic: the count of measurement records whose saved row is not the row that was current at the accepted trigger — both are on the record ([R11.5](#11-demo-device-and-verifiability)), so the metric is a count of inequalities and not a judgement. Population: a Demo Device stress run at real pacing exercising hold-and-retry, moved-on, Flag, jump, insert, the guard, and a measurement held open across each of them ([R4.18](#4-the-scan-loop)). | 0 — this is the whole point of fences F6, F16, and F32 | [R11.5](#11-demo-device-and-verifiability), [R11.6](#11-demo-device-and-verifiability) | 🤝 Aligned |
 | M7 | Import success on real exports | Start: picking a file. End: a committed import. Statistic: the share of files that imported without the user editing the file first. Population: a corpus of real exports from the spreadsheets catalogers actually use — Numbers, Excel, Sheets. | ≥ 90% (proposal); the failures are what write the detection rules for OQ 12 | Timed walkthroughs against the corpus, n stated with the result | 🤝 Aligned |
-| M8 | Import to first captured row | Start: the import commit. End: the first row-success confirmation in that collection. Statistic: median. Population: dogfood collections, first session only, where the instrument was healthy at the start — paired, calibration not due, and charged enough to clear the pre-flight gate ([device PRD §4](prd-device-management.md#4-pre-flight-device-health)); a run that began with a blocking check is excluded and counted separately. | ≤ 5 min with a healthy instrument to hand (proposal) | Timed dogfood sessions, measured locally | 🤝 Aligned |
+| M8 | Import to first captured row | Start: the import commit. End: the first row-success confirmation in that collection. Statistic: median. Population: dogfood collections, first session only, where the instrument was healthy at the start — paired, calibration not due, and charged enough to clear the pre-flight gate ([device PRD §4](../device-management/prd-device-management.md#4-pre-flight-device-health)); a run that began with a blocking check is excluded and counted separately. | ≤ 5 min with a healthy instrument to hand (proposal) | Timed dogfood sessions, measured locally | 🤝 Aligned |
 | M9 | Sessions abandoned after a failure | Start: a session ending. End: — the ending is the event. Statistic: the share of session endings that came mid-queue within one row of a failed attempt or a guard pause, as against endings the operator chose with rows still waiting and endings at a completed queue. Population: dogfood bulk sessions across chains (fence F30). | ≤ 5% of endings (proposal) — this, not an incomplete queue, is the failure M3 used to conflate with stopping for the day | [R3.1](#3-the-capture-session), [R8.17](#8-deferred-row-review-and-corrections), [R11.11](#11-demo-device-and-verifiability) | 🤝 Aligned |
 | M10 | Per-sample cue interval | Start: a sample's arrival at the app. End: that sample's confirmation cue reaching the operator. Statistic: median and p95. Population: the same runs as M1. | ≤ RESULT_CUE_LATENCY (OQ 5) | [R11.7](#11-demo-device-and-verifiability) | 🤝 Aligned |
 | M11 | Interactions per captured row | Start: a row becoming current. End: that row reaching captured. Statistic: the median count of accepted interactions on that row that were not the trigger — every shortcut and control the operator used to get it captured. Population: every captured row on a dogfood run where that row itself had no failed attempt and was never set aside — cleanliness is judged per row, so one troublesome swatch does not take the whole run's rows out of the measurement. | ≤ INTERACTIONS_PER_ROW_TARGET, a number set before v1 rather than left as "near zero" — candidate 0, because the thesis is that a clean row costs N trigger presses and nothing else (OQ 25) | [R11.5](#11-demo-device-and-verifiability), [R11.16](#11-demo-device-and-verifiability) | 🤝 Aligned |
