@@ -65,6 +65,7 @@
 | R4.22 | 339 | 86 | — | — |
 | R4.23 | — | 76 | R4.10 | — |
 | R4.24 | — | 76 | R4.12 | — |
+| R4.25 | — | — | R4.21 | → merged into R4.21 |
 | R4.26 | — | 54 | R4.22 | — |
 | R5.1 | 32 | 30 | — | — |
 | R5.2 | 54 | 44 | — | — |
@@ -164,4 +165,4 @@
 | R11.15 | — | 233 | R11.12 | — |
 | R11.16 | — | 90 | R11.13 | — |
 
-Totals: 144 rows before at 17253 words (mean 119); 150 rows now at 9725 words (mean 64). Rows over two sentences: 0. Retired under F46 and never reused: R10.2, R11.1, R11.2, R11.4, R11.9, R4.25, R7.10, R7.4, R7.6, R8.11.
+Totals: 144 rows before at 17253 words (mean 119); 150 rows now at 9725 words (mean 64). Counting basis for "now": the 149 requirement rows of §1–§11 plus R11.15, whose own one-row line sits above its two-column table. Rows over two sentences: 0. Retired under F46 and never reused: R10.2, R11.1, R11.2, R11.4, R11.9, R4.25, R7.10, R7.4, R7.6, R8.11.

@@ -702,3 +702,39 @@ Minors accepted into the fix file: R2.7's whitespace generality and its named in
 Verification round: a row flips where every non-abstaining Claude verification lens ALIGNed. Of the 160 R rows and E27, **16 stay ⌛️** (an objection stands): R1.7, R2.7, R2.10, R4.24, R5.4, R6.1, R6.9, R7.18, R8.1, R8.15, R8.17, R10.8, R11.12, R11.13, R11.15, R11.16. **145 flip to 🤝 Aligned** (144 R rows and E27). The plan reviewer's OBJECTs are buildability items the owner routed to the engineering plan and do not hold rows; its CUTs are applied by the fix pass. Any 🤝 row the round-16 fix pass edits under F46 returns to ⌛️ "cut (F46), verify in round 17"; rows removed under F46 retire their IDs.
 
 **Round-16 status:** compaction verified — no rule lost. **Fix pass (F46 restructure):** applied by `operator-agents:product-manager` on Opus (11 items + FX16-0). The PRD file went from 33,164 to 19,302 words; the journeys and five diagrams moved verbatim to `prd-capture-mode-journeys.md` (6,986 words) and the E1–E44 copy table to `prd-capture-mode-copy.md` (2,959 words); ten row IDs retired (R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9); 149 R rows plus R11.15 as a table caption, 9,492 requirement words, mean 64, none over two sentences; every OQ, metric, and obligation citation regenerated from the post-split IDs; the compaction map regenerated. After the pass: 101 🤝 (99 R + 2 M) and 59 ⌛️ (35 R cut under F46, 16 R held from round 16, 9 M edited) plus E44 in the copy file. Operator judgment calls: 12k words is not reachable without cutting rules (19.3k is the honest floor: 9.7k rule text, the seam table, the two contract paragraphs, the obligations table, metrics definitions, the trimmed OQ table); R5.2 keeps its halt taxonomy sentence because fence F7 has no other home; the session-lifecycle diagram moved to the journeys file rather than being cut; the Vocabulary stays in the PRD; the OQ table's Evidence/Gated/Depends columns folded into the Closer cell. Next: round 17 verifies the cut rows and the held-row fixes.
+
+## Round 17 — verification of the F46 restructure (2026-09-07)
+
+**Subject:** commit `16cc7f3` (PRD 19,302 words; 149 R rows + R11.15 caption; 59 R/M rows and E39/E42/E44 open). **Lenses:** the five usual lenses on Claude/Opus verifying the open rows against the pre-restructure text (`244608f`); agy on four, advisory (PM rc 0, no objections; staff, arch, marketing rc 8).
+
+| lens | route | round-16 items | new findings | open rows OBJECT | other OBJECT |
+|---|---|---|---|---|---|
+| product manager | Claude/Opus | all RESOLVED / BY-FENCE (R7.12 CUT not applied, judged not a defect) | 3 Minor, 1 Nit | R11.15 | parity-gate obligation line |
+| staff engineer | Claude/Opus | all RESOLVED / BY-FENCE; R16-F4 PARTIAL (map lacks R4.25) | 3 Minor, 3 Nit, 5 questions | R11.15 | none |
+| test (retargeted) | Claude/Opus | all RESOLVED | 2 Minor, 4 Nit | R3.12 | F40 map entry, §11 preamble |
+| architecture | Claude/Opus | all RESOLVED; §8 two-tables PARTIAL | 5 Minor, 3 Nit | R11.15 | Legend list (R1.5), obligations table cells |
+| marketing (copy) | Claude/Opus | all RESOLVED; "deferred/set aside" nit carried | 4 Minor, 3 Nit | R3.12, R4.4, R5.9, R10.4, R11.13 | parity-gate obligation line |
+| agy | agy | — | none | — | — |
+
+**No Blocker and no Major.** Every lens confirms the restructure lost no rule: every retired ID's rule has a home, every citation across the three files resolves, and no 🤝 row, journey, or copy row was broken.
+
+### Verify-the-reviewer dispositions (Minors accepted into the fix file)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R17-M1 | R11.15's capture-surface cell lost "listed the same way under a halt"; and R11.15 is a caption, not a row, so a script scanning rows misses it | Staff S17-1/S17-2, PM PM17-1, Arch A17-5 | `:426`, `:430` confirmed. | accept: restore the clause; restore a one-row line above the table as R8.1 has. |
+| R17-M2 | The obligations table's parity-gate line lost retired R11.1's "within the device PRD's closed list of exceptions as amended by R11.3, R4.26"; its Device PRD §5 line lost R7.5 | PM PM17-2, Arch A17-3/A17-4, PMM PMM17-1 (test judged the parity line acceptable) | `:456`, `:457` confirmed. | accept: restore the qualifier and the R7.5 citation. |
+| R17-M3 | The Legend's engineering-plan list says R1.5 has no interim rule; OQ 21 carries D50/2° (only the pair list is open) | Staff nit, Arch A17-1 | `:76`, `:505` confirmed. | accept: reword. |
+| R17-M4 | R3.12 names three constants with no candidate while the Legend says every constant carries one in-row | PMM PMM17-3, Test T17-1, Staff Q3 | `:191`, `:87` confirmed. | accept: amend the Legend sentence ("here or in its Open Questions entry") — no numbers return to the row. |
+| R17-M5 | R11.13 is orphaned (M11 and the obligations table moved to R11.16); R4.4 and R10.4 should cite it | PMM PMM17-4 | confirmed. | accept. |
+| R17-M6 | F40's map entry cites retired R11.9 and §11's preamble step 3 no longer cites R5.9's floor; R5.9's "counts toward both" clause was cut (test: the definition's "by either route" carries it; PMM disagrees) | Test T17-2, PMM PMM17-2 | confirmed. | accept: step 3 cites R5.9's floor; F40's map entry repointed; R5.9 gains "a row auto-deferred counts toward both" as a clause of the definition (four words, a rule not rationale). |
+| R17-M7 | The obligations table sits under a section titled "Error & State Copy" | Arch A17-2, Staff nit | confirmed. | accept: its own section "Inherited obligations". |
+| R17-M8 | Nits: compaction map lacks an R4.25 row and its totals differ from the log by R11.15's counting; the copy file's header says "a requirement row above"; R8.1d's "which" antecedent; :31 says four diagrams (five); four rows still read "verify in round 16"; tally labels "deferred" vs the copy's "set aside" (R4.15) | Staff, Test, PMM | confirmed. | accept as hygiene. |
+
+Judged not defects (recorded): R5.2's dropped hand-off tag (fence F7 already routes drift; the device PRD owns the halt taxonomy); R7.12's second sentence kept; the device PRD's literal `&amp;` heading slugs (pre-existing; note for the OQ 16 amendment); R4.4's "find" without a Labels entry (pre-existing); the Placeholders "E39 alone" wording (pre-existing).
+
+### Row flips
+
+Verification round. Of the 62 open rows, **6 stay ⌛️** (an objection stands): R3.12, R4.4, R5.9, R10.4, R11.13, R11.15. **56 flip to 🤝 Aligned**: the other 50 R/M rows and E39, E42, E44. Any 🤝 row the round-17 fix pass edits returns to ⌛️ "edited in round 17, re-review".
+
+**Round-17 status:** restructure verified — no rule lost, no Blocker or Major. **Fix pass:** applied by `operator-agents:product-manager` on Opus (6 items + FX17-0). Correction to the flip paragraph above: the open set was 62 rows plus R11.15's caption; 55 flipped (R4.15 and R8.1 were edited by FX17-6 and stay ⌛️ with R4.4, R5.9, R10.4, R11.15; R3.12 and R11.13 stay held untouched). After the pass: PRD 18,959 words; 150 R rows (R11.15 is a row again) and 11 M rows; 153 🤝, 8 ⌛️ (R3.12 R4.4 R4.15 R5.9 R8.1 R10.4 R11.13 R11.15); copy file 44 🤝. The inherited-obligations table is now its own section. Operator notes: R8.1 returned to ⌛️ because the seam table's R8.1d cell was edited; held rows that no fix touches keep a stale round note (a rule for round 18: a held, untouched row reads "held since round N"). Next: round 18 as the Phase 5 priority pass and the Phase 6 pre-lock round together (five lenses delta-verify; `peer-plan-reviewer` retargeted on the lock question; `peer-interface-reviewer` as the fresh lens on the cross-document contract).
