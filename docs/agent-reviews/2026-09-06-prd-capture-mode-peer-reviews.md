@@ -921,3 +921,5 @@ Everything else raised this round is post-lock and listed in the round-23 fix fi
 ### Row flips
 
 Consented by every lens: R11.8, R11.12 → 🤝. Held: R5.9, R8.4 (test OBJECT by proxy of step 4). Round 24 is a delta by the test and architecture lenses over step 4, F47's and F48's lines, and those two rows; then the document locks.
+
+**Round-23 status:** lock consented on 2 of 4 rows; R5.9/R8.4 held by proxy of §11 step 4. **Fix pass:** applied by `operator-agents:product-manager` on Opus (3 items + FX23-0). After the pass: PRD 19,622 words; 159 🤝, 2 ⌛️ (R5.9 R8.4); copy 44/44. Checks clean.
