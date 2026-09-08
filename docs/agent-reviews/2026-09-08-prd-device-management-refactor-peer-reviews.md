@@ -67,3 +67,40 @@ Minors accepted (all editorial): R2.6, R4.3, E7 carry a pointer to the pending s
   - _Result:_ Done: 1,233 links and anchors resolve across the device files and every inbound file (the only 4 misses stay the pre-existing quoted excerpts in the 2026-09-06 capture review log); `&amp;` survives only where the refactor log and F9 name the string itself; 0 bare cross-PRD row labels; every requirement row two sentences or fewer (R6.1's third "sentence" is the period inside its quoted helper text); all 11 mermaid blocks render; R 100 (R1 22, R2 19, R3 5, R4 6, R5 20, R6 28), all 🤝 Aligned; E 32, each with a 🤝 Aligned Status cell; M 5, all 🤝; OQ 30; `⌛️` appears once per PRD, in the Legend's value list, on no row.
 
 Rows edited by the pass and re-verified in round 2: R1.8, R2.6, R2.11, R2.15, R3.5, R4.1, R4.3, R4.4, R5.1, R6.9, R6.22, R6.27, E7, E11, E13, E15, E18, E23, E32; every other row is consented by all four lenses and stays 🤝.
+
+## Round 2 — delta on the round-1 fixes (2026-09-08)
+
+**Subject:** commit `212b616`. **Lenses:** product manager, staff engineer, test (retargeted), interface, on Claude/Opus over the nineteen edited rows, OQ 28, and the edited paragraphs. All round-1 findings verified RESOLVED except D1-F3 (PARTIAL: the conditional form is wrong for R6.27) and D1-F4 (PARTIAL: the seam is binary and filed inside the device mock).
+
+| lens | verdict | new findings | rows OBJECT |
+|---|---|---|---|
+| product manager | builds the right thing | 2 Major, 6 Minor, 2 Nit | R1.8, R3.5, R4.1, R4.4, R6.9, E13, E15, E18, OQ 28 |
+| staff engineer | not ready — one Blocker | 1 Blocker, 1 Major, 4 Minor, 3 Nit | R4.1, R6.9, R6.27, E18, OQ 28, the roll-up |
+| test (retargeted) | trustworthy | 5 Minor, 3 Nit | R4.1, R6.9, OQ 28, the roll-up, the results file |
+| interface | contract sound | 5 Minor, 3 Nit | E3, E7, E18 |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| D2-F1 | R6.27 is P1 with a conditional obligations line, while the capture PRD's locked P0 R11.3 places the latency row in the first phase unconditionally; the device PRD's own inbound preamble makes the naming PRD's row authoritative | Staff (Blocker) | capture `:387` P0 unconditional; device `:286` P1. | accept — owner: R6.27 → P0 (F8 clarification (1)); the obligations line drops the conditional. |
+| D2-F2 | The engineering-plan roll-up lists OQ 3, 5, 28 as runnable now (OQ 3 waits on hardware-gated OQ 2; 5 and 28 need dogfood data) and lists OQ 3 under "no interim rule" though it has one; "Six constants" counts open questions | PM, Staff (Major), Test, Interface (Minor) | `:70`, `:72`, `:346`, `:349`, `:373` confirmed. | accept — bullets 2 and 4 corrected; R1.14 (OQ 24) added; "Six open questions hold every constant that has no candidate value". |
+| D2-F3 | OQ 28 has no candidate value, so the escape hatches cannot build in dogfood | PM (Major) | `:373` "None". | accept — owner: candidate 3 (F9 clarification (2a)). |
+| D2-F4 | E12 is produced by no requirement row | PM (Minor), Staff, Test (nit) | grep: Surfaces table only. | accept — owner: new R1.23, P0 (F9 clarification (2b)). |
+| D2-F5 | E18's body promises an action the P0 build withholds | PM, Staff, Interface (Minor) | copy `:27`. | accept — owner: drop the clause (F9 clarification (2c)). |
+| D2-F6 | R6.9's audio seam is two-valued where R4.1's "verified muted" is three-branched, and is filed inside the device mock rather than the shell-side seam list | Staff, Test, PM (Minor) | `:210`, `:268`, `:289`. | accept — three-valued; §6's seam note names system audio output (F9 clarification (2d)). |
+
+Minors accepted: E3's "Leave setup for now" ‹P1› (Interface; clarification (2e)); R4.4 reads "a one-tap way forward — re-check after charging or connecting power (E19), recalibrate (§3), extend offline use or reconnect (§2), re-check after freeing disk space (E20)" (PM); the F7 carve-out gains "where a constant has no candidate, the engineering plan sets a dogfood value, which the OQ's closer then replaces" (Interface); the fence-map preamble reads "A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation" and the F9 cell is titled Scope (Interface); OQ 4, 19, 25 gain results cites and the closing rule says eleven sections (Test); the results header says "three of the questions it bears on" (Test); the copy header says a marked state whose only exit is from an unmarked loop leaves the loop's own state carrying the exit as guidance (PM). Nits accepted: R4.3's pointer reads "the amendment's readiness half, already absorbed"; the `〈date〉` glyph; R5.5 "shows the advisory" for "warns"; OQ 19's results section marks the Apple-reference clause as the table's claim, not the audit's; E7's and E12's "Not copy" notes move to a footnote under the copy table. Post-lock: the journeys' nine "copy, §7" labels; OQ 5's "dogfood data" closer with no producing row.
+
+### Fix pass (resume point)
+
+- [ ] **DG-1** — R6.27 Pri → P0; the Capture Mode §6 obligations line reads "the configurable-latency row ([R6.27]) is in the first build phase, pacing at that PRD's DEMO_SCAN_CYCLE".
+- [ ] **DG-2** — Roll-up: bullet 2 drops OQ 3 from R4.1 and adds "R1.14 (OQ 24)"; bullet 4 reads "the questions an owner or a checked-in artifact closes without hardware (OQ 12, 13, 14, 19, 21, 22, 24) run now; OQ 3 waits on OQ 2's hardware probe, and OQ 5 and OQ 28 wait on dogfood data from the first build"; bullet 1 opens "Six open questions hold every constant that has no candidate value:".
+- [ ] **DG-3** — OQ 28: Decision so far "None; candidate 3 consecutive failures."; R1.8, R3.5, and the Legend bullet name the candidate.
+- [ ] **DG-4** — R1.23 (v1, P0): "A pairing attempt that fails shows the pairing-failed state ([E12]) with a retry action." Status 🤝 Aligned (owner-authorized, verified in round 3). Traceability's §1 count and the Surfaces table unchanged.
+- [ ] **DG-5** — E18's body drops "— you're online, so you can do it right now". E3's "Leave setup for now" gains ‹P1›. Copy header gains the loop-exit sentence. E7's and E12's "Not copy" notes become a footnote under the table.
+- [ ] **DG-6** — R6.9: "settable system audio output state (muted / not muted / not determinable) ([R4.1])"; §6's shell-side seam note adds "system audio output". R4.4's wording; R4.3's pointer; R5.5's verb.
+- [ ] **DG-7** — Legend `:53` carve-out clause; fence-map preamble and the F9 cell title; OQ 4/19/25 results cites and the closing rule's count; results header wording; OQ 19's source note; the `〈date〉` glyph.
+- [ ] **DG-8** — Checks as DF-7; R rows now 101; every row 🤝; counts and word counts.
+
+Rows edited by the pass and re-verified in round 3: R1.8, R1.23 (new), R3.5, R4.1, R4.3, R4.4, R5.5, R6.9, R6.27, E3, E7, E12, E18, OQ 28, and the Legend, obligations, fence-map, and results-file paragraphs.

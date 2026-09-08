@@ -36,6 +36,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Decision:** P0 is the pre-spike build phase (Demo Device, test seams, the capture/halt/resume core, the pre-flight gate, the device-identity model); P1 is the post-spike hardware wave; P2 last.
 
+**Clarification (1), 2026-09-08 (round 2):** R6.27, the simulated device's configurable latency, is P0: the capture PRD's locked P0 row R11.3 already places it in the first build phase, and the two documents agree rather than the device PRD carrying a conditional.
+
 ### F9 — The refactor: concise rows, companion files, row IDs (2026-09-08)
 
 **Decision:** The document takes the capture-mode PRD's shape. (1) Every requirement row is at most two sentences; the table shrinks and never expands; rationale and citations move out; a row splits only where two rules genuinely differ, and the new row takes the next ID in its section. (2) The journeys and every diagram move to `prd-device-management-journeys.md` (non-normative); §7's copy moves to `prd-device-management-copy.md`; answered and residual open questions get their evidence in `prd-device-management-oq-results.md` and the table takes the capture PRD's seven columns. (3) Every requirement row gains an ID `R<section>.<n>` in document order, every copy state `E<n>` in table order, every metric `M<n>`; IDs are assigned once and never renumbered. (4) The literal `&amp;` in headings and text becomes `&`; anchors are unchanged by that. (5) No rule changes: every row keeps its 🤝 status through the pass and is verified by one round (product manager, staff engineer, test, interface), then the document re-locks.
@@ -43,6 +45,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Why:** The owner's standing instruction for every PRD: "Simple, concise, designed for agents"; and the capture and import PRDs already cite this document by section, journey, and copy state, so one shape across the three keeps those cites mechanical.
 
 **Clarification (1), 2026-09-08 (round 1):** (a) The pairing and calibration retry counts get one open question, OQ 28, cited from R1.8 and R3.5. (b) R6.9's settable state gains "system audio output muted / not muted" so R4.1's advisory is testable without hardware; the one rule addition of this refactor, on the model of the capture PRD's R4.26. (c) R2.14 keeps "forks ship their own provider ID" — fence F6's text, promoted from OQ 13; not drift. (d) The copy file takes the capture copy file's conventions: a Status cell per row and ‹P1› marks on states and actions whose only citing rows are P1.
+
+**Clarification (2), 2026-09-08 (round 2):** (a) OQ 28 carries "candidate 3 consecutive failures". (b) §1 gains R1.23 (P0): a pairing attempt that fails shows E12 with a retry action — the one copy state no row produced. (c) E18's body drops "— you're online, so you can do it right now"; the sentence stands as guidance in the first build. (d) R6.9's audio state is three-valued (muted / not muted / not determinable), as its calibration-due sibling is, and §6's shell-side seam list names system audio output. (e) E3's "Leave setup for now" action carries the ‹P1› mark, since only R1.8 and R3.5 (P1) define it.
 
 ## Fence → row map
 
