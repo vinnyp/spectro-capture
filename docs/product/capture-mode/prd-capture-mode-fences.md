@@ -375,6 +375,8 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 
 **Why:** Import is small and self-contained (14 rows, ~1,100 words, no copy state shared with capture), the owner wants every PRD in the same three-file shape, and per-feature directories keep each PRD's companions together as the set of PRDs grows.
 
+**Clarification (1), 2026-09-08:** R2.7, the one matching rule for Swatch Codes and collection names, moves to the import PRD (owner's call over the recommendation to keep it in capture); capture's R1.2 and R9.2 cite the import PRD for it and the Inherited-obligations table names it. M8 (import to first captured row) stays in capture, citing the import PRD's commit row as its start point. OQ 13 stays in capture; the import PRD's IMPORT_BUDGET is closed by it. The split pass is `../import/prd-inventory-import-split-pass.md`.
+
 ## Rejected findings
 
 - **R1-F22** (agy product-manager, Blocker, round 1): "Immediate undo journey is missing; UJ3.2 mentioned but missing from the detailed text." Rejected: UJ3.2 exists with "Re-take sample" and "Restart item"; the reviewer's cited line numbers do not correspond to the document.
