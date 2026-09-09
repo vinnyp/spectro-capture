@@ -24,6 +24,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** The research is unambiguous that the distinction cannot be inferred; not asking means fabricating it, and asking mid-loop breaks heads-down capture.
 
+**Clarification (1), 2026-09-09:** A capture-time re-scan is a correction provisionally; the app asks once after the session, or on that item's next review, and the answer replaces the provisional value.
+
 ### F4 — The gamut-clipped flag compares against a fixed stored reference (2026-09-09, Phase 3)
 
 **Decision:** GAMUT_REFERENCE_SPACE is sRGB and GAMUT_RENDERING_INTENT is relative colorimetric, stored with the datum, so the flag means the same thing to every reader of the file. A live display-dependent check is Collection Mode's, not this file's. Closes OQ 7.
@@ -31,6 +33,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 ### F5 — Export is canonical-only by default with version history as a v1 option (2026-09-09, Phase 3)
 
 **Decision:** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version. The canonical export is P0; the history option is P1. Closes OQ 9 and settles the export rows' priority.
+
+**Clarification (1), 2026-09-09:** R7.6, the test row that asserts the export's column set, is P0 with the rows it verifies (process rule 3).
 
 ### F6 — Version history is kept for good (2026-09-09, Phase 3)
 
