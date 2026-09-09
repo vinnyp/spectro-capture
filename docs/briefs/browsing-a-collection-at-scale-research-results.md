@@ -4,7 +4,7 @@
 
 **The dominant shipped pattern is a hybrid**: one flat item store plus user-created reference collections, tags, and saved queries, with search/filter as the primary retrieval path. Zotero: "Collections allow hierarchical organization of items into groups and subgroups," "Tags allow for detailed characterization," and "Saved Searches are like smart collections. They automatically update." calibre: a flat library plus saved-query "Virtual libraries."
 
-**On what scales best for a single user**, the strongest evidence favours navigable structure over tags. Bergman, Gradovitch, Bar-Ilan &amp; Beyth-Marom (2013), two studies where both mechanisms were available:
+**On what scales best for a single user**, the strongest evidence favours navigable structure over tags. Bergman, Gradovitch, Bar-Ilan & Beyth-Marom (2013), two studies where both mechanisms were available:
 
 
 | Measure                                                      | Result                                                                                       |
@@ -93,9 +93,9 @@ The SwiftUI mechanisms, with versions: sort order = `[KeyPathComparator]` you ho
 
 **Minimum swatch size — there is a perceptual floor, not just an aesthetic one.** Three published thresholds:
 
-1. **Foveal tritanopia — a hard floor around 20 arcmin.** Davies &amp; Morland (2003), *BJO*: "The extent of the foveal tritanopic region is around 20–25 minutes of arc" (median 18′ in controls). **Below this, an observer fixating the stimulus loses short-wavelength discrimination** — blue/yellow differences become invisible while red/green survive. *Orchestrator-verified: "tritanopic" appears 30× in the source.* **For a colour catalogue this is not an edge case** — a swatch below ~20 arcmin makes two samples differing mainly in b look identical.
+1. **Foveal tritanopia — a hard floor around 20 arcmin.** Davies & Morland (2003), *BJO*: "The extent of the foveal tritanopic region is around 20–25 minutes of arc" (median 18′ in controls). **Below this, an observer fixating the stimulus loses short-wavelength discrimination** — blue/yellow differences become invisible while red/green survive. *Orchestrator-verified: "tritanopic" appears 30× in the source.* **For a colour catalogue this is not an edge case** — a swatch below ~20 arcmin makes two samples differing mainly in b look identical.
 2. **The CIE observer boundary at ~4°.** The 1931 2° observer is intended for fields under about 4°; the 1964 10° observer is for larger. A UI swatch is always under 4°, so **2° colorimetry is the correct basis** for any ΔE the app displays about what the user is looking at.
-3. **The colour size effect** — Xiao, Luo &amp; Li (2012) built models "capable of transforming the colour appearance of a stimulus having a viewing field of 2° to that associated with a range of viewing fields." Consequence: **a small on-screen swatch does not look like the physical sample even when the colorimetry is exactly right** — larger stimuli appear lighter and more colourful. **The honest claim is "this is the measured colour rendered correctly," never "this looks like your sample."**
+3. **The colour size effect** — Xiao, Luo & Li (2012) built models "capable of transforming the colour appearance of a stimulus having a viewing field of 2° to that associated with a range of viewing fields." Consequence: **a small on-screen swatch does not look like the physical sample even when the colorimetry is exactly right** — larger stimuli appear lighter and more colourful. **The honest claim is "this is the measured colour rendered correctly," never "this looks like your sample."**
 
 **Converting to points** (INFERRED arithmetic, at 600 mm viewing distance):
 
@@ -158,7 +158,7 @@ The SwiftUI mechanisms, with versions: sort order = `[KeyPathComparator]` you ho
 
 **But it is a moving target.** Bartlett (2025) reports that against the iOS 18 SDK, `LazyVStack` "has evidently been upgraded under the hood since iOS 16, to become lazy in both directions." A macOS practitioner reports `LazyVGrid` "release[s] backing views that scrolled far out of the visible area, but… later than a fixed AppKit reuse pool would have."
 
-**The macOS-specific complication, and it is bad.** A minimal 101-row test found that on macOS "the `List` calls the `init` &amp; `body` of **every** row, even if those rows are not on screen (and might never be shown)" — verified with print statements — while `ScrollView` + `LazyVStack` invoked them only for visible rows. **That thread received zero replies and no Apple response.**
+**The macOS-specific complication, and it is bad.** A minimal 101-row test found that on macOS "the `List` calls the `init` & `body` of **every** row, even if those rows are not on screen (and might never be shown)" — verified with print statements — while `ScrollView` + `LazyVStack` invoked them only for visible rows. **That thread received zero replies and no Apple response.**
 
 **And regardless of body-laziness, identities are always gathered eagerly:** "List and Table use identifiers to know what changes occurred… For consistency, **all the IDs of List and Table are gathered eagerly**." This is why identifier generation must be cheap and why `List`/`Table` cost scales with N even when rendering does not.
 
@@ -266,7 +266,7 @@ The **SwiftUI instrument (Instruments 26)**, requiring Xcode 26 and current OS. 
 
 ### Colour-proximity search: the counter-intuitive answer
 
-**MEASURED — exhaustive exact ΔE00.** CIEDE2000 written in C, **validated against Sharma, Wu &amp; Dalal's (2005) test pair 1 (computed 2.0425, expected 2.0425)**, compiled `-O2`, single-threaded:
+**MEASURED — exhaustive exact ΔE00.** CIEDE2000 written in C, **validated against Sharma, Wu & Dalal's (2005) test pair 1 (computed 2.0425, expected 2.0425)**, compiled `-O2`, single-threaded:
 
 
 | Corpus            | Full exhaustive ΔE00 scan |
@@ -503,7 +503,7 @@ Krita also documents two failure modes directly relevant: "**Soft Proofing doesn
 
 **A known weakness of colour substitution:** by the time the user sees the canvas the colours have *already* been brought into gamut by the rendering intent. **A gamut warning marks "this was moved," not "this is what you will get."** That argues for marking swatches with a **persistent badge tied to the item**, not a transient view mode — because renderability is a property of the datum, not of a display mode the user toggles.
 
-**The evidence half — an honest void.** **No usability or psychophysical evidence exists on whether users correctly interpret out-of-gamut indicators.** The closest peer-reviewed work, Henry &amp; Westland (2020), *Coloration Technology* 136(3), is genuinely adjacent — it names "the *gamut issue*" as a barrier and reports "in the art and design community there is often a level of dissatisfaction and deep cynicism about colour management" — but its measured outcomes concern **colour pickers and subtractive-vs-additive mixing prediction, not indicator comprehension.** Citing it as evidence for comprehension would be a misattribution. **The gap is not retrieval; professional colour tools ship these affordances as craft convention and vendors do not publish usability data.**
+**The evidence half — an honest void.** **No usability or psychophysical evidence exists on whether users correctly interpret out-of-gamut indicators.** The closest peer-reviewed work, Henry & Westland (2020), *Coloration Technology* 136(3), is genuinely adjacent — it names "the *gamut issue*" as a barrier and reports "in the art and design community there is often a level of dissatisfaction and deep cynicism about colour management" — but its measured outcomes concern **colour pickers and subtractive-vs-additive mixing prediction, not indicator comprehension.** Citing it as evidence for comprehension would be a misattribution. **The gap is not retrieval; professional colour tools ship these affordances as craft convention and vendors do not publish usability data.**
 
 **Follow-up:** a within-subjects comprehension test, 12–15 participants from the actual persona. Same 20-swatch grid rendered four ways — alarm-colour substitution, corner badge, diagonal hatch, unmarked control — with two scoring questions per condition: "point to every swatch your monitor cannot show accurately" (accuracy) and "**for the swatch you just pointed at, is the colour you see too saturated, not saturated enough, or you can't tell?**" (mental model). **The second question is the one that matters — it separates "noticed the marker" from "understood what it means," which the vendor-convention literature never tests.**
 
@@ -612,7 +612,7 @@ Apple's guidance points the same way from the other end: "**Consider encoding 'c
 
 **Apple's guidance favours placeholders over spinners:** "**Show something as soon as possible.** If you make people wait for loading to complete before displaying anything, they can interpret the lack of content as a problem with your app… Instead, consider showing placeholder text, graphics, or animations as content loads."
 
-**But the empirical evidence contradicts the industry folklore.** Faulkner &amp; Olvera (2017), 136 participants across three conditions:
+**But the empirical evidence contradicts the industry folklore.** Faulkner & Olvera (2017), 136 participants across three conditions:
 
 
 | Metric                | Skeleton (n=39) | Spinner (n=39) | Blank (n=58) |
@@ -679,7 +679,7 @@ Documented hazards that follow directly from "the user owns the file": **backup 
 | Area 10                             | **no answer section at all** | fully answered                                                                                                          |
 
 
-**Verified independently by the orchestrator:** SQLite 3.51.0 with FTS5 and RTREE; `PRAGMA foreign_keys` = 0; SQL:2011 syntax absent; partial unique index enforcement; trigram substring match; `kColorSync1BitGamut` at `ColorSyncTransform.h:72`; `kColorSyncTransformGamutCheck CS_AVAILABLE_STARTING(10.4, 16.0)` at line 158; `kColorSyncSigGamutTag` at `ColorSyncProfile.h:80`; the Davies &amp; Morland, STRV, Powell, Tulig and NN/g sources.
+**Verified independently by the orchestrator:** SQLite 3.51.0 with FTS5 and RTREE; `PRAGMA foreign_keys` = 0; SQL:2011 syntax absent; partial unique index enforcement; trigram substring match; `kColorSync1BitGamut` at `ColorSyncTransform.h:72`; `kColorSyncTransformGamutCheck CS_AVAILABLE_STARTING(10.4, 16.0)` at line 158; `kColorSyncSigGamutTag` at `ColorSyncProfile.h:80`; the Davies & Morland, STRV, Powell, Tulig and NN/g sources.
 
 ## Residual gaps
 

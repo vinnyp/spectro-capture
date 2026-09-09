@@ -80,7 +80,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 
 ### J1. First run (cataloger)
 
-1. Install &amp; open the app
+1. Install & open the app
 2. Enter the license credential once (stored locally, silently re-activated offline every launch)
 3. Discover the device (~20s scan, strongest signal first) → connect
   - **Risk points:** Bluetooth permission denial; the device's *first-ever* connect needs internet (serial authorization); a missing usage string may crash the app, caught in CI rather than by users.

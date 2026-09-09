@@ -140,7 +140,7 @@ Traces [UJ1](prd-capture-mode-journeys.md#uj-1-create-a-collection), [UJ1.2](prd
 
 ### 3. The capture session
 
-Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3.5](prd-capture-mode-journeys.md#uj-35-resume-an-interrupted-session); inherits from the [device PRD §5](../device-management/prd-device-management.md#5-mid-session-device-failure) the obligation that a session and its queue survive an app relaunch.
+Traces [UJ3](prd-capture-mode-journeys.md#uj-3-run-a-bulk-capture-session), [UJ3.5](prd-capture-mode-journeys.md#uj-35-resume-an-interrupted-session); inherits from the [device PRD's obligations table](../device-management/prd-device-management.md#inherited-obligations) the obligation that a session and its queue survive an app relaunch.
 
 #### As a Cataloger, I can pick a run up where I left it so that a swatch book is one job and not two.
 
@@ -433,7 +433,7 @@ One wording note for the device PRD, not a behaviour: this document says "the in
 
 ### 12. Error & State Copy
 
-The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-capture-mode-copy.md](prd-capture-mode-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R11.12](#11-demo-device-and-verifiability)). Halt copy is the [device PRD §7](../device-management/prd-device-management.md#7-error--state-copy)'s and is not restated.
+The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-capture-mode-copy.md](prd-capture-mode-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R11.12](#11-demo-device-and-verifiability)). Halt copy is the [device PRD's copy file](../device-management/prd-device-management-copy.md#error--state-copy)'s and is not restated.
 
 **Labels.** This table is the one place a user-facing label is written. A requirement row that names an action quotes the wording used here, and every action a row names appears in that state's copy in the copy file; where the two ever differ, this table is right. A few labels are fixed here as well as, or instead of, in a state there — because the control belongs to no state of its own, or because it appears across several: "Start capture session", which begins a session on a collection; "Add a swatch", which adds one, from the collection or mid-session, and is the same wording the copy file's states use for it; "Re-take sample"; "Restart item"; "Skip"; "Flag"; "Pause"; "Resume"; "End session"; "Review the set-aside swatches"; and "Done", which dismisses a summary shown on the collection surface and nothing else ([R7.15](#7-pause-end-interruption-and-resume), [E24](prd-capture-mode-copy.md#error--state-copy)).
 
