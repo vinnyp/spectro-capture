@@ -19,7 +19,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **If there's nowhere to write it.** No room, no permission, or the folder is gone: nothing is written, no half-finished file is left, and the app says which of the three it was and offers somewhere else. I never end up with a truncated CSV I might mistake for a complete one.
 
-**If I ask for full history.** Whether that ships in v1 is [OQ 9](prd-data-foundation.md#open-questions) and not settled; the export surface always says which of the two it is doing before it runs, so I am never guessing.
+**If I ask for full history.** I get every version of every swatch instead of just the current one. The export surface always says which of the two it is doing before it runs, so I am never guessing.
 
 ## DJ2. Fix a bad scan by measuring it again
 
@@ -36,7 +36,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **When I change my mind.** I restore the earlier reading. That writes a new current value equal to the old one rather than deleting anything, so I can undo the undo.
 
-**Why the app asks rather than working it out.** Two scans a week apart look identical whether the marker faded or the first scan was botched — nothing in the data separates them, so a silent default would invent an answer. Where the question is asked, and how it sits beside the check-it-or-correct-it choice capture already offers, is [OQ 3](prd-data-foundation.md#open-questions).
+**Why the app asks rather than working it out.** Two scans a week apart look identical whether the marker faded or the first scan was botched — nothing in the data separates them, so a silent default would invent an answer. It asks me once, after the heads-down run rather than in the middle of it — a re-scan I take during capture is filed as a correction until I answer.
 
 ## DJ3. Open a file made by an older or a newer app
 
@@ -72,7 +72,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **What a delete never reaches.** Removing a saved instrument from the app doesn't touch any measurement: the instrument's details are recorded on each reading at the moment it was taken and outlive the device record entirely.
 
-**How long the undo lasts.** DELETE_UNDO_WINDOW, candidate "until the app quits" — [OQ 10](prd-data-foundation.md#open-questions).
+**How long the undo lasts.** Until I quit the app. After that the delete is final, and the app says so before I confirm it.
 
 ## DJ5. Query the file without the app
 

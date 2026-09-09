@@ -52,7 +52,19 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ## Fence → row map
 
-(filled by the Phase 3 fix pass: F1 every row; F2–F9 the rows that carry them.)
+Filled by the Phase 3 fix pass (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
+
+| Fence | Rows that carry it |
+| :--- | :--- |
+| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its 5,000-word budget. |
+| F2 | R1.1, R1.3; OQ 1. |
+| F3 | R2.4; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3. |
+| F4 | R3.4; OQ 7. |
+| F5 | R4.1 (canonical default, P0), R4.4 (history option, P1); the P0/P1 split in the Legend, and the Pri cells of R4.2, R4.3, R4.5; OQ 9. |
+| F6 | R2.6; OQ 4. |
+| F7 | R6.3; OQ 10. |
+| F8 | R6.5; the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's ownership half. |
+| F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as J5 against R1.1–R1.3 and R3.2. |
 
 ## Rejected findings
 
