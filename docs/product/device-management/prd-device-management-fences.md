@@ -30,7 +30,7 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Decision:** No provisional number ships in a row; each constant carries its candidate value and its open-question id.
 
-**Clarification (1), 2026-09-08 (round 1 of the F9 refactor):** A dogfood build is not a release for this rule, so the first sessions run on candidate values and produce the halt-log data the thresholds' closers need; the Legend reads "carrying its candidate value where one exists, and its Open Questions id". Mirrors the capture PRD's fence F23.
+**Clarification (1), 2026-09-08 (round 1 of the F9 refactor):** A dogfood build is not a release for this rule, so the first sessions run on candidate values and produce the halt-log data the thresholds' closers need; the Legend reads "carrying its candidate value where one exists, and its Open Questions id". Where a constant has no candidate, the engineering plan sets a dogfood value, which the OQ's closer then replaces. Mirrors the capture PRD's fence F23.
 
 ### F8 — Priority is build order within v1, not scope (2026-09-05, review arc)
 
@@ -47,6 +47,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Clarification (1), 2026-09-08 (round 1):** (a) The pairing and calibration retry counts get one open question, OQ 28, cited from R1.8 and R3.5. (b) R6.9's settable state gains "system audio output muted / not muted" so R4.1's advisory is testable without hardware; the one rule addition of this refactor, on the model of the capture PRD's R4.26. (c) R2.14 keeps "forks ship their own provider ID" — fence F6's text, promoted from OQ 13; not drift. (d) The copy file takes the capture copy file's conventions: a Status cell per row and ‹P1› marks on states and actions whose only citing rows are P1.
 
 **Clarification (2), 2026-09-08 (round 2):** (a) OQ 28 carries "candidate 3 consecutive failures". (b) §1 gains R1.23 (P0): a pairing attempt that fails shows E12 with a retry action — the one copy state no row produced. (c) E18's body drops "— you're online, so you can do it right now"; the sentence stands as guidance in the first build. (d) R6.9's audio state is three-valued (muted / not muted / not determinable), as its calibration-due sibling is, and §6's shell-side seam list names system audio output. (e) E3's "Leave setup for now" action carries the ‹P1› mark, since only R1.8 and R3.5 (P1) define it.
+
+**Clarification (3), 2026-09-08 (round 3):** (a) E12's and E14's bodies close with E13's own exit sentence, "You can come back to this any time from the device panel.", so the first build's pairing and calibration loops carry their exit as guidance until R1.8 and R3.5 land. (b) R2.12 (P0) renews the window silently whenever connectivity exists while either E17 or E18 is shown, so the first build is not bounded by the authorization window; R2.10 and R2.11 stay P1. (c) R1.8's exit generalizes: any first-run setup state offers "Leave setup for now", landing on the device panel; E3 keeps the action, marked ‹P1›. (d) R4.4's round-2 rewording ("a one-tap way forward — re-check after…") is recorded here for provenance. (e) OQ 28's closer, like OQ 5's, is revisited after lock: no row records setup-failure counts yet.
 
 ## Fence → row map
 

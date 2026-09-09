@@ -112,3 +112,39 @@ Minors accepted: E3's "Leave setup for now" ‹P1› (Interface; clarification (
   - _Result:_ Done: 1,305 links and anchors resolve across the device files and every inbound file (the only 4 misses stay the pre-existing quoted excerpts in the 2026-09-06 capture review log); `&amp;` survives only in the fence file and the refactor log, which name the string itself; 0 bare cross-PRD row labels; every requirement row two sentences or fewer (R6.1's third "sentence" is the period inside its quoted helper text); all 11 mermaid blocks render; R 101 (R1 23, R2 19, R3 5, R4 6, R5 20, R6 28), all 🤝 Aligned; E 32, all 🤝; M 5, all 🤝; OQ 30; `⌛️` appears once, in the Legend's value list, on no row. Words: PRD 11,729, copy 1,787, journeys 1,814, oq-results 1,032, fences 1,005.
 
 Rows edited by the pass and re-verified in round 3: R1.8, R1.23 (new), R3.5, R4.1, R4.3, R4.4, R5.5, R6.9, R6.27, E3, E7, E12, E18, OQ 28, and the Legend, obligations, fence-map, and results-file paragraphs.
+
+## Round 3 — delta on the round-2 fixes (2026-09-08)
+
+**Subject:** commit `a5bb7e9`. **Lenses:** product manager, staff engineer, test (retargeted), interface, on Claude/Opus over the fourteen edited rows, OQ 28, and the edited paragraphs. Every round-2 finding verified RESOLVED except the F7 clause (Legend only, not in the fence) and the copy header's loop-exit rule (no state realizes it).
+
+| lens | verdict | new findings | rows OBJECT |
+|---|---|---|---|
+| product manager | builds the right thing | 1 Major, 4 Minor, 1 Nit | R6.27, E12, E18, the Legend paragraphs |
+| staff engineer | proceed after one Major | 1 Major, 4 Minor | R4.1, R6.9, E12, E14, R1.20, the Legend paragraphs |
+| test (retargeted) | trustworthy after one Major | 1 Major, 3 Minor, 1 Nit | E12, OQ 28, the Legend paragraphs |
+| interface | contract sound | 1 Major, 4 Minor, 1 Nit | R1.23, R6.27, E3, E12, E14, the obligations line |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| D3-F1 | The copy header's loop-exit rule governs E12 and E14, and neither body carries the exit; a literal P0 build ships the retry loop with no door | Staff, Test, Interface (Major), PM (Minor) | copy `:4`, `:21`, `:23`; E13/E15 ‹P1›. | accept — owner: both bodies close with E13's exit sentence (F9 clarification (3a)). |
+| D3-F2 | E18 has no P0 remedy: both renewal rows are P1 and R2.12's silent renewal applies only while E17 is shown | PM (Major) | `:178`–`:183` confirmed. | accept — owner: R2.12 renews while E17 or E18 is shown (F9 clarification (3b)). |
+| D3-F3 | E3's ‹P1› exit action is produced by no row in any phase | Interface (Minor) | R1.8 and R3.5 scope the exit to their loops. | accept — owner: R1.8's exit generalizes to any first-run setup state (F9 clarification (3c)). |
+| D3-F4 | OQ 28's closer names dogfood data no row produces | Test (Minor), PM (Nit) | R5.12 records halts only. | accept as post-lock — owner: revisited with OQ 5 (F9 clarification (3e)). |
+| D3-F5 | Roll-up: R6.27 (OQ 10) missing from bullet 2; OQ 4b, 7, 20b are labelled hardware but close on halt-log data from the first sessions | PM, Staff, Test, Interface (Minor) | `:70`, `:72`, `:349`, `:352`, `:366`. | accept — R6.27 added to bullet 2; 4b, 7, 20b join the dogfood clause of bullet 4 and the closing rule's exception. |
+| D3-F6 | The Legend attributes the dogfood-value clause to F7 clarification (1), which did not carry it; R4.4's rewording has no fence provenance | PM, Staff, Test (Minor) | fences `:33`. | accept — clause appended to F7 (1); R4.4 recorded under F9 (3d). |
+| D3-F7 | The audio seam is asserted in the device mock (R6.9, R4.1) and in the shell-side seam list | Staff (Minor) | `:211`, `:269`, `:290`. | accept — R6.9's clause reads "and, shell-side as §6's seam note says, a settable system audio output state (…)"; R4.1 cites the seam note. |
+
+Minors accepted: R1.20 cites "R1.1–R1.8 and R1.23"; the Capture Mode §6 obligations line is marked "already absorbed" like R4.3. Post-lock list: the journeys' nine "copy, §7" labels; the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table), stale now that R6.27 is P0, ride that PRD's OQ 16 amendment; E12's "Try again" versus the state diagram's return to discovery; OQ 5 and OQ 28's closers.
+
+### Fix pass (resume point)
+
+- [ ] **DH-1** — E12 and E14 bodies close with "You can come back to this any time from the device panel."; the copy header's loop-exit sentence names that sentence as the guidance; the footnote at the table's end says E12/E14 carry it until E13/E15 land.
+- [ ] **DH-2** — R2.12: "…while either that state or the offline-use-ended state ([E18]) is shown the app listens for connectivity and renews silently the moment any returns". Two sentences max. E18's row cites R2.12 in the footnote or its body stays as is.
+- [ ] **DH-3** — R1.8's second sentence: "Any first-run setup state offers 'Leave setup for now', landing on the device panel, so setup is never an inescapable loop." (or the closest two-sentence form that keeps R1.8's counter rule). E3's action keeps ‹P1›.
+- [ ] **DH-4** — Roll-up bullet 2 adds [R6.27] (OQ 10); bullet 4's dogfood clause reads "and OQ 4b, 5, 7, 20b and 28 wait on halt-log and dogfood data from the first build"; the closing rule's exception matches.
+- [ ] **DH-5** — R6.9's audio clause and R4.1's cite per D3-F7; R1.20's range cite; the §6 obligations line "already absorbed".
+- [ ] **DH-6** — Checks as DG-8; R 101; every row 🤝; counts.
+
+Rows edited and re-verified in round 4 (staff, test, product manager): R1.8, R1.20, R2.12, R4.1, R6.9, E12, E14, plus the roll-up and closing rule.
