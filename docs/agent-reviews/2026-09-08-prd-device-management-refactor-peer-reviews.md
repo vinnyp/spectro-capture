@@ -190,3 +190,35 @@ Minors accepted: R4.1 "TBD pending their open questions (OQ 3, OQ 4b, OQ 5)" (St
   - _Result:_ Done: 1,279 relative link instances (2,418 file+anchor checks) resolve across the device files and every inbound file, unchanged in count by this pass (375 in the PRD, 6 in the copy file, both before and after); the only 4 misses stay the pre-existing quoted excerpts in the 2026-09-06 capture review log. 0 bare cross-PRD row labels; every requirement row two sentences or fewer (R6.1's third "sentence" is still the period inside its quoted helper text); all 11 mermaid blocks re-extracted from source and rendering; R 101 (R1 23, R2 19, R3 5, R4 6, R5 20, R6 28), all 🤝 Aligned; E 32, all 🤝; M 5, all 🤝; OQ 30 (22 open, 8 residual); `&amp;` survives only in the fence file and the refactor log, which name the string itself; `⌛️` appears once, in the Legend's value list, on no row. Words: PRD 11,845, copy 1,872, journeys 1,814, oq-results 1,032, fences 1,283.
 
 Rows edited and re-verified in round 5 (staff, test): R1.8, R2.12, R4.1, E3, E18, the Surfaces paragraph, bullet 4.
+
+## Round 5 — delta on the round-4 fixes (2026-09-08)
+
+**Subject:** commit `1d8db64`. **Lenses:** staff engineer and test (retargeted) on Claude/Opus over R1.8, R2.12, R4.1, E3, E18, the Surfaces sentence, bullet 4, the obligations mark, and the copy footnote. D4-F1 and D4-F4 RESOLVED; D4-F2 and D4-F3 PARTIAL (the exit set not yet in E12/E14's cells; non-modality stated in prose no row owns).
+
+| lens | verdict | new findings |
+|---|---|---|
+| staff engineer | ready to re-lock after two Majors | 2 Major, 3 Minor, 2 Nit |
+| test (retargeted) | trustworthy after two Majors | 2 Major, 2 Minor, 1 Nit |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| D5-F1 | E12 and E14 carry no "Leave setup for now ‹P1›" although F9 (4b) names them | Test (Major) | copy `:21`, `:23`. | accept — realization of (4b); clarification (5b). |
+| D5-F2 | The non-modal sentence is prose with no row, status, or seam; a modal P0 sheet passes every row | Test (Major) | `:97`; Traceability `:87`. | accept — R1.23 carries it; §6 gains the observation; clarification (5a). |
+| D5-F3 | R4.4 says "guidance but no action" where the Legend, §7 and the copy header say "without that action"; R2.12 cites R4.4, so E18's Check again could be read out again | Staff (Major) | `:214` vs `:51`, `:325`, copy `:4`. | accept — three words; clarification (5e). |
+| D5-F4 | "Leaving setup" has no defining event now that states are non-modal; the action's visible effect on first run is undefined; "first run" is undefined | Staff (Major, Minor) | `:124`, `:201`, `:97`. | accept — clarification (5c), (5d), recorded by the orchestrator as precision, owner may overrule. |
+| D5-F5 | Non-modality does not span the device picker (E1); E18's body names the withheld control and lacks E17's coverage hedge; R4.1's "every check" overreaches by one | Staff, Test (Minor) | `:97`, `:106`, copy `:27`, `:211`. | accept — clarification (5a), (5f); R4.1 names the three checks and cites R2.12 for the fourth. |
+
+Post-lock list: E17's "Check again" while still offline; a producing row for "Check again"; R2.12's "reconnect-once" shorthand against §5's device-reconnect vocabulary; the copy header's loop-exit rule written for a marked state where E3's case is a marked action; the workflow diagram's missing leave-setup edges and single AuthBlocked state; the journeys' nine "copy, §7" labels; OQ 5's and OQ 28's closers; the capture PRD's two stale "moves from P1" sentences (that PRD's OQ 16 amendment); R5.2's forward reference to ADR-0004; E12's "Try again" versus the diagram.
+
+### Lock pass (editorial and precision edits under clarification (5); verified by orchestrator diff and one bounded test-lens check)
+
+Five rounds have each surfaced a new Minor-to-Major in the same first-run seam after the previous round's fix, the pattern the capture-mode arc's retro named. The items above realize decisions already fenced; they are applied as a lock pass, the diff is verified by the orchestrator, and the test lens runs one bounded check over the four rule-touching rows (R1.8, R1.23, R3.5, R4.4) where only a Blocker stops the lock.
+
+- [ ] **LK-1** — R1.23: "A pairing attempt that fails shows the pairing-failed state ([E12]) with a retry action. First-run setup states render non-modally on the device panel or in the device picker, both of which stay reachable, so leaving one never needs an action." The Surfaces sentence becomes a pointer to R1.23. §6: R6.9's list or R6.17's observability gains "and whether the device panel's other affordances stay operable while a setup state shows ([R1.23])" — whichever row keeps to two sentences.
+- [ ] **LK-2** — E12: "Try again; Leave setup for now ‹P1›"; E14: "Recalibrate; Leave setup for now ‹P1›"; the footnote's "until its own exit lands" now reads true for all three.
+- [ ] **LK-3** — R1.8 sentence 2: "The counter resets on a successful attempt and on leaving setup — navigating away from a setup state by that action or otherwise — and the states that block first-run progress (device authorization ([E3]), pairing, calibration) offer the same exit, which dismisses the state and on first run returns the device panel to its normal content." R3.5 cites R1.8 for the leaving rule rather than restating it. Legend gains: "First run: the app has no saved device yet."
+- [ ] **LK-4** — R4.4: "with guidance and without that action". R4.1: "the pass/warn/block boundaries for the battery, calibration and storage checks are TBD pending their open questions (OQ 3, OQ 4b, OQ 5); the authorization check's block boundary is [R2.12]'s."
+- [ ] **LK-5** — E18's body: "Extend offline use to keep scanning. Reconnecting refreshes this automatically — or check again now. If this doesn't clear, the device may not be covered by your license." R2.16 cites [E17] and [E18].
+- [ ] **LK-6** — Checks as DI-5; R 101; every row 🤝; counts.
