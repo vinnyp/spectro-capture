@@ -154,3 +154,34 @@ Minors accepted: R1.20 cites "R1.1–R1.8 and R1.23"; the Capture Mode §6 oblig
   - _Result:_ Done: 1,252 relative link instances (2,370 file+anchor checks) resolve across the device files and every inbound file, +7 on the round-2 baseline and exactly the seven links this pass added; the only 4 misses stay the pre-existing quoted excerpts in the 2026-09-06 capture review log. 0 bare cross-PRD row labels; every requirement row two sentences or fewer (R6.1's third "sentence" is the period inside its quoted helper text); all 11 mermaid blocks render; R 101 (R1 23, R2 19, R3 5, R4 6, R5 20, R6 28), all 🤝 Aligned; E 32, all 🤝; M 5, all 🤝; OQ 30 (22 open, 8 residual); `&amp;` survives only in the fence file and the refactor log, which name the string itself; `⌛️` appears once, in the Legend's value list, on no row. Words: PRD 11,812, copy 1,845, journeys 1,814, oq-results 1,032, fences 1,160.
 
 Rows edited and re-verified in round 4 (staff, test, product manager): R1.8, R1.20, R2.12, R4.1, R6.9, E12, E14, plus the roll-up and closing rule.
+
+## Round 4 — delta on the round-3 fixes (2026-09-08)
+
+**Subject:** commit `7253d4f`. **Lenses:** product manager, staff engineer, test (retargeted), on Claude/Opus over R1.8, R1.20, R2.12, R4.1, R6.9, E12, E14 and the edited paragraphs. Round-3 items D3-F1, D3-F5, D3-F6, D3-F7 and the Minors verified RESOLVED; D3-F2 and D3-F3 PARTIAL.
+
+| lens | verdict | new findings | rows OBJECT |
+|---|---|---|---|
+| product manager | builds the right thing; one Major | 1 Major, 3 Minor, 2 Nit | R1.8, R2.12, E3, E5, E7, E8, E18 |
+| staff engineer | proceed after three Majors | 3 Major, 3 Minor, 1 Nit | R1.8, R2.12, R4.1, E3, E12, E14, E18 |
+| test (retargeted) | not yet safe | 1 Blocker, 1 Major, 1 Minor, 2 Nit | R1.8, R2.12, E3, E18 |
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| D4-F1 | R2.12 renews "the moment any [connectivity] returns", a transition E18 has already passed, and E18 has no unmarked action, so an online user with a lapsed window is blocked with no control in P0 — narrower than F9 (3b) | Test (Blocker), PM, Staff (Major) | `:180`, copy `:27`, fences (3b). | accept — owner: "whenever connectivity is present, including the moment it returns"; E17 offline / E18 online named; E18 gains "Check again" (F9 clarification (4c)). |
+| D4-F2 | R1.8's "any first-run setup state" is an open set reaching the license states whose action cells say None, and the row gives two destinations | PM, Test, Staff (Major) | `:124` vs `:201`, `:106`, copy `:14`–`:17`. | accept — owner: the blocking states only (E3, E12/E13, E14/E15); on first run the exit lands on the device panel, mirroring R3.5 (F9 clarification (4b)). |
+| D4-F3 | The exit guidance in E12/E14 is true only if first-run setup states are non-modal, which the document never states | Staff (Major) | E16 the only non-modal state named; R3.1 "guided flow". | accept — owner: non-modal; one Surfaces sentence (F9 clarification (4a)). |
+| D4-F4 | E3 got the ‹P1› action's producing row but no P0 guidance sentence | PM, Test (Minor) | copy `:12`. | accept — E3's body closes with the exit sentence (F9 clarification (4d)). |
+
+Minors accepted: R4.1 "TBD pending their open questions (OQ 3, OQ 4b, OQ 5)" (Staff); bullet 4 opens "The hardware spike's scope is every OQ whose closer is 'hardware' except OQ 4b, 7 and 20b, which close on first-build halt logs" (Staff); R2.12's second sentence narrows to E18 (Test, Staff); the "already absorbed" mark moves to the latency clause's end (PM). Post-lock: the workflow diagram's missing leave-setup edge from Calibration; E12/E14's guidance says leaving is possible without saying how; R5.2's forward reference to ADR-0004.
+
+### Fix pass (resume point)
+
+- [ ] **DI-1** — R2.12, sentence 1: "If the pre-authorization window has expired, the pre-flight check blocks an acquisition session start — with the reconnect-once state ([E17]) while offline, or the offline-use-ended state ([E18]) while online — and while either is shown the app renews silently whenever connectivity is present, including the moment it returns; expiry never surfaces as a mystery mid-queue failure." Sentence 2: "Under the P1-seam convention ([R4.4]) the P0 phase renders E18 without the "Extend offline use" action, which arrives with [R2.10] alongside [R2.11]'s pre-emptive renewal." E18's actions: "Check again; Extend offline use ‹P1›".
+- [ ] **DI-2** — R1.8, sentence 2: "The consecutive-failure counter resets on a successful attempt and on leaving setup, and the states that block first-run progress — device authorization ([E3]), pairing, calibration — offer the same exit, which on first run lands on the device panel." Sentence 1 unchanged.
+- [ ] **DI-3** — Surfaces paragraph gains: "First-run setup states are non-modal: they render on the device panel, which stays reachable, so leaving one never needs an action." E3's body closes with "You can come back to this any time from the device panel."; the footnote names E3 with E12 and E14.
+- [ ] **DI-4** — R4.1's clause; bullet 4's opening clause; the "already absorbed" placement.
+- [ ] **DI-5** — Checks as DH-6; R 101; every row 🤝; counts.
+
+Rows edited and re-verified in round 5 (staff, test): R1.8, R2.12, R4.1, E3, E18, the Surfaces paragraph, bullet 4.
