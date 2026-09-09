@@ -1,6 +1,6 @@
 # Data Foundation PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. Owner-locked rows: none yet. Review log: `../../agent-reviews/<date-of-round-1>-prd-data-foundation-peer-reviews.md` (recorded at round 1).
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. Owner-locked rows: none yet. Review log: `../../agent-reviews/2026-09-09-prd-data-foundation-peer-reviews.md`.
 
 ## Phase 0 — research inventory (2026-09-09)
 
