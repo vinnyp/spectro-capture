@@ -1,6 +1,6 @@
 # PRD: Device Management
 
-Status: draft (F9 refactor; re-lock pending)
+Status: locked (2026-09-08)
 
 Companion files: the journeys are in [prd-device-management-journeys.md](prd-device-management-journeys.md), the shipping copy in [prd-device-management-copy.md](prd-device-management-copy.md), the answers to part-closed open questions in [prd-device-management-oq-results.md](prd-device-management-oq-results.md), and the owner's decisions in [prd-device-management-fences.md](prd-device-management-fences.md).
 

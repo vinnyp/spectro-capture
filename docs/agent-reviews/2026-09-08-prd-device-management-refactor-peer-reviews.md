@@ -230,3 +230,21 @@ Five rounds have each surfaced a new Minor-to-Major in the same first-run seam a
   - _Result:_ Done: 1,258 relative link instances (2,382 file+anchor checks) resolve across the device files and every inbound file, up 6 from 1,252 by this pass (381 in the PRD, was 375; 6 in the copy file, unchanged); the only 4 misses stay the pre-existing quoted excerpts in the 2026-09-06 capture review log. 0 bare cross-PRD row labels in the normative device files and in every inbound file (the fences file's round-1 "the capture PRD's R4.26" is prose in a decision record, untouched); every requirement row two sentences or fewer (R6.1's third "sentence" is still the period inside its quoted helper text); all 11 mermaid blocks re-extracted from source and rendering; R 101 (R1 23, R2 19, R3 5, R4 6, R5 20, R6 28), all 🤝 Aligned; E 32, all 🤝, ids contiguous E1–E32; M 5, all 🤝; OQ 30 (22 open, 8 residual); `&amp;` survives only in the fence file and the refactor log, which name the string itself; `⌛️` appears once, in the Legend's value list, on no row. Words: PRD 11,898, copy 1,896, journeys 1,814, oq-results 1,032, fences 1,461 (unedited; the round-4 count of 1,283 predates clarification (5)).
 
 Rows edited in the lock pass: R1.8, R1.23, R2.16, R3.5, R4.1, R4.4, R6.17, the Surfaces paragraph, the Legend's terminology paragraph; copy E12, E14, E18 and the footnote.
+
+## Lock record (2026-09-08)
+
+- **Bounded pre-lock check** (test lens over R1.8, R1.23, R3.5, R4.4, R6.17, E12, E14, E18): LOCK; every round-5 finding RESOLVED; no rule in scope contradicts another; no P0 first-run state lacks both an escape and a control.
+- **Every row aligned:** 101 R rows, 32 E rows, 5 M rows, all 🤝; no owner overrule stands. Every moved row traced to the pre-refactor source at `fd21ab7`; every rule change since carries a fence clarification (F7 (1); F8 (1); F9 (1)–(5)).
+- **Verification rounds:** five full or delta rounds plus the bounded check, on Claude/Opus (product manager, staff engineer, test, interface). The tier rationale: the PRD tier's always-on lenses plus interface, because the refactor changed the ID and cross-document contract two locked PRDs cite.
+- **OQ contract:** 30 questions (22 open, 8 residual); eleven results sections, one for each question carrying evidence; OQ 28 added for the retry counts.
+- **Zero placeholders; template comments deleted; mechanical checks:** links and anchors resolve across the device files and every inbound file (the four known misses are quoted excerpts inside the capture review log); no bare cross-PRD row label; every requirement row at most two sentences; eleven mermaid blocks render; `&amp;` gone from `docs/product` except where quoted as the fixed string.
+- **Process file** `prd-device-management-refactor-pass.md` (the F9 spec and compaction map, every box ticked) is deleted at lock; it is recoverable from the branch history, and this log holds every finding and the compaction summary.
+- **Header** reads `Status: locked (2026-09-08)`; the product README row reads Locked.
+
+### Post-lock list (consolidated)
+
+Rows and copy: R1.8's two landings (collection vs device panel on first run) read as complementary but not as one destination; under non-modality the counter also resets on incidental navigation; R4.4's "satisfied from P1" over-generalizes; R1.23's "or in the device picker" clause binds nothing while Surfaces assigns first-run states to the panel, so E1's non-modality is unstated; R6.17's affordance clause names no seam; E18's body leads with the withheld control; E17's "Check again" while still offline has no stated behaviour and no row produces "Check again"; R2.12's "reconnect-once" shorthand collides with §5's device-reconnect vocabulary; the copy header's loop-exit rule is written for a marked state where E3's case is a marked action.
+
+Indexes and journeys: the journeys' nine "copy, §7" labels; the workflow diagram's single AuthBlocked state and missing leave-setup edges from Pairing and Calibration; E12's "Try again" versus the diagram's return to discovery; R5.2's forward reference to ADR-0004.
+
+Cross-document: the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0 and ride that PRD's OQ 16 amendment; OQ 5's and OQ 28's closers name dogfood data no row records.

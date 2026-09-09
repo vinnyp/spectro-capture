@@ -10,7 +10,7 @@ Five PRDs remain to be written to cover v1. Priority is authoring order, not a c
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
-| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Written** — refactored under fence F9 to the capture PRD's shape, with four companion files: [journeys](device-management/prd-device-management-journeys.md), [copy](device-management/prd-device-management-copy.md), [open-question results](device-management/prd-device-management-oq-results.md), [fences](device-management/prd-device-management-fences.md); re-lock pending |
+| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet |
 | 4 | Data Foundation | U5, U6 | queued |
