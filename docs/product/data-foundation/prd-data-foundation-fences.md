@@ -8,13 +8,51 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F1 — Data Foundation is a slim data contract, not a schema document (2026-09-09)
 
-**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 4,000 words. Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
+**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 5,000 words (raised from 4,000 in Phase 3, 2026-09-09: the first fill landed at 5,030 after four compaction passes, and the remainder is rules, not prose — export and deletion are U5 and U6 promises this fence put in scope). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
 
 **Why:** U5 and U6 are promises to users about the data itself, and the data-consumer persona has no other PRD; the rest is engineering, and reviewing schema through product lenses produces the "solution smuggled into a requirement" findings the gate exists to reject. Everything this PRD can inherit it cites rather than restates.
 
+### F2 — One file, one open at a time (2026-09-09, Phase 3)
+
+**Decision:** A user's data lives in one store the user owns, and one store is open at a time; the matching rule and every cross-collection view span that one file. Closes OQ 1.
+
+**Why:** The browsing research favours one store over many; the capture PRD's OQ 19 already leans this way; every "the file" guarantee is stated once.
+
+### F3 — A re-scan asks correction-or-re-measurement once, outside the loop (2026-09-09, Phase 3)
+
+**Decision:** The file records whether a new version is a correction (the old value was wrong) or a re-measurement (the item changed). A re-scan made during capture defaults to correction and is never asked mid-loop; the question is asked once, outside the heads-down loop, and the answer lands on the version. Inherited obligation for the capture PRD: its E29 state gains the correction default as a post-lock amendment. Closes OQ 3.
+
+**Why:** The research is unambiguous that the distinction cannot be inferred; not asking means fabricating it, and asking mid-loop breaks heads-down capture.
+
+### F4 — The gamut-clipped flag compares against a fixed stored reference (2026-09-09, Phase 3)
+
+**Decision:** GAMUT_REFERENCE_SPACE is sRGB and GAMUT_RENDERING_INTENT is relative colorimetric, stored with the datum, so the flag means the same thing to every reader of the file. A live display-dependent check is Collection Mode's, not this file's. Closes OQ 7.
+
+### F5 — Export is canonical-only by default with version history as a v1 option (2026-09-09, Phase 3)
+
+**Decision:** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version. The canonical export is P0; the history option is P1. Closes OQ 9 and settles the export rows' priority.
+
+### F6 — Version history is kept for good (2026-09-09, Phase 3)
+
+**Decision:** HISTORY_RETENTION means nothing is aged out; no retention window exists. Closes OQ 4.
+
+**Why:** Corrections never destroy data (AGENTS.md §4), and the research names retrofitting a policy onto a store that cannot enumerate its history as the trap.
+
+### F7 — A delete is undoable until the app quits (2026-09-09, Phase 3)
+
+**Decision:** DELETE_UNDO_WINDOW is the running session: a deleted item and its history can be restored until the app quits, and the deletion is final after. Closes OQ 10.
+
+### F8 — The vendor SDK's analytics disclosure belongs to the Telemetry PRD and the help docs (2026-09-09, Phase 3)
+
+**Decision:** This PRD hands the disclosure over as an inherited obligation; it carries no disclosure row of its own. Closes OQ 12's ownership half; whether the analytics can be disabled stays open there.
+
+### F9 — Journey DJ5, querying the file without the app, stays (2026-09-09, Phase 3)
+
+**Decision:** The journeys file keeps DJ5; it is non-normative and states what a reader of the file can rely on, which is U6's headline job.
+
 ## Fence → row map
 
-(filled as fences land)
+(filled by the Phase 3 fix pass: F1 every row; F2–F9 the rows that carry them.)
 
 ## Rejected findings
 
