@@ -104,6 +104,10 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** Recorded in F1's amended text above.
 
+### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
+
+**Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
+
 ## Fence → row map
 
 Filled by the Phase 3 fix pass and extended by the round-1 fix pass (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
