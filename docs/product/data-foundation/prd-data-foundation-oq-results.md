@@ -10,9 +10,9 @@ One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-d
 
 ## OQ 3 — Is the correction-against-re-measurement question asked, and where?
 
-**Answer (2026-09-09, owner decision, fence F3):** Asked, and asked once, outside the heads-down loop; a re-scan made during capture is recorded as a correction and is never asked mid-loop, and the answer given later lands on the version. Carried by R2.4, which hands [the capture PRD's E29](../capture-mode/prd-capture-mode-copy.md#error--state-copy) the correction default as a post-lock amendment.
+**Answer (2026-09-09, owner decision, fence F3; amended round 1, fence F12):** Asked, and asked once, outside the heads-down loop; a re-scan made during capture is never asked mid-loop, and the answer given later lands on the version. F12 amends what the unanswered state is: the supersession reason is correction-unconfirmed, not correction — the reading is shown and marked rather than treated as never true, the question offers "Ask me later", and the whole unanswered set is answerable in one pass after a session. Carried by R2.4 and R2.8, which hand [the capture PRD's E29](../capture-mode/prd-capture-mode-copy.md#error--state-copy) the correction default as a post-lock amendment, in this document's axis word — supersession reason.
 
-**Evidence:** the research is unambiguous that the distinction cannot be inferred from the data, so not asking would fabricate it; asking mid-loop breaks heads-down capture.
+**Evidence:** the research is unambiguous that the distinction cannot be inferred from the data, so not asking would fabricate it; asking mid-loop breaks heads-down capture. The amendment closes the gap the round-1 gate found — recording an unanswered re-scan as a correction and then hiding the superseded reading fabricates history just as surely.
 
 ## OQ 4 — HISTORY_RETENTION
 
@@ -25,6 +25,12 @@ One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-d
 **Answer (2026-09-09, owner decision, fence F4):** GAMUT_REFERENCE_SPACE is sRGB and GAMUT_RENDERING_INTENT is relative colorimetric, stored with the datum so the flag means the same thing to every reader of the file. A live display-dependent check is Collection Mode's, not this file's. Carried by R3.4.
 
 **Evidence:** owner call. "In gamut" is intent-relative and the platform never says which intent its own check uses, so the file states its own.
+
+## OQ 8 — What the gamut-clipped export column is called
+
+**Answer (2026-09-09, owner decision, fence F20):** The column is `sRGB_gamut_clipped`, beside `sRGB_source_space` and `sRGB_rendering_intent`. The fence reads: "Closes OQ 8 by owner decision; revisited only if ISO 17972-4's schema becomes readable." Carried by R4.2, and asserted against the checked-in golden export header by R7.7.
+
+**Evidence:** neither the interchange standards nor the platform defines a name for this flag ([browsing v2 §8](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#gamut-containment--the-honesty-badge)), so the column is invented rather than adopted; the prior closer — read ISO 17972-4:2018's specification schema first — is named but unreachable, and the owner declined to hold the export contract open behind it.
 
 ## OQ 9 — Does an export carry version history, and in what shape?
 

@@ -106,19 +106,31 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ## Fence → row map
 
-Filled by the Phase 3 fix pass (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
+Filled by the Phase 3 fix pass and extended by the round-1 fix pass (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
 
 | Fence | Rows that carry it |
 | :--- | :--- |
-| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its 5,000-word budget. |
+| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its 7,000-word budget (F21). |
 | F2 | R1.1, R1.3; OQ 1. |
 | F3 | R2.4; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3. |
 | F4 | R3.4; OQ 7. |
 | F5 | R4.1 (canonical default, P0), R4.4 (history option, P1); the P0/P1 split in the Legend, and the Pri cells of R4.2, R4.3, R4.5; OQ 9. |
 | F6 | R2.6; OQ 4. |
 | F7 | R6.3; OQ 10. |
-| F8 | R6.5; the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's ownership half. |
-| F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as J5 against R1.1–R1.3 and R3.2. |
+| F8 | R6.6 (authorship handed over; the gate itself is F19's); the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's ownership half. |
+| F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as J5. |
+| F10 | R2.1; the Vocabulary entries for sample, reading, and canonical value; R6.2's counted-in-readings clause and [E8](prd-data-foundation-copy.md#error--state-copy); M6's population; the state diagram's sample → reading → history path. |
+| F11 | R1.2 (the readability half), R1.6 (the archived-payload half); OQ 5's constraint, OQ 2's derivation. |
+| F12 | R2.4, R2.5, R2.8; R7.1's read-back set and M4's third question; [E11](prd-data-foundation-copy.md#error--state-copy)'s "Ask me later"; the Capture Mode E29 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3's amendment. |
+| F13 | R1.7; R1.4's second clause; R7.4's volume-class scoping and M1's population. |
+| F14 | R1.8, R1.9; [E13](prd-data-foundation-copy.md#error--state-copy); the Capture Mode OQ 19 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
+| F15 | R6.1, R6.2, R6.3; [E14](prd-data-foundation-copy.md#error--state-copy); the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
+| F16 | The Pri cells of R6.1, R6.2, R6.5 (P0) and R6.3 (P1), and the Legend's P0/P1 split; R6.5's positive inventory and its two-surface credential test. |
+| F17 | R2.3's second sentence. |
+| F18 | R4.1's raw-payload column; M3's statistic. |
+| F19 | R6.6; the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's gate half. |
+| F20 | R4.2; OQ 8. |
+| F21 | F1's amended text; no requirement row. |
 
 ## Rejected findings
 
