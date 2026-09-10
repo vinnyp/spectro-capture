@@ -83,6 +83,7 @@ docs/
   product/capture-mode/      — the Capture Mode PRD and its companions
   product/import/            — the Inventory Import PRD and its companions
   product/device-management/ — the Device Management PRD
+  product/export/            — the Data Export PRD, split out of Data Foundation
   briefs/                    — research briefs + results (see §2)
 docs/decisions/               — ADRs (planned, not yet created)
 .compound-engineering/        — Compound Engineering config; docs/ is the CE artifact root

@@ -1,6 +1,6 @@
 # Data Foundation PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. Owner-locked rows: none yet. Review log: `../../agent-reviews/2026-09-09-prd-data-foundation-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. Owner-locked rows: none yet. Review log: `../../agent-reviews/2026-09-09-prd-data-foundation-peer-reviews.md` — shared with [the export PRD](../export/prd-data-export.md) since fence F30, one log and one fresh-lens ledger across both documents.
 
 ## Phase 0 — research inventory (2026-09-09)
 
@@ -166,7 +166,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F2 | R1.1, R1.3; OQ 1. |
 | F3 | R2.4; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3. |
 | F4 | R3.4; OQ 7. |
-| F5 | R4.1 (canonical default, P0), R4.4 (history option, P1); the P0/P1 split in the Legend, and the Pri cells of R4.2, R4.3, R4.5; OQ 9. |
+| F5 | No row here any more: moved to the export PRD's R1.1 (canonical default, P0) and R1.3 (history option, P1), the P0/P1 split in [its Legend](../export/prd-data-export.md#legend) and the Pri cells of its R1.2, R2.1, R3.1, and its OQ 2 — transcribed there as [its F2](../export/prd-data-export-fences.md). This document's Legend keeps only the delete undo as P1. |
 | F6 | R2.6; OQ 4. |
 | F7 | R6.3; OQ 10. |
 | F8 | R6.6 (authorship handed over; the gate itself is F19's); the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's ownership half. |
@@ -179,19 +179,19 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F15 | R6.1, R6.2, R6.3; [E14](prd-data-foundation-copy.md#error--state-copy); the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
 | F16 | The Pri cells of R6.1, R6.2, R6.5 (P0) and R6.3 (P1), and the Legend's P0/P1 split; R6.5's positive inventory and its two-surface credential test. |
 | F17 | R2.3's second sentence. |
-| F18 | R4.1's raw-payload column; M3's statistic. Amended by F26: one column per sample slot. |
+| F18 | No row here any more: moved to the export PRD's R1.1 (the raw-payload column) and its M1's statistic — [its F3](../export/prd-data-export-fences.md). Amended by F26: one column per sample slot. |
 | F19 | R6.6; the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's gate half. |
-| F20 | R4.2; OQ 8. |
+| F20 | No row here any more: moved to the export PRD's R2.1 and its OQ 1 — [its F4](../export/prd-data-export-fences.md). |
 | F21 | F1's amended text; no requirement row. |
-| F22 | R4.8 (a); R1.3 (b); R3.5 and R5.7 (c). |
-| F23 | R4.2, R4.3, R4.7, R4.8; OQ 8's results section; the Device Management export line both ways in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
-| F24 | R4.7, R4.9, R7.7, R7.9; OQ 16. |
+| F22 | [R1.3](prd-data-foundation.md#1-the-file-the-user-owns) (b); [R5.7](prd-data-foundation.md#5-migration-and-compatibility) (c, the COMPATIBILITY_FLOOR half); [R3.5](prd-data-foundation.md#3-derived-values-and-gamut-honesty) states the absent value the export writes empty. (a) and the export half of (c) moved to the export PRD's R2.4 and R2.1 — [its F5](../export/prd-data-export-fences.md). |
+| F23 | No row here any more: moved to the export PRD's R1.2, R2.1, R2.3 and R2.4, its OQ 1's results section, and the Device Management export line both ways in [its obligations tables](../export/prd-data-export.md#inherited-obligations) — [its F6](../export/prd-data-export-fences.md). |
+| F24 | No row here any more: moved to the export PRD's R2.3, R2.5, R4.1 and R4.2, and its OQ 4 — [its F7](../export/prd-data-export-fences.md). [R7.7](prd-data-foundation.md#7-verifiability) keeps the fixtures those rows run on. |
 | F25 | R1.2, R1.6, R2.1, R7.1; M6's population; OQ 5's population. |
-| F26 | R4.1, R7.7, R7.9; M3. |
-| F27 | R3.1, R3.3, R2.5, R4.4, R7.1, R7.5; M6's population; OQ 5's population. |
-| F28 | R3.1, R4.1, R4.2, R4.7; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). |
-| F29 | R4.1, R4.2; M3's population; [E6](prd-data-foundation-copy.md#error--state-copy). |
-| F30 | The Legend's retired-ID list; the Background scope statement; the obligations tables both ways; no requirement row. |
+| F26 | No row here any more: moved to the export PRD's R1.1, R4.1, R4.2 and its M1 — [its F8](../export/prd-data-export-fences.md). [R7.7](prd-data-foundation.md#7-verifiability) keeps the fixtures. |
+| F27 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R3.3](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R2.5](prd-data-foundation.md#2-canonical-value-and-version-history), [R7.1](prd-data-foundation.md#7-verifiability), [R7.5](prd-data-foundation.md#7-verifiability); M6's population; OQ 5's population. R4.4's history export moved to the export PRD's R1.3, which cites this fence from there. |
+| F28 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). The export half moved to the export PRD's R1.1, R2.1 and R2.3 — [its F9](../export/prd-data-export-fences.md). |
+| F29 | No row here any more: moved to the export PRD's R1.1 and R2.1, its M1's population, and its E1 — [its F10](../export/prd-data-export-fences.md). |
+| F30 | The [Legend](prd-data-foundation.md#legend)'s retired-ID list; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
 
 ## Rejected findings
 

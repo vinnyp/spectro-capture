@@ -1,0 +1,19 @@
+# Data Export PRD — error & state copy
+
+Companion to [prd-data-export.md](prd-data-export.md): the shipping copy for every state that PRD names.
+Each `E<n>` ID is the contract between a state and the rows that cite it; IDs never renumber. The Status column holds a value from that PRD's [Legend](prd-data-export.md#legend). A state whose name is marked ‹P1› does not appear until its own rows land, and a marked action or sentence inside an unmarked state is withheld until then — the P1-seam convention the sibling PRDs use. A marker leads the whole sentence it withholds and trails the whole action; it never sits inside one. The delete confirmations that offer an export first are the [Data Foundation PRD's E8 and E14](../data-foundation/prd-data-foundation-copy.md#error--state-copy)'s and are not restated here.
+
+These four states were the [Data Foundation PRD's E6, E7, E17 and E18](../data-foundation/prd-data-foundation-copy.md#error--state-copy), moved here under that document's fence F30 with no wording changed; those numbers are retired there and never reused.
+
+**Placeholders.** ⟨…⟩ stands for something filled in when the state is shown: ⟨collection⟩ a collection's name, ⟨n⟩ a count of items or readings, ⟨size⟩ a file size, ⟨path⟩ a file location. A sentence whose count would be zero is left out rather than shown as "0"; a sentence carrying a count agrees with it — "1 reading", "⟨n⟩ readings"; and a named provisional constant renders as the number it currently holds, never as its name.
+
+## Error & state copy
+
+Written in the Data consumer's vocabulary: plain language, names the recovery, never SDK-speak, never a schema word. Every promise below is backed by a requirement row in the PRD ([process rule 5](prd-data-export.md#legend)).
+
+| ID | State | Headline | Body | Primary action | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| E1 | Export a collection | Export ⟨collection⟩ | ⟨n⟩ swatches, with everything you imported, the full wavelength readings, and all six colour spaces — XYZ, Lab, LCh, Luv, sRGB, and HSL — each one saying which illuminant, observer, and measurement condition it came from. What's marked in the file: colours that fall outside standard sRGB, which most screens can't show accurately; ⟨n⟩ readings taken against the Demo Device; ⟨n⟩ taken without wavelength data, along with how their average was worked out; ⟨n⟩ columns you imported that share a name the app uses and go out under a slightly different one; which instrument each reading was taken on; the instrument's own readings, kept whole in their own columns; and ⟨n⟩ swatches you haven't scanned yet, which come out with their details and their colour columns empty. The file says which version of the export format it is. | Export current readings; Export with full history ‹P1›; Choose where | ⌛️ Ready for Alignment |
+| E2 | Export didn't finish — no room | There isn't room for this export | ⟨collection⟩ is untouched, nothing was written, and no half-finished file was left behind. ⟨path⟩ needs about ⟨size⟩ free. | Try again; Choose somewhere else | ⌛️ Ready for Alignment |
+| E3 | Export didn't finish — can't write there | That folder can't be written to | ⟨collection⟩ is untouched, nothing was written, and no half-finished file was left behind. Choose somewhere you can write to, or change who can write to ⟨path⟩. | Try again; Choose somewhere else | ⌛️ Ready for Alignment |
+| E4 | Export didn't finish — destination gone | That folder isn't there any more | ⟨collection⟩ is untouched, nothing was written, and no half-finished file was left behind. The drive may have been disconnected, or ⟨path⟩ moved. | Try again; Choose somewhere else | ⌛️ Ready for Alignment |

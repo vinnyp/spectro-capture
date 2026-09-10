@@ -1,5 +1,7 @@
 # Data Foundation PRD — round 2 fixes
 
+> **History.** The export contract moved to the [Data Export PRD](../export/prd-data-export.md) on 2026-09-09 under fence F30 after this round; §4's R4.x, R7.9, M3, E6/E7/E17/E18 and OQ 8/9/11/16 named below now live there under new IDs (its Traceability table maps them). This file is the round's record and is not rewritten.
+
 Resume point for round 2 (log: "Round 2"). Fences F1–F29 (F18 amended by F26) are the owner's authorization; process rules 1–8 bind every edit — two sentences per row, cite rather than restate, testability pairing on every changed row, the table never expands where a clause will do. Tick each box with a one-line **Landed:** note. Statuses: FX2-47 is the only status change this pass makes. C = the capture PRD, D = the device PRD, I = the import PRD. Lens keys: PM, S (staff), T (test), P (privacy), MK (marketing), A (architecture), IF (interface).
 
 ## Fence-carrying items

@@ -1,5 +1,7 @@
 # Data Foundation PRD — round 1 fixes
 
+> **History.** The export contract moved to the [Data Export PRD](../export/prd-data-export.md) on 2026-09-09 under fence F30 after this round; §4's R4.x, R7.9, M3, E6/E7/E17/E18 and OQ 8/9/11/16 named below now live there under new IDs (its Traceability table maps them). This file is the round's record and is not rewritten.
+
 Resume point for round 1 (log: "Round 1"). Fences F1–F21 (F1 amended: budget 7,000) are the owner's authorization; process rules 1–8 bind every edit — two sentences per row, cite rather than restate, testability pairing on every changed row. Tick each box with a one-line note. Statuses stay "⌛️ Ready for Alignment" on every row; nothing flips in a fix pass. C = the capture PRD.
 
 ## Rule-level items (each carries a fence)

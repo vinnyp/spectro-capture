@@ -1,6 +1,6 @@
 # Data Foundation PRD — open-question results
 
-One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-data-foundation.md)'s [Open Questions](prd-data-foundation.md#open-questions) table. An OQ's status may change only when its section exists here. Owner decisions that close a question are recorded as fences in [prd-data-foundation-fences.md](prd-data-foundation-fences.md); the section below points at the fence and states the answer the rows now carry.
+One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-data-foundation.md)'s [Open Questions](prd-data-foundation.md#open-questions) table. An OQ's status may change only when its section exists here. Owner decisions that close a question are recorded as fences in [prd-data-foundation-fences.md](prd-data-foundation-fences.md); the section below points at the fence and states the answer the rows now carry. OQ 8's and OQ 9's sections moved to [the export PRD's results file](../export/prd-data-export-oq-results.md) as its OQ 1 and OQ 2 under fence F30; those numbers are retired here.
 
 ## OQ 1 — How many files may a user's work live across, and may more than one be open?
 
@@ -25,18 +25,6 @@ One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-d
 **Answer (2026-09-09, owner decision, fence F4):** GAMUT_REFERENCE_SPACE is sRGB and GAMUT_RENDERING_INTENT is relative colorimetric, stored with the datum so the flag means the same thing to every reader of the file. A live display-dependent check is Collection Mode's, not this file's. Carried by R3.4.
 
 **Evidence:** owner call. "In gamut" is intent-relative and the platform never says which intent its own check uses, so the file states its own.
-
-## OQ 8 — What the gamut-clipped export column is called
-
-**Answer (2026-09-09, owner decision, fence F20; restated round 2 under fence F23):** The column is `sc_sRGB_gamut_clipped`, beside `sc_sRGB_source_space` and `sc_sRGB_rendering_intent`. F20 fixed the name; F23 then made the `sc_` prefix apply to every column the app emits, with no exemption, so F20's answer is read under the prefix and no separate rule survives for this flag. F20 reads: "Closes OQ 8 by owner decision; revisited only if ISO 17972-4's schema becomes readable." Carried by R4.2 and R4.8, and asserted against the checked-in golden by R7.7 and R7.9.
-
-**Evidence:** neither the interchange standards nor the platform defines a name for this flag ([browsing v2 §8](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#gamut-containment--the-honesty-badge)), so the column is invented rather than adopted; the prior closer — read ISO 17972-4:2018's specification schema first — is named but unreachable, and the owner declined to hold the export contract open behind it.
-
-## OQ 9 — Does an export carry version history, and in what shape?
-
-**Answer (2026-09-09, owner decision, fence F5):** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version, and it ships in v1. The canonical export is P0 and the history option P1. Carried by R4.1 and R4.4.
-
-**Evidence:** owner call on what a data consumer reaches for first; the history shape costs nothing to defer to the second build phase.
 
 ## OQ 10 — DELETE_UNDO_WINDOW
 

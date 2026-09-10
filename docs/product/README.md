@@ -6,18 +6,19 @@ A PRD is not a decision about *how*. Architecture is decided only in [`docs/deci
 
 ## The PRD set
 
-Five PRDs remain to be written to cover v1. Priority is authoring order, not a cut line.
+Six PRDs remain to be written to cover v1. Priority is authoring order, not a cut line.
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet |
-| 4 | Data Foundation | U5, U6 | queued |
-| 5 | Collection Mode | U5, U7 | queued |
-| 6 | QC & Comparison | U4 | queued |
-| 7 | Color Visualization | U7 | queued |
-| 8 | Telemetry | — | queued — v1.x, gated on the provider spike |
+| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | draft |
+| 5 | [Data Export](export/prd-data-export.md) | U6 | draft — split out of Data Foundation on 2026-09-09 under its fence F30 |
+| 6 | Collection Mode | U5, U7 | queued |
+| 7 | QC & Comparison | U4 | queued |
+| 8 | Color Visualization | U7 | queued |
+| 9 | Telemetry | — | queued — v1.x, gated on the provider spike |
 
 ### 1. Device Management — written
 
@@ -43,23 +44,31 @@ Its rows were split out of the locked Capture Mode PRD under fence F49 with no r
 
 ### 4. Data Foundation
 
-The user-owned SQLite file. Canonical raw payload · version history and the correction-vs-re-measurement model · derived spaces (Lab/XYZ/LCh/Luv/sRGB/HSL) and the gamut-clipped flag · CSV export · what the app guarantees to someone querying the file directly.
+The user-owned SQLite file. Canonical value as the stored mean of its samples · version history and the correction-vs-re-measurement model · derived spaces (Lab/XYZ/LCh/Luv/sRGB/HSL) and the gamut-clipped flag · what the app guarantees to someone querying the file directly.
 
-Gates ADR-0003, the sharpest one-way door in the project: this schema ships inside users' own files.
+The PRD is [prd-data-foundation.md](data-foundation/prd-data-foundation.md), with four companion files: the journeys, the shipping copy, the OQ results, and the owner decisions. Gates ADR-0003, the sharpest one-way door in the project: this schema ships inside users' own files.
 
-### 5. Collection Mode
+### 5. Data Export
+
+The CSV contract: what a canonical and a history export contain and which items get a row · column names, the reserved `sc_` prefix and collisions · the dialect, the wavelength column set and the export format version · what happens when an export cannot be written · the checked-in golden a test asserts against.
+
+The PRD is [prd-data-export.md](export/prd-data-export.md), with four companion files: the user journeys in [prd-data-export-journeys.md](export/prd-data-export-journeys.md), the shipping error and state copy in [prd-data-export-copy.md](export/prd-data-export-copy.md), the answers to closed open questions in [prd-data-export-oq-results.md](export/prd-data-export-oq-results.md), and the owner decisions in [prd-data-export-fences.md](export/prd-data-export-fences.md).
+
+Its rows were split out of the Data Foundation PRD on 2026-09-09 under that document's fence F30 with no rule changed — only IDs, citations, and sections. The two share one review log and one fresh-lens ledger.
+
+### 6. Collection Mode
 
 Browsing and working with a collection after capture. Browse at scale · search, filter, facet, sort · editing surfaces · selection and bulk operations · the version-history UI · the gamut-aware swatch grid.
 
-### 6. QC & Comparison
+### 7. QC & Comparison
 
 QC scan against a saved item, ΔE2000 verdict versus the canonical value, the delta stored as its own record, canonical never overwritten. Small by design — this is where the strategy deliberately holds at parity rather than building QC depth, and the PRD's job is as much to draw that line as to specify the feature.
 
-### 7. Color Visualization
+### 8. Color Visualization
 
 The 3D absolute-space plot (P2). Unserved anywhere in the market, per the competitive analysis.
 
-### 8. Telemetry
+### 9. Telemetry
 
 Opt-in and off by default · per-fork provider ID so no fork data reaches the project · the opt-in UX · fire-and-forget delivery that can never block, delay, or halt capture. v1.x, and gated on a provider spike (device PRD [OQ 12](device-management/prd-device-management.md#open-questions)).
 
@@ -76,7 +85,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 | U3 | Start a session with a healthy device | [Device Management](device-management/prd-device-management.md) |
 | U4 | Verify a color still matches | QC & Comparison |
 | U5 | Fix a bad scan without losing history | Data Foundation (storage) · Collection Mode (UI) |
-| U6 | Use the data outside the app | Data Foundation |
+| U6 | Use the data outside the app | Data Foundation (the file) · [Data Export](export/prd-data-export.md) (the CSV contract) |
 | U7 | See the collection honestly | Collection Mode (swatch grid) · Color Visualization (3D plot) |
 | U8 | Scan where there is no internet | [Device Management](device-management/prd-device-management.md) |
 | U9 | Contribute code without hardware | [Device Management](device-management/prd-device-management.md) §6 |
@@ -92,7 +101,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 | P0 | Queued bulk scan, 1–5 samples averaged | Capture Mode |
 | P0 | Inline scan-failure handling | Capture Mode |
 | P0 | Collections + version history | Data Foundation (model) · Collection Mode (UI) |
-| P0 | CSV export, spectral + derived spaces | Data Foundation |
+| P0 | CSV export, spectral + derived spaces | [Data Export](export/prd-data-export.md) |
 | P0 | Local SQLite store, raw payload canonical | Data Foundation |
 | P0 | Offline operation + per-device pre-authorization | [Device Management](device-management/prd-device-management.md) |
 | P0 | Mock-device layer | [Device Management](device-management/prd-device-management.md) §6 |
@@ -105,7 +114,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 **Capture Mode is locked** — its review gate closed after 24 rounds, with owner sign-off on the artifact set still pending — and **Inventory Import**, split out of it under fence F49, is locked with it after verification rounds 25–26. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
 
-**Data Foundation is next.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004.
+**Data Foundation is next.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004. **Data Export was split out of it on 2026-09-09** under its fence F30, once the round-2 fix pass left the body 690 words over a 7,000-word budget with nothing to cut but rules; the two are authored and reviewed together against one log.
 
 Collection Mode follows both, since it renders what the data model defines and inherits the seam's outcome. QC & Comparison and Color Visualization are P1/P2 and can follow at any point. Telemetry is last regardless — it is v1.x and blocked on a spike.
 
