@@ -28,7 +28,7 @@ One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-d
 
 ## OQ 8 — What the gamut-clipped export column is called
 
-**Answer (2026-09-09, owner decision, fence F20):** The column is `sRGB_gamut_clipped`, beside `sRGB_source_space` and `sRGB_rendering_intent`. The fence reads: "Closes OQ 8 by owner decision; revisited only if ISO 17972-4's schema becomes readable." Carried by R4.2, and asserted against the checked-in golden export header by R7.7.
+**Answer (2026-09-09, owner decision, fence F20; restated round 2 under fence F23):** The column is `sc_sRGB_gamut_clipped`, beside `sc_sRGB_source_space` and `sc_sRGB_rendering_intent`. F20 fixed the name; F23 then made the `sc_` prefix apply to every column the app emits, with no exemption, so F20's answer is read under the prefix and no separate rule survives for this flag. F20 reads: "Closes OQ 8 by owner decision; revisited only if ISO 17972-4's schema becomes readable." Carried by R4.2 and R4.8, and asserted against the checked-in golden by R7.7 and R7.9.
 
 **Evidence:** neither the interchange standards nor the platform defines a name for this flag ([browsing v2 §8](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#gamut-containment--the-honesty-badge)), so the column is invented rather than adopted; the prior closer — read ISO 17972-4:2018's specification schema first — is named but unreachable, and the owner declined to hold the export contract open behind it.
 

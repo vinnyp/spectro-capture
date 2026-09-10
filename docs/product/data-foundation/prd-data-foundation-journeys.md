@@ -16,12 +16,13 @@ States are named in plain language; each one's shipping copy is in the copy file
 5. The file is written. Nothing in my collection changed.
 6. I open it. It's plain UTF-8 CSV with comma separators and `.` decimals — nothing to configure. One column per wavelength, named by the wavelength. The rows come out in the collection's own order, so exporting the same unchanged collection twice gives me the same file twice.
 7. The sRGB columns sit next to columns naming the space they were converted into, the rendering intent used, and whether that value fell outside the gamut. Colours that fall outside standard sRGB are marked in the file, not just in the app — most screens can't show them accurately.
-8. There's a `simulated` column too, so the readings I took against the Demo Device while testing are obvious rather than mixed in silently, and a mark on any reading taken without wavelength data along with how its average was worked out.
+8. There's an `sc_simulated` column too, so the readings I took against the Demo Device while testing are obvious rather than mixed in silently, and a mark on any reading taken without wavelength data along with how its average was worked out.
 9. Where a value genuinely couldn't be worked out, the cell is empty. It is never a zero or a rounded-off guess I might mistake for a measurement.
-10. There's one opaque column carrying the instrument's own round-trip string for each reading, so what I export is as complete as what the app holds.
-11. Every row says which version of the export format it is and which version of the app wrote it, and the help docs tell me what a version bump means: a column removed, renamed, moved, or changed in meaning. A column appended at the end doesn't bump it, so my parser keeps working.
+10. There's one opaque column per sample slot carrying the instrument's own round-trip string, so what I export is as complete as what the app holds.
+11. Every swatch in the collection gets a row, including the ones I haven't scanned yet — those come out with their details and their colour columns empty, and a column saying so, so my export reconciles against the spreadsheet I imported.
+12. Every row says which version of the export format it is and which version of the app wrote it, and the help docs tell me what a version bump means: a column removed, renamed, moved, or changed in meaning, or the set of wavelength columns changing. A column appended at the end doesn't bump it, so my parser keeps working.
 
-**If a column I imported clashes with one the app writes.** The app's own columns all share a reserved name prefix, so my column comes out under a slightly different name rather than being dropped or quietly overwritten — and the export surface tells me before it runs.
+**If a column I imported clashes with one the app writes.** Every column the app writes carries the reserved `sc_` prefix, with no exceptions — the gamut mark, the simulated mark, the wavelength columns, all of them — so my column comes out under a slightly different name rather than being dropped or quietly overwritten, and the export surface tells me before it runs.
 
 **If there's nowhere to write it.** No room, no permission, or the folder is gone: nothing is written, no half-finished file is left, and the app says which of the three it was and offers somewhere else. I never end up with a truncated CSV I might mistake for a complete one.
 
@@ -50,7 +51,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 ## DJ3. Open a file made by an older or a newer app
 
-**Cataloger.** Serves [U5](../vision.md#use-cases) and [U6](../vision.md#use-cases). Exercises [R5.1](prd-data-foundation.md#5-migration-and-compatibility)–[R5.8](prd-data-foundation.md#5-migration-and-compatibility).
+**Cataloger.** Serves [U5](../vision.md#use-cases) and [U6](../vision.md#use-cases). Exercises [R2.9](prd-data-foundation.md#2-canonical-value-and-version-history), [R5.1](prd-data-foundation.md#5-migration-and-compatibility)–[R5.8](prd-data-foundation.md#5-migration-and-compatibility).
 
 1. I update SpectroCapture and open the file I've been scanning into for a year.
 2. The app says it needs to get the file ready for this version, and that it is saving a copy of the file exactly as it is now first, and where that copy is. It shows me how far along it is rather than leaving me guessing.
@@ -103,11 +104,11 @@ States are named in plain language; each one's shipping copy is in the copy file
 2. The first thing I can read is what version of the file format it is — in one place, in one form, and in the same place it will be in every future version. I know what I'm looking at before I interpret anything else in it.
 3. I can read an item's identity, its current colour values, and the illuminant, observer, and measurement condition each of those came from — with nothing installed and no function the app had to register.
 4. I can tell which of a swatch's readings is the current one without asking the app, why each of the others was superseded, and which are marked as never having been true.
-5. I can find which values are marked as outside the display gamut, and take that honesty into whatever I build next.
+5. I can find which values are marked as outside standard sRGB, and take that honesty into whatever I build next.
 6. I move the file to a different Mac and it still opens. I keep a copy on a drive and it still opens.
 
-**The one thing I can't read on my own.** There's an archived column holding the instrument's own opaque string for each reading. It's there so nothing is lost, and it may be compressed — but nothing I need is locked inside it. Every value, condition, mark, and reason above is stored in plain columns beside it.
+**The one thing I can't read on my own.** There are archived columns holding the instrument's own opaque string, one for each sample behind a reading. They're there so nothing is lost, and they may be compressed — but nothing I need is locked inside them. Every value, condition, mark, and reason above, and every sample's own numbers, is stored in plain columns beside them.
 
 **What isn't safe.** Writing to the file while the app has it open. The app can't see another program's write and will keep showing me what it last read — so a re-read is always available in the app, and the help docs say plainly which direction is safe. No SQLite library detects an out-of-process write; this is a property of the format, not a gap in the app ([browsing v2 §9](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#the-finding-that-should-shape-the-architecture)).
 
-**What version of sqlite3 I need.** SQLITE_READER_FLOOR, candidate 3.31.0 — [OQ 2](prd-data-foundation.md#open-questions) — worked out from what the file actually uses and stated in the help docs, so I know before I try rather than after.
+**What version of sqlite3 I need.** SQLITE_READER_FLOOR — [OQ 2](prd-data-foundation.md#open-questions), whose candidate is the `sqlite3` shipping with the app's minimum macOS version once that floor lands — worked out from what the file actually uses and stated in the help docs, so I know before I try rather than after.

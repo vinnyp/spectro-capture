@@ -150,6 +150,12 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** A half-scanned collection is the ordinary state between sittings, and the export must reconcile against the spreadsheet the inventory came from.
 
+### F30 — The export contract is its own PRD (2026-09-09, after the round-2 fix pass)
+
+**Decision:** The CSV export contract — §4 (R4.1–R4.9), the golden-file rule (R7.9), the export half of R7.8, the export surface (R7.6a), M3, OQ 8, OQ 9, OQ 11, OQ 16, the export states (E6, E7, E17, E18), and DJ1 — moves to a new PRD, Data Export, at `docs/product/export/` in the five-file shape, with its own row-ID families, fences, and a 4,000-word budget. Moved IDs are retired in this document's Legend naming their destination and recorded in the destination's Traceability naming their origin; the decisions the moved rows carry (F5, F18, F20, F22, F23, F24, F26, F28, F29) are transcribed into the export PRD's fence file with their provenance, and this file keeps them as history. The two PRDs share this review log; round 3 onward reads both. Chosen over raising the budget again (4,000 → 5,000 → 7,000) after the round-2 fix pass landed at 7,690 with nothing left to cut but rules.
+
+**Why:** The export is a consumer contract with its own audience (U6's downstream tools) and its own fresh-lens set; Data Foundation is the file's promise to its owner. A document that cannot fit because it has too many rows is two PRDs (writing-prds, Phase 2).
+
 ## Fence → row map
 
 Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passes (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
@@ -179,12 +185,13 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F21 | F1's amended text; no requirement row. |
 | F22 | R4.8 (a); R1.3 (b); R3.5 and R5.7 (c). |
 | F23 | R4.2, R4.3, R4.7, R4.8; OQ 8's results section; the Device Management export line both ways in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
-| F24 | R4.7, R4.9, R7.7; OQ 16. |
+| F24 | R4.7, R4.9, R7.7, R7.9; OQ 16. |
 | F25 | R1.2, R1.6, R2.1, R7.1; M6's population; OQ 5's population. |
-| F26 | R4.1, R7.7; M3. |
+| F26 | R4.1, R7.7, R7.9; M3. |
 | F27 | R3.1, R3.3, R2.5, R4.4, R7.1, R7.5; M6's population; OQ 5's population. |
 | F28 | R3.1, R4.1, R4.2, R4.7; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). |
 | F29 | R4.1, R4.2; M3's population; [E6](prd-data-foundation-copy.md#error--state-copy). |
+| F30 | The Legend's retired-ID list; the Background scope statement; the obligations tables both ways; no requirement row. |
 
 ## Rejected findings
 
