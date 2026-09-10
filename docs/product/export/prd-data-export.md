@@ -36,21 +36,22 @@ flowchart TD
 
 <!-- guidance: Index every user journey this feature supports — one row per journey. The full journeys never live inline here: the PRD body has a word budget and the companion does not. -->
 
-Every journey is in the [journeys companion](prd-data-export-journeys.md); nothing there adds a rule.
+Every journey is in the [journeys companion](prd-data-export-journeys.md); nothing there adds a rule. Journey IDs are this document's own, prefixed `EJ`.
 
 | Journey | Name | Rows exercised | Entry |
 | :--- | :--- | :--- | :--- |
-| J1 | Export the collection | R1.1–R1.3, R2.1–R2.5, R3.1 | [J1](prd-data-export-journeys.md#j1-export-the-collection) |
+| EJ1 | Export the collection | R1.1–R1.3, R2.1–R2.5, R3.1, and the Data Foundation PRD's R3.4, R3.5 | [EJ1](prd-data-export-journeys.md#ej1-export-the-collection) |
 
 ## Requirements
 
 ### Vocabulary
 
-The terms these rows use are [AGENTS.md §8](../../../AGENTS.md#8-vocabulary)'s and the [Data Foundation PRD's Vocabulary](../data-foundation/prd-data-foundation.md#vocabulary)'s — canonical value, raw payload, sample, reading, derived value, supersession reason, quarantined, gamut-clipped — and are not restated here. Added here:
+The terms these rows use are [AGENTS.md §8](../../../AGENTS.md#8-vocabulary)'s and the [Data Foundation PRD's Vocabulary](../data-foundation/prd-data-foundation.md#vocabulary)'s — canonical value, raw payload, sample, reading, derived value, supersession reason, quarantined, gamut-clipped, chosen condition, fixture — and are not restated here. Added here:
 
 - **Canonical export** — the default: one row per item carrying its canonical value on the collection's chosen condition.
 - **History export** — the explicit option: one row per version of every item, canonical and superseded alike.
 - **Golden** — a checked-in header-and-rows file an export is asserted against, one per fixture, per export kind, for every released export format version.
+- **State column** — the closed set never-scanned, quarantined, current, and superseded, the last only in the history export; a new value in it is a change in meaning under [R2.5](#2-columns-names-dialect-and-the-version).
 
 ### Legend
 
@@ -96,7 +97,7 @@ Three row-ID families, one per dispositionable table, under one rule: an ID is a
 | E7 | [E2](prd-data-export-copy.md#error--state-copy) |
 | E17 | [E3](prd-data-export-copy.md#error--state-copy) |
 | E18 | [E4](prd-data-export-copy.md#error--state-copy) |
-| DJ1 (its journeys index's J1) | [J1](prd-data-export-journeys.md#j1-export-the-collection) |
+| DJ1 | [EJ1](prd-data-export-journeys.md#ej1-export-the-collection) |
 
 Three rows are split rather than moved whole. [The Data Foundation PRD's R7.7](../data-foundation/prd-data-foundation.md#7-verifiability) keeps the fixtures and their content and hands the assertion here; [its R7.8](../data-foundation/prd-data-foundation.md#7-verifiability) keeps the move's failures and hands the export destination's here; [its R7.6](../data-foundation/prd-data-foundation.md#7-verifiability) stays live there for its own surfaces and this document states the same rule for its one.
 
@@ -110,7 +111,7 @@ This document governs one surface. The table is [R4.4](#4-verifiability)'s rule 
 
 ### Evidence base
 
-These rules rest on the research inventoried in the [fence file](prd-data-export-fences.md#phase-0--research-inventory-2026-09-09) and no row restates it. §1, §2: [browsing v2 §8](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#gamut-containment--the-honesty-badge) (no interoperable name exists for the gamut flag), [SDK audit §2](../../briefs/nix-universal-sdk-audit-findings.md) (the raw string round-trips a measurement; the toolkit supplies XYZ, Lab, LCh, Luv — per SDK docs). §3: [browsing v2 §10](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#10-empty-loading-and-error-states) (three failure classes, three answers).
+These rules rest on the research inventoried in the [fence file](prd-data-export-fences.md#phase-0--research-inventory-2026-09-09) and no row restates it. §1, §2: [browsing v2 §8](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#gamut-containment--the-honesty-badge) (no interoperable name exists for the gamut flag), [SDK audit §2](../../briefs/nix-universal-sdk-audit-findings.md) (the raw string round-trips a measurement; the toolkit supplies XYZ, Lab, LCh, Luv — per SDK docs, [the Data Foundation PRD's OQ 15](../data-foundation/prd-data-foundation.md#open-questions)). §3: [browsing v2 §10](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#10-empty-loading-and-error-states) (three failure classes, three answers).
 
 ### 1. What the export contains
 
@@ -173,8 +174,8 @@ Each line is a requirement. A row cited here carries the rule, the naming PRD's 
 | Source PRD | Obligation | Rows here |
 | :--- | :--- | :--- |
 | Data Foundation | What the file holds that an export reads: every sample readable at the floor and every imported column under the name and position its import file gave it ([its R1.2](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns)), a derived set per reading with history included and the chosen condition's set current, absent only where the reading carries no measurement in it ([its R3.1](../data-foundation/prd-data-foundation.md#3-derived-values-and-gamut-honesty), [its F31](../data-foundation/prd-data-foundation-fences.md)), a non-chosen condition's set kept in the file and not exported, the acquiring device's snapshot, the basis, the per-reading sequence and both time axes on every reading ([its R2.1](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history)), each reading's supersession reason ([its R2.4](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history)), which reading is current and an item with no canonical value ([its R2.2](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history), [its R2.9](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history)); the vendor license credential is in neither the file nor any export ([its R6.5](../data-foundation/prd-data-foundation.md#6-deletion-and-privacy)). An export reads the file and never writes it | [R1.1](#1-what-the-export-contains), [R1.2](#1-what-the-export-contains), [R1.3](#1-what-the-export-contains), [R2.1](#2-columns-names-dialect-and-the-version), [R2.3](#2-columns-names-dialect-and-the-version), [R4.2](#4-verifiability), [R4.3](#4-verifiability) |
-| Capture Mode | A collection's queue order lives with the collection ([its R1.9](../capture-mode/prd-capture-mode.md#1-collections)), and an export's rows follow it | [R2.3](#2-columns-names-dialect-and-the-version) |
-| Device Management, export | CSV export emits an `sc_simulated` column, true or false ([its R6.5](../device-management/prd-device-management.md#6-mock-device-layer)) | [R1.2](#1-what-the-export-contains) |
+| Capture Mode | A collection's queue order lives with the collection ([its R1.9](../capture-mode/prd-capture-mode.md#1-collections)), and an export's rows follow it; the basis an average was taken on and the non-spectral mark travel with the reading ([its R4.24](../capture-mode/prd-capture-mode.md#4-the-scan-loop)) | [R1.2](#1-what-the-export-contains), [R2.3](#2-columns-names-dialect-and-the-version) |
+| Device Management, export | CSV export emits an `sc_simulated` column, true or false ([its R6.5](../device-management/prd-device-management.md#6-mock-device-layer)); every measurement carries the acquiring device's snapshot, which the export writes ([its R1.21](../device-management/prd-device-management.md#1-device-pairing)) | [R1.1](#1-what-the-export-contains), [R1.2](#1-what-the-export-contains) |
 | Inventory Import | Every column an import brought in is carried through, and a column mapped to identity is emitted once rather than twice ([its R2.2](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule)) | [R1.1](#1-what-the-export-contains), [R2.3](#2-columns-names-dialect-and-the-version), [R2.4](#2-columns-names-dialect-and-the-version) |
 
 **What this PRD imposes on others**
@@ -183,6 +184,7 @@ Each line is a requirement. A row cited here carries the rule, the naming PRD's 
 | :--- | :--- | :--- |
 | Data Foundation | [Its R7.7](../data-foundation/prd-data-foundation.md#7-verifiability)'s fixtures hold what these goldens are asserted on — a colliding imported column, a column mapped to identity, an absent derived value, a non-spectral reading, a simulated one, a clipped one, a never-scanned item, a quarantined reading, a reading carrying a second condition's derived set, a confirmed correction in history, a collection imported into twice, a collection whose queue order differs from its items' insertion order, and a corpus at ROWS_CEILING — [its R7.2](../data-foundation/prd-data-foundation.md#7-verifiability)'s declared file-held-open-read-only state is what [R4.3](#4-verifiability) exports against, and no export this document defines carries the vendor license credential its R6.5 asserts against every export | [R4.1](#4-verifiability), [R4.2](#4-verifiability), [R4.3](#4-verifiability) |
 | Device Management | Post-lock amendment there: [its R6.5](../device-management/prd-device-management.md#6-mock-device-layer)'s `simulated` column is read as `sc_simulated` and [its "Data Foundation, export" obligation line](../device-management/prd-device-management.md#inherited-obligations) names this PRD as its target (fence F6) | [R1.2](#1-what-the-export-contains) |
+| Capture Mode | Post-lock amendment there: [its R1.9](../capture-mode/prd-capture-mode.md#1-collections)'s queue-order obligation names this PRD beside Data Foundation, an export's rows following that order | [R2.3](#2-columns-names-dialect-and-the-version) |
 | Inventory Import | Post-lock amendment there: [its R2.2](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule)'s passthrough and identity mapping gains an obligation line naming this PRD, which carries those columns into the export and renames a collision rather than dropping it | [R2.3](#2-columns-names-dialect-and-the-version), [R2.4](#2-columns-names-dialect-and-the-version) |
 
 ### 5. Error & State Copy
@@ -204,6 +206,6 @@ Numeric targets are proposals, not commitments.
 | 1 | What the gamut-clipped export column is called (the Data Foundation PRD's OQ 8) | `sc_sRGB_gamut_clipped`, beside `sc_sRGB_source_space` and `sc_sRGB_rendering_intent`; no standard names this flag, so it is invented, and F6 exempts nothing (fences F4, F6). | — | Closed — owner; revisited only if ISO 17972-4's schema becomes readable. | [R2.1](#2-columns-names-dialect-and-the-version), [R2.4](#2-columns-names-dialect-and-the-version) | answered |
 | 2 | Does an export carry version history, and in what shape? (the Data Foundation PRD's OQ 9) | Canonical values by default, one row per item; an explicit v1 option exports every version (fence F2). | — | Closed — owner. | [R1.1](#1-what-the-export-contains), [R1.3](#1-what-the-export-contains) | answered |
 | 3 | CxF export and import (the Data Foundation PRD's OQ 11) | Out of scope for v1. The format is CxF/X-4 (ISO 17972-4); whether the vendor's mobile app exports at all is an open gap ([vision J7](../vision.md#j7-migrating-in-from-the-vendor-apps-cataloger-v2-candidate)). | None — v1 exports CSV. | A v2 scoping pass once the schema is readable — owner. | [R1.1](#1-what-the-export-contains) | open |
-| 4 | WAVELENGTH_GRID — the wavelength column set the export format version fixes (the Data Foundation PRD's OQ 16) | None. The set belongs to the export format version, v1's being the v1 instrument family's reported grid (fence F7). | Candidate: the Spectro 2's grid — start, end, interval — per SDK docs. | Read the grid off the instrument — hardware. | [R2.3](#2-columns-names-dialect-and-the-version), [R4.2](#4-verifiability) | open |
+| 4 | WAVELENGTH_GRID — the wavelength column set the export format version fixes (the Data Foundation PRD's OQ 16) | None. The set belongs to the export format version, v1's being the v1 instrument family's reported grid (fence F7). | Candidate: the Spectro 2's grid — start, end, interval — per SDK docs. | Read the grid off the instrument — hardware. | [R2.3](#2-columns-names-dialect-and-the-version), [R2.5](#2-columns-names-dialect-and-the-version) | open |
 
 Results file: [`prd-data-export-oq-results.md`](prd-data-export-oq-results.md), one `## OQ <id>` section per answer; a status changes only when that section exists, and a number is never reused. Every provisional constant and every "per SDK docs" marker carries its OQ id — a marker with no entry above is invalid.

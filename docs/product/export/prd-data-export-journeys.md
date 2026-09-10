@@ -5,7 +5,7 @@ The requirement rows in that file are the rules; nothing here adds one, and the 
 
 States are named in plain language; each one's shipping copy is in the copy file, and the vocabulary is defined once in the [PRD](prd-data-export.md#vocabulary) and in the [Data Foundation PRD](../data-foundation/prd-data-foundation.md#vocabulary). Persona is named per journey. Citation shorthand: [browsing v2](../../briefs/browsing-a-collection-at-scale-research-results-v2.md) is the collection-browsing research (v2 supersedes the first pass), [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) the vendor SDK audit. This journey was the [Data Foundation PRD's DJ1](../data-foundation/prd-data-foundation.md), moved here under that document's fence F30 with no step changed.
 
-## J1. Export the collection
+## EJ1. Export the collection
 
 **Data consumer.** Serves [U6](../vision.md#use-cases) and [vision J4](../vision.md#j4-data-out-data-consumer). Exercises [R1.1](prd-data-export.md#1-what-the-export-contains)–[R1.3](prd-data-export.md#1-what-the-export-contains), [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version)–[R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version), [R3.1](prd-data-export.md#3-when-an-export-cannot-finish), and [the Data Foundation PRD's R3.4 and R3.5](../data-foundation/prd-data-foundation.md#3-derived-values-and-gamut-honesty).
 

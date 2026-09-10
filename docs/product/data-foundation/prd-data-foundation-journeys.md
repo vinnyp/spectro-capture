@@ -3,7 +3,7 @@
 Companion to [prd-data-foundation.md](prd-data-foundation.md): what the user does and sees, journey by journey.
 The requirement rows in that file are the rules; nothing here adds one, and the shipping copy is in [prd-data-foundation-copy.md](prd-data-foundation-copy.md).
 
-DJ1, exporting the collection, moved to [the export PRD's journeys](../export/prd-data-export-journeys.md#j1-export-the-collection) under fence F30 and its number is retired here; DJ2–DJ5 keep the numbers they have.
+DJ1, exporting the collection, moved to [the export PRD's EJ1](../export/prd-data-export-journeys.md#ej1-export-the-collection) under fence F30 and its number is retired here; DJ2–DJ5 keep the numbers they have.
 
 States are named in plain language; each one's shipping copy is in the copy file, and the vocabulary is defined once in the [PRD](prd-data-foundation.md#vocabulary). Persona is named per journey. Citation shorthand: [browsing v2](../../briefs/browsing-a-collection-at-scale-research-results-v2.md) is the collection-browsing research (v2 supersedes the first pass), [acq v2](../../briefs/acquisition-experience-research-results-v2.md) the acquisition-experience research, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) the vendor SDK audit.
 

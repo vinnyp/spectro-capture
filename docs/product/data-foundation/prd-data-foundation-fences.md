@@ -34,7 +34,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version. The canonical export is P0; the history option is P1. Closes OQ 9 and settles the export rows' priority.
 
-**Clarification (1), 2026-09-09:** R7.6, the test row that asserts the export's column set, is P0 with the rows it verifies (process rule 3).
+**Clarification (1), 2026-09-09:** The test row that asserts the export's column set — now the export PRD's R4.4 (this document's R7.6 before F30) — is P0 with the rows it verifies (process rule 3).
 
 ### F6 — Version history is kept for good (2026-09-09, Phase 3)
 
@@ -106,7 +106,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
-**Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
+**Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8, now the export PRD's R2.4). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
 
 ### F23 — The `sc_` prefix applies to every app column (2026-09-09, round 2)
 
@@ -116,9 +116,9 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F24 — The export format version fixes the wavelength column set (2026-09-09, round 2)
 
-**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as OQ 16 with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version (R4.9).
+**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as OQ 16 with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version (R4.9, now the export PRD's R2.5).
 
-**Why:** R4.7's "column order is fixed" and R7.7's golden are undefined without a fixed set; a header that follows the data is unusable to a consumer allocating columns before reading.
+**Why:** R4.7's "column order is fixed" (now the export PRD's R2.3) and R7.7's golden are undefined without a fixed set; a header that follows the data is unusable to a consumer allocating columns before reading.
 
 ### F25 — Samples are readable at the floor (2026-09-09, round 2)
 
@@ -136,7 +136,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** Every reading — superseded ones too — carries its six derived spaces; a derivation bump regenerates every reading's set and marks the old sets superseded. An outside reader plots an item's history from plain columns. OQ 5's budget is re-derived on this population.
 
-**Why:** R2.5's over-time view, R4.4's history export, and R7.1's read-back all read derived values off superseded readings; keeping them only on the canonical value would make history a value only the app can compute, which R1.2 forbids.
+**Why:** R2.5's over-time view, R4.4's history export (now the export PRD's R1.3), and R7.1's read-back all read derived values off superseded readings; keeping them only on the canonical value would make history a value only the app can compute, which R1.2 forbids.
 
 ### F28 — The collection's chosen condition is the current derived set; the canonical export emits it (2026-09-09, round 2)
 
@@ -176,7 +176,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F6 | R2.6; OQ 4. |
 | F7 | R6.3; OQ 10. |
 | F8 | R6.6 (authorship handed over; the gate itself is F19's); the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's ownership half. |
-| F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as J5. |
+| F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as DJ5. |
 | F10 | R2.1; the Vocabulary entries for sample, reading, and canonical value; R6.2's counted-in-readings clause and [E8](prd-data-foundation-copy.md#error--state-copy); M6's population; the state diagram's sample → reading → history path. |
 | F11 | R1.2 (the readability half), R1.6 (the archived-payload half); OQ 5's constraint, OQ 2's derivation. |
 | F12 | R2.4, R2.5, R2.8; R7.1's read-back set and M4's third question; [E11](prd-data-foundation-copy.md#error--state-copy)'s "Ask me later"; the Capture Mode E29 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3's amendment. |
