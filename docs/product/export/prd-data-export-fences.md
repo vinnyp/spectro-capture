@@ -68,6 +68,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** A half-scanned collection is the ordinary state between sittings, and the export must reconcile against the spreadsheet the inventory came from. Transcribed from [the Data Foundation PRD's F29](../data-foundation/prd-data-foundation-fences.md), 2026-09-09.
 
+### F11 — The canonical export carries when each current reading was measured (2026-09-10, round 5)
+
+**Decision:** Every canonical row carries the time its current reading was measured, under an `sc_` name, the export preview naming it. An appended column, so no export format version bump.
+
+**Why:** A Data consumer cannot otherwise tell from the file when a swatch was scanned until the history export lands; the serial is already disclosed at the preview, so the added linkability is small and the provenance is what U6 expects. Taken over the privacy lens's reading of the omission as minimization — the owner's call.
+
 ## Fence → row map
 
 A row "carries" a fence when the fence's decision is what the row now states; this file, not the row, holds the rationale. Every entry below is the corresponding entry in [the Data Foundation PRD's map](../data-foundation/prd-data-foundation-fences.md#fence--row-map) rewritten into this document's IDs.
@@ -84,6 +90,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F8 | [R1.1](prd-data-export.md#1-what-the-export-contains), [R4.1](prd-data-export.md#4-verifiability), [R4.2](prd-data-export.md#4-verifiability); [M1](prd-data-export.md#success-metrics). |
 | F9 | [R1.1](prd-data-export.md#1-what-the-export-contains), [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version), [R2.3](prd-data-export.md#2-columns-names-dialect-and-the-version); the Data Foundation line in [Inherited obligations](prd-data-export.md#inherited-obligations) (the chosen condition's set). |
 | F10 | [R1.1](prd-data-export.md#1-what-the-export-contains), [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version); [M1](prd-data-export.md#success-metrics)'s population; [E1](prd-data-export-copy.md#error--state-copy). |
+| F11 | [R1.1](prd-data-export.md#1-what-the-export-contains); [E1](prd-data-export-copy.md#error--state-copy); the inbound Data Foundation line (both time axes). |
 
 ## Rejected findings
 

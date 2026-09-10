@@ -205,3 +205,38 @@ Every Minor and Nit from all seven reviews is accepted and mapped in the round-3
 Every remaining Minor and Nit is accepted and mapped in the round-4 fix file; the fence-file wording nits (F28, F31, the export PRD's F3, F7, F9) are applied by the orchestrator in this commit. **Judgment calls recorded for the owner to overrule:** the state enum gains `superseded` rather than making the state the item's (R4-F6); the app version is normalized out of the byte comparison rather than moved out of every row (R4-F3); a ‹until P1› marker rather than a reworded P0 sentence (R4-F8); the fixtures' device snapshots are the simulated device's settable ones (privacy Info, device R6.9).
 
 **Round-4 status:** one owner decision recorded as the F31 amendment (the export PRD's F9 amended to match). Fix file `prd-data-foundation-round-4-fixes.md` (both PRDs) to be verified item-for-item before dispatch. Round 5 is a delta over the 15 held rows and the rule-6 edits by the same seven lenses; three lenses already converged with no OBJECT, so round 5's brief asks each lens to confine itself to the delta.
+
+## Round 5 — narrow delta over the round-4 fix pass (2026-09-10)
+
+**Subject:** commit `4c40749` — the round-4 fix pass (16 boxes; DF 6,981 words, DE 3,368; 93 rows Aligned). **Lenses:** the same seven on Claude/Opus, confined to the 15 held rows and the four rule-6 edits, each with its round-4 report as a source. **Cross-model:** not repeated.
+
+| lens | verdict | Blocker | Major | Minor/Nit | rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | builds the right thing; both PRDs should close | 0 | 0 | 2 | 0 |
+| staff engineer | ready — proceed | 0 | 0 | 6 | 0 |
+| test (retargeted) | trustworthy after one clause | 0 | 1 | 4 | 1 |
+| privacy | privacy-sound to ship; closes | 0 | 0 | 1 Low, 3 Info | 0 |
+| marketing (copy) | lands and honest, one half-clause | 0 | 0 | 5 | 1 |
+| architecture | sound — build it | 0 | 0 | 3 | 0 |
+| interface | contract sound | 0 | 0 | 6 | 0 |
+
+**Round-4 dispositions, per lens.** Every round-4 finding from all seven lenses is resolved on the text; marketing's N4-2 partial (E13's repeated phrase) is the one residue. Five lenses raised no OBJECT on any row; the four rule-6 edits keep alignment on every lens.
+
+**Row flips.** Of the 15 held rows, every non-abstaining lens ALIGNs on 13; those untouched by this round's fix file flip to 🤝 Aligned — DF R5.7, R6.2, R7.2, R7.7, E8, E14 (6) and DE M1 (1). Held with an OBJECT: DF R1.2 (test), DE E1 (marketing). Held for an edit this round: DF M6, E13; DE R1.1, R1.3, R4.1, R4.3. Aligned rows edited under process rule 6 this round: DF R7.1, R3.3, R7.6b; DE R2.1, R4.4a.
+
+### Verify-the-reviewer dispositions (the Major and the cross-lens Minors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R5-F1 | R1.2 promises imported columns under name and position at the floor and names R7.1 as owner; R7.1's read-back set has no imported column, so a normalized layout with an app-private order passes every green assertion | Test (Major) | DF `:131`, `:216` confirmed. | accept — R7.1's read-back set gains the imported columns under name and position (rule 6). |
+| R5-F2 | The canonical export carries no measurement time; R1.3 adds measured-at "beside every canonical-export column" | Interface (Minor), Privacy (reads the omission as minimization) | DE `:123`, `:125` confirmed. | accept — owner: measured-at on every canonical row (the export PRD's F11). |
+| R5-F3 | R1.1's "not exportable" carve-out names two of DF's four read-only states and no row asserts it | Staff (Minor), Arch (Minor), Test (Minor) | DE `:123`, `:164`; DF `:149`, `:189` confirmed. | accept — the carve-out names R5.5 and R2.2 too; R4.3 induces an export against such a file and asserts it is refused. |
+| R5-F4 | The golden's refresh rule covers an append only, not a DERIVATION_VERSION bump; "well-formed" is undefined; the ceiling corpus's golden scope is open | Staff (Minor), Interface (Minor, Nit), Test (Minor) | DE `:162`; DF `:169` confirmed. | accept — one clause each on R4.1. |
+| R5-F5 | R1.1 and R1.3 disagree on whether a never-scanned item gets a history row | Interface (Minor) | DE `:123`, `:125` confirmed. | accept — it contributes its identity row as in the canonical export (judgment call). |
+| R5-F6 | The merged blank-row line carries two counts and the zero-count rule as written drops the whole sentence when one is zero, the common case | Marketing (Minor) | DE copy `:8`, `:16` confirmed. | accept — the copy headers say a zero count's phrase is dropped and the rest of the sentence stands. |
+| R5-F7 | ‹until P1› is tied to "the P1 rows" as a phase; an interim build landing the undo before the history export shows "final" beside "undo" | PM (Minor) | DF copy `:4` confirmed. | accept — the marker is withdrawn when the ‹P1› sentence it stands in for appears. |
+| R5-F8 | M6's condition multiplier has no number; R3.3's regeneration triggers omit a change of the chosen scan mode | Staff (Minor), Arch (Minor) | DF `:264`, `:169` vs capture `:139` confirmed. | accept — M6 pins "the chosen condition plus one"; R3.3 names the scan-mode change (rule 6). |
+
+Every remaining Nit is accepted and mapped in the round-5 fix file. **Judgment calls recorded for the owner to overrule:** a never-scanned item's identity row in the history export (R5-F5); "well-formed" read as the app's released version string; the two copy-header rules (R5-F6, R5-F7).
+
+**Round-5 status:** one owner decision recorded as the export PRD's F11. Fix file `prd-data-foundation-round-5-fixes.md` (both PRDs, 13 boxes) to be verified item-for-item before dispatch. Round 6 is the Phase 6 pre-lock round: the seven lenses delta the rows this fix touches and answer Phase 5's question (does anything deferred break the first usable build?), joined by the retargeted `peer-plan-reviewer` and two fresh lenses — `peer-standards-reviewer` on the export contract and `peer-reliability-reviewer` on the file's durability, migration and recovery rows — with the three mechanical lock preconditions run before the round and again after its fix pass.
