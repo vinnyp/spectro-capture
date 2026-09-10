@@ -140,7 +140,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F28 — The collection's chosen condition is the current derived set; the canonical export emits it (2026-09-09, round 2)
 
-**Decision:** Derived sets are keyed per reading and measurement condition; the set for the collection's chosen scan mode ([the capture PRD's R1.10](../capture-mode/prd-capture-mode.md#1-collections)) is always present and is the current one, and another condition's set is present when the user asks for it. The canonical export emits one row per item on the chosen condition, the condition column saying which; the header stays fixed.
+**Decision:** Derived sets are keyed per reading and measurement condition; the set for the collection's chosen scan mode ([the capture PRD's R1.10](../capture-mode/prd-capture-mode.md#1-collections)) is always present and is the current one, and another condition's set is present when the user asks for it. The canonical export emits one row per item on the chosen condition, the condition column saying which; the header stays fixed. **Amended 2026-09-10 (round 3, FX3-6):** the chosen condition's set is absent where the reading carries no measurement in that condition, which R3.5 marks.
 
 **Why:** The capture PRD keeps every mode a reading arrives with and works colour values out from the chosen mode; one row per item (F5) and a fixed header (F24) survive only if the export names one condition per row.
 
@@ -158,9 +158,9 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F31 — A non-chosen condition's derived set is kept once asked for (2026-09-10, round 3)
 
-**Decision:** A derived set for a condition other than the collection's chosen scan mode is worked out when the user asks for it and is then kept in the file like any other set — regenerated with the rest, readable at the floor, carried by the history export. OQ 5 gains a third multiplier, bounded by the instrument's condition count.
+**Decision:** A derived set for a condition other than the collection's chosen scan mode is worked out when the user asks for it and is then kept in the file like any other set — regenerated with the rest and readable at the floor. OQ 5 gains a third multiplier, bounded by the instrument's condition count. **Amended 2026-09-10 (round 4, owner):** the CSV stays one condition per row on the collection's chosen scan mode in both exports; the extra sets are readable in the file and not carried by the history export, and the export preview says which condition the rows come out on.
 
-**Why:** R1.2 promises that nothing a reader needs is a value only the app can compute; a set computed for the moment and discarded would be exactly that, and the history export could not carry it.
+**Why:** R1.2 promises that nothing a reader needs is a value only the app can compute; a set computed for the moment and discarded would be exactly that. The export stays one condition per row so the header stays fixed (F28, the export PRD's F9).
 
 ## Fence → row map
 
@@ -198,7 +198,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F28 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). The export half moved to the export PRD's R1.1, R2.1 and R2.3 — [its F9](../export/prd-data-export-fences.md). |
 | F29 | No row here any more: moved to the export PRD's R1.1 and R2.1, its M1's population, and its E1 — [its F10](../export/prd-data-export-fences.md). |
 | F30 | The [Legend](prd-data-foundation.md#legend)'s retired-ID list; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
-| F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population. |
+| F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population and [R7.7](prd-data-foundation.md#7-verifiability)'s fixture; the export PRD's R1.1, R1.3 and E1 (one condition per row, the amendment). |
 
 ## Rejected findings
 

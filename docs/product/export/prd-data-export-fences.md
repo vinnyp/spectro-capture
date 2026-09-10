@@ -22,7 +22,7 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 ### F3 — The CSV carries the vendor's raw payload column (2026-09-09)
 
-**Decision:** One opaque column per row, documented as the vendor's round-trip string, so the export carries the file's fidelity promise and [M1](prd-data-export.md#success-metrics) reads as written; a reading with no payload leaves it empty and marked.
+**Decision:** One opaque column per row, documented as the vendor's round-trip string, so the export carries the file's fidelity promise and [M1](prd-data-export.md#success-metrics) reads as written; a reading with no payload leaves it empty and marked. **Amended (round 2, FX2-4; round 3, FX3-12):** the column is empty where none exists; no separate mark.
 
 **Provenance:** transcribed from [the Data Foundation PRD's F18](../data-foundation/prd-data-foundation-fences.md), 2026-09-09 (its M3 is this document's M1). Amended by [F8](#f8--the-csv-carries-one-payload-column-per-sample-slot-2026-09-09): one column per sample slot.
 
@@ -46,7 +46,7 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 ### F7 — The export format version fixes the wavelength column set (2026-09-09)
 
-**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as [OQ 4](prd-data-export.md#open-questions) with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version ([R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)).
+**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as [OQ 4](prd-data-export.md#open-questions) with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version ([R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)). **Amended (round 3, FX3-12):** an out-of-grid column is empty, with no separate mark, and the branch cannot arise in v1 (R2.3).
 
 **Why:** [R2.3](prd-data-export.md#2-columns-names-dialect-and-the-version)'s "column order is fixed" and [R4.1](prd-data-export.md#4-verifiability)'s golden are undefined without a fixed set; a header that follows the data is unusable to a consumer allocating columns before reading. Transcribed from [the Data Foundation PRD's F24](../data-foundation/prd-data-foundation-fences.md), 2026-09-09 (its OQ 16 is this document's OQ 4).
 
@@ -58,7 +58,7 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 ### F9 — The canonical export emits the collection's chosen condition (2026-09-09)
 
-**Decision:** The canonical export emits one row per item on the chosen condition — the set for the collection's chosen scan mode ([the capture PRD's R1.10](../capture-mode/prd-capture-mode.md#1-collections)), which [the Data Foundation PRD's R3.1](../data-foundation/prd-data-foundation.md#3-derived-values-and-gamut-honesty) keeps current and always present — the condition column saying which; the header stays fixed.
+**Decision:** The canonical export emits one row per item on the chosen condition — the set for the collection's chosen scan mode ([the capture PRD's R1.10](../capture-mode/prd-capture-mode.md#1-collections)), which [the Data Foundation PRD's R3.1](../data-foundation/prd-data-foundation.md#3-derived-values-and-gamut-honesty) keeps current and always present — the condition column saying which; the header stays fixed. **Amended (round 3, FX3-6; round 4, owner):** the chosen condition's set is absent where the reading carries no measurement in it (that PRD's R3.1 and R3.5); a non-chosen condition's set kept under that PRD's F31 is readable in the file and not exported, in either export kind.
 
 **Why:** The capture PRD keeps every mode a reading arrives with and works colour values out from the chosen mode; one row per item ([F2](#f2--export-is-canonical-only-by-default-with-version-history-as-a-v1-option-2026-09-09)) and a fixed header ([F7](#f7--the-export-format-version-fixes-the-wavelength-column-set-2026-09-09)) survive only if the export names one condition per row. Transcribed from the export half of [the Data Foundation PRD's F28](../data-foundation/prd-data-foundation-fences.md), 2026-09-09; that fence's rule that derived sets are keyed per reading and condition is about the file and stays there.
 

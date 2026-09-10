@@ -167,3 +167,41 @@ Rejected: agy staff's request to drop older-stamp derived values (R3.3) and agy 
 Every Minor and Nit from all seven reviews is accepted and mapped in the round-3 fix file. **Judgment calls recorded for the owner to overrule:** the second-import column rule (R3-F1); "never writes" read as content-identical at the floor plus working read-only (R3-F4); columns the export PRD does not name literally follow `sc_` plus lower snake_case with `sc_sRGB_*` the fenced exception (Interface F3-04); the out-of-grid wavelength branch drops "marked" and is declared unreachable in v1 the way R5.7 declares its floor (Interface F3-02, Staff); retired-version goldens document what each release emitted and feed a future parse-an-old-export test (Interface); the single-item export uses the collection surface with counts scoped to one item (PM F3-3). Not adopted, with the lens's own agreement: no rule about an export mid-session (architecture: the app serialises it) and no overwrite rule at the destination (the macOS save panel's).
 
 **Round-3 status:** one owner decision recorded as F31. Fix file `prd-data-foundation-round-3-fixes.md` (beside Data Foundation, covering both PRDs) to be verified item-for-item against all seven reviews before dispatch. Round 4 is a delta by the same seven lenses; if it converges, Phase 5 (priority pass) and Phase 6 (the pre-lock round with the retargeted plan reviewer and a fresh lens) follow for both documents together.
+
+## Round 4 — delta verification of the round-3 fix pass (2026-09-10)
+
+**Subject:** commit `c6933a0` — the round-3 fix pass (29 boxes, both documents; DF 6,997 words, DE 3,193; 76 rows Aligned). **Lenses:** the same seven on Claude/Opus, each with its round-3 report as a source, briefed to converge. **Cross-model:** not repeated. **Tier rationale:** unchanged.
+
+| lens | verdict | Blocker | Major | Minor/Nit | rows OBJECT |
+|---|---|---|---|---|---|
+| product manager | builds the right thing; one Major F31 opened | 0 | 1 | 4 | 5 |
+| staff engineer | proceed; one Major | 0 | 1 | 4 | 4 |
+| test (retargeted) | trustworthy after fixing Majors | 0 | 3 | 3 | 4 |
+| privacy | privacy-sound to ship | 0 | 0 | 2 Low, 3 Info | 0 |
+| marketing (copy) | lands and honest | 0 | 0 | 5 | 4 |
+| architecture | sound — build it | 0 | 0 | 4 | 0 |
+| interface | contract sound | 0 | 0 | 5 | 2 |
+
+**Round-3 dispositions, per lens.** PM: 4 of 4 resolved, the mid-session nit deliberate. Staff: 12 of 13 resolved, FX3-4's read-only clause partial (its Major). Test: 10 of 10 resolved. Privacy: 3 of 3 resolved. Marketing: 7 of 8 resolved, F3-3 partial (one journey line unswept). Architecture: 7 of 7 resolved. Interface: 11 of 11 resolved. Three lenses raised no OBJECT on any row; no Blocker anywhere.
+
+**Row flips.** Of the 32 rows held after round 3, every non-abstaining lens ALIGNs on 19; 17 of those are untouched by this round's fix file and flip to 🤝 Aligned — DF R2.3, R3.1, R3.3, R5.8, R6.5, R7.3, R7.8, M8, M9, E12, E16, E22, E25 (13) and DE R2.3, R2.4, R2.5, R4.2 (4) — while E13 and DE M1 are held for a wording edit. Held with OBJECTs: DF R1.2, R5.7, R6.2, R7.2, R7.7, M6, E8, E14; DE R1.1, R1.3, R4.1, R4.3, E1. Aligned rows edited under process rule 6 this round: R7.1 (sample read-back), R5.5 (the salvage output's home), R1.9 and R7.6l (editorial cite and listing changes).
+
+### Verify-the-reviewer dispositions (every Major and the cross-lens Minors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R4-F1 | Fence F31 is asserted by no fixture — R7.7's list has no non-chosen condition's set — and M6's population has no condition factor while OQ 5 says the corpus measures it | Test (Major), Arch (Minor) | DF `:222`, `:264`, `:277` confirmed. | accept — R7.7's fixtures gain a reading with a second condition's set; M6's population gains the conditions-kept factor. |
+| R4-F2 | Each sample's decoded values (R1.2, F25) are read back by no test, though F25's map names R7.1 | Test (Major) | DF `:131`, `:216`, fences `:195` confirmed. | accept — R7.1's read-back set gains each sample's decoded values (process rule 6; R7.1 stays Aligned). |
+| R4-F3 | R1.1's per-row app version cannot survive R4.1's byte-for-byte comparison against a golden keyed on export format version | Test (Major) | DE `:123`, `:162` confirmed. | accept — the app-version column is asserted present and well-formed and set aside before the comparison. |
+| R4-F4 | "An export succeeds against a file the app holds read-only" cites R5.3 (a newer-app file the app must not interpret) and R7.2 (which declares no such state) | Staff (Major), Test (Minor) | DE `:123`, `:164`; DF `:187`, `:217` confirmed. | accept — R1.1 anchors the promise to the connection, a file the app cannot interpret (R5.3, R5.7) not being exportable; R7.2 declares a file held open read-only; DF's inbound line names R7.2. |
+| R4-F5 | F31's "carried by the history export" has no export row: both exports emit the chosen condition, and a per-condition reading would break R2.3's ordering and R4.1's golden | PM (Major), Arch (Minor), Interface (note) | fence `:161`, DE `:123`, `:125` confirmed. | accept — owner: chosen condition only in both exports; F31 and the export PRD's F9 amended; E1 names the condition the rows come out on; both obligations lines reworded. |
+| R4-F6 | The state column's enum has no value for a superseded reading in the history export | Interface (Minor), Staff (Minor) | DE `:123`, `:125` confirmed. | accept — the state is the row's; history rows read superseded, the current-reading flag saying which row is canonical. |
+| R4-F7 | The golden is keyed on kind × version but asserted per R7.7 fixture, and the ceiling corpus sits inside the byte-for-byte scope | Interface (Minor) | DE `:162`, `:163`, DF `:222` confirmed. | accept — a golden per fixture per kind per version; the ceiling corpus asserted on header and dialect only. |
+| R4-F8 | E8/E14's "Once it's done it's final" will ship beside the P1 undo sentence once R6.3 lands; the marker set has no way to withdraw a sentence | Marketing (Minor) | copy `:23`–`:24`, header `:4` confirmed. | accept — an ‹until P1› marker, defined in the copy header, for a sentence withdrawn when the P1 rows land. |
+| R4-F9 | "The readings you have now" reads as history at collection scale in the P0 build | PM (Minor), Privacy (Low) | copy `:23`–`:24` confirmed. | accept — "each swatch's current reading, not its earlier ones and not the scanning record". |
+| R4-F10 | "Export first" leaves the delete in an unstated state | PM (Minor) | DF `:201`, DJ4 confirmed. | accept — the export leaves the delete unperformed and returns to the confirmation; DJ4 gains the branch. |
+| R4-F11 | The salvage output (R5.5, E5) is a complete copy with no stated destination or lifecycle | Privacy (Low) | DF `:189`, copy `:22` confirmed. | accept — written where the user chooses, kept until removed (rule 6 on R5.5); E5 names the place. |
+
+Every remaining Minor and Nit is accepted and mapped in the round-4 fix file; the fence-file wording nits (F28, F31, the export PRD's F3, F7, F9) are applied by the orchestrator in this commit. **Judgment calls recorded for the owner to overrule:** the state enum gains `superseded` rather than making the state the item's (R4-F6); the app version is normalized out of the byte comparison rather than moved out of every row (R4-F3); a ‹until P1› marker rather than a reworded P0 sentence (R4-F8); the fixtures' device snapshots are the simulated device's settable ones (privacy Info, device R6.9).
+
+**Round-4 status:** one owner decision recorded as the F31 amendment (the export PRD's F9 amended to match). Fix file `prd-data-foundation-round-4-fixes.md` (both PRDs) to be verified item-for-item before dispatch. Round 5 is a delta over the 15 held rows and the rule-6 edits by the same seven lenses; three lenses already converged with no OBJECT, so round 5's brief asks each lens to confine itself to the delta.
