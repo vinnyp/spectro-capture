@@ -62,7 +62,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 1. A swatch got into the collection twice under two codes and I want one of them gone.
 2. I delete it. Deleting isn't the button my hand lands on by accident — it is never the default action on the surface.
 3. The app tells me exactly what goes: the reading it has now, the earlier readings behind it, and everything recorded about scanning it, each counted. The counts are of readings — the samples inside a reading aren't counted at me as though they were separate scans. It offers to export first.
-4. I go ahead. That is the one place in this app where data is genuinely thrown away, and it happened because I asked for it by name.
+4. I go ahead. Deleting is the only thing that throws away a reading, and it happened because I asked for it by name.
 5. I realise immediately it was the wrong one and undo. The swatch comes back with its history intact — not as an empty row with the right code on it.
 
 **Throwing away a whole collection.** Same thing at collection scale: I'm told how many swatches and how many readings go with it, and offered an export first. It's the same undo, and the same finality after.

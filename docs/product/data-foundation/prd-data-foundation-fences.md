@@ -198,6 +198,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F28 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). The export half moved to the export PRD's R1.1, R2.1 and R2.3 — [its F9](../export/prd-data-export-fences.md). |
 | F29 | No row here any more: moved to the export PRD's R1.1 and R2.1, its M1's population, and its E1 — [its F10](../export/prd-data-export-fences.md). |
 | F30 | The [Legend](prd-data-foundation.md#legend)'s retired-ID list; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
+| F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population. |
 
 ## Rejected findings
 
