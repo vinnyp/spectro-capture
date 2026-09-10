@@ -8,7 +8,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F1 — Data Foundation is a slim data contract, not a schema document (2026-09-09)
 
-**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 7,000 words (raised from 4,000 to 5,000 in Phase 3 when the first fill landed at 5,030 after four compaction passes, and from 5,000 to 7,000 after round 1, 2026-09-09: nine lenses found some fifteen missing guarantees — the sample tier, time axes, atomic writes, the sync posture, the file's identity and floor, the CSV contract, fixtures — which are rules, not prose). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
+**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 7,500 words (raised from 4,000 to 5,000 in Phase 3 when the first fill landed at 5,030 after four compaction passes; from 5,000 to 7,000 after round 1, 2026-09-09; and from 7,000 to 7,500 on 2026-09-10 before the pre-lock round, when the mechanical lock checks required a 21-row obligations map and four Vocabulary entries — bookkeeping, not rules — and the body landed at 7,281 with nothing left to cut but rules: nine lenses found some fifteen missing guarantees — the sample tier, time axes, atomic writes, the sync posture, the file's identity and floor, the CSV contract, fixtures — which are rules, not prose). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
 
 **Why:** U5 and U6 are promises to users about the data itself, and the data-consumer persona has no other PRD; the rest is engineering, and reviewing schema through product lenses produces the "solution smuggled into a requirement" findings the gate exists to reject. Everything this PRD can inherit it cites rather than restates.
 
@@ -102,7 +102,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F21 — Word budget 7,000 (2026-09-09, round 1)
 
-**Decision:** Recorded in F1's amended text above.
+**Decision:** Recorded in F1's amended text above. **Amended 2026-09-10 (owner, before the pre-lock round):** 7,500, for the lock checks' traceability and vocabulary additions.
 
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
@@ -162,6 +162,12 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** R1.2 promises that nothing a reader needs is a value only the app can compute; a set computed for the moment and discarded would be exactly that. The export stays one condition per row so the header stays fixed (F28, the export PRD's F9).
 
+### F32 — R6.5's inventory names the capture PRD's interaction record, measuring builds only (2026-09-10, before the pre-lock round)
+
+**Decision:** The privacy inventory in R6.5 gains the per-session shortcut and control interaction record [the capture PRD's R11.16](../capture-mode/prd-capture-mode.md#11-demo-device-and-verifiability) keeps, present in a measuring build only and never in a release build, so the inventory stays closed and true.
+
+**Why:** The lock checks' obligations map found R11.16 carried by no Data Foundation row; a closed inventory that omits a record the file can hold is false, and excluding the record from the file would amend a locked PRD.
+
 ## Fence → row map
 
 Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passes (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
@@ -199,6 +205,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F29 | No row here any more: moved to the export PRD's R1.1 and R2.1, its M1's population, and its E1 — [its F10](../export/prd-data-export-fences.md). |
 | F30 | The [Legend](prd-data-foundation.md#legend)'s retired-ID list; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
 | F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population and [R7.7](prd-data-foundation.md#7-verifiability)'s fixture; the export PRD's R1.1, R1.3 and E1 (one condition per row, the amendment). |
+| F32 | [R6.5](prd-data-foundation.md#6-deletion-and-privacy); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
 
 ## Rejected findings
 
