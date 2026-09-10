@@ -45,7 +45,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **If I open the file on a machine running an older app.** I get a plain statement that this file was made by a newer version, the version numbers of both, and a read-only view. I am never shown a partial read of a file the app doesn't fully understand, which would look like data loss.
 
-**If a future release stops upgrading files this old.** The app says so instead of trying: it names my file's version, its own, and the last app version that can still open my file, and opens it read-only. Today there is no such file — v1 writes the first version there is.
+**If a future release stops upgrading files this old.** The app says so instead of trying: it names my file's version, its own, and the last app version that can still change my file, and opens it read-only. Today there is no such file — v1 writes the first version there is.
 
 **If one reading can't be read.** That single swatch is set aside and named, and the rest of the collection opens and works normally. The swatch has no value until I scan it again or go back to one of its earlier readings, which are all still there — nothing is quietly promoted into the gap. A catalogue of 1,200 swatches must not become unopenable because one measurement is damaged, and a damaged reading is something I need to see rather than something to hide ([browsing v2 §10](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#10-empty-loading-and-error-states)).
 
@@ -64,6 +64,8 @@ States are named in plain language; each one's shipping copy is in the copy file
 3. The app tells me exactly what goes: the reading it has now, the earlier readings behind it, and everything recorded about scanning it, each counted. The counts are of readings — the samples inside a reading aren't counted at me as though they were separate scans. It offers to export first.
 4. I go ahead. Deleting is the only thing that throws away a reading, and it happened because I asked for it by name.
 5. I realise immediately it was the wrong one and undo. The swatch comes back with its history intact — not as an empty row with the right code on it.
+
+**If I take the export first.** Choosing it runs the export and does not delete anything: I come back to the same confirmation with the swatch still there, and delete once I have the file in hand.
 
 **Throwing away a whole collection.** Same thing at collection scale: I'm told how many swatches and how many readings go with it, and offered an export first. It's the same undo, and the same finality after.
 

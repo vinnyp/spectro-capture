@@ -91,7 +91,7 @@ UJ1.1 was folded into UJ1 when Library was dropped (fence F1).
 
 ### UJ 1.2 Manage collections — rename, delete
 
-> Scope boundary — handed to Collection Mode. Per the [product README](../README.md#5-collection-mode), Collection Mode owns editing surfaces, selection, and bulk operations; rename and delete are collection management, not capture. The steps below are kept verbatim so nothing the owner wrote is lost, and so the Collection Mode PRD inherits them with the two failure branches this pass adds. Ownership is decided by fence F3 ([fences](prd-capture-mode-fences.md)); they generate no requirement rows here beyond the inherited-obligation row [R1.8](prd-capture-mode.md#1-collections).
+> Scope boundary — handed to Collection Mode. Per the [product README](../README.md#6-collection-mode), Collection Mode owns editing surfaces, selection, and bulk operations; rename and delete are collection management, not capture. The steps below are kept verbatim so nothing the owner wrote is lost, and so the Collection Mode PRD inherits them with the two failure branches this pass adds. Ownership is decided by fence F3 ([fences](prd-capture-mode-fences.md)); they generate no requirement rows here beyond the inherited-obligation row [R1.8](prd-capture-mode.md#1-collections).
 
 **Rename a collection**
 

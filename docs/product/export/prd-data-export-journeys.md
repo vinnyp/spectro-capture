@@ -11,7 +11,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 1. I've finished digitizing a marker set and I want the numbers in my own colour tooling.
 2. From the collection I choose to export it. The app tells me what's about to come out: how many swatches, that every column I imported is there, that the wavelength readings are there, and that all six colour spaces — XYZ, Lab, LCh, Luv, sRGB, HSL — are there.
-3. It also tells me each colour space value will say which illuminant, observer, and measurement condition produced it, and which version of the working-out it came from — so a year from now I can still tell what a number means.
+3. It also tells me each colour space value will say which illuminant, observer, and measurement condition produced it, and which version of the working-out it came from — so a year from now I can still tell what a number means. It tells me which measurement condition the rows come out on, the one this collection is set to; a set worked out for another condition stays in my file rather than coming out here.
 4. I choose current readings rather than full history, and where to put the file.
 5. The file is written. Nothing in my collection changed.
 6. I open it. It's plain UTF-8 CSV with comma separators and `.` decimals — nothing to configure. One column per wavelength, each named `sc_nm_` and the wavelength. The rows come out in the collection's own order, so exporting the same unchanged collection twice gives me the same file twice.
