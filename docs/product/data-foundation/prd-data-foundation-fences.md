@@ -8,7 +8,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F1 — Data Foundation is a slim data contract, not a schema document (2026-09-09)
 
-**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 5,000 words (raised from 4,000 in Phase 3, 2026-09-09: the first fill landed at 5,030 after four compaction passes, and the remainder is rules, not prose — export and deletion are U5 and U6 promises this fence put in scope). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
+**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 7,000 words (raised from 4,000 to 5,000 in Phase 3 when the first fill landed at 5,030 after four compaction passes, and from 5,000 to 7,000 after round 1, 2026-09-09: nine lenses found some fifteen missing guarantees — the sample tier, time axes, atomic writes, the sync posture, the file's identity and floor, the CSV contract, fixtures — which are rules, not prose). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
 
 **Why:** U5 and U6 are promises to users about the data itself, and the data-consumer persona has no other PRD; the rest is engineering, and reviewing schema through product lenses produces the "solution smuggled into a requirement" findings the gate exists to reject. Everything this PRD can inherit it cites rather than restates.
 
@@ -54,6 +54,56 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** The journeys file keeps DJ5; it is non-normative and states what a reader of the file can rely on, which is U6's headline job.
 
+### F10 — The canonical value is a stored mean; samples are a third tier (2026-09-09, round 1)
+
+**Decision:** Every sample of a saved set is kept exactly as the instrument produced it. An item's canonical value is the set's mean, stored rather than computed on read, readable without the app, and recording the basis it was taken on and the version of the working-out. Samples are a tier beneath a reading: never version-history entries, never counted as "earlier readings". The canonical value is defined by what it must contain — the spectrum or colour values, the conditions, the device snapshot, the basis, the derivation version — and a vendor's raw payload is an archived artifact beside it where one exists.
+
+**Why:** The capture PRD's locked R4.12 averages N samples; a "raw payload as the instrument produced it" cannot be that mean. Both the architecture and staff lenses called this the round's one-way door, and the research names retrofitting a tier as the trap.
+
+### F11 — Readability is split from the archived payload (2026-09-09, round 1)
+
+**Decision:** Everything a reader needs — the decoded spectrum or colour values, the conditions, the derived values, the current-value marker, the supersession reason — is stored in plain SQLite types, readable at SQLITE_READER_FLOOR with no extension and no app function. The vendor's opaque payload is an archived artifact and may be compressed. STORE_SIZE_BUDGET is re-derived on the real population, samples counted; OQ 5 records this constraint; OQ 2's floor is derived from the features actually kept, not from a rejected one.
+
+### F12 — An unanswered re-scan is recorded as unconfirmed and stays visible (2026-09-09, round 1)
+
+**Decision:** The supersession reasons are initial, re-measurement, correction, correction-unconfirmed, and restore; a QC reading is a record of its own, not a supersession. Only a confirmed correction is marked never-true and excluded from over-time views; an unconfirmed one is shown and marked. Every unconfirmed reading is enumerable and answerable in bulk after a session, and the question offers "Ask me later". The capture PRD's E29 amendment (F3) uses this document's axis, "supersession reason", never that state's own word "correct".
+
+### F13 — Synced and network volumes: warn, and scope durability to local volumes (2026-09-09, round 1)
+
+**Decision:** The app names the risk when the file sits in a known sync-managed or network location; the crash-durability guarantee is stated for local volumes, with other classes marked needs-hardware-verify; the help docs carry the one safe practice. A hold left by a process that is gone never blocks the owner from opening their file. What the app sends is distinguished from what the user's chosen location does.
+
+### F14 — The first launch asks where to keep the file (2026-09-09, round 1)
+
+**Decision:** Before anything else, the first launch asks where the file lives, offering a default; the app shows where the file is and lets the user move it or open another. Closes the capture PRD's OQ 19 half that F2 left (that PRD's OQ 19 closes on F2 and F14, a post-lock amendment there). Owner's call over the recommendation to default silently.
+
+### F15 — The app deletes items and collections, never the file (2026-09-09, round 1)
+
+**Decision:** Whole-file deletion is Finder's job and the help docs say so. A collection delete has its own counted confirmation state; the undo window covers items and collections; once the window closes, deleted content is not recoverable from the file by an outside reader, and a crash is not a quit. The guarantees that a single reading is never deletable out of history and that delete is never a default action are imposed on Collection Mode.
+
+### F16 — R6.1, R6.2, and R6.5 are P0; R6.3's undo stays P1 (2026-09-09, round 1)
+
+**Decision:** The delete-scope rules, the counted confirmation, and the credential guard ship with the deletes and the export they govern; the credential test asserts against the store file as well as an export. R6.5 states a positive inventory of what the file holds about the user and their instrument rather than a negative blanket.
+
+### F17 — Notes and metadata are correctable in place (2026-09-09, round 1)
+
+**Decision:** Version history covers measurements. Item metadata and notes are editable and clearable; an edit supersedes the old text without touching any reading.
+
+### F18 — The CSV carries the vendor's raw payload column (2026-09-09, round 1)
+
+**Decision:** One opaque column per row, documented as the vendor's round-trip string, so the export carries the file's fidelity promise and M3 reads as written; a reading with no payload leaves it empty and marked.
+
+### F19 — v1 does not ship without the vendor-analytics disclosure (2026-09-09, round 1)
+
+**Decision:** A §6 row gates release on a disclosure that names the recipient, the events (connect, scan, calibration), that it fires per event and cannot be switched off, and that it is separate from the app's own opt-in telemetry. Authorship stays with the Telemetry PRD and the help docs (F8 unchanged).
+
+### F20 — The gamut-clipped export column is `sRGB_gamut_clipped` (2026-09-09, round 1)
+
+**Decision:** Closes OQ 8 by owner decision; revisited only if ISO 17972-4's schema becomes readable.
+
+### F21 — Word budget 7,000 (2026-09-09, round 1)
+
+**Decision:** Recorded in F1's amended text above.
+
 ## Fence → row map
 
 Filled by the Phase 3 fix pass (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
@@ -72,4 +122,5 @@ Filled by the Phase 3 fix pass (2026-09-09). A row "carries" a fence when the fe
 
 ## Rejected findings
 
-(none yet)
+- **agy staff, round 1, "derivation regeneration storage leak" (R3.3):** asked to drop the requirement that values on an older derivation stamp stay findable. Rejected: reproducibility of a value a user has already exported or quoted is the point of the stamp; the architecture lens's rule that exactly one set is current and the rest are retained and marked superseded is adopted instead.
+- **agy privacy, round 1, Low (R6.1):** asked for deletion of a single reading out of an item's history. Rejected under the non-negotiable that corrections never destroy data and fence F6; the erasure need it points at is met by F17 (notes correctable in place) and F15 (item and collection delete).
