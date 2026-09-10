@@ -108,9 +108,51 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
 
+### F23 — The `sc_` prefix applies to every app column (2026-09-09, round 2)
+
+**Decision:** F22(a) subsumes F20 and the device PRD's `simulated` column: the export columns are `sc_sRGB_gamut_clipped`, `sc_sRGB_source_space`, `sc_sRGB_rendering_intent`, `sc_simulated`, and `sc_nm_<wavelength>` for the spectral columns. F20's answer and OQ 8's results section are restated under the prefix; the device PRD's "emits a `simulated` column" obligation is read as `sc_simulated`, carried as a post-lock amendment line under "what this PRD imposes on others". No exemption list exists.
+
+**Why:** One rule the golden header can be written against; a closed exemption list would re-open the collision F22 exists to close.
+
+### F24 — The export format version fixes the wavelength column set (2026-09-09, round 2)
+
+**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as OQ 16 with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version (R4.9).
+
+**Why:** R4.7's "column order is fixed" and R7.7's golden are undefined without a fixed set; a header that follows the data is unusable to a consumer allocating columns before reading.
+
+### F25 — Samples are readable at the floor (2026-09-09, round 2)
+
+**Decision:** Each sample's decoded spectrum or colour values are stored in plain SQLite types beside its reading, inside R1.2's readability floor, so an outside reader can check the stored mean against its samples; each sample's vendor payload is an archived artifact per F11 and may be compressed. OQ 5's budget is re-derived on this population.
+
+**Why:** R1.2 promises everything a reader needs; the evidence behind every canonical value is part of that, and R7.1 cannot verify a mean whose samples it cannot see.
+
+### F26 — The CSV carries one payload column per sample slot (2026-09-09, round 2; amends F18)
+
+**Decision:** The canonical export carries `sc_sample_1_payload` … `sc_sample_5_payload`, one column per sample slot up to the capture PRD's maximum of five, empty where a slot is unused or a sample has no payload. F18's "one opaque column" becomes up to five; the header stays fixed.
+
+**Why:** A reading of N samples has N payloads; a fixed slot set keeps R7.7's golden well-defined and gives M3 every sample it reconstructs from.
+
+### F27 — Derived values are kept per reading, history included (2026-09-09, round 2)
+
+**Decision:** Every reading — superseded ones too — carries its six derived spaces; a derivation bump regenerates every reading's set and marks the old sets superseded. An outside reader plots an item's history from plain columns. OQ 5's budget is re-derived on this population.
+
+**Why:** R2.5's over-time view, R4.4's history export, and R7.1's read-back all read derived values off superseded readings; keeping them only on the canonical value would make history a value only the app can compute, which R1.2 forbids.
+
+### F28 — The collection's chosen condition is the current derived set; the canonical export emits it (2026-09-09, round 2)
+
+**Decision:** Derived sets are keyed per reading and measurement condition; the set for the collection's chosen scan mode ([the capture PRD's R1.10](../capture-mode/prd-capture-mode.md#1-collections)) is always present and is the current one, and another condition's set is present when the user asks for it. The canonical export emits one row per item on the chosen condition, the condition column saying which; the header stays fixed.
+
+**Why:** The capture PRD keeps every mode a reading arrives with and works colour values out from the chosen mode; one row per item (F5) and a fixed header (F24) survive only if the export names one condition per row.
+
+### F29 — Every item gets an export row (2026-09-09, round 2)
+
+**Decision:** Every item in the collection gets a row in the canonical export; an item with no canonical value carries its identity and import columns with its colour, spectral, and payload columns empty, and a column states whether it is never-scanned or quarantined. Both cases join M3's population.
+
+**Why:** A half-scanned collection is the ordinary state between sittings, and the export must reconcile against the spreadsheet the inventory came from.
+
 ## Fence → row map
 
-Filled by the Phase 3 fix pass and extended by the round-1 fix pass (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
+Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passes (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
 
 | Fence | Rows that carry it |
 | :--- | :--- |
@@ -131,10 +173,18 @@ Filled by the Phase 3 fix pass and extended by the round-1 fix pass (2026-09-09)
 | F15 | R6.1, R6.2, R6.3; [E14](prd-data-foundation-copy.md#error--state-copy); the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
 | F16 | The Pri cells of R6.1, R6.2, R6.5 (P0) and R6.3 (P1), and the Legend's P0/P1 split; R6.5's positive inventory and its two-surface credential test. |
 | F17 | R2.3's second sentence. |
-| F18 | R4.1's raw-payload column; M3's statistic. |
+| F18 | R4.1's raw-payload column; M3's statistic. Amended by F26: one column per sample slot. |
 | F19 | R6.6; the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's gate half. |
 | F20 | R4.2; OQ 8. |
 | F21 | F1's amended text; no requirement row. |
+| F22 | R4.8 (a); R1.3 (b); R3.5 and R5.7 (c). |
+| F23 | R4.2, R4.3, R4.7, R4.8; OQ 8's results section; the Device Management export line both ways in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
+| F24 | R4.7, R4.9, R7.7; OQ 16. |
+| F25 | R1.2, R1.6, R2.1, R7.1; M6's population; OQ 5's population. |
+| F26 | R4.1, R7.7; M3. |
+| F27 | R3.1, R3.3, R2.5, R4.4, R7.1, R7.5; M6's population; OQ 5's population. |
+| F28 | R3.1, R4.1, R4.2, R4.7; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). |
+| F29 | R4.1, R4.2; M3's population; [E6](prd-data-foundation-copy.md#error--state-copy). |
 
 ## Rejected findings
 
