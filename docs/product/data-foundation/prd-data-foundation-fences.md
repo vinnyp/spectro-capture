@@ -156,6 +156,12 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** The export is a consumer contract with its own audience (U6's downstream tools) and its own fresh-lens set; Data Foundation is the file's promise to its owner. A document that cannot fit because it has too many rows is two PRDs (writing-prds, Phase 2).
 
+### F31 — A non-chosen condition's derived set is kept once asked for (2026-09-10, round 3)
+
+**Decision:** A derived set for a condition other than the collection's chosen scan mode is worked out when the user asks for it and is then kept in the file like any other set — regenerated with the rest, readable at the floor, carried by the history export. OQ 5 gains a third multiplier, bounded by the instrument's condition count.
+
+**Why:** R1.2 promises that nothing a reader needs is a value only the app can compute; a set computed for the moment and discarded would be exactly that, and the history export could not carry it.
+
 ## Fence → row map
 
 Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passes (2026-09-09). A row "carries" a fence when the fence's decision is what the row now states; the fence file, not the row, holds the rationale.
