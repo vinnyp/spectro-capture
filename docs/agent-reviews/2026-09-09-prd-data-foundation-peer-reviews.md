@@ -240,3 +240,50 @@ Every remaining Minor and Nit is accepted and mapped in the round-4 fix file; th
 Every remaining Nit is accepted and mapped in the round-5 fix file. **Judgment calls recorded for the owner to overrule:** a never-scanned item's identity row in the history export (R5-F5); "well-formed" read as the app's released version string; the two copy-header rules (R5-F6, R5-F7).
 
 **Round-5 status:** one owner decision recorded as the export PRD's F11. Fix file `prd-data-foundation-round-5-fixes.md` (both PRDs, 13 boxes) to be verified item-for-item before dispatch. Round 6 is the Phase 6 pre-lock round: the seven lenses delta the rows this fix touches and answer Phase 5's question (does anything deferred break the first usable build?), joined by the retargeted `peer-plan-reviewer` and two fresh lenses — `peer-standards-reviewer` on the export contract and `peer-reliability-reviewer` on the file's durability, migration and recovery rows — with the three mechanical lock preconditions run before the round and again after its fix pass.
+
+## Round 6 — the pre-lock round (2026-09-14)
+
+**Subject:** commit `54583a5` — after the round-5 fix pass, the mechanical lock checks and their editorial pass, the F21 raise to 7,500, and fence F32 (DF 7,305 words, DE 3,584; 100 rows Aligned, 8 held). **Lenses:** the seven standing lenses on Claude/Opus, each with its round-5 report; the retargeted `peer-plan-reviewer` ("could the follow-on spike and first build phase execute from these documents unattended"); and two fresh lenses per the fresh-lens rule — `peer-standards-reviewer` on the export contract and `peer-reliability-reviewer` on the file's durability, migration and recovery rows. Every lens answered Phase 5's question (does anything deferred to P1 break the first usable build) and named what it would stand on at lock. The staff lens's first run died on a connection error and was relaunched with the same brief. **Cross-model:** not repeated.
+
+| lens | verdict | Blocker | Major | Minor/Nit | rows OBJECT | Phase 5 | clears at lock |
+|---|---|---|---|---|---|---|---|
+| product manager | builds the right thing | 0 | 0 | 3 | 0 | no break | yes |
+| staff engineer | ready — proceed | 0 | 0 | 7 | 0 | no break | yes |
+| test (retargeted) | trustworthy after two clauses | 0 | 2 | 8 | 2 | no break | after F6-T1, F6-T2 |
+| privacy | privacy-sound to ship | 0 | 1 Medium | 3 Low, 2 Info | 0 | no break | yes |
+| marketing (copy) | lands after two Majors | 0 | 2 | 1 | 2 | no break | DE yes; DF after F6-1, F6-2 |
+| architecture | sound; two clauses | 0 | 2 | 4 | 2 | no break | after A6-1, A6-2 |
+| interface | contract sound | 0 | 0 | 6 | 0 | no break | yes |
+| plan (retargeted) | execute after two clauses | 0 | 3 | 4 | 3 | no break | after P6-1 (+ P6-2 before the golden task) |
+| standards (fresh) | publish with these changes | 0 | 2 | 8 | 2 | no break | after SR-1, SR-2 |
+| reliability (fresh) | resilient after fixing the Blocker | 1 | 3 | 4 | 6 | no break | after RL-1–RL-4 |
+
+**Round-5 dispositions.** Every round-5 finding from all seven standing lenses is resolved on the text; none partial, none unresolved.
+
+**Row flips.** The 8 held rows: every non-abstaining lens ALIGNs on DF R1.2, M6, E13 and DE E1, and this round's fix file does not change their meaning — they flip to 🤝 Aligned. DE R1.1 (RL-2), R1.3 (A6-1, SR-2), R4.1 (P6-2) draw OBJECTs and R4.3 is edited (S6-MN4, test) — held. Aligned rows drawing an OBJECT this round, edited under process rule 6 and re-verified in round 7: DF R7.1, R3.3, R6.5, R2.2, R5.5, R5.8, R7.2, R7.3, M9, E5, E15, E25; DE R2.2.
+
+### Verify-the-reviewer dispositions (the Blocker, every Major, the cross-lens Minors)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R6-F1 | A file opened read-only for two current readings (R2.2 → E5) has no route back to a writable file: the salvage copies both readings and the fresh file breaks the same invariant; R5.4's "never repairs unasked" implies a repair no row defines | Reliability (Blocker) | DF `:153`, `:193`, copy `:22`, `:222` confirmed — nothing says the salvage output resolves the conflict or opens read-write. | accept — R5.5: the salvage output resolves an invariant its source breaks (the later-recorded reading stays current, the other kept as correction-unconfirmed, the choice named) and opens read-write; R7.3 asserts it; E5 says so. The choice of which reading stays current is a judgment call the owner may overrule. |
+| R6-F2 | Save-a-copy, the pre-upgrade snapshot and the salvage output are the only destination writes with no failure contract; an unfinished copy is listed as a way back | Reliability (Major) | DF `:188`–`:193`, copy `:35` confirmed. | accept — the move's contract on R5.8 and R5.5 (three named failures, nothing partial, an unfinished copy never listed), three states, R7.3 induces, R7.6m lists. |
+| R6-F3 | R1.5's "a hold left by a dead process never blocks the owner" is induced by no test | Reliability (Major) | DF `:140`, `:221`–`:222` confirmed. | accept — R7.3's list gains it. |
+| R6-F4 | DE R1.1's not-exportable carve-out cites R5.5 whole, whose second half is the quarantined-payload case the export must still serve | Reliability (Major) | DE `:124`, DF `:193` confirmed. | accept — the carve-out names R5.5's file-level half. |
+| R6-F5 | After F11 the history export names measured-at twice, with no scope rule; a row with no current reading has a required column with no content | Arch (Major), Interface (Minor), Standards (Minor) | DE `:124`, `:126` confirmed. | accept — R1.3 drops the duplicate and scopes the column to the row's reading; R1.1 says empty on a no-current-reading row. |
+| R6-F6 | R7.1's older-stamp enumeration can never be empty under R3.1's retention, so R7.5's completion assertion is unsatisfiable | Arch (Major) | DF `:171`, `:220`, `:224` confirmed. | accept — "every live value". |
+| R6-F7 | R6.5's "never a release build" is asserted by nothing; a release build writing the interaction record passes every green row | Test (Major) | DF `:208` confirmed. | accept — R6.5's assertion clause covers the record's absence from a release build's file. |
+| R6-F8 | R3.3's settings-change trigger is induced by no test and does not say whether it bumps the stamp | Test (Major) | DF `:173`, `:224` confirmed. | accept — the settings change regenerates under the same stamp; R7.5 induces it on the second-condition fixture. |
+| R6-F9 | E25 is written for the sync class only while R1.7 and R7.2 name a network-volume class with different risks | Marketing (Major) | DF `:139`, `:221`, copy `:32` confirmed. | accept — a network-volume state; R7.6e lists both. |
+| R6-F10 | E15 restates R1.10's whole-or-nothing guarantee without R1.10's local-volume scope | Marketing (Major) | copy `:25` vs DF `:141`, `:139` confirmed. | accept — a scope clause. |
+| R6-F11 | R7.2 and M9 (P0) assert the P1 undo with no landing qualifier, unlike the nine other seams | Plan (Major), Test (Minor) | DF `:221`, `:275` confirmed. | accept — "once R6.3 lands". |
+| R6-F12 | OQ 4 has a closer but no usable interim, so the P0 golden cannot be authored | Plan (Major) | DE `:209`, `:139`, `:163`; SDK audit `:30` confirmed. | accept — R4.1 gates the wavelength block until OQ 4 closes; OQ 4's interim says so. |
+| R6-F13 | The dialect stops at the field boundary: no value-encoding rule, no timestamp format, no column dictionary a consumer can reach | Standards (Major), Interface (Minor) | DE `:138` confirmed. | accept — R2.2 gains a value-form sentence (reflectance as a fraction of 1; times RFC 3339 with an explicit offset; booleans true/false; a fixed precision the golden records) and the help docs a per-version column dictionary. Reflectance's scale is a judgment call. |
+| R6-F14 | A reading both quarantined and superseded has two state values; an item whose current reading is quarantined must carry no current-reading flag | Standards (Major), Interface (Minor) | DE `:54`, `:126`; DF `:154` confirmed. | accept — quarantined takes precedence; no current flag on such an item's rows. |
+| R6-F15 | Three hardware closers name no vehicle; the reference set has no source | Plan (Major, Minor) | DF `:289`, `:292`, DE `:209` confirmed. | accept — an outbound Device Management line adds the grid, the payload round-trip and the reference-set sourcing to that PRD's spike scope; the closers name it. |
+| R6-F16 | R6.5's "never a release build" outruns capture R11.16's open OQ 24, recorded nowhere; what a release build does with a measuring build's file is unsaid | PM (Minor), Privacy (Medium), Arch (Minor), Staff (Minor) | DF `:208` vs capture `:396`, `:485` confirmed. | accept — an outbound Capture Mode line; R6.5 names OQ 24 and says a release build leaves the record untouched. |
+| R6-F17 | The 21-row map files R11.16 under read-back and R6.7/R6.9 under R1.3; R6.9's comparison rule is carried by no DF row | PM, Arch, Privacy, Staff, Test (Minors) | DF `:242` confirmed. | accept — R11.16 → R6.5; R6.7 → R1.1; R6.9 named as carried by no DF row and handed to the Collection Mode line. |
+
+Every remaining Minor and Nit is accepted and mapped in the round-6 fix file. **Judgment calls recorded for the owner to overrule:** the salvage conflict resolution (R6-F1); reflectance as a fraction of 1 (R6-F13); E8/E14 gain an ‹until P1› sentence pointing at save-a-copy (staff, reliability, PM nit — PM would leave it); a release build leaves a measuring build's interaction record untouched (R6-F16); a delete does not reach the session-scoped interaction record (privacy Low). Recorded as deliberate omissions: no collection-identifier column in the export (standards nit).
+
+**Round-6 status:** one owner decision — F21 raised to 8,000 for the fresh lenses' rules. Fix file `prd-data-foundation-round-6-fixes.md` (both PRDs). Round 7 is the closing delta: the six lenses that objected re-verify their rows, and the three fresh or retargeted lenses (plan, standards, reliability) confirm proceed, which Phase 6 requires; the three mechanical checks re-run after the round-7 fix against the state that locks.

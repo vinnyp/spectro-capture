@@ -8,7 +8,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F1 — Data Foundation is a slim data contract, not a schema document (2026-09-09)
 
-**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 7,500 words (raised from 4,000 to 5,000 in Phase 3 when the first fill landed at 5,030 after four compaction passes; from 5,000 to 7,000 after round 1, 2026-09-09; and from 7,000 to 7,500 on 2026-09-10 before the pre-lock round, when the mechanical lock checks required a 21-row obligations map and four Vocabulary entries — bookkeeping, not rules — and the body landed at 7,281 with nothing left to cut but rules: nine lenses found some fifteen missing guarantees — the sample tier, time axes, atomic writes, the sync posture, the file's identity and floor, the CSV contract, fixtures — which are rules, not prose). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
+**Decision:** This PRD states what the user-owned file guarantees: what is kept and never destroyed, what "canonical value" and version history mean to someone reading the file, which derived spaces are present and what the gamut-clipped flag asserts, what the CSV export contains, what a schema migration does to a file a user already has, what the user may delete, and the obligations the capture-mode, import, and device-management PRDs already impose on Data Foundation, gathered here by citation. The storage schema, blob layout, library choice, and migration mechanism are out of scope: they belong to ADR-0003 and a technical spec that follows this document. Word budget for the PRD body: 8,000 words (raised from 4,000 to 5,000 in Phase 3 when the first fill landed at 5,030 after four compaction passes; from 5,000 to 7,000 after round 1, 2026-09-09; and from 7,000 to 7,500 on 2026-09-10 before the pre-lock round, when the mechanical lock checks required a 21-row obligations map and four Vocabulary entries — bookkeeping, not rules — and the body landed at 7,281 with nothing left to cut but rules; and from 7,500 to 8,000 on 2026-09-14 after the pre-lock round, whose two fresh lenses — reliability and standards — named rules the file and export contracts lacked (a route back from a read-only state, a failure contract on the app's own copies, a dead-process hold test, a value-encoding rule): nine lenses found some fifteen missing guarantees — the sample tier, time axes, atomic writes, the sync posture, the file's identity and floor, the CSV contract, fixtures — which are rules, not prose). Shape: the capture PRD's three-file shape plus this fence file and an OQ results file; no author line; row IDs `R<section>.<n>`, `E<n>`, `M<n>`; every requirement row at most two sentences.
 
 **Why:** U5 and U6 are promises to users about the data itself, and the data-consumer persona has no other PRD; the rest is engineering, and reviewing schema through product lenses produces the "solution smuggled into a requirement" findings the gate exists to reject. Everything this PRD can inherit it cites rather than restates.
 
@@ -102,7 +102,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F21 — Word budget 7,000 (2026-09-09, round 1)
 
-**Decision:** Recorded in F1's amended text above. **Amended 2026-09-10 (owner, before the pre-lock round):** 7,500, for the lock checks' traceability and vocabulary additions.
+**Decision:** Recorded in F1's amended text above. **Amended 2026-09-10 (owner, before the pre-lock round):** 7,500, for the lock checks' traceability and vocabulary additions. **Amended 2026-09-14 (owner, after the pre-lock round):** 8,000, for the fresh lenses' rules.
 
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
@@ -174,7 +174,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 
 | Fence | Rows that carry it |
 | :--- | :--- |
-| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its 7,000-word budget (F21). |
+| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its word budget (F21, 8,000 since 2026-09-14). |
 | F2 | R1.1, R1.3; OQ 1. |
 | F3 | R2.4; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3. |
 | F4 | R3.4; OQ 7. |
