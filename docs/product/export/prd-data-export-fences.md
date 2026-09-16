@@ -84,7 +84,7 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Decision:** [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version)'s value-form rule governs app columns only; a column an import brought in is emitted with its value exactly as stored, [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) saying so.
 
-**Why:** U6's "nothing is stranded" and the import PRD's "exactly as entered": a user's own column never changes shape in their own export — an imported `0007` or `1,234.5` comes back out as the file holds it, the app reshaping nothing on the way. Taken over normalising every column to the dialect's forms, which the interface lens showed would alter a script-visible value the user supplied.
+**Why:** U6's "nothing is stranded" and the import PRD's "exactly as entered": a user's own column never changes shape in their own export — an imported `0007` or `1,234.5` comes back out as the file holds it, the app reshaping nothing but its quoting on the way. Taken over normalising every column to the dialect's forms, which the interface lens showed would alter a script-visible value the user supplied.
 
 ## Fence → row map
 
