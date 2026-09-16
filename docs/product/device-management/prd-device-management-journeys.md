@@ -70,18 +70,19 @@ stateDiagram-v2
 ### UJ 1. First run
 
 1. Install & Open app
-2. Activate the Nix SDK license (first run: enter the two-part license credential once; it is stored locally and re-activated silently, offline, on every later launch — activation precedes every device operation, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs; confirm on hardware — [OQ 1](prd-device-management.md#open-questions))
+2. Choose where the file lives (a default offered; [the Data Foundation PRD's R1.8](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns))
+3. Activate the Nix SDK license (first run: enter the two-part license credential once; it is stored locally and re-activated silently, offline, on every later launch — activation precedes every device operation, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs; confirm on hardware — [OQ 1](prd-device-management.md#open-questions))
   - If the license is invalid or incomplete → show the invalid-license state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-3. Initiate device discovery
-4. Grant App bluetooth permissions
-5. App detects a device is available to connect via USB or BLE
+4. Initiate device discovery
+5. Grant App bluetooth permissions
+6. App detects a device is available to connect via USB or BLE
   - If no device detected → show the no-device-found state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-6. Initiate device pairing — a device's first-ever connect authorizes its serial online
+7. Initiate device pairing — a device's first-ever connect authorizes its serial online
   - If there's no internet connection → show the no-internet-to-authorize-device state ([copy, §7](prd-device-management-copy.md#error--state-copy))
   - If pairing fails → show the pairing-failed state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-7. Initiate calibration
+8. Initiate calibration
   - If calibration fails → show the calibration-failed state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-8. App ready for acquisition
+9. App ready for acquisition
 
 ### UJ 1.1 Cannot complete a first run
 
@@ -99,16 +100,19 @@ stateDiagram-v2
 ### UJ 1.2 First run with no hardware (Contributor)
 
 1. Install & open app with no instrument and no license credential
-2. In the device picker, choose "Demo Device (simulated — no instrument)"
-3. No license activation runs and no key prompt ever appears
-4. A working capture session runs against generated readings ([§6](prd-device-management.md#6-mock-device-layer))
+2. Choose where the file lives (a default offered; [the Data Foundation PRD's R1.8](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns))
+3. In the device picker, choose "Demo Device (simulated — no instrument)"
+4. No license activation runs and no key prompt ever appears
+5. A working capture session runs against generated readings ([§6](prd-device-management.md#6-mock-device-layer))
 
 The chart below covers [UJ1](#uj-1-first-run), [UJ1.1](#uj-11-cannot-complete-a-first-run), and [UJ1.2](#uj-12-first-run-with-no-hardware-contributor) together — the denied-Bluetooth and no-internet branches are UJ1.1's failure points; the Demo Device branch is UJ1.2.
 
 ```mermaid
 flowchart TD
-    A[Install and open app] --> E["Enter license once (two parts)"]
-    A -- "no hardware: choose Demo Device" --> K["Demo Device: simulated, no license or activation"]
+    A[Install and open app] --> L1["Choose where the file lives"]
+    L1 --> E["Enter license once (two parts)"]
+    A -- "no hardware: choose Demo Device" --> L2["Choose where the file lives"]
+    L2 --> K["Demo Device: simulated, no license or activation"]
     K --> H
     E --> E1{License valid?}
     E1 -- no --> E2["Invalid-license state: re-enter"]
