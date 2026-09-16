@@ -51,7 +51,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **If the whole file is damaged.** It opens read-only, and the app offers to write everything it can still read into a fresh file while leaving the original untouched. It never repairs my file behind my back.
 
-**If the disk fills up under me.** The app says so, and on a local disk my file is exactly as it was before the write it couldn't finish. There is never a half-written reading, and never a file that won't open next time.
+**If the disk fills up under me.** The app says so, and on a local disk my file is exactly as it was before the write it couldn't finish — never a half-written reading, never a file that won't open next time.
 
 **Keeping my own copy.** I ask the app for a copy rather than copying the file in Finder while the app is open, because copying a database that is in use is one of the documented ways to end up with a broken copy — and "the file is the sync strategy" means people will put it in a folder that syncs itself. If mine is in one, the app told me the risk when I chose it.
 

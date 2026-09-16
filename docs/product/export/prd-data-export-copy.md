@@ -5,7 +5,7 @@ Each `E<n>` ID is the contract between a state and the rows that cite it; IDs ne
 
 These four states were the [Data Foundation PRD's E6, E7, E17 and E18](../data-foundation/prd-data-foundation-copy.md#error--state-copy), moved here under that document's fence F30 with no wording changed; those numbers are retired there and never reused.
 
-**Placeholders.** ⟨…⟩ stands for something filled in when the state is shown: ⟨collection⟩ a collection's name, or one swatch's code where a single item is exported, ⟨n⟩ a count of items or readings, ⟨size⟩ a file size, ⟨path⟩ a file location. A count that would be zero is never shown as "0": its phrase is dropped and the rest of the sentence stands, and a sentence that is nothing but that phrase is left out. A sentence carrying a count agrees with it — "1 reading", "⟨n⟩ readings"; and a named provisional constant renders as the number it currently holds, never as its name.
+**Placeholders.** ⟨…⟩ stands for something filled in when the state is shown: ⟨collection⟩ a collection's name, or one swatch's code where a single item is exported, ⟨n⟩ a count of items or readings, ⟨size⟩ a file size, ⟨path⟩ a file location. A count that would be zero, or a phrase naming something the item does not have, is never shown as "0" or as a claim: the phrase or clause it governs is dropped with the conjunction or punctuation that joined it, and the rest of the sentence stands; a sentence, list line or action that exists only for that phrase, or that would not stand without it, is left out. A sentence carrying a count agrees with it — "1 reading", "⟨n⟩ readings"; and a named provisional constant renders as the number it currently holds, never as its name.
 
 ## Error & state copy
 
