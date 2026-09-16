@@ -1025,3 +1025,14 @@ Import PRD: no row obliges a test to list the actions a non-preview import state
 Cross-document: the device PRD's literal `&amp;` §2 and §7 headings break three links; the widened cross-PRD label grep should become a standing check.
 
 Engineering-plan test matrix: "Leave it set aside" after a non-disagreeing failed attempt does not count; a mixed-route run counts; "Accept the average" and a captured row reset the counter; a run spanning the queue→review boundary; whether N_CONSEC_HARD carries across consecutive one-row look-through sessions.
+
+## Post-lock amendment — the Data Foundation and Data Export obligations (2026-09-16)
+
+- **AM-C1** — the capture PRD's Data Foundation obligation row gains the kept-modes and chosen-scan-mode clause, and its Rows cell gains R1.10 and R4.5 → the [Data Foundation PRD's Capture Mode inherited line](../product/data-foundation/prd-data-foundation.md#inherited-obligations), fence DF F28 (its R3.1, which names that line's R1.10 and R4.5).
+- **AM-C2** — a Data Export obligation row is added to that table (queue order, the averaging basis, the non-spectral mark), and R1.9 and R4.24 now name Data Export beside Data Foundation, each carrying a Commit PR amendment note → the [Data Export PRD's Capture Mode outbound line](../product/export/prd-data-export.md#inherited-obligations), its R1.2 and R2.3.
+- **AM-C3** — OQ 19 is answered, its Decision-so-far and Closer cells rewritten and a section added to [the OQ results file](../product/capture-mode/prd-capture-mode-oq-results.md) → the [Data Foundation PRD's OQ 19 outbound line](../product/data-foundation/prd-data-foundation.md#inherited-obligations), fences DF F2 and F14 (its R1.1, R1.3, R1.8).
+- **AM-C4** — OQ 24's Closer cell records that closing toward a shipped build re-opens the Data Foundation PRD's R6.5 inventory → the [Data Foundation PRD's OQ 24 outbound line](../product/data-foundation/prd-data-foundation.md#inherited-obligations), fence DF F32.
+- **AM-C5** — [E29](../product/capture-mode/prd-capture-mode-copy.md#error--state-copy)'s Body gains the capture-time correction default: correction-unconfirmed until answered, asked once after the session → the [Data Foundation PRD's E29 outbound line](../product/data-foundation/prd-data-foundation.md#inherited-obligations), fences DF F3 and F12 (its R2.4 and E11). Copy rows carry no Commit PR cell, so this log is the record.
+- **AM-I1** — the import PRD's [R2.2](../product/import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule) gains that a later import keeps the existing columns' positions and appends its new ones after them → the [Data Foundation PRD's Inventory Import outbound line](../product/data-foundation/prd-data-foundation.md#inherited-obligations), its R1.2, whose imported-column positions are fence DF F25's.
+
+Verification: a bounded staff-engineer check over the amended lines (recorded below when it lands).
