@@ -457,3 +457,36 @@ Declined with the reason, both released by the raising lens and neither fitting 
 **Post-lock list additions:** R7.6b to list the versions each state names; R7.2's oracle to name a cleared imported value; a golden asserting `sc_simulated` false; whether a Collection Mode rename moves an imported column's stored name; the collision tie-break for a literal `import_`-prefixed passthrough (standards SR10-5); the README's gamut gloss (PM). **Judgment calls recorded for the owner to overrule:** trims applied again under the round-9 decision to fund the round-10 fixes (FX10-8).
 
 **Round-10 status:** one owner decision after the round (2026-09-16): the four released objections R10-F8 lists — R7.6b listing the versions E16/E23 name (test T10-1), R7.2's oracle naming a cleared imported value (privacy P10-1), OQ 2's ADR-0006 gloss (staff SE10-8 and three others), and an `sc_simulated`-false fixture (staff SE10-4) — are overruled on the record and carried on the post-lock list; the owner's reason: each is a released Low or Minor with a build-review or post-lock home, and none makes either document unsafe to hand to engineering. The round-9 trim decision is applied once more (FX10-8, −16 words). Two orchestrator corrections after the pass: R7.1's duplicated R1.2 cite pruned; R1.2's own tail reads "positions and values" as the outbound Inventory Import line now does (DF 7,996 words, DE 3,998). Fix file `prd-data-foundation-round-10-fixes.md` (both PRDs). Round 11 is the closing delta over the eight edited rows and entries by the lenses that objected (standards, reliability, architecture, staff, interface, test, plan) plus privacy on R1.2; the three mechanical checks re-run after it against the state that locks.
+
+## Round 11 — the closing delta after round 10 (2026-09-16)
+
+**Subject:** commit `19a21ea` — after the round-10 fix pass and two orchestrator corrections (DF 7,996 words of 8,000, DE 3,998 of 4,000; held: DF R1.2, R7.1, R7.5, R7.7, R5.7; DE R2.4, R4.1). **Lenses:** the eight whose rows changed — standards, reliability, architecture, staff, interface, test, plan, privacy — on Claude/Opus over those rows, the Vocabulary entry, the outbound Inventory Import line, the FX10-8 trims, fence F13's Why and EJ1 step 11. **Cross-model:** not repeated.
+
+| lens | verdict | Blocker | Major | Minor/Nit | rows OBJECT | stands on |
+|---|---|---|---|---|---|---|
+| staff engineer | not ready until one clause reverts | 1 | 0 | 3 | R1.2, outbound Import line | SE11-1 |
+| test (retargeted) | trustworthy after one Blocker | 1 | 0 | 3 | R1.2, outbound Import line, R7.5, R4.1 | T11-1 |
+| standards (fresh) | publish with these changes | 0 | 1 | 4 | R1.2, outbound Import line, fence F13 Why, §8, DE outbound line | SR11-1 |
+| architecture | sound — lock after one fix | 0 | 1 | 1 | R1.2, outbound Import line | A11-1 |
+| interface | contract sound after one Major | 0 | 1 | 2 | R1.2, outbound Import line, R4.1, DE outbound line | IF11-1 |
+| privacy | privacy-sound to ship | 0 | 1 Medium | 4 Info | R1.2 | nothing (releases P11-1 post-lock) |
+| reliability | resilient — proceed | 0 | 0 | 1 | R1.2, outbound Import line | nothing |
+| plan (retargeted) | ready to execute; proceed holds | 0 | 0 | 4 | R1.2, outbound Import line | nothing (withdraws its own R10-F7) |
+
+**Round-10 dispositions.** Every round-10 finding from the eight lenses is resolved on the text (standards SR10-1/2/3, reliability RL10-1, architecture A10-1/2, staff SE10-1/2/3/5/6/7, interface IF10-2/3, plan PL10-1/2, privacy's Info), with one withdrawn: plan's PL10-3 (the outbound line handing over "positions and values"), whose fix is what every lens now objects to. The plan lens confirms proceed for the spike and the first build phase; PL7-4 stands.
+
+**Row flips.** Every non-abstaining lens ALIGNs on DF R7.1, R7.7, the Vocabulary's chosen-condition entry, the FX10-8 trims, DE R2.4, fence F13's Why sentence (as rationale) and EJ1 step 11 — R7.1, R7.7 and R2.4 flip to 🤝 Aligned. Held for the last delta (round 12): DE R4.1 (IF11-2, T11-3 — one word, edited). DF R1.2 and the outbound Inventory Import line take an editorial reversion to the text every lens reviewed in round 10 (R11-F1) and flip with it. DF R7.5 draws one released OBJECT (test T11-2) whose fix does not fit; it goes to the owner for an overrule on the record at lock. R5.7 stays held on the owner's existing round-10 overrule.
+
+### Verify-the-reviewer dispositions
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| R11-F1 | "keeps the existing columns' positions and values" — added to R1.2's tail as an orchestrator correction and to the outbound Inventory Import line by FX10-7 after round 10's review — says a re-import never changes an imported value, contradicting the import PRD's R3.5 default ("take the new details") that the same row cites two clauses earlier; R7.1's read-back oracle inherits the contradiction and the outbound line would write it into a locked PRD | Staff, Test (Blockers); Standards, Architecture, Interface (Majors); Privacy (Medium); Reliability, Plan (Minors) | DF `:135`, `:258`; import PRD R3.5 `:148` ("The default is to take the new details") confirmed. | accept — "and values" deleted at both places, restoring the round-10-reviewed column-order rule; the value pin and its two change paths stay in R1.2's first clause. Editorial reversion, net −4 words. |
+| R11-F2 | R4.1's bump-diff confinement omits the gamut-mark column, which a derivation bump legitimately flips on a boundary value | Interface (Minor), Test (Minor) | DE `:163`; DF R3.4, M7 confirmed. | accept — "the derived-value, gamut-mark and derivation-version columns" (+1 word). |
+| R11-F3 | Fence F13's Why now says "the app reshaping nothing on the way", the over-reach FX10-5 removed from R2.4 | Architecture (Nit), Standards (Minor) | DE fences `:87` confirmed. | accept — "reshaping nothing but its quoting on the way" (fence file, unbudgeted). |
+| R11-F4 | DE's outbound mirror still lists the generated corpus among "R7.7's fixtures"; §8's trimmed "even" diverges from DE §5 and every sibling | Standards, Staff, Plan, Interface (Nits) | DE `:185`; DF `:263` vs DE `:192` confirmed. | accept — "beside a generated corpus" (word-neutral); "even" restored (+1). |
+| R11-F5 | Both R7.1 enumerations are asserted empty and never non-empty, so an enumeration that cannot return a row passes | Test (Minor, released) | DF `:224` confirmed. | declined for budget, released by the lens; to the owner for an overrule on the record at lock, post-lock list. |
+
+Declined, released by the lens: plan's "second enumeration" naming on R7.5; staff's device-snapshot sentence not covering the generated corpus (index; post-lock with the mirror drift item); standards' "working set" defined inside another term's entry; privacy's omitted-column clause (+4, the same rule import R3.6 already states). **Post-lock list additions:** R7.5 asserting a non-empty enumeration at the interrupt; the value pin handed over on one obligation line (staff SE11-2).
+
+**Round-11 status:** no owner decision beyond the overrule sought at lock for R11-F5. Fix file `prd-data-foundation-round-11-fixes.md` (five boxes). Round 12 is the last delta: interface and test on DE R4.1 only; the three mechanical checks re-run after it against the state that locks.
