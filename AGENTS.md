@@ -83,6 +83,7 @@ docs/
   product/capture-mode/      — the Capture Mode PRD and its companions
   product/import/            — the Inventory Import PRD and its companions
   product/device-management/ — the Device Management PRD
+  product/data-foundation/   — the Data Foundation PRD and its companions
   product/export/            — the Data Export PRD, split out of Data Foundation
   briefs/                    — research briefs + results (see §2)
 docs/decisions/               — ADRs (planned, not yet created)

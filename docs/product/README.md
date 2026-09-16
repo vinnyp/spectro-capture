@@ -6,15 +6,15 @@ A PRD is not a decision about *how*. Architecture is decided only in [`docs/deci
 
 ## The PRD set
 
-Six PRDs remain to be written to cover v1. Priority is authoring order, not a cut line.
+Three PRDs remain to be written to cover v1 (five are locked). Priority is authoring order, not a cut line.
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet |
-| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | draft |
-| 5 | [Data Export](export/prd-data-export.md) | U6 | draft — split out of Data Foundation on 2026-09-09 under its fence F30 |
+| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; owner merge pending |
+| 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16 |
 | 6 | Collection Mode | U5, U7 | queued |
 | 7 | QC & Comparison | U4 | queued |
 | 8 | Color Visualization | U7 | queued |
@@ -102,7 +102,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 | P0 | Inline scan-failure handling | Capture Mode |
 | P0 | Collections + version history | Data Foundation (model) · Collection Mode (UI) |
 | P0 | CSV export, spectral + derived spaces | [Data Export](export/prd-data-export.md) |
-| P0 | Local SQLite store, raw payload canonical | Data Foundation |
+| P0 | Local SQLite store, stored mean canonical, raw payload archived beside it | Data Foundation |
 | P0 | Offline operation + per-device pre-authorization | [Device Management](device-management/prd-device-management.md) |
 | P0 | Mock-device layer | [Device Management](device-management/prd-device-management.md) §6 |
 | P1 | Ad-hoc single capture | Capture Mode |
@@ -114,7 +114,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 **Capture Mode is locked** — its review gate closed after 24 rounds, with owner sign-off on the artifact set still pending — and **Inventory Import**, split out of it under fence F49, is locked with it after verification rounds 25–26. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
 
-**Data Foundation is next.** ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004. **Data Export was split out of it on 2026-09-09** under its fence F30, once the round-2 fix pass left the body 690 words over a 7,000-word budget with nothing to cut but rules; the two are authored and reviewed together against one log.
+**Data Foundation and Data Export are locked** (2026-09-16, twelve rounds under one log). ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004. **Data Export was split out of it on 2026-09-09** under its fence F30, once the round-2 fix pass left the body 690 words over a 7,000-word budget with nothing to cut but rules; the two are authored and reviewed together against one log.
 
 Collection Mode follows both, since it renders what the data model defines and inherits the seam's outcome. QC & Comparison and Color Visualization are P1/P2 and can follow at any point. Telemetry is last regardless — it is v1.x and blocked on a spike.
 
@@ -122,7 +122,7 @@ Collection Mode follows both, since it renders what the data model defines and i
 
 | ADR | Decision | Gating PRD |
 |---|---|---|
-| [0003](../decisions/README.md#decision-queue) | Storage schema: canonical raw payload, version history, derived-value recompute, migration mechanism | Data Foundation |
+| [0003](../decisions/README.md#decision-queue) | Storage schema: the stored mean canonical with the raw payload archived beside it, version history, derived-value recompute, migration mechanism | Data Foundation |
 | [0004](../decisions/README.md#decision-queue) | The capture → collection seam | Capture Mode (the product-level re-open) |
 
 ADRs 0002, 0005, 0006, 0007, and 0008 carry no PRD gate — they are decided from research and the existing vision.
