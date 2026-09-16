@@ -168,6 +168,7 @@ Each line is a requirement on the document named, not a suggestion. A row cited 
 | :--- | :--- | :--- |
 | Data Foundation | The one matching rule for Swatch Codes and collection names, and an import that either lands whole or not at all | [R2.3](#2-target-mapping-and-the-matching-rule), [R3.2](#3-preview-and-commit) |
 | Collection Mode | Renaming an imported column | [R2.2](#2-target-mapping-and-the-matching-rule) |
+| Data Export | Every column an import brought in, and a column mapped to identity, are carried into the export as [the export PRD's R2.3](../export/prd-data-export.md#2-columns-names-dialect-and-the-version) orders them, a name that collides with an app column renamed rather than dropped ([its R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version)) | [R2.2](#2-target-mapping-and-the-matching-rule) |
 | Capture Mode | A collection's pending rows, in file order, are what a session scans; an import is refused while a session on that collection is in flight, and the routes [E40](prd-inventory-import-copy.md#error--state-copy) offers resolve to the capture PRD's §7 paths — an active or paused session ended from there follows [the capture PRD's R7.5](../capture-mode/prd-capture-mode.md#7-pause-end-interruption-and-resume) | [R3.2](#3-preview-and-commit) |
 
 ### 5. Error & State Copy
