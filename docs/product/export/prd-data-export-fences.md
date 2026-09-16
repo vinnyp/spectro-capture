@@ -74,6 +74,18 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** A Data consumer cannot otherwise tell from the file when a swatch was scanned until the history export lands; the serial is already disclosed at the preview, so the added linkability is small and the provenance is what U6 expects. Taken over the privacy lens's reading of the omission as minimization — the owner's call.
 
+### F12 — A change in the form a value is written in bumps the export format version (2026-09-15, round 7)
+
+**Decision:** [R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)'s bump list includes an app column's values changing the form they are written in — precision, a boolean's spelling, a time's shape; [R4.1](prd-data-export.md#4-verifiability)'s in-place golden refresh covers an appended column and a DERIVATION_VERSION bump only, a form change cutting a new golden under the new version.
+
+**Why:** R2.2 made value form part of the contract per released version (round 6); a consumer comparing two releases' files under one declared version must see one form, or the version says nothing a name-keyed parser can rely on. Taken over the alternative — form outside the version, recorded per release in the help docs — which the standards and architecture lenses both read as a silent change at the second release. The owner's call.
+
+### F13 — A passthrough column's value is emitted as stored (2026-09-15, round 7)
+
+**Decision:** [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version)'s value-form rule governs app columns only; a column an import brought in is emitted with its value exactly as stored, [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) saying so.
+
+**Why:** U6's "nothing is stranded" and the import PRD's "exactly as entered": a user's own column never changes shape in their own export — an imported `0007` or `1,234.5` comes back out as it went in. Taken over normalising every column to the dialect's forms, which the interface lens showed would alter a script-visible value the user supplied.
+
 ## Fence → row map
 
 A row "carries" a fence when the fence's decision is what the row now states; this file, not the row, holds the rationale. Every entry below is the corresponding entry in [the Data Foundation PRD's map](../data-foundation/prd-data-foundation-fences.md#fence--row-map) rewritten into this document's IDs.
@@ -91,6 +103,8 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F9 | [R1.1](prd-data-export.md#1-what-the-export-contains), [R1.3](prd-data-export.md#1-what-the-export-contains), [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version), [R2.3](prd-data-export.md#2-columns-names-dialect-and-the-version); the Data Foundation line in [Inherited obligations](prd-data-export.md#inherited-obligations) (the chosen condition's set). |
 | F10 | [R1.1](prd-data-export.md#1-what-the-export-contains), [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version); [M1](prd-data-export.md#success-metrics)'s population; [E1](prd-data-export-copy.md#error--state-copy). |
 | F11 | [R1.1](prd-data-export.md#1-what-the-export-contains); [E1](prd-data-export-copy.md#error--state-copy); the inbound Data Foundation line (both time axes). |
+| F12 | [R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)'s bump list; [R4.1](prd-data-export.md#4-verifiability)'s in-place refresh list; [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version)'s per-version help-docs sentence. |
+| F13 | [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version) (app columns only); [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) (emitted as stored). |
 
 ## Rejected findings
 
