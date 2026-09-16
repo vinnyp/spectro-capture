@@ -32,7 +32,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F5 — Export is canonical-only by default with version history as a v1 option (2026-09-09, Phase 3)
 
-**Decision:** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version. The canonical export is P0; the history option is P1. Closes OQ 9 and settles the export rows' priority.
+**Decision:** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version. The canonical export is P0; the history option is P1. Closes OQ 9 (now the export PRD's OQ 2) and settles the export rows' priority.
 
 **Clarification (1), 2026-09-09:** The test row that asserts the export's column set — now the export PRD's R4.4 (this document's R7.6 before F30) — is P0 with the rows it verifies (process rule 3).
 
@@ -90,7 +90,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F18 — The CSV carries the vendor's raw payload column (2026-09-09, round 1)
 
-**Decision:** One opaque column per row, documented as the vendor's round-trip string, so the export carries the file's fidelity promise and M3 reads as written; a reading with no payload leaves it empty and marked.
+**Decision:** One opaque column per row, documented as the vendor's round-trip string, so the export carries the file's fidelity promise and M3 (now the export PRD's M1) reads as written; a reading with no payload leaves it empty and marked.
 
 ### F19 — v1 does not ship without the vendor-analytics disclosure (2026-09-09, round 1)
 
@@ -98,7 +98,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F20 — The gamut-clipped export column is `sRGB_gamut_clipped` (2026-09-09, round 1)
 
-**Decision:** Closes OQ 8 by owner decision; revisited only if ISO 17972-4's schema becomes readable.
+**Decision:** Closes OQ 8 (now the export PRD's OQ 1) by owner decision; revisited only if ISO 17972-4's schema becomes readable.
 
 ### F21 — Word budget 7,000 (2026-09-09, round 1)
 
@@ -110,13 +110,13 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F23 — The `sc_` prefix applies to every app column (2026-09-09, round 2)
 
-**Decision:** F22(a) subsumes F20 and the device PRD's `simulated` column: the export columns are `sc_sRGB_gamut_clipped`, `sc_sRGB_source_space`, `sc_sRGB_rendering_intent`, `sc_simulated`, and `sc_nm_<wavelength>` for the spectral columns. F20's answer and OQ 8's results section are restated under the prefix; the device PRD's "emits a `simulated` column" obligation is read as `sc_simulated`, carried as a post-lock amendment line under "what this PRD imposes on others". No exemption list exists.
+**Decision:** F22(a) subsumes F20 and the device PRD's `simulated` column: the export columns are `sc_sRGB_gamut_clipped`, `sc_sRGB_source_space`, `sc_sRGB_rendering_intent`, `sc_simulated`, and `sc_nm_<wavelength>` for the spectral columns. F20's answer and OQ 8's (now the export PRD's OQ 1) results section are restated under the prefix; the device PRD's "emits a `simulated` column" obligation is read as `sc_simulated`, carried as a post-lock amendment line under "what this PRD imposes on others". No exemption list exists.
 
 **Why:** One rule the golden header can be written against; a closed exemption list would re-open the collision F22 exists to close.
 
 ### F24 — The export format version fixes the wavelength column set (2026-09-09, round 2)
 
-**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as OQ 16 with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version (R4.9, now the export PRD's R2.5).
+**Decision:** The wavelength column set — start, end, interval — is part of the export format version; v1's set is the v1 instrument family's reported grid, carried as OQ 16 (now the export PRD's OQ 4) with a per-SDK-docs candidate closed on hardware. A reading whose wavelengths fall outside the set exports those columns empty and marked; any change to the set bumps the export format version (R4.9, now the export PRD's R2.5).
 
 **Why:** R4.7's "column order is fixed" (now the export PRD's R2.3) and R7.7's golden are undefined without a fixed set; a header that follows the data is unusable to a consumer allocating columns before reading.
 
@@ -130,7 +130,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** The canonical export carries `sc_sample_1_payload` … `sc_sample_5_payload`, one column per sample slot up to the capture PRD's maximum of five, empty where a slot is unused or a sample has no payload. F18's "one opaque column" becomes up to five; the header stays fixed.
 
-**Why:** A reading of N samples has N payloads; a fixed slot set keeps R7.7's golden well-defined and gives M3 every sample it reconstructs from.
+**Why:** A reading of N samples has N payloads; a fixed slot set keeps R7.7's golden well-defined and gives M3 (now the export PRD's M1) every sample it reconstructs from.
 
 ### F27 — Derived values are kept per reading, history included (2026-09-09, round 2)
 
@@ -146,7 +146,7 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 ### F29 — Every item gets an export row (2026-09-09, round 2)
 
-**Decision:** Every item in the collection gets a row in the canonical export; an item with no canonical value carries its identity and import columns with its colour, spectral, and payload columns empty, and a column states whether it is never-scanned or quarantined. Both cases join M3's population.
+**Decision:** Every item in the collection gets a row in the canonical export; an item with no canonical value carries its identity and import columns with its colour, spectral, and payload columns empty, and a column states whether it is never-scanned or quarantined. Both cases join M3's (now the export PRD's M1) population.
 
 **Why:** A half-scanned collection is the ordinary state between sittings, and the export must reconcile against the spreadsheet the inventory came from.
 
@@ -175,7 +175,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | Fence | Rows that carry it |
 | :--- | :--- |
 | F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its word budget (F21, 8,000 since 2026-09-14). |
-| F2 | R1.1, R1.3; OQ 1. |
+| F2 | R1.1, R1.3; the Capture Mode OQ 19 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 1. |
 | F3 | R2.4; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3. |
 | F4 | R3.4; OQ 7. |
 | F5 | No row here any more: moved to the export PRD's R1.1 (canonical default, P0) and R1.3 (history option, P1), the P0/P1 split in [its Legend](../export/prd-data-export.md#legend) and the Pri cells of its R1.2, R2.1, R3.1, and its OQ 2 — transcribed there as [its F2](../export/prd-data-export-fences.md). This document's Legend keeps only the delete undo as P1. |
@@ -183,11 +183,11 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F7 | R6.3; OQ 10. |
 | F8 | R6.6 (authorship handed over; the gate itself is F19's); the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 12's ownership half. |
 | F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as DJ5. |
-| F10 | R2.1; the Vocabulary entries for sample, reading, and canonical value; R6.2's counted-in-readings clause and [E8](prd-data-foundation-copy.md#error--state-copy); M6's population; the state diagram's sample → reading → history path. |
+| F10 | R2.1; the Vocabulary entries for sample, reading, and canonical value; R6.2's counted-in-readings clause and [E8](prd-data-foundation-copy.md#error--state-copy); M6's population; the state diagram's sample → reading → history path; the Vision line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
 | F11 | R1.2 (the readability half), R1.6 (the archived-payload half); OQ 5's constraint, OQ 2's derivation. |
 | F12 | R2.4, R2.5, R2.8; R7.1's read-back set and M4's third question; [E11](prd-data-foundation-copy.md#error--state-copy)'s "Ask me later"; the Capture Mode E29 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3's amendment. |
-| F13 | R1.7; R1.4's second clause; R7.4's volume-class scoping and M1's population. |
-| F14 | R1.8, R1.9; [E13](prd-data-foundation-copy.md#error--state-copy); the Capture Mode OQ 19 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
+| F13 | R1.7; the dead-process hold in R1.5 and R7.3; R1.4's second clause; R7.4's volume-class scoping and M1's population. |
+| F14 | R1.8, R1.9; [E13](prd-data-foundation-copy.md#error--state-copy); the Capture Mode OQ 19 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; the Device Management line (UJ1) there. |
 | F15 | R6.1, R6.2, R6.3; [E14](prd-data-foundation-copy.md#error--state-copy); the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
 | F16 | The Pri cells of R6.1, R6.2, R6.5 (P0) and R6.3 (P1), and the Legend's P0/P1 split; R6.5's positive inventory and its two-surface credential test. |
 | F17 | R2.3's second sentence. |
@@ -198,13 +198,13 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F22 | [R1.3](prd-data-foundation.md#1-the-file-the-user-owns) (b); [R5.7](prd-data-foundation.md#5-migration-and-compatibility) (c, the COMPATIBILITY_FLOOR half); [R3.5](prd-data-foundation.md#3-derived-values-and-gamut-honesty) states the absent value the export writes empty. (a) and the export half of (c) moved to the export PRD's R2.4 and R2.1 — [its F5](../export/prd-data-export-fences.md). |
 | F23 | No row here any more: moved to the export PRD's R1.2, R2.1, R2.3 and R2.4, its OQ 1's results section, and the Device Management export line both ways in [its obligations tables](../export/prd-data-export.md#inherited-obligations) — [its F6](../export/prd-data-export-fences.md). |
 | F24 | No row here any more: moved to the export PRD's R2.3, R2.5, R4.1 and R4.2, and its OQ 4 — [its F7](../export/prd-data-export-fences.md). [R7.7](prd-data-foundation.md#7-verifiability) keeps the fixtures those rows run on. |
-| F25 | R1.2, R1.6, R2.1, R7.1; M6's population; OQ 5's population. |
+| F25 | R1.2, R1.6, R2.1, R7.1; M6's population; OQ 5's population; the outbound Data Export line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
 | F26 | No row here any more: moved to the export PRD's R1.1, R4.1, R4.2 and its M1 — [its F8](../export/prd-data-export-fences.md). [R7.7](prd-data-foundation.md#7-verifiability) keeps the fixtures. |
-| F27 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R3.3](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R2.5](prd-data-foundation.md#2-canonical-value-and-version-history), [R7.1](prd-data-foundation.md#7-verifiability), [R7.5](prd-data-foundation.md#7-verifiability); M6's population; OQ 5's population. R4.4's history export moved to the export PRD's R1.3, which cites this fence from there. |
-| F28 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5). The export half moved to the export PRD's R1.1, R2.1 and R2.3 — [its F9](../export/prd-data-export-fences.md). |
+| F27 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R3.3](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R2.5](prd-data-foundation.md#2-canonical-value-and-version-history), [R7.1](prd-data-foundation.md#7-verifiability), [R7.5](prd-data-foundation.md#7-verifiability); M6's population; OQ 5's population; the outbound Data Export line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). R4.4's history export moved to the export PRD's R1.3, which cites this fence from there. |
+| F28 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5); the outbound Data Export line there. The export half moved to the export PRD's R1.1, R2.1 and R2.3 — [its F9](../export/prd-data-export-fences.md). |
 | F29 | No row here any more: moved to the export PRD's R1.1 and R2.1, its M1's population, and its E1 — [its F10](../export/prd-data-export-fences.md). |
 | F30 | The [Legend](prd-data-foundation.md#legend)'s retired-ID list; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
-| F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population and [R7.7](prd-data-foundation.md#7-verifiability)'s fixture; the export PRD's R1.1, R1.3 and E1 (one condition per row, the amendment). |
+| F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population and [R7.7](prd-data-foundation.md#7-verifiability)'s fixture; the outbound Data Export line in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the export PRD's R1.1, R1.3 and E1 (one condition per row, the amendment). |
 | F32 | [R6.5](prd-data-foundation.md#6-deletion-and-privacy); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
 
 ## Rejected findings
