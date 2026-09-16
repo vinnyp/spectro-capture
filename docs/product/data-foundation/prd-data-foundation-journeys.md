@@ -41,7 +41,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **If the upgrade stops partway.** The file is exactly as it was. The app names the version it found and the version it expected, and points at the copy it took before it started. Nothing was half-changed and nothing is lost.
 
-**If an upgrade would lose a reading.** It doesn't happen. The app refuses rather than performing it, and my file comes out of the attempt byte for byte as it went in.
+**If an upgrade would lose a reading.** It doesn't happen. The app refuses rather than performing it, and my file comes out of the attempt exactly as it went in — every reading, mark and note reads back the same.
 
 **If I open the file on a machine running an older app.** I get a plain statement that this file was made by a newer version, the version numbers of both, and a read-only view. I am never shown a partial read of a file the app doesn't fully understand, which would look like data loss.
 
@@ -51,7 +51,7 @@ States are named in plain language; each one's shipping copy is in the copy file
 
 **If the whole file is damaged.** It opens read-only, and the app offers to write everything it can still read into a fresh file while leaving the original untouched. It never repairs my file behind my back.
 
-**If the disk fills up under me.** The app says so and my file is exactly as it was before the write it couldn't finish. There is never a half-written reading, and never a file that won't open next time.
+**If the disk fills up under me.** The app says so, and on a local disk my file is exactly as it was before the write it couldn't finish. There is never a half-written reading, and never a file that won't open next time.
 
 **Keeping my own copy.** I ask the app for a copy rather than copying the file in Finder while the app is open, because copying a database that is in use is one of the documented ways to end up with a broken copy — and "the file is the sync strategy" means people will put it in a folder that syncs itself. If mine is in one, the app told me the risk when I chose it.
 
