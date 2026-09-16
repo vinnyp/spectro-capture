@@ -87,13 +87,14 @@ stateDiagram-v2
 ### UJ 1.1 Cannot complete a first run
 
 1. Install & Open app with no internet connection
-2. Activate the license — succeeds offline (activation needs no internet, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs)
-3. Initiate device discovery
-4. User denies App bluetooth permissions
+2. Choose where the file lives (a default offered; [the Data Foundation PRD's R1.8](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns))
+3. Activate the license — succeeds offline (activation needs no internet, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs)
+4. Initiate device discovery
+5. User denies App bluetooth permissions
   - Failure point: Permission is now denied, App can't detect the device via bluetooth
   - Show the Bluetooth-denied state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-5. App can only detect device via USB
-6. If a Nix device is discovered, attempt to pair
+6. App can only detect device via USB
+7. If a Nix device is discovered, attempt to pair
   - Failure point: No internet connection prevents the device's first-time authorization
   - Show the no-internet-to-authorize-device state ([copy, §7](prd-device-management-copy.md#error--state-copy)); the user can retry, or leave setup for now
 
@@ -109,10 +110,9 @@ The chart below covers [UJ1](#uj-1-first-run), [UJ1.1](#uj-11-cannot-complete-a-
 
 ```mermaid
 flowchart TD
-    A[Install and open app] --> L1["Choose where the file lives"]
-    L1 --> E["Enter license once (two parts)"]
-    A -- "no hardware: choose Demo Device" --> L2["Choose where the file lives"]
-    L2 --> K["Demo Device: simulated, no license or activation"]
+    A[Install and open app] --> L["Choose where the file lives"]
+    L --> E["Enter license once (two parts)"]
+    L -- "no hardware: choose Demo Device" --> K["Demo Device: simulated, no license or activation"]
     K --> H
     E --> E1{License valid?}
     E1 -- no --> E2["Invalid-license state: re-enter"]
