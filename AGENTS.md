@@ -83,6 +83,8 @@ docs/
   product/capture-mode/      — the Capture Mode PRD and its companions
   product/import/            — the Inventory Import PRD and its companions
   product/device-management/ — the Device Management PRD
+  product/data-foundation/   — the Data Foundation PRD and its companions
+  product/export/            — the Data Export PRD, split out of Data Foundation
   briefs/                    — research briefs + results (see §2)
 docs/decisions/               — ADRs (planned, not yet created)
 .compound-engineering/        — Compound Engineering config; docs/ is the CE artifact root
@@ -100,8 +102,8 @@ Where source code lands, and how it's modularized, is not yet decided beyond the
 - **Collection mode** — browsing, searching, and editing after capture.
 - **The seam** — the boundary between capture mode and collection mode (see §3, open).
 - **Cataloger** — the primary persona: someone digitizing their whole collection in one sitting.
-- **Canonical value** — an item's current authoritative measurement, which is its raw payload (not a derived value); a re-scan supersedes it into version history, never overwrites it, and QC scans compare against it.
-- **Raw payload** — the instrument's raw measurement bytes. This is what the store keeps as canonical; Lab/XYZ/LCh/Luv/sRGB/HSL are derived from it.
+- **Canonical value** — an item's current authoritative measurement: the stored mean of a saved set of samples, not a vendor raw payload and not a derived value, carrying the measurement conditions, the device snapshot, the basis the mean was taken on, and the derivation version. A re-scan supersedes it into version history, never overwrites it, and QC scans compare against it. (Data Foundation fence F10.)
+- **Raw payload** — the instrument's raw measurement bytes. It is an archived artifact kept beside the canonical value rather than being it, one per sample where the instrument supplies one, and may be compressed; Lab/XYZ/LCh/Luv/sRGB/HSL are derived from the stored mean, not from it. (Data Foundation fences F10, F11, F25.)
 - **Multi-sample averaging** — 1–5 readings of one item averaged into a single value.
 - **ΔE / ΔE2000** — the color-difference metric used for QC comparisons.
 - **Gamut-clipped** — the flag on a derived sRGB value that fell outside the display gamut.

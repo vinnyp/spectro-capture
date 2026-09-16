@@ -19,7 +19,7 @@ Ordered by dependency first, then irreversibility (numbering is pinned where exi
 |---|---|---|---|
 | [0001](0001-rust-core-swiftui-shell.md) | Language & UI shape: Rust core + SwiftUI shell | **Accepted** (2026-09-01) | Gate satisfied — [spike evidence](../briefs/rust-boundary-spike-results.md); fallback not triggered |
 | 0002 | v1 instrument scope: Nix Spectro 2 / Spectro L only | queued — already cited by the vision, needs formalizing | none |
-| 0003 | Storage schema: canonical raw payload, version history, derived-value recompute, and the schema-migration mechanism | queued | PRD for data/versioning; the sharpest one-way door — this schema ships inside users' own files. Scoped to the measurement/versioning core; session-adjacent tables (queue, dead-letter) wait for 0004's seam re-open |
+| 0003 | Storage schema: the stored mean canonical with the raw payload archived beside it, version history, derived-value recompute, and the schema-migration mechanism | queued | PRD for data/versioning; the sharpest one-way door — this schema ships inside users' own files. Scoped to the measurement/versioning core; session-adjacent tables (queue, dead-letter) wait for 0004's seam re-open |
 | 0004 | The capture → collection seam | queued | PRD-level re-open first: the two capture-mode research passes conflict and v2 says re-open before the ADR |
 | 0005 | Module layout, the `SpectroDevice` seam placement, and executor/runtime ownership (no whole-app tokio; see 0001) | queued | depends on 0001 |
 | 0006 | Minimum macOS version | queued | research cites APIs spanning 13.0–15.0; decide against 0001's toolchain needs |
