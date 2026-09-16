@@ -248,3 +248,18 @@ Rows and copy: R1.8's two landings (collection vs device panel on first run) rea
 Indexes and journeys: the journeys' nine "copy, §7" labels; the workflow diagram's single AuthBlocked state and missing leave-setup edges from Pairing and Calibration; E12's "Try again" versus the diagram's return to discovery; R5.2's forward reference to ADR-0004.
 
 Cross-document: the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0 and ride that PRD's OQ 16 amendment; OQ 5's and OQ 28's closers name dogfood data no row records.
+
+## Post-lock amendment — the hardware spike's scope and the Data Foundation / Data Export obligations (2026-09-16)
+
+Authority: the Data Foundation PRD's outbound obligations table (`docs/product/data-foundation/prd-data-foundation.md:250–251`, fences F14 and F32's neighbours) and the Data Export PRD's (`docs/product/export/prd-data-export.md:180`, fence F6), both locked 2026-09-16. No rule changed beyond what those lines record.
+
+- AM-1 — the Legend's hardware-spike scope gains the four questions the Data Foundation and Data Export PRDs hand it: the reported wavelength grid (the export PRD's OQ 4), the raw payload round-trip and the toolkit's spaces (the DF PRD's OQ 15), the vendor analytics recipient (its OQ 12), and the published reference set (its OQ 6) → DF `:251`.
+- AM-2 — the Phase-0 predecessors line now reads that Data Foundation and Data Export are locked (2026-09-16) and only Collection Mode and Telemetry are unwritten → the two lock records (the Data Foundation and Data Export PRDs' headers, 2026-09-16); a factual status correction, not a recorded amendment.
+- AM-3 — the outbound obligations table: the Data Foundation line adds that the same device snapshot is what the export PRD's R1.1 writes, and the "Data Foundation, export" line becomes a Data Export line carrying `sc_simulated` → DE `:180`, fence F6.
+- AM-4 — R6.5's `simulated` column is named `sc_simulated` in the export PRD's terms → DE `:180`, fence F6.
+- AM-5 — R6.20's declared-state harness gains the file-location axis → DF `:250`, fence F14.
+- AM-6 — M2's start event spans choosing where the file lives (the DF PRD's R1.8) → DF `:250`, fence F14. The Success Metrics table has no Commit PR column, so the recorded Commit PR note has nowhere to land and was not written.
+- AM-7 — journeys UJ1 and UJ1.2 gain "Choose where the file lives" as step 2 before license activation, later steps renumbered, and the first-run chart gains that node on both the licensed and the no-hardware path → DF `:250`, fence F14.
+- AM-7a — UJ1.1 gains the same step 2 (the orchestrator's extension: the Data Foundation PRD's R1.8 applies to every first launch); the chart's two location nodes merge into one and the Demo Device choice follows it.
+
+Verification: a bounded staff-engineer check (Claude/Opus, 2026-09-16) over the amended lines and the spike brief — one Blocker on the brief (the Capture Mode PRD's declared spike scope, its OQ 1, 2, 4, 5, 21 and 22, was missing; folded in), one Major on M2 (the start event read as excluding the location choice; rewritten so the measured interval spans it), one Major on the brief (no prerequisites section; added), and Minors on the Legend's and the obligations line's qualifiers, UJ1.1, the chart, R6.20's in-row cite and the brief's Feeds lines — all fixed in the same pass; the amendment is safe to merge.

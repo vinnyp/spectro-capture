@@ -11,11 +11,12 @@ SpectroCapture is an open-source macOS desktop app for **bulk color acquisition*
 Source of truth, in this order:
 
 - [`docs/product/vision.md`](docs/product/vision.md) — what the product is, why it exists, and v1/v2/non-goal scope. Start here.
-- [`docs/briefs/`](docs/briefs) — research, not decisions. Each topic is a `*-brief.md` (the questions asked) and a `*-results.md` (the findings). Where a `-results-v2.md` exists, it supersedes the first-pass results on any point where they conflict, and says so explicitly. Three topics so far:
+- [`docs/briefs/`](docs/briefs) — research, not decisions. Each topic is a `*-brief.md` (the questions asked) and a `*-results.md` (the findings). Where a `-results-v2.md` exists, it supersedes the first-pass results on any point where they conflict, and says so explicitly. Topics so far:
   - acquisition experience — the capture-mode design (queue model, error handling, the seam); has a `-results-v2.md` gap-closure pass
   - browsing a collection at scale — the collection-mode design (data model, rendering, color honesty)
   - macOS SwiftUI app architecture — the chassis: module boundaries, state ownership, concurrency, testability without hardware
-- `docs/decisions/` — Architectural Decision Records. **This directory does not exist yet.** It is the only place a recommendation becomes a decision.
+  - the hardware spike — `hardware-spike-brief.md`, the questions a person with an instrument answers for the five locked PRDs; its results file lands beside it
+- `docs/decisions/` — Architectural Decision Records: ADR-0001 (the Rust core / SwiftUI shell) and the decision queue in its README. It is the only place a recommendation becomes a decision.
 
 **If it isn't in an ADR, it is not decided.** A research brief can recommend an approach with strong evidence behind it; that is still a recommendation, not a commitment, until someone writes the ADR. Do not treat brief language ("recommended," "best practice," "the evidence favors") as settled architecture.
 
@@ -86,7 +87,7 @@ docs/
   product/data-foundation/   — the Data Foundation PRD and its companions
   product/export/            — the Data Export PRD, split out of Data Foundation
   briefs/                    — research briefs + results (see §2)
-docs/decisions/               — ADRs (planned, not yet created)
+docs/decisions/               — ADRs (0001 accepted; the README holds the queue)
 .compound-engineering/        — Compound Engineering config; docs/ is the CE artifact root
 .gitleaks.toml                 — gitleaks config: default rules + vendor license-key rule
 lefthook.yml                   — pre-commit hook config (runs gitleaks)
