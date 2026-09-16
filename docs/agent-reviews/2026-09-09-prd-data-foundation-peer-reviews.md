@@ -490,3 +490,16 @@ Declined with the reason, both released by the raising lens and neither fitting 
 Declined, released by the lens: plan's "second enumeration" naming on R7.5; staff's device-snapshot sentence not covering the generated corpus (index; post-lock with the mirror drift item); standards' "working set" defined inside another term's entry; privacy's omitted-column clause (+4, the same rule import R3.6 already states). **Post-lock list additions:** R7.5 asserting a non-empty enumeration at the interrupt; the value pin handed over on one obligation line (staff SE11-2).
 
 **Round-11 status:** one owner decision (2026-09-16): R11-F5 — R7.5 asserting a non-empty enumeration at the interrupt (test T11-2) — is overruled on the record and carried post-lock; the owner's reason: a released Minor whose sibling observations in R7.5 already catch a no-op regeneration, with the assertion added at build review. The fix pass's bookkeeping put DE two words over, so one four-word rule-free trim in its Background landed under the standing trim decision (DF 7,996 words, DE 3,998). Fix file `prd-data-foundation-round-11-fixes.md` (five boxes). Round 12 is the last delta: interface and test on DE R4.1 only; the three mechanical checks re-run after it against the state that locks.
+
+## Round 12 — the last delta, one row (2026-09-16)
+
+**Subject:** commit `3d62dac` — after the round-11 fix pass (DF 7,996 words of 8,000, DE 3,998 of 4,000; held: DE R4.1, plus DF R5.7 and R7.5 on the owner's overrules). **Lenses:** interface and test on Claude/Opus over DE R4.1 (the one edited row) and, for confirmation, the reverted DF R1.2 and outbound Inventory Import line. **Cross-model:** not repeated.
+
+| lens | verdict | Blocker | Major | Minor/Nit | rows OBJECT | stands on |
+|---|---|---|---|---|---|---|
+| interface | contract sound — safe to hand to engineering | 0 | 0 | 1 Nit | 0 | nothing |
+| test (retargeted) | trustworthy — safe to hand to engineering | 0 | 0 | 1 Nit | 0 | nothing |
+
+**Round-11 dispositions.** IF11-1/T11-1 (the reversion) RESOLVED at DF `:135` and `:258` — an exact restoration of the round-10-reviewed text with no straggler; IF11-2/T11-3 (R4.1's gamut-mark column) RESOLVED at DE `:163`; IF11-3 (the DE mirror's "beside") RESOLVED at DE `:185`. Both lenses release one shared Nit to the post-lock list: "gamut-mark" could use the already-defined term "gamut-clipped" (word-neutral).
+
+**Row flips.** DE R4.1: both lenses ALIGN and it is not edited — it flips to 🤝 Aligned. DF R5.7 and R7.5 flip to 🤝 Aligned by the owner's overrules recorded in rounds 10 and 11 (the standing objections — test T10-1 and T11-2 — and the owner's reasons are in those rounds' status lines). With that, every requirement, surface, metric and copy row in both documents is 🤝 Aligned; Phase 6's lock record follows the lock edits and the mechanical checks on the state that locks.
