@@ -17,6 +17,7 @@ Source of truth, in this order:
   - macOS SwiftUI app architecture — the chassis: module boundaries, state ownership, concurrency, testability without hardware
   - the hardware spike — `hardware-spike-brief.md`, the questions a person with an instrument answers for the five locked PRDs; its results file lands beside it
 - `docs/decisions/` — Architectural Decision Records: ADR-0001 (the Rust core / SwiftUI shell) and the decision queue in its README. It is the only place a recommendation becomes a decision.
+- [`docs/product/post-lock.md`](docs/product/post-lock.md) — the post-lock list: the follow-on work every locked PRD recorded at lock, grouped by the trigger that acts on it (the spike, a pass over a locked PRD, the first build PR, ADR-0003, documentation). Check it before starting any of those; tick an item in the same PR that closes it; a new PRD's lock appends here, not to its review log.
 
 **If it isn't in an ADR, it is not decided.** A research brief can recommend an approach with strong evidence behind it; that is still a recommendation, not a commitment, until someone writes the ADR. Do not treat brief language ("recommended," "best practice," "the evidence favors") as settled architecture.
 
@@ -81,6 +82,7 @@ There is no code yet. Current tree:
 docs/
   product/vision.md          — product vision, scope, personas, journeys
   product/README.md          — the PRD index
+  product/post-lock.md       — the post-lock list (see §2)
   product/capture-mode/      — the Capture Mode PRD and its companions
   product/import/            — the Inventory Import PRD and its companions
   product/device-management/ — the Device Management PRD

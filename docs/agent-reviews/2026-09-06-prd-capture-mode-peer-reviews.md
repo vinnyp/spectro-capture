@@ -947,7 +947,7 @@ R5.9, R8.4 → 🤝 (unanimous ALIGN; orchestrator flip recorded here).
 - **Zero unresolved placeholders; template guidance comments deleted** (checked across the PRD, the copy file, and the journeys file).
 - **Mechanical checks:** anchors and citations resolve (the device PRD's literal `&amp;` §7 heading is the one known miss, on the post-lock list); no literal `&amp;` in the capture files; six mermaid blocks render; every requirement row at most two sentences (F45).
 - **Fences:** F1–F48 with clarifications; fence → row map in the fence file.
-- **Post-lock list:** in `prd-capture-mode-round-23-fixes.md`.
+- **Post-lock list:** was in `prd-capture-mode-round-23-fixes.md` (deleted at lock); now in [the post-lock list](../product/post-lock.md).
 - **Next:** owner review of the artifact set. No PR until the owner says so. The PRD header's `Status:` line is the owner's to flip.
 
 ## Round 25 — F49 split verification (2026-09-08)
@@ -1018,13 +1018,7 @@ The edits above touch no requirement row's text. Under the round-25 log's own fi
 
 ### Post-lock list (consolidated)
 
-Capture PRD wording: R11.8 "set … against" → "relative to" (contested; two lenses read "against" as R4.9's term); F47's Decision lacks an "(R11.12 added rounds 21–22)" marker; the Surfaces table carries no ‹P1› on P1-only state names; the "Device PRD, simulated layer" obligation cell does not summarise R11.8's spread control; OQ 18's results phrasing predates F42; the Legend's serial comma; F47's map files E18's and E42's re-scan marks as action-level where they are body-variant marks (name the third mark kind once in the copy header); UJ 3.9 step 4's gloss omits the agreement-check setting; §11 step 4's negatives inherit N_CONSEC_HARD by ellipsis.
-
-Import PRD: no row obliges a test to list the actions a non-preview import state offers (E40's three routes) — a rule change, so an owner decision; §4's Traces line points at UJ 3.9; the three Swatch field terms are defined in neither Vocabulary; the journeys carry no blocked-import path for R3.2/E40.
-
-Cross-document: the device PRD's literal `&amp;` §2 and §7 headings break three links; the widened cross-PRD label grep should become a standing check.
-
-Engineering-plan test matrix: "Leave it set aside" after a non-disagreeing failed attempt does not count; a mixed-route run counts; "Accept the average" and a captured row reset the counter; a run spanning the queue→review boundary; whether N_CONSEC_HARD carries across consecutive one-row look-through sessions.
+Moved to [the post-lock list](../product/post-lock.md) on 2026-09-17, the single source of truth; this record no longer carries it.
 
 ## Post-lock amendment — the Data Foundation and Data Export obligations (2026-09-16)
 
