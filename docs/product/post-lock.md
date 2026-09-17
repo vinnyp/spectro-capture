@@ -1,6 +1,6 @@
 # Post-lock list
 
-Every PRD that locks records follow-on work at its lock: wording the review gate declined to fund, items for build review, questions the hardware spike answers, and amendments its sibling documents owe. This document holds all of it, grouped by the trigger that acts on it, and it is the only place these items live — the review logs' lock records point here instead of carrying their own lists. An item is ticked in the same PR that closes it, with the PR number or commit recorded beside the tick. A new PRD's lock appends its items here rather than to its review log.
+Every PRD that locks records follow-on work at its lock: wording accepted as post-lock rather than fixed before lock, items for build review, questions the hardware spike answers, and amendments its sibling documents owe. This document holds all of it, grouped by the trigger that acts on it, and it is the only place these items live — the review logs' lock records point here instead of carrying their own lists. An item is ticked in the same PR that closes it, with the PR number or commit recorded beside the tick. A new PRD's lock appends its items here rather than to its review log.
 
 **Sources**, as history only: the [Capture Mode lock record](../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md), the [Device Management lock record](../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md), the [Data Foundation and Data Export lock record](../agent-reviews/2026-09-09-prd-data-foundation-peer-reviews.md), and the post-lock amendment sections in the capture and device logs.
 
@@ -8,6 +8,7 @@ Every PRD that locks records follow-on work at its lock: wording the review gate
 
 The spike runs from [`hardware-spike-brief.md`](../briefs/hardware-spike-brief.md) and its results file lands beside it. That brief's "Before the session" prerequisites are the gate — the throwaway probe harness, both instrument models, the two license variants, the vendor confirmation path for a per-serial refusal, a network-capture tool and a second SDK client, the calibration tile, and the time-box — and each is confirmed before the instrument is booked.
 
+- [ ] **All five PRDs** — the spike runs and its results file lands beside the brief; each PRD's spike-scoped open questions close from that evidence.
 - [x] **Device** — the spike-scope amendment lands before the spike is dispatched: the Legend's hardware-spike scope gains the reported wavelength grid, the raw-payload round-trip and the toolkit's spaces, the vendor analytics recipient, and the published reference set (plan PL7-4). — done, PR #13
 
 ## Landed sibling amendments
@@ -118,21 +119,21 @@ Build-review items and the engineering plan's test matrix.
 
 Deliberate omissions from v1, recorded so no one re-raises them as gaps. Not work.
 
-- [ ] **DE** — field selection at export (serial, measured-at).
-- [ ] **DE** — no collection-identifier column.
-- [ ] **DE** — no rule about an export mid-session.
-- [ ] **DE** — no destination-overwrite rule.
+- **DE** — field selection at export (serial, measured-at).
+- **DE** — no collection-identifier column.
+- **DE** — no rule about an export mid-session.
+- **DE** — no destination-overwrite rule.
 
 ## Judgment calls that stood at lock
 
 The owner may overrule any of these. Not work.
 
-- [ ] **DF** — the salvage conflict resolution: the later-recorded reading stays current.
-- [ ] **DF** — reflectance as a fraction of 1.
-- [ ] **DF** — times in UTC with `Z`.
-- [ ] **DF** — a path in both volume classes shows the network state.
-- [ ] **DF** — the reflectance precision is fixed when the golden is re-cut.
-- [ ] **DF** — E28–E30 lose the "way back" clause.
-- [ ] **DF** — the ceiling corpus is generated rather than checked in.
-- [ ] **DE** — R2.4 returns to fence F13's "exactly as stored", with the storage obligation on DF R1.2.
-- [ ] **DF** — prose trims to fit the budgets (rounds 9 and 10).
+- **DF** — the salvage conflict resolution: the later-recorded reading stays current.
+- **DF** — reflectance as a fraction of 1.
+- **DF** — times in UTC with `Z`.
+- **DF** — a path in both volume classes shows the network state.
+- **DF** — the reflectance precision is fixed when the golden is re-cut.
+- **DF** — E28–E30 lose the "way back" clause.
+- **DF** — the ceiling corpus is generated rather than checked in.
+- **DE** — R2.4 returns to fence F13's "exactly as stored", with the storage obligation on DF R1.2.
+- **DF** — prose trims to fit the budgets (rounds 9 and 10).
