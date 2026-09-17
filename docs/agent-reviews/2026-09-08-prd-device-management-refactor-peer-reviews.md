@@ -243,11 +243,7 @@ Rows edited in the lock pass: R1.8, R1.23, R2.16, R3.5, R4.1, R4.4, R6.17, the S
 
 ### Post-lock list (consolidated)
 
-Rows and copy: R1.8's two landings (collection vs device panel on first run) read as complementary but not as one destination; under non-modality the counter also resets on incidental navigation; R4.4's "satisfied from P1" over-generalizes; R1.23's "or in the device picker" clause binds nothing while Surfaces assigns first-run states to the panel, so E1's non-modality is unstated; R6.17's affordance clause names no seam; E18's body leads with the withheld control; E17's "Check again" while still offline has no stated behaviour and no row produces "Check again"; R2.12's "reconnect-once" shorthand collides with §5's device-reconnect vocabulary; the copy header's loop-exit rule is written for a marked state where E3's case is a marked action.
-
-Indexes and journeys: the journeys' nine "copy, §7" labels; the workflow diagram's single AuthBlocked state and missing leave-setup edges from Pairing and Calibration; E12's "Try again" versus the diagram's return to discovery; R5.2's forward reference to ADR-0004.
-
-Cross-document: the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0 and ride that PRD's OQ 16 amendment; OQ 5's and OQ 28's closers name dogfood data no row records.
+Moved to [the post-lock list](../product/post-lock.md) on 2026-09-17, the single source of truth; this record no longer carries it.
 
 ## Post-lock amendment — the hardware spike's scope and the Data Foundation / Data Export obligations (2026-09-16)
 

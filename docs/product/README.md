@@ -118,6 +118,8 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 Collection Mode follows both, since it renders what the data model defines and inherits the seam's outcome. QC & Comparison and Color Visualization are P1/P2 and can follow at any point. Telemetry is last regardless — it is v1.x and blocked on a spike.
 
+The follow-on work each locked PRD recorded at its lock lives in [the post-lock list](post-lock.md), grouped by the trigger that acts on it.
+
 ## PRD → ADR gates
 
 | ADR | Decision | Gating PRD |
