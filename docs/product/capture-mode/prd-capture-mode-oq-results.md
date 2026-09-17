@@ -14,6 +14,12 @@ One `## OQ <id>` section per answered question in `prd-capture-mode.md`'s Open Q
 
 **Evidence:** owner call. The rule's value is that it has no exceptions; a look-only entry is a later refinement if dogfood asks for it.
 
+## OQ 19 — How many store files does a user's work live across?
+
+**Answer (2026-09-16, closed by the Data Foundation PRD's fences F2 and F14):** One. F2 settles that a user's work lives in one file with one open at a time, and F14 that the first launch asks where that file lives; both are carried by that PRD's R1.1, R1.3 and R1.8. A collection's rows, its queue order, its remembered row, and its sessions all travel together in that one file, so R1.9 stands unchanged.
+
+**Evidence:** the Data Foundation PRD's decision, not a capture one — this question was always that document's to answer, and capture only needed the count to be settled.
+
 ## OQ 10 and OQ 17 — folded into OQ 8 (fence F20)
 
 Not answered. The review's surface and the summary's form are settled together with the seam (OQ 8, ADR-0004) by the Demo Device prototype of each reading. This section exists so the fold is recorded; the answers land under `## OQ 8` when the prototype closes it.

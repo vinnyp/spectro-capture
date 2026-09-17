@@ -150,23 +150,23 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 *Priority is build order within v1, not a cut line: everything in this table ships in v1, P0 first, P2 last.*
 
 
-| Pri | Feature                                          | Serves | Notes                                                                               |
-| --- | ------------------------------------------------ | ------ | ----------------------------------------------------------------------------------- |
-| P0  | Spectro 2/L connect (BLE + USB)                  | U3     | The only real instrument family in v1                                               |
-| P0  | Known-device management                          | U3     | Serial number is the durable device identity                                        |
-| P0  | Tile calibration with due-prompts                | U3     | Prompted before a session, not mid-queue                                            |
-| P0  | CSV inventory import with column mapping         | U1     | The inventory-first wedge                                                           |
-| P0  | Queued bulk scan, 1–5 samples averaged           | U1     | Heads-down; haptic confirm where available; row auto-advance                        |
-| P0  | Inline scan-failure handling                     | U1     | Retry / skip / flag-row for light, battery, temperature errors                      |
-| P0  | Collections + version history                    | U5     | Corrections never destroy data                                                      |
-| P0  | CSV export, spectral + derived spaces            | U6     | Lab/XYZ/LCh/Luv/sRGB/HSL; sRGB/HSL flagged as gamut-clipped                         |
-| P0  | Local SQLite store, raw payload canonical        | U5, U6 | The file is the whole system: portable, queryable                                   |
-| P0  | Offline operation + per-device pre-authorization | U8     | "Offline use through 〈date〉" surfaced in the device panel                           |
-| P0  | Mock-device layer                                | U9     | App runs, tests, and takes contributions with no hardware or key; what CI exercises |
-| P1  | Ad-hoc single capture                            | U2     | Metadata-first, into a chosen collection                                            |
-| P1  | QC delta E vs canonical                          | U4     | ΔE2000 default; parity-minimum by design (competitive position)                     |
-| P2  | 3D absolute-space plot                           | U7     | Unserved anywhere in the market                                                     |
-| P2  | Gamut-aware swatch grid                          | U7     | Renderable vs not, marked honestly                                                  |
+| Pri | Feature                                                                   | Serves | Notes                                                                               |
+| --- | ------------------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------- |
+| P0  | Spectro 2/L connect (BLE + USB)                                           | U3     | The only real instrument family in v1                                               |
+| P0  | Known-device management                                                   | U3     | Serial number is the durable device identity                                        |
+| P0  | Tile calibration with due-prompts                                         | U3     | Prompted before a session, not mid-queue                                            |
+| P0  | CSV inventory import with column mapping                                  | U1     | The inventory-first wedge                                                           |
+| P0  | Queued bulk scan, 1–5 samples averaged                                    | U1     | Heads-down; haptic confirm where available; row auto-advance                        |
+| P0  | Inline scan-failure handling                                              | U1     | Retry / skip / flag-row for light, battery, temperature errors                      |
+| P0  | Collections + version history                                             | U5     | Corrections never destroy data                                                      |
+| P0  | CSV export, spectral + derived spaces                                     | U6     | Lab/XYZ/LCh/Luv/sRGB/HSL; sRGB/HSL flagged as gamut-clipped                         |
+| P0  | Local SQLite store, stored mean canonical, raw payload archived beside it | U5, U6 | The file is the whole system: portable, queryable                                   |
+| P0  | Offline operation + per-device pre-authorization                          | U8     | "Offline use through 〈date〉" surfaced in the device panel                           |
+| P0  | Mock-device layer                                                         | U9     | App runs, tests, and takes contributions with no hardware or key; what CI exercises |
+| P1  | Ad-hoc single capture                                                     | U2     | Metadata-first, into a chosen collection                                            |
+| P1  | QC delta E vs canonical                                                   | U4     | ΔE2000 default; parity-minimum by design (competitive position)                     |
+| P2  | 3D absolute-space plot                                                    | U7     | Unserved anywhere in the market                                                     |
+| P2  | Gamut-aware swatch grid                                                   | U7     | Renderable vs not, marked honestly                                                  |
 
 
 ### v2 candidates
