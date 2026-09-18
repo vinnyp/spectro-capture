@@ -1,10 +1,12 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F14 record the owner-approved agent-build amendment (2026-09-18), whose peer review is pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F30 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review is pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
 **Decision:** The research-prescribed mid-run drift halt is cut; calibration is checked before a session, never during one. Owner override of the research.
+
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** F29 routes measurement-time drift through Capture’s per-scan error path; the prohibition on mid-session recalibration remains.
 
 ### F2 — Explicit resume is the only path out of a halt (2026-09-05, review arc)
 
@@ -96,6 +98,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** R1.23 retry now re-runs discovery and re-acquires the selected entry; F18 supplies the offline visible outcome and OQ registrations. R4.2/R4.7 own user-requested battery/storage rechecks, and R4.4 retains the no-dead-end invariant.
 
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** Empty re-discovery during pairing retry stays E12 on the panel and does not increment the pairing-failure counter (R1.23); ordinary discovery still uses E1.
+
 ### F14 — Test observability and closure evidence (2026-09-18)
 
 **Decision:** R6.17 separates local activation invocations from network attempts; R6.29 makes panel/picker operability invocable and observable through a shell seam without choosing its module. Preserve the three R6.21 subjects, fail-on-unconfigured-seam rule and all hardware gates. Constants receive explicit names/candidates/closers; DEMO_SCAN_CYCLE is shared with Capture rather than duplicated.
@@ -114,6 +118,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** R3.3; Legend P0-defer list; OQ 3 Interim/results; E21 unknown variant; UJ4-b.
 
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** R4.3 joins Carried by: the unknown calibration result is warn with E21’s unknown variant, an exception to blocked-copy reuse; no-interim and stated-interim dependencies are listed separately.
+
 ### F16 — Device confirmation before the halted-session summary (2026-09-18)
 
 **Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D2.
@@ -121,6 +127,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** Device keeps E33 End-from-halt confirmation, including the held-reading warning when applicable; Capture R7.5/E23's halted-session summary follows confirmed End, names the discarded held reading if present, and has no Keep scanning action. Cancelling the Device confirmation returns to the halt without discarding the reading.
 
 **Carried by:** R5.11/R5.18; Device E33; Device→Capture obligation; Capture R7.5/R11.12/E23/F50; UJ5-e.
+
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** F28 defines confirmed Quit as an exception to the post-End summary: close the session and exit, without a summary or next-launch Resume offer; End still shows the summary.
 
 ### F17 — Quit-from-halt is P0 (2026-09-18)
 
@@ -138,6 +146,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** R2.20; E17; OQ 8/OQ 18; UJ6.1-a/b/c.
 
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** R2.20 now names E17’s checked-while-offline variant, whose copy differs visibly from initial. Clearing authorization does not re-enter the full gate; the next capture action does, unlike R4.7’s recheck of a blocking gate.
+
 ### F19 — Observe states and invoke shell recovery entry points (2026-09-18)
 
 **Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D5.
@@ -146,6 +156,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** R6.29; OQ 21 Feeds; test-control map; UJ1-f/UJ5-e.
 
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** R6.29 also enumerates variants and lists the conditional lines/actions present: E11 valid/lapsed, E17 initial/checked-while-offline, E18 with/without P1 action, E21 due/unknown, E33 End/Quit × held-reading present/absent.
+
 ### F20 — Hardware-free live-flow instrument with simulated provenance (2026-09-18)
 
 **Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D6.
@@ -153,6 +165,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** A test-only simulated instrument presents as live-kind for licensing/authorization flow selection, but its readings and acquiring snapshots stay simulated. Demo's R6.3 guarantee stays unchanged; only DF F41 hand-authored fixtures cover the false sc_simulated shape.
 
 **Carried by:** R6.30; R6.10; UJ1/UJ2/UJ6 preconditions; DF R7.7/F41; test-control map.
+
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** F27 defines simulated kind for persistence/display and the three live-read exceptions. Carried by also includes R1.10/R6.6’s launch auto-reconnect exception and DF R1.4’s live permitted set; UJ3-b seeds its live record through R6.20 rather than changing this double’s persisted kind.
 
 ### F21 — List the noninstant default exception (2026-09-18)
 
@@ -170,6 +184,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** M6/M7; OQ 5/OQ 28 closers; Legend phase note. No results file is fabricated before observations exist.
 
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** The evidence recorder is a person following the dogfood runbook, not an undefined “dogfood agent”; M6/M7 and the companion-files line name the results file, which exists only after observations.
+
 ### F23 — Observe outbound paths and permit update checks (2026-09-18)
 
 **Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D9.
@@ -177,6 +193,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** R6.17 keeps update checks observable; DF R1.4 permits user-controlled software-update checks for both live and Demo under Device R2.13. Activation invocations are classified by observed destination, with whether they carry requests left to OQ 1/OQ 16.
 
 **Carried by:** R6.17; Device→DF outbound-attempt obligation naming R6.12/R6.17; DF R1.4/F49 clarification; UJ6-e.
+
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** F27 makes DF R1.4’s live permitted set apply to R6.30 authorization traffic despite its simulated persisted/displayed kind.
 
 ### F24 — Keep Capture OQ 16 open until Device re-lock (2026-09-18)
 
@@ -202,6 +220,38 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** E18; F12 clarification.
 
+### F27 — Limit the live-flow double’s kind exceptions (2026-09-18)
+
+**Authority:** [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540), D13.
+
+**Decision:** R6.30 is simulated-kind wherever kind is persisted or shown: saved-device record/display, identity and non-collision, the persistent simulated indicator and all provenance. Only licensing/authorization selection, launch auto-reconnect and DF R1.4’s live permitted set read it as live; UJ3-b’s live record is seeded through R6.20, and scenarios use the double only where named.
+
+**Carried by:** R1.10/R6.6/R6.30; R1.7/R1.22/R6.4 by the R6.30 mapping; F20 clarification; DF R1.4/F49 clarification; named UJ2/UJ6 cases and UJ3-b.
+
+### F28 — Quit ends the halted session without a summary (2026-09-18)
+
+**Authority:** [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540), D14.
+
+**Decision:** Confirmed Quit discards the held reading under R5.11, closes the session and exits without Capture E23’s halted summary. The next launch opens the collection with the session ended and no Resume offer, so Capture R7.11/E25 do not fire for it.
+
+**Carried by:** R5.18; Device copy Not-copy restatement; UJ5-e; Capture R7.5 and Device obligation row; Capture F50 clarification.
+
+### F29 — Route measurement drift through per-scan recovery (2026-09-18)
+
+**Authority:** [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540), D15.
+
+**Decision:** Measurement-time calibration drift follows Capture’s per-scan error path, never a §5 halt or mid-session recalibration. Device R5.1’s causes and E23–E30 remain unchanged.
+
+**Carried by:** Device R3.4/R4.2; Capture R5.1/R5.2/R5.3 and E45, drift journey branches; dated Capture F7/F8/F50 clarifications. R5.10’s existing guard exclusion is retained while its obsolete device-halt rationale is removed; no new counter policy is chosen.
+
+### F30 — Render blocking pre-flight at its entry point (2026-09-18)
+
+**Authority:** [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540), D16.
+
+**Decision:** A blocking pre-flight state and its Check again render where the gate fires, including the capture entry point, in addition to the device-panel readiness zone. Rechecking a connect advisory does not enter a session-start gate that has not fired.
+
+**Carried by:** Surfaces; R4.7/R4.2; UJ4-e/f and connect-advisory case UJ4-g.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.
@@ -218,7 +268,7 @@ Where a fence is named in the PRD, for provenance only. A row not listed here ci
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
 | F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
-F10–F26 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
+F10–F30 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
 
 ## Rejected findings
 

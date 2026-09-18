@@ -31,3 +31,5 @@ Not answered. The review's surface and the summary's form are settled together w
 **Evidence:** Owner approval to proceed with the audited improvements; this is the document amendment, pending peer review, not hardware verification or implementation. Capture OQ 16 remains open until Device re-locks; Device OQs remain open/residual as before; Capture OQ 2 still decides whether the physical-button trigger exception is needed.
 
 **Clarified 2026-09-18:** Device F16 keeps its own E33 confirmation before Capture E23’s halted-session summary; this result section records the amendment’s contents, not review completion.
+
+**Round-2 clarification (2026-09-18):** Device F28 skips the halted-session summary on confirmed Quit and leaves the session ended at next launch; F29 sends measurement-time drift to Capture’s per-scan path. OQ 16 still waits for Device re-lock.

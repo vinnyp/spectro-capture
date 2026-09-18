@@ -129,8 +129,8 @@ The product thesis: import first, then scan heads-down with no per-item metadata
 4. I put the instrument on the swatch and trigger a scan.
   - If I press again while a scan is running → the press is rejected with a distinct non-visual cue and nothing is lost ([§4](prd-capture-mode.md#4-the-scan-loop))
 5. The instrument measures.
-  - If it refuses the reading — light leaked in, or it is out of temperature range → [UJ3.1](#uj-31-a-scan-fails-mid-queue)
-  - If the device disconnects, goes quiet, reports drift, runs low on battery, or the save fails → the device PRD's halt ([UJ3.6](#uj-36-device-fails-mid-session))
+  - If it refuses the reading — light leaked in, it is out of temperature range, or the reading drifted → [UJ3.1](#uj-31-a-scan-fails-mid-queue)
+  - If the device disconnects, goes quiet, runs low on battery, or the save fails → the device PRD's halt ([UJ3.6](#uj-36-device-fails-mid-session))
 6. I hear and feel "sample 1 of N" without looking up.
 7. I lift, reposition slightly, and press again until the set is done. I touch nothing on the Mac in between.
   - If a sample looked wrong to me → [UJ3.2](#uj-32-undo-or-redo-the-current-item)
@@ -183,16 +183,17 @@ flowchart TD
     D -- "second press while a scan is in flight" --> D1["Rejected with non-visual feedback (LOCKOUT_WINDOW)"]
     D1 --> D
     D --> E{Reading OK?}
-    E -- "ambient light or temperature" --> F["Caution through two senses; row holds, good samples kept"]
+    E -- "ambient light, temperature, or measurement drift" --> F["Caution through two senses; row holds, good samples kept"]
     F --> F2{"Failed attempts on this row reach K_FAILED_ATTEMPTS?"}
     F2 -- "no: the next press retries the same row" --> D
     F2 -- "no: Skip or Flag, deliberate keys" --> F3["Row deferred with cause, good samples kept; queue advances"]
     F2 -- "yes: distinct moved-on cue" --> F3
-    F3 --> K{"Consecutive rows set aside by R5.9's routes reach N_CONSEC_HARD?"}
+    F3 -- "drift: guard exclusion unchanged" --> C
+    F3 -- "other counted routes" --> K{"Consecutive rows set aside by R5.9's routes reach N_CONSEC_HARD?"}
     K -- "yes, guard enabled" --> L["Guard pauses: row held, samples kept; check placement or recalibrate; force-resume resets the guard's counter"]
     L --> C
     K -- no --> C
-    E -- "device failure, no reading, or calibration drift" --> X["Halt (device PRD UJ5, see UJ3.6)"]
+    E -- "device failure or no reading" --> X["Halt (device PRD UJ5, see UJ3.6)"]
     E -- yes --> G["Sample n of N confirmed through two senses"]
     G --> H{Set complete?}
     H -- no --> D
