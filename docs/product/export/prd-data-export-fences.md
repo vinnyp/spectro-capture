@@ -86,6 +86,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** U6's "nothing is stranded" and the import PRD's "exactly as entered": a user's own column never changes shape in their own export — an imported `0007` or `1,234.5` comes back out as the file holds it, the app reshaping nothing but its quoting on the way. Taken over normalising every column to the dialect's forms, which the interface lens showed would alter a script-visible value the user supplied.
 
+### F14 — Archive damage and quarantine export semantics (2026-09-17, PR #17)
+
+**Decision:** Transcribe the export half of DF F33 as settled by [DF F37](../data-foundation/prd-data-foundation-fences.md#f37--export-unavailable-archives-and-quarantined-readings-2026-09-17): canonical export runs when only an archive is damaged; unavailable sample payload cells are empty, with no new CSV column or state token. Any quarantined reading uses `quarantined` in the state column, including superseded history; DF OQ 21 remains open for a distinct archive mark and an Export R2.5 version bump.
+
+**Why:** Intact canonical data remains exportable, and both builders and consumers need deterministic payload and state precedence. Source: [owner decision 2](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725041707).
+
 ## Fence → row map
 
 A row "carries" a fence when the fence's decision is what the row now states; this file, not the row, holds the rationale. Every entry below is the corresponding entry in [the Data Foundation PRD's map](../data-foundation/prd-data-foundation-fences.md#fence--row-map) rewritten into this document's IDs.
@@ -105,6 +111,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F11 | [R1.1](prd-data-export.md#1-what-the-export-contains); [E1](prd-data-export-copy.md#error--state-copy); the inbound Data Foundation line (both time axes). |
 | F12 | [R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)'s bump list; [R4.1](prd-data-export.md#4-verifiability)'s in-place refresh list; [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version)'s per-version help-docs sentence. |
 | F13 | [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version) (app columns only); [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) (emitted as stored). |
+| F14 | R1.1/R1.3 and the inbound Data Foundation obligation; DF OQ 21 tracks the future distinct mark. |
 
 ## Rejected findings
 

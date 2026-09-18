@@ -46,6 +46,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** DELETE_UNDO_WINDOW is the running session: a deleted item and its history can be restored until the app quits, and the deletion is final after. Closes OQ 10.
 
+**Clarified 2026-09-17 (F35):** The original until-quit decision remains above; R6.3 also names crash and file close as ending undo. The copy and OQ 10 now enumerate all three, defining the open-file lifetime rather than a capture session.
+
 ### F8 — The vendor SDK's analytics disclosure belongs to the Telemetry PRD and the help docs (2026-09-09, Phase 3)
 
 **Decision:** This PRD hands the disclosure over as an inherited obligation; it carries no disclosure row of its own. Closes OQ 12's ownership half; whether the analytics can be disabled stays open there.
@@ -156,6 +158,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** The export is a consumer contract with its own audience (U6's downstream tools) and its own fresh-lens set; Data Foundation is the file's promise to its owner. A document that cannot fit because it has too many rows is two PRDs (writing-prds, Phase 2).
 
+**Clarified 2026-09-17 (F35):** The complete retired-ID map moved from the main Legend to this file’s [Retired ID map](#retired-id-map); the Legend links to it. IDs and destinations did not change.
+
 ### F31 — A non-chosen condition's derived set is kept once asked for (2026-09-10, round 3)
 
 **Decision:** A derived set for a condition other than the collection's chosen scan mode is worked out when the user asks for it and is then kept in the file like any other set — regenerated with the rest and readable at the floor. OQ 5 gains a third multiplier, bounded by the instrument's condition count. **Amended 2026-09-10 (round 4, owner):** the CSV stays one condition per row on the collection's chosen scan mode in both exports; the extra sets are readable in the file and not carried by the history export, and the export preview says which condition the rows come out on.
@@ -175,19 +179,19 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | Fence | Rows that carry it |
 | :--- | :--- |
 | F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its word budget (F21, 8,000 since 2026-09-14). |
-| F2 | R1.1, R1.3; the Capture Mode OQ 19 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 1. |
-| F3 | R2.4; the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3. |
+| F2 | R1.1, R1.3; the Capture Mode OQ 19 line in [Sibling amendment map](#sibling-amendment-map); OQ 1. |
+| F3 | R2.4; the Capture Mode line in [Sibling amendment map](#sibling-amendment-map); OQ 3. |
 | F4 | R3.4; OQ 7. |
 | F5 | No row here any more: moved to the export PRD's R1.1 (canonical default, P0) and R1.3 (history option, P1), the P0/P1 split in [its Legend](../export/prd-data-export.md#legend) and the Pri cells of its R1.2, R2.1, R3.1, and its OQ 2 — transcribed there as [its F2](../export/prd-data-export-fences.md). This document's Legend keeps only the delete undo as P1. |
 | F6 | R2.6; OQ 4. |
 | F7 | R6.3; OQ 10. |
 | F8 | R6.6 (authorship handed over; the gate itself is F19's); the Telemetry and help-docs line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; §8's Error & State Copy paragraph; OQ 12's ownership half. |
 | F9 | No requirement row. It keeps [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) in the journeys companion, which the [User Journeys](prd-data-foundation.md#user-journeys) index lists as DJ5. |
-| F10 | R2.1; the Vocabulary entries for sample, reading, and canonical value; R6.2's counted-in-readings clause and [E8](prd-data-foundation-copy.md#error--state-copy); M6's population; the state diagram's sample → reading → history path; the Vision line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
+| F10 | R2.1; the Vocabulary entries for sample, reading, and canonical value; R6.2's counted-in-readings clause and [E8](prd-data-foundation-copy.md#error--state-copy); M6's population; the measurement-operations table; the Vision line in [Sibling amendment map](#sibling-amendment-map). |
 | F11 | R1.2 (the readability half), R1.6 (the archived-payload half); OQ 5's constraint, OQ 2's derivation. |
-| F12 | R2.4, R2.5, R2.8; R7.1's read-back set and M4's third question; [E11](prd-data-foundation-copy.md#error--state-copy)'s "Ask me later"; the Capture Mode E29 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; OQ 3's amendment. |
+| F12 | R2.4, R2.5, R2.8; R7.1's read-back set and M4's third question; [E11](prd-data-foundation-copy.md#error--state-copy)'s "Ask me later"; the Capture Mode E29 line in [Sibling amendment map](#sibling-amendment-map); OQ 3's amendment. |
 | F13 | R1.7; the dead-process hold in R1.5 and R7.3; R1.4's second clause; R7.4's volume-class scoping and M1's population. |
-| F14 | R1.8, R1.9; [E13](prd-data-foundation-copy.md#error--state-copy); the Capture Mode OQ 19 line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others"; the Device Management line (UJ1) there. |
+| F14 | R1.8, R1.9; [E13](prd-data-foundation-copy.md#error--state-copy); the Capture Mode OQ 19 line in [Sibling amendment map](#sibling-amendment-map); the Device Management line (UJ1) there. |
 | F15 | R6.1, R6.2, R6.3; [E14](prd-data-foundation-copy.md#error--state-copy); the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what this PRD imposes on others". |
 | F16 | The Pri cells of R6.1, R6.2, R6.5 (P0) and R6.3 (P1), and the Legend's P0/P1 split; R6.5's positive inventory and its two-surface credential test. |
 | F17 | R2.3's second sentence. |
@@ -203,9 +207,26 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F27 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R3.3](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R2.5](prd-data-foundation.md#2-canonical-value-and-version-history), [R7.1](prd-data-foundation.md#7-verifiability), [R7.5](prd-data-foundation.md#7-verifiability); M6's population; OQ 5's population; the outbound Data Export line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). R4.4's history export moved to the export PRD's R1.3, which cites this fence from there. |
 | F28 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) (its R1.10, R4.5); the outbound Data Export line there. The export half moved to the export PRD's R1.1, R2.1 and R2.3 — [its F9](../export/prd-data-export-fences.md). |
 | F29 | No row here any more: moved to the export PRD's R1.1 and R2.1, its M1's population, and its E1 — [its F10](../export/prd-data-export-fences.md). |
-| F30 | The [Legend](prd-data-foundation.md#legend)'s retired-ID list; the Open Questions' retirement note; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
+| F30 | The [retired-ID map](#retired-id-map); the Open Questions' retirement note; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
 | F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population and [R7.7](prd-data-foundation.md#7-verifiability)'s fixture; the outbound Data Export line in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the export PRD's R1.1, R1.3 and E1 (one condition per row, the amendment). |
-| F32 | [R6.5](prd-data-foundation.md#6-deletion-and-privacy); the Capture Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
+| F32 | [R6.5](prd-data-foundation.md#6-deletion-and-privacy); the Capture Mode OQ 24 line in [Sibling amendment map](#sibling-amendment-map). |
+| F33 | R2.9; R5.5a–c/f (F47 defines derived-set regeneration); R7.6g/h; R7.7i; E4/E31; DJ3; OQ 21, with interim export behavior settled by F37. |
+| F34 | R1.3; R7.3a/b; E22; DJ3. |
+| F35 | Legend/Traceability; R2.3a–i; R3.3a–g; R7.3a–k (R7.3l retired by F47); R6.2a–d/R6.3; R7.7a–m; E8/E14; OQ 10/14/17–21; DJ2–DJ5. |
+| F36 | R5.5d, R7.3; post-lock ADR-0003 item. |
+| F37 | R5.5a–c, outbound Data Export obligation, R7.7i, OQ 21; DE R1.1/R1.3 and F14. |
+| F38 | R1.5/R1.9, R7.3c/j, OQ 19, E9/E15/E25/E27, DJ3. |
+| F39 | R5.3, R7.3f, OQ 18, E1/E23 and copy variants, DJ3. |
+| F40 | R2.3f, R7.7g, DJ2. |
+| F41 | R7.7, R7.7e; post-lock live-kind golden. |
+| F42 | R3.3g, R7.1/R7.5, R7.7i, DJ5. |
+| F43 | R7.7/R7.7m, R5.1/R5.2, R7.3, E2/E3/E23/E24, M5. |
+| F44 | R1.3, R7.3b, DJ3; amends F34’s close-first ordering. |
+| F45 | F34 dated confirmation; R1.3, R7.3a, E22. |
+| F46 | Legend, Traceability, primary requirement tables. |
+| F47 | R3.3a, R5.4/R5.5f, R7.6g/h, R7.7i, §8, DJ3; retired E32/R7.3l. |
+| F48 | E14 and copy Variants; R6.1/R6.2. |
+| F49 | post-lock Data Foundation list; future M10, no metric row yet. |
 
 ## Rejected findings
 
@@ -213,3 +234,171 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 - **agy privacy, round 1, Low (R6.1):** asked for deletion of a single reading out of an item's history. Rejected under the non-negotiable that corrections never destroy data and fence F6; the erasure need it points at is met by F17 (notes correctable in place) and F15 (item and collection delete).
 - **standards, round 7, SR7-4 (R5.5):** asked to scope the salvage promise to the invariants this document states. Rejected (owner, 2026-09-15): the salvage output resolves whatever its source broke and names each choice ([E5](prd-data-foundation-copy.md#error--state-copy)); the per-invariant rules are ADR-0003's, and enumerating them at WHAT level is the schema document F1 fences this PRD off from. The one rule stated — two current readings — stays as the worked example.
 - **privacy, round 7, Medium (E27):** asked for a disclosure sentence on the network-volume state — that the whole collection sits on a host someone else administers. Rejected (owner, 2026-09-15): E27 names the two risks that class carries; R1.7's risk pair is scoped per class instead (round-7 fix FX7-3); a network share is the user's own choice of location, and F13's warning is about the damage and the copies the app's own behaviour causes.
+
+
+## Agent-build amendment (2026-09-17)
+
+The owner approved the audit's eight recommendations with “proceed with your recommendations” after the two behavior changes below were explicitly proposed. F33 and F34 record those choices individually; the remaining edits clarify existing guarantees or expose unanswered decisions, not new architecture choices.
+
+### F33 — Isolate archive and history damage from current-value loss
+
+**Decision:** Archive-only damage does not invalidate an intact stored mean or decoded measurements, and damage to a historical reading does not clear an intact current reading. Mark and retain the affected archive or reading; only authoritative damage to the current reading leaves an item without a current value, with no automatic historical promotion.
+
+**Amends:** R2.9, R5.5, Vocabulary, E4; adds archive state E31 and R5.5a–c acceptance cases. F10/F11/F25 remain authoritative: archived vendor bytes are not the canonical value; export handling of an unreadable archive remains an explicit open decision (OQ 21) rather than silently substituting empty bytes.
+
+### F34 — Pausing capture does not permit switching files
+
+**Decision:** Refuse opening another file while a capture session is active, paused or halted, naming the session and preserving its state. With no in-flight capture, close the original file before opening the selected one; an interrupted session remains persisted in its own file for later resume.
+
+**Amends:** F22(b), R1.3, E22, R7.3a/b and DJ3. The approved recommendation explicitly covered active and paused capture; halted capture retains the same in-flight session under Capture R3.5/R7.14, so the same gate applies. Move and re-read scheduling remain OQ 19.
+
+**Owner confirmed 2026-09-17 (F45):** [Decision 10](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725041707) explicitly extends F34 to halted capture; End session is the halted route out. F44 subsequently changes target-check ordering; F38 settles the move/re-read interim policy.
+
+### F35 — Agent-readable contract and existing-rule clarification
+
+**Decision:** Preserve stable IDs, priorities, anchors and owner decisions; remove repeated persona narrative, local-machine governance dependencies and review disposition text from implementation cells; release and alignment status are stated once for the requirement tables. Use lettered subrows and acceptance tables for measurement operations, regeneration, recovery, deletion and fixtures; a subrow inherits its parent's priority, release and status.
+
+**Clarifications:** R6.3 already ends undo on quit, crash and file close; E8/E14, OQ 10 and DJ4 now say the same. Correct the external-write impossibility claim using [SQLite's primary documentation](https://sqlite.org/pragma.html#pragma_data_version), without selecting polling, notifications or a library. OQ 17–21 expose previously unspecified product behavior and preserve ADR ownership; they are not settled by this approval. Implementation PR cells stay empty until code lands; earlier review provenance remains in git and the original review log.
+
+**Amended 2026-09-17:** F36–F46 below settle the review’s owner choices; F46 restores per-row Status and Commit PR, F38/F39/F37 establish interim behavior for OQ 19/18/21. OQ 17 and OQ 20 remain open as before.
+
+## Retired ID map
+
+E32 and R7.3l are retired under F47 in PR #17, never reused; automatic R5.5f regeneration replaces their prompt.
+
+**Retired row IDs.** Retired under fence F30, never reused, each now [the export PRD](../export/prd-data-export.md)'s at the ID named: R4.1 → [its R1.1](../export/prd-data-export.md#1-what-the-export-contains); R4.3 → [its R1.2](../export/prd-data-export.md#1-what-the-export-contains); R4.4 → [its R1.3](../export/prd-data-export.md#1-what-the-export-contains); R4.2 → [its R2.1](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.6 → [its R2.2](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.7 → [its R2.3](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.8 → [its R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.9 → [its R2.5](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.5 → [its R3.1](../export/prd-data-export.md#3-when-an-export-cannot-finish); R7.9 → [its R4.1](../export/prd-data-export.md#4-verifiability); R7.6a → [its R4.4a](../export/prd-data-export.md#surfaces); M3 → [its M1](../export/prd-data-export.md#success-metrics); OQ 8, 9, 11, 16 → [its OQ 1–4](../export/prd-data-export.md#open-questions); E6, E7, E17, E18 → [its E1–E4](../export/prd-data-export-copy.md#error--state-copy); DJ1 → [its EJ1](../export/prd-data-export-journeys.md#ej1-export-the-collection). §4's number goes with them; [R7.6](prd-data-foundation.md#7-verifiability), [R7.7](prd-data-foundation.md#7-verifiability) and [R7.8](prd-data-foundation.md#7-verifiability) stay ([its Traceability](../export/prd-data-export.md#traceability)).
+
+## Sibling amendment map
+
+Original hand-offs retained for traceability; landed amendments are tracked in [post-lock](../post-lock.md#landed-sibling-amendments), and each linked sibling row owns its current wording. The active inbound/outbound contract remains in the PRD's obligations tables.
+
+| Target | Amendment recorded at lock | Rows here |
+| :--- | :--- | :--- |
+| Capture Mode | [Its E29](../capture-mode/prd-capture-mode-copy.md#error--state-copy) gains the correction default — a capture-time re-scan carries the supersession reason correction-unconfirmed, the question never asked mid-loop — post-lock there (fences F3, F12) | [R2.4](prd-data-foundation.md#2-canonical-value-and-version-history) |
+| Capture Mode | [Its OQ 19](../capture-mode/prd-capture-mode.md#open-questions) closes on fences F2 and F14 — one file, one open at a time, its location asked for on first launch — post-lock there | [R1.1](prd-data-foundation.md#1-the-file-the-user-owns), [R1.3](prd-data-foundation.md#1-the-file-the-user-owns), [R1.8](prd-data-foundation.md#1-the-file-the-user-owns) |
+| Capture Mode | Post-lock amendments there: [its Data Foundation obligation row](../capture-mode/prd-capture-mode.md#inherited-obligations) gains its R4.5 and its R1.10, and its R1.9 queue-order obligation names Data Export beside Data Foundation ([the export PRD's R2.3](../export/prd-data-export.md#2-columns-names-dialect-and-the-version)) | [R2.1](prd-data-foundation.md#2-canonical-value-and-version-history), [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty) |
+| Capture Mode | Post-lock amendment there: [its OQ 24](../capture-mode/prd-capture-mode.md#open-questions) closing toward a shipped build re-opens [R6.5](prd-data-foundation.md#6-deletion-and-privacy)'s inventory (fence F32) | [R6.5](prd-data-foundation.md#6-deletion-and-privacy) |
+| Device Management | Post-lock amendments there: [its UJ1](../device-management/prd-device-management-journeys.md#uj-1-first-run) and [its UJ1.2](../device-management/prd-device-management-journeys.md#uj-12-first-run-with-no-hardware-contributor) gain a first step — choosing where the file lives before license activation (fence F14) — which [its M2](../device-management/prd-device-management.md#success-metrics)'s start event spans, and [its R6.20](../device-management/prd-device-management.md#6-mock-device-layer)'s declared-state harness gains the file-location axis; the `simulated` column amendment is [the export PRD's](../export/prd-data-export.md#inherited-obligations) | [R1.8](prd-data-foundation.md#1-the-file-the-user-owns) |
+| Device Management | Post-lock amendment there: [its hardware spike's scope](../device-management/prd-device-management.md#legend) gains reading the instrument's reported wavelength grid ([the export PRD's OQ 4](../export/prd-data-export.md#open-questions)), measuring, storing, reconstructing and comparing a raw payload and recording which spaces the toolkit supplies (OQ 15), the vendor analytics recipient and whether they can be switched off (OQ 12), and sourcing the published reference set (OQ 6) | [R1.6](prd-data-foundation.md#1-the-file-the-user-owns), [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty), [R6.6](prd-data-foundation.md#6-deletion-and-privacy), [R7.5](prd-data-foundation.md#7-verifiability) |
+| Inventory Import | Post-lock amendment there: [its R2.2](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule) gains that a later import into a collection keeps the existing columns' positions and appends its new ones after them | [R1.2](prd-data-foundation.md#1-the-file-the-user-owns) |
+| Vision | Post-lock amendment there: [the v1 feature list](../vision.md#v1)'s "raw payload canonical" phrasing is the stored mean, the payload archived beside it (fence F10) | [R2.1](prd-data-foundation.md#2-canonical-value-and-version-history) |
+
+## PR #17 review decisions (2026-09-17)
+
+Source: [the owner’s eleven decisions](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725041707), one fence per numbered decision in order. These supersede conflicting clauses in the initial PR #17 amendment; architecture remains ADR-owned.
+
+### F36 — Keep the general salvage promise (2026-09-17)
+
+**Decision:** Salvage remains complete for readable data, opens read-write and names every resolution; two current readings remain the worked example. Per-invariant rules, including equal record times, belong to ADR-0003 without becoming a product precondition to salvage; the rejected SR7-4 finding stands.
+
+**Why:** E5 must retain a usable recovery path; schema mechanics must not narrow the owner’s general guarantee.
+
+**Rows:** R5.5d, R7.3; post-lock ADR-0003 item.
+
+### F37 — Export unavailable archives and quarantined readings (2026-09-17)
+
+**Decision:** The canonical export runs with an empty payload cell for each unavailable sample archive, with no new CSV column or state token. Any quarantined reading emits `quarantined`, including superseded history; OQ 21 stays open only for a distinct archive mark with an Export R2.5 version bump.
+
+**Why:** Preserve export of intact canonical data while giving agents one interim byte-level contract and one state precedence rule.
+
+**Rows:** R5.5a–c, outbound Data Export obligation, R7.7i, OQ 21; DE R1.1/R1.3 and F14.
+
+### F38 — Disable move and re-read during in-flight capture (2026-09-17)
+
+**Decision:** Move and explicit re-read are disabled during active, paused or halted capture; an interrupted session does not disable them. E9/E15/E25/E27 explain the disabled actions and point to ending the session; OQ 19 remains open only for a future mid-capture policy.
+
+**Why:** An enabled action must have defined behavior; preserve in-flight scans until the existing End session path has run.
+
+**Rows:** R1.5/R1.9, R7.3c/j, OQ 19, E9/E15/E25/E27, DJ3.
+
+### F39 — Guarantee a read-only browsing floor (2026-09-17)
+
+**Decision:** E1/E16/E23/E24 read-only opens show at least the item list, each item’s canonical value and history marks; E1 and E23 retain their browsing promises. OQ 18 concerns additional export, salvage and search capabilities, with existing export restrictions and requested salvage rules still applying.
+
+**Why:** Read-only is a useful view of owned data, not merely an update dialog.
+
+**Rows:** R5.3, R7.3f, OQ 18, E1/E23 and copy variants, DJ3.
+
+### F40 — Restore copies samples and recomputes derived values (2026-09-17)
+
+**Decision:** A restored reading has its own copies of the source samples and decoded values, and fresh six-space derivations at current DERIVATION_VERSION under the collection reference, subject to R3.5’s non-spectral/missing-condition rules. The source reading and its sets remain unchanged.
+
+**Why:** A restore must be independently readable and must not revive stale derivations or mutate the source history.
+
+**Rows:** R2.3f, R7.7g, DJ2.
+
+### F41 — Hand-author the live-kind fixture (2026-09-17)
+
+**Decision:** The non-simulated snapshot is a hand-authored live-kind snapshot checked into the fixture file; the simulated snapshot still uses Device R6.9’s mock fields. No Device Management change or mock kind override is introduced.
+
+**Why:** Exercise `sc_simulated=false` without hardware while keeping simulated and live device identities separate.
+
+**Rows:** R7.7, R7.7e; post-lock live-kind golden.
+
+### F42 — Exclude unreadable measurements from regeneration (2026-09-17)
+
+**Decision:** Do not regenerate a reading whose authoritative measurement is unreadable; retain its sets and stamp. Completion enumerations exclude it and list it separately as excluded by damage.
+
+**Why:** A retained quarantined reading cannot be re-derived and must not make completion permanently unreachable.
+
+**Rows:** R3.3g, R7.1/R7.5, R7.7i, DJ5.
+
+### F43 — Exercise upgrades from the first release (2026-09-17)
+
+**Decision:** Check in a fixture at a fabricated format version below current and exercise a test-only migration path from v1. Cover snapshot-first, successful upgrade, mid-upgrade failure, lossy refusal and insufficient snapshot space; include it in M5’s population.
+
+**Why:** v1 has no real older format, but its migration guarantees need non-vacuous tests before the first format bump.
+
+**Rows:** R7.7/R7.7m, R5.1/R5.2, R7.3, E2/E3/E23/E24, M5.
+
+### F44 — Precheck a switch target before closing the original (2026-09-17)
+
+**Decision:** Run target version, integrity and ownership checks before closing the original file; a failed target leaves the original open and shows the target’s opening state. Only an accepted target proceeds to close the original and open the target; retain one active store and persisted interrupted sessions.
+
+**Why:** Failed selection must not strand the app in an undefined no-file-open state.
+
+**Rows:** R1.3, R7.3b, DJ3; amends F34’s close-first ordering.
+
+### F45 — Ratify halted capture in F34 (2026-09-17)
+
+**Decision:** F34 explicitly includes halted capture; the owner confirms this scope rather than leaving it as an agent inference. E22 names End session as the way out when scanning cannot continue.
+
+**Why:** A halt retains an in-flight session, and an unavailable instrument must not trap the file-switch path behind finishing scans.
+
+**Rows:** F34 dated confirmation; R1.3, R7.3a, E22.
+
+### F46 — Restore per-row status tracking (2026-09-17)
+
+**Decision:** Restore each primary requirement row’s Status column and the Commit PR column name. Keep lettered sub-tables and the shared v1 declaration.
+
+**Why:** Match the other PRDs’ implementation tracking without undoing the useful contract tables.
+
+**Rows:** Legend, Traceability, primary requirement tables.
+
+## PR #17 round-2 decisions (2026-09-17)
+
+Source: [the owner’s three round-2 decisions](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725692929), mapped in order below. F47 supersedes the requested-rebuild behavior introduced in round 1; that earlier review record remains history.
+
+### F47 — Regenerate unreadable derived sets automatically (2026-09-17)
+
+**Decision:** Mark an unreadable persisted derived set whose measurement is intact, and regenerate it automatically under R3.3a at current DERIVATION_VERSION without bumping it; retain the damaged set as superseded and leave canonical selection/reading marks unchanged. Retire E32 and R7.3l, removing their prompt, actions and surface entries; R7.7i asserts the regenerated set is readable and the damaged set retained and marked, with current selection unchanged.
+
+**Why:** A prompt offers no useful alternative and creates inconsistent completion/export outcomes; automatic regeneration restores the existing six-space contract without an export exception or additional matrix row.
+
+**Rows:** R3.3a, R5.4/R5.5f, R7.6g/h, R7.7i, §8, DJ3; retired E32/R7.3l.
+
+### F48 — Restore the deletion statement on the collection confirmation (2026-09-17)
+
+**Decision:** Restore ‘Deleting is the only thing that throws away a reading’ to E14 only; E8 stays unchanged. The copy Variants note explains the asymmetry for never-scanned items.
+
+**Why:** Keep the non-negotiable visible in shipping copy without claiming a never-scanned item has a reading.
+
+**Rows:** E14 and copy Variants; R6.1/R6.2.
+
+### F49 — Track the salvage metric after lock (2026-09-17)
+
+**Decision:** Record M10 (readable readings absent from salvage output, target 0, method R7.3) as a Data Foundation post-lock item. Do not add a metric row to this PRD now.
+
+**Why:** Make the proposed preservation measurement discoverable for the next pass while keeping this amendment scoped to the remaining review fixes.
+
+**Rows:** post-lock Data Foundation list; future M10, no metric row yet.
