@@ -19,12 +19,14 @@ Ordered by dependency first, then irreversibility (numbering is pinned where exi
 |---|---|---|---|
 | [0001](0001-rust-core-swiftui-shell.md) | Language & UI shape: Rust core + SwiftUI shell | **Accepted** (2026-09-01) | Gate satisfied — [spike evidence](../briefs/rust-boundary-spike-results.md); fallback not triggered |
 | 0002 | v1 instrument scope: Nix Spectro 2 / Spectro L only | queued — already cited by the vision, needs formalizing | none |
-| 0003 | Storage schema: the stored mean canonical with the raw payload archived beside it, version history, derived-value recompute, and the schema-migration mechanism | queued | PRD for data/versioning; the sharpest one-way door — this schema ships inside users' own files. Scoped to the measurement/versioning core; session-adjacent tables (queue, dead-letter) wait for 0004's seam re-open |
+| 0003 | Storage schema: the stored mean canonical with the raw payload archived beside it, version history, derived-value recompute, the schema-migration mechanism, and identifier-comparison data governance | queued | PRD for data/versioning; the sharpest one-way door — this schema ships inside users' own files. Scoped to the measurement/versioning core; session-adjacent tables (queue, dead-letter) wait for 0004's seam re-open. Choose data/version governance for [Import R2.3/F57](../product/import/prd-inventory-import-fences.md#f57--comparison-data-version-belongs-to-adr-0003-2026-09-17): table upgrades must re-check existing identifiers and review changed equivalences before accepting the upgrade, never silently merging identities; verify the comparator on 0006’s selected macOS floor before closing that gate |
 | 0004 | The capture → collection seam | queued | PRD-level re-open first: the two capture-mode research passes conflict and v2 says re-open before the ADR |
 | 0005 | Module layout, the `SpectroDevice` seam placement, and executor/runtime ownership (no whole-app tokio; see 0001) | queued | depends on 0001 |
 | 0006 | Minimum macOS version | queued | research cites APIs spanning 13.0–15.0; decide against 0001's toolchain needs |
 | 0007 | Sandboxed vs. unsandboxed distribution | queued | research calls it "a deliberate decision, not an assumed requirement" |
 | 0008 | Distribution & updates: Developer ID + notarization pipeline, Sparkle (or alternative) update channel | queued | currently "recommended, no ADR" in AGENTS.md; decide with 0007 |
+
+Comparison feasibility evidence (2026-09-17): the Rust [`caseless` 0.2.2 source](https://docs.rs/caseless/0.2.2/src/caseless/lib.rs.html) implements canonical caseless comparison as NFD → full default case fold → NFD. This establishes an available Rust algorithm, not a package decision or a tested macOS deployment floor; the selected implementation must pass Import’s equality cases and whitespace rules on the minimum OS after ADR-0006 selects it. That platform check remains open; this PR does not claim a comparator build or re-lock it as platform-verified.
 
 ## Deliberately deferred (two-way doors)
 

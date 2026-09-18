@@ -71,9 +71,11 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 ### F11 — Swatch Code normalisation (2026-09-06, round 1, R1-F9)
 
-**Decision:** Wherever a Swatch Code or a collection name is compared (uniqueness, re-import match, find, ad-hoc duplicate), the comparison trims leading and trailing whitespace, collapses internal whitespace runs to one space, and is case-insensitive. The display value is preserved as entered. Stated once in UJ2.2 and cited everywhere else.
+**Decision:** Wherever a Swatch Code or a collection name is compared (uniqueness, re-import match, find, ad-hoc duplicate), the comparison trims leading and trailing whitespace, collapses internal whitespace runs to one space, and is case-insensitive. The display value is preserved as entered. The normative rule now lives in Inventory Import R2.3 (moved under F49); all consumers cite it.
 
 **Why:** A re-export from Numbers or an Excel autocorrect must not double the queue on an idempotent re-import. The owner chose the forgiving rule over the research default (case-sensitive) because spreadsheet drift is the common case for this persona.
+
+**Clarification, 2026-09-17:** The owner-authorized Inventory Import agent-build amendment specifies the comparison in [Import R2.3](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule), with equality examples in its journeys. [Import F56/F57](../import/prd-inventory-import-fences.md#f56--full-default-folding-without-locale-tailoring-2026-09-17) record the owner’s full-folding decision and transfer comparison-data governance to ADR-0003; the single comparison rule continues to apply to Capture's collection names, find and duplicate checks. PR #16 also extends §12’s placeholder index for Import E43/E45 and generated names, including ⟨filled⟩, under [Import F63](../import/prd-inventory-import-fences.md#f63--preview-follows-shared-zero-count-copy-rules-2026-09-17); the shared zero-count rule is unchanged.
 
 ### F12 — The session is a named entity; device binding is released at quit (2026-09-06, round 1, R1-F4, R1-F11)
 

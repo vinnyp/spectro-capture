@@ -1,198 +1,169 @@
 # PRD: Inventory Import
 
-Status: locked (2026-09-08)
+Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16.
 
-Companion files: the journeys are in [prd-inventory-import-journeys.md](prd-inventory-import-journeys.md), the shipping copy in [prd-inventory-import-copy.md](prd-inventory-import-copy.md), the answers to closed open questions in [prd-inventory-import-oq-results.md](prd-inventory-import-oq-results.md), and the owner's decisions in [prd-inventory-import-fences.md](prd-inventory-import-fences.md).
+Import a CSV inventory into one collection without entering metadata between scans. Import never starts capture; only new items become pending.
 
-# Background
-
-A Cataloger's swatch list already exists in a spreadsheet, and typing it into the app one row at a time is the work this document removes. Inventory import reads that file, maps its columns onto swatches, and lands every row in a collection as pending. It serves [U1](../vision.md#use-cases), bulk-digitize a predefined inventory, and it is the first step of the inventory-first wedge. Import ends at ready-to-capture and never starts a session; the run that follows is the [capture PRD](../capture-mode/prd-capture-mode.md)'s.
+Companions: [acceptance journeys](prd-inventory-import-journeys.md), [shipping copy](prd-inventory-import-copy.md), [decisions and provenance](prd-inventory-import-fences.md), [open-question results](prd-inventory-import-oq-results.md).
 
 ## User Journeys
 
-Every journey — UJ 2, UJ 2.1, UJ 2.2, and the flow diagram that covers all three — is in [prd-inventory-import-journeys.md](prd-inventory-import-journeys.md). They keep the numbers they carried in the capture PRD, so citations from the capture journeys stay true (fence F49).
+[UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-via-csv-import): new collection; [UJ 2.1](prd-inventory-import-journeys.md#uj-21-import-additional-rows-into-an-existing-collection): re-import; [UJ 2.2](prd-inventory-import-journeys.md#uj-22-mapping-metadata-fields): mapping. Their initial-state/action/result tables are acceptance cases for the requirements below.
 
 ## Requirements
 
 ### Vocabulary
 
-The terms the rows below use that the [capture PRD's Vocabulary](../capture-mode/prd-capture-mode.md#vocabulary) does not define ([AGENTS.md §8](../../../AGENTS.md#8-vocabulary)). Pending, Captured, and Session are defined there and are not restated here.
-
-
-- **Swatch Code** — the one column an import must map; it is how a file row is matched to a collection row on a re-import, and how the Cataloger finds a swatch later ([R2.2](#2-target-mapping-and-the-matching-rule), [R3.3](#3-preview-and-commit)).
-- **The one matching rule** — how two Swatch Codes, or two collection names, are judged to be the same ([R2.3](#2-target-mapping-and-the-matching-rule)).
-- **Header signature** — a file's set of column names, in any order, which a remembered mapping is keyed by ([R1.2](#1-reading-the-file)).
-- **Ready to capture** — a collection holding the imported rows as pending, in file order, with no session started; import ends here ([R3.2](#3-preview-and-commit)).
-
+- **Swatch Code:** required item match key; R3.3 owns uniqueness within the target collection.
+- **Swatch Name:** optional display name; **Swatch Alternate Code / Swatch Alternate Name:** optional additional search terms, never re-import match keys; search behavior belongs to [Capture R6.1](../capture-mode/prd-capture-mode.md#6-queue-navigation-and-reordering).
+- **The one matching rule:** R2.3 comparison for codes, collection names and headers, used wherever those values are matched.
+- **Header signature:** unordered set of R2.3 comparison keys for the final unique column names; generated names include their original column position.
+- **Ready to capture:** import finished, new rows pending, existing rows preserved, no session started.
+- **Record number:** one-based parsed record number from the start of the source, never reset after a selected header or ignored preamble; in a headerless file, record 1 is data, and a quoted multiline field counts once (R1.4).
+- **Absent field:** the item has never received that field; distinct from a present field holding an empty string (R3.6).
+- Pending, captured, set aside, and session use [Capture's vocabulary](../capture-mode/prd-capture-mode.md#vocabulary).
 
 ### Legend
 
-**Priority**
+All requirements are **v1 / P0**. Status and Commit PR track implementation: ⌛️ Ready for Alignment; ✋ Needs Discussion; 🤝 Aligned (specified, not implemented); 🦺 In Progress; ✅ Completed (merged PR linked); ✂️ Deferred. OQs are open or answered.
 
-Priority is build order within v1, not a cut line — everything in this document ships in v1, and every row here is P0, the first build phase, because a bulk session has nothing to scan until an inventory has landed. The P0/P1 split is fence F24, recorded in the [capture fence file](../capture-mode/prd-capture-mode-fences.md).
-
-Provisional constants: every TBD-on-spike constant is a named provisional constant carrying its candidate value and its Open Questions id; mechanisms build against these constants, and no provisional constant ships in a release without its OQ resolved. Two bear on import and neither is closed here: IMPORT_BUDGET, at candidate TBD, and ROWS_CEILING, which [R3.1](#3-preview-and-commit) warns against — both are [the capture PRD's R3.12](../capture-mode/prd-capture-mode.md#3-the-capture-session)'s and are closed by its OQ 13. An "OQ n" written without a qualifier is this document's; another PRD's are named as its own. A row ID written without a qualifier is this document's; a row cited from another PRD names that PRD in the link.
-
-**For the engineering plan.** These are the plan's to answer, not this document's.
-
-- IMPORT_BUDGET sits at "candidate TBD" under the capture PRD's OQ 13.
-- One P0 row defers, in part, to an open question with no interim rule: [R1.2](#1-reading-the-file) (OQ 1).
-
-**Row IDs.** This document numbers its requirement rows from R1.1 under fence F49 and keeps the `E<n>` numbers it inherited; the IDs those rows carried in the capture PRD are retired there and never reused ([Traceability](#traceability)).
-
-**Status of this document.** Every row is 🤝 Aligned: the moved rows came from the locked capture PRD with their rules unchanged and only their citations rewritten (fence F49), and the F49 verification rounds (25, 26) are recorded in the [capture review log](../../agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md). The Commit PR column is empty throughout, and this document is locked with the capture PRD.
-
-**Status**
-
-A status cell in this document and in the [copy file](prd-inventory-import-copy.md#error--state-copy) holds one of the six values below and nothing else. The [Open Questions](#open-questions) table has its own two values, open and answered.
-
-- ⌛️ Ready for Alignment - Waiting for cross-functional team to align on requirements
-- ✋ Needs Discussion - Cross-functional team needs to discuss with PM
-- 🤝 Aligned - Cross-functional team aligned on the requirement
-- 🦺 In Progress - Implementation in flight (Optional status)
-- ✅ Completed - Implementation completed & merged. PR # & link added in the "Commit PR" column.
-- ✂️ Deferred - Deferred from current release
-
+**Build dependencies:** ADR-0003 owns comparison data/version governance and must verify R2.3 against the macOS floor once ADR-0006 selects it; no minimum OS or package is decided here. Use R1.5's detection baseline while OQ 1 remains open; named templates wait on OQ 2. [Capture OQ 13](../capture-mode/prd-capture-mode.md#open-questions) owns ROWS_TARGET, ROWS_CEILING and IMPORT_BUDGET; the engineering plan must set a dogfood import budget before performance checks, with release readiness governed by [Capture’s provisional-constant rule](../capture-mode/prd-capture-mode.md#legend) and OQ 13.
 
 ### Traceability
 
-Three row-ID families, one per dispositionable table, all under one rule: an ID is assigned once and never renumbered — a row that is cut or deferred keeps its ID rather than freeing it for reuse.
-
-- Every requirement row in [§1](#1-reading-the-file) through [§4](#4-demo-device-and-verifiability) carries an ID of the form `R<section>.<n>` — for example `R3.1`.
-- Every state row in the [copy file](prd-inventory-import-copy.md#error--state-copy) carries an ID of the form `E<n>`.
-- Every metric row in [Success Metrics](#success-metrics) carries an ID of the form `M<n>`.
-
-The Commit PR column is where a row maps onto the work that lands it. Owner decisions are recorded in the [fence file](prd-inventory-import-fences.md); where a row names one it is for provenance only, and no row re-argues one. Which rows carry each fence is that file's "Fence → row map".
-
-**Where these rows came from.** Every row below moved from the capture PRD's §2 under fence F49; the left-hand IDs are retired there and never reused. The copy states E4–E14, E38, and E40 moved with their numbers unchanged, and so did journeys UJ 2, UJ 2.1, and UJ 2.2.
-
-| In the capture PRD | Here |
-| :--- | :--- |
-| R2.1 | [R1.1](#1-reading-the-file) |
-| R2.2 | [R1.2](#1-reading-the-file) |
-| R2.3 | [R1.3](#1-reading-the-file) |
-| R2.4 | [R1.4](#1-reading-the-file) |
-| R2.5 | [R2.1](#2-target-mapping-and-the-matching-rule) |
-| R2.6 | [R2.2](#2-target-mapping-and-the-matching-rule) |
-| R2.7 | [R2.3](#2-target-mapping-and-the-matching-rule) |
-| R2.8 | [R2.4](#2-target-mapping-and-the-matching-rule) |
-| R2.9 | [R3.1](#3-preview-and-commit) |
-| R2.10 | [R3.2](#3-preview-and-commit) |
-| R2.11 | [R3.3](#3-preview-and-commit) |
-| R2.12 | [R3.4](#3-preview-and-commit) |
-| R2.13 | [R3.5](#3-preview-and-commit) |
-| R2.14 | [R3.6](#3-preview-and-commit) |
-| R11.15h | [R4.1](#4-demo-device-and-verifiability) |
-| M7 | [M1](#success-metrics) |
-| OQ 12 | [OQ 1](#open-questions) |
-
-[R4.2](#4-demo-device-and-verifiability) is not in the map. It carries over these states the obligation the [capture PRD's R11.12](../capture-mode/prd-capture-mode.md#11-demo-device-and-verifiability) held before the split, and that row stays live there.
+R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
 
 ### Surfaces
 
-This table names the one import-owned surface. The collection surface it is reached from, and every other surface in the app, is the [capture PRD's](../capture-mode/prd-capture-mode.md#surfaces).
-
-
-| Surface | Shows | The [copy](prd-inventory-import-copy.md#error--state-copy) states in this surface's flow — its entry offer and its cancel notice included |
-| :--- | :--- | :--- |
-| Import flow | The file that was picked, what was detected in it, the column mapping, and the pre-commit preview with its issue list | No header row; can't read the file; nothing to import; rows with the wrong number of columns; mapping incomplete; blank codes excluded; duplicate codes in the file; ambiguous code; unnamed column; file changed on disk; file gone before the import; changed metadata on a captured row; import blocked by a session |
+Import flow: file selection and read settings → target collection → column mapping → preview and issue list → explicit commit. The [copy file](prd-inventory-import-copy.md#error--state-copy) enumerates states and offered actions; R3.8 defines their transitions. Collection entry points belong to [Capture](../capture-mode/prd-capture-mode.md#surfaces).
 
 ### 1. Reading the file
 
-Traces [UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-via-csv-import); serves [U1](../vision.md#use-cases), the inventory-first wedge.
+| ID | Requirement | Status | Commit PR |
+| :--- | :--- | :--- | :--- |
+| R1.1 | Start import only by explicit action, accepting a file through the picker or drag and drop. | 🤝 Aligned | |
+| R1.2 | Show the proposed header and data-row count, and always show the active encoding and delimiter in the preview. Remember mappings by header signature and pre-fill by resolved column name, never by position, after R2.5 resolves headers and R1.6’s one-column guard is satisfied. | 🤝 Aligned | |
+| R1.3 | Route missing headers to E4, unreadable text or invalid CSV syntax to E5, zero data records to E6, and a source moved, renamed or removed before commit to E38. These states write no imported data and resume only through R3.8's actions. | 🤝 Aligned | |
+| R1.4 | List wrong-width records by one-based parsed record number from the source start, counting header and preamble records and each quoted multiline record once, and exclude them (E7). Validate codes only on structurally valid records; never guess field alignment. | 🤝 Aligned | |
+| R1.5 | Until OQ 1 closes, use R1.5a–e; the listed encodings, delimiters and defaults are provisional under that question. Re-read, reset overwrite choices, and rebuild the preview after any read-setting change; keep all decoded field text, including leading zeros and whitespace, without numeric or date coercion. | 🤝 Aligned | |
+| R1.6 | A read yielding exactly one column requires explicit confirmation (E45), with the delimiter control beside it, before a mapping can be saved or reused or the import committed. Clear that confirmation on any re-read; this guard remains until OQ 1 closes. | 🤝 Aligned | |
 
-#### As a Cataloger, I can import my inventory from a spreadsheet export so that I never type my swatch list into the app.
+**R1.5 — initial read contract**
 
-
-| ID | Release | Pri | Requirement | Status | Commit PR |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| R1.1 | v1 | P0 | Import starts from an explicit user action and accepts a file by picker or by drag and drop. | 🤝 Aligned |  |
-| R1.2 | v1 | P0 | The app shows what it detected — the header row and the row count — and shows the encoding and the delimiter only when detection failed or the user asks. A mapping is remembered by the file's header signature — the set of column names in any order, each compared by [R2.3](#2-target-mapping-and-the-matching-rule), a generated name for a blank header carrying its column's position — and arrives pre-filled for the next file with the same signature; the detection rules, and whether a remembered mapping becomes a named template, are OQ 1. | 🤝 Aligned |  |
-| R1.3 | v1 | P0 | Four read failures each end the import with nothing imported, each its own named state: no header row detected ([E4](prd-inventory-import-copy.md#error--state-copy)), where the user names the columns or picks the header row; text that cannot be read ([E5](prd-inventory-import-copy.md#error--state-copy)), where the user chooses an encoding or re-saves the file; a file with zero data rows ([E6](prd-inventory-import-copy.md#error--state-copy)); and a file that has moved, been renamed, or gone away between being picked and being committed ([E38](prd-inventory-import-copy.md#error--state-copy)), which offers the file picker again. | 🤝 Aligned |  |
-| R1.4 | v1 | P0 | Rows with the wrong number of columns are listed by row number and excluded, never silently imported ([E7](prd-inventory-import-copy.md#error--state-copy)); the user proceeds without them or fixes the file and re-picks it. | 🤝 Aligned |  |
+| ID | Input | Behavior |
+| :--- | :--- | :--- |
+| R1.5a | Encoding | Default UTF-8, accepting and stripping a leading UTF-8 BOM; manual choices UTF-8, UTF-16LE, UTF-16BE, Windows-1252; strip a matching leading BOM and reject a contradictory one. Decoding errors stop at E5; never replace invalid bytes silently; show the all-encodings-failed variant only after the default attempt and manual choices have attempted every listed encoding and failed for the current source and delimiter, offering re-saving as UTF-8 CSV, "Pick the file again", and "Cancel". |
+| R1.5b | Delimiter | Default comma; manual comma, semicolon or tab. No heuristic delimiter detection yet. |
+| R1.5c | Records and quoting | Accept LF and CRLF record endings; double quotes delimit quoted fields, doubled quotes escape a quote, and quoted fields may contain delimiters and newlines. A terminal record ending adds no empty record; invalid quoting is E5, never an attempt to salvage shifted columns. |
+| R1.5d | Header | Propose record 1 and allow the user to pick another record (earlier records ignored), or supply names with no header record (all records are data). A source with no records goes directly to E6; a proposed header with all fields blank goes to E4; generated names are for individual blank headers beside named ones. |
+| R1.5e | Empty fields | Preserve empty strings, including trailing empty fields; a blank record is processed by the width and blank-code rules, not silently discarded. |
 
 ### 2. Target, mapping and the matching rule
 
-Traces [UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-via-csv-import), [UJ 2.2](prd-inventory-import-journeys.md#uj-22-mapping-metadata-fields); serves [U1](../vision.md#use-cases).
-
-#### As a Cataloger, I can say where my file lands and what its columns mean so that my spreadsheet arrives as swatches rather than as text.
-
-
-| ID | Release | Pri | Requirement | Status | Commit PR |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| R2.1 | v1 | P0 | The target collection — new or existing — is chosen in the app before columns are mapped, and the collection name is never a mapped column in v1. A new collection collects the same name, samples-per-row, scan mode, and optional display defaults as [§1 of the capture PRD](../capture-mode/prd-capture-mode.md#1-collections). | 🤝 Aligned |  |
-| R2.2 | v1 | P0 | Swatch Code must be mapped and the mapping cannot be saved without it ([E8](prd-inventory-import-copy.md#error--state-copy)); Swatch Name, Swatch Alternate Code, and Swatch Alternate Name are optional. Every other column is imported as extra metadata the collection can surface, a column with a blank header arriving under a generated name listed in the preview ([E12](prd-inventory-import-copy.md#error--state-copy)), and a later import into a collection keeps the existing columns' positions and appends its new ones after them ([the Data Foundation PRD's R1.2](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns)). (Inherited obligation for the Collection Mode PRD: renaming an imported column.) | 🤝 Aligned | amended post-lock 2026-09-16 (the Data Foundation PRD's outbound line) |
-| R2.3 | v1 | P0 | Two Swatch Codes, or two collection names, are the same when they match after the text is brought to one standard form, spaces at either end trimmed, inner runs of space collapsed to one, and letter case ignored the same way in every language; any whitespace character — a tab or a non-breaking space included — counts as a space. The value is shown exactly as entered, and this one rule governs uniqueness, re-import matching, find, the ad-hoc duplicate check, and collection names, exercised with accented, tab, and non-breaking-space inputs. (Inherited obligation for the Data Foundation PRD.) | 🤝 Aligned |  |
-| R2.4 | v1 | P0 | Rows with a blank Swatch Code ([E9](prd-inventory-import-copy.md#error--state-copy)), and rows whose codes repeat within the file or merge into one another under [R2.3](#2-target-mapping-and-the-matching-rule) ([E10](prd-inventory-import-copy.md#error--state-copy)), are all listed by row number and excluded — every offending row, never first-row-wins, and the app never picks a winner. The user proceeds without them or fixes the file and re-picks it. | 🤝 Aligned |  |
+| ID | Requirement | Status | Commit PR |
+| :--- | :--- | :--- | :--- |
+| R2.1 | Choose or create one target collection before mapping, using [Capture §1](../capture-mode/prd-capture-mode.md#1-collections) for creation settings; collection name is never a mapped field. Selecting an existing target adds no confirmation dialog: R3.1’s named-target preview is the confirmation. | 🤝 Aligned | |
+| R2.2 | Require one source column for Swatch Code (E8); optionally map Swatch Name and both alternates, each source and target used at most once. Import remaining columns as metadata under R2.5/R2.6 and [Data Foundation R1.2](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns), preserving decoded values and existing column positions and appending new columns in source order. | 🤝 Aligned | |
+| R2.3 | For every code, collection-name or header comparison, trim Unicode White_Space at either end, collapse internal White_Space runs to U+0020, then apply canonical caseless matching (NFD → full default case fold → NFD), without locale tailoring or compatibility normalization. Preserve entered text separately; uniqueness, re-import, find and ad-hoc duplicate checks share this rule. | 🤝 Aligned | |
+| R2.4 | Exclude whitespace-only codes (E9) and every structurally valid record in a duplicate-code group under R2.3 (E10), listing source record numbers. No first-row-wins rule applies, and excluded records change nothing in the collection. | 🤝 Aligned | |
+| R2.5 | Resolve header names before mapping: reserve all nonblank input names under R2.3, retain each group’s first occurrence, and suffix later occurrences in source order until unique against reserved and assigned names (E41). Then name blank headers by source position, suffixing collisions the same way (E12); show original names, positions and resolved names using the [copy file’s naming templates](prd-inventory-import-copy.md#generated-column-names), with "Continue with the listed names", "Pick the file again", and "Cancel". | 🤝 Aligned | |
+| R2.6 | A resolved passthrough header equal under R2.3 to a stored column name reuses that column regardless of how its name arose, retaining its first-seen spelling and position; otherwise append a new column. Reuse within a collision group follows R2.5’s source-order resolution; renaming stored columns remains Collection Mode’s obligation. | 🤝 Aligned | |
 
 ### 3. Preview and commit
 
-Traces [UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-via-csv-import), [UJ 2.1](prd-inventory-import-journeys.md#uj-21-import-additional-rows-into-an-existing-collection); serves [U1](../vision.md#use-cases).
+| ID | Requirement | Status | Commit PR |
+| :--- | :--- | :--- | :--- |
+| R3.1 | Before every commit, E43 names the target collection and existing item count, encoding/delimiter, new / updated / unchanged counts, added columns, the count of matched rows gaining absent fields (R3.6j), exclusions and absent-item count, applying [Capture §12’s zero-count rule](../capture-mode/prd-capture-mode.md#12-error--state-copy); warn with resulting size and ROWS_CEILING when exceeded, but allow import. If the source changes, re-read, revalidate headers/mapping, reset overwrite choices, and require a new preview (E13). | 🤝 Aligned | |
+| R3.2 | Commit the previewed import whole or not at all under R3.3a–d within [DF R1.7/R1.10’s local-volume scope](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns), never starting a session; a failed commit rolls back within that scope and shows E44 with its cause, using [Data Foundation E15](../data-foundation/prd-data-foundation-copy.md#error--state-copy) for no room. Refuse import while the target has an active, paused or interrupted session (E40), checking on target selection and again before commit. | 🤝 Aligned | |
+| R3.3 | Swatch Codes must be unique within the target collection under R2.3; import never creates a second item with an equal code, and R3.4 handles pre-existing duplicates defensively. Apply R3.3a–d without deleting or reordering existing items or changing their capture state or measurements; repeating a committed file with the same mapping/choices and no intervening edits is idempotent. | 🤝 Aligned | |
+| R3.4 | If a source code matches multiple existing items, exclude that source record (E11); change none of the matches and allow the other eligible records through preview. | 🤝 Aligned | |
+| R3.5 | For each captured item with proposed changes to existing field values, offer "Take the new details" / "Keep what I have" as actions scoped to that row or all rows, defaulting to "Take the new details" (E14). "Keep what I have" preserves conflicts in existing fields but fills previously absent fields; other matched items take supplied changes without this choice, and neither path touches measurements/history. | 🤝 Aligned | |
+| R3.6 | Apply R3.6a–j to identity fields and passthrough metadata, comparing values as exact decoded text rather than R2.3 match equivalence. New columns persist in the collection’s column list even when every captured match selects "Keep what I have"; list additions separately from row counts. | 🤝 Aligned | |
+| R3.7 | Creating a new target is the separate Capture §1 action and persists its empty collection (F64). Canceling or failing the import preserves that collection and an existing target under R3.2’s rollback scope; R3.9 owns commit eligibility. | 🤝 Aligned | |
+| R3.8 | Offer the copy table’s actions and apply R3.8a–o; only E43’s explicit "Import" commits. "Cancel" before commit exits without imported changes; an in-progress commit succeeds or rolls back under R3.2. | 🤝 Aligned | |
+| R3.9 | If no source records remain eligible, show E42 with the issue list and disable commit. An all-unchanged import remains eligible, with only the column additions and absent-field fills separately previewed by E43’s added-columns list and rows-gaining-details line written (F62). | 🤝 Aligned | |
 
-#### As a Cataloger, I can see exactly what will land before it lands so that an import never surprises me.
+**Commit outcomes — R3.2/R3.3**
 
+| ID | Source disposition | Effect at commit |
+| :--- | :--- | :--- |
+| R3.3a | Eligible, no matching item | Create pending item without a measurement; append after existing rows, in source order. |
+| R3.3b | Eligible, one match | Apply R3.5/R3.6 to metadata only; retain queue position, capture state, canonical value and all history. |
+| R3.3c | Excluded record | No insert or update. |
+| R3.3d | Existing item absent from source | No change. |
 
-| ID | Release | Pri | Requirement | Status | Commit PR |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| R3.1 | v1 | P0 | A preview precedes every commit, showing the row count — for an existing collection the three-way count new / updated / unchanged plus a line reading "N rows in the collection are not in this file — left untouched" — and the issue list. A file that changed on disk between being read and being committed is re-read and re-previewed ([E13](prd-inventory-import-copy.md#error--state-copy)), and a file that would take the collection past ROWS_CEILING ([the capture PRD's R3.12](../capture-mode/prd-capture-mode.md#3-the-capture-session)) is warned about by number in the preview and imported anyway. | 🤝 Aligned |  |
-| R3.2 | v1 | P0 | A commit is all-or-none, so a failure partway leaves the collection exactly as it was, and every imported row lands pending, in file order, appended after any existing rows. Import ends at ready-to-capture and never starts a session, and importing into a collection whose session is active, paused, or interrupted is refused, naming that session and offering both a way to it and a way to end it from here, so a blocked import is never a dead end ([E40](prd-inventory-import-copy.md#error--state-copy)). (Inherited obligation for the Data Foundation PRD: an import that either lands whole or not at all.) | 🤝 Aligned |  |
+**Field updates and counts — R3.6**
 
+| ID | Incoming field / selected choice | Result |
+| :--- | :--- | :--- |
+| R3.6a | Column omitted | Keep stored value. |
+| R3.6b | Present field, same decoded value, including blank-to-blank | Unchanged. |
+| R3.6c | Present field, different value; uncaptured item or "Take the new details" | Replace; an empty string clears the old value. |
+| R3.6d | Previously absent field, including a captured item selecting "Keep what I have" | Store the incoming value, even if empty; create its column if needed under R2.6, with additions listed separately. |
+| R3.6e | Previously present field, captured item selecting "Keep what I have" | Preserve the stored value, including blank values and displayed code spelling. |
+| R3.6f | Matched pending/set-aside item, code spelling differs but is R2.3-equal | Replace displayed code with incoming spelling as a metadata update; item identity, order and measurements stay unchanged. |
+| R3.6g | Classifying eligible records | No matching item → new; matched item with at least one previously present value changing after choices → updated; otherwise unchanged, even if previously absent fields are filled. Column creation by itself never counts as a row update. |
+| R3.6h | Counting absent items | Count existing items whose code appears in none of the structurally valid, nonblank source codes; excluded duplicate/ambiguous codes still count as present. |
+| R3.6i | Choices change | Recalculate preview counts before commit. |
+| R3.6j | Counting rows gaining absent fields | Count each eligible matched item receiving at least one previously absent field once, including empty values, whether the column is new or already exists. This tally overlaps updated/unchanged counts rather than adding a fourth disposition; show it on E43’s rows-gaining-details line. |
 
-#### As a Cataloger, I can re-import a corrected file so that fixing my spreadsheet never costs me my measurements.
+**Action transitions — R3.8**
 
-
-| ID | Release | Pri | Requirement | Status | Commit PR |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| R3.3 | v1 | P0 | Swatch Code is how a file row is matched to a collection row: a matched row keeps its place, its state, and its measurements whatever the file says. Importing the same file twice changes nothing, a re-import never deletes a row, and rows the file does not mention are left exactly as they are. | 🤝 Aligned |  |
-| R3.4 | v1 | P0 | A code in the file that matches more than one row in the collection is a hard failure listed in the preview ([E11](prd-inventory-import-copy.md#error--state-copy)) and is neither created nor updated. | 🤝 Aligned |  |
-| R3.5 | v1 | P0 | Where an updated row is already captured, the preview offers a keep-or-overwrite toggle on each such row with one default applied to all of them, never a series of dialogs ([E14](prd-inventory-import-copy.md#error--state-copy)). The default is to take the new details, and the state says that measurements — the canonical value and its version history — are never touched either way. | 🤝 Aligned |  |
-| R3.6 | v1 | P0 | A mapped column present in the file but blank for a row counts as a change, so it appears under "updated" and the preview says so. A column omitted from the file entirely leaves existing values untouched. | 🤝 Aligned |  |
+| ID | State / action | Next state or effect |
+| :--- | :--- | :--- |
+| R3.8a | E4: "Pick the header row" / "Name columns"; E5/E45: "Choose an encoding" / "Choose a separator" where offered | Re-read, revalidate headers and the one-column guard, then mapping/preview; another decoding or syntax failure returns to E5. |
+| R3.8b | E5/E7/E9/E10/E12/E38/E41/E42: "Pick the file again"; E6: "Pick a different file" | Read fresh, then header resolution, guard, mapping and preview. |
+| R3.8c | E7/E9/E10: "Continue without them"; E11: "Continue without it" | Keep all exclusions; return to remaining mapping/preview steps, or E42 if none eligible. |
+| R3.8d | E8: "Choose the code column" | Return to mapping; continue only when valid. |
+| R3.8e | E12/E41: "Continue with the listed names" | Accept the listed resolved headers; continue through the guard and mapping to preview. |
+| R3.8f | E13: "Review again" | Review fresh counts and reset choices; re-map first if the signature changed. |
+| R3.8g | E14: "Take the new details" / "Keep what I have", scoped to one row or all rows | Update the selected row’s choice or every offered row’s choice, and recalculate counts; explicit "Import" still required. |
+| R3.8h | E40: "Go to the session" | Leave import without changes; open the named session’s current or resume surface. |
+| R3.8i | E40: "End that session" | Use [Capture R7.5/R7.13](../capture-mode/prd-capture-mode.md#7-pause-end-interruption-and-resume); canceled ending stays blocked, confirmed ending returns through a fresh preview. |
+| R3.8j | Every import state: "Cancel" | Exit without imported changes; preserve any separately created collection. |
+| R3.8k | E43: "Import" | Require E45 confirmation for a one-column read before E43; recheck source and session gate, then commit once; a changed source → E13, blocked session → E40, write failure → E44. |
+| R3.8l | E44: "Try again" | Retry from a fresh read and preview; never repeat a write blindly or insert duplicate rows. |
+| R3.8m | E45: "Use this one column" | Confirm the current parse; enable valid mapping save/reuse, then preview. |
+| R3.8n | E43: "Choose an encoding" / "Choose a separator" | Re-read, reset overwrite choices, and invalidate previous preview and one-column confirmation; revalidate through R3.8a before returning to preview. |
+| R3.8o | Multiple header notices | "Continue with the listed names" accepts all listed E12/E41 resolutions together; no notice skips mapping or preview. |
 
 ### 4. Demo Device and verifiability
 
-Traces [UJ 3.9](../capture-mode/prd-capture-mode-journeys.md#uj-39-capture-with-the-demo-device-contributor); serves [U9](../vision.md#use-cases) and vision [J5](../vision.md#j5-first-contribution-contributor). Builds on the [device PRD §6](../device-management/prd-device-management.md#6-mock-device-layer) mock-device layer, as the capture PRD's [§11](../capture-mode/prd-capture-mode.md#11-demo-device-and-verifiability) does; neither that layer's rules nor §11's are restated here.
+[UJ 2–2.2](prd-inventory-import-journeys.md#user-journeys) run without hardware or a license; use the existing [device/store test seams](../device-management/prd-device-management.md#6-mock-device-layer).
 
-#### As a Contributor, I can walk the import flow and read back what its preview offers so that I can contribute without an instrument or a license.
-
-
-| ID | Release | Pri | Requirement | Status | Commit PR |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| R4.1 | v1 | P0 | A test lists what the import preview shows, without matching wording ([R3.1](#3-preview-and-commit)). | 🤝 Aligned |  |
-| R4.2 | v1 | P0 | A test observes, without matching wording, which named [copy](prd-inventory-import-copy.md#error--state-copy) state is up. | 🤝 Aligned |  |
+| ID | Requirement | Status | Commit PR |
+| :--- | :--- | :--- | :--- |
+| R4.1 | Tests enumerate R1.5a–e’s read contract, R2.3’s equality cases, preview counts, exclusions, column additions, choices, and the actions offered in every import state, including all three E40 routes. Assert transitions and store effects against the acceptance journeys, including rollback and idempotent re-import. | 🤝 Aligned | |
+| R4.2 | Tests observe named copy-state identity and cause variant independently of wording. Keep shipping-string checks separate from behavior assertions. | 🤝 Aligned | |
 
 ### Inherited obligations
 
-Each line is a requirement on the document named, not a suggestion. A row cited here carries the rule; a line with no row is one this document hands over whole.
+Each line is a requirement on the document named, not a suggestion; the Rows column identifies the import rules it carries.
 
 | Target PRD | Obligation | Rows |
 | :--- | :--- | :--- |
-| Data Foundation | The one matching rule for Swatch Codes and collection names, and an import that either lands whole or not at all | [R2.3](#2-target-mapping-and-the-matching-rule), [R3.2](#3-preview-and-commit) |
-| Collection Mode | Renaming an imported column | [R2.2](#2-target-mapping-and-the-matching-rule) |
-| Data Export | Every column an import brought in, and a column mapped to identity, are carried into the export as [the export PRD's R2.3](../export/prd-data-export.md#2-columns-names-dialect-and-the-version) orders them, a name that collides with an app column renamed rather than dropped ([its R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version)) | [R2.2](#2-target-mapping-and-the-matching-rule) |
-| Capture Mode | A collection's pending rows, in file order, are what a session scans; an import is refused while a session on that collection is in flight, and the routes [E40](prd-inventory-import-copy.md#error--state-copy) offers resolve to the capture PRD's §7 paths — an active or paused session ended from there follows [the capture PRD's R7.5](../capture-mode/prd-capture-mode.md#7-pause-end-interruption-and-resume) | [R3.2](#3-preview-and-commit) |
+| Data Foundation | The one matching rule; field preservation and column identity; atomic imports within R3.2’s cited storage scope; measurement preservation on re-import; decoded values stay directly queryable ([DF inbound mirror](../data-foundation/prd-data-foundation.md#inherited-obligations)). | R2.2, R2.3, R2.5, R2.6, R3.2, R3.3 |
+| Collection Mode | Renaming imported columns; whether a rename changes their stored names remains [post-lock work](../post-lock.md#cross-document). | R2.2, R2.6 |
+| Data Export | Every column an import brought in is carried through, and a column mapped to identity is emitted once rather than twice; order and export-name collisions follow [Export R2.3/R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version). | R2.2, R2.6 |
+| Capture Mode | New items append pending and matched items retain state/position; E40’s "Go to the session" and "End that session" use Capture’s current/resume and §7 ending paths. Design scale and import timing remain [Capture R3.12/OQ 13](../capture-mode/prd-capture-mode.md#3-the-capture-session). | R3.2, R3.3, R3.8h–i |
 
 ### 5. Error & State Copy
 
-The shipping copy for every error, waiting, choice, and confirmation state in this PRD is in [prd-inventory-import-copy.md](prd-inventory-import-copy.md). Every state there is a distinct named state whose identity is stable even when its wording changes, so behaviour can be asserted independently of copy ([R4.2](#4-demo-device-and-verifiability)). The Labels and Placeholders rules that govern that table are the [capture PRD's §12](../capture-mode/prd-capture-mode.md#12-error--state-copy)'s, read with "this table" meaning that one, and are not restated here.
+[Shipping copy](prd-inventory-import-copy.md#error--state-copy) uses [Capture §12's label and placeholder rules](../capture-mode/prd-capture-mode.md#12-error--state-copy). E IDs identify states independently of strings; R3.8 owns action transitions.
 
 ## Success Metrics
 
-Numeric targets below are proposals, not commitments.
-
-
-| ID | Metric | Definition (start event, end event, statistic, population) | Candidate target | Method | Status |
+| ID | Metric | Definition | Candidate target | Method | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| M1 | Import success on real exports | Start: picking a file. End: a committed import. Statistic: the share of files that imported without the user editing the file first. Population: a corpus of real exports from the spreadsheets catalogers actually use — Numbers, Excel, Sheets. | ≥ 90% (proposal); the failures are what write the detection rules for OQ 1 | Timed walkthroughs against the corpus, n stated with the result | 🤝 Aligned |
+| M1 | Import success on real exports | Start: file picked; end: committed import; share of Numbers, Excel and Sheets corpus files imported without editing the source file first. | ≥ 90%, proposal | Corpus walkthroughs with n, settings, failures and exclusions recorded; feeds OQ 1. | 🤝 Aligned |
 
-
-How long an import takes to show up as capture is [the capture PRD's M8](../capture-mode/prd-capture-mode.md#success-metrics), which starts at [R3.2](#3-preview-and-commit)'s commit.
+[Capture M8](../capture-mode/prd-capture-mode.md#success-metrics) measures import commit to first captured row.
 
 ## Open Questions
 
-One question, numbered from 1. It was OQ 12 in the capture PRD and moved here under fence F49; a question number is never reused.
+| # | Question | Interim build contract | Closer / required evidence | Feeds | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | CSV detection | R1.5’s lists/defaults are provisional; R1.6’s one-column guard and visible preview settings remain until detection closes. | Dogfood corpus of real Numbers, Excel and Sheets exports; record expected decoded fields, selected settings and failures, then publish deterministic detection/fallback rules and corpus results. | R1.2, R1.5, R1.6, M1 | open |
+| 2 | Named mapping templates | Automatic remembered mapping remains required; no named-template UI until decided. | Owner decides whether named templates belong in v1, informed by repeated mapping corrections from OQ 1's corpus/dogfood. | R1.2 | open |
 
-| # | Question | Decision so far | Interim rule | Closer | Feeds | Status |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | CSV detection, and named mapping templates | None. Open with it: whether a remembered mapping becomes a named, reusable template. | None; detection failures fall to the no-header-row and can't-read-the-file states. | Real exports from Numbers, Excel, and Sheets, with the detection rules written from what breaks — dogfood. | [R1.2](#1-reading-the-file), [M1](#success-metrics) | open |
-
-Results file: [`prd-inventory-import-oq-results.md`](prd-inventory-import-oq-results.md), one `## OQ <id>` section per answer; an OQ's status may change only when its section exists there. A question number is never reused. Every provisional constant in this document carries its OQ id — a marker without a matching entry above, or in the capture PRD's [Open Questions](../capture-mode/prd-capture-mode.md#open-questions) where it says so, is invalid.
+OQ 2 was separated from OQ 1 in this amendment; neither is answered. [Results](prd-inventory-import-oq-results.md) require a matching `## OQ <id>` section before status changes; Capture OQ 13 retains ownership of the import performance constants.

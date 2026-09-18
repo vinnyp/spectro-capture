@@ -109,7 +109,7 @@ UJ1.1 was folded into UJ1 when Library was dropped (fence F1).
 
 ### Cluster 2 — Import an inventory
 
-UJ 2, UJ 2.1, and UJ 2.2 moved to the [inventory-import journeys](../import/prd-inventory-import-journeys.md) under fence F49, keeping their numbers; the flow chart that covered all three went with them.
+UJ 2, UJ 2.1, and UJ 2.2 moved to the [inventory-import journeys](../import/prd-inventory-import-journeys.md) under fence F49, keeping their numbers; PR #16 replaces the import flow chart and narrative steps with acceptance tables linked to requirement and state IDs.
 
 ### Cluster 3 — The bulk session (the thesis)
 
