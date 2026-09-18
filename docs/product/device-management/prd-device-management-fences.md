@@ -94,6 +94,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D7 / Capture F62 moves the spread-control mirror to “Capture Mode, on the simulated layer”, beside Capture R11.8; the earlier §6 placement is superseded. That line also carries Capture R11.7’s fired cue channels (sound / haptic / visual), making the two-sense promise observable; no hardware capability is inferred.
 
+**Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736942308)):** D12 / Capture F67 adds the offered illuminant/observer reference-pair set to R6.9 and the Capture simulated-layer obligation line, mirroring Capture R11.6; unlike inferred hardware support, the configured set is a test fixture and must be explicitly declared under R6.25.
+
 ### F13 — Setup and authorization recovery actions (2026-09-18)
 
 **Decision:** First-run explicit setup exits dismiss to normal device-panel content; later-run exits land in the collection. Incidental navigation resets the relevant failure counter exactly as F9 clarification (5c) already required. Pairing Try again retries the selected device; discovery is a separate picker action. Setup states belong to the panel, E1 to the picker, and both remain non-modal.

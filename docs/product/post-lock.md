@@ -65,7 +65,7 @@ Cross-document:
 
 ### Capture Mode
 
-- [x] **Capture** — R11.8 now names spread below, equal to, or above SAMPLE_TOLERANCE (F62), resolving the ambiguous “set … against” wording. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — R11.8 now names spread below, equal to, or above SAMPLE_TOLERANCE (F62), resolving the ambiguous “set … against” wording. — Capture agent-build amendment F51–F55, ratified by F62 (PR #20).
 - [x] **Capture** — F47's Decision lacks an "(R11.12 added rounds 21–22)" marker. — Capture agent-build amendment F51–F55 (PR #20).
 - [x] **Capture** — the Surfaces table carries no ‹P1› on P1-only state names. — Capture agent-build amendment F51–F55 (PR #20).
 - [x] **Capture** — the "Device PRD, simulated layer" obligation cell does not summarise R11.8's spread control. — Capture agent-build amendment F51–F55 (PR #20).
@@ -89,7 +89,7 @@ Cross-document:
 - [x] **Import / DF / DE** — 2026-09-17 owner fence F59: DF’s inbound Import line gains field preservation, decoded values directly queryable, and measurement preservation; both obligation tables carry Rows. DF R1.2 and Export’s inbound mirror use Import R2.5/R2.6’s first-seen resolved column names; Capture’s import line mirrors both E40 session routes. — PR #16
 
 - [x] **Capture** — the device PRD's literal `&amp;` §2 and §7 headings break three links. — done, the F9 refactor (commit `4b0f474`, PR #11): the headings read `&`, and the inbound `#2-licensing--pre-authorization` and `#7-error--state-copy` anchors resolve; the only `&amp;` left under `docs/product` is the fixed string quoted in the device fence file's F9
-- [x] **Capture** — the widened cross-PRD label grep should become a standing check. — Capture §12 standing label check, F55 (PR #20).
+- [x] **Capture** — the widened cross-PRD label grep should become a standing check. — Capture §12 standing label check, F55, ratified by F65 (PR #20).
 - [x] **DF** — R7.7a–m is the sole fixture inventory; Data Export links to it instead of mirroring the list. — PR #17 agent-build amendment.
 - [ ] **DF** — whether a Collection Mode rename moves an imported column's stored name.
 - [x] **DF** — OQ 2 distinguishes ADR-0003's required SQLite features from ADR-0006's macOS floor; owner ratifies the reader floor after both. — PR #17 agent-build amendment.
