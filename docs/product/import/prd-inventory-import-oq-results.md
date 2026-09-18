@@ -1,5 +1,5 @@
 # Inventory Import PRD — open-question results
 
-One `## OQ <id>` section per answered question in `prd-inventory-import.md`'s Open Questions table. An OQ's status may change only when its section exists here. Owner decisions that close a question are recorded as fences in `prd-inventory-import-fences.md`; the section then points at the fence and states the answer the rows now carry.
+An OQ becomes answered only when its `## OQ <id>` section records the evidence and resulting contract, with a decision reference where needed. IDs never renumber or get reused.
 
-No question is answered yet.
+No question is answered yet. On 2026-09-17, OQ 1 retained CSV detection and OQ 2 took named mapping templates; [F50](prd-inventory-import-fences.md#f50--agent-build-amendment-2026-09-17) records the split. R1.5 is the initial build contract, not evidence that detection is solved; automatic mapping reuse remains required while named templates are undecided.
