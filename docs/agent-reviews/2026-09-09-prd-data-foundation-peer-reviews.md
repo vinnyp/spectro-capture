@@ -576,3 +576,21 @@ Declined, released by the lens: plan's "second enumeration" naming on R7.5; staf
 | [4043886885](https://github.com/vinnyp/spectro-capture/pull/17#discussion_r4043886885) | Updated the sole journeys inventory: DJ2 includes R3.3/R3.5, DJ3 includes R7.7, and DJ5 includes R5.5. The companion still carries no separate row inventory. |
 | [4043886889](https://github.com/vinnyp/spectro-capture/pull/17#discussion_r4043886889) | R7.3 now runs below-floor cases only once a release raises the floor, using E16’s floor convention. DJ3 carries the same marker; R7.7m remains the test-only upgrade fixture from v1. |
 | [4043886893](https://github.com/vinnyp/spectro-capture/pull/17#discussion_r4043886893) | Applied owner decision 2 as F48: restored the deletion-only statement to E14 and documented why E8 omits it. E9 explicitly distinguishes active/paused/halted from interrupted sessions; E15’s parallel wording is consistent. R1.5/R1.7/R1.10 now link to File actions. Owner decision 3 is F49, with proposed M10 recorded only in post-lock. |
+
+## Data Export agent-build amendment — 2026-09-17
+
+**Scope:** Data Export, following merged Data Foundation PR #17. Worktree/branch: `audit/data-export-prd`, based on main `7b132ef`. The owner approved the seven-item recommendation list before edits; this is an implementation of that audit, not a new peer-review round or a claim that product code exists.
+
+| Approved improvement | Change |
+| :--- | :--- |
+| Decompose dense requirements | R1.1a–r separate row fields, missing data, eligibility and preview; R2.4a–c define collision allocation; R4.1a–h separate golden acceptance cases. Parent IDs, priorities, Status and Commit PR remain. |
+| Explicit missing-data behavior | F16/R1.1h–l use empty absent reading metadata, including `sc_simulated`; quarantined history retains readable provenance, never claims current, and emits no colour/spectral/payload values. Identity-only history has no ordinal/reason and a false current flag. |
+| Deterministic collision allocation | F17 uses persisted collection-column order across imports, reserves app headers, repeats `import_` until unique and discloses each renamed pair, including literal prefixed columns. Three worked examples specify the tie-break. |
+| Golden acceptance checklist | R4.1a–h preserve golden authority, app-version exception, whole-byte repeat checks, append/derivation refresh rules, format bumps, retained old goldens, scale exception and OQ 4 gate. DF R7.7 remains the sole fixture inventory. |
+| Export-preview variants | F18/R1.1o–r/E1 specify selected-kind/single-item counts, unavailable-archive disclosures, rename pairs, empty-collection copy and header-only output, with history gated to P1. |
+| Acceptance scenarios | EJ1 now specifies setup/action/result cases for canonical/history, source preservation, missing/damaged data, repeated imports, empty/single-item exports, read-only eligibility and each destination failure. |
+| Move history out of the build contract | F15 relocates the complete split-origin map to fences, removes repeated persona/process narration, fixes landed-obligation wording, and updates the index and post-lock tracking. |
+
+**Local validation:** 1,995 active-document local links/anchors, zero broken; no malformed tables or duplicate active requirement IDs; all 13 primary requirement IDs/priorities/tracking preserved, plus the original surface, 29 new lettered rules, four copy states and one metric; all 18 fences mapped. The historical split-origin map is preserved; M1, E2–E4 and all four OQs (two answered, two open) are unchanged. PRD lock-count: 3,677/4,000 words. `git diff --check` and gitleaks pass; hooks remain enabled. No application tests or hardware checks apply to this documentation change, and first-build evidence stays pending in post-lock.
+
+**Boundaries:** no wavelength-grid claim, schema/package decision, new derived-recovery/export exception, mid-session-export policy or destination-overwrite policy. OQ 4 still requires hardware; DF OQ 21 still owns the future distinct unavailable-archive mark. F16/F17 clarify meanings before the first implementation; changes to any released CSV contract still follow R2.5.

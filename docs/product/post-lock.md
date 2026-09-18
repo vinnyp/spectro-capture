@@ -33,6 +33,10 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 - [ ] **DF / Data Export** — DF OQ 21 tracks a future distinct unavailable-archive export mark and version bump; interim empty payload cells and quarantine precedence are settled by PR #17, DF F37 / DE F14.
 
+### Data Export
+
+- [x] **DE** — agent-build amendment F17 specifies stored-order collision allocation and literal `import_` examples; F18 specifies empty-collection preview/output. Implementation checks remain below; branch `audit/data-export-prd`.
+
 ### Device Management
 
 Rows and copy:
@@ -100,8 +104,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **DF** — implement R7.2/R6.2d's cleared-imported-value recovery oracle independently of cleared notes; contract clarified in PR #17, build evidence pending.
 - [ ] **DF** — implement R7.6k/R7.7h delete counts for an item with no earlier readings; contract clarified in PR #17, build evidence pending.
 - [ ] **DF** — implement R7.7h/DJ4's never-scanned E8 rendering with no nonexistent measurement clauses; contract clarified in PR #17, build evidence pending.
-- [ ] **DE** — E1 at an empty collection.
-- [ ] **DF** — the collision tie-break for a literal `import_`-prefixed passthrough column.
+- [ ] **DE** — implement E1/R1.1r/R4.1h empty-collection preview and header-only export assertions; specified by the agent-build amendment F18, build evidence pending.
+- [ ] **DF / DE** — implement DF R7.7a/k with DE R2.4a–c’s stored-order collision tie-break, including literal `import_` names and repeated imports; specified under DE F17, build evidence pending.
 - [ ] **Capture** — "Leave it set aside" after a non-disagreeing failed attempt does not count.
 - [ ] **Capture** — a mixed-route run counts.
 - [ ] **Capture** — "Accept the average" and a captured row reset the counter.

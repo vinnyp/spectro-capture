@@ -92,13 +92,70 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** Intact canonical data remains exportable, and both builders and consumers need deterministic payload and state precedence. Source: [owner decision 2](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725041707).
 
+### F15 — Agent-build contract and acceptance shape (2026-09-17)
+
+**Decision:** Preserve requirement/copy/metric IDs, priorities, Status and Commit PR tracking; decompose dense requirements into lettered rule tables. Replace persona narration with acceptance scenarios, relocate the split-origin map here, and refer to landed sibling obligations as existing contracts. R4.1a–h unpack the existing golden/version/hardware rules without selecting schema, libraries or the wavelength grid.
+
+**Why:** Agents need field rules and observable outcomes at the point of implementation; origin history remains available without duplicating the build contract. Owner approved the seven-item Data Export audit recommendation in this session (2026-09-17).
+
+### F16 — Missing reading fields and quarantine rows (2026-09-17)
+
+**Decision:** R1.1h–l define field presence. Canonical rows without a canonical value and never-scanned history rows have empty reading metadata, including `sc_simulated`; false means a known non-simulated snapshot, not “no reading.” Quarantined history keeps readable provenance/sequence/reason, empties unreadable metadata and all colour/spectral/payload/qualifier cells, and never claims current. An identity-only history row has no ordinal/reason and has a false current flag.
+
+**Why:** Approved audit item 2 requested an explicit missing-data matrix and empty unknown fields rather than invented values. F10/F14’s row inclusion, archive-only export and quarantine precedence stand; this specifies formerly ambiguous metadata/history cells. It does not alter stored data or add a CSV state/column; any change to a released format’s meanings follows R2.5.
+
+### F17 — Collision allocation follows stored collection order (2026-09-17)
+
+**Decision:** Reserve the selected kind’s app headers; allocate passthrough names sequentially in persisted collection-column order, repeatedly prefixing `import_` while the candidate is reserved or already allocated. Earlier stored columns win, including against literal `import_` names; preview discloses every rename, and stored names/values never change.
+
+**Why:** Approved audit item 3: after multiple imports there is no single current “import file order.” Import R2.2/R3.3 and DF R1.2 already retain earlier columns and append new ones; this makes the collision tie-break executable and closes its specification gap. R2.5 governs any change to a released contract.
+
+### F18 — Preview population and empty exports (2026-09-17)
+
+**Decision:** R1.1o–r scope preview counts to the selected item/collection and export kind, distinguish reading rows from never-scanned items and unavailable archives from unused slots, disclose every renamed header, and qualify field-presence claims. Empty collections export the selected kind’s header with no rows and explicit column-names-only copy; P1 history actions/disclosures remain gated.
+
+**Why:** Approved audit item 5: a builder needs deterministic E1 variants, including the empty-collection post-lock case and archive damage introduced by F14. This is a product-output contract, not a UI-layout or mid-session/overwrite policy decision.
+
+## Split-origin map
+
+**Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
+
+| In the Data Foundation PRD | Here |
+| :--- | :--- |
+| R4.1 | [R1.1](prd-data-export.md#1-what-the-export-contains) |
+| R4.3 | [R1.2](prd-data-export.md#1-what-the-export-contains) |
+| R4.4 | [R1.3](prd-data-export.md#1-what-the-export-contains) |
+| R4.2 | [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version) |
+| R4.6 | [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version) |
+| R4.7 | [R2.3](prd-data-export.md#2-columns-names-dialect-and-the-version) |
+| R4.8 | [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) |
+| R4.9 | [R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version) |
+| R4.5 | [R3.1](prd-data-export.md#3-when-an-export-cannot-finish) |
+| R7.9 | [R4.1](prd-data-export.md#4-verifiability) |
+| R7.7, the assertion half | [R4.2](prd-data-export.md#4-verifiability) |
+| R7.8, the export-destination half | [R4.3](prd-data-export.md#4-verifiability) |
+| R7.6, for this document's one surface | [R4.4](prd-data-export.md#4-verifiability) |
+| R7.6a | [R4.4a](prd-data-export.md#surfaces) |
+| M3 | [M1](prd-data-export.md#success-metrics) |
+| OQ 8 | [OQ 1](prd-data-export.md#open-questions) |
+| OQ 9 | [OQ 2](prd-data-export.md#open-questions) |
+| OQ 11 | [OQ 3](prd-data-export.md#open-questions) |
+| OQ 16 | [OQ 4](prd-data-export.md#open-questions) |
+| E6 | [E1](prd-data-export-copy.md#error--state-copy) |
+| E7 | [E2](prd-data-export-copy.md#error--state-copy) |
+| E17 | [E3](prd-data-export-copy.md#error--state-copy) |
+| E18 | [E4](prd-data-export-copy.md#error--state-copy) |
+| DJ1 | [EJ1](prd-data-export-journeys.md#ej1-export-the-collection) |
+
+Three rows are split rather than moved whole. [The Data Foundation PRD's R7.7](../data-foundation/prd-data-foundation.md#7-verifiability) keeps the fixtures and their content and hands the assertion here; [its R7.8](../data-foundation/prd-data-foundation.md#7-verifiability) keeps the move's failures and hands the export destination's here; [its R7.6](../data-foundation/prd-data-foundation.md#7-verifiability) stays live there for its own surfaces and this document states the same rule for its one.
+
 ## Fence → row map
 
-A row "carries" a fence when the fence's decision is what the row now states; this file, not the row, holds the rationale. Every entry below is the corresponding entry in [the Data Foundation PRD's map](../data-foundation/prd-data-foundation-fences.md#fence--row-map) rewritten into this document's IDs.
+A row "carries" a fence when the fence's decision is what the row now states; this file, not the row, holds the rationale. F1–F13 were transcribed from [Data Foundation’s map](../data-foundation/prd-data-foundation-fences.md#fence--row-map); later entries record amendments here.
 
 | Fence | Rows that carry it |
 | :--- | :--- |
-| F1 | Every row in the PRD body, plus its Background scope statement, its shape, its 4,000-word budget, and its [Traceability](prd-data-export.md#traceability) origin table; no requirement row of its own. |
+| F1 | Every row in the PRD body, plus its Background scope statement, its shape, its 4,000-word budget, and its historical [split-origin map](#split-origin-map) (relocated by F15); no requirement row of its own. |
 | F2 | [R1.1](prd-data-export.md#1-what-the-export-contains) (canonical default, P0), [R1.3](prd-data-export.md#1-what-the-export-contains) (history option, P1); the P0/P1 split in the [Legend](prd-data-export.md#legend), and the Pri cells of [R1.2](prd-data-export.md#1-what-the-export-contains), [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version), [R3.1](prd-data-export.md#3-when-an-export-cannot-finish), [R4.4](prd-data-export.md#4-verifiability); [OQ 2](prd-data-export.md#open-questions). |
 | F3 | [R1.1](prd-data-export.md#1-what-the-export-contains)'s raw-payload column; [M1](prd-data-export.md#success-metrics)'s statistic. Amended by F8: one column per sample slot. |
 | F4 | [R2.1](prd-data-export.md#2-columns-names-dialect-and-the-version), [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version); [OQ 1](prd-data-export.md#open-questions). |
@@ -112,6 +169,10 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F12 | [R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)'s bump list; [R4.1](prd-data-export.md#4-verifiability)'s in-place refresh list; [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version)'s per-version help-docs sentence. |
 | F13 | [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version) (app columns only); [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) (emitted as stored). |
 | F14 | R1.1/R1.3 and the inbound Data Foundation obligation; DF OQ 21 tracks the future distinct mark. |
+| F15 | R1.1a–g/m–n, R4.1a–h, R4.2/R4.4a; EJ1; Traceability and this split-origin map; inherited obligations. |
+| F16 | R1.1h–l, R1.2/R1.3, R4.2; E1 variants and EJ1 missing-data assertions. |
+| F17 | R2.4/R2.4a–c, R4.2/R4.4a; E1 rename disclosure and EJ1 collision assertions. |
+| F18 | R1.1o–r, R4.1h/R4.4a; E1 variants and EJ1 empty/preview assertions. |
 
 ## Rejected findings
 
