@@ -23,3 +23,9 @@ One `## OQ <id>` section per answered question in `prd-capture-mode.md`'s Open Q
 ## OQ 10 and OQ 17 — folded into OQ 8 (fence F20)
 
 Not answered. The review's surface and the summary's form are settled together with the seam (OQ 8, ADR-0004) by the Demo Device prototype of each reading. This section exists so the fold is recorded; the answers land under `## OQ 8` when the prototype closes it.
+
+## OQ 16 — Inherited notes for the device PRD
+
+**Answer (2026-09-18):** The owner approved carrying the settled notes in the Device Management agent-build amendment ([Device F12](../device-management/prd-device-management-fences.md#f12--carry-captures-device-obligations-2026-09-18), mirrored by Capture F50). Device R2.6/R4.3/E7 permit non-spectral capture; R6.6/R6.9 add the trigger exception and spectral switch; R6.27 and Capture R11.3 agree on P0 DEMO_SCAN_CYCLE. Device §5 distinguishes same-session halt recovery from a new session after interruption, follows Capture's current-row rules, carries the End warning and makes R5.18 quit-from-halt P0; sleep remains a halt.
+
+**Evidence:** Owner approval to proceed with the audited improvements; this is the document amendment, pending peer review, not hardware verification or implementation. Device OQs remain open/residual as before; Capture OQ 2 still decides whether the physical-button trigger exception is needed.

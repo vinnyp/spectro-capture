@@ -1,6 +1,6 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F14 record the owner-approved agent-build amendment (2026-09-18), whose peer review is pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
@@ -54,6 +54,44 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarification (5), 2026-09-08 (round 5, recorded by the orchestrator as precision of (4a)–(4c); the owner may overrule):** (a) Non-modality is a rule: R1.23 (P0) carries it — first-run setup states render non-modally on the device panel or in the device picker, both of which stay reachable — and §6 gains the observation that a test can assert the panel's other affordances stay operable while a setup state shows. (b) E12 and E14 carry "Leave setup for now ‹P1›" in their action cells, as (4b) names them. (c) Leaving setup is the user navigating away from a setup state, by the "Leave setup for now" action or otherwise; both reset the consecutive-failure counter, and the action dismisses the state and returns the device panel to its normal content. (d) "First run" means the app has no saved device yet; the Legend says so. (e) R4.4 reads "with guidance and without that action", as the Legend, §7 and the copy header already do. (f) E18's body names its P0 control and carries E17's coverage hedge; R2.16 cites E17 and E18.
 
+### F10 — Agent-build contract and acceptance scenarios (2026-09-18)
+
+**Authorization:** The owner approved the seven audit recommendations with “Proceed with the improvements.” This amendment is pending peer review; no implementation is claimed.
+
+**Decision:** Replace repeated vision/persona/journey narrative with scope, ownership and acceptance scenarios; keep the UJ anchors and every existing R/E/M ID, priority (except F12), status and historical decision. Requirements remain authoritative; scenarios and test-control maps derive assertions from those requirements rather than adding behavior. F9's table-never-expands restriction is superseded only for the explicit contracts R2.20/R6.29 and evidence methods M6/M7 added here; concise requirement rows and stable IDs remain binding.
+
+**Carried by:** Build contract, Legend, journey companion and amendment markers. The shared Status vocabulary is unchanged.
+
+### F11 — Calibration interim uses the SDK due signal (2026-09-18)
+
+**Decision:** Resolve R3.3 versus OQ 3 in favor of OQ 3's explicit interim: SDK due alone trips the calibration gate until OQ 3 closes. The candidate elapsed-time fraction is inactive, not a second interim gate; timestamps remain persisted for the eventual check. OQ 2's hardware findings and the owner's OQ 3 decision still determine the eventual gate, including expected session length and unknown due-state handling.
+
+**Carried by:** R3.3, the constants table, OQ 3 and UJ4-b. No hardware question closes here.
+
+### F12 — Carry Capture's device obligations (2026-09-18)
+
+**Decision:** Carry all already-settled Capture OQ 16 notes into their owning rows: non-spectral capture passes authorization when otherwise valid (R2.6/R4.3/E7), mock spectral availability and trigger exception (R6.9/R6.6), and configurable noninstant P0 latency shared as DEMO_SCAN_CYCLE (R6.27). E7 leaves the normal capture entry point available subject to other checks; it does not add a confirmation or silently manufacture spectral values.
+
+**Decision:** The §5 current item follows Capture's queue rules; without jumps/reorders it is the remembered row, evaluated after a held save succeeds to prevent duplicates. A halt retains the bound session; process-interruption recovery starts a new session with full pre-flight and the then-connected instrument. End routes through Capture's warning; R5.18 quit-from-halt moves P1 → P0. Sleep remains a same-session halt, and neither calibration due nor authorization expiry alone interrupts it. Shipping halt copy uses “instrument” to match Capture.
+
+**Carried by:** R2.6, R4.3, §5 definition, R5.10/R5.11/R5.18/R5.19, R6.6/R6.9/R6.27, E7, E23–E30 and both PRDs' obligation tables. Capture OQ 16 is answered by this owner-approved amendment; its hardware questions remain open.
+
+### F13 — Setup and authorization recovery actions (2026-09-18)
+
+**Decision:** First-run explicit setup exits dismiss to normal device-panel content; later-run exits land in the collection. Incidental navigation resets the relevant failure counter exactly as F9 clarification (5c) already required. Pairing Try again retries the selected device; discovery is a separate picker action. Setup states belong to the panel, E1 to the picker, and both remain non-modal.
+
+**Decision:** E17/E18 Check again re-evaluates connectivity: offline remains E17 with no network attempt; online attempts device-authorization renewal, re-evaluates the effective persisted window and uses the existing distinct failure states. E18 copy must not lead with its withheld P1 control. P0 recovery controls remain available independently of P1-only remediations; copy-header guidance applies to withheld actions as well as states.
+
+**Carried by:** R1.8/R1.23, R2.12/R2.20, R3.5/R4.4, E17/E18 and the copy header; UJ1-e/f and UJ6.1. OQ 8 and OQ 18 still gate real SDK renewal/refusal capabilities.
+
+### F14 — Test observability and closure evidence (2026-09-18)
+
+**Decision:** R6.17 separates local activation invocations from network attempts; R6.29 makes panel/picker operability invocable and observable through a shell seam without choosing its module. Preserve the three R6.21 subjects, fail-on-unconfigured-seam rule and all hardware gates. Constants receive explicit names/candidates/closers; DEMO_SCAN_CYCLE is shared with Capture rather than duplicated.
+
+**Decision:** M6/M7 specify the local dogfood artifacts needed to close OQ 5/OQ 28. Harness measurements or manual observations supply those artifacts; no new production event log, telemetry path, retention rule, or threshold value is decided. Those OQs stay open until observations and owner decisions exist.
+
+**Carried by:** Legend constants, R6.17/R6.29, M6/M7, OQ 5/OQ 28 and the journey companion's test-control map.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.
@@ -69,6 +107,8 @@ Where a fence is named in the PRD, for provenance only. A row not listed here ci
 | F7 | the [Legend](prd-device-management.md#legend)'s provisional-constants paragraph, which every TBD-on-spike constant's row inherits |
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
 | F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
+
+F10–F14 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
 
 ## Rejected findings
 
