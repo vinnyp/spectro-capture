@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F61 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F64 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -94,13 +94,31 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** Open questions need separate evidence and owners; action labels must distinguish continuing from committing, and source numbering must remain usable when locating an issue.
 
+### F62 — Preview absent-field fills separately (2026-09-17)
+
+**Decision:** A matched row gaining a value in a field it never had remains unchanged in the row counts unless a previously present value changes, whether the column is new or already exists. E43 names the number of rows gaining details on a first-class line; split acceptance cases assert counts, the line, and stored values for both column cases.
+
+**Why:** The preview must disclose these writes without changing F54’s separate treatment of row updates and column additions. Source: [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
+
+### F63 — Preview follows shared zero-count copy rules (2026-09-17)
+
+**Decision:** E43 omits zero-count sentences and empty list lines rather than displaying zero or “None”; Capture §12 owns the rule. Extend its placeholder index with Import’s preview and generated-name tokens, including the filled-row count, and record that editorial extension beside Capture F11.
+
+**Why:** Import and its siblings must render counts consistently from one copy contract. Source: [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
+
+### F64 — Separately created target persists (2026-09-17)
+
+**Decision:** A collection created through Capture §1 persists empty when its import is canceled or fails under R3.2’s storage guarantee; creation is a separate action. R3.7 owns this lifecycle, with import eligibility separated into R3.9.
+
+**Why:** Canceling import does not undo a separately completed collection creation. Accepted explicitly in the [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
 
 - **F4** the import target is chosen in the app — [R2.1](prd-inventory-import.md#2-target-mapping-and-the-matching-rule). **F11** Swatch Code normalisation — [R2.3](prd-inventory-import.md#2-target-mapping-and-the-matching-rule), [R2.4](prd-inventory-import.md#2-target-mapping-and-the-matching-rule). F11 also carries the capture PRD's R1.2, R6.1, and R9.2, which cite [R2.3](prd-inventory-import.md#2-target-mapping-and-the-matching-rule) across.
 - In the [capture fence file](../capture-mode/prd-capture-mode-fences.md): **F24** the priority split — the [Legend](prd-inventory-import.md#legend). **F45** every requirement row is at most two sentences — every row in [§1](prd-inventory-import.md#1-reading-the-file) through [§4](prd-inventory-import.md#4-demo-device-and-verifiability). **F49** the split — this document, its four companions, and the historical ID map below.
-- **F50** structural amendment — Legend, Traceability, acceptance-table shape and stable IDs. New base requirement IDs: R1.5, R1.6, R2.5, R2.6, R3.7, R3.8; new copy IDs: E41–E45; existing IDs retained.
+- **F50** structural amendment — Legend, Traceability, acceptance-table shape and stable IDs. New base requirement IDs: R1.5, R1.6, R2.5, R2.6, R3.7, R3.8, R3.9; new copy IDs: E41–E45; existing IDs retained.
 - **F51** blank-to-blank is unchanged — R3.6b/g.
 - **F52** preview confirms the target — R2.1, R3.1; E43.
 - **F53** header drift reuses the stored column — R2.2, R2.6.
@@ -111,7 +129,10 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F58** guard single-column reads — R1.2, R1.5, R1.6; E5, E45; OQ 1.
 - **F59** mirror storage obligations — R2.2, R2.5, R2.6, R3.3; inherited obligations; DF R1.2/R2.3.
 - **F60** changed source resets choices — R3.1, R3.8f; E13.
-- **F61** accept remaining flow and open-question changes — R1.4, R3.7, R3.8; E7/E9/E10/E42; OQ 1/2.
+- **F61** accept remaining flow and open-question changes — R1.4, R3.8, R3.9; E7/E9/E10/E42; OQ 1/2.
+- **F62** absent-field fills — R3.1, R3.6g/j, R3.9; E43; UJ 2.1.
+- **F63** zero-count copy — R3.1; E43; Capture §12 placeholder index.
+- **F64** target lifecycle — R3.7, R3.8j; UJ 2.
 
 ## Historical ID map
 

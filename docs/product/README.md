@@ -11,10 +11,10 @@ Three PRDs remain to be written to cover v1 (five are locked). Priority is autho
 | # | PRD | Use cases | Status |
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds |
-| 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
-| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F61 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16), merge pending |
-| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; owner merge pending |
-| 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16 |
+| 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; cross-document amendment under Import F59 in PR #16 |
+| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F64 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) |
+| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; cross-document amendment under Import F59 in PR #16 |
+| 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16; cross-document amendment under Import F59 in PR #16 |
 | 6 | Collection Mode | U5, U7 | queued |
 | 7 | QC & Comparison | U4 | queued |
 | 8 | Color Visualization | U7 | queued |
@@ -40,7 +40,7 @@ Reading a spreadsheet export, mapping its columns onto swatches, and appending n
 
 The PRD is [prd-inventory-import.md](import/prd-inventory-import.md), with four companion files: the user journeys in [prd-inventory-import-journeys.md](import/prd-inventory-import-journeys.md), the shipping error and state copy in [prd-inventory-import-copy.md](import/prd-inventory-import-copy.md), the answers to closed open questions in [prd-inventory-import-oq-results.md](import/prd-inventory-import-oq-results.md), and the owner decisions in [prd-inventory-import-fences.md](import/prd-inventory-import-fences.md).
 
-Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed in that split; verification rounds 25–26 are in the capture review log. The later [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) agent-build amendment changes behavior under individual owner fences F51–F61, including column reuse, conflict-only keep, header disambiguation and guarded single-column reads; rows remain 🤝 Aligned, not implemented.
+Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed in that split; verification rounds 25–26 are in the capture review log. The later [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) agent-build amendment changes behavior under individual owner fences F51–F64, including column reuse, conflict-only keep, header disambiguation and guarded single-column reads; rows remain 🤝 Aligned, not implemented.
 
 ### 4. Data Foundation
 
@@ -112,7 +112,7 @@ Every v1 use case and feature maps to exactly one owning PRD. This table is the 
 
 ## Authoring order
 
-**Capture Mode is locked** — its review gate closed after 24 rounds, with owner sign-off on the artifact set still pending — and **Inventory Import**, split out of it under fence F49, is locked with it after verification rounds 25–26. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
+**Capture Mode is locked** — its review gate closed after 24 rounds — and **Inventory Import**, split out of it under fence F49, is locked with it after verification rounds 25–26. Capture Mode still holds the seam re-open, the only thing that unblocks ADR-0004.
 
 **Data Foundation and Data Export are locked** (2026-09-16, twelve rounds under one log). ADR-0003's scope is deliberately limited to the measurement/versioning core, which is independent of the seam; only the session-adjacent tables (queue, dead-letter) wait on ADR-0004. **Data Export was split out of it on 2026-09-09** under its fence F30, once the round-2 fix pass left the body 690 words over a 7,000-word budget with nothing to cut but rules; the two are authored and reviewed together against one log.
 
