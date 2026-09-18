@@ -86,6 +86,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** U6's "nothing is stranded" and the import PRD's "exactly as entered": a user's own column never changes shape in their own export — an imported `0007` or `1,234.5` comes back out as the file holds it, the app reshaping nothing but its quoting on the way. Taken over normalising every column to the dialect's forms, which the interface lens showed would alter a script-visible value the user supplied.
 
+### F14 — Archive damage and quarantine export semantics (2026-09-17, PR #17)
+
+**Decision:** Transcribe the export half of DF F33 as settled by [DF F37](../data-foundation/prd-data-foundation-fences.md#f37--export-unavailable-archives-and-quarantined-readings-2026-09-17): canonical export runs when only an archive is damaged; unavailable sample payload cells are empty, with no new CSV column or state token. Any quarantined reading uses `quarantined` in the state column, including superseded history; DF OQ 21 remains open for a distinct archive mark and an Export R2.5 version bump.
+
+**Why:** Intact canonical data remains exportable, and both builders and consumers need deterministic payload and state precedence. Source: [owner decision 2](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725041707).
+
 ## Fence → row map
 
 A row "carries" a fence when the fence's decision is what the row now states; this file, not the row, holds the rationale. Every entry below is the corresponding entry in [the Data Foundation PRD's map](../data-foundation/prd-data-foundation-fences.md#fence--row-map) rewritten into this document's IDs.
@@ -109,3 +115,5 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 ## Rejected findings
 
 None yet. The findings rejected on these rows before the split are recorded in [the Data Foundation PRD's fence file](../data-foundation/prd-data-foundation-fences.md#rejected-findings); neither of the two standing there touches an export row.
+
+| F14 | R1.1/R1.3, R4.2 and the inbound Data Foundation obligation; DF OQ 21 tracks the future distinct mark. |

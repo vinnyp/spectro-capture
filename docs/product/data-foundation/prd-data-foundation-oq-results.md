@@ -28,6 +28,8 @@ One `## OQ <id>` section per answered question in [prd-data-foundation.md](prd-d
 
 ## OQ 10 — DELETE_UNDO_WINDOW
 
-**Answer (2026-09-09, owner decision, fence F7):** DELETE_UNDO_WINDOW is the current open-file lifetime: a deleted item and its history can be restored until quit, crash or file close; after any of these, undo is lost and the deletion is final. R6.3 already specified all three endings; the 2026-09-17 F35 clarification aligns this answer and E8/E14 with that requirement, not with the capture-session lifetime.
+**Answer (2026-09-09, owner decision, fence F7):** DELETE_UNDO_WINDOW is the running session: a deleted item and its history can be restored until the app quits, and the deletion is final after. Carried by R6.3.
+
+**Clarified 2026-09-17 (F35):** R6.3 already ends undo on quit, crash or file close; the window is the open-file lifetime, not a capture session. E8/E14 and the OQ table now enumerate those endings.
 
 **Evidence:** owner call; the research notes a reversible bulk delete is cheap.

@@ -26,10 +26,10 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 ### Data Foundation
 
-- [x] **DF** — the Capture obligation map names R1.10 → DF R3.1 and R4.5 → DF R2.1. — agent-build amendment, commit `01b009a`.
+- [x] **DF** — the Capture obligation map names R1.10 → DF R3.1 and R4.5 → DF R2.1. — PR #17 agent-build amendment.
 - [ ] **DF** — E29 arrives with the QC & Comparison PRD; until then DF E11 is the surface for the capture-time correction default.
 
-- [ ] **DF / Data Export** — close DF OQ 21 on unreadable-archive export semantics, with the corresponding export-format decision and golden; F33's healthy canonical preservation does not specify how damaged archive bytes export.
+- [ ] **DF / Data Export** — DF OQ 21 tracks a future distinct unavailable-archive export mark and version bump; interim empty payload cells and quarantine precedence are settled by PR #17, DF F37 / DE F14.
 
 ### Device Management
 
@@ -84,20 +84,20 @@ Cross-document:
 
 - [x] **Capture** — the device PRD's literal `&amp;` §2 and §7 headings break three links. — done, the F9 refactor (commit `4b0f474`, PR #11): the headings read `&`, and the inbound `#2-licensing--pre-authorization` and `#7-error--state-copy` anchors resolve; the only `&amp;` left under `docs/product` is the fixed string quoted in the device fence file's F9
 - [ ] **Capture** — the widened cross-PRD label grep should become a standing check.
-- [x] **DF** — R7.7a–l is the sole fixture inventory; Data Export links to it instead of mirroring the list. — agent-build amendment, commit `01b009a`.
+- [x] **DF** — R7.7a–m is the sole fixture inventory; Data Export links to it instead of mirroring the list. — PR #17 agent-build amendment.
 - [ ] **DF** — whether a Collection Mode rename moves an imported column's stored name.
-- [x] **DF** — OQ 2 distinguishes ADR-0003's required SQLite features from ADR-0006's macOS floor; owner ratifies the reader floor after both. — agent-build amendment, commit `01b009a`.
+- [x] **DF** — OQ 2 distinguishes ADR-0003's required SQLite features from ADR-0006's macOS floor; owner ratifies the reader floor after both. — PR #17 agent-build amendment.
 
 ## First build PR
 
 Build-review items and the engineering plan's test matrix.
 
-- [ ] **DF** — implement the CSV → store → CSV passthrough-value case now specified by R7.7b; contract clarified in `01b009a`, build evidence pending.
-- [ ] **DF** — implement R7.7e's golden asserting `sc_simulated` false (and true) via mock snapshots; contract clarified in `01b009a`, build evidence pending.
-- [ ] **DF** — implement R7.6b's file/app/compatibility-version and snapshot-path assertions; contract clarified in `01b009a`, build evidence pending.
-- [ ] **DF** — implement R7.2/R6.2d's cleared-imported-value recovery oracle independently of cleared notes; contract clarified in `01b009a`, build evidence pending.
-- [ ] **DF** — implement R7.6k/R7.7h delete counts for an item with no earlier readings; contract clarified in `01b009a`, build evidence pending.
-- [ ] **DF** — implement R7.7h/DJ4's never-scanned E8 rendering with no nonexistent measurement clauses; contract clarified in `01b009a`, build evidence pending.
+- [ ] **DF** — implement the CSV → store → CSV passthrough-value case now specified by R7.7b; contract clarified in PR #17, build evidence pending.
+- [ ] **DF** — implement R7.7e's golden asserting `sc_simulated` false (and true) via mock simulated and hand-authored live-kind snapshots; contract clarified in PR #17, build evidence pending.
+- [ ] **DF** — implement R7.6b's file/app/compatibility-version and snapshot-path assertions; contract clarified in PR #17, build evidence pending.
+- [ ] **DF** — implement R7.2/R6.2d's cleared-imported-value recovery oracle independently of cleared notes; contract clarified in PR #17, build evidence pending.
+- [ ] **DF** — implement R7.6k/R7.7h delete counts for an item with no earlier readings; contract clarified in PR #17, build evidence pending.
+- [ ] **DF** — implement R7.7h/DJ4's never-scanned E8 rendering with no nonexistent measurement clauses; contract clarified in PR #17, build evidence pending.
 - [ ] **DE** — E1 at an empty collection.
 - [ ] **DF** — the collision tie-break for a literal `import_`-prefixed passthrough column.
 - [ ] **Capture** — "Leave it set aside" after a non-disagreeing failed attempt does not count.
@@ -111,9 +111,9 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **Import** — choose comparison-data version governance; re-check existing identifiers on table upgrades and verify the R2.3 comparator against the eventual ADR-0006 macOS floor (F57; [decision queue](../decisions/README.md#decision-queue)).
 
 - [ ] **DF** — the generated ROWS_CEILING corpus's determinism contract; M6, M8 and DE R4.1 read from it.
-- [ ] **DF** — the regeneration job's progress record; first settle OQ 17's partial-run presentation and overlapping-request behavior, preserving R3.3a–f.
-- [ ] **DF** — the per-invariant salvage rules, including equal record-time conflicts; R5.5d requires a valid output, never a guessed resolution.
-- [ ] **DF** — OQ 18–20: settle read-only capabilities, capture-time move/re-read scheduling, and P1 undo visibility/identity conflicts before their corresponding implementations; owner behavior decisions precede the ADR mechanisms.
+- [ ] **DF** — the regeneration job's progress record; first settle OQ 17's partial-run presentation and overlapping-request behavior, preserving R3.3a–g.
+- [ ] **DF** — the per-invariant salvage rules, including equal record-time conflicts; the general salvage promise is unchanged (PR #17, F36).
+- [ ] **DF** — OQ 18–20: read-only extras and future mid-capture move/re-read policy remain open beyond PR #17’s defined floors (F38/F39); settle P1 undo visibility/identity conflicts before implementation.
 
 ## Documentation
 
