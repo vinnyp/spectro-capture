@@ -20,6 +20,10 @@ History, kept so no one re-raises them. Each locked PRD recorded amendments its 
 - [x] **Import** — R2.2 gains that a later import keeps the existing columns' positions and appends its new ones after them; the outbound obligations table gains a Data Export line. — done, PR #14
 - [x] **Vision and the product README** — "raw payload canonical" reads as the stored mean. — done, PR #14 (the vision) and PR #12 (the README)
 
+- [x] **Device / Export** — R6.5 and its export obligation define true/false from known snapshots, empty without one; Export F19 / PR #18.
+- [x] **DF / Export** — R7.7n adds the empty-collection fixture; R7.7a/e/i cover header comparison variants, all three simulation values and payload-absence branches; both obligation directions updated under Export F19/F20/F23/F26 / PR #18.
+- [x] **Capture / Export** — queue-order obligation points to Export R1.1g beside R2.3 in both directions; PR #18.
+
 ## Next pass over a locked PRD
 
 Document amendments still open. Each waits for the next editing pass over the PRD that owns it.
@@ -32,10 +36,6 @@ Document amendments still open. Each waits for the next editing pass over the PR
 - [ ] **DF** — E29 arrives with the QC & Comparison PRD; until then DF E11 is the surface for the capture-time correction default.
 
 - [ ] **DF / Data Export** — DF OQ 21 tracks a future distinct unavailable-archive export mark and version bump; interim empty payload cells and quarantine precedence are settled by PR #17, DF F37 / DE F14.
-
-### Data Export
-
-- [x] **DE** — agent-build amendment F17 specifies stored-order collision allocation and literal `import_` examples; F18 specifies empty-collection preview/output. Implementation checks remain below; [PR #18](https://github.com/vinnyp/spectro-capture/pull/18).
 
 ### Device Management
 
@@ -104,8 +104,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **DF** — implement R7.2/R6.2d's cleared-imported-value recovery oracle independently of cleared notes; contract clarified in PR #17, build evidence pending.
 - [ ] **DF** — implement R7.6k/R7.7h delete counts for an item with no earlier readings; contract clarified in PR #17, build evidence pending.
 - [ ] **DF** — implement R7.7h/DJ4's never-scanned E8 rendering with no nonexistent measurement clauses; contract clarified in PR #17, build evidence pending.
-- [ ] **DE** — implement E1/R1.1r/R4.1h empty-collection preview and header-only export assertions; specified by the agent-build amendment F18, build evidence pending.
-- [ ] **DF / DE** — implement DF R7.7a/k with DE R2.4a–c’s stored-order collision tie-break, including literal `import_` names and repeated imports; specified under DE F17, build evidence pending.
+- [ ] **DE** — implement E1/R1.1r/R4.1h empty-collection preview and header-only export assertions; specified in PR #18 under F27, build evidence pending.
+- [ ] **DF / DE** — implement DF R7.7a/k with DE R2.4a–c’s stored-order collision tie-break, including literal `import_` names and repeated imports; specified in PR #18 under DE F22/F23, build evidence pending.
 - [ ] **Capture** — "Leave it set aside" after a non-disagreeing failed attempt does not count.
 - [ ] **Capture** — a mixed-route run counts.
 - [ ] **Capture** — "Accept the average" and a captured row reset the counter.

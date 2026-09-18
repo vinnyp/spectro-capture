@@ -4,7 +4,7 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 ## Phase 0 — research inventory (2026-09-09)
 
-Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-data-foundation-fences.md#phase-0--research-inventory-2026-09-09), because these rows were ingested and reviewed there: every brief under `docs/briefs/` on `main` at `dd43c13`; the [browsing-a-collection-at-scale research results v2](../../briefs/browsing-a-collection-at-scale-research-results-v2.md) (supersedes the first pass on any point where they conflict — §8 on the gamut flag having no interoperable name is the one this document rests on); the [Nix universal SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) (§2, what the raw payload round-trips and which spaces the toolkit supplies); and the X-Rite SDK and open-source prior-art findings brought in the same way (CxF and export shapes, which set [OQ 3](prd-data-export.md#open-questions)'s frame). The three locked PRDs and their obligations tables. Deferred by the owner: the Spectro 2 software competitive brief (positioning, not data). No project-supplied prior-art query command.
+Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-data-foundation-fences.md#phase-0--research-inventory-2026-09-09), because these rows were ingested and reviewed there: every brief under `docs/briefs/` on `main` at `dd43c13`; the [browsing-a-collection-at-scale research results v2](../../briefs/browsing-a-collection-at-scale-research-results-v2.md) (supersedes the first pass on any point where they conflict — §8 on the gamut flag having no interoperable name is the one this document rests on); [browsing v2 §10](../../briefs/browsing-a-collection-at-scale-research-results-v2.md#10-empty-loading-and-error-states) (the inherited failure-class evidence for R3.1); the [Nix universal SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) (§2, what the raw payload round-trips and which spaces the toolkit supplies); and the X-Rite SDK and open-source prior-art findings brought in the same way (CxF and export shapes, which set [OQ 3](prd-data-export.md#open-questions)'s frame). The three locked PRDs and their obligations tables. Deferred by the owner: the Spectro 2 software competitive brief (positioning, not data). No project-supplied prior-art query command.
 
 ### F1 — Data Export is the CSV contract, split out of Data Foundation (2026-09-09)
 
@@ -68,6 +68,8 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** A half-scanned collection is the ordinary state between sittings, and the export must reconcile against the spreadsheet the inventory came from. Transcribed from [the Data Foundation PRD's F29](../data-foundation/prd-data-foundation-fences.md), 2026-09-09.
 
+**Clarification (2026-09-18, PR #18):** F10’s historical payload-blanking clause for quarantine is read under standing F14: available archives remain exportable; R1.1d/l control empty payload cells. [Owner decisions 2 and 4](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) confirm this boundary and F21 specifies readable provenance.
+
 ### F11 — The canonical export carries when each current reading was measured (2026-09-10, round 5)
 
 **Decision:** Every canonical row carries the time its current reading was measured, under an `sc_` name, the export preview naming it. An appended column, so no export format version bump.
@@ -94,27 +96,93 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 ### F15 — Agent-build contract and acceptance shape (2026-09-17)
 
-**Decision:** Preserve requirement/copy/metric IDs, priorities, Status and Commit PR tracking; decompose dense requirements into lettered rule tables. Replace persona narration with acceptance scenarios, relocate the split-origin map here, and refer to landed sibling obligations as existing contracts. R4.1a–h unpack the existing golden/version/hardware rules without selecting schema, libraries or the wavelength grid.
+**Decision:** The approved seven-item list permits decomposing dense requirements, replacing narration with acceptance scenarios, moving split history here and correcting stale obligations while preserving IDs, priorities and tracking. Detailed behavior is settled by F19–F29; retained retired goldens remain F12/R4.1’s pre-existing contract, not a new decision.
 
-**Why:** Agents need field rules and observable outcomes at the point of implementation; origin history remains available without duplicating the build contract. Owner approved the seven-item Data Export audit recommendation in this session (2026-09-17).
+**Why:** Agents need observable rules at implementation time; the initial list approval did not decide every detail. [Owner clarification, 2026-09-18](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) supplies the recorded provenance and requires the shared Legend wording under F29.
 
 ### F16 — Missing reading fields and quarantine rows (2026-09-17)
 
-**Decision:** R1.1h–l define field presence. Canonical rows without a canonical value and never-scanned history rows have empty reading metadata, including `sc_simulated`; false means a known non-simulated snapshot, not “no reading.” Quarantined history keeps readable provenance/sequence/reason, empties unreadable metadata and all colour/spectral/payload/qualifier cells, and never claims current. An identity-only history row has no ordinal/reason and has a false current flag.
+**Decision:** Audit item 2 authorizes an explicit missing-data matrix; F19 settles unknown simulation values and F21 settles canonical quarantine provenance. Payload availability follows standing F14/DF F37, restored under owner decision 2; quarantine does not suppress an available archive.
 
-**Why:** Approved audit item 2 requested an explicit missing-data matrix and empty unknown fields rather than invented values. F10/F14’s row inclusion, archive-only export and quarantine precedence stand; this specifies formerly ambiguous metadata/history cells. It does not alter stored data or add a CSV state/column; any change to a released format’s meanings follows R2.5.
+**Why:** An explicit matrix prevents guessed values; the blanket list approval did not authorize canonical/history asymmetry or payload suppression. [Owner decisions 1, 2 and 4](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) resolve those details.
 
 ### F17 — Collision allocation follows stored collection order (2026-09-17)
 
-**Decision:** Reserve the selected kind’s app headers; allocate passthrough names sequentially in persisted collection-column order, repeatedly prefixing `import_` while the candidate is reserved or already allocated. Earlier stored columns win, including against literal `import_` names; preview discloses every rename, and stored names/values never change.
+**Decision:** Audit item 3 authorizes deterministic collision rules and examples; F22/F23 now settle order, consequences and comparisons. Under F22, this expressly supersedes R2.4’s prior “earlier in the import file’s order” clause with persisted collection-column order; R2.5 still governs released-format changes.
 
-**Why:** Approved audit item 3: after multiple imports there is no single current “import file order.” Import R2.2/R3.3 and DF R1.2 already retain earlier columns and append new ones; this makes the collision tie-break executable and closes its specification gap. R2.5 governs any change to a released contract.
+**Why:** The original wording has no single referent after repeated imports; the literal-`import_` outcome needs an explicit owner decision, not inferred approval. [Owner decisions 5–6](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) supply it.
 
 ### F18 — Preview population and empty exports (2026-09-17)
 
-**Decision:** R1.1o–r scope preview counts to the selected item/collection and export kind, distinguish reading rows from never-scanned items and unavailable archives from unused slots, disclose every renamed header, and qualify field-presence claims. Empty collections export the selected kind’s header with no rows and explicit column-names-only copy; P1 history actions/disclosures remain gated.
+**Decision:** Audit item 5 authorizes specifying preview variants; F27/F28 now settle empty output/copy and the disclosure set. F27 chooses a header-only export over disabling export at zero items.
 
-**Why:** Approved audit item 5: a builder needs deterministic E1 variants, including the empty-collection post-lock case and archive damage introduced by F14. This is a product-output contract, not a UI-layout or mid-session/overwrite policy decision.
+**Why:** Builders need defined empty/single-item/history behavior; approval to clarify it was not approval of every chosen detail. [Owner decisions 10–11](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) supply those details.
+
+### F19 — Unknown simulation provenance (2026-09-18, PR #18)
+
+**Decision:** `sc_simulated` is true/false from a known acquiring snapshot and empty without one; consumers treat empty as unknown. Amend Device R6.5 and its export obligation plus DF R7.7e to cover all three values.
+
+**Why:** No reading or snapshot is not evidence of a live device. Source: [owner decision 1](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F20 — Empty collection belongs to the fixture inventory (2026-09-18, PR #18)
+
+**Decision:** Add DF R7.7n for an empty collection, consumed by R4.1h’s header-only golden and R1.1r preview; name it in both obligation directions.
+
+**Why:** The sole-inventory loop must actually exercise the empty case. Source: [owner decision 3](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F21 — Canonical quarantine preserves readable provenance (2026-09-18, PR #18)
+
+**Decision:** Split never-scanned R1.1h from quarantined-current R1.1s; canonical quarantine keeps readable snapshot, `sc_simulated`, basis and measured-at without a sequence column, as history keeps them. Colour/spectral/qualifier cells are empty; payloads follow standing F14.
+
+**Why:** Measurement damage does not erase readable provenance, and the two export kinds must agree. Source: [owner decision 4](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F22 — Persisted-order collision tie-break (2026-09-18, PR #18)
+
+**Decision:** Persisted collection-column order under Import R2.5/R2.6 replaces “earlier in the import file’s order”; earlier allocations can rename a literal `import_` column even when its own original name was not reserved. Put the basis/examples in R2.4a and consequence in R2.4c; F17 explicitly supersedes the old clause.
+
+**Why:** Repeated imports retain one stored order; the three examples now have ratified consequences. Source: [owner decision 5](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F23 — One comparator for both collision tests (2026-09-18, PR #18)
+
+**Decision:** Use Import R2.3 for namespace-prefix and allocated-name comparisons; keep stored spelling with `import_` prepended in emitted headers. Extend DF R7.7a with case/whitespace variants.
+
+**Why:** Byte-wise and canonical-caseless tests must not produce different headers. Source: [owner decision 6](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F24 — Exactly three mixed-case app names (2026-09-18, PR #18)
+
+**Decision:** Only `sc_sRGB_gamut_clipped`, `sc_sRGB_source_space` and `sc_sRGB_rendering_intent` escape lower snake_case; every other sRGB column follows the ordinary rule.
+
+**Why:** A wildcard would let first-golden authors freeze incompatible value-column spellings. Source: [owner decision 7](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F25 — Non-spectral qualifiers keep their original reference (2026-09-18, PR #18)
+
+**Decision:** R2.1 excepts non-spectral rows: qualifiers carry their original reference; divergence from the row’s chosen-condition column is derivable, not a separate exported mark. R1.1k owns precedence: missing chosen-condition measurement remains absent; otherwise original-reference spaces/qualifiers persist.
+
+**Why:** Do not fabricate a derivation or silently add a CSV mark. Source: [owner decision 8](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F26 — Payload-count branches have fixtures (2026-09-18, PR #18)
+
+**Decision:** Extend DF R7.7i with a sample whose instrument never supplied a payload, beside unused slots and unavailable archives; mirror those cases in R4.2.
+
+**Why:** Preview unavailable-archive counts must not include legitimate absent payloads. Source: [owner decision 9](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F27 — Empty collection remains exportable (2026-09-18, PR #18)
+
+**Decision:** Export the selected kind’s header and no rows, with “This collection has no swatches. The export contains column names only.” Disabling export at zero items is the alternative not taken, also recorded in F18.
+
+**Why:** A deterministic empty output and explicit preview are useful to downstream consumers. Source: [owner decision 10](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F28 — Preview disclosure set (2026-09-18, PR #18)
+
+**Decision:** Keep R1.1o–r’s kind, item/row counts, chosen condition, five population counts, rename pairs and export-format/app versions; canonical quarantine counts affected items. Recompute for selected scope/kind before writing; omit redundant row counts when equal to item counts.
+
+**Why:** The preview must describe the selected output, with explicit versions and accurate count units. Source: [owner decision 11](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
+
+### F29 — Restore the shared Legend (2026-09-18, PR #18)
+
+**Decision:** Restore the priority recommendation hedge and the six shared status-glyph definitions; lettered rule/copy IDs are added to Traceability without redefining those statuses.
+
+**Why:** A document-shape audit does not redefine shared governance. Source: [owner decision 12](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
 
 ## Split-origin map
 
@@ -170,9 +238,20 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F13 | [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version) (app columns only); [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) (emitted as stored). |
 | F14 | R1.1/R1.3 and the inbound Data Foundation obligation; DF OQ 21 tracks the future distinct mark. |
 | F15 | R1.1a–g/m–n, R4.1a–h, R4.2/R4.4a; EJ1; Traceability and this split-origin map; inherited obligations. |
-| F16 | R1.1h–l, R1.2/R1.3, R4.2; E1 variants and EJ1 missing-data assertions. |
+| F16 | R1.1h–l/s, R1.2/R1.3, R4.2; E1 variants and EJ1 missing-data assertions. |
 | F17 | R2.4/R2.4a–c, R4.2/R4.4a; E1 rename disclosure and EJ1 collision assertions. |
 | F18 | R1.1o–r, R4.1h/R4.4a; E1 variants and EJ1 empty/preview assertions. |
+| F19 | R1.2, R1.1h/i/s, R4.2; Device R6.5/export obligation; DF R7.7e; E1b/c and EJ1. |
+| F20 | R4.1h/R4.2 and DF obligations; DF R7.7/R7.7n/export obligation; E1d/EJ1. |
+| F21 | R1.1c/h/i/s, R4.2; E1/E1b/c and EJ1. |
+| F22 | R2.4/R2.4a/c, F17; E1g/EJ1; DF R7.7a/k. |
+| F23 | R2.4b/R4.2; DF R7.7a; EJ1. |
+| F24 | R2.4/R4.1a; F6 remains the three-name source. |
+| F25 | R2.1/R1.1k/R4.2; E1 and EJ1; DF R7.7d remains the storage oracle. |
+| F26 | R1.1p/R4.2; DF R7.7i; E1f/EJ1. |
+| F27 | R1.1r/R4.1h; E1d/EJ1; DF R7.7n. |
+| F28 | R1.1o–r/R4.4a; E1/E1a–g; EJ1. |
+| F29 | Legend/Traceability; E1 variant identity convention. |
 
 ## Rejected findings
 
