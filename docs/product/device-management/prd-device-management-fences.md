@@ -90,6 +90,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** F16 retains Device E33 confirmation followed by Capture E23's halted summary; F17 ratifies P0 quit; F24 keeps Capture OQ 16 open until re-lock; F26 scopes the noun change to E23–E30. R5.8 identifies the remembered row even after jumps; the earlier "without jumps/reorders" qualifier does not govern the revised row.
 
+**Clarified 2026-09-18 (Capture agent-build amendment):** The Capture §6 obligation summary explicitly names its existing R11.8 per-mode spread control (below/equal to/above SAMPLE_TOLERANCE), under Capture F55; no device capability or exception is added.
+
 ### F13 — Setup and authorization recovery actions (2026-09-18)
 
 **Decision:** First-run explicit setup exits dismiss to normal device-panel content; later-run exits land in the collection. Incidental navigation resets the relevant failure counter exactly as F9 clarification (5c) already required. Pairing Try again retries the selected device; discovery is a separate picker action. Setup states belong to the panel, E1 to the picker, and both remain non-modal.

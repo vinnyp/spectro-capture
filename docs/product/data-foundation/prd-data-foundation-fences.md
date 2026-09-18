@@ -62,6 +62,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** The capture PRD's locked R4.12 averages N samples; a "raw payload as the instrument produced it" cannot be that mean. Both the architecture and staff lenses called this the round's one-way door, and the research names retrofitting a tier as the trap.
 
+**Clarified 2026-09-18 (Capture agent-build amendment):** Capture F52 aligns its R4.12 and vocabulary with this stored-mean decision: sample-to-mean agreement uses D50/2°, spectral display derivations follow collection reference, and non-spectral restrictions remain R3.5. Capture F33’s raw-payload wording survives only as historical rationale.
+
 ### F11 — Readability is split from the archived payload (2026-09-09, round 1)
 
 **Decision:** Everything a reader needs — the decoded spectrum or colour values, the conditions, the derived values, the current-value marker, the supersession reason — is stored in plain SQLite types, readable at SQLITE_READER_FLOOR with no extension and no app function. The vendor's opaque payload is an archived artifact and may be compressed. STORE_SIZE_BUDGET is re-derived on the real population, samples counted; OQ 5 records this constraint; OQ 2's floor is derived from the features actually kept, not from a rejected one.
@@ -412,3 +414,5 @@ Source: [the owner’s three round-2 decisions](https://github.com/vinnyp/spectr
 **Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** Under D9 / Device F23, R1.4's permitted recipients gain user-controlled software-update checks for both live and Demo (Device R2.13), observed through R6.12/R6.17; no item, reading or payload may leave. This records the network-set amendment here because no earlier fence owns that permitted set; F49's salvage decision is unchanged.
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** D13 / Device F27 adds R6.30’s double to R1.4’s live permitted set for authorization traffic, while its persisted/displayed kind and all provenance remain simulated; the software-update and no-file-content rules are unchanged.
+
+**Clarified 2026-09-18 (Capture agent-build amendment):** The Capture obligation mirror now names F53’s own-session contributions versus cumulative resumed-chain display; R1.1/R7.1 carry persistence/readback, with schema left to ADR-0003. No record is duplicated by inheritance and no new privacy field or session-status enum is selected.

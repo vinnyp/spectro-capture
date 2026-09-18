@@ -1,9 +1,9 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. Format per `operator-agents:writing-prds`.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the owner-approved 2026-09-18 agent-build amendment; peer review pending.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
-Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist at ⌛️ Ready for Alignment as of commit 6e0ec45; none locked)
+Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed, while F51–F55 are pending review.
 
 ## Fences
 
@@ -107,6 +107,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Not a session interruption:** system sleep. Sleep mid-session is a device-PRD halt (device PRD §5: the disconnect halts, the authorization check is excluded for the in-flight session, "Resume scanning" is the way back). Only quit, crash, force-quit, and power loss make a session interrupted. This corrects the round-1 fix pass, not a new owner call.
 
+**Clarified 2026-09-18 (agent-build amendment):** F53 makes inheritance a chain presentation rule, not a second copy of earlier capture time/outcomes in the successor’s own contribution; each linked session counts once. No session status or schema is added.
+
 ### F15 — The collection remembers the last current row; every new session opens there (2026-09-06, round-1 delta, NEW-K)
 
 **Decision:** The remembered current row belongs to the collection, not only to an interrupted session. After a session ends early, is interrupted, or completes, the next session on that collection opens at the last remembered row, falling back to the next pending row in queue order if that row is no longer pending. Jumps and reorders made in an earlier session are honoured on day two. Selecting a row in the deferred-row review also updates the remembered row.
@@ -191,6 +193,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** An acquisition gate must not key off a viewing preference; changing display defaults would otherwise change future capture outcomes and make tuning data incomparable.
 
+**Clarified 2026-09-18 (agent-build amendment):** F52 keeps agreement at D50/2° while display derivations follow the collection reference under Data Foundation R3.1–R3.5. A sample’s comparison value comes from that sample, the mean’s comparison value from the mean; display edits never alter the verdict.
+
 ### F29 — A lost-unflushed-writes stand-in makes the power-loss promise assertable (2026-09-06, round 5, R5-F8)
 
 **Decision:** This PRD adds an obligation on the simulated layer (implemented by Data Foundation's store): a test can induce the loss of everything not durably flushed at an arbitrary point, and assert that every row the operator was told landed is present afterwards; drive detachment is the same stand-in. The row-success confirmation's cost is floored by the durable-commit time on the user's volume, so ROW_CONFIRM_BUDGET is measured on real volume classes, not only on the Demo Device.
@@ -202,6 +206,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 **Decision:** M3 becomes the share of collections fully adjudicated plus days-to-adjudication; a resumed chain counts once. Session endings are split into "ended deliberately" and "abandoned mid-queue after a failure", and the second is its own metric. M2 and M5 likewise count over chains, with a re-scan attributed to the session it occurred in against a cumulative captured-row denominator.
 
 **Why:** The metric as written scored the two-sitting behaviour §7 is built for, and any crash chain, as failure.
+
+**Clarified 2026-09-18 (agent-build amendment):** F53 disambiguates M2’s denominator: sum own capture intervals once per linked session, never cumulative resume displays. The metric’s population, target, exclusions and collection-level completion rule remain unchanged.
 
 ### F31 — The review offers "Leave all set aside" with one optional note (2026-09-06, round 5, R5-F39)
 
@@ -220,6 +226,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 **Decision:** The mean of a set is the average of the samples' reflectance curves; colour values, including the ones the agreement check compares, are derived from that mean under the fixed reference (F28). The basis and a derivation version are recorded on the reading so the average can be recomputed. Individual readings are never discarded in favour of the average.
 
 **Why:** Two builds would otherwise give different agreement verdicts and different canonical averages; the spectral mean matches raw-payload-as-canonical.
+
+**Clarified 2026-09-18 (agent-build amendment):** F52 distinguishes the spectral mean from its derivations: the canonical value is the stored mean with metadata under Data Foundation F10/F25, not an archived raw payload. Derive each sample and the mean separately at D50/2° for sample-to-mean agreement; spectral display values instead follow the collection reference. R4.24’s non-spectral basis and OQ 3’s provisional statistic/tolerance remain unchanged.
 
 ### F34 — Each collection carries a chosen scan mode, default M1 (2026-09-06, round-5 fix pass, fork 2)
 
@@ -307,11 +315,15 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** The document is read by agents building plans. At 33k words with 54% outside the rows it was twice what a builder needs; the moves lose no rule, and the E-ID contract keeps copy and rows in sync.
 
+**Clarified 2026-09-18 (agent-build amendment):** F51 replaces duplicated narrative and diagrams with linked acceptance/transition tables while preserving all UJ anchors and requirement IDs. F54 reconciles the queued storage dependency with the existing common-to-both-readings persistence promises; it chooses no navigation model or schema.
+
 ### F47 — The first build phases its offers; fence F24 stands (2026-09-07, round 18, priority pass)
 
 **Decision:** A P0 row's state that offers an action whose rows are P1 — "Re-scan" (R8.7–R8.10, R8.12), "Add a swatch" (R9.1–R9.11), mid-session reorder (R6.8, R6.11) — is shown in the first build without that action; the offer arrives with the P1 rows. R11.15's surface lists and R7.19's entry points are asserted per phase. R10.7's reorder observable is recorded once reordering lands; R10.8's tie-break (mode slips, then steps to the just-captured row) is unaffected, so the seam prototype still closes OQ 8 in the first build. M5 is measured from the P1 build onward.
 
 **Why:** Six lenses found the P0 set offering doors with nothing behind them; phasing the offers keeps the owner-confirmed P0/P1 split (F24) and costs one Legend sentence rather than twenty rows.
+
+**Clarified 2026-09-18 (agent-build amendment):** R11.12 was added in rounds 21–22. F55 names state, action and body-variant phase marks separately: E18/E42 re-scan are body variants; their P1 actions are withheld with them; the stable state IDs remain available for P0 variants.
 
 ### F48 — One guard counter (2026-09-07, round 18, R18-F2)
 
@@ -383,6 +395,46 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Clarified 2026-09-18 ([final review](https://github.com/vinnyp/spectro-capture/pull/19#pullrequestreview-5252472266)):** peer review closed 2026-09-18 (PR #19); re-locked on merge. PR #19’s merge supplies Device’s re-lock under D10/F24, closing Capture OQ 16 as answered with its results headed “Answered on Device re-lock (PR #19)”; this supersedes the earlier pending-review and pending-re-lock statements in this fence. No hardware verification or implementation is claimed.
 
+### F51 — Agent build contract and acceptance tables (2026-09-18)
+
+**Authority:** The owner approved the eight Capture audit recommendations with “proceed” on 2026-09-18, following PR #19’s merge; peer review pending.
+
+**Decision:** Replace repeated background, persona headings and narrative journeys/diagrams with ownership, a row-transition index and Given/When/Assert cases; repair the missing ID separator in R8.1a–k without changing its cells. Retain all current requirement/copy/metric IDs, priorities, statuses, retired IDs and UJ anchors; existing requirement rows remain the source of behavior, and historical fence text is preserved with dated clarifications.
+
+**Carried by:** Build contract, Vocabulary, R8.1a–k structure, journeys, product index; F46 clarification; F55 consistency checks. No implementation is claimed.
+
+### F52 — Separate sample agreement, canonical mean and display derivation (2026-09-18)
+
+**Authority:** Owner approval of audit recommendation 5 (“proceed”, 2026-09-18); peer review pending.
+
+**Decision:** Use Data Foundation’s measurement tiers: an acquisition is a sample, a saved reading contains its N samples, and the current stored mean with conditions/device/basis/version is canonical; raw payloads are archived separately and display values are derived. For spectral agreement, compare each sample’s value to the set mean’s value, both derived at fixed D50/2° in the chosen scan mode; spectral display derivations follow collection reference preferences rather than forcing all visible values to D50/2°. Retain every saved sample and the mean before success; R4.24 still governs non-spectral capture and Data Foundation R3.5 forbids deriving a new reference from a non-spectral reading.
+
+**Carried by:** Vocabulary; R4.12 with R1.5/R4.9/R4.24; UJ1-e/f and UJ3-b/i; Capture→DF/DF←Capture obligations; dated F28/F33 and DF F10 clarifications. This does not settle hardware modes/reference coverage, OQ 3’s candidate statistic/tolerance, or choose a derivation library.
+
+### F53 — Count each session contribution once in a resumed chain (2026-09-18)
+
+**Authority:** Owner approval of audit recommendation 6 (“proceed”, 2026-09-18); peer review pending.
+
+**Decision:** Resume inherits the chain’s cumulative display, not a second accounting contribution for its predecessors’ time or outcomes. Each session’s own capture intervals/outcomes retain their session attribution; chain summaries and M2 count each contribution once. Three sessions with own elapsed times 10, 5 and 7 minutes display cumulative 10, 15 and 22 minutes, and total 22, never 47; the same rule prevents duplicating inherited tallies. R3.1’s exclusions, R3.2’s status set and F30’s metric definitions remain in force; storage representation stays with ADR-0003.
+
+**Carried by:** R7.18, M2, UJ3.5-g/h; R11.11 readback; Capture/DF obligation mirrors; dated F14/F30 and DF F49 clarifications.
+
+### F54 — Separate storage obligations from the navigation choice (2026-09-18)
+
+**Authority:** Owner approval of audit recommendation 7 (“proceed”, 2026-09-18); peer review pending.
+
+**Decision:** Session records, queue order, remembered row and deferred-row records are persistence requirements common to both Capture navigation readings and belong in ADR-0003’s queued scope; they do not wait for A/B selection. ADR-0004 and OQ 8 still require both prototypes and the owner’s navigation/placement decision; no ADR becomes Accepted here. Remove Device re-lock as an outstanding predecessor because PR #19 closed it, and consolidate constants/interims/closure gates without inventing candidate values or closing hardware/dogfood questions.
+
+**Carried by:** Legend constants/dependency tables; §10 preamble; ADR decision queue and product README; OQ 22 interim mirror; OQ 3’s explicit one-row-counter lifecycle gap. R10.1/R10.3/R10.4 common guarantees remain applicable while OQ 8 is open.
+
+### F55 — State-specific oracles and phase/copy consistency (2026-09-18)
+
+**Authority:** Owner approval of audit recommendations 3, 4 and 8 (“proceed”, 2026-09-18); peer review pending.
+
+**Decision:** Replace the contributor walk’s global unchanged-count claim with operation-specific deltas and declared fixtures/settings; cover late readings, durable-save interruptions, mixed guard routes, resets and same-session queue→review continuity. The ad-hoc journey must distinguish a standalone one-row session from an insertion into an existing bulk session. Bring Surfaces/copy phase marks, drift cause enumeration, simulated spread controls, F47 provenance and OQ 18’s answer into line with the existing rows; a reorder changes positions, not queue length. Make the cross-PRD label check standing review work; do not close first-build test tasks merely because scenarios now specify them.
+
+**Carried by:** R4.15/R8.2/R11.8, §11 preamble, UJ3.1/UJ3.5/UJ3.9/UJ4/UJ4.1; Surfaces, copy header, §12 standing check, OQ 18 results; F47 clarification/map; Device spread-control obligation mirror; post-lock list. Separate one-row guard lifetime remains open in OQ 3; no implicit reset/carry rule is introduced.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -396,8 +448,9 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F31** "Leave them all set aside", as clarified three times — R1.7, R3.9, R7.11, R7.16, R8.5, R8.15, R8.1f, R8.1g, R8.1h, R8.1i. **F32** the trigger lockout lasts until the reading returns — R4.3, R4.18, R11.5. **F33** the average is taken across the spectral curves — R4.12. **F34** each collection carries a chosen scan mode — R1.6, R1.10, R4.5. **F35** the prototype protocol runs with the owner only — R10.8.
 - **F36** capture proceeds without the spectral entitlement, as clarified — R4.22, R4.24, R4.26, R8.14. **F37** that one counter counts rows, not presses, as amended by F48 — R5.9, R5.14, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script. **F38** the seam tie-break is symmetric and repeated, as clarified — R10.8. **F39** the review is offered while any set-aside row exists — R8.16 (and [E2](prd-capture-mode-copy.md#error--state-copy)'s finished variant). **F40** that one counter has a floor of 2, as clarified and as amended by F48 — R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script.
 - **F41** cancelling an offer keeps the part-finished set — R6.3, R7.1, R9.10. **F42** look-through versus in-session review, as clarified five times — R3.6, R3.11, R8.1, R8.2, R8.5, R8.15, R8.1a–R8.1k. **F43** a collection-surface state never hides that surface's entry points — R7.19. **F44** leaving a detour returns to the queue, as clarified twice — R3.8, R8.1, R8.6, R8.1j, R8.1k. **F45** every requirement row is at most two sentences — every row in [§1](prd-capture-mode.md#1-collections) through [§11](prd-capture-mode.md#11-demo-device-and-verifiability). **F46** the restructure — the two companion files, the trims, and the retired IDs listed in the [Legend](prd-capture-mode.md#legend).
-- **F47** the first build phases its offers — the [Legend](prd-capture-mode.md#legend)'s priority paragraph, R10.7, M5, R11.12, R11.15, and the [copy file](prd-capture-mode-copy.md#error--state-copy)'s header, its state-level ‹P1› marks (E30–E34), E29's handing-over mark, and its action-level marks (E2, E18, E28, E29, E36, E37, E42). **F48** one guard counter — R4.21, R5.9, R5.10, R5.11, R5.14, R8.4, and OQ 3.
+- **F47** the first build phases its offers — the [Legend](prd-capture-mode.md#legend)'s priority paragraph, R10.7, M5, R11.12, R11.15, and the [copy file](prd-capture-mode-copy.md#error--state-copy)'s header, its state-level ‹P1› marks (E30–E34), E29's handing-over mark, its action-level marks (E2, E18, E28, E29, E36, E37), and its body-variant marks (E18/E42 re-scan). **F48** one guard counter — R4.21, R5.9, R5.10, R5.11, R5.14, R8.4, and OQ 3.
 - **F50** Device amendment mirror — R5.1/R5.2/R5.3/R5.4/R5.9/R5.10, E45, R7.5/R7.14, R11.3, R11.12, E23 halted variant, Device obligation rows, OQ 16/results (answered on Device re-lock, PR #19).
+- **F51–F55** agent-build amendment — the individual Carried-by lists above; all earlier maps remain provenance.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings
