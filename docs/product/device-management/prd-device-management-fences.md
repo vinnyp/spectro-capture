@@ -1,6 +1,6 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review is pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
@@ -69,6 +69,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Carried by:** Build contract, Legend, journey companion and amendment markers. The shared Status vocabulary is unchanged.
 
 **Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** The individual WHAT choices are ratified separately as F15–F26, each citing its owner decision; the blanket approval is not their sole authority. The supersession sentence above is corrected to F9(1) as the owner explicitly requested.
+
+**Clarified 2026-09-18 ([final review](https://github.com/vinnyp/spectro-capture/pull/19#pullrequestreview-5252472266)):** peer review closed 2026-09-18 (PR #19); re-locked on merge. This closes the amendment’s earlier pending-review marker; no implementation is claimed.
 
 ### F11 — Calibration interim uses the SDK due signal (2026-09-18)
 
@@ -205,6 +207,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** Capture OQ 16 remains open until Device re-locks, despite the notes being carried by this amendment. Keep its results section with pending re-lock status and preserve peer review pending in Device's status.
 
 **Carried by:** Capture OQ 16/results/F50; Device status; product index.
+
+**Clarified 2026-09-18 ([final review](https://github.com/vinnyp/spectro-capture/pull/19#pullrequestreview-5252472266)):** peer review closed 2026-09-18 (PR #19); re-locked on merge. PR #19’s merge is the Device re-lock required by D10; Capture OQ 16 is marked answered with its results headed “Answered on Device re-lock (PR #19)”. This supersedes the earlier pending-review and open-until-re-lock markers; hardware questions remain open/residual.
 
 ### F25 — Place Capture F50 with fences (2026-09-18)
 

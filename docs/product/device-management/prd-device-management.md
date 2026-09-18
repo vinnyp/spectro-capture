@@ -1,6 +1,6 @@
 # PRD: Device Management
 
-Status: locked (2026-09-08); agent-build amendment 2026-09-18 under F10–F31 (peer review pending)
+Status: locked (2026-09-08); agent-build amendment 2026-09-18 under F10–F31; peer review closed 2026-09-18 (PR #19); re-locked on merge
 
 Companion files: the journeys are in [prd-device-management-journeys.md](prd-device-management-journeys.md), the shipping copy in [prd-device-management-copy.md](prd-device-management-copy.md), the answers to part-closed open questions in [prd-device-management-oq-results.md](prd-device-management-oq-results.md), and the owner's decisions in [prd-device-management-fences.md](prd-device-management-fences.md); `prd-device-management-dogfood-results.md` lands beside this PRD only once observations exist (M6/M7).
 
