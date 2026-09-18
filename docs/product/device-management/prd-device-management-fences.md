@@ -92,6 +92,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-18 (Capture agent-build amendment):** The Capture §6 obligation summary explicitly names its existing R11.8 per-mode spread control (below/equal to/above SAMPLE_TOLERANCE), under Capture F55; no device capability or exception is added.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D7 / Capture F62 moves the spread-control mirror to “Capture Mode, on the simulated layer”, beside Capture R11.8; the earlier §6 placement is superseded. That line also carries Capture R11.7’s fired cue channels (sound / haptic / visual), making the two-sense promise observable; no hardware capability is inferred.
+
 ### F13 — Setup and authorization recovery actions (2026-09-18)
 
 **Decision:** First-run explicit setup exits dismiss to normal device-panel content; later-run exits land in the collection. Incidental navigation resets the relevant failure counter exactly as F9 clarification (5c) already required. Pairing Try again retries the selected device; discovery is a separate picker action. Setup states belong to the panel, E1 to the picker, and both remain non-modal.
@@ -181,6 +183,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** DEMO_SCAN_CYCLE's noninstant default is the sole explicit exception to R6.25's no-unconfigured-default rule. Its provisional value remains governed by F7/OQ 10.
 
 **Carried by:** R6.25/R6.27; UJ1.2-d; constants table.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D6 / Capture F61 ratifies Capture OQ 22’s matching nonzero plan-set dogfood interim under R6.27/F7/F21; measured pacing remains Device OQ 10, with no new default exception.
 
 ### F22 — Ratify metric rows and name dogfood evidence (2026-09-18)
 

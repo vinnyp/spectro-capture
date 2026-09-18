@@ -6,7 +6,7 @@ Use Device's simulated seam plus Capture R11.5–R11.16 and the Data Foundation 
 
 ## User Journeys
 
-P0 is bulk capture and bulk deferred-row review. P1 is captured-value correction, ad-hoc/one-row capture and reordering; withhold their actions/variants in P0 as F47 requires. Unless specified otherwise, an assertion concerns the test's existing session, never a carry-over rule for separate one-row sessions (OQ 3).
+P0 is bulk capture and bulk deferred-row review. P1 is captured-value correction, ad-hoc capture and reordering; withhold those actions/variants in P0 as F47 requires. A one-row deferred-row acquisition from look-through is P0 under R8.1a/R8.3. The guard counter belongs to the test’s session; separate one-row sessions each start at zero and never accumulate (F58, OQ 3 interim).
 
 ### The session, end to end
 
@@ -32,12 +32,12 @@ UJ1.1 was folded into UJ1 under F1. Hardware capabilities and the complete selec
 | UJ1-b | Existing collection name | Create names differing only under Import R2.3 equivalence; also try empty name | Duplicate gives E1 and one collection remains; empty name cannot create collection | R1.2 |
 | UJ1-c | Creation form | Try N=1,3,5 and out-of-range values | Accept only 1–5; N=1 skips agreement check and E18; defaults editable between sessions | R1.3/R1.4 |
 | UJ1-d | Empty collection / finished collection with settled rows / no pending but unsettled rows | Open collection; request capture where offered | E2 empty / finished variants; review offer iff any set-aside row; unsettled-only start gates then opens review | R1.1/R1.7/R3.9/R8.16 |
-| UJ1-e | Saved samples and spread; spectral / non-spectral fixtures | Change display reference between available pairs | No re-scan, no measurement or agreement-verdict mutation; spectral derivation follows selected reference; non-spectral stays at original reference with required mark | R1.5/R4.9/R4.12/R4.24; DF R3.3/R3.5 |
+| UJ1-e | Saved samples and spread; spectral / non-spectral fixtures | Configure two supported reference pairs via the capability fixture, then change display reference between them | No re-scan, no measurement or agreement-verdict mutation; spectral derivation follows selected reference; non-spectral stays at original reference with required mark | R1.5/R4.9/R4.12/R4.24; DF R3.3/R3.5 |
 | UJ1-f | Supported scan modes configured; saved reading includes all modes | Change chosen mode between sessions | All returned modes remain stored; chosen mode selects working values and later agreement checks; no re-scan or prior-reading mutation | R1.6/R1.10/R4.5/R11.8 |
 
 ### UJ 1.2 Manage collections — rename, delete
 
-Collection Mode owns these controls; these are inherited contract cases, not Capture-owned UI requirements.
+Under [fence F3](prd-capture-mode-fences.md#f3--rename-and-delete-belong-to-collection-mode-2026-09-06), Collection Mode owns these controls and inherits UJ1.2-a/b/c (the acceptance form ratified by F63); these cases create no Capture-owned UI requirements.
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
@@ -55,7 +55,7 @@ UJ2/UJ2.1/UJ2.2 moved under F49 to [Import acceptance scenarios](../import/prd-i
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
-| UJ3-a | Pending A/B; N=3; guard and agreement record-only; nonzero latency | Accept three triggers on A, then three on B | One measurement per accepted trigger; sample confirmations through two senses; each durable set precedes row confirmation and one advance; captured +2, pending −2, deferred unchanged | R4.1–R4.8/R4.12–R4.15/R4.23/R11.3 |
+| UJ3-a | Pending A/B; N=3; guard and agreement record-only; nonzero latency | Accept three triggers on A, then three on B | One measurement per accepted trigger; R11.7 records at least two distinct channels for every sample and row confirmation; each durable set precedes row confirmation and one advance; captured +2, pending −2, deferred unchanged; R11.16 records exactly N accepted trigger interactions and zero other accepted interactions on each clean row (M11) | R4.1–R4.8/R4.12–R4.15/R4.23/R11.3/R11.7/R11.16; M11 |
 | UJ3-b | N=3; enabled agreement; independently declared sample-to-mean distances | Complete sets below/equal to/above SAMPLE_TOLERANCE | Below/equal agrees; above shows E18 and holds; fixed D50/2° independent of display reference; saved samples retained individually | R4.9/R4.12/R11.8 |
 | UJ3-c | Above-tolerance set; agreement record-only / enabled | Complete set; in enabled run take each E18 queue action separately | Record-only accepts and records spread without prompt; Take it again repeats and counts failed sets; Accept the average saves spread; Set it aside retains samples and advances once | R4.10/R4.11/R4.23/R5.4 |
 | UJ3-d | Measurement held open by seam; extra dead-time configured | Press repeatedly during measurement and configured post-result lockout | No queued/second measurements; in-flight presses have distinct rejection cue; accepted-trigger count equals requested-measurement count | R4.2/R4.3/R11.5 |
@@ -65,11 +65,11 @@ UJ2/UJ2.1/UJ2.2 moved under F49 to [Import acceptance scenarios](../import/prd-i
 | UJ3-h | Each surface focused in turn; shortcut map available | Deliver capture shortcuts, including trigger | Capture shortcuts inert off capture surface; none bound to bare Space/single letter; capture surface offers no Cancel/Abandon; End separate from advance controls | R4.4/R4.16/R10.4/R11.13/R11.15 |
 | UJ3-i | Spectral absent / present Demo configurations | Start session and scan | Absent shows persistent E43 Demo variant and still captures with non-spectral basis/version; present omits E43; simulated indicator E35 always present and provenance retained | R4.22/R4.24/R4.26/R11.3; Device R6.4–R6.6 |
 | UJ3-j | ROWS_TARGET/ROWS_CEILING and SESSION_LENGTH fixtures with declared budgets | Find/list at ceiling; import at target; hold session over outlasting queue | Meet FIND_BUDGET/IMPORT_BUDGET and last-row TRIGGER_ACK_WINDOW; tallies, elapsed time and order remain correct | R3.12; M8; Import R3.1 |
-| UJ3-k | Virtual pacing clock plus independent real clock; observable cues/announcements | Run configured paced captures and induced failures | Record both clocks and cue kind/pre-emption; assert timing budgets and configured distinct cues; VoiceOver policy remains OQ14 and haptic exposure remains hardware-gated | R4.7/R4.8/R4.13/R4.17/R11.7/R11.14; M1/M10 |
+| UJ3-k | Virtual pacing clock plus independent real clock; observable cues/announcements | Run configured paced captures and induced failures | Record both clocks and cue kind/pre-emption; assert timing budgets and configured distinct cues; every capture-state announcement is recorded as not requiring focus (R11.14), without judging OQ14’s policy; haptic exposure remains hardware-gated | R4.7/R4.8/R4.13/R4.17/R11.7/R11.14; M1/M10 |
 
 ### UJ 3.1 A scan fails mid-queue
 
-K and N are declared fixture values, not new release choices. “Sample counter” and “failed-attempt counter” are different observations. Guard lifetime across distinct one-row sessions remains OQ 3; the cases here assert within one bulk session only.
+K and N are declared fixture values, not new release choices. “Sample counter” and “failed-attempt counter” are different observations. F58 makes the guard session-scoped; the bulk cases preserve one session, and UJ3.1-l checks separate one-row sessions.
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
@@ -78,12 +78,13 @@ K and N are declared fixture values, not new release choices. “Sample counter�
 | UJ3.1-c | K=3, N_CONSEC_HARD=2, guard enabled; enough pending rows | Auto-defer two successive rows using three drift refusals each; repeat with two drift+one light refusal each | Each refusal counts once; each deferral counts one guard row; E19 pause only after second row; held row/samples intact; no separate drift bound | R5.4/R5.9–R5.14; Device F31 |
 | UJ3.1-d | Same failures, guard record-only | Repeat UJ3.1-c | Same counts and deferrals, no guard pause | R5.12 |
 | UJ3.1-e | Guard enabled; one held row; failed sample / partial samples without failure | Skip in each variant | Both defer and advance once, samples retained; only Skip after a failed attempt counts toward guard | R5.5/R5.9/R5.10 |
-| UJ3.1-f | At least seven pending rows; guard enabled | Flag each as missing before samples | Five set-aside rows, no guard count/pause; subsequent two counted deferrals pause exactly then | R5.8/R5.10 |
+| UJ3.1-f | At least seven pending rows; guard enabled | Flag five as missing before samples, then auto-defer two other rows | Five set-aside rows, no guard count/pause; subsequent two counted deferrals pause exactly then | R5.8/R5.10 |
 | UJ3.1-g | Just captured A, no trigger on next row yet; separate fixtures after auto-deferral or unattempted Skip | Flag during each flag window | Captured A demoted with prior reading in history; otherwise E20 already-set-aside/still-pending and no new row changed | R5.6/R5.7 |
-| UJ3.1-h | Guard paused with partial samples and row failure count | Press trigger; then force-resume | Trigger requests no measurement; deliberate force-resume clears guard count only, retains current samples and row failure count | R5.11 |
+| UJ3.1-h | Guard paused at declared N_CONSEC_HARD with partial samples and a declared row failure count; enough rows for a fresh run | Press trigger; force-resume; induce N_CONSEC_HARD counted deferrals without capturing a row | Trigger requests no measurement; R11.11 reads guard zero after force-resume and unchanged samples/row failure count; no pause before the Nth subsequent deferral, pause exactly there | R5.11/R11.6/R11.11 |
 | UJ3.1-i | Guard enabled N=2; agreement enabled; same bulk session | One auto-deferral then a Skip after failure; repeat with disagreement set aside as second route | Mixed routes count together and pause once at second row | R5.9/R5.14; F48 |
 | UJ3.1-j | Guard count=1 in enabled bulk session | Capture a row, including by Accept the average; then one counted deferral | Captured row resets count; later one deferral does not pause | R5.14/R4.11 |
 | UJ3.1-k | Enabled same bulk session; final pending row auto-defers, guard count=1; review opens | In review Skip a different row after failure | Queue→review boundary does not reset count; second counted row pauses | R5.9/R8.4 |
+| UJ3.1-l | No session open; enabled guard; N_CONSEC_HARD=2; two eligible set-aside rows | Start a one-row scan from look-through, Skip after a failed attempt, then repeat on the other row | Each new session reads guard zero initially and one on deferral; each ends without guard pause, with no carry-over into the next session | R3.11/R3.13/R5.9/R8.1a/R8.4/R11.11; F58 |
 
 ### UJ 3.2 Undo or redo the current item
 
@@ -95,15 +96,15 @@ K and N are declared fixture values, not new release choices. “Sample counter�
 
 ### UJ 3.3 Resolve the deferred-error queue at session end
 
-Cases involving one-row or captured-row re-scan behavior are P1; ordinary bulk deferred-row review is P0. R8.1d forbids scanning while held by guard/device. The matrix remains the single transition authority, with scenarios testing its cells rather than supplying exceptions.
+Captured-row correction is P1; deferred-row acquisition is P0, including a one-row session started from look-through (R8.1a/R8.3). R8.1d forbids scanning while held by guard/device. The matrix remains the single transition authority, with scenarios testing its cells rather than supplying exceptions.
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
 | UJ3.3-a | For each R8.1a–k entry fixture; partial set where specified | Open list, select a row where allowed, then leave | Assert every owning matrix cell: gate/session behavior, discard or retention, remembered/review-selected state, return target and session outcome; repeat with collection vs capture entry where available | R8.1a–k/R3.6–R3.9/R7.1/R7.16 |
 | UJ3.3-b | Settled and unsettled rows with retained samples/causes/notes, including drift | Open list and select eligible row | All rows listed with cause/attempt/sample counts and settlement note; prior values hidden during acquisition; full fresh N samples; earlier samples remain history | R8.2/R8.3/R11.15c |
 | UJ3.3-c | Review row with sample refusal; separate disagreeing set; guard/check enabled | Retry, Skip, exhaust K, or use E18 review action in separate runs | Failure holds; counted exits follow R5.9; unsettled deferrals retain prior causes plus new cause; settled rows offer no Leave it set aside | R8.4/R8.5/R5.9 |
-| UJ3.3-d | Review row unsettled; guard count below threshold; non-disagreeing failed attempt | Leave it set aside with optional note (E27) | Settled, retained samples/note; no increment toward guard for this route; ordinary failed-attempt record remains | R8.4/R8.5/R5.9 |
-| UJ3.3-e | Mixed settled/unsettled rows; one partial current row | Cancel then confirm Leave them all set aside (E39) | Cancel retains state; confirm settles only outstanding rows, common note; discards partial set only if current row is among them with cue/E42; no touching already-settled decisions | R8.15/R7.16/R7.17 |
+| UJ3.3-d | Fresh live bulk review; guard enabled at zero; unsettled row with non-disagreeing failed attempt; enough further review rows | Leave it set aside with optional note (E27), then induce N_CONSEC_HARD counted deferrals without capturing a row | R11.11 reads guard zero after Leave, samples/note and failed attempt retained; no pause before the Nth subsequent deferral, pause exactly there | R8.4/R8.5/R5.9/R11.6/R11.11 |
+| UJ3.3-e | Mixed settled/unsettled rows; one partial current row | Choose Go back, then reopen E39 and confirm Leave them all set aside | Go back retains state; confirm settles only outstanding rows, common note; discards partial set only if current row is among them with cue/E42; no touching already-settled decisions | R8.15/R7.16/R7.17 |
 | UJ3.3-f | No pending rows; final unsettled row; live bulk / interrupted bulk / ended session variants | Capture or deliberately settle last outstanding row | Live completes; interrupted closes complete without gate/Resume; ended session stays ended; appropriate summary still leaves collection entry points reachable | R8.6/R7.11/R7.19/R8.1 |
 | UJ3.3-g | End-of-run vs detour review; unresolved rows remain | Leave list | End-of-run ends early with unresolved rows retained; detour returns to held queue row at sample 0 and continues session | R8.6/R8.1f–k |
 
@@ -125,8 +126,9 @@ Cases involving one-row or captured-row re-scan behavior are P1; ordinary bulk d
 | UJ3.5-d | Saved collection unavailable / remembered-open collection missing from app preferences | Relaunch | Unavailable file gets E26 Find the file; otherwise manually opening file restores session state solely from file | R1.9/R7.8/R7.9 |
 | UJ3.5-e | Interrupted bulk; collection surface | End that session | Ends without opening capture; rows retained under ordinary ending contract | R7.13/R7.5 |
 | UJ3.5-f | P1 one-row session interrupted with pending / captured-before-re-scan row | Relaunch | One-row session ended, no Resume; existing canonical retained for interrupted correction; bulk interruption unaffected | R3.13/R8.8/R9.7 |
-| UJ3.5-g | Three linked sessions with own capture times 10,5,7 minutes and distinct newly captured rows 2,1,3; no flag/demotion/rework | Resume twice and read chain summary/records | Per-session own intervals/outcomes remain attributable; cumulative displays 10/15/22 minutes and 2/3/6 rows; final M2 uses 6 rows / 22 minutes, not summed cumulative displays | R3.1/R7.18/R11.11; M2; F53 |
+| UJ3.5-g | Six-row queue; three linked sessions with own capture times 10,5,7 minutes and distinct newly captured rows 2,1,3; no flag/demotion/rework | Resume twice, complete the final row and read chain summary/records | R11.11 reads own times 10/5/7 min and captured counts 2/1/3, separately from cumulative 10/15/22 min and 2/3/6; session 3’s R7.15/E24 completion summary shows 22 min, 6 captured and rate 6 ÷ (22/60) per hour with R11.12’s cumulative discriminator; 7 or 47 min fails | R3.1/R7.15/R7.18/R11.11/R11.12; M2; F57 |
 | UJ3.5-h | Active recording with configured clock | Advance time during capture, operator pause, guard pause, halt, review and between interrupted sessions | Elapsed time includes only capturing intervals; every sample/attempt/discard/decision retains session and event time | R3.1/R8.17/R11.11 |
+| UJ3.5-i | P0 declared history: saved sets, deferred samples, discarded partial samples, failed correction, accepted-average spread, flag demotion, review decisions/notes, linked sessions and queue/review-selected state | Read back after reopening the file | Every saved/deferred sample, attempt/cause/outcome, decision/note/settlement, spread and flagged history remains; discarded partial samples absent from saved history; chain/order/remembered mark match fixture; P1 interactions need not exist to verify record shape | R8.13/R8.17/R11.6/R11.11 |
 
 ### UJ 3.6 Device fails mid-session
 
@@ -138,6 +140,7 @@ Device owns detection, causes, reconnect bounds and shipping halt copy. These ca
 | UJ3.6-b | Completed set held by failed save | Try saving again successfully; Resume scanning | Held set commits once and confirmation advances once; resume reevaluates current row after save | R7.2/R4.13; Device R5.8–R5.10 |
 | UJ3.6-c | Halt with/without held unsaved reading | Device E33 End/Quit, cancel then confirm in separate runs | Cancel retains halt/set; End discards unsaved set and gives E23 halted-ended (no Keep scanning); Quit closes/exits with no summary or next-launch Resume | R7.5; Device R5.11/R5.18/F28 |
 | UJ3.6-d | Open halt record; confirmed rows plus unsaved data | Crash/force-quit/power-loss; relaunch | Halt closes unresolved—app terminated; bulk interrupted; confirmed rows safe; Resume starts new session through full gate | R3.4/R7.7/R7.12; Device R5.17/R5.19 |
+| UJ3.6-e | Separate fixtures for device-reported no reading, battery below operational threshold, disconnect and failed save | Deliver each Device halt event (no invented scan timeout) | Device halt, not per-scan retry; no increment to row failure/guard counters merely for the halt; failed-save completed set retained for Try saving again | R5.2/R7.2/R11.6/R11.11; Device §5 |
 
 ### UJ 3.7 Jump to a different row
 
@@ -169,8 +172,8 @@ Run 1–8 in order, resetting fixtures as declared; run 9 per phase. All use the
 | :--- | :--- | :--- | :--- | :--- |
 | UJ3.9-1 | No hardware/license; Demo selected; K=3; guard record-only; agreement enabled | Run UJ3.1-a/b for light/temperature/drift | State-specific caution/retry and auto-deferral; expected pending→deferred delta, good samples retained; no guard pause | R11.3/R4.23/R5.12/R11.6 |
 | UJ3.9-2 | Fresh bulk; guard enabled N=2; agreement enabled | Run UJ3.1-c/i/j/k | Pause/reset/mixed-route/queue→review cases match expected row counts | R5.9–R5.14/R8.4 |
-| UJ3.9-3 | Fresh bulk; guard enabled N=2; K=3 | Fail/accept/fail/accept/fail on one row with N samples large enough to avoid completing set | Only one auto-deferral; no session pause; failed count not reset by accepted samples | R5.4/R5.9/R5.13 |
-| UJ3.9-4 | Review in same bulk; guard and agreement enabled; fresh counter for each independent route run | Run N_CONSEC_HARD deferrals by each counted route; separate runs of N_CONSEC_HARD unattempted Skips, leaves without attempt, and leaves after non-disagreeing failures | Counted routes each pause at threshold; each excluded-route run never increments counter or pauses; E18 review actions obey settled state | R5.9/R5.10/R8.4/R8.5 |
+| UJ3.9-3 | Fresh bulk; guard enabled N_CONSEC_HARD=2; K_FAILED_ATTEMPTS=3; N=3 samples | Fail/accept/fail/accept/fail on one row before its set can complete | Only one auto-deferral; no session pause because R5.9/F40 fixes the threshold floor at 2; failed count not reset by accepted samples | R5.4/R5.9/R5.13 |
+| UJ3.9-4 | Fresh bulk; review reached within that same session; guard and agreement enabled; fresh counter for each independent route run | Run N_CONSEC_HARD deferrals by each counted route; separate runs of N_CONSEC_HARD unattempted Skips, leaves without attempt, and leaves after non-disagreeing failures | Counted routes each pause at threshold; each excluded-route run never increments counter or pauses; E18 review actions obey settled state | R5.9/R5.10/R8.4/R8.5 |
 | UJ3.9-5 | Queue fixture with anchor removed from pending during pass | Run UJ3.7-d/e | Pass ends instead of circling; no duplicate queue membership; expected flag/skip deltas | R6.5/R6.6 |
 | UJ3.9-6 | Declared failed-save/disconnect states; one ready-to-capture row | Recover then capture once | Retained set saves once; captured +1/pending −1; recovered row ownership correct | UJ3.6-a/b; R11.5/R11.6 |
 | UJ3.9-7 | Bulk with confirmed rows and partial current row | Quit and relaunch; then Resume capture | Confirmed state/counts preserved across interruption; new linked session, cumulative accounting counted once; partial samples discarded | UJ3.5-a/b/g |
@@ -198,6 +201,7 @@ Run 1–8 in order, resetting fixtures as declared; run 9 per phase. All use the
 | UJ4-d | Same collection bulk operator-paused; P1 | Capture ad-hoc row | Use existing session/device, lift pause for this row without new start gate; afterwards held queue row returns still paused; tallies include new row | R9.6 |
 | UJ4-e | Other collection active, paused or halted | Attempt scan | E3; no second active session | R3.5/R9.5 |
 | UJ4-f | One-row ad-hoc run with failures | Exhaust K / Skip; separately complete row then try flag-after-landing | Failure/Skip defers with retained evidence and closes one-row session; no F16 window after one-row capture, correction via collection | R9.8/R9.9/R3.13 |
+| UJ4-g | P1; two pending ad-hoc rows; first readiness fully passing with no advisory; R11.6 device input becomes blocking before second start | Complete first one-row session; attempt second after the readiness change | First gate checks run with presentation suppressed; second reruns checks and presents block; no second session starts, no measurement requested, queue unchanged from immediately before second start | R3.10/R9.4/R11.6; Device §4 |
 
 ### UJ 4.1 Insert an unplanned item mid-session
 
@@ -205,7 +209,7 @@ The standalone path in UJ4-c starts a one-row session; this mid-session path use
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
-| UJ4.1-a | P1; bulk A with partial samples | Add a swatch; cancel / submit duplicate or blank / save unique B separately | Cancel E32 retains A samples, no new row; invalid data creates nothing; unique save discards A partial set with cue, inserts B at configured position and makes B current sample 0 | R9.1/R9.2/R9.10/R9.11 |
+| UJ4.1-a | P1; bulk A with positive partial-sample count / zero samples in separate runs | Add a swatch; cancel / submit duplicate or blank / save unique B separately | Cancel E32 retains A samples, no new row; retained-sample sentence present iff count positive, absent at zero; invalid data creates nothing; unique save discards any A partial set with cue only when samples are dropped, inserts B at configured position and makes B current sample 0 | R9.1/R9.2/R9.10/R9.11/R11.12 |
 | UJ4.1-b | New B inserted after held A; bulk session active | Capture B successfully | No second session or new start gate; B captured, R +1 relative to before insert; return A sample 0, continue queue order | R3.11/R9.10/R9.11 |
 
 ### Cluster 5 — The seam (made visible, not decided)

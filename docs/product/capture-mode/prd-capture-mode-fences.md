@@ -1,9 +1,9 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the owner-approved 2026-09-18 agent-build amendment; peer review pending.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F65 individually ratify its WHAT choices under owner decisions D1–D10 (2026-09-18); peer review pending.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
-Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed, while F51–F55 are pending review.
+Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed, while the F51–F65 amendment is pending review.
 
 ## Fences
 
@@ -26,6 +26,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** Create-collection stays in this PRD because it is on the capture critical path. Rename-collection and delete-collection are handed to the Collection Mode PRD. The owner's steps are preserved under UJ1.2 with a scope-boundary note so they land in exactly one document; they generate no requirements here.
 
 **Why:** The product README assigns editing surfaces, selection, and bulk operations to Collection Mode.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D8 / F63 replaces the verbatim owner steps with UJ1.2-a/b/c acceptance cases; Collection Mode inherits those cases and still owns their controls.
 
 ### F4 — Import target is chosen in the app (2026-09-06)
 
@@ -133,11 +135,15 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Why:** Flagging five missing markers in a row must not pause the session and prompt recalibration; the guard exists to catch a systemic instrument problem.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The former §11 contributor script is now UJ3.9-2/3/4; the row map points there, with counter inputs/readback supplied by R11.6/R11.11 and session scope supplied by F58.
+
 ### F19 — Entering the deferred-row review mid-session discards the current item's partial set (2026-09-06, requirements fill, fork 1)
 
 **Decision:** The one partial-set rule has no look-only exception: opening the review puts a different item under the instrument, so the samples taken so far on the current item are discarded and the row returns to "sample 0 of N". Closes OQ 18.
 
 **Why:** The rule's value is that it has no exceptions; a look-only entry is a later refinement if dogfood asks for it.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D5 / F60 ratifies the OQ 18 answer as F19 refined by F42 clarifications (3)–(5), F44 and R8.1a–k: look-through entry does not discard; live end-of-run/detour entry does, and one-row selection/settlement follows its matrix cell. This supersedes the historical “no look-only exception” wording.
 
 ### F20 — The review's surface and the session summary's form follow the seam decision (2026-09-06, requirements fill, forks 2 and 3)
 
@@ -195,6 +201,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-18 (agent-build amendment):** F52 keeps agreement at D50/2° while display derivations follow the collection reference under Data Foundation R3.1–R3.5. A sample’s comparison value comes from that sample, the mean’s comparison value from the mean; display edits never alter the verdict.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D1 / F56 ratifies fixed-reference agreement separately from collection-reference spectral display derivation; R1.5 makes reference parameterisation explicit while the offered pair list stays OQ 21.
+
 ### F29 — A lost-unflushed-writes stand-in makes the power-loss promise assertable (2026-09-06, round 5, R5-F8)
 
 **Decision:** This PRD adds an obligation on the simulated layer (implemented by Data Foundation's store): a test can induce the loss of everything not durably flushed at an arbitrary point, and assert that every row the operator was told landed is present afterwards; drive detachment is the same stand-in. The row-success confirmation's cost is floored by the durable-commit time on the user's volume, so ROW_CONFIRM_BUDGET is measured on real volume classes, not only on the Demo Device.
@@ -229,6 +237,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-18 (agent-build amendment):** F52 distinguishes the spectral mean from its derivations: the canonical value is the stored mean with metadata under Data Foundation F10/F25, not an archived raw payload. Derive each sample and the mean separately at D50/2° for sample-to-mean agreement; spectral display values instead follow the collection reference. R4.24’s non-spectral basis and OQ 3’s provisional statistic/tolerance remain unchanged.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D1 / F56 ratifies the stored-mean/display split and quotes the superseded R4.12 sentence; spectral averaging still uses curves and no saved sample is replaced by its mean.
+
 ### F34 — Each collection carries a chosen scan mode, default M1 (2026-09-06, round-5 fix pass, fork 2)
 
 **Decision:** A collection carries a chosen scan mode (M0, M1, or M2 as the instrument's firmware offers), default M1 on Spectro 2, set at creation beside samples-per-row and editable between sessions. The agreement check runs on that mode and the derived colour values shown by default come from it; every recorded mode is kept with the reading. Whether one measurement returns every supported mode, or the app must choose, stays OQ 1 (per SDK docs; confirm on hardware).
@@ -252,6 +262,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision (superseded by F48: one counter):** N_CONSEC_HARD counts consecutive rows that each ended in an instrument-caused deferral (auto-deferred after K_FAILED_ATTEMPTS, or skipped after a failed attempt); repeated failures on one swatch are that swatch's problem and auto-defer it without pausing the session. N_CONSEC_FLAGGED keeps its meaning (F18) and the two counters may merge if tuning shows them redundant (OQ 3). The N_CONSEC_HARD < K_FAILED_ATTEMPTS invariant is withdrawn.
 
 **Why:** Counting presses meant two light-leaks on one awkward swatch paused a heads-down run before the row could auto-defer.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The former §11 contributor script is now UJ3.9-2/3/4; the row map points there, with counter inputs/readback supplied by R11.6/R11.11 and session scope supplied by F58.
 
 ### F38 — The seam tie-break is symmetric and repeated (2026-09-07, round 6, R6-F7)
 
@@ -278,6 +290,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** Whatever OQ 3 tunes, N_CONSEC_HARD is never below 2. Stated once in R5.9 and in OQ 3; [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script cites the floor rather than claiming that no tuning can invalidate its interleaved-failures step.
 
 **Why:** A guard that pauses on a single row's auto-deferral is not watching for a run of instrument failures; it would also make the auto-defer-without-pause path of R5.9 unreachable and falsify that step.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The contributor walk now lives in UJ3.9-2/3/4, not the former §11 preamble script; UJ3.9-3 explicitly cites R5.9/F40’s floor of 2 for its one-deferral/no-pause assertion. The original Decision’s script reference is historical.
 
 ### F41 — Cancelling a mid-session "Add a swatch" keeps the partial set (2026-09-07, round 8, R8-F5)
 
@@ -317,6 +331,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-18 (agent-build amendment):** F51 replaces duplicated narrative and diagrams with linked acceptance/transition tables while preserving all UJ anchors and requirement IDs. F54 reconciles the queued storage dependency with the existing common-to-both-readings persistence promises; it chooses no navigation model or schema.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D8 / F63 ratifies retirement of Background, diagrams, persona headings, inline UJ3 and narrative journeys in favour of build/transition/constants/dependency/acceptance tables; D4 / F59 ratifies the queued storage scope without deciding the navigation fork.
+
 ### F47 — The first build phases its offers; fence F24 stands (2026-09-07, round 18, priority pass)
 
 **Decision:** A P0 row's state that offers an action whose rows are P1 — "Re-scan" (R8.7–R8.10, R8.12), "Add a swatch" (R9.1–R9.11), mid-session reorder (R6.8, R6.11) — is shown in the first build without that action; the offer arrives with the P1 rows. R11.15's surface lists and R7.19's entry points are asserted per phase. R10.7's reorder observable is recorded once reordering lands; R10.8's tie-break (mode slips, then steps to the just-captured row) is unaffected, so the seam prototype still closes OQ 8 in the first build. M5 is measured from the P1 build onward.
@@ -324,6 +340,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Why:** Six lenses found the P0 set offering doors with nothing behind them; phasing the offers keeps the owner-confirmed P0/P1 split (F24) and costs one Legend sentence rather than twenty rows.
 
 **Clarified 2026-09-18 (agent-build amendment):** R11.12 was added in rounds 21–22. F55 names state, action and body-variant phase marks separately: E18/E42 re-scan are body variants; their P1 actions are withheld with them; the stable state IDs remain available for P0 variants.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The review fixes extend the phase marks to the Collection surface’s add/re-scan entry points and enumerate the phase-dependent R11.15b offers; E32’s retained-sample sentence is observable only when nonzero and once its P1 state lands.
 
 ### F48 — One guard counter (2026-09-07, round 18, R18-F2)
 
@@ -403,6 +421,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** Build contract, Vocabulary, R8.1a–k structure, journeys, product index; F46 clarification; F55 consistency checks. No implementation is claimed.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The initial “proceed” authority approved the audit work; the individual WHAT choices are now ratified by D1–D10 in F56–F65, with structural retirement specifically D8 / F63. These decisions supersede any inference of separate authority from the earlier blanket line.
+
 ### F52 — Separate sample agreement, canonical mean and display derivation (2026-09-18)
 
 **Authority:** Owner approval of audit recommendation 5 (“proceed”, 2026-09-18); peer review pending.
@@ -410,6 +430,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** Use Data Foundation’s measurement tiers: an acquisition is a sample, a saved reading contains its N samples, and the current stored mean with conditions/device/basis/version is canonical; raw payloads are archived separately and display values are derived. For spectral agreement, compare each sample’s value to the set mean’s value, both derived at fixed D50/2° in the chosen scan mode; spectral display derivations follow collection reference preferences rather than forcing all visible values to D50/2°. Retain every saved sample and the mean before success; R4.24 still governs non-spectral capture and Data Foundation R3.5 forbids deriving a new reference from a non-spectral reading.
 
 **Carried by:** Vocabulary; R4.12 with R1.5/R4.9/R4.24; UJ1-e/f and UJ3-b/i; Capture→DF/DF←Capture obligations; dated F28/F33 and DF F10 clarifications. This does not settle hardware modes/reference coverage, OQ 3’s candidate statistic/tolerance, or choose a derivation library.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The initial “proceed” authority is superseded for the individual WHAT choice by D1 / F56, which explicitly ratifies the agreement/display split and quotes the former R4.12 wording.
 
 ### F53 — Count each session contribution once in a resumed chain (2026-09-18)
 
@@ -419,6 +441,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R7.18, M2, UJ3.5-g/h; R11.11 readback; Capture/DF obligation mirrors; dated F14/F30 and DF F49 clarifications.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The initial “proceed” authority is superseded for the individual WHAT choice by D2 / F57: R7.15/E24 use cumulative chain figures, and R11.11 distinguishes them from each session’s own figures.
+
 ### F54 — Separate storage obligations from the navigation choice (2026-09-18)
 
 **Authority:** Owner approval of audit recommendation 7 (“proceed”, 2026-09-18); peer review pending.
@@ -426,6 +450,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** Session records, queue order, remembered row and deferred-row records are persistence requirements common to both Capture navigation readings and belong in ADR-0003’s queued scope; they do not wait for A/B selection. ADR-0004 and OQ 8 still require both prototypes and the owner’s navigation/placement decision; no ADR becomes Accepted here. Remove Device re-lock as an outstanding predecessor because PR #19 closed it, and consolidate constants/interims/closure gates without inventing candidate values or closing hardware/dogfood questions.
 
 **Carried by:** Legend constants/dependency tables; §10 preamble; ADR decision queue and product README; OQ 22 interim mirror; OQ 3’s explicit one-row-counter lifecycle gap. R10.1/R10.3/R10.4 common guarantees remain applicable while OQ 8 is open.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The initial “proceed” authority is superseded for individual WHAT choices by D4 / F59 (queued storage scope), D6 / F61 (latency interim) and D9 / F64 (file-count restatement); D3 / F58 replaces the previously open one-row guard gap with a session-scoped interim.
 
 ### F55 — State-specific oracles and phase/copy consistency (2026-09-18)
 
@@ -435,6 +461,88 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R4.15/R8.2/R11.8, §11 preamble, UJ3.1/UJ3.5/UJ3.9/UJ4/UJ4.1; Surfaces, copy header, §12 standing check, OQ 18 results; F47 clarification/map; Device spread-control obligation mirror; post-lock list. Separate one-row guard lifetime remains open in OQ 3; no implicit reset/carry rule is introduced.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The initial “proceed” authority is superseded for individual WHAT choices by D5 / F60, D7 / F62, D8 / F63 and D10 / F65; D3 / F58 resolves the separate-one-row guard gap. Direct review fixes declare/read counters and row evidence in R11.6/R11.11, observe cue channels in R11.7, make R8.15 confirmation dismissible, enumerate R11.15b, and add the E32 conditional line to R11.12; UJ3-a/k, UJ3.1-h/l, UJ3.3-d/e, UJ3.5-g/i, UJ3.6-e, UJ3.9-3/4, UJ4-g and UJ4.1-a carry the corresponding oracles without claiming implementation.
+
+### F56 — Separate agreement reference from display derivation (2026-09-18)
+
+**Authority:** D1 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** F52 is ratified: sample-to-mean agreement uses fixed D50/2° in the chosen scan mode; spectral display values follow the collection’s selected reference under R1.5 and Data Foundation R3.1–R3.5. This supersedes locked R4.12’s sentence “every colour value the operator sees — including the ones the agreement check compares — is worked out from that mean under R4.9's fixed reference”. R1.5 requires reference-parameterised derivation even while OQ 21 offers one pair; the test uses a declared capability fixture and does not claim live capability evidence.
+
+**Carried by:** R1.5, R4.9, R4.12, R4.24, OQ 3 basis wording, UJ1-e, UJ3-b; Capture/DF obligation mirrors; dated F28/F33/F52 and DF F10 clarifications.
+
+### F57 — Show cumulative chain figures and expose own-session contributions (2026-09-18)
+
+**Authority:** D2 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** F53 is ratified: each linked session contributes its own capture intervals and outcomes once, and its successor presents cumulative chain figures. R7.15/E24’s completion summary uses the cumulative elapsed capture time and corresponding M2 rate; R11.11 separately exposes own and cumulative figures, and R11.12 distinguishes a single-session summary (own equals chain) from a resumed-chain summary. Own times 10/5/7 minutes total 22, never 47; UJ3.5-g identifies the surface behind every number.
+
+**Carried by:** R7.15, R7.18, E24, R11.11, R11.12, M2, UJ3.5-g; Capture/DF obligations; dated F53 and DF F49 clarifications.
+
+### F58 — Keep the guard counter within its session (2026-09-18)
+
+**Authority:** D3 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** N_CONSEC_HARD’s counter is session-scoped: it starts at zero and ends with its session, so consecutive one-row look-through scans never accumulate. R5.9’s queue-and-review rule applies within one bulk session; OQ 3 retains only whether dogfood evidence should change this interim, not an unbuildable no-interim gap. The policy question in post-lock is closed; its implementation test remains open, including the P0 one-row deferred-acquisition path reachable through R8.1a/R8.3 (distinct from P1 ad-hoc/captured-correction entry points).
+
+**Carried by:** R5.9, R11.6, R11.11, Legend, OQ 3, UJ3.1-l/UJ3.9, post-lock; dated F54/F55 clarifications.
+
+### F59 — Ratify session persistence in the queued storage scope (2026-09-18)
+
+**Authority:** D4 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** F54 is ratified: sessions, queue order, remembered row and deferred-row records belong to ADR-0003’s queued scope under either navigation reading. The ADR queue and product README edits stand; ADR-0004 and OQ 8 still choose navigation/placement and remain open, and no schema or architecture ADR is accepted here.
+
+**Carried by:** Legend build dependencies, §10 preamble, ADR queue 0003, product README authoring order; dated F46/F54 clarifications.
+
+### F60 — Ratify the state-specific review-entry answer (2026-09-18)
+
+**Authority:** D5 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** OQ 18 follows R8.1a–k rather than a blanket discard: a look-through does not discard on entry, and the matrix determines the other entry/selection/settlement cases. This ratifies the rewritten answer and reads F19 as refined by F42 (3)–(5) and F44, preserving F19’s original text as history.
+
+**Carried by:** OQ preamble, OQ 18 results, R8.1a–k, UJ3.3-a; dated F19/F55 clarifications.
+
+### F61 — Ratify the nonzero Demo pacing interim (2026-09-18)
+
+**Authority:** D6 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** OQ 22 uses a nonzero plan-set dogfood default under Device R6.27/F7/F21 until Device OQ 10 measures the real cycle. This ratifies the interim already in the constants inventory; no measured value or hardware closure is claimed.
+
+**Carried by:** OQ 22, Legend DEMO_SCAN_CYCLE, R11.3; dated F54 and Device F21 clarifications.
+
+### F62 — Ratify queue-length, drift-cause and spread-control corrections (2026-09-18)
+
+**Authority:** D7 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** F55’s three corrections stand: a reorder may move r but cannot change R (R4.15); review causes include measurement drift (R8.2); generated spread is settable below, equal to or above SAMPLE_TOLERANCE (R11.8). The Device mirror belongs on “Capture Mode, on the simulated layer” beside its R11.8 citation, not on the §6 exception/latency line.
+
+**Carried by:** R4.15, R8.2, R11.8, UJ3-b/UJ3.3-b/UJ3.10-a, Capture/Device simulated-layer obligations, post-lock; dated F55 and Device F12 clarifications.
+
+### F63 — Ratify the build-contract and acceptance-table structure (2026-09-18)
+
+**Authority:** D8 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** Background, diagrams, persona headings, inline UJ3 and narrative journeys (including UJ1.2’s verbatim owner steps) are retired in favour of the build contract, transition index, constants/build-dependency tables and acceptance tables. Stable UJ headings remain; UJ1.2 cites F3 and Collection Mode inherits its cases. Requirement rows remain authoritative.
+
+**Carried by:** Build contract, transition index including R4.10’s disagreeing-set route, Legend, journeys UJ1–UJ5 including UJ1.2; dated F3/F46/F51 clarifications.
+
+### F64 — Retain the file-count decision and export provenance (2026-09-18)
+
+**Authority:** D9 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** R1.9’s OQ 19 restatement is ratified under Data Foundation F2/F14: one user-owned SQLite file, with one open at a time under the owning DF contract. Preserve the Commit PR cell as “amended post-lock 2026-09-16 (the export PRD's obligations); amended 2026-09-18 (F51–F55)” so the Data Export provenance survives.
+
+**Carried by:** R1.9, OQ 19/results; dated F54 clarification; [DF F2](../data-foundation/prd-data-foundation-fences.md#f2--one-file-one-open-at-a-time-2026-09-09-phase-3) and [DF F14](../data-foundation/prd-data-foundation-fences.md#f14--the-first-launch-asks-where-to-keep-the-file-2026-09-09-round-1).
+
+### F65 — Keep the cross-PRD label check as standing review work (2026-09-18)
+
+**Authority:** D10 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
+
+**Decision:** §12’s label check is permanent amendment review work. Its alternation includes Take it again, Accept the average, Set it aside, Abandon the re-scan, Keep scanning, Go back and Flag remaining as missing, alongside the existing labels; contextual Resume labels and P1 state/action/body distinctions still apply.
+
+**Carried by:** §12 standing check, UJ3.3-e, R8.15/E39, post-lock; dated F55 clarification.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -442,15 +550,18 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F1** no Library — R1.1. **F2** measurement-settings scope — R1.3, R1.5, R1.10, R4.6. **F3** rename and delete are Collection Mode's — R1.8. **F4** the import target is chosen in the app — copied to the import PRD (F49); the decision stays recorded here. It carries [the import PRD's R2.1](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule). **F5** jump by code plus manual reordering — R6.7, R6.8, R6.11.
 - **F6** a per-scan failure holds the row, as amended — R5.3, R5.4, R5.13, R8.4. **F7** no-reading is a device halt; drift now follows per-scan recovery under Device F29; no per-scan timeout — R5.1, R5.2. **F8** N_CONSEC_DRIFT dropped — R5.10. **F9** "Flag" moves a captured row to set aside — R5.6, R5.8, R9.9. **F10** accept the average with the spread recorded — R1.4, R4.10, R4.11, R8.10.
 - **F11** Swatch Code normalisation — R1.2, R6.1, R9.2; copied to the import PRD (F49); the decision stays recorded here. R2.7 and R2.8 moved there as [the import PRD's R2.3](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule) and [the import PRD's R2.4](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule), which those three rows now cite. **F12** the session is a named entity, the binding released at quit — R3.1, R3.2, R3.3, R3.11, R3.13, R7.12. **F13** the mid-session insert stays in v1 — R9.10, R9.11. **F14** a resume is a new session and the old one is closed — R3.2, R3.4, R7.12, R7.18. **F15** the collection remembers the last current row — R3.1, R3.6, R3.7, R3.8, R7.5.
-- **F16** "Flag" targets the row that just landed — R4.21, R5.6, R5.7, R5.8. **F17** a quick re-scan never wakes an interrupted session — R3.11, R3.13, R7.13, R9.7, R8.1b, R8.1e. **F18** the guard's one counter counts only instrument-caused deferrals, as amended by F48 — R5.9, R5.10, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script. **F19** entering the review discards the part-finished set — R7.1, R8.1f, R8.1g, R8.1j. **F20** the review's surface and the summary's form follow the seam — R4.15, R7.15, R8.1.
+- **F16** "Flag" targets the row that just landed — R4.21, R5.6, R5.7, R5.8. **F17** a quick re-scan never wakes an interrupted session — R3.11, R3.13, R7.13, R9.7, R8.1b, R8.1e. **F18** the guard's one counter counts only instrument-caused deferrals, as amended by F48 — R5.9, R5.10, OQ 3, and [UJ3.9](prd-capture-mode-journeys.md#uj-39-capture-with-the-demo-device-contributor) cases 2/3/4. **F19** entering the review discards the part-finished set — R7.1, R8.1f, R8.1g, R8.1j. **F20** the review's surface and the summary's form follow the seam — R4.15, R7.15, R8.1.
 - **F21** find matches code, name, and both alternates — R6.1. **F22** capture owns the queue order — R6.7, R6.8. **F23** the guard is record-only in dogfood — R5.12. **F24** the priority split — the Pri column throughout, and the [Legend](prd-capture-mode.md#legend). **F25** the seam rows are P0 and the prototype is first-build work — [§10](prd-capture-mode.md#10-the-seam-capture-to-collection)'s preamble, R10.6, R10.7.
 - **F26** a cue at the moment samples are discarded, no confirm — R7.17, R8.13. **F27** the agreement check is record-only through dogfood — R4.23. **F28** the check runs at a fixed D50/2° — R1.5, R4.9, R4.24. **F29** the lost-unflushed-writes stand-in — R4.13, R11.10. **F30** completion measured per collection over chains — M2, M3, M5, M9.
 - **F31** "Leave them all set aside", as clarified three times — R1.7, R3.9, R7.11, R7.16, R8.5, R8.15, R8.1f, R8.1g, R8.1h, R8.1i. **F32** the trigger lockout lasts until the reading returns — R4.3, R4.18, R11.5. **F33** the average is taken across the spectral curves — R4.12. **F34** each collection carries a chosen scan mode — R1.6, R1.10, R4.5. **F35** the prototype protocol runs with the owner only — R10.8.
-- **F36** capture proceeds without the spectral entitlement, as clarified — R4.22, R4.24, R4.26, R8.14. **F37** that one counter counts rows, not presses, as amended by F48 — R5.9, R5.14, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script. **F38** the seam tie-break is symmetric and repeated, as clarified — R10.8. **F39** the review is offered while any set-aside row exists — R8.16 (and [E2](prd-capture-mode-copy.md#error--state-copy)'s finished variant). **F40** that one counter has a floor of 2, as clarified and as amended by F48 — R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script.
+- **F36** capture proceeds without the spectral entitlement, as clarified — R4.22, R4.24, R4.26, R8.14. **F37** that one counter counts rows, not presses, as amended by F48 — R5.9, R5.14, OQ 3, and [UJ3.9](prd-capture-mode-journeys.md#uj-39-capture-with-the-demo-device-contributor) cases 2/3/4. **F38** the seam tie-break is symmetric and repeated, as clarified — R10.8. **F39** the review is offered while any set-aside row exists — R8.16 (and [E2](prd-capture-mode-copy.md#error--state-copy)'s finished variant). **F40** that one counter has a floor of 2, as clarified and as amended by F48 — R5.9, OQ 3, and [UJ3.9](prd-capture-mode-journeys.md#uj-39-capture-with-the-demo-device-contributor) cases 2/3/4.
 - **F41** cancelling an offer keeps the part-finished set — R6.3, R7.1, R9.10. **F42** look-through versus in-session review, as clarified five times — R3.6, R3.11, R8.1, R8.2, R8.5, R8.15, R8.1a–R8.1k. **F43** a collection-surface state never hides that surface's entry points — R7.19. **F44** leaving a detour returns to the queue, as clarified twice — R3.8, R8.1, R8.6, R8.1j, R8.1k. **F45** every requirement row is at most two sentences — every row in [§1](prd-capture-mode.md#1-collections) through [§11](prd-capture-mode.md#11-demo-device-and-verifiability). **F46** the restructure — the two companion files, the trims, and the retired IDs listed in the [Legend](prd-capture-mode.md#legend).
 - **F47** the first build phases its offers — the [Legend](prd-capture-mode.md#legend)'s priority paragraph, R10.7, M5, R11.12, R11.15, and the [copy file](prd-capture-mode-copy.md#error--state-copy)'s header, its state-level ‹P1› marks (E30–E34), E29's handing-over mark, its action-level marks (E2, E18, E28, E29, E36, E37), and its body-variant marks (E18/E42 re-scan). **F48** one guard counter — R4.21, R5.9, R5.10, R5.11, R5.14, R8.4, and OQ 3.
 - **F50** Device amendment mirror — R5.1/R5.2/R5.3/R5.4/R5.9/R5.10, E45, R7.5/R7.14, R11.3, R11.12, E23 halted variant, Device obligation rows, OQ 16/results (answered on Device re-lock, PR #19).
-- **F51–F55** agent-build amendment — the individual Carried-by lists above; all earlier maps remain provenance.
+- **F51** build contract and tables — R8.1a–k; Build contract, Vocabulary, UJ1–UJ5 and product index. **F52** measurement tiers/references — R1.5, R4.9, R4.12, R4.24, UJ1-e/f, UJ3-b/i and DF obligations. **F53** chain accounting — R7.18, M2, R11.11, UJ3.5-g/h and DF obligations.
+- **F54** persistence/dependency scope — R1.9, R3.1/R3.6/R3.8, R6.7, R7.18, R8.5/R8.13/R8.17, §10, Legend, OQ 3/22 and ADR-0003 queue. **F55** state/phase oracles — R4.15, R8.2, R8.15, R11.6/R11.7/R11.8/R11.11/R11.12/R11.15b, E18/E32/E39/E42, Surfaces, §11/§12, UJ3.1/UJ3.3/UJ3.5/UJ3.6/UJ3.9/UJ4/UJ4.1, OQ 18 and obligation mirrors.
+- **F56** reference split — R1.5/R4.9/R4.12/R4.24, OQ 3, UJ1-e/UJ3-b. **F57** cumulative summary — R7.15/R7.18/R11.11/R11.12, E24, M2, UJ3.5-g. **F58** guard lifetime — R5.9/R11.6/R11.11, Legend, OQ 3, UJ3.1-l and post-lock.
+- **F59** queued persistence — §10, Legend, ADR-0003 queue and product README. **F60** review entry — R8.1a–k, UJ3.3-a, OQ 18/results. **F61** Demo interim — R11.3, OQ 22 and Legend. **F62** row corrections — R4.15/R8.2/R11.8 and Device obligation mirror. **F63** structure — Build contract, transition index, Legend and UJ1–UJ5. **F64** file-count provenance — R1.9 and OQ 19/results. **F65** labels — §12, R8.15/E39 and UJ3.3-e.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

@@ -65,7 +65,7 @@ Cross-document:
 
 ### Capture Mode
 
-- [x] **Capture** — R11.8's "set … against" → "relative to"; contested, since two lenses read "against" as R4.9's term. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — R11.8 now names spread below, equal to, or above SAMPLE_TOLERANCE (F62), resolving the ambiguous “set … against” wording. — Capture agent-build amendment F51–F55 (PR #20).
 - [x] **Capture** — F47's Decision lacks an "(R11.12 added rounds 21–22)" marker. — Capture agent-build amendment F51–F55 (PR #20).
 - [x] **Capture** — the Surfaces table carries no ‹P1› on P1-only state names. — Capture agent-build amendment F51–F55 (PR #20).
 - [x] **Capture** — the "Device PRD, simulated layer" obligation cell does not summarise R11.8's spread control. — Capture agent-build amendment F51–F55 (PR #20).
@@ -110,7 +110,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **Capture** — a mixed-route run counts.
 - [ ] **Capture** — "Accept the average" and a captured row reset the counter.
 - [ ] **Capture** — a run spanning the queue → review boundary.
-- [ ] **Capture** — whether N_CONSEC_HARD carries across consecutive one-row look-through sessions. — Explicitly registered under Capture OQ 3 by F54; owner decision and build evidence still pending.
+- [x] **Capture** — whether N_CONSEC_HARD carries across consecutive one-row look-through sessions. — Owner D3 / F58 in PR #20 sets a session-scoped counter starting at zero; separate one-row sessions never accumulate.
+- [ ] **Capture** — implement F58/UJ3.1-l’s separate-one-row counter-lifetime case; policy decided in PR #20, build evidence pending.
 
 ## ADR-0003
 

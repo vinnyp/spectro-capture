@@ -10,7 +10,7 @@ One `## OQ <id>` section per answered question in `prd-capture-mode.md`'s Open Q
 
 ## OQ 18 — Does opening the deferred-row review mid-session discard the current item's partial set?
 
-**Answer (2026-09-18 clarification under F51/F55; F19 as refined by F42/F44):** Entry follows R8.1a–k, not a blanket discard rule. End-of-run and detour review from a live bulk session discard the current partial set; a look-through does not discard on entry, and a guard-held set remains intact. Under a device halt the partial set was already discarded and a completed unsaved set remains held; a one-row session's set is discarded only on selecting another row or settling its current swatch. Read the matrix for remembered-row, exit and session outcomes.
+**Answer (2026-09-18 owner ratification under F60; F19 as refined by F42/F44):** Entry follows R8.1a–k, not a blanket discard rule. End-of-run and detour review from a live bulk session discard the current partial set; a look-through does not discard on entry, and a guard-held set remains intact. Under a device halt the partial set was already discarded and a completed unsaved set remains held; a one-row session's set is discarded only on selecting another row or settling its current swatch. Read the matrix for remembered-row, exit and session outcomes.
 
 **Historical evidence:** F19's 2026-09-06 answer said yes to mid-session review entry; F42/F44 subsequently distinguished look-through, detour and end-of-run entry. This clarification carries those settled distinctions and does not re-open OQ 18.
 

@@ -64,6 +64,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Clarified 2026-09-18 (Capture agent-build amendment):** Capture F52 aligns its R4.12 and vocabulary with this stored-mean decision: sample-to-mean agreement uses D50/2°, spectral display derivations follow collection reference, and non-spectral restrictions remain R3.5. Capture F33’s raw-payload wording survives only as historical rationale.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D1 / Capture F56 individually ratifies the F52 reference split already mirrored here; non-spectral restrictions and the canonical stored-mean decision remain unchanged.
+
 ### F11 — Readability is split from the archived payload (2026-09-09, round 1)
 
 **Decision:** Everything a reader needs — the decoded spectrum or colour values, the conditions, the derived values, the current-value marker, the supersession reason — is stored in plain SQLite types, readable at SQLITE_READER_FLOOR with no extension and no app function. The vendor's opaque payload is an archived artifact and may be compressed. STORE_SIZE_BUDGET is re-derived on the real population, samples counted; OQ 5 records this constraint; OQ 2's floor is derived from the features actually kept, not from a rejected one.
@@ -416,3 +418,5 @@ Source: [the owner’s three round-2 decisions](https://github.com/vinnyp/spectr
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** D13 / Device F27 adds R6.30’s double to R1.4’s live permitted set for authorization traffic, while its persisted/displayed kind and all provenance remain simulated; the software-update and no-file-content rules are unchanged.
 
 **Clarified 2026-09-18 (Capture agent-build amendment):** The Capture obligation mirror now names F53’s own-session contributions versus cumulative resumed-chain display; R1.1/R7.1 carry persistence/readback, with schema left to ADR-0003. No record is duplicated by inheritance and no new privacy field or session-status enum is selected.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** D2 / Capture F57 ratifies own-session contributions and cumulative summary figures; this mirror note is placed here because no earlier DF fence owns Capture’s session-accounting test obligation, not because salvage changes. The earlier “R1.1/R7.1 carry persistence/readback” overstates R7.1: schema remains ADR-0003 and readback stays on Capture R11.11; its R11.6/R11.11 declaration/readback of counters, partial sets, row evidence and labelled own/cumulative figures is inherited whole by the Capture obligation line, without enlarging R7.1’s list.
