@@ -10,8 +10,8 @@ Three PRDs remain to be written to cover v1 (five are locked). Priority is autho
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
-| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds; 2026-09-18 agent-build amendment F10–F30 pending peer review |
-| 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; cross-document amendment under Import F59 in PR #16; Device F12/F24 / Capture F50 carries OQ 16, open until Device re-lock (2026-09-18, peer review pending) |
+| 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds; 2026-09-18 agent-build amendment F10–F31 pending peer review |
+| 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; cross-document amendment under Import F59 in PR #16; Device F16/F24/F28/F29/F31 / Capture F50 carries OQ 16, open until Device re-lock (2026-09-18, peer review pending) |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F64 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) |
 | 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; Import F59 amendment in PR #16; [PR #17](https://github.com/vinnyp/spectro-capture/pull/17) agent-build amendment under F33–F49 (2026-09-17), with OQ 17–21 retained; PR #18 Export-mirror amendment (R7.7a/e/i/l/n, Data Export obligation) |
 | 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16; cross-document amendment under Import F59 in PR #16; PR #17 fixture/export amendment under DE F14 (2026-09-17); [PR #18](https://github.com/vinnyp/spectro-capture/pull/18) agent-build amendment F15–F30 (2026-09-17–18), including Device/DF/Capture mirrors |
@@ -24,7 +24,7 @@ Three PRDs remain to be written to cover v1 (five are locked). Priority is autho
 
 Connect (BLE + USB), known-device management, licensing and offline pre-authorization, guided calibration, the pre-flight readiness gate, mid-session device failure and recovery, and the mock-device layer. Owns device-level failure end-to-end: detect → alert → reconnect → resume.
 
-The PRD is [prd-device-management.md](device-management/prd-device-management.md), with four companion files: the acceptance scenarios (stable UJ anchors) in [prd-device-management-journeys.md](device-management/prd-device-management-journeys.md), the shipping error and state copy in [prd-device-management-copy.md](device-management/prd-device-management-copy.md), the answers to part-closed open questions in [prd-device-management-oq-results.md](device-management/prd-device-management-oq-results.md), and the owner decisions in [prd-device-management-fences.md](device-management/prd-device-management-fences.md). Fence F9 split the journeys and the copy out, gave every requirement row, copy state, and metric a stable ID, and compacted the rows; no rule changed in that pass. F10–F30 subsequently replace narrative journeys with acceptance scenarios, clarify calibration and recovery, carry Capture OQ 16, and specify test controls and dogfood evidence; peer review of that amendment is pending.
+The PRD is [prd-device-management.md](device-management/prd-device-management.md), with four companion files: the acceptance scenarios (stable UJ anchors) in [prd-device-management-journeys.md](device-management/prd-device-management-journeys.md), the shipping error and state copy in [prd-device-management-copy.md](device-management/prd-device-management-copy.md), the answers to part-closed open questions in [prd-device-management-oq-results.md](device-management/prd-device-management-oq-results.md), and the owner decisions in [prd-device-management-fences.md](device-management/prd-device-management-fences.md). Fence F9 split the journeys and the copy out, gave every requirement row, copy state, and metric a stable ID, and compacted the rows; no rule changed in that pass. F10–F31 subsequently replace narrative journeys with acceptance scenarios, clarify calibration and recovery, carry Capture OQ 16, and specify test controls and dogfood evidence; peer review of that amendment is pending.
 
 ### 2. Capture Mode
 
@@ -136,7 +136,7 @@ The device-management PRD specifies behavior it does not own and hands the oblig
 **Capture Mode inherits:**
 
 - What happens to the un-scanned remainder of the queue when a session ends from a halted state
-- Per-scan error UX — retry / skip / flag-row — and the dead-letter queue, including the ambient-light and out-of-range-temperature cases the simulated layer must be able to inject
+- Per-scan error UX — retry / skip / flag-row — and the dead-letter queue, including the ambient-light, out-of-range-temperature and measurement-time calibration drift cases the simulated layer must be able to inject
 - Session and queue persistence across app launches
 
 **Data Foundation inherits:**

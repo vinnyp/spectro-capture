@@ -53,6 +53,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** Device F29 / D15 supersedes only measurement drift’s halt routing: it joins Capture’s per-scan set and named E45, using the existing retry/deferral contract; no-reading still uses the Device liveness halt and no per-scan timer is added. R5.10 retains its prior drift guard exclusion, so this route change does not introduce mid-session recalibration.
 
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5735769586)):** Device F31 supersedes the round-2 counter exclusion: a drift-refused reading is one failed attempt under R5.4 and E45 is ratified; R5.9/R5.10 now apply the ordinary guard rules to drift-only and mixed-cause deferrals. No per-scan timer or drift-specific bound is added.
+
 ### F8 — N_CONSEC_DRIFT is dropped from v1 (2026-09-06, round 1, R1-F14)
 
 **Decision:** The Westgard 10:x drift rule is removed from the consecutive-failure guard, the constants list, and the open questions. Drift detection relies on the device PRD's SDK-signalled calibration-due state and scan-delta halt, plus the within-item sample spread.
@@ -60,6 +62,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 **Why:** 10:x presumes repeated measurement of one control; a bulk queue measures a different colour on every row, so there is no baseline and a hue-sorted set would pause a healthy session. Five lenses agreed.
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** The Westgard rule stays removed; Device F29 routes the SDK measurement-time drift error through per-scan recovery rather than a device halt. R5.10’s existing counter exclusion remains.
+
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5735769586)):** Device F31 removes the drift guard carve-out, not the historical Westgard-rule rejection: drift refusals use K_FAILED_ATTEMPTS and their counted deferrals use N_CONSEC_HARD with the existing run/reset rules and enabled-guard recalibration remedy. No N_CONSEC_DRIFT or other separate drift bound returns.
 
 ### F9 — Flag row moves a captured row to Deferred with its reading kept as history (2026-09-06, round 1, R1-F5)
 
@@ -375,6 +379,8 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** R7.14 now identifies the remembered row including jumps (R3.6/R6.2), matching Device R5.8; R7.5 and the obligation table record F28’s Quit exception (no summary or next-launch Resume). Device F29 mirrors the per-scan drift route under F7/F8’s dated clarifications; status explicitly says peer review pending, and the dropped-sample placeholder’s pre-action case refers only to E23’s ordinary variant. The earlier phase-predecessor correction “Data Foundation is locked; Collection Mode remains unwritten” is also recorded here.
 
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5735769586)):** Device F31 ratifies E45 and aligns the drift failed-attempt and guard rules in R5.4/R5.9/R5.10 and UJ3.1, including the flowchart. R5.4/R5.9/R5.10 join this fence’s map; OQ 16 Feeds includes the amended rows pending Device re-lock, and the status/index name Device F16/F24/F28/F29/F31; no counter-policy question remains for OQ 3.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -389,7 +395,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F36** capture proceeds without the spectral entitlement, as clarified — R4.22, R4.24, R4.26, R8.14. **F37** that one counter counts rows, not presses, as amended by F48 — R5.9, R5.14, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script. **F38** the seam tie-break is symmetric and repeated, as clarified — R10.8. **F39** the review is offered while any set-aside row exists — R8.16 (and [E2](prd-capture-mode-copy.md#error--state-copy)'s finished variant). **F40** that one counter has a floor of 2, as clarified and as amended by F48 — R5.9, OQ 3, and [§11](prd-capture-mode.md#11-demo-device-and-verifiability)'s preamble script.
 - **F41** cancelling an offer keeps the part-finished set — R6.3, R7.1, R9.10. **F42** look-through versus in-session review, as clarified five times — R3.6, R3.11, R8.1, R8.2, R8.5, R8.15, R8.1a–R8.1k. **F43** a collection-surface state never hides that surface's entry points — R7.19. **F44** leaving a detour returns to the queue, as clarified twice — R3.8, R8.1, R8.6, R8.1j, R8.1k. **F45** every requirement row is at most two sentences — every row in [§1](prd-capture-mode.md#1-collections) through [§11](prd-capture-mode.md#11-demo-device-and-verifiability). **F46** the restructure — the two companion files, the trims, and the retired IDs listed in the [Legend](prd-capture-mode.md#legend).
 - **F47** the first build phases its offers — the [Legend](prd-capture-mode.md#legend)'s priority paragraph, R10.7, M5, R11.12, R11.15, and the [copy file](prd-capture-mode-copy.md#error--state-copy)'s header, its state-level ‹P1› marks (E30–E34), E29's handing-over mark, and its action-level marks (E2, E18, E28, E29, E36, E37, E42). **F48** one guard counter — R4.21, R5.9, R5.10, R5.11, R5.14, R8.4, and OQ 3.
-- **F50** Device amendment mirror — R5.1/R5.2/R5.3/R5.10, E45, R7.5/R7.14, R11.3, R11.12, E23 halted variant, Device obligation rows, OQ 16/results (pending Device re-lock).
+- **F50** Device amendment mirror — R5.1/R5.2/R5.3/R5.4/R5.9/R5.10, E45, R7.5/R7.14, R11.3, R11.12, E23 halted variant, Device obligation rows, OQ 16/results (pending Device re-lock).
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

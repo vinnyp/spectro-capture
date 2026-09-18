@@ -31,7 +31,7 @@ This transition index replaces the narrative diagrams. The scenarios below suppl
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
-| UJ1-a | Clean persisted state; live-device fixture; online device authorization; calibration success | Choose file location, enter both credential strings, discover and pair, calibrate | Activation precedes discovery, activation works offline, with invocation/destination observed, first serial authorization is online, known record persists, readiness evaluates | R1.4, R1.9, R2.1, R3.1, R4.2, R6.20; Data Foundation R1.8 |
+| UJ1-a | Clean persisted state; R6.30 live-flow instrument; online device authorization; calibration success | Choose file location, enter both credential strings, discover and pair, calibrate | Activation precedes discovery, activation works offline, with invocation/destination observed, first serial authorization is online, known record persists, readiness evaluates | R1.4, R1.9, R2.1, R3.1, R4.2, R6.20; Data Foundation R1.8 |
 | UJ1-b | Invalid/incomplete or expired local credential | Activate in each variant | E4 or E5 respectively, never an internet error; no live operation starts | R1.4, R2.2, R2.5 |
 | UJ1-c | No discoverable device; clock configured | Run discovery to DISCOVERY_TIMEOUT, then Search again | E1 in non-modal picker; retry performs discovery; panel and picker navigation remain usable | R1.5, R1.23, R6.29 |
 | UJ1-d | Discovery entries over USB/BLE with known signal strengths; serial unavailable before connect | Inspect list, connect, then read identity | Strongest signal first; provisional name/transport before serial; final `(kind, model, serial)` identity deduplicates existing known record and updates handles | R1.3, R1.6, R1.7, R1.17, R6.14 |
@@ -75,8 +75,8 @@ This transition index replaces the narrative diagrams. The scenarios below suppl
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
-| UJ3-a | Known device with canonical measurements and history | Confirm Remove in P1, then re-add | E32 names device; only saved connection record removed; immutable kind/model/serial/firmware snapshots remain; re-add uses normal pairing | R1.18–R1.22 |
-| UJ3-b | R6.20 seeds simulated and live-kind saved records with the same model/serial; DF F41 seeds the live measurement snapshot | Read both identities and snapshots; acquire a reading from R6.30 | Separate records by kind; R6.30 never occupies the live record and saves only simulated snapshots; firmware is not part of the identity key | R1.21–R1.22, R6.20/R6.30; DF F41 |
+| UJ3-a | Known device with canonical measurements and history | Confirm Remove in P1, then re-add the same kind/model/serial with changed firmware | E32 names device; only saved connection record removed; immutable kind/model/serial/firmware snapshots remain; re-add uses normal pairing and the same identity key despite changed firmware | R1.18–R1.22 |
+| UJ3-b | R6.20 seeds simulated and live-kind saved records with the same model/serial; DF F41 seeds the live measurement snapshot | Read both identities and snapshots; acquire a reading from R6.30 | Separate records by kind; R6.30 never occupies the live record and saves only simulated snapshots | R1.21–R1.22, R6.20/R6.30; DF F41 |
 
 ### UJ 4. Calibrate a connected device
 
@@ -88,7 +88,7 @@ This transition index replaces the narrative diagrams. The scenarios below suppl
 | UJ4-d | Calibration failures | Reach CALIBRATION_FAILURE_LIMIT in P1, then retry/leave | E15 with retry and exit; success or navigation resets count; first-run exit returns normal panel | R3.5, R1.8 |
 | UJ4-e | Configured battery boundary, known low battery; other checks pass | Start, charge above pre-flight boundary, Check again | E19 and Check again render at the capture entry point where the gate fires, plus the device panel; E19 blocks first start; Check again refreshes all four checks and re-enters gate; E19 clears on recovery, but a newly introduced storage/calibration/auth block still prevents start | R4.1/R4.2/R4.4/R4.7 |
 | UJ4-f | Active-file volume below STORAGE_BLOCK_BYTES; other checks pass | Start, free space above boundary, Check again | E20 and Check again render at the capture entry point where the gate fires, plus the device panel; E20 blocks first start; Check again refreshes all four checks and re-enters gate; E20 clears on recovered storage, but another check's block still prevents start | R4.1/R4.2/R4.6/R4.7 |
-| UJ4-g | Battery/storage advisory on connect; session-start gate has not fired | Check again | All four readiness checks refresh at the advisory; no session-start gate is entered merely by this recheck | R4.2/R4.7, F30 |
+| UJ4-g | Battery/storage advisory on connect; session-start gate has not fired | Check again | All four readiness checks refresh at the advisory; no session-start gate is entered merely by this recheck, no capture session starts and the capture surface is not entered | R4.2/R4.7, F30 |
 
 ### UJ 5. Device failure during a session
 

@@ -1,6 +1,6 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F30 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review is pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review is pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
@@ -168,6 +168,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540)):** F27 defines simulated kind for persistence/display and the three live-read exceptions. Carried by also includes R1.10/R6.6’s launch auto-reconnect exception and DF R1.4’s live permitted set; UJ3-b seeds its live record through R6.20 rather than changing this double’s persisted kind.
 
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5735769586)):** UJ1-a now explicitly names R6.30 as its hardware-free instrument; the Carried-by journey scope is UJ1-a plus the UJ2/UJ6 cases that explicitly name R6.30, not all of UJ1.
+
 ### F21 — List the noninstant default exception (2026-09-18)
 
 **Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D7.
@@ -244,6 +246,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** Device R3.4/R4.2; Capture R5.1/R5.2/R5.3 and E45, drift journey branches; dated Capture F7/F8/F50 clarifications. R5.10’s existing guard exclusion is retained while its obsolete device-halt rationale is removed; no new counter policy is chosen.
 
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5735769586)):** F31 removes the retained drift counter exclusion: drift-refused readings count once toward K_FAILED_ATTEMPTS, and drift-only or mixed-cause deferrals follow the existing N_CONSEC_HARD counting and run/reset rules. Carried by additionally includes Capture R5.4/R5.9/R5.10; E45 is ratified, with no separate drift bound.
+
 ### F30 — Render blocking pre-flight at its entry point (2026-09-18)
 
 **Authority:** [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734782540), D16.
@@ -251,6 +255,14 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** A blocking pre-flight state and its Check again render where the gate fires, including the capture entry point, in addition to the device-panel readiness zone. Rechecking a connect advisory does not enter a session-start gate that has not fired.
 
 **Carried by:** Surfaces; R4.7/R4.2; UJ4-e/f and connect-advisory case UJ4-g.
+
+### F31 — Count drift refusals under the existing Capture guard (2026-09-18)
+
+**Authority:** [round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5735769586), D17.
+
+**Decision:** A drift-refused reading is a failed attempt under Capture R5.4 and counts toward K_FAILED_ATTEMPTS like any other refusal. Drop the guard carve-out: a row auto-deferred on drift alone or mixed with other causes counts toward N_CONSEC_HARD and follows the same run/reset rules as any instrument-caused deferral, so systematic drift trips the enabled guard pause with its existing recalibration remedy; R5.12's record-only default is unchanged. Drift is not counted twice and gains no bound of its own; Capture E45 is ratified as the drift per-scan state mirroring E15/E16.
+
+**Carried by:** Capture R5.4/R5.9/R5.10; E45; UJ3.1 counter cases and flowchart; Device R6.22 and Device→Capture obligation; dated Device F29 and Capture F7/F8/F50 clarifications and F50 map; Capture OQ 16 Feeds and status/index. No counter question is added to Capture OQ 3 because D17 leaves no part of this policy open; existing threshold tuning remains there.
 
 ## Fence → row map
 
@@ -268,7 +280,7 @@ Where a fence is named in the PRD, for provenance only. A row not listed here ci
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
 | F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
-F10–F30 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
+F10–F31 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
 
 ## Rejected findings
 

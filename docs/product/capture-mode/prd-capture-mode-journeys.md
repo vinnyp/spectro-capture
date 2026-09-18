@@ -152,16 +152,18 @@ The product thesis: import first, then scan heads-down with no per-item metadata
 
 ### UJ 3.1 A scan fails mid-queue
 
-1. Mid-set, a sample fails — light leaked under the aperture, or the instrument is out of temperature range.
+1. Mid-set, a sample fails — light leaked under the aperture, the instrument is out of temperature range, or the reading is refused for measurement-time calibration drift (E45).
 2. A caution reaches me through two senses and names the cause ([copy, §12](prd-capture-mode-copy.md#error--state-copy)).
 3. The row holds. My good samples are kept and my next trigger press retries the same row, so a reflexive re-press can never land a reading on the next swatch (fence F6).
-  - If the retries keep failing → the row is set aside for me after K_FAILED_ATTEMPTS, I get a distinct moved-on cue ([copy, §12](prd-capture-mode-copy.md#error--state-copy)), and the queue advances once
+  - If the retries keep failing → drift-only or mixed-cause refusals each count once toward K_FAILED_ATTEMPTS; at that limit the row is set aside for me, I get a distinct moved-on cue ([copy, §12](prd-capture-mode-copy.md#error--state-copy)), and the queue advances once
   - If I would rather move on now → Skip sets the row aside with the samples I did take and advances once
   - If the row that just landed was wrong — wrong swatch, a smudge → Flag demotes it and keeps its reading as history (fences F9, F16)
   - If I press Flag right after a moved-on cue → the flag-has-nothing-to-demote notice ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); that row is already waiting in the review
   - If the swatch is missing or damaged → Flag sets the current row aside with that cause and the queue advances
-4. If the instrument keeps failing, the guard pauses the session and offers me a placement check or a recalibration ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); my row stays under the instrument with its samples ([§5](prd-capture-mode.md#5-per-scan-failure-and-the-consecutive-failure-guard), fence F18).
+4. If consecutive rows keep deferring by the counted routes, including drift-only and mixed-cause refusals, the enabled guard pauses the session at N_CONSEC_HARD and offers me a placement check or a recalibration ([copy, §12](prd-capture-mode-copy.md#error--state-copy)); my row stays under the instrument with its samples ([§5](prd-capture-mode.md#5-per-scan-failure-and-the-consecutive-failure-guard), fence F18).
 5. Capture continues. Everything set aside is waiting in the end-of-session review ([UJ3.3](#uj-33-resolve-the-deferred-error-queue-at-session-end)); nothing is deleted and nothing needs a decision now.
+
+Counter acceptance cases (Device F31; Capture R5.4/R5.9/R5.10/R5.12–R5.14): configure K_FAILED_ATTEMPTS = 3 and N_CONSEC_HARD = 2 for these cases. For each of (a) three drift refusals per row and (b) two drift refusals plus one light-leak refusal per row, defer two successive rows: each row advances once on its third refusal, each deferred row contributes exactly one guard count, and the enabled guard pauses only after the second row with E19's existing recalibration action. Repeat with record-only: the same counts are recorded without a pause. In separate runs, a captured row resets the guard and an operator-only Flag neither counts nor breaks the run; with the guard enabled and paused, force-resume resets it as usual.
 
 ### UJ 3.2 Undo or redo the current item
 
@@ -188,11 +190,11 @@ flowchart TD
     F2 -- "no: the next press retries the same row" --> D
     F2 -- "no: Skip or Flag, deliberate keys" --> F3["Row deferred with cause, good samples kept; queue advances"]
     F2 -- "yes: distinct moved-on cue" --> F3
-    F3 -- "drift: guard exclusion unchanged" --> C
-    F3 -- "other counted routes" --> K{"Consecutive rows set aside by R5.9's routes reach N_CONSEC_HARD?"}
+    F3 -- "operator Flag: no count, no run break" --> C
+    F3 -- "counted routes, including drift-only or mixed causes" --> K{"Consecutive rows set aside by R5.9's routes reach N_CONSEC_HARD?"}
     K -- "yes, guard enabled" --> L["Guard pauses: row held, samples kept; check placement or recalibrate; force-resume resets the guard's counter"]
     L --> C
-    K -- no --> C
+    K -- "below threshold, or record-only" --> C
     E -- "device failure or no reading" --> X["Halt (device PRD UJ5, see UJ3.6)"]
     E -- yes --> G["Sample n of N confirmed through two senses"]
     G --> H{Set complete?}
