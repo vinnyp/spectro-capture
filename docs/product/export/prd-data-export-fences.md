@@ -96,9 +96,9 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 ### F15 — Agent-build contract and acceptance shape (2026-09-17)
 
-**Decision:** The approved seven-item list permits decomposing dense requirements, replacing narration with acceptance scenarios, moving split history here and correcting stale obligations while preserving IDs, priorities and tracking. Detailed behavior is settled by F19–F29; retained retired goldens remain F12/R4.1’s pre-existing contract, not a new decision.
+**Decision:** The approved seven-item list permits decomposing dense requirements, replacing narration with acceptance scenarios, moving split history here and correcting stale obligations while preserving IDs, priorities and tracking. Detailed behavior is settled by F19–F30; retained retired goldens remain F12/R4.1’s pre-existing contract, not a new decision.
 
-**Why:** Agents need observable rules at implementation time; the initial list approval did not decide every detail. [Owner clarification, 2026-09-18](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) supplies the recorded provenance and requires the shared Legend wording under F29.
+**Why:** Agents need observable rules at implementation time; the initial list approval did not decide every detail. [Owner clarification, 2026-09-18](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) supplies the recorded provenance and requires the shared Legend wording under F29. No export format has been released, so these pre-implementation clarifications owe no format-version bump.
 
 ### F16 — Missing reading fields and quarantine rows (2026-09-17)
 
@@ -184,6 +184,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** A document-shape audit does not redefine shared governance. Source: [owner decision 12](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642).
 
+### F30 — Export the original vendor payload string (2026-09-18, PR #18)
+
+**Decision:** `sc_sample_N_payload` carries the vendor round-trip string exactly as the instrument produced it. Storage compression under DF R1.6/F11 never reaches the CSV: decompress first and preserve the string byte-for-byte in the decoded cell, subject only to R2.2’s CSV quoting; R4.1a fixes this in the first golden and DF’s outbound obligation mirrors it.
+
+**Why:** The exported archive is the instrument’s portable artifact, independent of its storage encoding; first-golden authors need one representation. Source: [owner decision 13](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732919975).
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
@@ -241,7 +247,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F16 | R1.1h–l/s, R1.2/R1.3, R4.2; E1 variants and EJ1 missing-data assertions. |
 | F17 | R2.4/R2.4a–c, R4.2/R4.4a; E1 rename disclosure and EJ1 collision assertions. |
 | F18 | R1.1o–r, R4.1h/R4.4a; E1 variants and EJ1 empty/preview assertions. |
-| F19 | R1.2, R1.1h/i/s, R4.2; Device R6.5/export obligation; DF R7.7e; E1b/c and EJ1. |
+| F19 | R1.2, R1.1h/i/s, R4.2; Device R6.5/export obligation; DF R7.7e; EJ1. |
 | F20 | R4.1h/R4.2 and DF obligations; DF R7.7/R7.7n/export obligation; E1d/EJ1. |
 | F21 | R1.1c/h/i/s, R4.2; E1/E1b/c and EJ1. |
 | F22 | R2.4/R2.4a/c, F17; E1g/EJ1; DF R7.7a/k. |
@@ -252,6 +258,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F27 | R1.1r/R4.1h; E1d/EJ1; DF R7.7n. |
 | F28 | R1.1o–r/R4.4a; E1/E1a–g; EJ1. |
 | F29 | Legend/Traceability; E1 variant identity convention. |
+| F30 | R1.1d/R4.1a; DF outbound Data Export obligation; EJ1 payload assertion. |
 
 ## Rejected findings
 
