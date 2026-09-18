@@ -1,6 +1,6 @@
 # Data Foundation PRD — user journeys
 
-Executable acceptance scenarios for [the PRD](prd-data-foundation.md). The PRD’s journeys index is the sole exercised-row inventory; nothing here adds a rule. Requirement rows are authoritative; state IDs refer to [shipping copy](prd-data-foundation-copy.md#error--state-copy), independently of literal wording. Fixtures come from R7.7; no instrument is required except the separately gated reference evidence in OQ 6/15.
+Executable acceptance scenarios for [the PRD](prd-data-foundation.md). The PRD’s journeys index is the sole exercised-row inventory; nothing here adds a rule. ‹P1› clauses run only when their owning P1 rows land; ‹floor› cases run once a release raises the compatibility floor. Requirement rows are authoritative; state IDs refer to [shipping copy](prd-data-foundation-copy.md#error--state-copy), independently of literal wording. Fixtures come from R7.7; no instrument is required except the separately gated reference evidence in OQ 6/15.
 
 DJ1 moved to [Data Export EJ1](../export/prd-data-export-journeys.md#ej1-export-the-collection) under F30; its ID is retired. DJ2–DJ5 and their anchors remain stable.
 
@@ -8,7 +8,7 @@ DJ1 moved to [Data Export EJ1](../export/prd-data-export-journeys.md#ej1-export-
 
 | Initial state | Action | Stored/result oracle | State |
 | :--- | :--- | :--- | :--- |
-| Item's current reading A exists | Save a full re-scan B during capture, using Capture's sample/acceptance rules | B current, every sample and A retained; B correction-unconfirmed; no correction question mid-loop and no display of the old value during measurement ([Capture R8.7](../capture-mode/prd-capture-mode.md#8-deferred-row-review-and-corrections)) | E11/E26 outside the loop |
+| Item's current reading A exists | Save a full re-scan B during capture, using Capture's sample/acceptance rules | B current, every sample and A retained; B correction-unconfirmed; no correction question mid-loop; ‹P1› no display of the old value during measurement ([Capture R8.7](../capture-mode/prd-capture-mode.md#8-deferred-row-review-and-corrections)) | E11/E26 outside the loop |
 | A → B unresolved | Answer “The old reading was wrong” | B reason correction; A marked never true, retained in history, excluded from over-time views and QC reference selection | E11 dismissed |
 | A → B unresolved | Answer “The swatch has changed” | B reason re-measurement; both legitimate time points, ordered by measurement time | E11 dismissed |
 | A → B unresolved | Ask me later; end session; return to review | No expiry or inferred answer; unresolved pair remains enumerable from item and global review | E11/E26 |
@@ -24,13 +24,13 @@ DJ1 moved to [Data Export EJ1](../export/prd-data-export-journeys.md#ej1-export-
 | Older format, no snapshot space | Open; retry; or open read-only | No upgrade before safe snapshot; retry rechecks; read-only leaves source unchanged | E24 |
 | Upgrade in progress | Fail partway; retry or reveal snapshot | Source remains original version; name found/expected versions and snapshot; retry has same prerequisites | E3 |
 | Migration would lose a reading | Open; choose read-only | Refuse upgrade, name reading/file/app/last compatible versions; no loss | E23 |
-| Newer format / beneath compatibility floor | Open | Read-only with item list, canonical values and history marks; versions named, source unchanged; no export or falsely complete partial interpretation; extras remain OQ 18 | E1 / E16 |
+| Newer format / ‹floor› beneath compatibility floor | Open | Read-only with item list, canonical values and history marks; versions named, source unchanged; no export or falsely complete partial interpretation; extras remain OQ 18 | E1 / E16 |
 | Damaged current measurement | Open / inspect item after reopen; scan again or restore readable history | No current value or automatic promotion; damaged record retained; new initial/restore reading on recovery; initial recovery never raises E11 or enters E26 | E4 current |
 | Damaged historical measurement, healthy current | Inspect history after reopen | Current selection/values unchanged; only damaged history quarantined, not offered for restore | E4 history |
 | Only a sample archive is unreadable | Inspect reading after reopen | Mean, decoded measurements, derived values and canonical selection unchanged; damaged archive retained/marked | E31 |
-| Derived set unreadable, measurement intact | Rebuild colour values / Not now | Mark set; requested rebuild uses current algorithm version without bump, keeps original damaged set, measurement/current selection unchanged; defer preserves mark | E32 |
+| Derived set unreadable, measurement intact | Read the set | Automatically regenerate at current version without a bump; regenerated set readable, damaged set retained and marked superseded, current selection and reading marks unchanged | No prompt (R5.5f) |
 | Fabricated prior-format fixture | Open and exercise each upgrade branch | E2 success, E3 failure, E23 lossy refusal and E24 snapshot-full all tested in v1; M5 has nonempty population | E2/E3/E23/E24 |
-| File-level damage, including two current readings | Save what is readable to fresh destination | Original untouched; readable output complete, opens read-write, resolutions listed; later-recorded reading selected, no reading discarded; per-invariant rules remain ADR-0003’s without narrowing salvage | E5 |
+| File-level damage, including two current readings | Save what is readable to fresh destination | Original untouched; readable output complete, opens read-write, resolutions listed; later-recorded reading selected, other retained as correction-unconfirmed; per-invariant rules remain ADR-0003’s without narrowing salvage | E5 |
 | Move/copy/snapshot/salvage destination | Induce no room, no permission, disappearance, mid-write failure or crash | Original retained, no partial output, no failed copy advertised as recovery; retry/choose-elsewhere preserve operation identity | E19–E21 / E28–E30 |
 | Another running app / stale hold from dead app | Open; retry / choose different file | Live holder refuses; dead holder never blocks; retry rechecks ownership | E10 / normal open |
 | Capture active, paused or halted | Open a different file; Cancel / Go to the session | Refuse without changing current file/session; pause does not permit switching; return action opens same session | E22 |

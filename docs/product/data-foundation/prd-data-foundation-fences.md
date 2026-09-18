@@ -210,9 +210,9 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F30 | The [retired-ID map](#retired-id-map); the Open Questions' retirement note; the Background scope statement; [R7.7](prd-data-foundation.md#7-verifiability), [R7.8](prd-data-foundation.md#7-verifiability) and [R7.6](prd-data-foundation.md#7-verifiability), each having handed one half over; the obligations tables both ways; and [the export PRD's F1](../export/prd-data-export-fences.md), which transcribes it. No requirement row of its own. |
 | F31 | [R3.1](prd-data-foundation.md#3-derived-values-and-gamut-honesty); OQ 5's decision-so-far; [M6](prd-data-foundation.md#success-metrics)'s population and [R7.7](prd-data-foundation.md#7-verifiability)'s fixture; the outbound Data Export line in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the export PRD's R1.1, R1.3 and E1 (one condition per row, the amendment). |
 | F32 | [R6.5](prd-data-foundation.md#6-deletion-and-privacy); the Capture Mode OQ 24 line in [Sibling amendment map](#sibling-amendment-map). |
-| F33 | R2.9; R5.5a–c; R7.6g/h; R7.7i; E4/E31; DJ3; OQ 21, with interim export behavior settled by F37. |
+| F33 | R2.9; R5.5a–c/f (F47 defines derived-set regeneration); R7.6g/h; R7.7i; E4/E31; DJ3; OQ 21, with interim export behavior settled by F37. |
 | F34 | R1.3; R7.3a/b; E22; DJ3. |
-| F35 | Legend/Traceability; R2.3a–g; R3.3a–f; R7.3a–k; R6.2a–d/R6.3; R7.7a–l; E8/E14; OQ 10/14/17–21; DJ2–DJ5. |
+| F35 | Legend/Traceability; R2.3a–i; R3.3a–g; R7.3a–k (R7.3l retired by F47); R6.2a–d/R6.3; R7.7a–m; E8/E14; OQ 10/14/17–21; DJ2–DJ5. |
 | F36 | R5.5d, R7.3; post-lock ADR-0003 item. |
 | F37 | R5.5a–c, outbound Data Export obligation, R7.7i, OQ 21; DE R1.1/R1.3 and F14. |
 | F38 | R1.5/R1.9, R7.3c/j, OQ 19, E9/E15/E25/E27, DJ3. |
@@ -224,6 +224,9 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F44 | R1.3, R7.3b, DJ3; amends F34’s close-first ordering. |
 | F45 | F34 dated confirmation; R1.3, R7.3a, E22. |
 | F46 | Legend, Traceability, primary requirement tables. |
+| F47 | R3.3a, R5.4/R5.5f, R7.6g/h, R7.7i, §8, DJ3; retired E32/R7.3l. |
+| F48 | E14 and copy Variants; R6.1/R6.2. |
+| F49 | post-lock Data Foundation list; future M10, no metric row yet. |
 
 ## Rejected findings
 
@@ -260,6 +263,8 @@ The owner approved the audit's eight recommendations with “proceed with your r
 **Amended 2026-09-17:** F36–F46 below settle the review’s owner choices; F46 restores per-row Status and Commit PR, F38/F39/F37 establish interim behavior for OQ 19/18/21. OQ 17 and OQ 20 remain open as before.
 
 ## Retired ID map
+
+E32 and R7.3l are retired under F47 in PR #17, never reused; automatic R5.5f regeneration replaces their prompt.
 
 **Retired row IDs.** Retired under fence F30, never reused, each now [the export PRD](../export/prd-data-export.md)'s at the ID named: R4.1 → [its R1.1](../export/prd-data-export.md#1-what-the-export-contains); R4.3 → [its R1.2](../export/prd-data-export.md#1-what-the-export-contains); R4.4 → [its R1.3](../export/prd-data-export.md#1-what-the-export-contains); R4.2 → [its R2.1](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.6 → [its R2.2](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.7 → [its R2.3](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.8 → [its R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.9 → [its R2.5](../export/prd-data-export.md#2-columns-names-dialect-and-the-version); R4.5 → [its R3.1](../export/prd-data-export.md#3-when-an-export-cannot-finish); R7.9 → [its R4.1](../export/prd-data-export.md#4-verifiability); R7.6a → [its R4.4a](../export/prd-data-export.md#surfaces); M3 → [its M1](../export/prd-data-export.md#success-metrics); OQ 8, 9, 11, 16 → [its OQ 1–4](../export/prd-data-export.md#open-questions); E6, E7, E17, E18 → [its E1–E4](../export/prd-data-export-copy.md#error--state-copy); DJ1 → [its EJ1](../export/prd-data-export-journeys.md#ej1-export-the-collection). §4's number goes with them; [R7.6](prd-data-foundation.md#7-verifiability), [R7.7](prd-data-foundation.md#7-verifiability) and [R7.8](prd-data-foundation.md#7-verifiability) stay ([its Traceability](../export/prd-data-export.md#traceability)).
 
@@ -369,3 +374,31 @@ Source: [the owner’s eleven decisions](https://github.com/vinnyp/spectro-captu
 **Why:** Match the other PRDs’ implementation tracking without undoing the useful contract tables.
 
 **Rows:** Legend, Traceability, primary requirement tables.
+
+## PR #17 round-2 decisions (2026-09-17)
+
+Source: [the owner’s three round-2 decisions](https://github.com/vinnyp/spectro-capture/pull/17#issuecomment-5725692929), mapped in order below. F47 supersedes the requested-rebuild behavior introduced in round 1; that earlier review record remains history.
+
+### F47 — Regenerate unreadable derived sets automatically (2026-09-17)
+
+**Decision:** Mark an unreadable persisted derived set whose measurement is intact, and regenerate it automatically under R3.3a at current DERIVATION_VERSION without bumping it; retain the damaged set as superseded and leave canonical selection/reading marks unchanged. Retire E32 and R7.3l, removing their prompt, actions and surface entries; R7.7i asserts the regenerated set is readable and the damaged set retained and marked, with current selection unchanged.
+
+**Why:** A prompt offers no useful alternative and creates inconsistent completion/export outcomes; automatic regeneration restores the existing six-space contract without an export exception or additional matrix row.
+
+**Rows:** R3.3a, R5.4/R5.5f, R7.6g/h, R7.7i, §8, DJ3; retired E32/R7.3l.
+
+### F48 — Restore the deletion statement on the collection confirmation (2026-09-17)
+
+**Decision:** Restore ‘Deleting is the only thing that throws away a reading’ to E14 only; E8 stays unchanged. The copy Variants note explains the asymmetry for never-scanned items.
+
+**Why:** Keep the non-negotiable visible in shipping copy without claiming a never-scanned item has a reading.
+
+**Rows:** E14 and copy Variants; R6.1/R6.2.
+
+### F49 — Track the salvage metric after lock (2026-09-17)
+
+**Decision:** Record M10 (readable readings absent from salvage output, target 0, method R7.3) as a Data Foundation post-lock item. Do not add a metric row to this PRD now.
+
+**Why:** Make the proposed preservation measurement discoverable for the next pass while keeping this amendment scoped to the remaining review fixes.
+
+**Rows:** post-lock Data Foundation list; future M10, no metric row yet.

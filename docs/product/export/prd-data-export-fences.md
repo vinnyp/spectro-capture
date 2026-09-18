@@ -111,9 +111,8 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F11 | [R1.1](prd-data-export.md#1-what-the-export-contains); [E1](prd-data-export-copy.md#error--state-copy); the inbound Data Foundation line (both time axes). |
 | F12 | [R2.5](prd-data-export.md#2-columns-names-dialect-and-the-version)'s bump list; [R4.1](prd-data-export.md#4-verifiability)'s in-place refresh list; [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version)'s per-version help-docs sentence. |
 | F13 | [R2.2](prd-data-export.md#2-columns-names-dialect-and-the-version) (app columns only); [R2.4](prd-data-export.md#2-columns-names-dialect-and-the-version) (emitted as stored). |
+| F14 | R1.1/R1.3 and the inbound Data Foundation obligation; DF OQ 21 tracks the future distinct mark. |
 
 ## Rejected findings
 
 None yet. The findings rejected on these rows before the split are recorded in [the Data Foundation PRD's fence file](../data-foundation/prd-data-foundation-fences.md#rejected-findings); neither of the two standing there touches an export row.
-
-| F14 | R1.1/R1.3, R4.2 and the inbound Data Foundation obligation; DF OQ 21 tracks the future distinct mark. |

@@ -26,6 +26,8 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 ### Data Foundation
 
+- [ ] **DF** — M10: readable readings absent from the salvage output, target 0, method R7.3. Proposed metric deferred under PR #17, F49; no PRD metric row yet.
+
 - [x] **DF** — the Capture obligation map names R1.10 → DF R3.1 and R4.5 → DF R2.1. — PR #17 agent-build amendment.
 - [ ] **DF** — E29 arrives with the QC & Comparison PRD; until then DF E11 is the surface for the capture-time correction default.
 
