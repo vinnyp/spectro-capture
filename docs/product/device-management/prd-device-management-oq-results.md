@@ -24,9 +24,9 @@ One `## OQ <n>` section per question in [prd-device-management.md](prd-device-ma
 
 ## OQ 3 — Calibration gate interim clarification
 
-**Decision (2026-09-18, F11):** R3.3 now agrees with the existing OQ interim: only the SDK due signal trips the calibration gate. The candidate one-third elapsed-time fraction is inactive until the owner decides the final gate after OQ 2's hardware findings.
+**Decision (2026-09-18, F11):** R3.3 now agrees with the existing OQ interim: SDK due trips the calibration gate, not due does not, and unknown shows E21 as a non-blocking advisory (F15). The candidate one-third elapsed-time fraction is inactive until the owner decides the final gate after OQ 2's hardware findings.
 
-**Still open:** the final elapsed-time/session-length policy and unknown due-state behavior. Timestamp persistence remains required; no hardware capability is established here. See [F11](prd-device-management-fences.md#f11--calibration-interim-uses-the-sdk-due-signal-2026-09-18).
+**Still open:** the final elapsed-time/session-length and unknown due-state policies; the unknown interim is settled by F15. Timestamp persistence remains required; no hardware capability is established here. See [F11](prd-device-management-fences.md#f11--calibration-interim-uses-the-sdk-due-signal-2026-09-18).
 
 ## OQ 4 — Battery level capability
 

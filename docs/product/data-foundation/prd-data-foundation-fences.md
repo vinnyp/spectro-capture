@@ -337,6 +337,8 @@ Source: [the owner’s eleven decisions](https://github.com/vinnyp/spectro-captu
 
 **Rows:** R7.7, R7.7e; post-lock live-kind golden.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** Device F20 / R6.30 adds a test-only live-kind flow double for authorization coverage; generated readings still carry simulated acquiring snapshots, so F41's hand-authored fixtures remain the sole producer of the sc_simulated=false fixture shape. R7.7 records that distinction; the prior no-override statement is historical for the original PR #17 scope.
+
 ### F42 — Exclude unreadable measurements from regeneration (2026-09-17)
 
 **Decision:** Do not regenerate a reading whose authoritative measurement is unreadable; retain its sets and stamp. Completion enumerations exclude it and list it separately as excluded by damage.
@@ -404,3 +406,5 @@ Source: [the owner’s three round-2 decisions](https://github.com/vinnyp/spectr
 **Why:** Make the proposed preservation measurement discoverable for the next pass while keeping this amendment scoped to the remaining review fixes.
 
 **Rows:** post-lock Data Foundation list; future M10, no metric row yet.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** Under D9 / Device F23, R1.4's permitted recipients gain user-controlled software-update checks for both live and Demo (Device R2.13), observed through R6.12/R6.17; no item, reading or payload may leave. This records the network-set amendment here because no earlier fence owns that permitted set; F49's salvage decision is unchanged.

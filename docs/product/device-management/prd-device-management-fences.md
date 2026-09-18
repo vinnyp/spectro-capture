@@ -38,6 +38,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarification (1), 2026-09-08 (round 2):** R6.27, the simulated device's configurable latency, is P0: the capture PRD's locked P0 row R11.3 already places it in the first build phase, and the two documents agree rather than the device PRD carrying a conditional.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** F17 confirms R5.18 at P0; this does not move R5.19 or the P1 setup retry rules.
+
 ### F9 — The refactor: concise rows, companion files, row IDs (2026-09-08)
 
 **Decision:** The document takes the capture-mode PRD's shape. (1) Every requirement row is at most two sentences; the table shrinks and never expands; rationale and citations move out; a row splits only where two rules genuinely differ, and the new row takes the next ID in its section. (2) The journeys and every diagram move to `prd-device-management-journeys.md` (non-normative); §7's copy moves to `prd-device-management-copy.md`; answered and residual open questions get their evidence in `prd-device-management-oq-results.md` and the table takes the capture PRD's seven columns. (3) Every requirement row gains an ID `R<section>.<n>` in document order, every copy state `E<n>` in table order, every metric `M<n>`; IDs are assigned once and never renumbered. (4) The literal `&amp;` in headings and text becomes `&`; anchors are unchanged by that. (5) No rule changes: every row keeps its 🤝 status through the pass and is verified by one round (product manager, staff engineer, test, interface), then the document re-locks.
@@ -54,19 +56,25 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarification (5), 2026-09-08 (round 5, recorded by the orchestrator as precision of (4a)–(4c); the owner may overrule):** (a) Non-modality is a rule: R1.23 (P0) carries it — first-run setup states render non-modally on the device panel or in the device picker, both of which stay reachable — and §6 gains the observation that a test can assert the panel's other affordances stay operable while a setup state shows. (b) E12 and E14 carry "Leave setup for now ‹P1›" in their action cells, as (4b) names them. (c) Leaving setup is the user navigating away from a setup state, by the "Leave setup for now" action or otherwise; both reset the consecutive-failure counter, and the action dismisses the state and returns the device panel to its normal content. (d) "First run" means the app has no saved device yet; the Legend says so. (e) R4.4 reads "with guidance and without that action", as the Legend, §7 and the copy header already do. (f) E18's body names its P0 control and carries E17's coverage hedge; R2.16 cites E17 and E18.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** F13's pairing retry is corrected to re-discover/re-acquire the entry before pairing (R1.23), consistent with E12's power-cycle guidance; F18/F19 explicitly ratify the new action and test rows, using F9(1).
+
 ### F10 — Agent-build contract and acceptance scenarios (2026-09-18)
 
 **Authorization:** The owner approved the seven audit recommendations with “Proceed with the improvements.” This amendment is pending peer review; no implementation is claimed.
 
-**Decision:** Replace repeated vision/persona/journey narrative with scope, ownership and acceptance scenarios; keep the UJ anchors and every existing R/E/M ID, priority (except F12), status and historical decision. Requirements remain authoritative; scenarios and test-control maps derive assertions from those requirements rather than adding behavior. F9's table-never-expands restriction is superseded only for the explicit contracts R2.20/R6.29 and evidence methods M6/M7 added here; concise requirement rows and stable IDs remain binding.
+**Decision:** Replace repeated vision/persona/journey narrative with scope, ownership and acceptance scenarios; keep the UJ anchors and every existing R/E/M ID, priority (except F12), status and historical decision. Requirements remain authoritative; scenarios and test-control maps derive assertions from those requirements rather than adding behavior. R2.20/R6.29 use F9(1)'s existing split clause for genuinely different rules; M6/M7 remain in Success Metrics, outside the requirement-row split restriction.
 
 **Carried by:** Build contract, Legend, journey companion and amendment markers. The shared Status vocabulary is unchanged.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** The individual WHAT choices are ratified separately as F15–F26, each citing its owner decision; the blanket approval is not their sole authority. The supersession sentence above is corrected to F9(1) as the owner explicitly requested.
 
 ### F11 — Calibration interim uses the SDK due signal (2026-09-18)
 
 **Decision:** Resolve R3.3 versus OQ 3 in favor of OQ 3's explicit interim: SDK due alone trips the calibration gate until OQ 3 closes. The candidate elapsed-time fraction is inactive, not a second interim gate; timestamps remain persisted for the eventual check. OQ 2's hardware findings and the owner's OQ 3 decision still determine the eventual gate, including expected session length and unknown due-state handling.
 
 **Carried by:** R3.3, the constants table, OQ 3 and UJ4-b. No hardware question closes here.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** F15 supplies the unknown branch: non-blocking E21 advisory until OQ 3 closes; the historical text above does not leave that interim undefined.
 
 ### F12 — Carry Capture's device obligations (2026-09-18)
 
@@ -76,6 +84,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** R2.6, R4.3, §5 definition, R5.10/R5.11/R5.18/R5.19, R6.6/R6.9/R6.27, E7, E23–E30 and both PRDs' obligation tables. Capture OQ 16 is answered by this owner-approved amendment; its hardware questions remain open.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** F16 retains Device E33 confirmation followed by Capture E23's halted summary; F17 ratifies P0 quit; F24 keeps Capture OQ 16 open until re-lock; F26 scopes the noun change to E23–E30. R5.8 identifies the remembered row even after jumps; the earlier "without jumps/reorders" qualifier does not govern the revised row.
+
 ### F13 — Setup and authorization recovery actions (2026-09-18)
 
 **Decision:** First-run explicit setup exits dismiss to normal device-panel content; later-run exits land in the collection. Incidental navigation resets the relevant failure counter exactly as F9 clarification (5c) already required. Pairing Try again retries the selected device; discovery is a separate picker action. Setup states belong to the panel, E1 to the picker, and both remain non-modal.
@@ -84,6 +94,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** R1.8/R1.23, R2.12/R2.20, R3.5/R4.4, E17/E18 and the copy header; UJ1-e/f and UJ6.1. OQ 8 and OQ 18 still gate real SDK renewal/refusal capabilities.
 
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** R1.23 retry now re-runs discovery and re-acquires the selected entry; F18 supplies the offline visible outcome and OQ registrations. R4.2/R4.7 own user-requested battery/storage rechecks, and R4.4 retains the no-dead-end invariant.
+
 ### F14 — Test observability and closure evidence (2026-09-18)
 
 **Decision:** R6.17 separates local activation invocations from network attempts; R6.29 makes panel/picker operability invocable and observable through a shell seam without choosing its module. Preserve the three R6.21 subjects, fail-on-unconfigured-seam rule and all hardware gates. Constants receive explicit names/candidates/closers; DEMO_SCAN_CYCLE is shared with Capture rather than duplicated.
@@ -91,6 +103,104 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** M6/M7 specify the local dogfood artifacts needed to close OQ 5/OQ 28. Harness measurements or manual observations supply those artifacts; no new production event log, telemetry path, retention rule, or threshold value is decided. Those OQs stay open until observations and owner decisions exist.
 
 **Carried by:** Legend constants, R6.17/R6.29, M6/M7, OQ 5/OQ 28 and the journey companion's test-control map.
+
+**Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720)):** F19 widens state/variant and quit observability; F20 adds the test-only live-flow double without live provenance; F21 lists the sole default exception; F22 names and phases dogfood evidence; F23 leaves activation network behavior to observation and hardware OQs.
+
+### F15 — Unknown calibration signal (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D1.
+
+**Decision:** Until OQ 3 closes, unknown calibration due does not trip the session-start gate and shows E21 as a non-blocking advisory; due blocks and not due does not. Final unknown handling stays with OQ 3.
+
+**Carried by:** R3.3; Legend P0-defer list; OQ 3 Interim/results; E21 unknown variant; UJ4-b.
+
+### F16 — Device confirmation before the halted-session summary (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D2.
+
+**Decision:** Device keeps E33 End-from-halt confirmation, including the held-reading warning when applicable; Capture R7.5/E23's halted-session summary follows confirmed End, names the discarded held reading if present, and has no Keep scanning action. Cancelling the Device confirmation returns to the halt without discarding the reading.
+
+**Carried by:** R5.11/R5.18; Device E33; Device→Capture obligation; Capture R7.5/R11.12/E23/F50; UJ5-e.
+
+### F17 — Quit-from-halt is P0 (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D3.
+
+**Decision:** R5.18 is P0, specifically ratifying F12's priority choice. The same confirmation protects End and quit.
+
+**Carried by:** R5.18; R6.29; F8 clarification; UJ5-e.
+
+### F18 — Ratify Check again for expired authorization (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D4.
+
+**Decision:** R2.20 is a new rule: offline Check again re-presents E17 with its reachability line refreshed and no network attempt; online attempts renewal subject to OQ 8. R2.20 registers in OQ 8 and OQ 18 Feeds.
+
+**Carried by:** R2.20; E17; OQ 8/OQ 18; UJ6.1-a/b/c.
+
+### F19 — Observe states and invoke shell recovery entry points (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D5.
+
+**Decision:** R6.29 is a new obligation: observe the named state and variant without matching wording, invoke panel/picker entry points and quit-from-halt, and test R1.8 counters only once that P1 row lands. OQ 21 retains placement/CI ownership.
+
+**Carried by:** R6.29; OQ 21 Feeds; test-control map; UJ1-f/UJ5-e.
+
+### F20 — Hardware-free live-flow instrument with simulated provenance (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D6.
+
+**Decision:** A test-only simulated instrument presents as live-kind for licensing/authorization flow selection, but its readings and acquiring snapshots stay simulated. Demo's R6.3 guarantee stays unchanged; only DF F41 hand-authored fixtures cover the false sc_simulated shape.
+
+**Carried by:** R6.30; R6.10; UJ1/UJ2/UJ6 preconditions; DF R7.7/F41; test-control map.
+
+### F21 — List the noninstant default exception (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D7.
+
+**Decision:** DEMO_SCAN_CYCLE's noninstant default is the sole explicit exception to R6.25's no-unconfigured-default rule. Its provisional value remains governed by F7/OQ 10.
+
+**Carried by:** R6.25/R6.27; UJ1.2-d; constants table.
+
+### F22 — Ratify metric rows and name dogfood evidence (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D8.
+
+**Decision:** M6/M7 are new metric rows, retained in Success Metrics. The dogfood agent records `prd-device-management-dogfood-results.md` beside the PRD using the fields in those rows, with M6 manually observed against R6.17 logs unless a row supplies the observation; M7 requires P1-phase data.
+
+**Carried by:** M6/M7; OQ 5/OQ 28 closers; Legend phase note. No results file is fabricated before observations exist.
+
+### F23 — Observe outbound paths and permit update checks (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D9.
+
+**Decision:** R6.17 keeps update checks observable; DF R1.4 permits user-controlled software-update checks for both live and Demo under Device R2.13. Activation invocations are classified by observed destination, with whether they carry requests left to OQ 1/OQ 16.
+
+**Carried by:** R6.17; Device→DF outbound-attempt obligation naming R6.12/R6.17; DF R1.4/F49 clarification; UJ6-e.
+
+### F24 — Keep Capture OQ 16 open until Device re-lock (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D10.
+
+**Decision:** Capture OQ 16 remains open until Device re-locks, despite the notes being carried by this amendment. Keep its results section with pending re-lock status and preserve peer review pending in Device's status.
+
+**Carried by:** Capture OQ 16/results/F50; Device status; product index.
+
+### F25 — Place Capture F50 with fences (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D11.
+
+**Decision:** Capture F50 is a fence, placed under Fences after F49, with its fence-to-row map entry. Preserve rejected findings unchanged.
+
+**Carried by:** Capture fence file F50 location, dated placement note and map.
+
+### F26 — Keep the noun change on the capture surface (2026-09-18)
+
+**Authority:** [owner decisions](https://github.com/vinnyp/spectro-capture/pull/19#issuecomment-5734032720), D12.
+
+**Decision:** E18 reverts to device, matching E17; F12's noun replacement remains scoped to E23–E30. Established panel/device names remain unchanged.
+
+**Carried by:** E18; F12 clarification.
 
 ## Fence → row map
 
@@ -108,7 +218,7 @@ Where a fence is named in the PRD, for provenance only. A row not listed here ci
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
 | F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
-F10–F14 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
+F10–F26 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
 
 ## Rejected findings
 
