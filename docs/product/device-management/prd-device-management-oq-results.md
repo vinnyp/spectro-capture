@@ -1,6 +1,6 @@
 # Device Management PRD — open-question results
 
-One `## OQ <n>` section per question in [prd-device-management.md](prd-device-management.md)'s [Open Questions](prd-device-management.md#open-questions) table that already carries evidence: the eight questions the [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) part-answered, each marked `residual` in that table, and three of the questions it bears on without answering — OQ 4, OQ 19, OQ 25 — which stay `open`. An OQ's status may change only when its section exists here, and a section existing is necessary but not sufficient: a `residual` question keeps its section and its status until the hardware spike closes the remainder, and an `open` one keeps both until an answer rather than evidence arrives. The table keeps a one-line "Decision so far" and this file carries the evidence. Owner decisions that close a question are recorded as fences in [prd-device-management-fences.md](prd-device-management-fences.md).
+One `## OQ <n>` section per question in [prd-device-management.md](prd-device-management.md)'s [Open Questions](prd-device-management.md#open-questions) table that already carries evidence: the eight questions the [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) part-answered, each marked `residual` in that table, and three of the questions it bears on without answering — OQ 4, OQ 19, OQ 25 — which stay `open`; OQ 3 also records the later owner-approved interim clarification, not a final answer. An OQ's status may change only when its section exists here, and a section existing is necessary but not sufficient: a `residual` question keeps its section and its status until the hardware spike closes the remainder, and an `open` one keeps both until an answer rather than evidence arrives. The table keeps a one-line "Decision so far" and this file carries the evidence. Owner decisions that close a question are recorded as fences in [prd-device-management-fences.md](prd-device-management-fences.md).
 
 ## OQ 1 — Activation-before-discovery sequencing
 
@@ -21,6 +21,12 @@ One `## OQ <n>` section per question in [prd-device-management.md](prd-device-ma
 **Evidence source:** SDK docs. **Gated on:** hardware.
 
 **Carried by:** [R3.2](prd-device-management.md#3-calibration); the due-signal seam in [R6.9](prd-device-management.md#6-mock-device-layer).
+
+## OQ 3 — Calibration gate interim clarification
+
+**Decision (2026-09-18, F11):** R3.3 now agrees with the existing OQ interim: SDK due trips the calibration gate, not due does not, and unknown shows E21 as a non-blocking advisory (F15). The candidate one-third elapsed-time fraction is inactive until the owner decides the final gate after OQ 2's hardware findings.
+
+**Still open:** the final elapsed-time/session-length and unknown due-state policies; the unknown interim is settled by F15. Timestamp persistence remains required; no hardware capability is established here. See [F11](prd-device-management-fences.md#f11--calibration-interim-uses-the-sdk-due-signal-2026-09-18).
 
 ## OQ 4 — Battery level capability
 

@@ -1,245 +1,142 @@
-# Device Management PRD — user journeys
+# Device Management PRD — acceptance scenarios
 
-Companion to [prd-device-management.md](prd-device-management.md): what the Cataloger does and sees, journey by journey.
-The requirement rows in that file are the rules; nothing here adds one, and the shipping copy is in [prd-device-management-copy.md](prd-device-management-copy.md).
+Companion to [the PRD](prd-device-management.md). Requirement rows own behavior; these scenarios supply starting conditions, actions and observable results, not additional rules. Existing UJ headings remain stable link targets. `R` IDs refer to the PRD; `E` IDs refer to [shipping copy](prd-device-management-copy.md#error--state-copy).
 
-States are named here in plain language; the shipping copy for each is in [prd-device-management-copy.md](prd-device-management-copy.md#error--state-copy). Persona is the Cataloger unless the title says otherwise. Citation shorthand: [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md) is the vendor SDK audit.
+Harness references: [R6.21](prd-device-management.md#6-mock-device-layer) owns conformance subjects; R6.30 supplies the hardware-free live-flow instrument only in cases that name R6.30 below, with R6.10 licensing/authorization doubles. Generated readings from that instrument remain simulated; DF F41 hand-authored snapshots alone exercise false `sc_simulated`. Demo cases still follow R6.3.
 
 ## Device workflow
 
-The device lifecycle end-to-end, as the Cataloger experiences it: license activation, discovery, and pairing ([§1](prd-device-management.md#1-device-pairing), [§2](prd-device-management.md#2-licensing--pre-authorization)), calibration ([§3](prd-device-management.md#3-calibration)), the pre-flight gate ([§4](prd-device-management.md#4-pre-flight-device-health)), and in-session failure and recovery ([§5](prd-device-management.md#5-mid-session-device-failure)). App-level license activation precedes every device operation, including discovery; device-level serial authorization happens at connect ([SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs; confirm on hardware — [OQ 1](prd-device-management.md#open-questions)).
+This transition index replaces the narrative diagrams. The scenarios below supply acceptance cases; the linked rows remain authoritative.
 
-```mermaid
-stateDiagram-v2
-    state "Discovery" as Discovery
-    state "Pairing" as Pairing
-    state "Pairing is not working" as PairStuck
-    state "License activation" as Activation
-    state "Guided calibration" as Calibration
-    state "Calibration is not working" as CalStuck
-    state "Readiness advisory (on connect)" as Advisory
-    state "Pre-flight gate (at session start)" as Gate
-    state "Blocked, charge or free space" as HealthBlocked
-    state "Capture session" as Capture
-    state "Halted" as Halted
-    state "Manual waiting" as Waiting
-    state "Blocked, reconnect once" as AuthBlocked
-    state "Looking for known device" as Reaching
-
-    [*] --> Activation: first run or add device
-    [*] --> Activation: later launch, silent re-activation
-    Activation --> Reaching: silent re-activation succeeded (offline), auto-reconnect
-    Reaching --> Reaching: not reachable, background retry
-    Reaching --> Advisory: known device found, connected
-    Activation --> Activation: invalid, incomplete, or expired license — re-enter or renew
-    Activation --> Discovery: license active (offline, per SDK docs)
-    Discovery --> Discovery: no device found, search again
-    Discovery --> Pairing: device found over USB or BLE
-    Pairing --> Pairing: first-time device authorization needs internet
-    Pairing --> Discovery: pairing fails, guided recovery
-    Pairing --> PairStuck: repeated pairing failures
-    PairStuck --> Pairing: try again
-    PairStuck --> [*]: leave setup for now
-    Pairing --> [*]: leave setup for now (device not yet authorized)
-    Pairing --> Calibration: paired and device authorized, saved as known device
-    Calibration --> Calibration: calibration fails, retry
-    Calibration --> CalStuck: repeated calibration failures
-    CalStuck --> Calibration: try again
-    CalStuck --> [*]: leave setup for now
-    Calibration --> Advisory: calibration confirmed
-    Advisory --> Gate: first capture action against a loaded queue
-    Gate --> Calibration: calibration gate tripped
-    Gate --> AuthBlocked: offline-use window expired
-    AuthBlocked --> Gate: any internet once, silent renewal
-    Gate --> HealthBlocked: battery or storage blocked
-    HealthBlocked --> Gate: charged or space freed, check again
-    Gate --> Capture: all checks pass, session starts
-    Capture --> Halted: disconnect, not responding, low battery, or save failure
-    Halted --> Halted: try saving again
-    Halted --> Waiting: disconnect or not responding, reconnect retries exhausted
-    Waiting --> Halted: try reconnecting now
-    Halted --> Capture: resume scanning, enabled only once cause cleared
-    Waiting --> Capture: resume scanning, enabled only once device returns
-    Halted --> [*]: end session, remainder to capture-mode PRD
-    Waiting --> [*]: end session
-    Capture --> [*]: session complete
-```
+| Starting state / event | Result | Rows |
+| :--- | :--- | :--- |
+| Picker opened, no credential | Demo available; live discovery requires E6 | R1.4, R6.1–R6.3 |
+| Live activation: invalid / expired | E4 / E5; no live discovery | R2.1–R2.3 |
+| Active license; explicit Add Device | Discovery, then selected-device pairing | R1.1–R1.5 |
+| Later launch, active license, known live device | Auto-reconnect that identity; E16 while unreachable, or E2 under the permission condition | R1.10, R1.14–R1.16 |
+| First device authorization: offline / unreachable service / distinguishable serial refusal | E3 / E10 / E8 respectively | R2.5, R2.16; OQ 18 |
+| Pairing failure; Try again | Re-run discovery, re-acquire the selected entry, then retry pairing (E12); E13 at failure limit in P1 | R1.23, R1.8 |
+| Calibration failure; retry | Repeat calibration (E14); E15 at failure limit in P1 | R3.1, R3.5 |
+| Leave setup from E3/E12/E13/E14/E15 in P1 | First run: normal device panel; otherwise collection; reset relevant failure count | R1.8, R3.5 |
+| Connected | Advisory readiness check; no automatic capture | R4.2 |
+| First capture action against loaded queue | Blocking pre-flight; start only when no check blocks | R4.1–R4.4 |
+| Effective offline window expired | E17 offline / E18 online; Check again uses R2.20; returning connectivity attempts renewal | R2.12, R2.15, R2.20 |
+| Active session; disconnect / silence / low battery / save failure | Halt; suppress scan acceptance; discard partial set or hold completed failed-save reading | R5.1–R5.16 |
+| All halt causes cleared | Enable Resume scanning; remain halted until explicit Resume | R5.7–R5.9 |
+| Process terminated; Resume capture after relaunch | New session, full pre-flight, then-connected instrument bound | Capture R7.12/R7.14; R5.19 |
 
 ## User Journeys
 
 ### UJ 1. First run
 
-1. Install & Open app
-2. Choose where the file lives (a default offered; [the Data Foundation PRD's R1.8](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns))
-3. Activate the Nix SDK license (first run: enter the two-part license credential once; it is stored locally and re-activated silently, offline, on every later launch — activation precedes every device operation, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs; confirm on hardware — [OQ 1](prd-device-management.md#open-questions))
-  - If the license is invalid or incomplete → show the invalid-license state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-4. Initiate device discovery
-5. Grant App bluetooth permissions
-6. App detects a device is available to connect via USB or BLE
-  - If no device detected → show the no-device-found state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-7. Initiate device pairing — a device's first-ever connect authorizes its serial online
-  - If there's no internet connection → show the no-internet-to-authorize-device state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-  - If pairing fails → show the pairing-failed state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-8. Initiate calibration
-  - If calibration fails → show the calibration-failed state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-9. App ready for acquisition
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ1-a | Clean persisted state; R6.30 live-flow instrument; online device authorization; calibration success | Choose file location, enter both credential strings, discover and pair, calibrate | Activation precedes discovery, activation works offline, with invocation/destination observed, first serial authorization is online, known record persists, readiness evaluates | R1.4, R1.9, R2.1, R3.1, R4.2, R6.20; Data Foundation R1.8 |
+| UJ1-b | Invalid/incomplete or expired local credential | Activate in each variant | E4 or E5 respectively, never an internet error; no live operation starts | R1.4, R2.2, R2.5 |
+| UJ1-c | No discoverable device; clock configured | Run discovery to DISCOVERY_TIMEOUT, then Search again | E1 in non-modal picker; retry performs discovery; panel and picker navigation remain usable | R1.5, R1.23, R6.29 |
+| UJ1-d | Discovery entries over USB/BLE with known signal strengths; serial unavailable before connect | Inspect list, connect, then read identity | Strongest signal first; provisional name/transport before serial; final `(kind, model, serial)` identity deduplicates existing known record and updates handles | R1.3, R1.6, R1.7, R1.17, R6.14 |
+| UJ1-e | Selected entry; pairing failures configured | Fail once, Try again, then fail through PAIRING_FAILURE_LIMIT | E12 retry re-discovers and re-acquires before pairing; an empty re-discovery stays E12 without incrementing the pairing counter; P1 E13 at limit; P0 withholds P1 state/action but keeps retry and exit guidance | R1.23, R1.8; copy phase convention |
+| UJ1-f | First-run E3/E12/E13/E14/E15; P1 R1.8/R3.5 landed; nonzero relevant failure count | Navigate away incidentally; return; separately invoke P1 Leave setup for now | Navigation stays operable and resets count; explicit exit dismisses to normal device panel; repeat with a saved device to assert collection destination | R1.8, R3.5, R6.29 |
 
 ### UJ 1.1 Cannot complete a first run
 
-1. Install & Open app with no internet connection
-2. Choose where the file lives (a default offered; [the Data Foundation PRD's R1.8](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns))
-3. Activate the license — succeeds offline (activation needs no internet, [SDK audit](../../briefs/nix-universal-sdk-audit-findings.md), per SDK docs)
-4. Initiate device discovery
-5. User denies App bluetooth permissions
-  - Failure point: Permission is now denied, App can't detect the device via bluetooth
-  - Show the Bluetooth-denied state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-6. App can only detect device via USB
-7. If a Nix device is discovered, attempt to pair
-  - Failure point: No internet connection prevents the device's first-time authorization
-  - Show the no-internet-to-authorize-device state ([copy, §7](prd-device-management-copy.md#error--state-copy)); the user can retry, or leave setup for now
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ1.1-a | Clean state, chosen file location, valid credential, offline network, Bluetooth denied | Activate, discover | Activation succeeds offline; E2 offers settings and USB; USB discovery does not depend on Bluetooth permission | R1.3, R2.1, R6.15; Data Foundation R1.8; OQ 24 still owns permission recovery timing |
+| UJ1.1-b | Same state, discovered USB device needing first serial authorization | Pair; retry while offline; navigate away | E3, not invalid-license; state is non-modal; P1 exit present and P0 guidance remains | R2.5, R1.8, R1.23 |
+| UJ1.1-c | Active license, online; service unreachable or distinguishable serial refusal injected separately | Authorize | E10 or E8, not generic failure; no promise that internet alone fixes refusal | R2.5, R2.16, R6.10; OQ 18 gates live distinguishability |
 
 ### UJ 1.2 First run with no hardware (Contributor)
 
-1. Install & open app with no instrument and no license credential
-2. Choose where the file lives (a default offered; [the Data Foundation PRD's R1.8](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns))
-3. In the device picker, choose "Demo Device (simulated — no instrument)"
-4. No license activation runs and no key prompt ever appears
-5. A working capture session runs against generated readings ([§6](prd-device-management.md#6-mock-device-layer))
-
-The chart below covers [UJ1](#uj-1-first-run), [UJ1.1](#uj-11-cannot-complete-a-first-run), and [UJ1.2](#uj-12-first-run-with-no-hardware-contributor) together — the denied-Bluetooth and no-internet branches are UJ1.1's failure points; the Demo Device branch is UJ1.2.
-
-```mermaid
-flowchart TD
-    A[Install and open app] --> L["Choose where the file lives"]
-    L --> E["Enter license once (two parts)"]
-    L -- "no hardware: choose Demo Device" --> K["Demo Device: simulated, no license or activation"]
-    K --> H
-    E --> E1{License valid?}
-    E1 -- no --> E2["Invalid-license state: re-enter"]
-    E2 --> E
-    E1 -- "yes (activation is offline)" --> B[Device discovery]
-    B --> C{Bluetooth permission granted?}
-    C -- no --> C1["Error: enable Bluetooth permission"]
-    C1 --> C2[USB discovery only]
-    C2 --> D
-    C -- yes --> D{Device detected?}
-    D -- no --> D1["Message: turn on the device"]
-    D1 --> B
-    D -- yes --> F{First-time device authorization: internet available?}
-    F -- no --> F1["Error: connect to the internet, retry"]
-    F1 --> F
-    F -- yes --> G[Device serial authorized online]
-    G --> H{Pairing succeeds?}
-    H -- no --> H1[Recovery guidance] --> H
-    H1 -- repeated failures --> H2["Pairing isn't working: leave setup for now"]
-    H -- yes --> I{Calibration succeeds?}
-    I -- no --> I1[Recovery guidance] --> I
-    I1 -- repeated failures --> I2["Calibration isn't working: leave setup for now"]
-    I -- yes --> P["Pre-flight checks run (Demo: authorization reports not applicable)"]
-    P --> J[Ready for acquisition]
-```
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ1.2-a | Plain clone, no hardware/key, explicitly configured mock and shell state | Choose file location, select Demo, pair/calibrate, capture | No credential prompt or activation/authorization invocation; all four checks reported, authorization not applicable; nonzero default pacing; saved reading and capture indicator simulated | R6.1–R6.7, R6.17, R6.20, R6.27; Data Foundation R1.8 |
+| UJ1.2-b | Demo spectral switch absent; other checks pass | Start session and save | Capture runs without spectral data, with persistent Demo variant of Capture E43 and the recorded non-spectral basis; repeat available variant | R2.6, R6.9; Capture R4.22/R4.24/R4.26 |
+| UJ1.2-c | Simulated canonical fixture, then hand-authored live-kind correction fixture (DF F41) | Browse and export canonical/history | Canonical badge/banner follows current provenance; history retains simulated provenance; known exported snapshots yield true/false and unknown snapshots empty | R6.4–R6.5; Export R1.2 |
+| UJ1.2-d | One non-exempt required seam deliberately unconfigured; separate case with only latency unset | Exercise it | Non-exempt seam fails; latency alone uses R6.27’s noninstant default | R6.25/R6.27 |
 
 ### UJ 2. Start acquisition
 
-1. Open app & turn on device
-2. Auto-reconnect to the last known connected device
-3. Pre-flight health check evaluates on connect, advisory (battery, calibration currency, authorization window, storage headroom)
-  - Guided calibration if the gate tripped
-  - Extend offline use if the window has lapsed
-4. App ready for acquisition
-5. Initiate acquisition — the first capture action against the loaded queue re-runs the checks as the blocking gate
-
-```mermaid
-flowchart TD
-    A[Open app and power on device] --> B[Auto-reconnect to last known device]
-    B --> C["Readiness advisory on connect (ambient, non-blocking)"]
-    C --> D[Ready for acquisition]
-    D --> E[Initiate acquisition]
-    E --> F{Blocking gate at first capture action: checks pass?}
-    F -- calibration gate tripped --> F1[Guided calibration]
-    F1 --> F
-    F -- authorization window expired --> F2["Extend offline use"]
-    F2 --> F
-    F -- battery or storage blocked --> F3[Charge or free disk space]
-    F3 --> F
-    F -- pass --> G[Session starts, capture begins]
-```
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ2-a | Persisted last-used R6.30 double, valid credential double, passing health | Relaunch, connect, then first capture action | Silent offline activation, automatic reconnect under F27, simulated saved identity/display and persistent simulated indicator, advisory at connect; blocking pre-flight repeats at first action; no extra confirmation when checks pass | R1.10, R2.1, R4.1–R4.2 |
+| UJ2-b | Last-used R6.30 double absent | Launch, then make it present | E16 and background discovery; connects without dismissal; denied/undetermined Bluetooth plus no reachable USB instead gives E2 | R1.14 |
+| UJ2-c | R6.30 auto-reconnect probes candidate with different serial | Complete probe | Release immediately, never show as connected or bind to session | R1.16 |
+| UJ2-d | R6.30 background attempt in flight | User initiates connect/switch; deliver cancellation/outcome through controlled seam | Background attempt cancelled; at most one connect/disconnect/retry in flight; cancelled attempt cannot switch the selected identity | R1.12, R1.15, R6.17 |
+| UJ2-e | Active session bound to R6.30 double A; double B available | Request switch, inspect confirmation; recover A over another transport | E31 names A and B; B cannot take over the active session; same-identity recovery may use available transport, with transport visible | R1.11–R1.13, R6.19 |
+| UJ2-f | No active session; R6.30 double reachable over simulated USB and BLE | Connect in P1, then remove selected transport during capture | Prefer USB under provisional OQ 9 rule; no live transport migration; loss raises halt | R1.11, R6.19 |
+| UJ2-g | Configured pre-flight battery/storage boundaries | Inject pass/warn/block, then applicable remediation | Advisory at connect, block prevents new start, warn does not; storage checks active-file/default-file volume; unpollable battery with a prior reading shows last-known value and age | R4.1–R4.6; values remain OQ 4/4b/5 gated |
+| UJ2-h | Muted / not muted / not determinable shell audio variants | Evaluate pre-flight | Advisory only for verified muted; no fifth check and no pass/warn/block value | R4.1, R6.9 |
+| UJ2-i | Last-used device is Demo | Relaunch | No automatic Demo connection; explicit picker selection required | R1.10, R6.6 |
+| UJ2-j | R6.30 live-flow instrument; held-by-another-app failure, then success | Connect, release the competing-holder condition, Try again | E9 appears on attributed connect failure; successful retry clears E9 and connects the same selected identity | R1.12, R6.9, R6.30; live distinguishability OQ 26 |
+| UJ2-k | R6.30 instrument with authorized serial, valid license, spectral entitlement absent; other checks pass | Pair, inspect readiness, start capture; separately reconnect with spectral capability restored before the next session | E7 appears as non-blocking authorization indicator with normal capture entry; non-spectral capture runs; E7 clears on restored capability, with no first discovery of the shortfall mid-session or identity takeover | R2.6/R2.7, R1.13, R6.30; OQ 27 |
 
 ### UJ 3. Remove a saved device
 
-1. Open "Saved devices"
-2. Select device → Remove
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ3-a | Known device with canonical measurements and history | Confirm Remove in P1, then re-add the same kind/model/serial with changed firmware | E32 names device; only saved connection record removed; immutable kind/model/serial/firmware snapshots remain; re-add uses normal pairing and the same identity key despite changed firmware | R1.18–R1.22 |
+| UJ3-b | R6.20 seeds simulated and live-kind saved records with the same model/serial; DF F41 seeds the live measurement snapshot | Read both identities and snapshots; acquire a reading from R6.30 | Separate records by kind; R6.30 never occupies the live record and saves only simulated snapshots | R1.21–R1.22, R6.20/R6.30; DF F41 |
 
 ### UJ 4. Calibrate a connected device
 
-1. Turn on device
-2. App establishes connection to device
-  - If connection isn't established → show the device-not-reachable state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-3. Initiate calibration
-  - If calibration fails → show the calibration-failed state ([copy, §7](prd-device-management-copy.md#error--state-copy))
-4. App ready for acquisition
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ4-a | Connected device | Request calibration on demand; inject success, then separate failure | Guided tile placement; success recorded; E14 and retry on failure | R3.1–R3.3 |
+| UJ4-b | SDK not due / due / unknown; elapsed time exceeds candidate pre-emptive interval | Evaluate each variant before OQ 3 closes | Not due: no calibration block; due: E21 blocks; unknown: E21 unknown variant reports warn and is non-blocking, with normal capture entry subject to other checks; elapsed candidate alone never trips the interim | R3.3, F11/F15 |
+| UJ4-c | Active session | Change SDK due signal | No calibration interruption or countdown in capture; currency is ambient in panel | R3.4 |
+| UJ4-d | Calibration failures | Reach CALIBRATION_FAILURE_LIMIT in P1, then retry/leave | E15 with retry and exit; success or navigation resets count; first-run exit returns normal panel | R3.5, R1.8 |
+| UJ4-e | Configured battery boundary, known low battery; other checks pass | Start, charge above pre-flight boundary, Check again | E19 and Check again render at the capture entry point where the gate fires, plus the device panel; E19 blocks first start; Check again refreshes all four checks and re-enters gate; E19 clears on recovery, but a newly introduced storage/calibration/auth block still prevents start | R4.1/R4.2/R4.4/R4.7 |
+| UJ4-f | Active-file volume below STORAGE_BLOCK_BYTES; other checks pass | Start, free space above boundary, Check again | E20 and Check again render at the capture entry point where the gate fires, plus the device panel; E20 blocks first start; Check again refreshes all four checks and re-enters gate; E20 clears on recovered storage, but another check's block still prevents start | R4.1/R4.2/R4.6/R4.7 |
+| UJ4-g | Battery/storage advisory on connect; session-start gate has not fired | Check again | All four readiness checks refresh at the advisory; no session-start gate is entered merely by this recheck, no capture session starts and the capture surface is not entered | R4.2/R4.7, F30 |
 
 ### UJ 5. Device failure during a session
 
-> Scope boundary: this PRD owns device-level failure — detect → alert → reconnect → resume. Per-scan errors (retry / skip / flag-row) and the dead-letter queue belong to the capture-mode PRD.
-
-1. Mid-queue, the device fails: BLE/USB disconnect, the device stops responding, battery below the operational threshold, or a disk-write failure
-2. Capture halts immediately on disconnect (never continues silently); the alert reaches the user through at least two senses (tone + on-screen state; haptic where available) — the user's eyes are on the physical samples, not the screen
-3. App presents the matching recovery path: reconnect (auto-retried to the same device, bounded, then manual waiting), charge, or retry the failed save; ending the session is always available
-4. When the halt cause clears, a single "Resume scanning" action is enabled — the deliberate acknowledgment and the only way back to capture. Resume returns to the current item; every scan the queue advanced past was durably written, so nothing is lost, re-inserted, or duplicated
-5. Capture continues
-
-```mermaid
-flowchart TD
-    A[Capture in progress] --> B{Device fails mid-queue?}
-    B -- no --> A
-    B -- disconnect, not responding, low battery, or save failure --> C[Capture halts immediately]
-    C --> D["Alert through two senses: tone plus on-screen state"]
-    D --> E{Halt cause}
-    E -- "disconnect or not responding" --> E1["Auto-retry reconnect, bounded"]
-    E1 -- retries exhausted --> E5[Manual waiting state]
-    E5 -- try reconnecting now --> E1
-    E1 -- device reconnected --> R
-    E5 -- device returns --> R
-    E -- low battery --> E3[Charge or connect power]
-    E3 -- battery recovered above resume threshold --> R
-    E -- save failed --> E6[Try saving again]
-    E6 -- save succeeds --> R
-    R["Resume scanning enabled: explicit action"] --> F[Resume at current item]
-    F --> A
-    E -- end session --> G["Session ends: remainder handled by capture-mode PRD"]
-    E5 -- end session --> G
-```
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ5-a | Active session, success tone in flight, incomplete set | Inject disconnect | E23 on disconnect within configured tolerance; tone pre-empts success, partial set discarded, triggers suppressed; same-identity reconnect enables explicit Resume only after all causes clear | R5.1–R5.9, R5.15/R5.16 |
+| UJ5-a-silence | Active session, command/reading silence, incomplete set | Cross LIVENESS_TIMEOUT | E25, interrupting tone and partial-set discard; reconnect/response clears silence, with explicit Resume still required | R5.4/R5.7/R5.13/R5.15 |
+| UJ5-a-battery | Active session, incomplete set, level above halt threshold | Drop below BATTERY_HALT_LEVEL | E26, interrupting tone and partial-set discard; power alone does not clear, level above BATTERY_RESUME_LEVEL does, still requiring explicit Resume | R5.4/R5.7/R5.14/R5.15 |
+| UJ5-b | Disconnect halt, bound identity absent | Reach attempt or duration bound; later restore device | E24 with no active retries; listening continues; Try reconnecting now retries; return enables Resume only, never auto-resumes | R5.6–R5.9 |
+| UJ5-c | Disconnect raised before storage failure | Clear disconnect while storage still fails, then clear storage | First unresolved cause displayed at each step; Resume disabled until all clear; explicit Resume required | R5.7–R5.10 |
+| UJ5-d | Completed reading; disk full on save | Retry same save, fail again, free space, succeed, Resume | E27; same reading held and retried without a new measurement; durable before advance, no duplicate on Resume | R5.2/R5.8/R5.10 |
+| UJ5-d-unreachable | Completed reading; collection file unavailable on save | Retry, restore original file access, succeed, Resume | E28; same reading held without a new measurement; durable before advance, no duplicate | R5.2/R5.8/R5.10 |
+| UJ5-d-unexpected | Completed reading; unclassified write/commit error | Retry after clearing injected fault, then Resume | E29 without raw error code; same reading retried, durable before advance, no duplicate | R5.2/R5.8/R5.10 |
+| UJ5-e | Held failed-save reading; separately a halt without one | Invoke End and R6.29 quit entry point; Stay paused, then repeat and confirm | E33 names held swatch only when present; Stay paused preserves halt/reading; confirmed End discards only held reading and leaves row pending, then Capture E23 halted-ended summary names it with no Keep scanning/repeated confirmation; confirmed Quit skips Capture E23, closes the session and exits; next launch opens the collection with that session ended and no Resume offer (Capture R7.11/E25 do not fire for it) | R5.11/R5.18/R6.29; Device E33; Capture R7.5/E23 |
+| UJ5-f | Battery halt | Connect power without recovered level, then raise level above resume threshold | Power alone does not clear; explicit level check used when polling unavailable; resume threshold strictly above halt | R5.14; OQ 4/4b |
+| UJ5-g | Unknown SDK error | Inject error; then successful device command | E30; clears on successful command, still explicit Resume; every enumerated known error has an injection | R5.7, R6.22–R6.23 |
+| UJ5-h | Active session with remembered/current row; separately jump/reorder beforehand | Halt and recover | Resume lands on the jumped-to remembered row, not the row current before the jump; no reset to queue head; incomplete set restarts at sample 0 | R5.8, R5.15; Capture R6.2/R7.14 |
+| UJ5-i | Open halt and durable prior rows | Terminate process, relaunch, Resume capture | Old halt closes unresolved—app terminated; Capture interruption recovery creates new session with full pre-flight and then-connected instrument, preserving saved rows | R5.17; Capture R7.7/R7.12/R7.14/R7.18 |
+| UJ5-j | Active session in P1 | Sleep, let authorization/calibration fall due, wake | Same-session halt, not interruption; other health causes may arise; due authorization/calibration alone do not interrupt; explicit Resume | R5.19, R2.17, R3.4 |
+| UJ5-k | Store unavailable when halt occurs | Attempt halt-log write, then restore store | Logging failure does not cascade/block; save-failure halt record persists when writable; record contains required fields and resolution | R5.12 |
+| UJ5-l | Assistive technology active in P1 | Raise halt | Announcement record shows no focus requirement; capture surface remains navigable | R5.20; [Capture R11.14](../capture-mode/prd-capture-mode.md#11-demo-device-and-verifiability) |
 
 ### UJ 6. Pre-authorize before going offline
 
-1. Before leaving connectivity, open the device panel
-2. Check "Offline use through ⟨date⟩" and extend offline use if the window is short
-3. Go offline; run a full bulk session with no internet at all — activation and scanning are both local within the window
-4. Return online later; the next authorization check happens silently
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ6-a | R6.30 double with R6.10 authorization fixtures; Cache/license expiry independently set, including both orderings and equality | Evaluate displayed/gating date | Earlier date used consistently; derived date labelled approximate | R2.9, R2.15, R6.10 |
+| UJ6-b | R6.30 double with R6.10 authorization fixtures; Online valid short window in P1; renewal supported in fixture | Extend explicitly; separately cross configured renewal trigger | Date updated on success; background renewal unobtrusive; failure retries at 1 min → 10 min → 100 min → daily in virtual time | R2.10–R2.11, R6.11, R6.17; live capability OQ 8 |
+| UJ6-c | R6.30 double with R6.10 authorization fixtures; Offline in P1, window valid / lapsed | Extend offline use | E11 uses correct date variant; no spinner-only or silent failure | R2.18 |
+| UJ6-d | R6.30 double with R6.10 authorization fixtures; Session started inside valid window | Advance clock beyond expiry | App lets current session complete; next session blocked; simulated SDK refusal instead follows halt path, with live enforcement still OQ 11 | R2.17; OQ 11 |
+| UJ6-e | R6.30/R6.10 for offline activation; separate Demo and telemetry-off configurations | Exercise corresponding flow | Activation invocation/destination observed; live request behavior remains OQ 1/OQ 16; Demo zero activation/device-auth invocations; telemetry-off zero telemetry attempts; update checks remain an allowed observable path for live and Demo under R2.13/DF R1.4 | R2.8, R2.13, R6.17, R6.24 |
 
 ### UJ 6.1 Authorization window expired while offline
 
-1. Open app offline with an expired pre-authorization window
-2. Pre-flight health check blocks the session before it starts with a clear "reconnect to the internet once" state
-  - Never surfaces as a mystery disconnect mid-queue
-3. User reconnects to any internet source once; authorization renews silently
-4. App ready for acquisition
+| Case | Given | When | Assert | Rows |
+| :--- | :--- | :--- | :--- | :--- |
+| UJ6.1-a | R6.30 double with R6.10 authorization fixtures; Expired effective window, offline, P0 | Attempt start; Check again while offline | E17 changes from initial to checked-while-offline with the checked line visible, no session starts, no renewal network attempt; browsing/export remain available | R2.12, R2.20; E17 |
+| UJ6.1-b | R6.30 double with R6.10 authorization fixtures; E17 visible | Restore connectivity; separately Check again online | E18 while expired; silent/explicit renewal attempted; valid window clears only expiry block, without re-entering the gate; next capture action runs all pre-flight checks | R2.12, R2.15, R2.20 |
+| UJ6.1-c | R6.30 double with R6.10 authorization fixtures; Renewal fails, with unreachable service / distinguishable serial refusal / still-expired window | Check again online in each variant | E10 / E8 / E18 respectively; no guaranteed-success promise; P0 E18 retains Check again and does not instruct use of a withheld control | R2.16, R2.20; OQ 18 |
 
-The chart below covers [UJ6](#uj-6-pre-authorize-before-going-offline) and [UJ6.1](#uj-61-authorization-window-expired-while-offline) together — the dashed edge is UJ6.1's expired-window branch.
+## Test controls and observations
 
-```mermaid
-flowchart TD
-    A[Open device panel while online] --> B["Check offline-use-through date"]
-    B --> C{Window long enough?}
-    C -- no --> D["Extend offline use"]
-    D --> E[Go offline]
-    C -- yes --> E
-    E --> F{Window still valid at pre-flight?}
-    F -- yes --> G[Run full bulk session offline]
-    G --> H[Return online, next check renews silently]
-    F -. expired while offline .-> I["Pre-flight blocks session: reconnect to the internet once"]
-    I --> J[Reconnect to any internet source once]
-    J --> K[Authorization renews silently]
-    K --> G
-```
+This maps existing requirements to test surfaces; it does not choose module layout (OQ 21 / ADR-0005).
+
+| Surface | Controlled input | Observable result | Rows |
+| :--- | :--- | :--- | :--- |
+| SpectroDevice mock | Identity, transports, discovery fields, signal strength, calibration, battery, errors, deterministic measurements, spectral switch, latency, held-open measurement | Identity/binding, transport used, measurement requests, outcomes and error parity | R6.9, R6.14–R6.16, R6.19, R6.22–R6.23, R6.27/R6.30; Capture R11.5/R11.8 |
+| Licensing / authorization doubles | Local validation outcomes; device-service outcomes; both expiries; reachability; virtual clock | Activation invocation/destination and outbound destination/time/payload; expiry choice; renewal attempts | R6.10–R6.12, R6.17 |
+| Storage / persisted-state harness | Nth-write and commit failures, unavailable store, free bytes, initial saved devices/credential/calibration/file location | Same held reading retried, durable-before-advance, restart state, local halt records | R6.13, R6.18, R6.20; R5.2/R5.10/R5.12 |
+| Shell doubles | Bluetooth permission, credential store, audio state, picker and panel interactions | Enumerated named state/variant and present conditional lines/actions (R6.29), present/enabled entry points and invocation outcomes including quit, cue kind/time/pre-emption, non-modal navigation (counter assertions after R1.8 lands) | R6.9, R6.15, R6.17, R6.29; Capture R11.14 announcement record |
+| Conformance and release gates | Same applicable behavioral cases; pinned SDK error enumeration; recorded hardware fixtures in P2 | Mock CI, actual generated-boundary CI, named hardware-owner results; usage-string check; hardware OQs retained | R6.8, R6.21–R6.23, R6.26, R6.28 |

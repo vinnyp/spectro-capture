@@ -41,27 +41,27 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 Rows and copy:
 
-- [ ] **Device** — R1.8's two landings (collection versus device panel on first run) read as complementary but not as one destination.
-- [ ] **Device** — under non-modality the counter also resets on incidental navigation.
-- [ ] **Device** — R4.4's "satisfied from P1" over-generalizes.
-- [ ] **Device** — R1.23's "or in the device picker" clause binds nothing while Surfaces assigns first-run states to the panel, so E1's non-modality is unstated.
-- [ ] **Device** — R6.17's affordance clause names no seam.
-- [ ] **Device** — E18's body leads with the withheld control.
-- [ ] **Device** — E17's "Check again" while still offline has no stated behaviour, and no row produces "Check again".
-- [ ] **Device** — R2.12's "reconnect-once" shorthand collides with §5's device-reconnect vocabulary.
-- [ ] **Device** — the copy header's loop-exit rule is written for a marked state where E3's case is a marked action.
+- [x] **Device** — R1.8's two landings (collection versus device panel on first run) read as complementary but not as one destination. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — under non-modality the counter also resets on incidental navigation. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — R4.4's "satisfied from P1" over-generalizes. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — R1.23's "or in the device picker" clause binds nothing while Surfaces assigns first-run states to the panel, so E1's non-modality is unstated. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — R6.17's affordance clause names no seam. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — E18's body leads with the withheld control. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — E17's offline Check again is R2.20; E19/E20 Check again and full recheck are R4.7/R4.2 (closed with these review fixes). — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — R2.12's "reconnect-once" shorthand collides with §5's device-reconnect vocabulary. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — the copy header's loop-exit rule is written for a marked state where E3's case is a marked action. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 
 Indexes and journeys:
 
-- [ ] **Device** — the journeys' nine "copy, §7" labels.
-- [ ] **Device** — the workflow diagram's single AuthBlocked state and its missing leave-setup edges from Pairing and Calibration.
-- [ ] **Device** — E12's "Try again" versus the diagram's return to discovery.
-- [ ] **Device** — R5.2's forward reference to ADR-0004.
+- [x] **Device** — the journeys' nine "copy, §7" labels. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — the workflow diagram's single AuthBlocked state and its missing leave-setup edges from Pairing and Calibration. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — E12's "Try again" versus the diagram's return to discovery. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — R5.2's forward reference to ADR-0004. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 
 Cross-document:
 
-- [ ] **Device** — the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0, and ride that PRD's OQ 16 amendment.
-- [ ] **Device** — OQ 5's and OQ 28's closers name dogfood data no row records.
+- [x] **Device** — the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0, and ride that PRD's OQ 16 amendment. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
+- [x] **Device** — OQ 5's and OQ 28's closers name dogfood data no row records. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 
 ### Capture Mode
 
