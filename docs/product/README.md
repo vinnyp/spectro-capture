@@ -12,7 +12,7 @@ Three PRDs remain to be written to cover v1 (five are locked). Priority is autho
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; owner sign-off on the artifact set pending, no PR yet |
-| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — split from the capture PRD under F49 and verified in rounds 25–26; owner sign-off pending, no PR yet |
+| 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F61 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16), merge pending |
 | 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; owner merge pending |
 | 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16 |
 | 6 | Collection Mode | U5, U7 | queued |
@@ -36,11 +36,11 @@ The PRD is [prd-capture-mode.md](capture-mode/prd-capture-mode.md), with three c
 
 ### 3. Inventory Import
 
-Reading a spreadsheet export, mapping its columns onto swatches, and landing every row in a collection as pending — the step that fills the queue a bulk session then scans. Import ends at ready-to-capture and never starts a session. Owns the one matching rule for Swatch Codes and collection names, the all-or-none commit, and the idempotent re-import that never costs the Cataloger a measurement.
+Reading a spreadsheet export, mapping its columns onto swatches, and appending new rows as pending while preserving matched rows’ capture state — the step that fills the queue a bulk session then scans. Import ends at ready-to-capture and never starts a session. Owns the one matching rule for Swatch Codes and collection names, the all-or-none commit, and the idempotent re-import that never costs the Cataloger a measurement.
 
 The PRD is [prd-inventory-import.md](import/prd-inventory-import.md), with four companion files: the user journeys in [prd-inventory-import-journeys.md](import/prd-inventory-import-journeys.md), the shipping error and state copy in [prd-inventory-import-copy.md](import/prd-inventory-import-copy.md), the answers to closed open questions in [prd-inventory-import-oq-results.md](import/prd-inventory-import-oq-results.md), and the owner decisions in [prd-inventory-import-fences.md](import/prd-inventory-import-fences.md).
 
-Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed; they arrived 🤝 Aligned and its verification rounds (25–26) are recorded in the capture review log.
+Its rows were split out of the locked Capture Mode PRD under fence F49 with no rule changed in that split; verification rounds 25–26 are in the capture review log. The later [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) agent-build amendment changes behavior under individual owner fences F51–F61, including column reuse, conflict-only keep, header disambiguation and guarded single-column reads; rows remain 🤝 Aligned, not implemented.
 
 ### 4. Data Foundation
 
@@ -124,7 +124,7 @@ The follow-on work each locked PRD recorded at its lock lives in [the post-lock 
 
 | ADR | Decision | Gating PRD |
 |---|---|---|
-| [0003](../decisions/README.md#decision-queue) | Storage schema: the stored mean canonical with the raw payload archived beside it, version history, derived-value recompute, migration mechanism | Data Foundation |
+| [0003](../decisions/README.md#decision-queue) | Storage schema: the stored mean canonical with the raw payload archived beside it, version history, derived-value recompute, migration mechanism and identifier-comparison data governance | Data Foundation; Inventory Import R2.3/F57 |
 | [0004](../decisions/README.md#decision-queue) | The capture → collection seam | Capture Mode (the product-level re-open) |
 
 ADRs 0002, 0005, 0006, 0007, and 0008 carry no PRD gate — they are decided from research and the existing vision.

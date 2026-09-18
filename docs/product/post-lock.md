@@ -69,12 +69,14 @@ Cross-document:
 
 ### Inventory Import
 
-- [x] **Import** — non-preview actions, including all three E40 routes, are enumerated by R4.1 and exercised in UJ 2.1; R3.8 owns transitions. Owner-authorized amendment recorded in Import F50 — commit `cf9974f` (audit branch; merge pending).
+- [x] **Import** — non-preview actions, including all three E40 routes, are enumerated by R4.1 and exercised in UJ 2.1; R3.8 owns transitions. Owner explicitly ratified the rule change in the [2026-09-17 PR #16 decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); transitions and action coverage completed in PR #16 (merge pending).
 - [x] **Import** — §4 now links to its own UJ 2–2.2 acceptance scenarios — commit `cf9974f` (audit branch; merge pending).
 - [x] **Import** — Vocabulary defines Swatch Name and both alternates, including their search-only role versus the re-import match key — commit `cf9974f` (audit branch; merge pending).
 - [x] **Import** — UJ 2.1 covers active, paused and interrupted sessions, a session starting after preview, and E40's three routes — commit `cf9974f` (audit branch; merge pending).
 
 ### Cross-document
+
+- [x] **Import / DF / DE** — 2026-09-17 owner fence F59: DF’s inbound Import line gains field preservation, decoded values directly queryable, and measurement preservation; both obligation tables carry Rows. DF R1.2 and Export’s inbound mirror use Import R2.5/R2.6’s first-seen resolved column names; Capture’s import line mirrors both E40 session routes. — PR #16 (merge pending)
 
 - [x] **Capture** — the device PRD's literal `&amp;` §2 and §7 headings break three links. — done, the F9 refactor (commit `4b0f474`, PR #11): the headings read `&`, and the inbound `#2-licensing--pre-authorization` and `#7-error--state-copy` anchors resolve; the only `&amp;` left under `docs/product` is the fixed string quoted in the device fence file's F9
 - [ ] **Capture** — the widened cross-PRD label grep should become a standing check.
@@ -101,6 +103,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **Capture** — whether N_CONSEC_HARD carries across consecutive one-row look-through sessions.
 
 ## ADR-0003
+
+- [ ] **Import** — choose comparison-data version governance; re-check existing identifiers on table upgrades and verify the R2.3 comparator against the eventual ADR-0006 macOS floor (F57; [decision queue](../decisions/README.md#decision-queue)).
 
 - [ ] **DF** — the generated ROWS_CEILING corpus's determinism contract; M6, M8 and DE R4.1 read from it.
 - [ ] **DF** — the regeneration job's progress record.

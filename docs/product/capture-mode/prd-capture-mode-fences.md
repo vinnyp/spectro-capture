@@ -75,7 +75,7 @@ Owner-locked row IDs: (none yet — rows R1.1–R11.10, E1–E37, M1–M8 exist 
 
 **Why:** A re-export from Numbers or an Excel autocorrect must not double the queue on an idempotent re-import. The owner chose the forgiving rule over the research default (case-sensitive) because spreadsheet drift is the common case for this persona.
 
-**Clarification, 2026-09-17:** The owner-authorized Inventory Import agent-build amendment specifies the comparison in [Import R2.3](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule), with equality examples in its journeys. [Import F50](../import/prd-inventory-import-fences.md#f50--agent-build-amendment-2026-09-17) records the Unicode/column choices; the single comparison rule continues to apply to Capture's collection names, find and duplicate checks.
+**Clarification, 2026-09-17:** The owner-authorized Inventory Import agent-build amendment specifies the comparison in [Import R2.3](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule), with equality examples in its journeys. [Import F56/F57](../import/prd-inventory-import-fences.md#f56--full-default-folding-without-locale-tailoring-2026-09-17) record the owner’s full-folding decision and transfer comparison-data governance to ADR-0003; the single comparison rule continues to apply to Capture's collection names, find and duplicate checks.
 
 ### F12 — The session is a named entity; device binding is released at quit (2026-09-06, round 1, R1-F4, R1-F11)
 

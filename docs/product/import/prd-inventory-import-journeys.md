@@ -12,12 +12,13 @@ Run these cases without hardware or a vendor credential (R4.1/R4.2). Compare sto
 
 | Initial state | Action | Expected result | Rules / states |
 | :--- | :--- | :--- | :--- |
-| Readable CSV; no target yet | Pick or drop file; create target with name, sample count, scan mode and optional display defaults; map code; preview; commit | New rows pending in source order; no readings or session; queue survives relaunch | R1.1, R2.1–R2.2, R3.1–R3.3 |
+| Readable CSV; no target yet | Pick or drop file; create target with name, sample count, scan mode and optional display defaults; map code; preview; commit | New rows pending in source order; no readings or session; queue survives relaunch | R1.1, R2.1–R2.2, R3.1–R3.3; [Capture R1.9](../capture-mode/prd-capture-mode.md#1-collections), [DF R1.1/R1.10](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns) |
 | Same CSV encoded as UTF-8, with and without BOM | Use default settings | Same decoded headers and fields; BOM absent from first header | R1.5 |
 | Valid UTF-16LE/BE or Windows-1252 input; semicolon or tab delimiter | Select the matching encoding and delimiter | Exact decoded field values; regenerated mapping/preview | R1.2, R1.5 |
 | CSV includes `001`, `1/2`, a quoted comma, doubled quote, quoted newline, trailing empty field; LF or CRLF record endings | Read and import | All decoded text preserved; multiline field counts as one record; no extra record for terminal line ending | R1.4–R1.5 |
-| Empty source or all-blank proposed header | Pick file | E4; choose a header or supply names; no imported writes | R1.3, R1.5, R3.8 |
-| Headerless file, or preamble before actual header | Supply names, or select the header record | All records are data in the first case; records preceding the chosen header are ignored in the second | R1.5 |
+| Empty source | Pick file | E6; pick another file or cancel; no imported writes | R1.3, R1.5d, R3.8b |
+| All-blank proposed header beside data records | Pick file | E4; choose a header or supply names; no imported writes | R1.3, R1.5d, R3.8a |
+| Headerless file, or preamble before actual header | Supply names, or select the header record | All records are data in the first case: a wrong-width record 1 is listed as 1; with a header at record 3 after a preamble, a wrong-width record 5 is listed as 5 | R1.5 |
 | Invalid encoding bytes, contradictory BOM, or unclosed quoted field | Read file | E5 with encoding/syntax variant; no replacement bytes or guessed fields, no writes | R1.3, R1.5 |
 | Header only | Read file | E6, pick another file or cancel; no import | R1.3, R3.8 |
 | Wrong-width record plus valid records, one containing a quoted newline | Continue without excluded rows | E7 lists source record numbers; valid rows still pass through preview before commit | R1.4, R3.8 |
@@ -25,25 +26,36 @@ Run these cases without hardware or a vendor credential (R4.1/R4.2). Compare sto
 | Valid preview; source changes, including a header change | Commit | E13; re-read, revalidate mapping, reset choices, and require a fresh preview | R3.1, R3.8 |
 | Valid preview; source moved or removed | Commit | E38, re-pick or cancel; no imported writes | R1.3, R3.8 |
 | Target created explicitly during import | Cancel before commit or inject commit failure | Created collection remains empty; no partial items or imported columns | R2.1, R3.2, R3.7 |
-| Existing target; import would exceed ROWS_CEILING | Preview then commit | Warning names resulting size; eligible rows still import | R3.1 |
+| Existing target; import would exceed ROWS_CEILING | Preview then commit | E43 names target, existing count, encoding/delimiter, all three outcome counts, added columns, exclusions and absent rows; warning names resulting size and ceiling; eligible rows still import | R3.1 |
+| Semicolon or tab file, read with default comma | Attempt to save/reuse mapping | E45 blocks save/reuse; delimiter control available; choosing the correct separator re-reads into multiple columns and a fresh mapping/preview | R1.2, R1.6, R3.8a/m/n |
+| Genuine one-column inventory | Choose “Use this one column”; map code; preview | Valid mapping can be saved/reused only after confirmation; E43 displays settings; a re-read requires confirmation again | R1.6, R3.8m/n |
+| E5 for a UTF-16LE file with BOM | Choose UTF-8 (contradictory BOM), then UTF-16LE and the correct separator | Invalid retry remains E5 without writes; correct retry recovers through guard/mapping to E43 | R1.5a, R3.8a |
+| Each available encoding fails for the file | Exhaust encoding choices | E5 all-encodings-failed variant tells how to re-save as UTF-8; re-pick a valid export reaches preview; Cancel exits unchanged | R1.5a, R3.8b/j |
+| Every import state E4–E14, E38, E40–E45 (each variant) | Exercise every offered action, separately including Cancel | Destinations match R3.8; only E43 Import writes, Cancel preserves target, re-pick always re-reads; exclusions persist through Continue | R3.8a–o, R4.1–R4.2 |
 
 ### UJ 2.1 Import additional rows into an existing collection
 
 | Initial state | Action | Expected result | Rules / states |
 | :--- | :--- | :--- | :--- |
-| Existing pending, captured and set-aside rows; file contains matched, new and absent items | Import into existing target | No additional target-confirmation dialog; preview counts all dispositions; only new rows append, matches retain state/order/measurements, absent items unchanged | R2.1, R3.1–R3.3 |
+| Existing pending, captured and set-aside rows; file contains matched, new and absent items | Import into existing target | No additional target-confirmation dialog; E43 names the target and its existing item count and counts all dispositions; only new rows append, matches retain state/order/measurements, absent items unchanged | R2.1, R3.1–R3.3 |
 | Successful import | Repeat with identical mapping/choices and no intervening edits | All eligible rows unchanged; no duplicate items, column additions, queue changes or measurement writes | R3.3, R3.6–R3.7 |
 | Stored metadata `Blue`; source blank, same value, changed value, or column omitted (separate cases) | Preview and commit | Blank clears; same is unchanged; changed replaces; omitted preserves; exercise mapped fields and passthrough metadata | R3.6 |
 | Stored field already blank | Re-import blank field | Unchanged count, no proposed clear | R3.6 |
-| Captured item has changed metadata, including a blank and differently spelled but equivalent Swatch Code | Toggle overwrite/keep for one row and all rows | E14; counts reflect chosen effects; keep preserves all values; overwrite replaces supplied metadata; both preserve measurements/history | R3.5–R3.6 |
+| Captured item has changed metadata, including a blank and differently spelled but equivalent Swatch Code | Toggle overwrite/keep for one row and all rows | E14; counts reflect chosen effects; keep preserves previously present values and fills absent fields; overwrite replaces supplied metadata; both preserve measurements/history | R3.5–R3.6 |
 | Pending or set-aside item with changed metadata | Commit | Supplied changes applied without captured-row choice; state unchanged | R3.3, R3.5 |
-| Existing metadata columns; file has a new column | Import twice | New column appends once; existing positions retained; exact-name match reuses it on second import | R2.2, R3.6 |
-| All captured matches choose keep; source adds a metadata column | Preview and commit | Added column listed separately from unchanged-row count; column appended; existing row values unchanged | R3.5–R3.6 |
-| One code matches two existing items | Continue without it | E11 changes neither item; other eligible records may commit after preview | R3.4, R3.8 |
+| Existing metadata columns; file has a new column | Import twice | New column appends once; existing positions retained; R2.3-equal header reuses it on second import with first-seen spelling | R2.2, R3.6 |
+| All captured matches choose keep; source adds a metadata column | Preview and commit | Added column listed separately from unchanged-row count; column appended and incoming values stored for each keep-row, even empty; previously present values unchanged | R3.5–R3.6 |
+| One code matches two existing items | Continue without it | E11 changes neither item; both matches count as present, not absent, in E43; other eligible records may commit after preview | R3.4, R3.8 |
 | Source contains two equivalent codes matching an existing item | Continue without duplicates | Both source records excluded; existing item unchanged and not counted as absent from source | R2.4, R3.6 |
-| Existing target; store fails during commit | Attempt import | Entire import rolled back, including new columns and metadata clears | R3.2 |
+| Existing target; store fails during commit | Attempt import | E44 names the cause (no room uses DF E15); entire import rolled back on a local volume, including new columns and metadata clears; “Try again” requires a fresh preview, then succeeds once the fault is removed | R3.2 |
 | Target session active, paused or interrupted (each case), or becomes active after preview | Select target / attempt commit | E40 names session, offers Go to the session / End that session / Cancel; no imported writes | R3.2, R4.1 |
 | E40 | Go to session; cancel import; cancel ending; confirm ending (separate cases) | Open session/resume surface; exit unchanged; stay blocked; or follow Capture ending rules and return through fresh preview, respectively | R3.8 |
+| Captured row with old name and nonblank metadata; source changes name and clears metadata | Leave E14’s “Take the new details” default untouched; import | Row updated, new name stored and metadata cleared, measurements/history unchanged | R3.5, R3.6c |
+| Pending and set-aside items with code `CG 3`; separate fixtures import `cg  3` | Preview and commit | Same item, updated count, incoming displayed spelling; no E14, no new item, no state/order/measurement changes | R3.6f–g |
+| Captured keep-row with a present blank field and an absent field; incoming values nonblank | Import | Present blank stays blank; absent field receives value; row unchanged unless another previously present field changes | R3.6d–g |
+| Only previously absent fields filled; or only unchanged values supplied (separate cases) | Preview and import | Eligible all-unchanged import finishes; new fields persist where supplied, columns listed separately, repeated import creates no duplicates | R3.6d–g, R3.7 |
+| Stored `Notes` column and value; source ` notes ` in a new position and corrected value | Preview and import twice | One stored `Notes` column at its old position, corrected decoded value, no column addition; second import unchanged | R2.6, R3.6 |
+| Stored metadata `Blue`; source `blue` or ` Blue ` | Import with default choice | Exact text difference counts as updated even though R2.3 would match; store incoming text | R3.6 |
 
 ### UJ 2.2 Mapping metadata fields
 
@@ -51,11 +63,13 @@ Run these cases without hardware or a vendor credential (R4.1/R4.2). Compare sto
 | :--- | :--- | :--- | :--- |
 | No code mapping | Try to save mapping | E8; cannot save until one source maps to Swatch Code | R2.2 |
 | Code, name, alternate code/name and extra columns | Map fields | Optional fields remain optional; each source/target used at most once; extra columns retained | R2.2 |
-| Saved mapping; named headers reordered or case/spacing changed | Pick next file | Same signature restores identity mapping by name, never old position; differently spelled passthrough names remain distinct stored columns | R1.2, R2.2 |
-| Blank header at position 2; explicit `Column 2` and `Column 2 (2)` elsewhere | Read file | Blank becomes `Column 2 (3)`; explicit names preserved; E12 lists generated name and position | R2.5 |
-| Named headers `Name` and ` name ` | Read file | E41 lists both positions; no saved mapping applied or saved; fix source and re-pick | R2.5 |
+| Saved mapping; named headers reordered or case/spacing changed | Pick next file | Same signature restores identity mapping by name, never old position; R2.3-equal passthrough headers reuse the stored column and retain first-seen spelling and position | R1.2, R2.2, R2.6 |
+| Blank header at position 2; explicit `Column 2` and `Column 2 (2)` elsewhere | Read file | Blank becomes `Column 2 (3)`; explicit names preserved; E12 lists generated name and position; “Continue with the listed names” reaches mapping, or re-pick reads fresh | R2.5 |
+| Named headers `Name` and ` name ` | Read file | E41 lists both positions and resolved `Name` / ` name  (2)`; accept names before mapping, or re-pick; same source resolves identically on re-import | R2.5 |
 | Whitespace-only code | Validate | E9 excludes record | R2.4 |
 | Two codes equal in the table below | Validate | E10 excludes every member of the group; no winner | R2.3–R2.4 |
+| Headers `Notes`, ` notes `, `Notes (2)`, plus a blank header | Accept all E12/E41 names | First spelling preserved; duplicate resolves to ` notes  (3)` because suffix 2 collides with a reserved input name; blank gets its positional name; stable mapping on repeat | R2.5, R3.8o |
+| Two codes unequal in the table below; empty target | Map, preview and import | Two eligible new items, no E10; exact display text retained | R2.3, R3.3a |
 
 **R2.3 equality cases** — assert both equality and preserved display text. The same comparison serves collection names, headers, and Capture's find/duplicate checks.
 

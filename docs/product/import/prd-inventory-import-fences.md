@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding; F50 records this agent-build amendment and the scope of its authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F61 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -22,18 +22,77 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 ### F50 — Agent-build amendment (2026-09-17)
 
-**Authorization:** The owner approved the eight-item Inventory Import audit proposal in this session ("proceed with your recommended changes"). The following details were selected by the agent within that approved scope; they are new specifications, not claims about prior owner decisions or completed dogfood evidence.
+**Authorization:** The owner approved the eight-item Inventory Import audit proposal in this session (“proceed with your recommended changes”). The first revision included agent-selected behavior; the review identified choices needing individual ratification, now recorded in F51–F61 from the [owner’s 2026-09-17 decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817).
 
-**Decision:**
+**Decision:** Keep stable IDs and the PRD and four companions; move split history here, state v1/P0 once, retain implementation status, and express journeys as acceptance tables. Requirement rows remain normative; no architecture, module layout, or completed dogfood evidence is claimed. F51–F61 supersede the first revision’s behavioral proposals, including exact-name column reuse, blocking duplicate headers, and the Unicode data-version pin.
 
-1. Keep stable IDs and the PRD and four companion files; move the split history here, state v1/P0 once, retain implementation status, and express journeys as acceptance tables. Requirement rows remain normative; no architecture or module layout is selected.
-2. Only new items append pending; matched items retain state, order and measurements. Blank-to-blank is unchanged, supplied blank clears a value, absent column preserves it, and keep/overwrite choices determine the preview counts; imported column additions are shown separately.
-3. Specify R2.3 using Unicode 17.0.0 White_Space and canonical caseless matching, including full default folding and NFD, without locale tailoring or compatibility normalization. A future change to comparison results requires explicit review of existing identifiers, not a silent library-driven change; F11's forgiving whitespace/case rule remains intact.
-4. Reject equivalent named headers before mapping; generate collision-free positional names for blanks. Reuse identity mappings by normalized header name, while passthrough storage uses exact names so an import cannot silently rename an existing column; mapping-storage lifecycle and Collection Mode renames remain the existing post-lock work.
-5. Creating the target is Capture's separate action: a canceled or failed import leaves that empty collection. All-excluded input cannot commit; all-unchanged input can finish; import actions never bypass preview, and session-blocked actions are observable and follow Capture's existing ending/resume paths.
-6. R1.5 specifies a minimal read contract and preserves field text; detection stays open as OQ 1, and named templates move to OQ 2 with no named-template UI before the owner's decision. M1 still needs real export evidence; this amendment does not fabricate it.
+**Why:** Builders need deterministic requirements and testable outcomes; repeated narrative and process history obscure that contract.
 
-**Why:** A builder needs deterministic outcomes and an explicit unresolved boundary. Repeated human-facing narrative and process history obscure that contract; leaving equality, column identity and commit eligibility implicit forces agents to invent different behaviors.
+### F51 — Blank-to-blank is unchanged (2026-09-17)
+
+**Decision:** A supplied blank over a stored blank counts as unchanged; this replaces the locked R3.6 wording.
+
+**Why:** A no-op must not inflate the preview’s updated count.
+
+### F52 — Preview confirms the target (2026-09-17)
+
+**Decision:** Selecting an existing collection adds no confirmation dialog; the preview names the target collection and existing item count as a first-class line.
+
+**Why:** The final review identifies the destination where the user commits, without an extra dialog.
+
+### F53 — Header drift reuses the stored column (2026-09-17)
+
+**Decision:** A passthrough header equal under R2.3 reuses the stored column, keeping its first-seen spelling and position; append only unmatched columns.
+
+**Why:** Spreadsheet case and spacing drift must not multiply stored columns.
+
+### F54 — Keep preserves conflicts only (2026-09-17)
+
+**Decision:** A captured row choosing “Keep what I have” retains previously present fields, including blanks, but receives incoming values for previously absent fields. Column addition alone never counts a row as updated; list added columns separately.
+
+**Why:** Keep protects existing choices while allowing new metadata to arrive; row counts must not conflate a column addition with an existing-value change.
+
+### F55 — Duplicate headers are a notice (2026-09-17)
+
+**Decision:** Disambiguate later named-header collisions under R2.3 with the same suffix mechanism used for blank headers; show the results in E12/E41 with “Continue with the listed names” and “Pick the file again”. Keep literal generated-name templates beside the copy.
+
+**Why:** The user can import all columns without editing a spreadsheet first, while seeing exactly which names will be stored.
+
+### F56 — Full default folding without locale tailoring (2026-09-17)
+
+**Decision:** Retain canonical caseless matching with full default case folding and no locale tailoring: Straße equals STRASSE, while İ differs from i and ı differs from I; the nine-pair journey table specifies the observable cases.
+
+**Why:** One locale-independent rule keeps import, uniqueness, find and duplicate checks consistent across machines.
+
+### F57 — Comparison data version belongs to ADR-0003 (2026-09-17)
+
+**Decision:** Remove the Unicode version pin from R2.3; ADR-0003 chooses comparison data/version governance, and a table upgrade requires re-checking existing identifiers. Add this to the decision queue, including implementation evidence against the macOS floor when ADR-0006 selects it.
+
+**Why:** Product behavior must stay stable without pretending the PRD has selected an unverified dependency or OS floor.
+
+### F58 — Guard single-column reads (2026-09-17)
+
+**Decision:** Always show encoding and delimiter in preview; require explicit confirmation and offer the delimiter control for a one-column parse before mapping is saved or reused. The four encodings and three delimiters are provisional under OQ 1, the guard remains until that question closes, and E5 offers a UTF-8 re-save path when all encodings fail.
+
+**Why:** A valid one-column parse can still be the wrong interpretation of a spreadsheet export; expose that ambiguity before remembering the mapping.
+
+### F59 — Mirror storage obligations (2026-09-17)
+
+**Decision:** Decoded values stay directly queryable as a Data Foundation obligation; mirror field/column preservation and re-import measurement preservation into its inbound table, with Rows columns on both sides. Record the cross-document amendment in the post-lock list.
+
+**Why:** Agents implementing the store must receive the same preservation contract as agents implementing import.
+
+### F60 — Changed source resets choices (2026-09-17)
+
+**Decision:** On E13 re-read, reset overwrite choices and require a new preview, revalidating mapping first.
+
+**Why:** Earlier overwrite approvals describe the old file and cannot authorize changed input.
+
+### F61 — Accept remaining flow and open-question changes (2026-09-17)
+
+**Decision:** Keep OQ 1 (detection) separate from OQ 2 (named templates); offer Cancel on every import state and use “Continue without them” at E7/E9/E10. All-unchanged imports may commit, all-excluded imports may not; source record numbering includes headers/preambles, starts at data record 1 for headerless input, and counts a quoted multiline record once.
+
+**Why:** Open questions need separate evidence and owners; action labels must distinguish continuing from committing, and source numbering must remain usable when locating an issue.
 
 ## Fence → row map
 
@@ -41,7 +100,18 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 
 - **F4** the import target is chosen in the app — [R2.1](prd-inventory-import.md#2-target-mapping-and-the-matching-rule). **F11** Swatch Code normalisation — [R2.3](prd-inventory-import.md#2-target-mapping-and-the-matching-rule), [R2.4](prd-inventory-import.md#2-target-mapping-and-the-matching-rule). F11 also carries the capture PRD's R1.2, R6.1, and R9.2, which cite [R2.3](prd-inventory-import.md#2-target-mapping-and-the-matching-rule) across.
 - In the [capture fence file](../capture-mode/prd-capture-mode-fences.md): **F24** the priority split — the [Legend](prd-inventory-import.md#legend). **F45** every requirement row is at most two sentences — every row in [§1](prd-inventory-import.md#1-reading-the-file) through [§4](prd-inventory-import.md#4-demo-device-and-verifiability). **F49** the split — this document, its four companions, and the historical ID map below.
-- **F50** agent-build amendment — R1.2–R1.5, R2.2–R2.5, R3.1–R3.8, R4.1–R4.2, OQ 1/2, acceptance journeys and copy transitions. New requirement IDs: R1.5, R2.5, R3.7, R3.8; new copy IDs: E41, E42; existing IDs are retained.
+- **F50** structural amendment — Legend, Traceability, acceptance-table shape and stable IDs. New base requirement IDs: R1.5, R1.6, R2.5, R2.6, R3.7, R3.8; new copy IDs: E41–E45; existing IDs retained.
+- **F51** blank-to-blank is unchanged — R3.6b/g.
+- **F52** preview confirms the target — R2.1, R3.1; E43.
+- **F53** header drift reuses the stored column — R2.2, R2.6.
+- **F54** keep preserves conflicts only — R3.5, R3.6d–g; E14, E43.
+- **F55** duplicate headers are a notice — R2.5; E12, E41.
+- **F56** full default folding without locale tailoring — R2.3; UJ 2.2.
+- **F57** comparison data version belongs to adr-0003 — R2.3; build dependencies; ADR-0003 queue.
+- **F58** guard single-column reads — R1.2, R1.5, R1.6; E5, E45; OQ 1.
+- **F59** mirror storage obligations — R2.2, R2.5, R2.6, R3.3; inherited obligations; DF R1.2/R2.3.
+- **F60** changed source resets choices — R3.1, R3.8f; E13.
+- **F61** accept remaining flow and open-question changes — R1.4, R3.7, R3.8; E7/E9/E10/E42; OQ 1/2.
 
 ## Historical ID map
 
