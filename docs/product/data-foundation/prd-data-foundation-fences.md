@@ -152,6 +152,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Why:** A half-scanned collection is the ordinary state between sittings, and the export must reconcile against the spreadsheet the inventory came from.
 
+**Clarification (2026-09-18, PR #18):** F29’s historical export payload clause is read under Export F14/DF F37: quarantine alone does not suppress an available archive. [Owner decisions 2 and 4](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732380642) confirm the boundary; Export F21 specifies canonical quarantine provenance.
+
 ### F30 — The export contract is its own PRD (2026-09-09, after the round-2 fix pass)
 
 **Decision:** The CSV export contract — §4 (R4.1–R4.9), the golden-file rule (R7.9), the export half of R7.8, the export surface (R7.6a), M3, OQ 8, OQ 9, OQ 11, OQ 16, the export states (E6, E7, E17, E18), and DJ1 — moves to a new PRD, Data Export, at `docs/product/export/` in the five-file shape, with its own row-ID families, fences, and a 4,000-word budget. Moved IDs are retired in this document's Legend naming their destination and recorded in the destination's Traceability naming their origin; the decisions the moved rows carry (F5, F18, F20, F22, F23, F24, F26, F28, F29) are transcribed into the export PRD's fence file with their provenance, and this file keeps them as history. The two PRDs share this review log; round 3 onward reads both. Chosen over raising the budget again (4,000 → 5,000 → 7,000) after the round-2 fix pass landed at 7,690 with nothing left to cut but rules.
@@ -212,7 +214,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F32 | [R6.5](prd-data-foundation.md#6-deletion-and-privacy); the Capture Mode OQ 24 line in [Sibling amendment map](#sibling-amendment-map). |
 | F33 | R2.9; R5.5a–c/f (F47 defines derived-set regeneration); R7.6g/h; R7.7i; E4/E31; DJ3; OQ 21, with interim export behavior settled by F37. |
 | F34 | R1.3; R7.3a/b; E22; DJ3. |
-| F35 | Legend/Traceability; R2.3a–i; R3.3a–g; R7.3a–k (R7.3l retired by F47); R6.2a–d/R6.3; R7.7a–m; E8/E14; OQ 10/14/17–21; DJ2–DJ5. |
+| F35 | Legend/Traceability; R2.3a–i; R3.3a–g; R7.3a–k (R7.3l retired by F47); R6.2a–d/R6.3; R7.7a–m (PR #18 extends the inventory with R7.7n under Export F20, and a/e/i under Export F23/F19/F26); E8/E14; OQ 10/14/17–21; DJ2–DJ5. |
 | F36 | R5.5d, R7.3; post-lock ADR-0003 item. |
 | F37 | R5.5a–c, outbound Data Export obligation, R7.7i, OQ 21; DE R1.1/R1.3 and F14. |
 | F38 | R1.5/R1.9, R7.3c/j, OQ 19, E9/E15/E25/E27, DJ3. |
