@@ -35,7 +35,7 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 ### Data Export
 
-- [x] **DE** — agent-build amendment F17 specifies stored-order collision allocation and literal `import_` examples; F18 specifies empty-collection preview/output. Implementation checks remain below; branch `audit/data-export-prd`.
+- [x] **DE** — agent-build amendment F17 specifies stored-order collision allocation and literal `import_` examples; F18 specifies empty-collection preview/output. Implementation checks remain below; [PR #18](https://github.com/vinnyp/spectro-capture/pull/18).
 
 ### Device Management
 

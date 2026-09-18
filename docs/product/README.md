@@ -14,7 +14,7 @@ Three PRDs remain to be written to cover v1 (five are locked). Priority is autho
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; cross-document amendment under Import F59 in PR #16 |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F64 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) |
 | 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; Import F59 amendment in PR #16; [PR #17](https://github.com/vinnyp/spectro-capture/pull/17) agent-build amendment under F33–F49 (2026-09-17), with OQ 17–21 retained |
-| 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16; cross-document amendment under Import F59 in PR #16; PR #17 fixture/export amendment under DE F14 (2026-09-17); agent-build amendment F15–F18 (2026-09-17), branch `audit/data-export-prd` |
+| 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16; cross-document amendment under Import F59 in PR #16; PR #17 fixture/export amendment under DE F14 (2026-09-17); [PR #18](https://github.com/vinnyp/spectro-capture/pull/18) agent-build amendment F15–F18 (2026-09-17) |
 | 6 | Collection Mode | U5, U7 | queued |
 | 7 | QC & Comparison | U4 | queued |
 | 8 | Color Visualization | U7 | queued |

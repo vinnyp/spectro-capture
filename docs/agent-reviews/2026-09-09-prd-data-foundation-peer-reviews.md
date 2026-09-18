@@ -579,7 +579,7 @@ Declined, released by the lens: plan's "second enumeration" naming on R7.5; staf
 
 ## Data Export agent-build amendment — 2026-09-17
 
-**Scope:** Data Export, following merged Data Foundation PR #17. Worktree/branch: `audit/data-export-prd`, based on main `7b132ef`. The owner approved the seven-item recommendation list before edits; this is an implementation of that audit, not a new peer-review round or a claim that product code exists.
+**Scope:** [Data Export PR #18](https://github.com/vinnyp/spectro-capture/pull/18), following merged Data Foundation PR #17. Worktree/branch: `audit/data-export-prd`, based on main `7b132ef`. The owner approved the seven-item recommendation list before edits; this is an implementation of that audit, not a new peer-review round or a claim that product code exists.
 
 | Approved improvement | Change |
 | :--- | :--- |
