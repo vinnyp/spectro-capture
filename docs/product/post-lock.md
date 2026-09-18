@@ -69,10 +69,10 @@ Cross-document:
 
 ### Inventory Import
 
-- [ ] **Import** — no row obliges a test to list the actions a non-preview import state offers (E40's three routes). Owner decision (a rule change).
-- [ ] **Import** — §4's Traces line points at UJ 3.9.
-- [ ] **Import** — the three Swatch field terms are defined in neither Vocabulary.
-- [ ] **Import** — the journeys carry no blocked-import path for R3.2 and E40.
+- [x] **Import** — non-preview actions, including all three E40 routes, are enumerated by R4.1 and exercised in UJ 2.1; R3.8 owns transitions. Owner-authorized amendment recorded in Import F50 — commit `cf9974f` (audit branch; merge pending).
+- [x] **Import** — §4 now links to its own UJ 2–2.2 acceptance scenarios — commit `cf9974f` (audit branch; merge pending).
+- [x] **Import** — Vocabulary defines Swatch Name and both alternates, including their search-only role versus the re-import match key — commit `cf9974f` (audit branch; merge pending).
+- [x] **Import** — UJ 2.1 covers active, paused and interrupted sessions, a session starting after preview, and E40's three routes — commit `cf9974f` (audit branch; merge pending).
 
 ### Cross-document
 
