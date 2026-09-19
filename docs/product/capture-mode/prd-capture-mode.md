@@ -1,6 +1,6 @@
 # PRD: Capture Mode
 
-Status: locked (2026-09-08); Device F16/F24/F28/F29/F31 / Capture F50 amendment 2026-09-18; re-locked by PR #19; agent-build amendment 2026-09-18 under F51–F69 (peer review pending)
+Status: locked (2026-09-08); Device F16/F24/F28/F29/F31 / Capture F50 amendment 2026-09-18; re-locked by PR #19; agent-build amendment 2026-09-18 under F51–F69; peer review closed 2026-09-18 (PR #20); re-locked on merge
 
 Companion files: the journeys are in [prd-capture-mode-journeys.md](prd-capture-mode-journeys.md), the shipping copy in [prd-capture-mode-copy.md](prd-capture-mode-copy.md), the answers to closed open questions in [prd-capture-mode-oq-results.md](prd-capture-mode-oq-results.md), and the owner's decisions in [prd-capture-mode-fences.md](prd-capture-mode-fences.md).
 

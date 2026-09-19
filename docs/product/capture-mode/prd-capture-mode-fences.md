@@ -1,9 +1,9 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review pending.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
-Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed, while the F51–F69 amendment is pending review.
+Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed. For F51–F69, peer review closed 2026-09-18 (PR #20); re-locked on merge (closure recorded under F51).
 
 ## Fences
 
@@ -422,6 +422,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Carried by:** Build contract, Vocabulary, R8.1a–k structure, journeys, product index; F46 clarification; F55 consistency checks. No implementation is claimed.
 
 **Clarified 2026-09-18 ([owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147)):** The initial “proceed” authority approved the audit work; the individual WHAT choices are now ratified by D1–D10 in F56–F65, with structural retirement specifically D8 / F63. These decisions supersede any inference of separate authority from the earlier blanket line.
+
+**Closed 2026-09-18 ([final review](https://github.com/vinnyp/spectro-capture/pull/20#pullrequestreview-5254286327)):** For F51–F69, peer review closed 2026-09-18 (PR #20); re-locked on merge. This single closure supersedes “peer review pending” in all nineteen Authority lines; those lines remain as history.
 
 ### F52 — Separate sample agreement, canonical mean and display derivation (2026-09-18)
 
