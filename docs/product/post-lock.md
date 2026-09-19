@@ -65,15 +65,15 @@ Cross-document:
 
 ### Capture Mode
 
-- [ ] **Capture** — R11.8's "set … against" → "relative to"; contested, since two lenses read "against" as R4.9's term.
-- [ ] **Capture** — F47's Decision lacks an "(R11.12 added rounds 21–22)" marker.
-- [ ] **Capture** — the Surfaces table carries no ‹P1› on P1-only state names.
-- [ ] **Capture** — the "Device PRD, simulated layer" obligation cell does not summarise R11.8's spread control.
-- [ ] **Capture** — OQ 18's results phrasing predates F42.
-- [ ] **Capture** — the Legend's serial comma.
-- [ ] **Capture** — F47's map files E18's and E42's re-scan marks as action-level where they are body-variant marks; name the third mark kind once in the copy header.
-- [ ] **Capture** — UJ 3.9 step 4's gloss omits the agreement-check setting.
-- [ ] **Capture** — §11 step 4's negatives inherit N_CONSEC_HARD by ellipsis.
+- [x] **Capture** — R11.8 now names spread below, equal to, or above SAMPLE_TOLERANCE (F62), resolving the ambiguous “set … against” wording. — Capture agent-build amendment F51–F55, ratified by F62 (PR #20).
+- [x] **Capture** — F47's Decision lacks an "(R11.12 added rounds 21–22)" marker. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — the Surfaces table carries no ‹P1› on P1-only state names. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — the "Device PRD, simulated layer" obligation cell does not summarise R11.8's spread control. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — OQ 18's results phrasing predates F42. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — the Legend's serial comma. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — F47's map files E18's and E42's re-scan marks as action-level where they are body-variant marks; name the third mark kind once in the copy header. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — UJ 3.9 step 4's gloss omits the agreement-check setting. — Capture agent-build amendment F51–F55 (PR #20).
+- [x] **Capture** — §11 step 4's negatives inherit N_CONSEC_HARD by ellipsis. — Capture agent-build amendment F51–F55 (PR #20).
 
 ### Inventory Import
 
@@ -89,7 +89,7 @@ Cross-document:
 - [x] **Import / DF / DE** — 2026-09-17 owner fence F59: DF’s inbound Import line gains field preservation, decoded values directly queryable, and measurement preservation; both obligation tables carry Rows. DF R1.2 and Export’s inbound mirror use Import R2.5/R2.6’s first-seen resolved column names; Capture’s import line mirrors both E40 session routes. — PR #16
 
 - [x] **Capture** — the device PRD's literal `&amp;` §2 and §7 headings break three links. — done, the F9 refactor (commit `4b0f474`, PR #11): the headings read `&`, and the inbound `#2-licensing--pre-authorization` and `#7-error--state-copy` anchors resolve; the only `&amp;` left under `docs/product` is the fixed string quoted in the device fence file's F9
-- [ ] **Capture** — the widened cross-PRD label grep should become a standing check.
+- [x] **Capture** — the widened cross-PRD label grep should become a standing check. — Capture §12 standing label check, F55, ratified by F65 (PR #20).
 - [x] **DF** — R7.7a–m is the sole fixture inventory; Data Export links to it instead of mirroring the list. — PR #17 agent-build amendment.
 - [ ] **DF** — whether a Collection Mode rename moves an imported column's stored name.
 - [x] **DF** — OQ 2 distinguishes ADR-0003's required SQLite features from ADR-0006's macOS floor; owner ratifies the reader floor after both. — PR #17 agent-build amendment.
@@ -110,7 +110,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **Capture** — a mixed-route run counts.
 - [ ] **Capture** — "Accept the average" and a captured row reset the counter.
 - [ ] **Capture** — a run spanning the queue → review boundary.
-- [ ] **Capture** — whether N_CONSEC_HARD carries across consecutive one-row look-through sessions.
+- [x] **Capture** — whether N_CONSEC_HARD carries across consecutive one-row look-through sessions. — Owner D3 / F58 in PR #20 sets a session-scoped counter starting at zero; separate one-row sessions never accumulate.
+- [ ] **Capture** — implement F58/UJ3.1-l’s separate-one-row counter-lifetime case; policy decided in PR #20, build evidence pending.
 
 ## ADR-0003
 
