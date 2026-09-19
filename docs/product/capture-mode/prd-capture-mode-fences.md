@@ -1,9 +1,9 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F68 individually ratify its WHAT choices under owner decisions D1–D13 (2026-09-18); peer review pending.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review pending.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
-Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed, while the F51–F68 amendment is pending review.
+Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed, while the F51–F69 amendment is pending review.
 
 ## Fences
 
@@ -467,6 +467,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736942308)):** Round-2 direct fixes add T6’s P0 repeated-gate test, a measuring-build fixture for UJ3-a’s M11 assertion, all-closed-cue channel assertions in UJ3-k, concrete single-session values in UJ3.4-c, E28/E41 in the queue/find surface lists, and restored row links; §12 and provenance cells name F56/F62/F65 as ratifiers.
 
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** Round-3 oracle fixes limit two-channel assertions to cues whose behavior rows promise two senses and require rejection on at least one non-visual channel (R4.3), superseding the earlier all-cues wording. UJ3.5-g reads 22 minutes at the summary and derives 10/15 as running sums; UJ3.5-g2 reads 4/0/2 from the collection surface/R11.11 and asserts only the missing zero-count set-aside sentence on E23; UJ1-e names the declared reference-pair set.
+
 ### F56 — Separate agreement reference from display derivation (2026-09-18)
 
 **Authority:** D1 in the [owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736642147); peer review pending.
@@ -483,9 +485,11 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Decision:** F53 is ratified: each linked session contributes its own capture intervals and outcomes once, and its successor presents cumulative chain figures. R7.15/E24’s completion summary uses the cumulative elapsed capture time and corresponding M2 rate; R11.11 separately exposes own and cumulative figures, and R11.12 distinguishes a single-session summary (own equals chain) from a resumed-chain summary. Own times 10/5/7 minutes total 22, never 47; UJ3.5-g identifies the surface behind every number.
 
-**Carried by:** R7.15, R7.18, E24, R11.11, R11.12, M2, UJ3.5-g; Capture/DF obligations; dated F53 and DF F49 clarifications.
+**Carried by:** R7.15, R7.18, E24, R11.11, M2, UJ3.5-g; Capture/DF obligations; dated F53 and DF F49 clarifications.
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736942308)):** D11 / F66 supersedes the historical tally/discriminator interpretation: R7.15/E24 and R7.5/E23 use collection-state tallies, while elapsed time/rate use the chain basis. The single-session/resumed-chain discriminator belongs to R11.11’s numeric readback, not R11.12’s copy variants; UJ3.5-g/g2 distinguishes both bases and the defer-then-capture case.
+
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** D14 / F69 specifies the rate numerator as only rows captured by this chain over its cumulative elapsed capture time; the collection’s displayed captured count is deliberately different when earlier ended sessions contributed captures. The current Carried-by list drops R11.12 because the accounting basis is read through R11.11, not a copy variant.
 
 ### F58 — Keep the guard counter within its session (2026-09-18)
 
@@ -493,9 +497,11 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Decision:** N_CONSEC_HARD’s counter is session-scoped: it starts at zero and ends with its session, so consecutive one-row look-through scans never accumulate. R5.9’s queue-and-review rule applies within one bulk session; OQ 3 retains only whether dogfood evidence should change this interim, not an unbuildable no-interim gap. The policy question in post-lock is closed; its implementation test remains open.
 
-**Carried by:** R5.9, R11.6, R11.11, Legend, OQ 3, UJ3.1-l/UJ3.9, post-lock; dated F54/F55 clarifications.
+**Carried by:** R3.1, R5.9, R11.6, R11.11, Legend, OQ 3, UJ3.1-l/UJ3.9, post-lock; dated F54/F55 clarifications.
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736942308)):** D13 / F68 owns the phase claim moved out of the Decision: “including the P0 one-row deferred-acquisition path reachable through R8.1a/R8.3 (distinct from P1 ad-hoc/captured-correction entry points)”. R8.3 now carries the P0 gate/binding/exit mechanics, and R9.4/R9.5/R9.8 remain P1; session-scoped counting is unchanged. The round-2 readback fix adds durable guard-counter state to R3.1 for R11.11 after reopen, without inheriting it into a new session.
+
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** The current Carried-by/map now includes R3.1, which durably records the counter under the preceding clarification; the session-scoped policy is unchanged.
 
 ### F59 — Ratify session persistence in the queued storage scope (2026-09-18)
 
@@ -559,7 +565,9 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Decision:** Completion tallies are the collection’s captured/deferred/pending counts at the moment the chain completed, matching R10.3; they are never sums across sessions. E23’s end-early summary uses the same collection-state basis at End (its confirmation preview uses the state at the offer). Only elapsed capture time and the rate derived from it use the chain basis; a single-session chain equals its own figures. R11.11 records whether one session or a resumed chain supplied the time/rate, while R11.12 asserts only actual copy variants.
 
-**Carried by:** R7.5/R7.15/R7.18/R11.11/R11.12, E24 note, UJ3.4-c/UJ3.5-g/g2, Capture/DF obligation mirrors; dated F53/F57 and DF F49 clarifications.
+**Carried by:** R7.5/R7.15/R7.18/R11.11, E24 note, UJ3.4-c/UJ3.5-g/g2, Capture/DF obligation mirrors; dated F53/F57 and DF F49 clarifications.
+
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** D14 / F69 fixes the rate numerator: only rows captured by this chain, divided by its cumulative elapsed capture time; collection-state tallies never supply that numerator. R7.15, the summary Surfaces row, R11.11 and E24’s explanatory note carry the distinction, and R7.5’s end-early rate readback uses it too; UJ3.5-g3 includes prior captures. Current Carried-by/map omit R11.12; the older discriminator-removal reference remains historical.
 
 ### F67 — Declare the toolkit reference-pair set on the simulated layer (2026-09-18)
 
@@ -575,7 +583,17 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Decision:** A one-row deferred-row acquisition entered from R8.1a/R8.3’s look-through is P0 under F24’s split. R8.3 carries its mechanics: the gate runs, the connected instrument binds, capture ends the session, and Skip or K_FAILED_ATTEMPTS exhaustion leaves the row set aside with evidence and ends the session. R9.4/R9.5/R9.8 stay P1 for ad-hoc entry points, and UJ3.1-l cites the P0 carriers rather than the review-only R8.4.
 
-**Carried by:** R8.3/R3.11/R3.13, Legend priority wording, UJ3.1-l, journey phase preambles; dated F58 clarification.
+**Carried by:** R8.3/R3.5/R3.10/R3.11/R3.13, Legend priority wording, UJ3.1-l, journey phase preambles; dated F58 clarification.
+
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** The current Carried-by/map now includes R3.5/R3.10 for the P0 gate/binding path; R8.3 defines selectable rows as unsettled or settled and deliberately selected for another scan, and R9.4 points back to that P0 carrier without changing priority.
+
+### F69 — Compute summary rate from this chain’s captures (2026-09-18)
+
+**Authority:** D14 in the [round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056); peer review pending.
+
+**Decision:** The completion summary’s rate is M2’s: rows this chain captured divided by its cumulative elapsed capture time. Displayed captured/deferred/pending tallies remain the collection’s state at completion under F66 and never supply the rate numerator; a single-session chain on a previously unmeasured collection gives the same result either way. E24’s headline deliberately retains the collection’s captured count alongside chain time, with that distinction explicit in its note; E23’s end-early summary and R11.11’s rate readback use the same chain basis.
+
+**Carried by:** R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3, Capture/DF obligation mirrors; dated F57/F66 and DF F49 clarifications.
 
 ## Fence → row map
 
@@ -594,9 +612,10 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F50** Device amendment mirror — R5.1/R5.2/R5.3/R5.4/R5.9/R5.10, E45, R7.5/R7.14, R11.3, R11.12, E23 halted variant, Device obligation rows, OQ 16/results (answered on Device re-lock, PR #19).
 - **F51** build contract and tables — R8.1a–k; Build contract, Vocabulary, UJ1–UJ5 and product index. **F52** measurement tiers/references — R1.5, R4.9, R4.12, R4.24, UJ1-e/f, UJ3-b/i and DF obligations. **F53** chain accounting — R7.18, M2, R11.11, UJ3.5-g/h and DF obligations.
 - **F54** persistence/dependency scope — R1.9, R3.1/R3.6/R3.8, R6.7, R7.18, R8.5/R8.13/R8.17, §10, Legend, OQ 3/22 and ADR-0003 queue. **F55** state/phase oracles — R4.15, R8.2, R8.15, R11.6/R11.7/R11.8/R11.11/R11.12/R11.15b, E18/E32/E39/E42, Surfaces, §11/§12, UJ3.1/UJ3.3/UJ3.5/UJ3.6/UJ3.9/UJ4/UJ4.1, OQ 18 and obligation mirrors.
-- **F56** reference split — R1.5/R4.9/R4.12/R4.24, OQ 3, UJ1-e/UJ3-b. **F57**, refined by F66, chain time/rate — R7.15/R7.18/R11.11, E24, M2, UJ3.5-g/g2. **F58** guard lifetime — R5.9/R11.6/R11.11, Legend, OQ 3, UJ3.1-l and post-lock.
+- **F56** reference split — R1.5/R4.9/R4.12/R4.24, OQ 3, UJ1-e/UJ3-b. **F57**, refined by F66, chain time/rate — R7.15/R7.18/R11.11, E24, M2, UJ3.5-g/g2. **F58** guard lifetime — R3.1/R5.9/R11.6/R11.11, Legend, OQ 3, UJ3.1-l and post-lock.
 - **F59** queued persistence — §10, Legend, ADR-0003 queue and product README. **F60** review entry — R8.1a–k, UJ3.3-a, OQ 18/results. **F61** Demo interim — R11.3, OQ 22 and Legend. **F62** row corrections — R4.15/R8.2/R11.8 and Device obligation mirror. **F63** structure — Build contract, transition index, Legend and UJ1–UJ5. **F64** file-count provenance — R1.9 and OQ 19/results. **F65** labels — §12, R8.15/E39 and UJ3.3-e.
-- **F66** summary bases — R7.5/R7.15/R7.18/R11.11/R11.12, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.11/R3.13, Legend and UJ3.1-l.
+- **F66** summary bases — R7.5/R7.15/R7.18/R11.11, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.5/R3.10/R3.11/R3.13, Legend and UJ3.1-l.
+- **F69** chain capture-rate numerator — R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3 and DF mirrors.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

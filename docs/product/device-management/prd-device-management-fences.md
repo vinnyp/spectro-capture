@@ -96,6 +96,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736942308)):** D12 / Capture F67 adds the offered illuminant/observer reference-pair set to R6.9 and the Capture simulated-layer obligation line, mirroring Capture R11.6; unlike inferred hardware support, the configured set is a test fixture and must be explicitly declared under R6.25.
 
+**Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** The §6 obligation mirror now names the already-decided Capture F67 reference-pair set beside the spectral switch on both sides, in addition to its existing simulated-layer mirror; no new capability is introduced.
+
 ### F13 — Setup and authorization recovery actions (2026-09-18)
 
 **Decision:** First-run explicit setup exits dismiss to normal device-panel content; later-run exits land in the collection. Incidental navigation resets the relevant failure counter exactly as F9 clarification (5c) already required. Pairing Try again retries the selected device; discovery is a separate picker action. Setup states belong to the panel, E1 to the picker, and both remain non-modal.
