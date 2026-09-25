@@ -971,11 +971,15 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Decision:** As the chosen option states; it narrows F14 for bulk writes only and applies to a session on any collection.
 - **Carried by:** R1.4, R6.3, R8.3, E6, UJ1.2-f, UJ6.2-i, UJ6.2-j, UJ6.3-f, UJ8.1-j, UJ9.5-d, the capture PRD F72
 
+**Clarified 2026-09-25 (owner decisions D29–D30, F136, F137):** the refusal also covers E10's "Undo" of a multi-item delete and "Undo change" of a bulk set or clear; and while a bulk write or delete runs, no session starts or resumes and no other write this PRD offers starts.
+
 ### F101 — The Data Foundation PRD gains its permission-lost state in this change (2026-09-25)
 
 - **Authority:** owner decision D25, round-2 adjudication 2026-09-25. Question: "R8.8 must show a state when a save is refused because the app lost permission to the file — Data Foundation owes that state and hasn't written it… What now?" Chosen: **Add the DF state now** — "Data Foundation gains a 'can't save to your file' state in this PR (wording goes through the same review); R8.8 renders it, with a case. Closes the post-lock item." Not chosen: a Stop until the Data Foundation PRD writes it.
 - **Decision:** As the chosen option states; it refines F73.
 - **Carried by:** R8.8, R8.10a, UJ9.7-g, the Data Foundation PRD R1.10, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD E34, the Data Foundation PRD F53
+
+**Clarified 2026-09-25 (owner decision D31, F138):** the state's recovery copy is cause-neutral and offers choosing the file again.
 
 ### F102 — Removed text is gone from the moment the write lands, side files included (2026-09-25)
 
@@ -994,6 +998,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Authority:** approved round-2 recommendation 6: any committed write but a metadata change ends it (column hide/show and "New collection" too), a capture save or session start not (each undo re-checks R8.3); a refused undo keeps its entry; offered only where its collection is shown.
 - **Decision:** As recommendation 6 states.
 - **Carried by:** R4.7, E8, UJ6.4-i, UJ6.4-l, UJ6.4-m, UJ6.4-n
+
+**Clarified 2026-09-25 (owner decision D28, F135):** nothing a capture session writes ends the history, not only a save or a session start.
 
 ### F105 — Approved round-2 recommendation 7: Displayed precision of the other derived values (2026-09-25)
 
@@ -1178,6 +1184,104 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Decision:** As recommendation 36 states.
 - **Carried by:** M4
 
+Fences F135–F150 were decided by the owner on 2026-09-25 over the findings review round 3 accepted. F135–F138 each answer one question, quoted with its chosen option. F139–F150 are the owner's approval, as a set, of round-3 recommendations 5–16 (recommendation n is fence F(134+n)), each stated to the owner before the question "Approve round-3 recommendations 5–16 above as a set?", answered **Approve all 5–16**. Recommendations 5–14 and 16 are as they stand in the round-3 fix file's Owner-needed list; recommendation 15 was stated to the owner as "an import commit also waits while any capture session is running. This is an Import PRD amendment in this PR, for consistency with the one-writer rule", which governs over the fix file's text for item 15.
+
+### F135 — No write a capture session makes ends the undo history (2026-09-25)
+
+- **Authority:** owner decision D28, round-3 adjudication 2026-09-25. Question: "Metadata 'Undo change' (F29/F104): today a capture save or session start doesn't end its history, but a Skip, Flag, pause or end-session during capture DOES — while E8 tells the user 'scanning doesn't count'. Which?" Chosen: **No capture write ends it** — "Nothing a capture session writes ends the undo history (each undo still re-checks the session guard). E8's text is rewritten to name exactly what does end it: closing or re-reading the file, importing, hiding/showing a column, or any action other than editing swatch details, codes or names." Not chosen: exempting only saves and starts.
+- **Decision:** As the chosen option states; it refines F29 and F104.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F136 — Bulk undos are refused while any session is in flight (2026-09-25)
+
+- **Authority:** owner decision D29, round-3 adjudication 2026-09-25. Question: "Your F100 refuses bulk writes while any session runs, but two big writes slip through: the delete 'Undo' (E10) of a selection/collection delete (up to 10 s), and 'Undo change' of a bulk set/clear. Refuse them too?" Chosen: **Refuse both** — "While any capture session is in flight, E10's 'Undo' of a multi-item delete and 'Undo change' of a bulk set or clear are refused with E6's 'elsewhere' variant, like the bulk writes themselves. Mirrored in Capture." Not chosen: refusing only the delete undo.
+- **Decision:** As the chosen option states; it extends F100.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F137 — A session waits, shown, while a bulk write or delete runs (2026-09-25)
+
+- **Authority:** owner decision D30, round-3 adjudication 2026-09-25. Question: "F100 works one way only: nothing stops a capture session STARTING while a bulk write or delete (up to 10 s) already holds the file's single writer. Which?" Chosen: **Session waits, shown** — "While a bulk write or delete runs, no session starts or resumes and no other write this PRD offers starts — each is shown unavailable until the write lands (its progress is showing). A Capture half lands in this PR." Not chosen: the session starting and the write yielding under ADR-0005.
+- **Decision:** As the chosen option states; it is F100's reverse ordering.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F138 — The Data Foundation PRD's E34 recovery copy is cause-neutral and offers choosing the file again (2026-09-25)
+
+- **Authority:** owner decision D31, round-3 adjudication 2026-09-25. Question: "Data Foundation's new E34 ('Can't save to your file') tells users to check Finder's Get Info → Sharing & Permissions. That fixes nothing when access was lost through macOS privacy settings or a sandbox (ADR-0007 is still open). Reword?" Chosen: **Neutral + choose file** — "'SpectroCapture can no longer change your file at ⟨path⟩, so the last thing you did wasn't saved… Check that the file isn't locked and that SpectroCapture is still allowed to change it, then try again — or choose the file again.' Adds a 'Choose the file again' action; ADR-0007 gets an input to name the exact place once it decides." Not chosen: neutral wording without the new action.
+- **Decision:** As the chosen option states; it refines F101.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F139 — Approved round-3 recommendation 5: Removing writes against open readers (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 5: capture saves never wait on a removing edit — an ADR-0003 input that a text-removing write lands once every earlier read has ended, this app's own reads (an export, All items' cold load) running in transactions no longer than BROWSE_RESPONSE_BUDGET; an outside reader's hold leaves the edit shown not yet saved, and DF R1.5's help-docs line says reading the file elsewhere during capture may delay saves; R8.1c times a user's own write from the input (+8 body words); the UJ9.5-d run PERF3-7 names.
+- **Decision:** As recommendation 5 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F140 — Approved round-3 recommendation 6: Which E6 variant renders when two apply (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 6: an in-flight session wins — the body, "full" or "elsewhere" — and "interrupted" renders only while no session is in flight, because resuming the interrupted session is refused while another is active; the copy's "interrupted" condition adds "and no session is in flight" (no body words), R8.3's "beside" reworded word-neutrally, and a UJ1.2 case for each collision.
+- **Decision:** As recommendation 6 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F141 — Approved round-3 recommendation 7: E6's "full" gate if R1.7 is deferred (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 7: "full" renders once every P1 action it names lands, E10's "Undo" aside, and drops "and undoing a delete" (the headline covers a delete made before the session); one gate, "every P1 action that variant names", in R8.3 (+3 words), the copy and the Harness; a dated line under F111.
+- **Decision:** As recommendation 7 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F142 — Approved round-3 recommendation 8: How a mismatched non-spectral reading counts toward the All items like pair (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 8: it doesn't count — F113 makes it never like, so the majority counts only readings that can be like ("…the most common among listed items with a value, a mismatched non-spectral reading not counting", about +6 words); R3-m10's inks case plus a second fixture, because the first cannot tell "not counting" from "counting under its collection's pair".
+- **Decision:** As recommendation 8 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F143 — Approved round-3 recommendation 9: What Return fires in E8 (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 9: "Cancel", as in every delete confirmation (R1.6) — E8 exists to stop an accidental change to many swatches, and a second press of Return would otherwise apply it unread; R6.2 gains "in E8 Return fires "Cancel"" (about +6 words) and a UJ6.2 case.
+- **Decision:** As recommendation 9 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F144 — Approved round-3 recommendation 10: E9 after a result opened from it is deleted, flagged, restored or answered (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 10: on return E9 is worked out again for the same source — a deleted result gone, a changed one at its new distance or no longer listed — and deleting a result opened from E9 returns to E9, the table showing only if the source itself is gone (about +8 words in R4.1); a case deletes FS-002 from E9 and one restores a result.
+- **Decision:** As recommendation 10 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F145 — Approved round-3 recommendation 11: "Undo change" and the All items view (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 11: the All items view doesn't offer it, E13 unchanged; an edit made from it is undone in the item detail or on its collection's surface, R4.7's "offered only where its latest change's collection is shown" adding "never in the All items view" (+5 body words).
+- **Decision:** As recommendation 11 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F146 — Approved round-3 recommendation 12: Who owns the stored gamut flag's test parameters (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 12: the Data Foundation PRD — its R3.4 states the test itself (Bradford to the display white, relative colorimetric, zero tolerance, the adaptation its sRGB derivation uses) under DF F54, closing this PRD's OQ 7 changing DF R3.4 only through a DF fence and a new derivation version; OQ 7's Decision cell swaps its F40/F64 provenance sentence for that (word-neutral) and cites DF for the sRGB case; the ADR-0003 input follows.
+- **Decision:** As recommendation 12 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F147 — Approved round-3 recommendation 13: What an undoable ceiling delete holds (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 13: yes — the Data Foundation PRD's OQ 20 question adds "and what an undoable delete of ROWS_CEILING items holds in memory, or writes when the window ends, on OQ 1's Mac", in a dated line under DF F50 as IF-10's was; R1.7 stays gated and no row changes.
+- **Decision:** As recommendation 13 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F148 — Approved round-3 recommendation 14: HISTORY_READINGS_CEILING's closure evidence (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 14: yes — "OQ 1 — the owner's estimate of the longest history a real item reaches, timed by UJ9.5-e", as FILE_ITEMS_CEILING closes by estimate (+6 body words in the constants table); a dated line under F118.
+- **Decision:** As recommendation 14 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F149 — Approved round-3 recommendation 15: An import commit while a session is in flight (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 15: an import commit also waits while any capture session is running — an Import PRD amendment in this change, for consistency with the one-writer rule (F100, F137).
+- **Decision:** As recommendation 15 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
+### F150 — Approved round-3 recommendation 16: E34 in an owner reading once ADR-0007 lands (2026-09-25)
+
+- **Authority:** approved round-3 recommendation 16: yes, as an input on the ADR-0007 row — revoke access the way the chosen model allows, follow E34 and confirm it recovers — decided with 4 (D); no row changes.
+- **Decision:** As recommendation 16 states.
+- **Carried by:** _(filled by the round-3 fix pass)_
+
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
      fence bodies: no map entry may point at deleted text, and every changed row must appear in
@@ -1323,6 +1427,22 @@ than deciding a WHAT.
 - **F132** — R8.10, UJ9.4-e
 - **F133** — E19
 - **F134** — M4
+- **F135** — _(filled by the round-3 fix pass)_
+- **F136** — _(filled by the round-3 fix pass)_
+- **F137** — _(filled by the round-3 fix pass)_
+- **F138** — _(filled by the round-3 fix pass)_
+- **F139** — _(filled by the round-3 fix pass)_
+- **F140** — _(filled by the round-3 fix pass)_
+- **F141** — _(filled by the round-3 fix pass)_
+- **F142** — _(filled by the round-3 fix pass)_
+- **F143** — _(filled by the round-3 fix pass)_
+- **F144** — _(filled by the round-3 fix pass)_
+- **F145** — _(filled by the round-3 fix pass)_
+- **F146** — _(filled by the round-3 fix pass)_
+- **F147** — _(filled by the round-3 fix pass)_
+- **F148** — _(filled by the round-3 fix pass)_
+- **F149** — _(filled by the round-3 fix pass)_
+- **F150** — _(filled by the round-3 fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
