@@ -705,3 +705,18 @@ Each line: the box, the question, and a recommended answer.
 - Deleting guidance comments — at lock.
 - The post-lock tick — round 0's box, when the PR exists.
 - Any change a fence above does not authorize, and every **needs owner** item until the owner answers it.
+
+## Round 1b — forks from the round-1 fix pass (fences F91–F98, 2026-09-25)
+
+The same rules as above. Each box is ticked, with a Result note, as its fix lands.
+
+- [ ] **F91 — Build dependencies.** Remove the trailing "Proceeds under interim" column; keep the format's three columns (Work · Available contract · What must remain open) and prefix each item in the last column "Stop:" or "Interim:", carrying the same content. Confirm the table's header matches the format exactly.
+- [ ] **F92 — Escape abandons a code change.** R4.4 (and E15/E16 where they name the way back) states Escape abandons a Swatch Code change and keeps the old code; add a case.
+- [ ] **F93 — column renamed to itself.** R4.8 mirrors R1.3/F70: a new name equal to the column's own under the import PRD's R2.3 rule, differing only in case or spacing, is stored as typed with no E19; add a case.
+- [ ] **F94 — All items tie.** The row carrying F54 states the tie-break (the pair of the collection first in the collection list); add or extend a case.
+- [ ] **F95 — Capture E30.** Fix E30's spacing phrase as E1's was fixed (Capture F71's wording), recorded as a dated line under Capture F71.
+- [ ] **F96 — cause names.** Add the set-aside cause names as labels in the capture PRD's copy file (one home, in that file's style), recorded under Capture F71; this PRD's R4.2b and item-detail copy cite them by document, never re-quote them as this PRD's own.
+- [ ] **F97 — E18 phase mark.** E18's "Use this reading" sentence carries `[phase: variant-absent]` (or the equivalent variant) until R5.5 lands, with the owning row enumerating it.
+- [ ] **F98 — decision queue and post-lock.** `docs/decisions/README.md`'s ADR-0003 row gains the five Collection Mode inputs (item identity kept across a Swatch Code change; per-collection column visibility kept in the file; renamed imported column names; deleted, cleared or replaced text gone from the file's bytes; no stored cannot-show mark), citing this PRD's F35/F50/F73 and DF F52. `docs/product/post-lock.md` gains, in its existing grouping and style, (i) the flagged-reading-over-time item for the Data Foundation owner (F77) and (ii) Data Foundation's owed permission-lost state (DF F52). Do not tick post-lock.md:94 yet — it is ticked with the PR number when the PR exists.
+- [ ] **Carried by** for F92–F98 and their map lines filled.
+- [ ] **Testability pairing** for every changed row; **word count** by rule 14 reported (budget 12,000 — the body stands at 11,972, so any addition must be paid for by trimming rule-free prose).

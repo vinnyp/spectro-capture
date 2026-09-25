@@ -616,6 +616,8 @@ round-1 fix pass are filled by it.
 - **Decision:** As recommendation 15 states, the Data Foundation half landing in this change.
 - **Carried by:** R2.10, R4.4, R4.8, the Data Foundation PRD R1.2, the Data Foundation PRD F52
 
+**Clarified 2026-09-25 (owner decision D22, F91):** the Build dependencies split is carried by labelling each item in the format's "What must remain open" column 'Stop:' or 'Interim:', not by a fourth column.
+
 ### F51 — Approved recommendation 16: metric M4 (2026-09-24)
 
 - **Authority:** approved recommendation 16: "New metric M4: re-scans still unanswered a week after a dogfood session, target 0."
@@ -858,6 +860,57 @@ Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 number
 - **Decision:** As recommendation 33 states.
 - **Carried by:** the capture PRD F71
 
+Fences F91–F98 were decided by the owner on 2026-09-25 over the forks the round-1 fix pass surfaced. F91 answers one question, quoted with its chosen option. F92–F98 are the owner's approval, as a set, of seven lettered fixes (a)–(g) put in the question "Approve these small consistency fixes as a set?", answered **Approve all (a)–(g)**; each fence's Authority is its item, quoted, and settles what it states and nothing more.
+
+### F91 — The Build dependencies split is labelled within the format's columns (2026-09-25)
+
+- **Authority:** owner decision D22, 2026-09-25. Question: "My recommendation 15 (fence F50) split the Build dependencies table into 'stops' and 'proceeds under interim' columns — but the agent-prd v1 format fixes that table's three columns (only requirement tables may gain a column). How should the split land?" Chosen: **Label within the column** — "Keep the format's three columns; each item under 'What must remain open' is prefixed 'Stop:' or 'Interim:'. Same information, stays conformant. A dated note under F50 records it." Not chosen: keeping a fourth column and forking the format.
+- **Decision:** As the chosen option states; it refines F50's table clause.
+- **Carried by:** governs no rows
+- **Why:** it sets the Legend's Build dependencies table, which carries no ID.
+
+### F92 — Approved fix (a) Escape abandons a code change (2026-09-25)
+
+- **Authority:** approved fix (a): "Escape also abandons a Swatch Code change, as it does a rename."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
+### F93 — Approved fix (b) A column renamed to itself (2026-09-25)
+
+- **Authority:** approved fix (b): "Renaming a column to its own name with only case/spacing changed is stored as typed, with no E19 import warning (mirrors codes)."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
+### F94 — Approved fix (c) The All items tie on the most common illuminant/observer (2026-09-25)
+
+- **Authority:** approved fix (c): "All items L*/C*/h° sort: when two illuminant/observer pairs tie for most common, the pair of the collection first in the collection list wins."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
+### F95 — Approved fix (d) Capture E30's spacing phrase (2026-09-25)
+
+- **Authority:** approved fix (d): "Capture E30 carries the same 'spacing doesn't count' overclaim as E1 — fix it the same way."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
+### F96 — Approved fix (e) A copy home for set-aside cause names (2026-09-25)
+
+- **Authority:** approved fix (e): "Set-aside cause names get a copy home in Capture's copy file (Capture owns the causes), cited by this PRD's item detail."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
+### F97 — Approved fix (f) E18's phase mark (2026-09-25)
+
+- **Authority:** approved fix (f): "E18's mention of 'Use this reading' is phase-marked until R5.5 lands."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
+### F98 — Approved fix (g) The decision-queue and post-lock halves (2026-09-25)
+
+- **Authority:** approved fix (g): "The out-of-scope halves land in this PR: the ADR-0003 row in docs/decisions/README.md gains the five inputs, and post-lock.md gains the flagged-reading item (F77) and DF's owed permission-lost state."
+- **Decision:** As the item states.
+- **Carried by:** _(filled by the round-1b fix pass)_
+
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
      fence bodies: no map entry may point at deleted text, and every changed row must appear in
@@ -959,6 +1012,14 @@ than deciding a WHAT.
 - **F88** — R8.1d
 - **F89** — R8.11, UJ9.5-d
 - **F90** — the capture PRD F71
+- **F91** — governs no rows
+- **F92** — _(filled by the round-1b fix pass)_
+- **F93** — _(filled by the round-1b fix pass)_
+- **F94** — _(filled by the round-1b fix pass)_
+- **F95** — _(filled by the round-1b fix pass)_
+- **F96** — _(filled by the round-1b fix pass)_
+- **F97** — _(filled by the round-1b fix pass)_
+- **F98** — _(filled by the round-1b fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
