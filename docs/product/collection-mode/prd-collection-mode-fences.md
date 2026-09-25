@@ -1326,19 +1326,19 @@ Fences F151–F153 were decided by the owner on 2026-09-25 over the forks the ro
 
 - **Authority:** owner decision D32, 2026-09-25. Question: "Data Foundation E34's new 'Choose the file again' action (F138): after the user re-chooses the file, does the app retry the change that wasn't saved?" Chosen: **No — then Try again** — "Choosing the file only restores access; E34 stays up and the user presses 'Try again' to redo the save. Nothing happens without the user's say-so." Not chosen: retrying automatically.
 - **Decision:** As the chosen option states; it refines F138.
-- **Carried by:** _(filled by the round-3b fix pass)_
+- **Carried by:** the Data Foundation PRD E34, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD DJ3, the Data Foundation PRD F54
 
 ### F152 — While a Collection Mode bulk write or delete runs, no other write anywhere in the app starts (2026-09-25)
 
 - **Authority:** owner decision D33, 2026-09-25. Question: "F137 stops sessions and this PRD's other writes while a bulk write/delete runs. Other writers exist: an import commit, Data Foundation's re-read/move, Capture's 'New collection'. Do they also wait?" Chosen: **Everything waits, shown** — "While a Collection Mode bulk write or delete runs, no other write anywhere in the app starts — each is shown unavailable until it lands. One-line mirrors land in Import, Data Foundation and Capture in this PR." Not chosen: only what F137 names.
 - **Decision:** As the chosen option states; it widens F137.
-- **Carried by:** _(filled by the round-3b fix pass)_
+- **Carried by:** R8.1f, R8.1g, UJ9.5-g, the import PRD R3.2, the import PRD F66, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD DJ3, the Data Foundation PRD F54, the capture PRD R1.1, the capture PRD T7, the capture PRD F73
 
 ### F153 — E34 says OK leaves the change unsaved (2026-09-25)
 
 - **Authority:** owner decision D34, 2026-09-25. Question: "E34's 'OK' dismisses the message and leaves the change unsaved. Should the copy say so ('OK leaves it unsaved')?" Chosen: **Yes, say it** — "Add 'OK leaves it unsaved.' — the one DF 'OK' that discards a change says so." Not chosen: keeping F138's text exactly.
 - **Decision:** As the chosen option states; it refines F138.
-- **Carried by:** _(filled by the round-3b fix pass)_
+- **Carried by:** the Data Foundation PRD E34, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1501,9 +1501,9 @@ than deciding a WHAT.
 - **F148** — R8.1b, UJ9.5-e
 - **F149** — the import PRD R3.2, the import PRD E40, the import PRD F66
 - **F150** — the Data Foundation PRD F54
-- **F151** — _(filled by the round-3b fix pass)_
-- **F152** — _(filled by the round-3b fix pass)_
-- **F153** — _(filled by the round-3b fix pass)_
+- **F151** — the Data Foundation PRD E34, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD DJ3, the Data Foundation PRD F54
+- **F152** — R8.1f, R8.1g, UJ9.5-g, the import PRD R3.2, the import PRD F66, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD DJ3, the Data Foundation PRD F54, the capture PRD R1.1, the capture PRD T7, the capture PRD F73
+- **F153** — the Data Foundation PRD E34, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link

@@ -126,6 +126,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** the file has one writer, and a commit landing during a session would hold up its saves, as the Collection Mode PRD's F100 and F137 rule for that PRD's bulk writes. Source: the Collection Mode PRD's F149; peer review pending.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** the **Not decided** point above is settled: while a Collection Mode bulk write or delete runs, no other write anywhere in the app starts, so R3.2's commit shows disabled until that write lands, citing Collection Mode's R8.1f, and a UJ 2.1 case asserts it. R3.2 keeps its alignment. Peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -148,7 +150,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F63** zero-count copy — R3.1; E43; Capture §12 placeholder index.
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
 - **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
-- **F66** Collection Mode one-writer mirror — R3.2; E40; UJ 2.1.
+- **F66** Collection Mode one-writer mirror, as clarified once — R3.2; E40; UJ 2.1.
 
 ## Historical ID map
 

@@ -659,6 +659,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability; dated F71 and F72 clarifications.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** (2) widens: while a Collection Mode bulk write or delete runs, no other write anywhere in the app starts, so R1.1 creates no collection, creating one shown disabled until the write lands, citing Collection Mode's R8.1f, and T7 asserts it beside the held session start and resume. R1.1 keeps its alignment. Peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -683,7 +685,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F70** Collection Mode seam mirror, as clarified twice — R1.1, R5.6, R8.2, R8.18, R9.9, R11.15g, M3, M4, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i/j, UJ4-f and the dated F9 clarification.
 - **F71** Collection Mode round-1 mirror, as clarified four times — R1.1, R3.7, R5.6, R5.8, R6.6, R8.18, R11.15g, E1, E30, OQ 13, Legend, Collection Mode obligation line, the Set-aside cause labels table, UJ3.3-h, UJ3.3-k, UJ3.3-l and the dated F9, F11, F15 and F70 clarifications.
 - **F72** Collection Mode bulk-write refusal mirror, as clarified twice — Collection Mode obligation line, Traceability.
-- **F73** Collection Mode round-3 mirror — R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability and the dated F71 and F72 clarifications.
+- **F73** Collection Mode round-3 mirror, as clarified once — R1.1, R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability and the dated F71 and F72 clarifications.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

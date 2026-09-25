@@ -243,7 +243,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F51 | R2.9; DJ2; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F33 clarification. |
 | F52 | R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33; DJ2, DJ4, DJ5; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F17, F40 and F50 clarifications. |
 | F53 | R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F4, F17, F50 and F52 clarifications. |
-| F54 | R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F50 and F53 clarifications. |
+| F54 | R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F50 and F53 clarifications. Clarified 2026-09-25 (the Collection Mode PRD's F151–F153): R1.5, R1.9, R7.3j, R7.6p, E34; DJ3; the Collection Mode line. |
 
 ## Rejected findings
 
@@ -531,3 +531,9 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 **Why:** each is the Data Foundation half of a Collection Mode decision about a state this PRD owns, what the file keeps or its help docs say, or an input this PRD hands the ADRs.
 
 **Rows:** R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20, DJ3, the Collection Mode inbound obligation line, the dated F50 and F53 clarifications.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F151](../collection-mode/prd-collection-mode-fences.md), owner decision D32):** the **Not decided** point above is settled: Choose the file again restores access only. R7.3j runs the file-selection path and retries no write, E34 staying up for Try again; E34's body says to try again after choosing the file, R7.6p lists that no write is retried, and DJ3 asserts it. R7.3j keeps its alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** while a Collection Mode bulk write or delete runs ([its R8.1f and R8.1g](../collection-mode/prd-collection-mode.md#8-operating-envelope-and-quality-attributes)), no re-read or move starts: R1.5 and R1.9 show each disabled until the write lands, DJ3 asserts it, and the Collection Mode inbound obligation line records it. R1.5 and R1.9 keep their alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F153](../collection-mode/prd-collection-mode-fences.md), owner decision D34):** E34's body adds "OK leaves it unsaved.", so the one OK here that leaves a change unsaved says so; R7.6p lists it. Peer review pending.
