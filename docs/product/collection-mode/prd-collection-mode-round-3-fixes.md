@@ -685,3 +685,13 @@ owner check).
 - Deleting guidance comments — at lock.
 - The post-lock tick for this PRD's item — when the PR exists.
 - Any change a fence above does not authorize, and every **needs owner** item until the owner answers it.
+
+## Round 3b — forks from the round-3 fix pass (fences F151–F153, 2026-09-25)
+
+The same rules as above. Each box is ticked, with a Result note, as its fix lands.
+
+- [ ] **F151 — "Choose the file again".** The Data Foundation PRD's E34 and the row that runs its actions (its R7.3j) state that choosing the file again restores access only, E34 staying up for "Try again"; its R7.6p case and DJ3 line assert that no write is retried by the choice. Dated line under DF F54.
+- [ ] **F152 — every other writer waits.** R8.3 (or the row that carries F137) states that while a bulk write or delete this PRD makes runs, no other write anywhere in the app starts, each shown unavailable until it lands, marked as an inherited obligation for the Inventory Import, Data Foundation and Capture Mode docs; the Outbound table names the sibling rows. Land one-line mirrors in the import PRD (its commit), the Data Foundation PRD (its re-read and move) and the capture PRD (its collection creation), each with a dated line under that sibling's newest fence (Import F66, DF F54, Capture F73). Add a UJ9.5-g run: during a collection delete, an import commit, a re-read and "New collection" are each shown unavailable and start nothing.
+- [ ] **F153 — E34's OK.** The Data Foundation PRD's E34 body adds "OK leaves it unsaved." Dated line under DF F54.
+- [ ] **Seam symmetry (rule 12, editorial).** Make this PRD's Outbound Data Foundation row and the Data Foundation PRD's inbound Collection Mode line state the same obligations (E34's actions, OQ 20's sizing question, the search-input hand-off), compactly — cite the Data Foundation PRD's fences by range rather than restating.
+- [ ] **Carried by** for F151–F153 and their map lines filled; **testability pairing**; **word count** by rule 14 (body at 11,996 — pay for every addition by trimming rule-free prose; never touch the §8 preamble, the Open-questions trailer or R1.7; stop and report if it cannot fit).

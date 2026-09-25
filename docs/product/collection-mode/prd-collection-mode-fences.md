@@ -1238,11 +1238,15 @@ Fences F135–F150 were decided by the owner on 2026-09-25 over the findings rev
 - **Decision:** As the chosen option states; it is F100's reverse ordering.
 - **Carried by:** R8.1f, R8.1g, UJ9.5-g, the capture PRD R3.5, the capture PRD T7, the capture PRD F73
 
+**Clarified 2026-09-25 (owner decision D33, F152):** while such a write runs, no other write anywhere in the app starts — an import commit, the Data Foundation PRD's re-read or move, and the capture PRD's collection creation included — each shown unavailable until it lands.
+
 ### F138 — The Data Foundation PRD's E34 recovery copy is cause-neutral and offers choosing the file again (2026-09-25)
 
 - **Authority:** owner decision D31, round-3 adjudication 2026-09-25. Question: "Data Foundation's new E34 ('Can't save to your file') tells users to check Finder's Get Info → Sharing & Permissions. That fixes nothing when access was lost through macOS privacy settings or a sandbox (ADR-0007 is still open). Reword?" Chosen: **Neutral + choose file** — "'SpectroCapture can no longer change your file at ⟨path⟩, so the last thing you did wasn't saved… Check that the file isn't locked and that SpectroCapture is still allowed to change it, then try again — or choose the file again.' Adds a 'Choose the file again' action; ADR-0007 gets an input to name the exact place once it decides." Not chosen: neutral wording without the new action.
 - **Decision:** As the chosen option states; it refines F101.
 - **Carried by:** the Data Foundation PRD E34, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
+
+**Clarified 2026-09-25 (owner decisions D32, D34; F151, F153):** "Choose the file again" restores access only, the user then pressing "Try again"; E34 also says OK leaves the change unsaved.
 
 ### F139 — Approved round-3 recommendation 5: Removing writes against open readers (2026-09-25)
 
@@ -1315,6 +1319,26 @@ Fences F135–F150 were decided by the owner on 2026-09-25 over the findings rev
 - **Authority:** approved round-3 recommendation 16: yes, as an input on the ADR-0007 row — revoke access the way the chosen model allows, follow E34 and confirm it recovers — decided with 4 (D); no row changes.
 - **Decision:** As recommendation 16 states.
 - **Carried by:** the Data Foundation PRD F54
+
+Fences F151–F153 were decided by the owner on 2026-09-25 over the forks the round-3 fix pass surfaced; each answers one question, quoted with its chosen option.
+
+### F151 — Choosing the file again restores access only (2026-09-25)
+
+- **Authority:** owner decision D32, 2026-09-25. Question: "Data Foundation E34's new 'Choose the file again' action (F138): after the user re-chooses the file, does the app retry the change that wasn't saved?" Chosen: **No — then Try again** — "Choosing the file only restores access; E34 stays up and the user presses 'Try again' to redo the save. Nothing happens without the user's say-so." Not chosen: retrying automatically.
+- **Decision:** As the chosen option states; it refines F138.
+- **Carried by:** _(filled by the round-3b fix pass)_
+
+### F152 — While a Collection Mode bulk write or delete runs, no other write anywhere in the app starts (2026-09-25)
+
+- **Authority:** owner decision D33, 2026-09-25. Question: "F137 stops sessions and this PRD's other writes while a bulk write/delete runs. Other writers exist: an import commit, Data Foundation's re-read/move, Capture's 'New collection'. Do they also wait?" Chosen: **Everything waits, shown** — "While a Collection Mode bulk write or delete runs, no other write anywhere in the app starts — each is shown unavailable until it lands. One-line mirrors land in Import, Data Foundation and Capture in this PR." Not chosen: only what F137 names.
+- **Decision:** As the chosen option states; it widens F137.
+- **Carried by:** _(filled by the round-3b fix pass)_
+
+### F153 — E34 says OK leaves the change unsaved (2026-09-25)
+
+- **Authority:** owner decision D34, 2026-09-25. Question: "E34's 'OK' dismisses the message and leaves the change unsaved. Should the copy say so ('OK leaves it unsaved')?" Chosen: **Yes, say it** — "Add 'OK leaves it unsaved.' — the one DF 'OK' that discards a change says so." Not chosen: keeping F138's text exactly.
+- **Decision:** As the chosen option states; it refines F138.
+- **Carried by:** _(filled by the round-3b fix pass)_
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1477,6 +1501,9 @@ than deciding a WHAT.
 - **F148** — R8.1b, UJ9.5-e
 - **F149** — the import PRD R3.2, the import PRD E40, the import PRD F66
 - **F150** — the Data Foundation PRD F54
+- **F151** — _(filled by the round-3b fix pass)_
+- **F152** — _(filled by the round-3b fix pass)_
+- **F153** — _(filled by the round-3b fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
