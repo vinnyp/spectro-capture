@@ -648,6 +648,206 @@ round-1 fix pass are filled by it.
 - **Decision:** As recommendation 22 states.
 - **Carried by:** _(filled by the round-1 fix pass)_
 
+Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 numbered recommendations over the round-1 findings no earlier fence settled — each stated to the owner in full before the question "Approve the 33 round-1 recommendations listed above as a set?", answered **Approve all 1–33**. Recommendation n is fence F(57+n); its Authority quotes the recommendation as it stands in the round-1 fix file's Owner-needed list (the box named in its title), and it settles what that recommendation states and nothing more.
+
+### F58 — Approved round-1 recommendation 1 (PM Major 1) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 1, answering the round-1 fix file's box PM Major 1: Is a collection rename undoable by "Undo change"? Recommended and approved: yes — it is name text like a column rename, re-checked against R1.3 on undo.
+- **Decision:** As recommendation 1 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F59 — Approved round-1 recommendation 2 (PM Nit 3 / IF-9) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 2, answering the round-1 fix file's box PM Nit 3 / IF-9: Where are "Clear filters" and "Clear search" offered? Recommended and approved: on E3's and E13's "narrowed" variants too, each only while its own narrowing is active, as R3.4 already reads.
+- **Decision:** As recommendation 2 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F60 — Approved round-1 recommendation 3 (PM Nit 4) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 3, answering the round-1 fix file's box PM Nit 4: Is "Show history" offered on an item with no readings? Recommended and approved: no, as "Find similar" is withheld without a current value; R4.2f says the item has no readings yet.
+- **Decision:** As recommendation 3 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F61 — Approved round-1 recommendation 4 (PM unrated 1) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 4, answering the round-1 fix file's box PM unrated 1: Moving an item between collections? Recommended and approved: a stated v1 non-goal in the Build contract; a re-import is the route.
+- **Decision:** As recommendation 4 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F62 — Approved round-1 recommendation 5 (PM unrated 2) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 5, answering the round-1 fix file's box PM unrated 2: Copying a value to the clipboard? Recommended and approved: no v1 row beyond platform text selection; export and the file are the data routes.
+- **Decision:** As recommendation 5 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F63 — Approved round-1 recommendation 6 (PM unrated 3) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 6, answering the round-1 fix file's box PM unrated 3: Column delete or merge? Recommended and approved: a stated v1 non-goal; F31's warning makes the split a knowing choice and hiding (R2.10) the mitigation.
+- **Decision:** As recommendation 6 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F64 — Approved round-1 recommendation 7 (PM unrated 4 / SSE unrated 4) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 7, answering the round-1 fix file's box PM unrated 4 / SSE unrated 4: OQ 7's other interim clauses and OQ 11's interim? Recommended and approved: ratify both as drafted.
+- **Decision:** As recommendation 7 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F65 — Approved round-1 recommendation 8 (SSE MJ3) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 8, answering the round-1 fix file's box SSE MJ3: Is ADR-0003 a stop for every row? Recommended and approved: yes — every row reads or writes the file whose schema it fixes; the OQ interims proceed alongside.
+- **Decision:** As recommendation 8 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F66 — Approved round-1 recommendation 9 (SSE MJ8) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 9, answering the round-1 fix file's box SSE MJ8: The dropped-frame constant's candidate (F41)? Recommended and approved: no more than 1% of frames missed while paging through ROWS_CEILING rows on F33's Mac, the interim equal to it.
+- **Decision:** As recommendation 9 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F67 — Approved round-1 recommendation 10 (SSE MN2) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 10, answering the round-1 fix file's box SSE MN2: How do the row-state and Spread columns sort, and does the chip column sort? Recommended and approved: row state in lifecycle order (pending, captured, set aside), Spread by number, and the chip column does not sort.
+- **Decision:** As recommendation 10 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F68 — Approved round-1 recommendation 11 (SSE MN3) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 11, answering the round-1 fix file's box SSE MN3: Where does a within-collection item with DF R3.3e's reference mismatch go in L*, C*, h° sorts? Recommended and approved: F54's rule — after the like-referenced items, counted.
+- **Decision:** As recommendation 11 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F69 — Approved round-1 recommendation 12 (SSE MN4) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 12, answering the round-1 fix file's box SSE MN4: How does a restore order against its source in "Measured order"? Recommended and approved: ties on measurement time break by record time, the restore after its source.
+- **Decision:** As recommendation 12 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F70 — Approved round-1 recommendation 13 (SSE MN5) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 13, answering the round-1 fix file's box SSE MN5: A code equal to the item's own but for case or spacing? Recommended and approved: mirror R1.3 — stored as entered, no E16.
+- **Decision:** As recommendation 13 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F71 — Approved round-1 recommendation 14 (SSE MN6) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 14, answering the round-1 fix file's box SSE MN6: "The item in view", and do swatch size and Grid/Table persist? Recommended and approved: the selected item if on screen, else the first on screen; both last while the file is open and are written nowhere, as R3.6 does.
+- **Decision:** As recommendation 14 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F72 — Approved round-1 recommendation 15 (SSE MN7) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 15, answering the round-1 fix file's box SSE MN7: Which display governs a straddling window? Recommended and approved: the one macOS reports the window is on (holding most of it).
+- **Decision:** As recommendation 15 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F73 — Approved round-1 recommendation 16 (SSE MN9) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 16, answering the round-1 fix file's box SSE MN9: Which states render for an edit failing on a vanished volume, lost permission or a held file? Recommended and approved: cite Capture E26 and DF E10 where they apply; hand DF an obligation for a permission-lost state.
+- **Decision:** As recommendation 16 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F74 — Approved round-1 recommendation 17 (SSE MN10) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 17, answering the round-1 fix file's box SSE MN10: What shows once an open detail's item is deleted? Recommended and approved: the detail and history close, returning to the table (E10 over it where R1.7 is built); the same after a re-read.
+- **Decision:** As recommendation 17 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F75 — Approved round-1 recommendation 18 (SSE MN11) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 18, answering the round-1 fix file's box SSE MN11: Keyboard routes for drag and Compare? Recommended and approved: leave the mechanism to the build under R8.9 and add a keyboard case for each.
+- **Decision:** As recommendation 18 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F76 — Approved round-1 recommendation 19 (SSE MN18) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 19, answering the round-1 fix file's box SSE MN18: Reordering while a search or filter narrows the table? Recommended and approved: neither drag nor "Use as scan order" is offered while narrowed.
+- **Decision:** As recommendation 19 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F77 — Approved round-1 recommendation 20 (SSE unrated 1) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 20, answering the round-1 fix file's box SSE unrated 1: A flagged reading re-entering over-time views after a re-scan? Recommended and approved: accept for v1 (a Flag means scan again, not never true); log it for the DF owner on the post-lock list.
+- **Decision:** As recommendation 20 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F78 — Approved round-1 recommendation 21 (SSE unrated 2) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 21, answering the round-1 fix file's box SSE unrated 2: Flag while the current reading awaits the correction answer? Recommended and approved: not offered until that question is answered (E11 sits in the same detail).
+- **Decision:** As recommendation 21 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F79 — Approved round-1 recommendation 22 (TEST n1) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 22, answering the round-1 fix file's box TEST n1: Is a search that normalises to nothing an active search? Recommended and approved: no — no narrowing and no "narrowed" variant.
+- **Decision:** As recommendation 22 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F80 — Approved round-1 recommendation 23 (PMM Minor 2) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 23, answering the round-1 fix file's box PMM Minor 2: The same spacing phrase in the capture PRD's aligned E1? Recommended and approved: fix it in this change under a dated Capture fence, since Capture is already being amended.
+- **Decision:** As recommendation 23 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F81 — Approved round-1 recommendation 24 (PMM Nit 5) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 24, answering the round-1 fix file's box PMM Nit 5: Device's "simulated badge" wording? Recommended and approved: leave it for Device's next amendment; its R6.5 owns the word.
+- **Decision:** As recommendation 24 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F82 — Approved round-1 recommendation 25 (PMM unrated) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 25, answering the round-1 fix file's box PMM unrated: A dogfood reading of E12? Recommended and approved: a one-line dogfood check beside M4, no metric.
+- **Decision:** As recommendation 25 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F83 — Approved round-1 recommendation 26 (A13) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 26, answering the round-1 fix file's box A13: Does a restore carry its source's device snapshot, agreement verdict and spread? Recommended and approved: yes — a DF clarification of R2.3f's "equal to H" and the ZX-015 B1 case.
+- **Decision:** As recommendation 26 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F84 — Approved round-1 recommendation 27 (A14) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 27, answering the round-1 fix file's box A14: What do the counts show when damage is found on a read-only file? Recommended and approved: whatever quarantine DF reports for the open file, persisted or not; nothing is written.
+- **Decision:** As recommendation 27 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F85 — Approved round-1 recommendation 28 (ARCH unrated 1) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 28, answering the round-1 fix file's box ARCH unrated 1: "No stored cannot-show" as an ADR-0003 input? Recommended and approved: yes; F6 already keeps the mark live-only.
+- **Decision:** As recommendation 28 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F86 — Approved round-1 recommendation 29 (ARCH unrated 2) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 29, answering the round-1 fix file's box ARCH unrated 2: Does All items search match imported values? Recommended and approved: yes, as R1.10 reads; say so in R1.10.
+- **Decision:** As recommendation 29 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F87 — Approved round-1 recommendation 30 (PERF-6) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 30, answering the round-1 fix file's box PERF-6: A budget for opening the All items view? Recommended and approved: OPEN_COLLECTION_BUDGET for its first rows at FILE_ITEMS_CEILING.
+- **Decision:** As recommendation 30 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F88 — Approved round-1 recommendation 31 (PERF-9) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 31, answering the round-1 fix file's box PERF-9: Do the browse budgets hold from the first-rows moment? Recommended and approved: yes — no lazily loaded tail that a search waits on.
+- **Decision:** As recommendation 31 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F89 — Approved round-1 recommendation 32 (PERF-10) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 32, answering the round-1 fix file's box PERF-10: Capture precedence over this PRD's writes and refreshes? Recommended and approved: yes — add the row and a Demo Device case during a bulk clear; F14's in-session edits stay available.
+- **Decision:** As recommendation 32 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F90 — Approved round-1 recommendation 33 (PERF-13) (2026-09-25)
+
+- **Authority:** approved round-1 recommendation 33, answering the round-1 fix file's box PERF-13: FIND_BUDGET ≤ BROWSE_RESPONSE_BUDGET? Recommended and approved: yes — state it in OQ 1 and hand Capture a line at its OQ 13.
+- **Decision:** As recommendation 33 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
      fence bodies: no map entry may point at deleted text, and every changed row must appear in
@@ -716,6 +916,39 @@ than deciding a WHAT.
 - **F55** — _(filled by the round-1 fix pass)_
 - **F56** — _(filled by the round-1 fix pass)_
 - **F57** — _(filled by the round-1 fix pass)_
+- **F58** — _(filled by the round-1 fix pass)_
+- **F59** — _(filled by the round-1 fix pass)_
+- **F60** — _(filled by the round-1 fix pass)_
+- **F61** — _(filled by the round-1 fix pass)_
+- **F62** — _(filled by the round-1 fix pass)_
+- **F63** — _(filled by the round-1 fix pass)_
+- **F64** — _(filled by the round-1 fix pass)_
+- **F65** — _(filled by the round-1 fix pass)_
+- **F66** — _(filled by the round-1 fix pass)_
+- **F67** — _(filled by the round-1 fix pass)_
+- **F68** — _(filled by the round-1 fix pass)_
+- **F69** — _(filled by the round-1 fix pass)_
+- **F70** — _(filled by the round-1 fix pass)_
+- **F71** — _(filled by the round-1 fix pass)_
+- **F72** — _(filled by the round-1 fix pass)_
+- **F73** — _(filled by the round-1 fix pass)_
+- **F74** — _(filled by the round-1 fix pass)_
+- **F75** — _(filled by the round-1 fix pass)_
+- **F76** — _(filled by the round-1 fix pass)_
+- **F77** — _(filled by the round-1 fix pass)_
+- **F78** — _(filled by the round-1 fix pass)_
+- **F79** — _(filled by the round-1 fix pass)_
+- **F80** — _(filled by the round-1 fix pass)_
+- **F81** — _(filled by the round-1 fix pass)_
+- **F82** — _(filled by the round-1 fix pass)_
+- **F83** — _(filled by the round-1 fix pass)_
+- **F84** — _(filled by the round-1 fix pass)_
+- **F85** — _(filled by the round-1 fix pass)_
+- **F86** — _(filled by the round-1 fix pass)_
+- **F87** — _(filled by the round-1 fix pass)_
+- **F88** — _(filled by the round-1 fix pass)_
+- **F89** — _(filled by the round-1 fix pass)_
+- **F90** — _(filled by the round-1 fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
