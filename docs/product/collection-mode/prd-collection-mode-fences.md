@@ -50,7 +50,7 @@ re-raised.
 the first lock on, the fences that predate it stand as recorded; an amendment preserves them and
 does not re-decide them.
 
-**Review log:** `{{review-log-path}}`.
+**Review log:** `docs/agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md` — created at round 1, 2026-09-24; every later round appends a `## Round N` section to it.
 <!-- guidance: {{review-log-path}} is the path of the durable peer-review log for this PRD,
      created once at round 1 and appended to by every later round — recorded here so every later
      brief can find it without re-deriving it. -->
