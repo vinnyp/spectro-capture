@@ -323,6 +323,10 @@ choices that recommendation states and nothing more.
   quarantined.
 - **Carried by:** R4.2h, R5.1, R5.3, R5.4, R5.5, R5.7, R5.8, E17
 
+**Clarified 2026-09-24 (owner decision D14, F23):** where restore is offered is extended by F23 —
+"Use this reading" is also offered on an item set aside by a Flag, the flagged reading included.
+The rest of this fence stands.
+
 ### F16 — Find similar: P1, its candidate distance, and its scope (2026-09-24)
 
 - **Authority:** approved recommendation 5: "Find similar is P1. The candidate distance is ΔE2000
@@ -390,7 +394,7 @@ is its item, and settles what that item states and nothing more.
   preferences with an amendment to the Data Foundation PRD's R1.1.
 - **Decision:** The P2 column-visibility choice is kept per collection, with that collection, in
   the user's file; nothing about it is kept elsewhere.
-- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it)_
+- **Carried by:** R2.10, R8.10, UJ2.2-a, UJ2.2-b
 
 ### F22 — The consequences of an item set aside as unreadable (2026-09-24)
 
@@ -402,7 +406,7 @@ is its item, and settles what that item states and nothing more.
   excluded from Capture M4's per-session deferred rate and doesn't reopen M3 once recorded.
   Approve?" Chosen: **Approve as drafted.** Not chosen: arriving settled.
 - **Decision:** As the question states, the capture PRD's R8.18 carrying it at P0.
-- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it, the capture PRD's first)_
+- **Carried by:** the capture PRD R8.18, the capture PRD M3, the capture PRD M4, the capture PRD UJ3.3-h, the capture PRD F70, R4.2b, UJ4.1-c, UJ4.5-c
 
 ### F23 — Restore is offered on an item set aside by a Flag, and the Data Foundation PRD's R2.9 names the Flag (2026-09-24)
 
@@ -417,7 +421,7 @@ is its item, and settles what that item states and nothing more.
   included — of an item set aside by a Flag, and makes the item captured again. The Data
   Foundation PRD's R2.9 is amended in this change to name the operator's Flag (the capture PRD's
   R5.6) as the other way an item's current value is removed.
-- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it, sibling IDs included)_
+- **Carried by:** R5.5, UJ5.3-e, UJ5.3-g, the capture PRD R5.6, the capture PRD UJ3.3-j, the capture PRD F9, the capture PRD F70, the Data Foundation PRD R2.9, the Data Foundation PRD DJ2, the Data Foundation PRD F33, the Data Foundation PRD F51
 
 ### F24 — Export first from a selection delete opens the whole-collection export (2026-09-24)
 
@@ -425,7 +429,7 @@ is its item, and settles what that item states and nothing more.
   (Export has no selection scope; F3 excludes selection export), and Export's list of confirmations
   offering export-first gains E33."
 - **Decision:** As item (i) states, the Data Export PRD's list amended in this change.
-- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it, sibling IDs included)_
+- **Carried by:** UJ6.3-e, the Data Foundation PRD R6.2, the Data Foundation PRD R7.6o, the Data Foundation PRD DJ4, the Data Foundation PRD F50, the Data Export PRD F31
 
 ### F25 — The All items view shows no simulated-readings banner, recorded on the device side (2026-09-24)
 
@@ -433,7 +437,7 @@ is its item, and settles what that item states and nothing more.
   view shows no simulated banner."
 - **Decision:** As item (ii) states; F5 already decides the behaviour, and this fence authorises the
   device PRD's half of that seam.
-- **Carried by:** R1.10, _(the device PRD IDs the round-0b fix pass touches)_
+- **Carried by:** R1.10, the device PRD F32
 
 ### F26 — "Answer re-scans" is not offered in the All items view (2026-09-24)
 
@@ -487,11 +491,11 @@ than deciding a WHAT.
 - **F18** — R2.3, R3.4, R3.5, E5
 - **F19** — R1.2, R1.6, R2.6, R2.8, R3.3, E12
 - **F20** — R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b
-- **F21** — _(the IDs the round-0b fix pass leaves carrying it)_
-- **F22** — _(the IDs the round-0b fix pass leaves carrying it)_
-- **F23** — _(the IDs the round-0b fix pass leaves carrying it)_
-- **F24** — _(the IDs the round-0b fix pass leaves carrying it)_
-- **F25** — R1.10, _(the device PRD IDs the round-0b fix pass touches)_
+- **F21** — R2.10, R8.10, UJ2.2-a, UJ2.2-b
+- **F22** — the capture PRD R8.18, the capture PRD M3, the capture PRD M4, the capture PRD UJ3.3-h, the capture PRD F70, R4.2b, UJ4.1-c, UJ4.5-c
+- **F23** — R5.5, UJ5.3-e, UJ5.3-g, the capture PRD R5.6, the capture PRD UJ3.3-j, the capture PRD F9, the capture PRD F70, the Data Foundation PRD R2.9, the Data Foundation PRD DJ2, the Data Foundation PRD F33, the Data Foundation PRD F51
+- **F24** — UJ6.3-e, the Data Foundation PRD R6.2, the Data Foundation PRD R7.6o, the Data Foundation PRD DJ4, the Data Foundation PRD F50, the Data Export PRD F31
+- **F25** — R1.10, the device PRD F32
 - **F26** — R5.7, E13
 - **F27** — R5.4
 - **F28** — governs no rows

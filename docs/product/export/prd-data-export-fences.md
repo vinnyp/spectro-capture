@@ -190,6 +190,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** The exported archive is the instrument’s portable artifact, independent of its storage encoding; first-golden authors need one representation. Source: [owner decision 13](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732919975).
 
+### F31 — A selection delete's export first opens the collection export (2026-09-24)
+
+**Decision:** The Data Foundation PRD's E33 — its delete confirmation for a selection of swatches — joins E8 and E14 in §5's and the copy header's list of the delete confirmations that offer an export first, and its Export first opens this PRD's collection-scope export of the collection holding the selection ([R1.1a](prd-data-export.md#row-selection-and-fields)). No row changes: R1.1a's two scopes stay the whole collection and one item, and no selection scope is added.
+
+**Why:** This PRD has no selection scope, and the Collection Mode PRD's F3 excludes exporting a selection. Source: [the Collection Mode PRD's F24](../collection-mode/prd-collection-mode-fences.md) — its approved loose end (i), owner second post-fill adjudication 2026-09-24; mirrored by [the Data Foundation PRD's F50](../data-foundation/prd-data-foundation-fences.md) as clarified the same day; peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
@@ -259,6 +265,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F28 | R1.1o–r/R4.4a; E1/E1a–g; EJ1. |
 | F29 | Legend/Traceability; E1 variant identity convention. |
 | F30 | R1.1d/R4.1a; DF outbound Data Export obligation; EJ1 payload assertion. |
+| F31 | §5's delete-confirmation sentence and the copy header, both naming DF E33 and R1.1a's collection scope; no requirement row. DF R6.2/R7.6o and DJ4 carry the Data Foundation half under DF F50 as clarified. |
 
 ## Rejected findings
 

@@ -1,6 +1,6 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge. F70 mirrors the Collection Mode PRD's F10, F11 and F19 (2026-09-24); peer review pending.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge. F70 mirrors the Collection Mode PRD's F10, F11 and F19, and is clarified by its F22 and F23 (2026-09-24); peer review pending.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
 Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed. For F51–F69, peer review closed 2026-09-18 (PR #20); re-locked on merge (closure recorded under F51).
@@ -72,6 +72,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** "Flag row" acts on the current pending row (no reading yet: deferred, cause "flagged: missing or damaged") or on the most recent captured row on the recents strip (Captured → Deferred; the flagged reading is demoted to version history; the row has no canonical value until re-scanned). The row-state diagram gains the Captured → Deferred edge. Flagged rows are resolved in the end-of-session review like any deferred row.
 
 **Why:** Flag-row is a P0 feature that was undefined on the state model; one place resolves all problem rows, and a suspect value is never live in the collection.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F23](../collection-mode/prd-collection-mode-fences.md), owner decision D14):** A flagged row has no canonical value until it is re-scanned or until the operator restores a readable earlier reading of it, the flagged one included, through Collection Mode R5.5 — an out for a mistaken Flag (R5.6, F70 as clarified the same day). Peer review pending.
 
 ### F10 — Accept average with the spread recorded (2026-09-06, round 1, R1-F8)
 
@@ -607,6 +609,10 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R1.1, R8.2, R8.18, R9.9, R11.15g, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i, UJ4-f.
 
+**Clarified 2026-09-24 ([the Collection Mode PRD's F22](../collection-mode/prd-collection-mode-fences.md), owner decision D13, second post-fill adjudication):** The owner approved R8.18's drafted clauses as drafted, closing the "Not decided" paragraph above: a row set aside as unreadable is unsettled, so the collection is not finished until the row is re-scanned, restored or deliberately left; it neither counts toward nor breaks a run of N_CONSEC_HARD; and restoring a readable earlier reading makes it captured again. The owner also decided that such a row is left out of M4's per-session deferred rate and does not reopen M3 once M3 has recorded the collection. R8.18 states all of these and moves from ✋ Needs Discussion to 🤝 Aligned on that authority; M3 and M4 gain the exclusion and keep their alignment; UJ3.3-h asserts it. Peer review pending.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F23](../collection-mode/prd-collection-mode-fences.md), owner decision D14, second post-fill adjudication):** A row set aside by a Flag — R5.6's, or Collection Mode R4.9's — is captured again when Collection Mode R5.5's "Use this reading" restores a readable earlier reading of it, the flagged reading included; it no longer waits only for a re-scan. R5.6 says so and keeps its alignment, the Row transitions gain that route, UJ3.3-j asserts it, and F9 carries a dated line saying the same; [Data Foundation F51](../data-foundation/prd-data-foundation-fences.md) names the Flag in Data Foundation R2.9. What a Flag does to the row is otherwise unchanged. Peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -628,7 +634,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F59** queued persistence — §10, Legend, ADR-0003 queue and product README. **F60** review entry — R8.1a–k, UJ3.3-a, OQ 18/results. **F61** Demo interim — R11.3, OQ 22 and Legend. **F62** row corrections — R4.15/R8.2/R11.8 and Device obligation mirror. **F63** structure — Build contract, transition index, Legend and UJ1–UJ5. **F64** file-count provenance — R1.9 and OQ 19/results. **F65** labels — §12, R8.15/E39 and UJ3.3-e.
 - **F66** summary bases — R7.5/R7.15/R7.18/R11.11, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.5/R3.10/R3.11/R3.13, Legend and UJ3.1-l.
 - **F69** chain capture-rate numerator — R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3 and DF mirrors.
-- **F70** Collection Mode seam mirror — R1.1, R8.2, R8.18, R9.9, R11.15g, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i and UJ4-f.
+- **F70** Collection Mode seam mirror, as clarified twice — R1.1, R5.6, R8.2, R8.18, R9.9, R11.15g, M3, M4, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i/j, UJ4-f and the dated F9 clarification.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

@@ -1,6 +1,6 @@
 # PRD: Data Export
 
-Status: locked (2026-09-16); PR #18 agent-build amendment (2026-09-17–18), F15–F30; requirements aligned, not implemented.
+Status: locked (2026-09-16); PR #18 agent-build amendment (2026-09-17–18), F15–F30; Collection Mode seam mirror 2026-09-24 under F31 (§5 and the copy header name DF E33; no row changed; peer review pending); requirements aligned, not implemented.
 
 Companion files: the journeys are in [prd-data-export-journeys.md](prd-data-export-journeys.md), the shipping copy in [prd-data-export-copy.md](prd-data-export-copy.md), the answers to closed open questions in [prd-data-export-oq-results.md](prd-data-export-oq-results.md), and the owner's decisions in [prd-data-export-fences.md](prd-data-export-fences.md).
 
@@ -182,7 +182,7 @@ Each line is a requirement. A row cited here carries the rule, the naming PRD's 
 
 ### 5. Error & State Copy
 
-The shipping copy for every state this PRD names is in [prd-data-export-copy.md](prd-data-export-copy.md), with the placeholder rules; each state's identity is stable even when its wording changes, so behaviour is asserted independently of copy ([R4.3](#4-verifiability)). The delete confirmations that offer an export first are the [Data Foundation PRD's E8 and E14](../data-foundation/prd-data-foundation-copy.md#error--state-copy)'s and are not restated.
+The shipping copy for every state this PRD names is in [prd-data-export-copy.md](prd-data-export-copy.md), with the placeholder rules; each state's identity is stable even when its wording changes, so behaviour is asserted independently of copy ([R4.3](#4-verifiability)). The delete confirmations that offer an export first are the [Data Foundation PRD's E8, E14 and E33](../data-foundation/prd-data-foundation-copy.md#error--state-copy)'s and are not restated; E33's, for a selection of swatches, opens this PRD's collection-scope export of the collection holding them ([R1.1a](#row-selection-and-fields); [DF R6.2](../data-foundation/prd-data-foundation.md#6-deletion-and-privacy), F31).
 
 ## Success Metrics
 

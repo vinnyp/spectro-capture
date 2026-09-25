@@ -1,6 +1,6 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. F32 records the Collection Mode mirror of 2026-09-24; peer review pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. F32 records the Collection Mode mirror of 2026-09-24, clarified the same day under that PRD's F25; peer review pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
@@ -285,6 +285,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 **Decision:** Editorial, with no change of meaning: the Collection Mode obligation line records that what E22's action does on the collection surface is Collection Mode R2.6's. This PRD never specified that action's effect, and E22's copy, R6.5 and the per-item badge are unchanged.
 
 **Carried by:** the Device → Collection Mode obligation line.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F25](../collection-mode/prd-collection-mode-fences.md), its approved loose end (ii), owner second post-fill adjudication; the behaviour itself is [its F5](../collection-mode/prd-collection-mode-fences.md)):** The Collection Mode obligation line also records that Collection Mode's All items view shows no E22 banner, each item there carrying its own simulated badge (Collection Mode R1.10). E22 is a collection's banner and the All items view spans every collection without being one, so R6.5, E22's copy and the per-item badge are unchanged; the same obligation line carries it. Peer review pending.
 
 ## Fence → row map
 

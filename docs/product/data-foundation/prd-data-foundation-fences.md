@@ -233,7 +233,8 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F47 | R3.3a, R5.4/R5.5f, R7.6g/h, R7.7i, §8, DJ3; retired E32/R7.3l. |
 | F48 | E14 and copy Variants; R6.1/R6.2. |
 | F49 | post-lock Data Foundation list; future M10, no metric row yet. |
-| F50 | R1.2, R6.2, R7.6o, E33; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the copy header and Variants note; DJ4, DJ5. |
+| F50 | R1.2, R6.2, R7.6o, E33; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the copy header and Variants note; DJ4, DJ5. Clarified 2026-09-24 (E33's Export first at collection scope): R6.2, R7.6o, DJ4. |
+| F51 | R2.9; DJ2; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F33 clarification. |
 
 ## Rejected findings
 
@@ -252,6 +253,8 @@ The owner approved the audit's eight recommendations with “proceed with your r
 **Decision:** Archive-only damage does not invalidate an intact stored mean or decoded measurements, and damage to a historical reading does not clear an intact current reading. Mark and retain the affected archive or reading; only authoritative damage to the current reading leaves an item without a current value, with no automatic historical promotion.
 
 **Amends:** R2.9, R5.5, Vocabulary, E4; adds archive state E31 and R5.5a–c acceptance cases. F10/F11/F25 remain authoritative: archived vendor bytes are not the canonical value; export handling of an unreadable archive remains an explicit open decision (OQ 21) rather than silently substituting empty bytes.
+
+**Clarified 2026-09-24 (F51, under [the Collection Mode PRD's F23](../collection-mode/prd-collection-mode-fences.md)):** "only authoritative damage to the current reading" ranks the damage kinds against one another; the operator's Flag ([the capture PRD's R5.6](../capture-mode/prd-capture-mode.md#5-per-scan-failure-and-the-consecutive-failure-guard)) is the other way an item's current value is removed, as R2.9 now says. The damage rules above are unchanged. Peer review pending.
 
 ### F34 — Pausing capture does not permit switching files
 
@@ -441,3 +444,19 @@ Source: the owner's decisions D7 and D9 in the Collection Mode PRD's post-fill a
 **Why:** Collection Mode's F7 makes its Delete selected buildable only if a selection-scale confirmation exists here, and its F9 closes the post-lock question of whether a rename moves the stored name.
 
 **Rows:** R1.2, R6.2, R7.6o, E33, the Collection Mode inbound obligation line, the copy header and Variants note, DJ4, DJ5.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F24](../collection-mode/prd-collection-mode-fences.md), its approved loose end (i), second post-fill adjudication):** The "Not decided" point above is settled: E33's Export first opens the export of the whole collection holding the selection, at [the export PRD's R1.1a](../export/prd-data-export.md#row-selection-and-fields) collection scope — that PRD offers no selection scope, and Collection Mode's F3 excludes exporting a selection. R6.2 says so and keeps its alignment, R7.6o lists it and DJ4 asserts it; [the export PRD's F31](../export/prd-data-export-fences.md) adds E33 to its list of the confirmations offering export first. E33's copy is unchanged. Peer review pending.
+
+## Collection Mode seam amendment, second pass (2026-09-24)
+
+Source: the owner's decision D14 in the Collection Mode PRD's second post-fill adjudication of 2026-09-24, recorded there as [its F23](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation half of that seam; peer review pending.
+
+### F51 — The operator's Flag is the other way an item's current value is removed (2026-09-24)
+
+**Authority:** [the Collection Mode PRD's F23](../collection-mode/prd-collection-mode-fences.md) — owner decision D14, second post-fill adjudication 2026-09-24.
+
+**Decision:** R2.9 names the operator's Flag on a captured item ([the capture PRD's R5.6](../capture-mode/prd-capture-mode.md#5-per-scan-failure-and-the-consecutive-failure-guard)) beside damage to the current reading as a way an item's current value is removed. The flagged reading stays readable in history, so restoring it or any other readable earlier reading follows R2.3f — Collection Mode's R5.5 offers that restore on a flagged item, making it captured again — and a fresh set follows R2.3a. Nothing else in R2.9, the damage classification or the measurement operations changes, and R2.9 keeps its alignment.
+
+**Why:** R2.9's "only damage to the current reading removes the item's current value" already contradicted the capture PRD's R5.6 Flag demotion, which Collection Mode's F23 names as the authority to fix here.
+
+**Rows:** R2.9, DJ2, the Collection Mode inbound obligation line, the dated F33 clarification.

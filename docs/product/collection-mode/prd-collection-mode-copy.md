@@ -217,7 +217,7 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Variants enumerated by: R3.4
 - Headline: All items
 - Body: ⟨n⟩ swatches across ⟨collections⟩ collections.
-- Actions: "Filters", "Colour marks", "Answer re-scans"
+- Actions: "Filters", "Colour marks"
 - Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches across ⟨collections⟩ collections match.
 
 ### E14 — Swatch detail

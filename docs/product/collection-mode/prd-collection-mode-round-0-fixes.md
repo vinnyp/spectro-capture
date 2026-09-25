@@ -108,18 +108,25 @@ own ID families, format and voice; never renumber.
 The same rules as above: the fence file authorizes, a change no fence names is reported rather than
 made, and each box is ticked as its fix lands.
 
-- [ ] **F21 — column visibility in the file.** R2.10: the choice is kept per collection, with the
+- [x] **F21 — column visibility in the file.** R2.10: the choice is kept per collection, with the
       collection, in the user's file (the Data Foundation PRD's R1.1). Remove the app-preferences
       seam from R8.10, the Named defaults and the test-controls map if nothing else uses it; update
       UJ2.2-a/b to read the choice back from the file. Fill F21's Carried by and map line.
-- [ ] **F22 — Capture R8.18.** Its status moves from ✋ Needs Discussion to the owner-authorized
+      Result: the app-preferences seam had no other user and is gone from R8.10 and the Named
+      defaults (the test-controls map never named it); the file's default line now declares every
+      column shown. Also carried: an inbound Data Foundation R1.1 → R2.10 line and ADR-0003's schema
+      in the column-visibility build-dependency row.
+- [x] **F22 — Capture R8.18.** Its status moves from ✋ Needs Discussion to the owner-authorized
       aligned value in Capture's vocabulary (🤝 Aligned), with the owner authorization noted inline
       per Capture's convention; its text states each F22 consequence (unsettled; neither counts
       toward nor breaks a N_CONSEC_HARD run; restore makes it captured again; excluded from M4's
       per-session deferred rate and does not reopen M3 once recorded — amend M3/M4's definitions or
       a note citing R8.18, whichever that PRD's shape uses). Capture F70 gets a dated clarification
       recording F22. Remove the "drafted, undecided clauses" wording wherever it now misstates.
-- [ ] **F23 — restore on a flagged item.** R5.5 offers "Use this reading" on a readable earlier
+      Result: M3 and M4 amended in their definition cells (Capture's metrics have no notes); the
+      drafted wording is gone from R8.18's Commit PR cell and the UJ3.3 preamble, and F70's own "Not
+      decided" paragraph stays as history, closed by its dated clarification. UJ3.3-h asserts M3/M4.
+- [x] **F23 — restore on a flagged item.** R5.5 offers "Use this reading" on a readable earlier
       reading — the flagged one included — of an item set aside by a Flag, making it captured again;
       UJ5.3-e's assert flips accordingly, and add a case restoring the flagged reading itself. Amend
       the Data Foundation PRD's R2.9 to name the operator's Flag (the capture PRD's R5.6) as the
@@ -127,18 +134,29 @@ made, and each box is ticked as its fix lands.
       if F50's scope cannot carry it) citing this PRD's F23 / D14. If Capture's Vocabulary or R8.18
       transition lines say only a restore after damage makes a row captured again, extend them to
       the Flag case.
-- [ ] **F24 — export first from E33.** The Data Foundation PRD's E33 "Export first" opens the
+      Result: a new DF fence F51 (F50's scope is F7/F9 only) with a dated line under DF F33; DF DJ2
+      gains the Flag case. Capture's Vocabulary did not need it, but R5.6's "no value until
+      re-scanned" did: R5.6 amended (alignment kept), a Row-transitions line and UJ3.3-j added, F70
+      clarified, and a dated line under Capture F9. This PRD's F15 carries a dated line too.
+- [x] **F24 — export first from E33.** The Data Foundation PRD's E33 "Export first" opens the
       whole-collection export (the Data Export PRD's collection scope). The Data Export PRD's list
       of delete confirmations offering export first gains E33, with a new dated fence in its fence
       file citing this PRD's F24. Update UJ6.3-e's assert to the collection scope.
-- [ ] **F25 — Device note.** Add to the device PRD (and its F32, as a dated clarification) that the
+      Result: DF R6.2 (alignment kept), R7.6o and DJ4 carry it under a dated F50 clarification that
+      closes F50's "Not decided"; Export F31, its §5 sentence and copy header; no Export row changed.
+- [x] **F25 — Device note.** Add to the device PRD (and its F32, as a dated clarification) that the
       All items view shows no E22 banner, each item carrying its own simulated mark, citing this
       PRD's F5/F25.
-- [ ] **F26 — "Answer re-scans" off the All items view.** R5.7 names E2 only; E13's copy loses the
+      Result: carried by the Device → Collection Mode obligation line; R6.5 and E22 unchanged.
+- [x] **F26 — "Answer re-scans" off the All items view.** R5.7 names E2 only; E13's copy loses the
       action; drop any case asserting it on E13 and keep one asserting its absence there.
-- [ ] **F27 — R5.4.** Confirm its text says same illuminant, observer and measurement condition.
-- [ ] **F28 — OQ statuses.** Confirm OQ 8 and OQ 9 carry aligned.
-- [ ] **Editorial.** UJ1.3-b's bare "E14" names the Data Foundation PRD (its E14), per the
+      Result: UJ7.1-c now asserts its absence; E13's index row no longer names R5.7.
+- [x] **F27 — R5.4.** Confirm its text says same illuminant, observer and measurement condition.
+      Result: confirmed; no change.
+- [x] **F28 — OQ statuses.** Confirm OQ 8 and OQ 9 carry aligned.
+      Result: confirmed; both carry aligned and have results sections; no change.
+- [x] **Editorial.** UJ1.3-b's bare "E14" names the Data Foundation PRD (its E14), per the
       cross-document cite rule.
-- [ ] **Carried-by placeholders** for F21–F25 and their map lines filled with actual IDs.
-- [ ] **Testability pairing** for every row changed in this section; word count reported.
+- [x] **Carried-by placeholders** for F21–F25 and their map lines filled with actual IDs.
+- [x] **Testability pairing** for every row changed in this section; word count reported.
+      Result: 9,862 words (rule 14's method, table separator rows stripped as in the first pass).
