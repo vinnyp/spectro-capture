@@ -4844,3 +4844,2376 @@ Every Blocker and Major was checked against commit `7861221`. Privacy raised no 
 | 12 | No readback exposes a mark's shape, yet UJ2.1-k and UJ9.6-a assert shapes | test (R2-M3); staff-software-engineer 2MN16 | reproduced — R8.10c grants identifiers and accessible descriptions only | accept |
 
 **Per-row dispositions after round 2.** Flip-eligible (every non-abstaining lens ALIGNs, at least one opined): E1, E2, E7, E14, E15, E16, E18, E19, M3, R1.1, R1.2, R1.5, R1.6, R1.7, R1.8, R1.9, R2.1, R2.2, R2.4, R2.4a, R2.4c, R2.4d, R2.4e, R2.4f, R2.4g, R2.4h, R2.4i, R2.6, R2.7, R2.9, R2.10, R3.1, R3.2, R3.4, R3.6, R4.2a, R4.2d, R4.2e, R4.2f, R4.2g, R4.4, R4.6, R5.1, R5.2, R5.2a, R5.2c, R5.2d, R5.2e, R5.3, R5.6, R5.8, R6.1, R8.4, R8.7. A lettered sub-row flips only with its lead (the PRD's Traceability rule), so a sub-row whose lead or sibling sub-row is objected holds. Every other row carries at least one OBJECT and moves to needs-discussion until the round-2 fix pass lands.
+
+## Round 3 (2026-09-25) — delta verification
+
+**Lenses:** the eight Claude-route lenses, re-dispatched in parallel with the round-2 log and fix file as sources, asked per round-2 finding RESOLVED / UNRESOLVED / PARTIAL with file:line, then any new defect the round-2 fixes introduced (`git diff 7861221 HEAD`), then a per-row table; Blocker/Major reserved for a builder guessing or a correct build failing a case. **Subject commit:** `c4ec992`. No cross-model pass. **tier-rationale:** unchanged.
+
+**Delta summary.** No Blocker was raised. Round-2 findings resolved per lens: product-manager 12 of 14 (2 partial); staff-software-engineer 30 of 33 (3 partial); test 20 of 25 (4 partial, 1 superseded by a new Major); interface 14 of 15 (IF-16 deferred to the bookkeeping close by design); privacy 5 of 7 (2 partial); product-marketing-manager 19 of 19; architecture 8 of 10 (2 partial); performance 11 of 12 (1 partial).
+
+### Per-lens reviews (verbatim)
+
+#### peer-product-manager-reviewer (Claude route)
+
+## Verdict
+Builds the right thing for the user. Of my 14 round-2 items (13 findings plus one carried), 12 are resolved and 2 are partly resolved. The fixes add one new Major, PM3-1: E8's rewritten undo sentence still promises more than R4.7 keeps, and R4.7's exception for capture can be built two ways. Fix it before lock. Everything else is Minor or Nit.
+
+## User & problem context (brief)
+- **User.** The primary user is the Cataloger. Secondary users are the Data consumer and the QC re-checker.
+- **Job.** After capture, the user wants to see the whole collection honestly, find a swatch, fix a bad scan without losing its history, and keep metadata tidy (vision U5 and U7).
+- **Validated.** The owner has decided F1–F134.
+- **Assumed.** Everything else. The owner's own dogfooding is the only feedback loop, which is the right size for a solo open-source tool.
+- **What I read.** At c4ec992: all four target files; fences F99–F134; the round-2 fix file; my round-2 section of the review log; and `git diff 7861221 HEAD -- docs ':!docs/agent-reviews'`. From the siblings: the changed Data Foundation lines (PRD, copy, journeys), the Capture Mode PRD and journeys, decisions/README.md and post-lock.md. I also read the capture PRD's R1.9 and R3.6 and its cause-label table.
+- **Not re-read in full.** The Import, Export and Device PRDs. Round 2 did not change them.
+- **Path shorthand.** All paths are under /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/:
+  - PRD = docs/product/collection-mode/prd-collection-mode.md
+  - COPY = docs/product/collection-mode/prd-collection-mode-copy.md
+  - JRN = docs/product/collection-mode/prd-collection-mode-journeys.md
+  - DFC = docs/product/data-foundation/prd-data-foundation-copy.md
+  - CAP = docs/product/capture-mode/prd-capture-mode.md
+
+## Findings
+
+### Round-2 delta verification
+
+| Round-2 finding | Result | Evidence |
+|---|---|---|
+| PM2-1 (Major) — E8 promises an undo R4.7 does not give | PARTIAL | COPY:173 and :175 now list closing the file, re-reading it, and "anything other than swatch details, codes or names". That still disagrees with R4.7 (PRD:496) about imports, column hide/show and capture-session writes. Carried forward as PM3-1. |
+| PM2-2 (Minor) — the actions that end undo are open-ended, and what an undo reverses is invisible | PARTIAL | PRD:496 now closes the list: capture saves and session starts are exempt, a refused undo keeps its entry, and undo is offered only where the change's collection is shown. Cases: JRN:392, :395–:397. Two gaps remain. Capture writes other than a save are unclassified (PM3-1). The All items view is ambiguous (PM3-5). |
+| PM2-3 (Minor) — the permission-lost state has no interim | RESOLVED | PRD:590 (R8.8 renders DF E34); PRD:300 (Build dependencies row 1); JRN:486 (UJ9.7-g); DFC:29; post-lock item ticked |
+| PM2-4 (Minor) — displayed precision covers only some values | RESOLVED | PRD:448 (R2.11 covers every space R4.2c shows, including the sRGB and HSL forms); JRN:275 (UJ4.1-a) |
+| PM2-5 (Minor) — M4 can pass vacuously | RESOLVED | PRD:738 (a session with nothing to answer reads "not measured") |
+| PM2-6 (Minor) — Find similar loses its list | RESOLVED | PRD:474 (R4.1 returns to E9); JRN:257 (UJ3.4-e opens two results in turn). A new gap on delete is PM3-3. |
+| PM2-7 (Minor) — the duplicate check ignores visible headers | RESOLVED | PRD:497 (R4.8 checks the Column headers table); JRN:314 (UJ4.6-j) |
+| PM2-8 (Minor) — the collection-name search rule is unstated | RESOLVED | PRD:413 (matches anywhere in the name); COPY:135 (E4 "all items" variant); JRN:415, :418 |
+| PM2-9 (Minor) — E5 blames the filters for an empty search | RESOLVED | PRD:461; JRN:238–239 (UJ3.2-d, UJ3.2-e) |
+| PM2-10 (Nit) — R4.9 keyed to the wrong reading | RESOLVED | PRD:498 (keyed to the R2.4i mark in both clauses) |
+| PM2-11 (Nit) — E17 names a P1 action at P0 | RESOLVED | COPY:267–269 (P0 body trimmed; "restore" variant is phase-marked); PRD:521 lists it; JRN:352 |
+| PM2-12 (Nit) — "a re-import moves an item" | RESOLVED | PRD:101 now says "re-importing approximates"; the overstatement is gone |
+| PM2-15 (Nit) — an open detail or history view doesn't update | RESOLVED | PRD:576 (R8.1c now reaches the item detail and version history view); JRN:459 (UJ9.1-l) |
+| carried PM Minor 5 — precision for R4.2c's six spaces | RESOLVED | PRD:448 |
+
+### New defects from the round-2 fixes
+
+[MAJOR] **PM3-1** — COPY:173 and :175 (E8's new endings) against PRD:496 (R4.7) and CAP:160 (capture R3.6). **E8's undo promise still does not match R4.7, and R4.7's capture exception can be read two ways.**
+- **(a) The copy promises more than the row keeps.** E8 now says Undo change "puts it back until the file closes, you read the file again, or you change anything other than swatch details, codes or names — scanning doesn't count." Three things in R4.7 contradict that:
+  - An import that updates swatch details ends the history. R4.7 and UJ6.4-f (JRN:389) both say so, but E8's wording tells the user it does not.
+  - Hiding or showing a column ends the history (F104). A user won't read "change anything other than swatch details" as covering a view toggle.
+  - "Scanning doesn't count" covers only what R4.7 exempts: a capture save and a session starting.
+- **(b) The capture exception is open to two builds.** The capture PRD writes the remembered row to the file on every queue advance, jump, insert or review selection (CAP:146, CAP:160). "Skip", "Flag", "Add a swatch", "End session" and the end-of-run review are all committed writes. A builder has to decide which of them count as "a capture save".
+- **Scenario.** A cataloger mistakenly clears Family on 40 swatches. They start a session, skip one missing marker and end the session. Then they notice the mistake. Under a literal R4.7, the skip already ended the undo history. The old values existed only in memory, so they are gone for good, although E8 said scanning doesn't count.
+- **Mutation.** End the history on the remembered-row write that a Skip makes. UJ6.4-m (JRN:396) still passes, because it only runs a save and a session start, yet E8's promise is broken after one Skip.
+- **Fix (owner call; this clarifies F104 rather than reopening it).**
+  - Either replace R4.7's "a capture save or a session starting not" with "no write a capture session makes". That is 2 words fewer and keeps E8's "scanning doesn't count" true.
+  - Or keep R4.7 as it is and have E8 name the session actions that end the history.
+  - Either way, key E8's ending to actions, not to what changed. Example: "…until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — importing and hiding a column included." This is a copy-file change, so it costs no body words.
+  - Add a UJ6.4 case: edit, then Skip, Flag and End session, then check whether Undo change is still offered.
+
+[MINOR] **PM3-2** — PRD:585 (R8.3) and COPY:155 (E6 "full"), against PRD:410 (R1.7) and JRN:49–51. **E6's "full" variant only appears once every P1 action R8.3 names is built, and one of those is E10's "Undo".**
+- **The gap.** R1.7 may be deferred past v1 if OQ 10 is still open (F57). In that build "full" never renders. On the in-flight collection, "Change code", Flag, "Set a field", "Delete selected" and an undo of a code change then get the base E6 body. That body names only deleting and restoring. The harness also asserts the base body in that build.
+- **Scenario.** A user fires "Set a field" during a session and is told that "deleting a swatch or the collection and bringing back an earlier reading aren't available". Nothing tells them the edit they just tried is blocked.
+- **Fix.** Show "full" once every P1 action R8.3 names except E10's "Undo" is built. Move "undoing a delete" into its own clause or variant tied to R1.7. The body cost is 2 words in R8.3. Pay for it by cutting the Build contract's last sentence (PRD:111–112, 20 words). The Build-dependencies paragraph (PRD:312–316) and R8.7 already say the same.
+
+[MINOR] **PM3-3** — PRD:474 (R4.1), JRN:257; PRD:576 (R8.1c). **The F107 return to E9 covers closing a result, not deleting or changing one.**
+- **The gap.** R4.1's delete clause still sends the user to the table, so E9's list is lost. Deleting the duplicate is the most likely action when hunting duplicates. A Flag, restore or re-scan answer on a result brings the user back to an E9 that lists its old distance. E9 is not among the surfaces R8.1c updates, so a result that now has no current value still shows ΔE 2.04.
+- **Scenario.** A cataloger finds three near-duplicates of FS-000 and deletes FS-001. They land on the table and have to reopen FS-000 and run Find similar again for each remaining match.
+- **Fix (owner call).** Deleting a result opened from E9 returns to E9, and on return E9 is re-run for the same source. Add a case that deletes FS-002 from E9. The body cost is about 8 words in R4.1. Pay for it by cutting PRD:765–766 ("Every open question carries an interim rule… there is no third option.", 22 words). It repeats the Legend's two-list preamble at PRD:323–324.
+
+[MINOR] **PM3-4** — PRD:585 (R8.3) against PRD:580 (R8.1g), PRD:607 (R8.11) and JRN:299 (UJ4.4-g). **E10's "Undo" of a large delete is not refused while a session runs elsewhere.**
+- **The gap.** F100 refuses "Delete selected" and "Delete collection" on any collection while any session is in flight. R8.1g gives their E10 "Undo" the same 10 s DELETE_WRITE_BUDGET. But R8.3 refuses E10's "Undo" only "on that collection". A deleted collection can never have its own session in flight, so its undo is never refused.
+- **What the builder must guess.** When R1.7 is built, R8.3 allows a write of up to 10 s during another collection's session, and R8.11 forbids its effect. The builder has to choose.
+- **Scenario.** A user deletes Scale by mistake, starts scanning Studio Markers, then fires "Undo". Under a literal R8.3 the undo runs and holds up capture's saves.
+- **Fix.** Move E10's "Undo" into R8.3's "on any collection" list (0 words), extending F100. Add a case alongside UJ4.4-g. Severity is Minor only because OQ 10 stops R1.7 from being built yet.
+
+[NIT] **PM3-5** — PRD:496 (R4.7) against COPY:229 (E13's actions) and JRN:409 (UJ7.1-d). The All items view shows every collection's items, but E13 offers no "Undo change". So "offered only where its latest change's collection is shown" is ambiguous there. An edit made from All items can only be undone inside the item detail or from the collection surface. **Fix:** say that All items does not offer it, or add it to E13's actions. Both are copy-file or wording-only changes.
+
+[NIT] **PM3-6** — JRN:395 (UJ6.4-l, first run). After "New collection" the user is on Inks, not Studio Markers. "Undo change" isn't offered there whether or not creating the collection ended the history, so the case can't catch a wrong build. **Fix:** choose Studio Markers before listing the actions. The test lens owns this.
+
+[NIT] **PM3-7** — COPY:156 (E6 "elsewhere"). The copy says a bulk change "waits until it ends", which sounds like the change is queued. Queuing is the option F100 rejected, and the next sentence says nothing changed. **Fix:** "…can't be made until it ends…".
+
+[NIT] **PM3-8** — DFC:29 (DF E34, new in this change). E34 offers only "Try again" and "OK". If permission can't be restored, each later edit shows E34 again with no way forward from the state. By contrast, E15 offers "Move my file" and E20/E29 offer "Choose somewhere else". **Fix:** offer the move route from DF's R1.9, as DF R7.3j does for E15.
+
+## Biggest risks   (what builds the wrong thing or fails the user)
+1. **PM3-1.** The one undo for a bulk clear lives only in memory. E8's wording and R4.7 still disagree about imports, hiding columns and scanning, and two correct-looking builds decide the session case differently.
+2. **PM3-4.** When R1.7 is eventually built, a 10 s undo can run during another collection's session. That is exactly the stall F100 was written to prevent.
+3. **Word budget.** The body is at 12,000 of 12,000. PM3-2 and PM3-3 need small additions, paid for by cutting PRD:111–112 and PRD:765–766. Both only repeat rules stated elsewhere; check each for rules before cutting.
+
+## Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **The owner answers closed my round-2 items cleanly.**
+  - E4 versus E5 now tells the user the true cause of an empty list.
+  - DF E34 closes the permission-lost path, with a case.
+  - M4 can no longer pass without measuring anything.
+  - Displayed precision is complete, including the sRGB and HSL forms that Data consumers paste.
+  - A refused undo keeps its entry, and undo is scoped to the collection on screen.
+  - The E6, E17 and E18 phase variants follow one pattern.
+- **Every copy state still traces to a row that puts the user there.** E4 "all items" comes from R3.5; E6 "elsewhere" and "full" from R8.3; E17 "restore" from R5.3; E18 "restore" from R4.9. Every variant name is listed word for word by the row that enumerates it.
+- **Sibling halves agree.**
+  - DF E11 and E26 now say "awaiting your answer", matching E12's mark.
+  - Capture R5.8 and R6.6 match its cause-label table.
+  - Capture's obligations line matches F100 word for word.
+  - The ADR-0003 row takes the seven inputs.
+  - post-lock.md ticks the DF item and adds the Device and help-docs lines.
+- **Right-sized.** Refusing all bulk writes while any session runs is simple and testable (F100). Scoping undo to a collection, with no redo, is the right v1 choice. One dogfood metric plus one E12 read-through on a P3 display is enough for a single-owner tool.
+
+## Missing / over-specified
+- **Missing:**
+  - which capture-session writes end the undo history (PM3-1)
+  - E9's behaviour on return after a result is deleted or changed (PM3-3)
+  - E10's "Undo" while a session runs on another collection (PM3-4)
+  - whether the All items view offers "Undo change" (PM3-5)
+- **Over-specified:**
+  - E6 "full" is tied to R1.7, which may never ship in v1 (PM3-2).
+  - Nothing else new. The fence discipline is carrying the load well.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | OBJECT (PM3-3) |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | OBJECT (PM3-1, PM3-5, PM3-6) |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | ALIGN |
+| R8.3 | OBJECT (PM3-2, PM3-4) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ABSTAIN (platform floor; out of lens) |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ABSTAIN (test seam; test/interface lens) |
+| R8.10a | ABSTAIN (test seam; test/interface lens) |
+| R8.10b | ABSTAIN (test seam; test/interface lens) |
+| R8.10c | ABSTAIN (test seam; test/interface lens) |
+| R8.10d | ABSTAIN (test seam; test/interface lens) |
+| R8.10e | ABSTAIN (test seam; test/interface lens) |
+| R8.10f | ABSTAIN (test seam; test/interface lens) |
+| R8.11 | ALIGN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | OBJECT (PM3-2, PM3-7) |
+| E7 | ALIGN |
+| E8 | OBJECT (PM3-1) |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+#### peer-staff-software-engineer-reviewer (Claude route)
+
+## Verdict
+Ready to proceed, but settle the two new MAJORs before lock. There are no Blockers. Of my lens's 33 round-2 items, 30 are resolved and 3 are partly resolved. F99–F134 and their sibling halves landed as recorded, and I found no row that re-argues a fence. What the fixes opened:
+- **R8.1's lead row applies F118's reading bound to every budget.** F118 meant it for the history view only.
+- **F100 closes only one ordering of the single-writer race.** A session can still start while a bulk write or delete of up to 10 s is running.
+
+## What I reviewed
+- **Paths.** All paths below are relative to `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/`.
+- **Subject.** Requirements mode at `c4ec992` (HEAD). I read in full:
+  - `docs/product/collection-mode/prd-collection-mode.md`
+  - `docs/product/collection-mode/prd-collection-mode-journeys.md`
+  - `docs/product/collection-mode/prd-collection-mode-copy.md`
+  - `docs/product/collection-mode/prd-collection-mode-oq-results.md`
+- **Contract sources.**
+  - Fences F99–F134 in `-fences.md`.
+  - `-round-2-fixes.md`, in full.
+  - My Round 2 section of `docs/agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md`.
+  - The sibling diffs from `git diff 7861221 HEAD -- docs ':!docs/agent-reviews'`: DF F53 (R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E33, E34, OQ 20); Capture F72 and the F71 clarification (R5.8, R6.6, UJ3.3-k, UJ3.3-l); the ADR-0003 row; `post-lock.md`.
+  - Capture R3.2, R3.5, R9.7, OQ 5, OQ 13; DF R7.7; the capture copy file's Set-aside cause labels table.
+- **Checks I computed** in memory with python; no file was touched:
+  - Linear sRGB and Display P3 membership of every seeded or case-declared L\*C\*h°, D50 to D65 by Bradford.
+  - ZX-019's margin under four matrix and white-point variants.
+  - UJ2.1-c's P3 triplet.
+  - The sort, count and ΔE oracles of the new cases.
+  - The word-count delta between `7861221` and HEAD.
+- **Could not verify:**
+  - Any timing.
+  - Real ColorSync behaviour.
+  - SQLite secure-delete and WAL/checkpoint behaviour under F102.
+  - How large and how random the seeded file really is (3MN8).
+  - M3 and anything else that needs a build.
+
+## Findings
+
+### Round-2 delta verification (my lens)
+
+| Round-2 finding | Status | Evidence |
+|---|---|---|
+| 2MJ1 file-wide budgets state no width | RESOLVED | prd:584 (R8.2 at IMPORTED_COLUMNS_CEILING, first rows "as R8.1d does"); journeys:472 (UJ9.5-b declares the width), 418 (UJ7.1-m: an imported-value search from All items), 108 (the workload's imported-value text) |
+| 2MJ2 storage constraints not handed to ADR-0003 | PARTIAL | (i) resolved: prd:174–175 (the file's bytes include side files), prd:590 (R8.8 "from the moment it lands, open or after a crash"); DF prd:116, 230; decisions README:22. (ii) resolved for a bulk write started while a session is in flight (prd:585, F100). Still open: a session starting, or another write landing, while a bulk write or delete runs → **3MJ2** |
+| 2MN1 collection-name match mode, E4 | RESOLVED | prd:413; copy:135; journeys:415, 418 |
+| 2MN2 which derived set's clipped flag | RESOLVED | prd:431 (R2.4b), prd:442 (R2.5) |
+| 2MN3 R3.3's like set | PARTIAL | In-collection, "listed" and never-like are resolved: prd:459; journeys:252, 419. Whether a mismatched non-spectral reading counts toward the majority is still open → **3MN5** |
+| 2MN4 Find similar with the working-set value absent | RESOLVED | prd:463–464, 483; journeys:259–260 |
+| 2MN5 what ends the undo history | PARTIAL | prd:496 closes the set for Collection Mode actions. Capture's writes other than a save or a session start are still unclassed → **3MN4** |
+| 2MN6 false not-compared reason | RESOLVED | prd:522; journeys:350 |
+| 2MN7 "Use this reading" on a never-true reading | RESOLVED | prd:523; journeys:351 |
+| 2MN8 how "Set a field" commits and cancels | RESOLVED | prd:535; journeys:377. E8's own Return default is still unstated → 3N2 |
+| 2MN9 E8's undo over-promise | RESOLVED | copy:173, 175. A capture-write residual → 3MN4 |
+| 2MN10 per-collection grid and swatch size | RESOLVED | prd:546–547; journeys:503 |
+| 2MN11 "cold" and paging | RESOLVED | journeys:108; prd:752 |
+| 2MN12 deleting a ROWS_CEILING collection | RESOLVED | prd:279, 580 (R8.1g); journeys:477 |
+| 2MN13 bound on readings for history open | RESOLVED in substance | prd:280. The bound is placed in R8.1's lead row → **3MJ1** |
+| 2MN14 no interim for lost permission | RESOLVED | prd:590; DF copy:29 (E34); journeys:486 |
+| 2MN15 R8.11's TBD with no interim | RESOLVED | prd:330, 752 (F120) |
+| 2MN16 no readback for shape or cause | RESOLVED | prd:599–600; journeys:277, 315, 478 |
+| 2MN17 precision of R4.2c's six spaces | RESOLVED | prd:448; journeys:275 |
+| 2MN18 DF E11/E26 "not yet settled" | RESOLVED | DF copy:38–39 |
+| 2MN19 Capture R5.8/R6.6 cause wording | RESOLVED | Capture prd:215, 233 |
+| 2N1 no route for an item removed outside the app | RESOLVED | prd:144, 226–227; journeys:133 (T16) |
+| 2N2 E10's surfaces | RESOLVED | prd:372, 378–379, 693 |
+| 2N3 All-items Find similar tie | RESOLVED | prd:463; journeys:261 (UJ3.4-i) |
+| 2N4 ⟨distance⟩ places | RESOLVED | prd:720 |
+| 2N5 fixture margins, two "Daylight"s | RESOLVED | journeys:61–70, 414 |
+| 2N6 ADR-0006 stops every row | RESOLVED | prd:312–316 |
+| carried MJ2 / MJ8 / MN9 / MN17 | RESOLVED | covered by 2MN18 / 2MJ1, 2MN12 and 2MN13 / PM2-3 / PM2-4, as above |
+| unrated: "Columns" label | RESOLVED | prd:447; copy:124; journeys:217 |
+| unrated: "That E8" back-references | RESOLVED | journeys:296, 412 |
+
+### New defects introduced by the round-2 fixes
+
+**[MAJOR] 3MJ1 — R8.1's lead row applies HISTORY_READINGS_CEILING to every budget, not to history opens.**
+- **Locations.** prd:568; prd:280; fences:1076–1080 (F118); the round-2 fix file:150.
+- **The gap.**
+  - R8.1 says every input below meets its budget "at ROWS_CEILING items in the collection with up to IMPORTED_COLUMNS_CEILING imported columns and HISTORY_READINGS_CEILING readings an item".
+  - The constants table (prd:280) and F118 ("A bound on readings for R8.1b's history-open budget") scope the bound to history opens only. Because the Legend makes the owning row govern (prd:288), the lead row's wider scope wins.
+- **The two ways it fails.**
+  - *Too much is promised.* R8.1g would need a byte-scrubbed "Delete collection" of 10,000 × 500 = 5×10⁶ readings within 10 s on an 8 GB M1 Air. The performance lens measured 3.05 s at about one reading per item. A builder taking the row at its word is pushed toward a storage decision (per-collection encryption keys, or a scrub deferred against F102) that only a misplaced constant justifies.
+  - *Too little is promised.* One item with 501 readings takes its whole collection "above any ceiling", so search, sort and open lose their budgets.
+- **Mutation.** A build that meets R8.1a–g only at one reading per item stays green. UJ9.5-a and UJ9.5-g seed DF R7.7's corpus, and only UJ9.5-e (journeys:475) holds 500 readings, on a single item.
+- **Fix.**
+  - Delete "and HISTORY_READINGS_CEILING readings an item" from R8.1's lead (−5 words).
+  - In R8.1b, write "opening or closing an item detail, or a version history view of up to HISTORY_READINGS_CEILING readings" (+7 words).
+  - Pay for it by trimming R8.2's ", history never being aged out", which restates "every reading it holds, however many" (−5 words). Net −3 words.
+
+**[MAJOR] 3MJ2 — Nothing orders other writes, or a session's start, against a bulk write or delete already running (up to DELETE_WRITE_BUDGET = 10 s). This is the 2MJ2 (ii) residual.**
+- **Locations.**
+  - prd:579–580: R8.1f/g say "the surface meeting R8.1a–c throughout", and R8.1c includes single-item writes.
+  - prd:422: R2.2 keeps every capture entry point "reachable and unhidden".
+  - prd:585: R8.3's refusal is checked only when the bulk action is fired.
+  - prd:607: R8.11.
+  - Capture F72: "Nothing in this PRD's rows changes."
+  - journeys:474: UJ9.5-d starts with the session already in flight.
+  - journeys:477: UJ9.5-g runs with "no session in flight".
+- **Scenario A.** Fire "Delete collection" on Scale, confirm it, and during the 10 s delete choose another collection and start a session. On a single-writer file the first row confirmation waits for the delete to commit, which breaks ROW_CONFIRM_BUDGET and fails R8.11.
+- **Scenario B.** Start a session on Scale itself, or edit or rename it, during its own deletion. The delete then lands under an in-flight session, which R1.4 and F100 exist to forbid, and the queued edit targets a row that no longer exists.
+- **A second gap in UJ9.5-g.** Its "Delete collection" run types a search keystroke into a surface no row names. The collection list has no search field.
+- **Mutation.** A build that lets a session start mid-delete passes UJ9.5-d, UJ9.5-g and UJ1.2-a/f.
+- **Fix (owner decision; F100 is the precedent).**
+  - Add to R8.3: "While a bulk write or delete this PRD makes runs, no session starts or resumes and no other write this PRD offers starts, each shown disabled until it lands (inherited obligation for the Capture Mode doc)." That is about 30 words.
+  - Pay for it by trimming §8's preamble paragraph (prd:561–564, about 47 words). It restates the section's guidance comment and gives the builder no rule, if agent-prd v1 doesn't fix that paragraph.
+  - Add a dated Capture line under its F72, and put the same question to Import (whether an import commit waits too).
+  - UJ9.5-g should name the surface shown during a collection delete and try a session start mid-write.
+
+**[MINOR] 3MN1 — E10's "Undo" of a selection or collection delete is refused only on "that collection" (prd:585).**
+- R8.1g (prd:580) puts that undo in the same DELETE_WRITE_BUDGET class as the deletes that F100 refuses on any collection. A deleted collection can hold no session, so the refusal never fires for a collection undo, and a restore lasting seconds runs against another collection's session, against R8.11.
+- An undo of a bulk set or clear in flight is refused only by combining R4.7's re-check with R8.3, and no case covers it.
+- **Fix.** Move E10's "Undo" into R8.3's "on any collection" group; the reorder is word-neutral. Add a UJ6.4 case: undo a 10-item clear while a session is in flight on Gouache Set, expecting E6 "elsewhere".
+
+**[MINOR] 3MN2 — Which E6 variant wins is unstated.**
+- **Locations.** prd:407 (R1.4), prd:585; copy:154, 156; Capture prd:156 (R3.2), 159 (R3.5), R9.7.
+- **Collision 1.** Collection A can hold an interrupted bulk session while B's session is in flight. "Delete collection" on A then meets both "interrupted" and "elsewhere".
+- **Collision 2.** A one-row session can be in flight on A beside A's interrupted session. That pits "interrupted" against the body or "full".
+- The variants' "Go to the session" leads to different sessions, and resuming A is refused while B is active.
+- The round-2 trim of R1.4 to "R8.3 governing it in flight" removed the only hint.
+- **Fix (companion only).** Give each variant condition an order, for example "elsewhere" and in-flight before "interrupted", and add a UJ1.2 case for each collision.
+
+**[MINOR] 3MN3 — E6's "full" variant waits on an action OQ 10 may defer past v1.**
+- **Locations.** prd:585; copy:155; prd:410.
+- "full" renders once every P1 action R8.3 names lands, and one of them is E10's "Undo".
+- If R1.7 is deferred at v1, "full" never renders. A refused "Set a field", "Change code", Flag or "Use this reading" then shows the P0 body, which names only deletes and restores. The "full" text would also claim that undoing a delete exists.
+- **Fix.** R8.3: "once every P1 action it names lands or is deferred" (+3 words, paid from the §8 paragraph). The "full" body names undoing a delete only where R1.7 is built.
+
+**[MINOR] 3MN4 — R4.7 exempts only "a capture save or a session starting" (prd:496).**
+- A session's other writes all end the undo history under the literal row: a skip, a set-aside by the guard or by capture's Flag, a pause, an end or resume, and a queue-list reorder.
+- E8 promises "scanning doesn't count" (copy:173, 175).
+- UJ6.4-i (journeys:392) expects "Undo change" still offered after the session ends.
+- **Fix (owner, refining F104).** Replace the clause with "nothing a session writes doing so" (−2 words). Add a case that skips a row mid-session and then undoes.
+
+**[MINOR] 3MN5 — R3.3's majority count is still undecided (2MN3 residual; prd:459).**
+- "The most common among listed items with a value" doesn't say whether a mismatched non-spectral reading votes under its value's pair, votes under its collection's pair, or doesn't vote.
+- UJ7.1-n (journeys:419) gives the same order under all three readings.
+- Two collections of 2 items each, plus one D65/10° non-spectral item in the D50/2° collection, give a different like pair under each reading.
+- **Fix.** Add that case. Once the owner reads F113's "never", add "each item voting under its value's pair" or the chosen alternative (+6 words, paid from the §8 paragraph).
+
+**[MINOR] 3MN6 — Release-build timing cases read a readback that exists only in test builds.**
+- UJ9.5-e and UJ9.5-g run "a Release build" (journeys:475, 477) but assert through R8.10b: E17's list, and whether a write's progress shows.
+- F132 makes R8.10b exist only in test builds (prd:592).
+- UJ9.4-e (journeys:470) treats "Release build" and "test build" as different builds.
+- **Fix (Harness only).** Timing cases run a Release-configuration test build, and UJ9.4-e's Release build is the shipped one.
+
+**[MINOR] 3MN7 — Two E17 cases contradict each other once R5.5 lands.**
+- UJ5.1-a and UJ5.1-b assert E17's body with no variant (journeys:330–331).
+- UJ5.3-n uses the same Given and When and asserts the "restore" variant (journeys:352), which F111 made the recorded-order text once R5.5 is built.
+- The Harness gives E6 a substitution rule (journeys:49–51); E17 has none. UJ4.7-a handles E18 inline.
+- **Fix (companion only).** Add "where R5.5 is built, a case asserting E17's body asserts its 'restore' variant".
+
+**[MINOR] 3MN8 — The byte check's per-word rule can match raw binary by chance (journeys:53–59).**
+- "Sky" is the unique word of "Sky Blue" in T6 and UJ4.2-a. Its 8 letter-case variants match any given byte offset with probability of about 4.8×10⁻⁷.
+- Across the file, the WAL and the high-entropy raw-payload and float blobs, at three moments per case, a correct build fails T6 and UJ4.2-a at an estimated few percent per run. The magnitude is unverified.
+- **Fix.** Apply the per-word rule to SQLITE_READER_FLOOR's text values, and to raw bytes only for words of four or more letters. Hand this to the test lens.
+
+**[NIT] 3N1 — R8.1f's "or an undo of one of them" (prd:579) includes "Use as scan order", which R4.7 never undoes.** Pre-existing. Fix: "or undoing a set or clear" (word-neutral).
+
+**[NIT] 3N2 — E8's default key is unstated.** R6.2 now says Return applies (prd:535), but no row says what Return fires inside E8 (copy:174). R1.6's cancel-by-default covers deletes only, so two presses of Return clear ⟨n⟩ values; undo can still restore them. Fix: state it, as R1.6 does for deletes.
+
+**[NIT] 3N3 — R4.1 returns to "E9 with its list" (prd:474).** A restore made in the opened detail changes that item's value, so the list and ΔE shown on return are stale. R3.9 governs only the table. Fix: say "E9 recomputed", or add a case.
+
+## Clarifying questions for the author
+1. Does HISTORY_READINGS_CEILING bound only R8.1b's history open, as F118 and the constants table say, or every R8.1 budget?
+2. While a bulk write or delete runs, may a session start or resume, on that collection or another? If so, does the write yield, or does the start wait?
+3. While a bulk write or delete runs, are this PRD's other writes offered, queued or refused? What happens to an edit to an item that the running delete removes?
+4. What surface shows while "Delete collection" runs?
+5. Is E10's "Undo" of a selection or collection delete refused while any session is in flight, as the deletes are?
+6. When collection A holds an interrupted session and a session is in flight on B, or a one-row session is in flight on A, which E6 variant does "Delete collection" on A render?
+7. If R1.7 is deferred at v1, does E6's "full" render once every other P1 action it names lands?
+8. Do a session's writes other than a save (skip, set aside, pause, end, resume, queue-list reorder) end "Undo change" history?
+9. In the All-items majority, does a mismatched non-spectral reading vote under its value's pair, under its collection's pair, or not at all?
+10. Do timing cases run a Release-configuration test build that carries R8.10b?
+11. Does every case keep running in later build phases?
+12. In E8, which action does Return fire?
+13. Is E9's list recomputed when a detail opened from it closes after a restore?
+14. For the Import PRD: is an import commit refused while a session is in flight on another collection, as F100 refuses this PRD's bulk writes?
+
+## Claimed properties
+- **Every box for my lens in the round-2 fix file is ticked — holds.** Three items are PARTIAL on substance (see the table).
+- **Body at 12,000 words by rule 14's method — holds within method.** My raw-token recount moves by +15 from `7861221`, matching 11,985 → 12,000. There is no headroom, so every body fix above names its trim.
+- **Every P0 row has an interim; the no-interim list is "None" — holds.** R8.11 sits under OQ 1's interim (F120), and R8.8 renders DF E34, which now exists (DF copy:29).
+- **Every own constant has a candidate, an interim and an OQ — holds** for all 12, DELETE_WRITE_BUDGET and HISTORY_READINGS_CEILING included. The latter's owning row over-scopes it (3MJ1).
+- **Gamut margins — hold.**
+  - Every other declared value is at least 0.03 inside or outside. The smallest are GS-002 at +0.038 and ZX-014 at +0.044. The exemptions are DL-001 and BI-1, each at about +0.016.
+  - ZX-019 is inside sRGB by +0.00056 to +0.00059 under the primaries-derived matrix, the IEC 61966-2-1 rounded matrix and the ICC D50-adapted matrix, with either D50 white. UJ2.1-q's "not clipped" survives any of them.
+- **UJ2.1-c's triplet (64.7, 196.8, 103.6)/255 — holds** exactly under OQ 7's interim.
+- **The new oracles hold:**
+  - UJ3.4-f: GB-3 at 3.0035, analytically, with S_L ≈ 1.
+  - UJ3.2-e: 7 hidden.
+  - UJ3.3-l and UJ3.3-m.
+  - UJ3.4-h and UJ3.4-i.
+  - UJ7.1-n.
+  - UJ9.1-e/f/h/i/k.
+  - UJ4.4-f.
+- **The ADR-0003 row "takes seven inputs" — holds.** I counted seven distinct inputs.
+- **Sibling halves landed — holds:** DF F53 and its rows, Capture F72 and the F71 clarification, post-lock.
+- **F100 removes capture/bulk-write contention — does not hold.** It fails for a session that starts or resumes mid-write (3MJ2).
+- **No row contradicts F1–F134 — holds, except** that R8.1's lead row reaches past F118's scope (3MJ1).
+- **Unverified:** all timings, ColorSync, SQLite secure-delete and checkpoint behaviour under F102, 3MN8's rate, M3.
+
+## Genuinely sound
+- **F100 is the right simplification.** Refusing bulk writes in flight is testable, and UJ9.5-d is now a P0 case against the edits that stay available. It beats an engineered yield or queue under ADR-0005; 3MJ2 asks only for the reverse ordering.
+- **F102 is defined once, in the Vocabulary's "the file's bytes".** R1.3, R4.3, R6.2 and R8.8 inherit it, and UJ9.8-c is a real control the check must catch.
+- **DELETE_WRITE_BUDGET is a separate constant**, rather than 2 s being stretched or F35's scrub being deferred.
+- **F127 makes the stored flag and the sRGB display check one computation**, and UJ2.1-q is an edge that genuinely survives implementation variance.
+- **The verification seam exists only in test builds and opens no socket (F132), with UJ9.4-e.** That is right-sized for a single-user local app.
+- **F110's E4/E5 split and E4's "all items" variant** are deterministic and cheap.
+- **The round's trims kept the body at 12,000 words.** They removed research and fence-provenance sentences, not rules.
+
+## Deferred
+- **peer-architecture-reviewer:**
+  - 3MJ2's mechanism: single-writer arbitration, and whether a bulk write can yield without breaking R8.8's atomicity.
+  - F102 under WAL: a checkpoint after each write against capture's concurrent reads.
+  - An import commit while a session is in flight (question 14).
+- **peer-performance-reviewer:**
+  - That 3MJ1's literal envelope is infeasible at 500 readings per item.
+  - Whether R8.1g's 10 s holds with the F102 scrub at ROWS_CEILING.
+- **peer-test-reviewer:**
+  - 3MN6, 3MN7 and 3MN8.
+  - UJ9.5-f has no functional timeout.
+- **peer-product-marketing-manager-reviewer:**
+  - E6's "elsewhere" copy says a change "waits until it ends", which reads as a queued change while R8.3 changes nothing.
+  - E8's "scanning doesn't count" against R4.7 (3MN4).
+- **peer-interface-reviewer:** E8's Return default (3N2).
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | OBJECT (3MN2) |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | OBJECT (3MN5) |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | OBJECT (3N3) |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | OBJECT (3MN4) |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | OBJECT (3N2) |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | OBJECT (3MJ1) |
+| R8.1a | ALIGN |
+| R8.1b | OBJECT (3MJ1) |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | OBJECT (3MJ2, 3N1) |
+| R8.1g | OBJECT (3MJ2) |
+| R8.2 | ALIGN |
+| R8.3 | OBJECT (3MJ2, 3MN1, 3MN2, 3MN3) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | OBJECT (3MN6) |
+| R8.10a | ALIGN |
+| R8.10b | OBJECT (3MN6) |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | OBJECT (3MJ2) |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | OBJECT (3MN2, 3MN3) |
+| E7 | ALIGN |
+| E8 | OBJECT (3MN4, 3N2) |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | OBJECT (3MN7) |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ABSTAIN (out of lens) |
+
+3MN8 targets the Harness's byte-check rule, which carries no row ID. Question 14 targets the Import PRD.
+
+#### peer-test-reviewer (Claude route)
+
+## Verdict
+Trustworthy once three new Majors are fixed; no Blocker remains. Of my four round-2 Blocker and Major findings, three are resolved and one is partly resolved, and every new fixture number I recomputed holds. The round-2 fixes did add three Majors:
+- **Undos of bulk writes stay available while a session is in flight**, against F100 and R8.11.
+- **"File's bytes equal" checks fail correct builds.** A correct SQLite build fails them. My own round-2 fix text caused this.
+- **UJ5.1-a fails a correct build** from the phase that lands R5.5.
+
+## Coverage map (brief)
+- **Now covered:**
+  - Every R3.9 trigger, and its "moves it" clause.
+  - The Display P3 colour values the chip sends, and a chip on an item with several readings.
+  - A byte check that handles letter case, encoding and side files, with a control case.
+  - Lost file permission.
+  - R8.11 in the first build phase.
+  - Bulk and collection deletes timed at the ceiling.
+  - Each of F100's four refusals, with an "elsewhere" case.
+- **Load-bearing gaps:**
+  - Undos of bulk writes while a session is in flight (R3-M1).
+  - Oracles that fail correct builds (R3-M2, R3-M3).
+  - The symbols of marks in E12 and on history lines can't be read (R3-m1).
+  - Nothing tests R3.9's "lists it" (R3-m2).
+  - R8.1c's writes other than capture saves are untimed, and nothing tests history above its ceiling (R3-m7, R3-m8).
+
+## Findings
+Paths, all under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/`:
+- PRD = `collection-mode/prd-collection-mode.md`
+- J = `collection-mode/prd-collection-mode-journeys.md`
+- C = `collection-mode/prd-collection-mode-copy.md`
+- FEN = `collection-mode/prd-collection-mode-fences.md`
+- CAPJ = `capture-mode/prd-capture-mode-journeys.md`
+- CAPC = `capture-mode/prd-capture-mode-copy.md`
+- DF = `data-foundation/prd-data-foundation.md`
+
+**Round-2 delta verification (subject c4ec992)**
+
+| Round-2 ID | Status | Evidence |
+|---|---|---|
+| B1 | RESOLVED | J:202 asserts ZX-002's P3 triplet (64.7, 196.8, 103.6)/255 ±1/255. I recomputed (64.69, 196.82, 103.58); it holds across D50/D65 white-point and matrix variants. J:215 (UJ2.1-p) reads ZX-013's chip as T3's value, with T1 and T2 declared at other values (J:94). |
+| R2-M1 | RESOLVED | J:53–59 checks the text and its unique words, in any case and in the import PRD's R2.3 form, as UTF-8 and both UTF-16 byte orders. It reads every file beside the file and every table, internal tables included, at F102's moments. J:489 is the control. Remaining calibration issues are R3-m5. |
+| R2-M2 | RESOLVED | J:452–458: a restore (e), a Flag (f), an undo (g), a display move (h), a capture save under an L* sort (i), a search change (j) and a re-scan answer (k). In (i), ZX-010 at L* 50 lands between ZX-005 (48) and ZX-003 (55); I recomputed this. Only the unlist direction is tested: R3-m2. |
+| R2-M3 | PARTIAL | PRD:600 now reads a chip mark's symbol apart from its tint, and J:478 asserts the 11 symbols distinct. E12 (J:210) and the marks on R5.2d's Standing line still have no symbol readback: R3-m1. |
+| R2-m1 | RESOLVED | J:298: ZX-000 at queue position 1; the case asserts ZX-000, not ZX-020. |
+| R2-m2 | RESOLVED | J:465 (UJ9.3-c). |
+| R2-m3 | RESOLVED | J:483: the crash comes after the new reading is written and before its six derived sets are. |
+| R2-m4 | RESOLVED | J:479: every action of every state in the phase, range and toggle selection included. A Nit on its surface list is R3-n3. |
+| R2-m5 | RESOLVED | J:449 runs in each in-flight state. |
+| R2-m6 | RESOLVED | J:258: GB-3 at ΔE2000 3.0035 (its lightness weighting differs from 1 by about 10⁻⁸) displays as 3.00 and is excluded. J:251: CP-2 (50.01) sorts before CP-1 (50.04), both showing 50.0. |
+| R2-m7 | RESOLVED | J:349. |
+| R2-m8 | RESOLVED | J:473. |
+| R2-m9 | RESOLVED | PRD:598 declares the permission; PRD:590 names E34; J:486 (UJ9.7-g); J:524. DF R7.3 induces DF's new File actions case for it. |
+| R2-m10 | PARTIAL | J:474 is now P0 (a keystroke, a header fire and a single edit at each set's last sample). J:477 times both deletes and "Use as scan order". R8.1c's kinds other than capture saves are still untimed, and M1's per-kind claim doesn't match its workload: R3-m7. |
+| R2-m11 | RESOLVED | PRD:599 reads each R4.2 and R5.2 line, and the cause by its key; J:277, J:315. UJ4.7-d still reads the cause by its label: R3-n2. |
+| R2-m12 | RESOLVED | J:61–65. |
+| R2-m13 | PARTIAL | PRD:602's "never the user's file itself" still leaves the file's side files readable as app storage: R3-m6. |
+| R2-m14 | PARTIAL | J:203 and J:467 landed as raw byte equality, which correct builds fail. My round-2 fix text was wrong: R3-M2. |
+| R2-m15 | RESOLVED | PRD:459 is split. J:419 (UJ7.1-n): GI-1 is unlike though its own pair is the like pair; ⟨unlike⟩ 3, recomputed. The counting rule is R3-m10. |
+| R2-m16 | RESOLVED | CAPJ:114 seeds the quarantine before the session; CAPJ:115 is the F84 read-only case. Its byte oracle falls under R3-M2. |
+| R2-n1 | RESOLVED | J:68–70 names DL-001 and BI-1 (inside sRGB by 0.016; I recomputed 0.0157). J:414 is now Soft Light. |
+| R2-n2 | RESOLVED | J:389, J:393–394. New instances are R3-n1. |
+| carried MJ5 | RESOLVED | Via R2-m4, J:479. |
+| carried m8 | RESOLVED | Via R2-m2, J:465. |
+| carried m9 | RESOLVED | Via R2-m3, J:483. |
+
+**New defects introduced by the round-2 fixes**
+
+**[MAJOR] R3-M1 — PRD:585 (R8.3), PRD:607 (R8.11), PRD:579–580 (R8.1f, R8.1g), C:156 (E6 "elsewhere"), FEN:968–972 (F100) — two bulk writes are still allowed while a session is in flight, and no case covers them.**
+- **What F100 changed:** four bulk actions are now refused while a session on any collection is in flight.
+- **What it left out:**
+  - an "Undo change" reversing a bulk set or clear — R8.3 refuses only the undo of a code change, and says "every other metadata edit … stay available";
+  - E10's "Undo" of a selection or collection delete, which R8.3 refuses only "on that collection".
+- **Both are reachable:**
+  - Clear Family on 10,000 Scale items with no session running, then start a session; F104 says starting a session doesn't end the undo history, and UJ6.4-m fires Undo in flight. "Undo change" is then a BULK_WRITE_BUDGET-class write during capture.
+  - Or delete Gouache Set, start a session on Studio Markers, and fire E10's "Undo": a DELETE_WRITE_BUDGET (10 s) write during capture.
+- **A builder has to guess:**
+  - R8.3 allows both writes.
+  - R8.11 says no write may delay a row confirmation.
+  - E6 "elsewhere" tells the user "a change that touches many swatches at once waits".
+  - F100's title says no bulk writes in flight.
+  - Meeting R8.11 while allowing both needs the yield-or-queue design F100 rejected.
+- **Mutation that stays green:** allow both undos in flight, holding the single writer for 2–10 s. No case fires either in flight, and UJ9.5-d (J:474) fires only a keystroke, a header and a single edit.
+- **Fix (within F100's "no bulk writes"):**
+  - In R8.3, move "E10's "Undo"" from the "on that collection" list to the "on any collection" list (no words added).
+  - Add "or an "Undo change" of a bulk set or clear" after "Use as scan order" (+9 words).
+  - Pay for it by deleting the Build contract's rule-free provenance parentheticals "(the vision's non-goals)" and "(the vision's v2 candidates)" (PRD:101–102, −7), plus 2 words of §8's preamble (see R3-m1).
+  - Mirror the change in the capture PRD's F72 Outbound line.
+  - Add cases:
+    - UJ6.2-l: clear Family on 11 items, bring a session on Gouache Set in flight in each in-flight state, fire "Undo change" → E6 "elsewhere", and the 11 stay empty.
+    - UJ4.4-i (R1.7): delete Gouache Set, bring Studio Markers' session in flight, fire E10's "Undo" → E6 "elsewhere".
+  - If the owner reads F100 as covering the four actions only, R8.11 needs an owner decision instead.
+
+**[MAJOR] R3-M2 — J:203 (UJ2.1-d), J:467 (UJ9.4-b), CAPJ:115 (capture UJ3.3-l); PRD:174–175, PRD:442 (R2.5), PRD:588 (R8.6) — "the file's bytes equal those before" fails correct builds.**
+- By the Vocabulary, the file's bytes include every journal, log, index or file beside the file. Raw byte identity is an implementation detail, not a behaviour.
+- **Correct builds that fail:**
+  - SQLite's recommended `PRAGMA optimize` at close writes sqlite_stat1.
+  - An ownership hold (DF R1.5 refuses a second copy "by name") may be written at open and cleared at close.
+  - A WAL checkpoint, on a timer or at close, rewrites main-file pages with the same logical content.
+  - The -wal and -shm files exist only while the app is open. UJ9.4-b's undated "before the case" baseline, compared with a read after the app closes, can differ by whole files.
+- **Fix (companion only):**
+  - Replace each equality with "read with the app closed at SQLITE_READER_FLOOR, every table holds the same rows as the seeded file read before launch, SQLite's own statistics tables aside".
+  - Keep UJ9.4-b's byte check for qqq.
+  - For capture UJ3.3-l, assert the main file unchanged plus the same row-level read.
+
+**[MAJOR] R3-M3 — J:330 (UJ5.1-a), PRD:521 (R5.3), C:269 (E17 "restore"), J:49–51 — UJ5.1-a fails a correct build once R5.5 lands.**
+- F111 moved E17's Use-this-reading sentence into a "restore" variant. By R5.3, that variant renders in recorded order once R5.5 lands.
+- UJ5.1-a asserts "E17 renders with no variant", and nothing substitutes the new variant:
+  - the Harness's substitution rule covers only E6 ("full");
+  - UJ4.7-a conditions E18 itself ("no variant while R5.5 is not built", J:315); UJ5.1-a has no such condition.
+- The E6 rule shows the suite re-runs earlier cases in later builds, so a correct build fails UJ5.1-a from R5.5's phase on.
+- **Fix (companion only):** "Where a case asserts E6 or E17 with no variant, it asserts E6's "full" variant once every P1 action it names has landed, or E17's "restore" variant once R5.5 has (R8.3, R5.3)."
+
+**[MINOR] R3-m1 (R2-M3 carried) — J:210 (UJ2.1-k), PRD:599–600, C:210–220, J:478, J:528 — the marks in E12 and on history lines have no symbol readback.**
+- R8.10b grants E12 nothing beyond "the copy state and variant up, with each token's value", and E12 has no tokens. So UJ2.1-k's "naming eleven marks … each with its shape" can only be read by its wording.
+- Never-true and awaiting-answer render on R5.2d's Standing line, not on a chip. So UJ9.6-a can't read two of its eleven symbols.
+- **Mutation that stays green:** E12 draws cannot-show with a different symbol from the chip's.
+- **Fix:**
+  - R8.10c "Each chip's marks by identifier" → "Each chip's, E12's and each history line's marks by identifier" (+5 words).
+  - Pay by trimming §8's preamble sentence at PRD:561–564 ("The rows here hold the operating envelope … a class left out is a latent decision.", 48 words). It is an authoring instruction that binds no build behaviour; trim it only if the format's checks don't require it.
+  - UJ2.1-k asserts E12's eleven identifiers, each symbol equal to the chip's.
+  - The map cites R8.10c, not R8.9.
+
+**[MINOR] R3-m2 — PRD:465 (R3.9), PRD:537 (R6.4); J:450, J:457, J:366 — only the unlist direction is tested.**
+- No case makes a change newly list an item. Mutation that stays green: filter maintenance that only drops items that stop matching.
+- R6.4's keep branch on a search change is also unasserted. "Any keystroke clears the selection" passes UJ9.1-j; UJ6.1-c covers the keep branch for filters only, and only at P1.
+- **Fix:**
+  - UJ9.1-m: row-state filter captured; a capture save on ZX-010 → ZX-010 is listed.
+  - UJ9.1-n: ZX-013 selected; type zx-01 → ZX-013 is still selected.
+
+**[MINOR] R3-m3 — PRD:585 — nothing tests R8.3's per-collection list with a session on another collection.**
+- Every refusal case for the "on that collection" list runs with the session on the same collection (J:290, 295, 304, 317, 346, 299).
+- **Mutation that stays green:** refuse every R8.3 action whenever any session is in flight.
+- **Fix:** with a session on Gouache Set in flight, "Delete swatch" on Studio Markers' ZX-010 opens DF E8, not E6.
+
+**[MINOR] R3-m4 — PRD:496 (R4.7), J:389–391, J:395–396 — the Undo-history cases list actions on an undeclared surface.**
+- F104 offers "Undo change" only where its latest change's collection is shown.
+- UJ6.4-l lists actions after "New collection", which ends on Inks or the collection list, where Undo is never offered. So "not offered" passes even if "New collection" doesn't end the history — a false green.
+- UJ6.4-f's import and re-read runs, UJ6.4-g and UJ6.4-h leave the surface to the import flow.
+- UJ6.4-m reads Undo in flight without the "show Studio Markers' collection surface" step that UJ9.1-a, -c and -i use. Under the full-window takeover reading of the open seam (ADR-0004), it fails.
+- **Fix:** end each run with "choose Studio Markers and list the actions offered", and add the show step to UJ6.4-m.
+
+**[MINOR] R3-m5 — J:53–59, J:489; J:123, 245, 282, 393–394, 467, 501 — the byte check needs calibration.**
+- **(a) Chance matches on a short word.** "Sky" (T6, UJ4.2-a) is 3 letters: about 4.8×10⁻⁷ per byte position case-insensitively, or roughly 0.5 chance hits per MB of high-entropy bytes. Such bytes include compressed raw payloads (DF R1.6), float arrays and random WAL salts. Every other checked word has four or more letters, at about 3.7×10⁻⁹ per position.
+- **(b) App-storage reads have no matching rule.** The reads in UJ3.3-f, UJ9.4-b, UJ6.4-j/k and UJ10.1-d define no case or encoding handling. A UTF-16 plist or undo store passes an exact-case UTF-8 search. Unified-log entries are compressed on disk.
+- **(c) The control covers two branches only.** UJ9.8-c checks letter case and a side file, not UTF-16, word-level or table-level matching.
+- **(d) Search-index terms can evade a byte search.** A full-text index stores terms prefix-compressed: "plum" after "pink" is stored as "lum".
+- **Fix (companion only):**
+  - Check words of four or more letters only.
+  - Apply the same rule to R8.10e reads, with log entries read decoded.
+  - Add control runs: Warm as UTF-16LE in a side file, and warm in an internal table.
+  - Read any full-text index's vocabulary at SQLITE_READER_FLOOR.
+
+**[MINOR] R3-m6 (R2-m13 carried) — PRD:602 vs PRD:174; J:245 — a side file can hold "zx-010".**
+- A -wal, a persistent WAL, or an index beside the file can hold normalised codes such as "zx-010" and counts as app storage under R8.10e. UJ3.3-f can then fail a correct build.
+- **Fix:** R8.10e "never the user's file itself" → "never the file's bytes" (−1 word).
+
+**[MINOR] R3-m7 (R2-m10 carried) — PRD:576 (R8.1c), PRD:735 (M1), J:471, J:459 — timing gaps remain.**
+- Of R8.1c's kinds, only capture saves are timed. F112's version-history half has no functional case either.
+- M1 says "200 of each kind", but UJ9.5-a gives 20 display moves (now an M1 kind), 20 Table/Grid switches and 20 swatch-size changes.
+- **Fix (companion only):**
+  - Time 200 of each R8.1c kind, and 200 display moves and grid switches.
+  - Add a case: answer ZX-013's re-scan with its history open → E17 shows T3's reason as re-measurement.
+
+**[MINOR] R3-m8 — PRD:568, PRD:584; J:473, J:475 — nothing tests history above HISTORY_READINGS_CEILING.**
+- UJ9.5-e holds exactly 500 readings, so a view capped at 500 passes, against R8.2's "however many".
+- **Fix:** UJ9.5-c adds an item holding 1,000 readings; E17's ⟨n⟩ and its list both read 1,000.
+
+**[MINOR] R3-m9 — J:275 (UJ4.1-a), PRD:448 — F105's precisions are asserted as formats, not values.**
+- u*, v*, X, Y, Z, sRGB and HSL are checked for format only, so values swapped between those slots still pass.
+- **Fix:** declare ZX-001's six derived sets and assert the values. I computed u* −32.0, v* −44.7, X 26.79, Y 30.40, Z 49.87, sRGB (91, 157, 211), HSL (207°, 58%, 59%); none sits at a rounding edge.
+
+**[MINOR] R3-m10 — PRD:459 (R3.3), J:419 — the like-pair count is ambiguous and no case tells the readings apart.**
+- "The most common among listed items with a value" doesn't say whether a mismatched non-spectral item counts toward the pair its value was worked out under. UJ7.1-n gives D65/10° under all three readings.
+- **Fix:** a case that tells them apart:
+  - Alpha Inks at D65/10°: AI-1 and AI-2.
+  - Beta Inks at D50/2°: BI-1 to BI-3.
+  - Gamma Inks at D50/2°: GI-1 and GI-2, non-spectral, worked out at D65/10°.
+  - The literal reading gives like pair D65/10° and ⟨unlike⟩ 5. If the owner meant otherwise, R3.3 needs about 8 words, paid from §8's preamble.
+
+**[MINOR] R3-m11 — PRD:592, J:470 — nothing tests "exists only in test builds".**
+- **Fix:** UJ9.4-e also tries each R8.10b–e readback against the Release build, and none answers.
+
+**[NIT] R3-n1 — J:453–454 — UJ9.1-f and UJ9.1-g's Rows omit R4.9 and R4.7**, which their Givens need. This is R2-n2's pattern again.
+
+**[NIT] R3-n2 — J:318 vs CAPC:47 — UJ4.7-d reads the set-aside cause by its label.** Read it by its Cause key through R11.11.
+
+**[NIT] R3-n3 — J:479, J:477 — two cases leave a surface undeclared.**
+- UJ9.6-b's surface list omits the collection list.
+- UJ9.5-g doesn't name the surface its inputs go to while Scale is being deleted.
+
+**[NIT] R3-n4 — PRD:407, PRD:585 — "interrupted" and "elsewhere" can both apply.** This happens when the collection holds an interrupted session and another collection's session is in flight. One case would pin which renders.
+
+## Biggest risks   (what could ship broken behind a green suite)
+- **A 2–10 s bulk undo during capture (R3-M1).** It holds up the capture session's saves, while E6 tells the user such changes wait.
+- **Correct builds failing byte-equality and UJ5.1-a (R3-M2, R3-M3).** This pushes teams to weaken good oracles.
+- **An E12 legend whose symbols differ from the chips' (R3-m1).**
+- **Filtered tables that never gain newly matching items (R3-m2).**
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **Oracles I recomputed, all correct:**
+  - ZX-002's P3 triplet.
+  - ZX-019 inside sRGB by +0.00055 to +0.00060 across nine white-point choices, the IEC matrix and a fixed-point (s15.16) ICC matrix. UJ2.1-q's edge case can't flip on a correct build.
+  - GB-3; the CP pair; UJ9.1-i's position and UJ9.1-f's list; UJ3.2-e's 7.
+  - UJ3.3-m's ⟨unlike⟩ 2, which catches a "most common" rule applied inside a collection (3).
+  - UJ3.4-h: FS-007's M2 set at ΔE 0 catches comparing any persisted derived set.
+  - UJ3.4-i's tie broken by collection-list order.
+- **The byte-check moments catch two classic SQLite leaks.** Reading while open and after a crash finds the old page image the main file keeps until a WAL checkpoint, and PERSIST-mode journals.
+- **The E6 "full" substitution** is the right single declarative clause; it only needs E17 added (R3-M3).
+- **Lost permission is injectable** through R8.10a together with DF R7.3.
+- **Correctly minimal:**
+  - UJ2.1-b doesn't assert the clipped sRGB triplet's value; the clipping method belongs to OQ 7.
+  - UJ9.5-d needs no baseline run without the browsing inputs; the absolute budget is the contract.
+  - Timing R8.1c's kinds at release cadence, not every PR, is enough.
+
+## Missing / over-tested
+- **Missing:**
+  - Cases for bulk undos in flight (R3-M1).
+  - Row-level replacements for the byte-equality oracles (R3-M2).
+  - An E17 variant rule in the Harness (R3-M3).
+  - Symbol readbacks for E12 and the history lines (R3-m1).
+  - "Lists it" and search-keep cases (R3-m2).
+  - A cross-collection availability case (R3-m3).
+  - Declared surfaces for the Undo cases (R3-m4).
+  - Byte-check calibration and more controls (R3-m5).
+  - R8.1c timing (R3-m7).
+  - A case above the history ceiling (R3-m8).
+  - Derived values in UJ4.1-a (R3-m9).
+  - A case that pins the like-pair count (R3-m10).
+  - A Release-build readback probe (R3-m11).
+- **Over-tested:** nothing material.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | OBJECT (R3-M2) |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | OBJECT (R3-m1) |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | OBJECT (R3-m9) |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | OBJECT (R3-m10) |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | OBJECT (R3-m2) |
+| R4.1 | ALIGN |
+| R4.2 | OBJECT (R3-m9) |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | OBJECT (R3-m9) |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | OBJECT (R3-m4) |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | OBJECT (R3-M3) |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | OBJECT (R3-M3) |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | OBJECT (R3-m2) |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | OBJECT (R3-m7, R3-m8) |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | OBJECT (R3-m7) |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | OBJECT (R3-m8) |
+| R8.3 | OBJECT (R3-M1, R3-m3) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | OBJECT (R3-M2) |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | OBJECT (R3-m1) |
+| R8.10 | OBJECT (R3-m5, R3-m11) |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | OBJECT (R3-m1) |
+| R8.10d | OBJECT (R3-m5) |
+| R8.10e | OBJECT (R3-m5, R3-m6) |
+| R8.10f | ALIGN |
+| R8.11 | OBJECT (R3-M1) |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | OBJECT (R3-M1) |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | OBJECT (R3-m1) |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | OBJECT (R3-M3) |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | OBJECT (R3-m7) |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+#### peer-interface-reviewer (Claude route)
+
+## Verdict
+Contract sound. Every round-2 interface finding is resolved except IF-16 (the product README line), which the fix file deferred on purpose. The round-2 fixes introduced no Blocker or Major. They did leave seven Minors and four Nits, mostly about how E6's variants are chosen and cite hygiene.
+
+## Surface & consumers (brief)
+- **What I reviewed:** commit c4ec992. That covers the row IDs, named constants, both obligations tables and the copy index of `docs/product/collection-mode/prd-collection-mode.md`, plus its journeys, copy and oq-results companions. I read every named source.
+- **Who depends on it:**
+  - agent builders, who read rows and copy;
+  - test harnesses, which key on copy-state and variant IDs, mark identifiers and action labels;
+  - the Capture, Data Foundation, Import, Export and Device PRDs, which cite these rows.
+- **What changed (`git diff 7861221 HEAD`):**
+  - Capture F72: its obligations line and Traceability, and R5.8/R6.6 wording.
+  - Data Foundation F53: new E34, R1.10, R7.3j and R7.6p; R2.3, R3.4 and R6.2a clarified; E11, E26 and E33 reworded; OQ 20 widened.
+  - ADR-0003 row: now 7 inputs.
+  - post-lock.md: one item ticked and two lines added.
+- **Gating:** every sibling change carries a dated fence and a "peer review pending" status clause. I found no ungated break.
+- **Mechanical label check (re-run):** the copy file has 53 labels. Every quoted string in the PRD and the journeys resolves to one of them, and every label is quoted in both files. Zero unresolved, zero unused.
+
+## Findings
+
+**Round-2 delta verification**
+
+| Round-2 finding | Status | Evidence |
+|---|---|---|
+| R2-IF-1 | RESOLVED | PRD:590 (R8.8 renders DF E34); DF copy:29 (E34); DF PRD:107 (R1.10), :208 (R7.3j), :88 (R7.6p); journeys:486 (UJ9.7-g); PRD:300 (row 1 lists DF E34); post-lock.md:41 ticked |
+| R2-IF-2 | RESOLVED | PRD:599 (R8.10b reads each R4.2/R5.2 line, and a cause by key); journeys:277 (UJ4.1-c), :315 (UJ4.7-a). A residual in UJ4.7-d is R3-IF-10. |
+| R2-IF-3 | RESOLVED | copy:219 now reads "Can't show:", matching the chip label at copy:301 |
+| R2-IF-5 | RESOLVED | PRD:496 (column hide/show and "New collection" end the history; a capture save and a session start do not); journeys:392, :395, :396 (UJ6.4-i, -l, -m) |
+| R2-IF-6 | RESOLVED | PRD:465 (one list, re-scan answer and undo added); PRD:537 (R6.4 cites it); journeys:458 (UJ9.1-k). A gap in the list itself is R3-IF-6. |
+| R2-IF-7 | RESOLVED | PRD:372 (preamble), :377–378 (Surfaces rows), :693 (index row) |
+| R2-IF-8 | RESOLVED | copy:152 (the P0 body names only P0 actions); copy:155 ("full" [phase: variant-absent]); PRD:585 (R8.3 enumerates it). A new edge is R3-IF-3. |
+| R2-IF-9 | RESOLVED | PRD:497 (R4.8 adds the Column headers table); journeys:314 (UJ4.6-j) |
+| R2-IF-10 | RESOLVED | PRD:627–628 (fence cites name their documents); PRD:629 (its R1.2) |
+| R2-IF-11 | RESOLVED | PRD:630 (cause-labels table, R4.2b); PRD:642 (new Inbound line → R8.3); PRD:643 ("its F70 and F71") |
+| R2-IF-12 | RESOLVED | capture PRD:215, :233 now read "flagged as missing or damaged", matching capture copy:56 |
+| R2-IF-13 | RESOLVED | capture PRD:116 reads F1–F72 (F72 at capture fences:640) |
+| R2-IF-14 | RESOLVED | PRD:140 (R4.6 and R5.5) |
+| IF-10 (carried) | RESOLVED | DF PRD:340 (OQ 20 names E33's selection and two deletes in one window); PRD:761 |
+| IF-16 (carried) | UNRESOLVED (deferred on purpose) | `docs/product/README.md:18` still reads "queued"; the fix file's Out-of-scope list defers it to the bookkeeping close |
+
+**New defects**
+
+[MINOR] R3-IF-1 — Harness in-flight rule (journeys:49–51) and E17: F111 added E17's "restore" variant, but only E6 got a rule for builds where its phase variant has landed.
+- **The contradiction:** UJ5.1-a (journeys:330) and UJ5.3-n (:352) have the same Given ("the seeded file") and the same When (open ZX-013, fire "Show history").
+  - UJ5.1-a asserts "E17 renders with no variant".
+  - UJ5.3-n asserts its "restore" variant.
+- UJ5.1-b (:331) also asserts "the body" in recorded order.
+- **When it bites:** the E6 rule only makes sense if first-phase cases such as UJ1.2-a run again in later builds. On that reading, UJ5.1-a and UJ5.1-b fail every correct build once R5.5 lands.
+- **The other reading isn't granted either:** "Build phase" is listed as a seam input (journeys:103), but R8.10a (PRD:598) does not grant it.
+- **Fix (journeys only, no body words):** "Where a case asserts E6, E17 or E18 with no variant, it asserts that state's phase variant ("full", "restore", "restore") in a build where every P1 action that variant names has landed."
+
+[MINOR] R3-IF-2 — R1.4 (PRD:407), R8.3 (PRD:585) and E6 (copy:154, :156): no rule says which of E6's variants wins when two apply.
+- **The state is reachable:** under the capture PRD's R3.2 (capture PRD:156) and R3.5 (:159), Studio Markers can hold an interrupted session while Gouache Set's session is in flight.
+- **Both variants apply:** "Delete collection" on Studio Markers then meets R1.4's "interrupted" condition and R8.3's "elsewhere" condition, which is new this round (R1.4 dropped "there").
+- **Nothing settles it:** no case covers it, because UJ1.2-b's Given (journeys:175) rules out a session in flight. R8.10b reads the variant by ID, so two correct builds diverge.
+- **Wording nit folded in:** R8.3's "its 'full' variant, beside R1.4's 'interrupted', once…" reads as if both variants render together.
+- **Fix (owner picks the order):** add "and no session is in flight" to the copy's "interrupted" condition (companion only), or have R1.4 say "R8.3 governing it first in flight" (+1 word). Add a UJ1.2-g case for the combined state.
+
+[MINOR] R3-IF-3 — E6's "full" variant is gated three different ways, and all three wait on R1.7.
+- **The three conditions:**
+  - copy:155: "every P1 action R8.3 names is built";
+  - the Harness (journeys:50): "every P1 action that variant names";
+  - R8.3 (PRD:585): "every P1 action it names".
+- **They split on "Use as scan order" (R2.9).** R8.3 names it, but it is never refused on the session's own collection, so "full" does not name it. In a build where R2.9 lands last, the copy says the body renders and the Harness says "full" — for UJ1.2-a, UJ4.3-f, UJ6.2-j and others.
+- **All three include E10's "Undo" (R1.7).** If OQ 10 is still open at release, F57 defers R1.7 (PRD:410). Then "full" never ships in v1, and refused "Change code", Flag, "Set a field" and "Delete selected" all show a P0 body that names none of them.
+- **Fix:**
+  - In the copy, gate "full" on "every P1 action this variant names is built", and drop "and undoing a delete" from its body.
+  - In R8.3, change "it names" to "that variant names" (+1 word, paid by dropping "now" in R3.9's "view sort now place it").
+
+[MINOR] R3-IF-4 — R8.3 against R8.1g, F100 and R8.11 (PRD:580, :585, :607): an undo of a large delete is not refused while another collection is scanning.
+- **The mismatch:** R8.1g puts E10's "Undo" of a selection or collection delete in the delete class (DELETE_WRITE_BUDGET, 10 s). R8.3 refuses it only "on that collection", and a deleted collection can't hold a session.
+- **Effect:** with Gouache Set in flight, undoing Studio Markers' "Delete collection" is offered and runs a 10 s write on the single writer. That is exactly the case F100 refused for the deletes themselves. R8.11 then requires engineering F100 turned down (writes that yield or queue behind capture).
+- **Why only this undo:** "Undo change" of a bulk set is already covered, because R4.7 re-checks R8.3.
+- **Mitigation:** R1.7 is Stop-gated behind OQ 10 (PRD:305).
+- **Fix (owner confirms it counts as a bulk write under F100):** move E10's "Undo" of a selection or collection into R8.3's any-collection group. That costs about 6 words, paid by R1.7's "— this row is not built until that question closes —", which repeats OQ 10's interim (PRD:761) and the Stop.
+
+[MINOR] R3-IF-5 — E8's body and "clear" variant (copy:173, :175) against R4.7 (PRD:496): E8 promises an undo that R4.7 withdraws after an import.
+- **What E8 says:** the undo lasts "until the file closes, you read the file again, or you change anything other than swatch details, codes or names".
+- **The mismatch:** an import that only updates swatch details is, in E8's own words, "changing swatch details". But R4.7 ends the history at any other committed write, and UJ6.4-f (journeys:389) asserts "Undo change" is gone after an import.
+- **Fix (copy only):** "…you read the file again or import into it, or you change anything other than swatch details, codes or names by hand — scanning doesn't count."
+
+[MINOR] R3-IF-6 — R3.9 (PRD:465), which R6.4 (PRD:537) now cites as the one list: the list leaves out a code change. This is pre-existing, but the R2-IF-6 fix made the list authoritative.
+- **The list:** "an edit, a capture save, a restore, a Flag, a re-scan answer, an undo or a re-read".
+- **Why it misses code changes:** this PRD keeps "an edit" apart from a code change (R4.3 PRD:492; R4.7 lists "a field edit, a code change … a bulk set or clear").
+- **Effect:** changing ZX-001 to ZX-100 under a Code sort or a "zx-00" search neither re-lists nor deselects by any row. A bulk set is ambiguous the same way.
+- **Fix:** "an edit" → "a metadata change" (R4.7's term), word-neutral with the trim above. Add a case in R4.4's phase: search zx-00, ZX-001 selected, change it to ZX-100; it unlists and is deselected.
+
+[MINOR] R3-IF-7 — R8.8 (PRD:590): "that PRD's E34" points at the wrong document by its nearest antecedent.
+- **The sentence:** "…the capture PRD's E26, because another copy of the app holds the file that PRD's E10, and because permission to the file was lost that PRD's E34".
+- **The collision:** read in order, "that PRD" is the capture PRD. The capture PRD has its own E34 ("Sort over a manual order", capture copy:34), and it renders on this PRD's surfaces (R2.9).
+- **Rule broken:** the PRD's own cite rule (PRD:618–620).
+- **Mitigation:** row 1 (PRD:300) and UJ9.7-g name the Data Foundation PRD's E34.
+- **Fix (word-neutral):** reorder the list so the capture clause comes last: "…renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26".
+
+[NIT] R3-IF-8 — copy:94–97: the sibling-owned states list leaves out the Data Foundation PRD's E34, which R8.8 renders here. The Test-controls map (journeys:522) has it. Add it.
+
+[NIT] R3-IF-9 — sibling IDs written bare, against the cite rule (all pre-existing):
+- UJ2.1-g "fire E22's action" (journeys:206), UJ2.1-h (:207) and UJ2.1-j "E23 is up" (:209);
+- UJ8.1-c and UJ8.1-d "E34 renders" (:430–431) — E34 now exists in both Capture and the Data Foundation PRD;
+- R4.9's "(E11 in the same detail)" (PRD:498), where this PRD's own E11 is the column-name error.
+
+Fix: name the document in each case. In R4.9, drop the parenthetical (−4 words; R2.4i already defines the mark).
+
+[NIT] R3-IF-10 — reading a set-aside cause:
+- R8.10b (PRD:599) says "the capture PRD's cause key", but the capture table's column is "Cause" (capture copy:49).
+- UJ4.7-d (journeys:318) still asserts the set-aside list shows "the cause flagged after capture" (the label), against capture copy:47 ("through R11.11, never by its label"). This is left over from R2-IF-2's class of defect.
+
+Fix: say "by its Cause column", and have UJ4.7-d read "the capture PRD's R11.11 reads ZX-001's cause Flagged after capture".
+
+[NIT] R3-IF-11 — E6 "elsewhere" (copy:156): "waits until it ends" reads as if the change were queued. R8.3 says the action changes nothing, and the variant's own last sentence says "do it again". Use "can't be made until it ends".
+
+## Biggest risks   (what existing consumers/scripts/agents break)
+- **A regression suite that re-runs first-phase cases goes red on a correct build once R5.5 lands** (UJ5.1-a against UJ5.3-n). An agent builder could "fix" it by suppressing E17's "restore" variant (R3-IF-1).
+- **Harnesses split on E6:**
+  - which variant shows when another collection is in flight and this one is interrupted (R3-IF-2);
+  - when "full" applies, which diverges if R2.9 lands last (R3-IF-3).
+- **If OQ 10 defers R1.7, v1's refusals of P1 actions show a message that names none of them** (R3-IF-3).
+- **Once R1.7 lands, undoing a collection delete runs a 10 s write during another collection's session,** and no case tests that against R8.11 (R3-IF-4).
+
+## Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **R2-IF-1 was closed the right way.** The Data Foundation PRD now owns E34, with R1.10, R7.3j, R7.6p and DJ3 all mirroring it. This PRD's R8.8, row 1, R8.10a, UJ9.7-g and the Test-controls map name it, and the post-lock item is ticked.
+- **The F100 mirror is complete on both sides:** Capture F72 plus its obligations line (capture PRD:386) matches this PRD's Inbound line (PRD:642).
+- **The ADR-0003 row's seven inputs match the Outbound DF row one for one.**
+- **R4.7's ender set is now closed, and every class that was ambiguous has its own case** (UJ6.4-i, -l, -m, -n).
+- **"Undo change" re-checks R8.3,** so undoing a bulk set on another collection is refused with "elsewhere" without R8.3 having to list it.
+- **The "elsewhere" variant has a case for every refused bulk action:** UJ1.2-f, UJ6.2-i, UJ6.3-f and UJ8.1-j.
+- **Status lines reconcile:** the copy index and the copy file's Status lines agree on all 19 states.
+- **"Columns" closes the staff engineer's deferred label gap.**
+- **Deliberate choices a style checker would wrongly flag:**
+  - E6 "elsewhere" binds ⟨collection⟩ to the session's collection, not the one acted on. That is right: the headline is about the session.
+  - "restore" is reused as a variant name on E17 and E18. That is fine, because variants are read per state.
+  - E10 still carries no phase mark, because it is held back by the OQ 10 Stop rather than by phase.
+
+## Missing / over-engineered
+- **Missing:**
+  - a phase-variant mapping in the Harness for E17 and E18, not just E6;
+  - a precedence rule between E6's variants;
+  - one gating condition for "full", used in all three places;
+  - the Data Foundation PRD's E34 in the copy file's sibling-owned list;
+  - IF-16's README line.
+- **Over-engineered:** nothing material.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | OBJECT (R3-IF-2) |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | OBJECT (R3-IF-6) |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | OBJECT (R3-IF-6) |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ABSTAIN |
+| R8.1a | ABSTAIN |
+| R8.1b | ABSTAIN |
+| R8.1c | ABSTAIN |
+| R8.1d | ABSTAIN |
+| R8.1e | ABSTAIN |
+| R8.1f | ABSTAIN |
+| R8.1g | ABSTAIN |
+| R8.2 | ABSTAIN |
+| R8.3 | OBJECT (R3-IF-2, R3-IF-3, R3-IF-4) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ALIGN |
+| R8.8 | OBJECT (R3-IF-7) |
+| R8.9 | ALIGN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | ABSTAIN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | OBJECT (R3-IF-2, R3-IF-3) |
+| E7 | ALIGN |
+| E8 | OBJECT (R3-IF-5) |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | OBJECT (R3-IF-1) |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ABSTAIN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+The table covers 122 IDs, R8.1g included.
+- **Abstentions:** R8.1, R8.1a–g, R8.2, R8.11 and M1 are performance-lens rows.
+- **Nits that object no row:** R3-IF-8 through R3-IF-11. The R4.9 and R8.10b nits fold into R3-IF-9 and R3-IF-10.
+- **R3-IF-4:** the fix belongs in R8.3, so R1.7 is left aligned.
+
+Paths: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md`, `…/prd-collection-mode-copy.md`, `…/prd-collection-mode-journeys.md`, `…/docs/product/capture-mode/prd-capture-mode.md`, `…/docs/product/capture-mode/prd-capture-mode-copy.md`, `…/docs/product/data-foundation/prd-data-foundation-copy.md`, `…/docs/product/README.md`.
+
+#### peer-privacy-reviewer (Claude route)
+
+## Verdict
+**Privacy-sound to ship.** No finding is Critical or High. The round-2 fixes closed five of my seven round-2 findings and part of the other two. No new or amended row adds a network path or moves personal data off the machine. One Medium should close before lock: nothing places or checks copies of item content kept outside the user's file. The All items search budget (F103) now points builders toward keeping such a copy, as a search index.
+
+## Data-flow & PII map (brief)
+- **Who the data is about.** The user, and anyone named in an imported free-text column (F8) or in a collection name. Nothing is special-category.
+- **Personal fields.**
+  - The device serial and firmware (R4.2d, R5.2b), and measurement and record times.
+  - Swatch Name, the alternates, imported values, and collection and column names. R1.3, R4.3, R4.8 and R6.2 edit them; R1.4, R4.5 and R6.3 delete them.
+  - Search text. In the All items view it now matches names and imported values across the whole file (F109, F103).
+  - Column visibility.
+- **Where it is stored.** The one SQLite file, plus the files the app keeps beside it. Search, filters, sorts, the grid choices and undo stay in memory (R8.6). R8.6 now also rules out system-kept versions of the file and Spotlight/Handoff donations (F130). Where a search index for F103 would live is unstated (PRIV3-2).
+- **How data leaves.** Only through an export the user starts. There is no network path: in the Demo configuration, with telemetry and update checks off, zero outbound attempts are allowed (UJ9.4-c). The test readbacks exist only in test builds, and no build opens a listening socket for them (F132). E34 shows the file's path only to its owner, on screen.
+- **The user's rights.** Removed text is gone from the file's bytes from the moment its write lands, open or after a crash (F102). Corrections happen in place, and history is kept for good. Backups and snapshots are left to the help docs (F131).
+
+## Findings
+Paths used below:
+- PRD = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md
+- J = …/collection-mode/prd-collection-mode-journeys.md
+- F = …/collection-mode/prd-collection-mode-fences.md
+- FIX = …/collection-mode/prd-collection-mode-round-2-fixes.md
+- DF = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation.md
+- ADRQ = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/decisions/README.md
+- PL = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/post-lock.md
+
+**Round-2 delta (subject c4ec992)**
+
+| Round-2 ID | Status | Evidence |
+|---|---|---|
+| PRIV-10 (Medium) | PARTIAL | The Harness's byte check now reads the file and every file beside it at three moments: open after the write, after a crash, and closed (J:53-59). UJ1.3-c now reads the bytes for Teal (J:182). But the carve-out "unless the case names its moment" (J:55) lets four cases be read as closed-only. Their Assert also says "the file read with the app closed" or "at SQLITE_READER_FLOOR": T1 (J:118), UJ1.3-c (J:182), UJ4.2-c (J:284) and UJ6.3-b (J:379). Carried as PRIV3-1. |
+| PRIV-11 (Low) | RESOLVED | R1.3 carries the byte clause (PRD:406). T5 asserts Gouache Set nowhere (J:122). A correct build passes: the whole text is not a substring of Gouache Travel Set, and the Harness exempts its words (J:56-57). A bookkeeping gap is noted in PRIV3-8. |
+| PRIV-12 (Low) | PARTIAL | **Gap 2 is closed.** R8.6 rules out system-kept versions and donations (PRD:588). R8.10e and the map add unified-log entries, versions and donations (PRD:602, J:525), and UJ9.4-d tests them (J:469). **Gap 1 is not.** It is answered with "wherever the build puts it", which still leaves the list of locations to the build under test. FIX:353-356 had planned "by location under either sandbox reading". **Crash reports** are still read nowhere. |
+| PRIV-13 (Low) | RESOLVED | UJ9.4-c declares the Demo configuration with telemetry and update checks off, and asserts no outbound attempt at all (J:468). The Data Foundation PRD's R1.4 leaves that configuration's permitted set empty (DF:104). |
+| PRIV-14 (Info) | RESOLVED | R4.7 cites the Data Foundation PRD's R6.2d and R1.1 and this PRD's F53 (PRD:496). |
+| PRIV-15 (Info) | RESOLVED | F131 (F:1156-1161); PL:137 carries the help-docs item. |
+| PRIV-16 (Info) | RESOLVED | R8.10 (PRD:592), UJ9.4-e (J:470), F132 (F:1163-1167). The new case has defects of its own: PRIV3-5 and PRIV3-6. |
+
+**New findings**
+
+[MEDIUM] **PRIV3-2 — Copies of item content kept outside the user's file: nothing says where they may live, and no case looks**
+- **Where:** PRD:584 (R8.2, F103); ADRQ:22 (the ADR-0003 row); J:53-59 (byte checks); J:393-394 (UJ6.4-j/k); DF:98 (the Data Foundation PRD's R1.1).
+- **Why an index is now likely.** F103 holds All items search to BROWSE_RESPONSE_BUDGET at 100,000 items with 20 imported columns each. The ADR-0003 row answers with "an index or a scan, either one under that byte rule".
+- **The rule doesn't reach it.** The byte rule covers only the file and the files beside it. An index in ~/Library/Caches or Application Support is outside it.
+- **Only one rule forbids it.** The Data Foundation PRD's R1.1 says "Nothing about a collection … is kept elsewhere". No row here restates that for item content; R8.6 lists only view state and undo.
+- **What the cases read.**
+  - Every byte check reads only the file and what sits beside it (J:54).
+  - No delete case reads the app's own storage: T1, UJ4.4-b, UJ1.3-c and UJ6.3-b.
+  - The storage reads that do exist (UJ6.4-j/k, UJ3.3-f, UJ9.4-b) have no defined matching. The Harness's any-case, normal-form and UTF-16 rules are written for the file's bytes only.
+- **Mutation that passes every case.** Keep a full-text index of names, codes and imported values in ~/Library/Caches/<bundle id>/, stored as lower-case tokens. Update it on edits and clears; never purge it on deletes.
+  - T1, UJ4.4-b, UJ1.3-c and UJ6.3-b pass: they never read the cache.
+  - UJ6.4-j/k, read literally, look for "Pink" and "Yellow" and miss "pink" and "yellow".
+  - UJ3.3-f passes because tokenising splits ZX-010 into "zx" and "010", so "zx-01" never appears.
+  - Meanwhile the cache holds every current Swatch Name and imported value, and still holds Warm Grey 1, Teal and Plum after their deletes.
+- **Who is affected.** The user, and third parties named in imported free text. The copy survives deletes, and survives the user moving or deleting the file. No surface shows it exists.
+- **Remediation (no PRD body words).**
+  - (a) The Harness's byte check also reads the app's own storage (R8.10e), and every read of that storage uses the byte check's matching.
+  - (b) Add one P1 case: after UJ7.1-m's All items search, quit and read the app's own storage. Assert it holds none of Sky Blue, Cerulean or Purple.
+  - (c) On the orchestrator's say-so, as F98 allows for the ADR queue, the ADR-0003 row reads "an index in the file, or a scan" (DF R1.1).
+- (GDPR Art. 5(1)(e), Art. 17, Art. 25(2); the Data Foundation PRD's R1.1)
+
+[LOW] **PRIV3-1 — The moment carve-out can turn four byte cases into closed-only checks**
+- **Where:** J:55; T1 (J:118), UJ1.3-c (J:182), UJ4.2-c (J:284), UJ6.3-b (J:379).
+- **The rule.** Every case that deliberately names its moment does so in its When: T4, UJ1.3-e/f, UJ6.4-j/k and UJ9.4-b. These four instead say "the file read with the app closed" (or "at SQLITE_READER_FLOOR", which R8.10 reads closed) in the Assert, beside "its bytes".
+- **The risk.** A literal builder can take that phrase as the case's moment. Under that reading, three writes are never checked with the file open or after a crash: the only P0 collection delete (UJ1.3-c), the only single-field clear (UJ4.2-c) and the only selection delete (UJ6.3-b).
+- **Mutation.** WAL mode with no checkpoint after a write that removes text. All four cases pass, while the open file holds Teal, Plum and Azure for the whole session.
+- **Remediation (journals).** Reword the carve-out to "unless the case's When names the moment at which it reads the bytes".
+- (F102)
+
+[LOW] **PRIV3-3 — The after-crash byte read can erase its own evidence**
+- **Where:** J:53-59; PRD:601 (R8.10d).
+- **The gap.** At each moment the check scans the raw bytes and also reads every table at SQLITE_READER_FLOOR. It orders neither step, and says nothing about how the SQLite reader opens the file. After a crash, a read-write connection (the sqlite3 CLI's default) runs WAL recovery. When that last connection closes, it checkpoints and deletes the -wal file.
+- **Mutation.** A build that never checkpoints after a removing write leaves Teal in the main file's old pages and in the -wal, after UJ1.3-f's or UJ6.4-k's crash. If the test does its SQL read first, it rewrites or unlinks those bytes before the raw scan, and the case passes.
+- **Remediation (journals).** At each moment, copy the file and every file beside it byte for byte before any SQLite connection opens them. Raw-scan that copy; run the SQL read against a second copy, or read-only.
+
+[LOW] **PRIV3-5 — UJ9.4-e is stricter than its row, and doesn't say which listing to check**
+- **Where:** J:470 (UJ9.4-e); PRD:592 (R8.10).
+- **The mismatch.** R8.10 (F132) forbids a listening socket or cross-process service opened for a readback. UJ9.4-e asserts that none of any kind is listed, in both a Release and a test build, and never says which operating-system listing counts as "cross-process services it offers".
+- **The risk.** A tester who lists launchd's per-process services would also see an XPC service embedded in the app bundle. One example is Sparkle 2's installer under the sandboxed reading: AGENTS.md §3 recommends Sparkle, and sandboxing is still open. A correct build then fails the case, or the tester guesses.
+- **Remediation (journals).** Assert no listening socket at all (lsof over the process's TCP, UDP and Unix sockets), and no service the app registers or offers that returns an R8.10b–e value. F132 stays as written.
+
+[INFO] **PRIV3-4 — "Beside it" has three scopes**
+- This PRD's Vocabulary (PRD:174) says "other file the app keeps beside it".
+- The Data Foundation PRD's R2.3 and R6.2a (DF:116, :230) and the ADR-0003 row (ADRQ:22) say "any … other file beside it". Read literally, that includes a user's own CSV or export saved in the same folder.
+- The Harness (J:54) says "every file beside it".
+- No case puts such a file there, and user-facing copy promises only "your file", so nothing overclaims to the user.
+- Fix: the Data Foundation half says "the app keeps", in a dated line under its F53. The Harness says a case's folder holds only the file, the files the app keeps beside it, and any control file the case declares.
+
+[INFO] **PRIV3-6 — Release builds get no byte or storage check.** F132's "every readback below but R8.10f exists only in test builds" (PRD:592) also covers R8.10d and R8.10e, which are reads made from outside the app. As a result, no byte or storage case runs against a Release build; only UJ9.4-e does. Without re-opening F132: run UJ9.4-b and UJ9.4-d "in turn a Release build and a test build", as UJ9.4-e already does (journals only).
+
+[INFO] **PRIV3-7 — Edge cases in the byte check's matching rule (J:56-58)**
+- The word exemption is worked out from "values the file holds after the action". If that means the build's own file, a build that wrongly keeps the old text exempts its own words. It should mean the case's declared values after the action.
+- The whole text gets no exemption, and the check ignores letter case. So R1.3's and R4.3's byte clause can't be satisfied on a change of letter case only (UJ1.1-d, UJ4.3-g, UJ4.6-i). Nor can it where another kept value holds the same text, such as a second swatch named Sky Blue or a capture review note (the capture PRD's R8.13).
+- No current case asserts bytes in these situations, so no correct build fails today. Fix: exempt the whole text where a declared post-action value contains it.
+
+[INFO] **PRIV3-8 — Bookkeeping**
+- R1.3's new byte clause appears in neither F35's nor F102's Carried by (F:1226, F:1293); F102 lists T5 only. Add R1.3 to F102's Carried by and its map line.
+- The map's app-storage line (J:525) allows reads "with the app closed or after a crash", but UJ6.4-j (J:393) reads the storage while the app is open. Add "open" to J:525.
+
+**Word budget.** Every remediation above lands in the journeys, the fences or the ADR queue, so none adds PRD body words. One optional addition does: "crash reports" in R8.10e (+2 words, for PRIV-12's remainder). It can be paid for by cutting R8.10's rule-free purpose clause "to assert what each action left there" (PRD:592).
+
+## Biggest privacy risks
+1. **Copies of names and imported values in the app's own storage, outside the file (PRIV3-2).** They survive deletes and survive the file being removed. The new index-or-scan input makes this likely, and no case looks.
+2. **Byte checks that a residue build can pass.** Under one reading, four cases never read the file open or after a crash (PRIV3-1). After a crash, the SQL read can destroy the evidence before the raw scan runs (PRIV3-3).
+3. **An app-storage readback whose locations the build under test lists itself, with crash reports left out (PRIV-12's remainder).**
+
+## Genuinely privacy-respecting
+- **F102 lands consistently.** It appears in R8.8, the Data Foundation PRD's R2.3 and R6.2a, the ADR-0003 row and the Harness. That closes the WAL and side-file residue gap at the rule level.
+- **R8.8 does not miss deletes.** Its list leaves out single and collection deletes, which a shallow read would flag. But deletes go through the Data Foundation PRD's E8, E14 and E33 to its R6.2a, which now carries the moment clause, and the Vocabulary's deleted state cites it.
+- **UJ9.4-c asserts zero outbound attempts.** That is the strongest oracle available, and it runs with the network reachable.
+- **F130 is correct minimisation.** No autosave versions and no Spotlight or Handoff donation. A checklist might call the missing autosave versions a lost convenience, but DF R1.1 says the one file is everything.
+- **The test seam stays out of shipped builds.** F132 keeps the in-app readbacks to test builds, with no listening socket (UJ9.4-e).
+- **F99 favours privacy.** It gives deletes 10 s instead of scrubbing freed bytes in the background, so there is no window in which freed text lingers.
+- **The copy stays honest.** E8's new ending ("What was there isn't kept in your file. Undo change puts it back until …") is still true, and UJ6.4-j/k prove both halves. E4's "all items" variant tells the user that collection names and imported values are searched.
+- **The removed state is honest.** It carries "no byte guarantee" for a change made outside the app.
+- **Browsing writes nothing.** UJ9.4-b's "file's bytes equal those before the case" shows the file keeps no browse history.
+- **E34 is not a disclosure.** It shows the file's path only to its owner, on screen.
+- **The sibling halves add no data flow.** Capture F72, the Data Foundation PRD's E11 and E26 wording, and Capture R5.8 and R6.6 change no flow of personal data.
+- **Every new fixture is synthetic:** ZX-019, LH-001, CP-1/2, RT-1–3, AI/BI/GI and ZX-000/020.
+
+## Missing controls / over-collection
+- A declared place, in the file, for any search index. Delete and edit cases that also read the app's own storage, using the byte check's matching (PRIV3-2).
+- Reads with the file open and after a crash for UJ1.3-c, UJ4.2-c and UJ6.3-b (PRIV3-1). A raw read before any SQLite open (PRIV3-3).
+- The app's storage listed by location for both sandbox readings, plus the app's crash reports (PRIV-12's remainder).
+- One storage and byte case run on a Release build (PRIV3-6).
+- **No over-collection.** The new rows and states add no personal field: R8.1g, R8.10's new clause, E34, E4 "all items", E6 "full" and "elsewhere", and E17 "restore". HISTORY_READINGS_CEILING and DELETE_WRITE_BUDGET are constants. M4 still reads a count only.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ABSTAIN (out of lens) |
+| R1.2 | ABSTAIN (out of lens) |
+| R1.3 | OBJECT (PRIV3-2) |
+| R1.4 | OBJECT (PRIV3-1, PRIV3-2) |
+| R1.5 | ABSTAIN (out of lens) |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ABSTAIN (out of lens) |
+| R2.2 | ABSTAIN (out of lens) |
+| R2.3 | ABSTAIN (out of lens) |
+| R2.4 | ABSTAIN (out of lens) |
+| R2.4a | ABSTAIN (out of lens) |
+| R2.4b | ABSTAIN (out of lens) |
+| R2.4c | ABSTAIN (out of lens) |
+| R2.4d | ABSTAIN (out of lens) |
+| R2.4e | ABSTAIN (out of lens) |
+| R2.4f | ABSTAIN (out of lens) |
+| R2.4g | ABSTAIN (out of lens) |
+| R2.4h | ABSTAIN (out of lens) |
+| R2.4i | ABSTAIN (out of lens) |
+| R2.5 | ABSTAIN (out of lens) |
+| R2.6 | ABSTAIN (out of lens) |
+| R2.7 | ABSTAIN (out of lens) |
+| R2.8 | ABSTAIN (out of lens) |
+| R2.9 | ABSTAIN (out of lens) |
+| R2.10 | ALIGN |
+| R2.11 | ABSTAIN (out of lens) |
+| R3.1 | ALIGN |
+| R3.2 | ABSTAIN (out of lens) |
+| R3.3 | ABSTAIN (out of lens) |
+| R3.4 | ABSTAIN (out of lens) |
+| R3.5 | ABSTAIN (out of lens) |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ABSTAIN (out of lens) |
+| R3.9 | ABSTAIN (out of lens) |
+| R4.1 | ABSTAIN (out of lens) |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ABSTAIN (out of lens) |
+| R4.2c | ABSTAIN (out of lens) |
+| R4.2d | ALIGN |
+| R4.2e | ABSTAIN (out of lens) |
+| R4.2f | ABSTAIN (out of lens) |
+| R4.2g | ABSTAIN (out of lens) |
+| R4.2h | ABSTAIN (out of lens) |
+| R4.3 | OBJECT (PRIV3-1, PRIV3-2) |
+| R4.4 | ALIGN |
+| R4.5 | OBJECT (PRIV3-2) |
+| R4.6 | ABSTAIN (out of lens) |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ABSTAIN (out of lens) |
+| R5.1 | ABSTAIN (out of lens) |
+| R5.2 | ABSTAIN (out of lens) |
+| R5.2a | ABSTAIN (out of lens) |
+| R5.2b | ALIGN |
+| R5.2c | ABSTAIN (out of lens) |
+| R5.2d | ABSTAIN (out of lens) |
+| R5.2e | ABSTAIN (out of lens) |
+| R5.3 | ABSTAIN (out of lens) |
+| R5.4 | ABSTAIN (out of lens) |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ABSTAIN (out of lens) |
+| R5.8 | ABSTAIN (out of lens) |
+| R6.1 | ABSTAIN (out of lens) |
+| R6.2 | OBJECT (PRIV3-2) |
+| R6.3 | OBJECT (PRIV3-1, PRIV3-2) |
+| R6.4 | ABSTAIN (out of lens) |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ABSTAIN (out of lens) |
+| R8.1a | ABSTAIN (out of lens) |
+| R8.1b | ABSTAIN (out of lens) |
+| R8.1c | ABSTAIN (out of lens) |
+| R8.1d | ABSTAIN (out of lens) |
+| R8.1e | ABSTAIN (out of lens) |
+| R8.1f | ABSTAIN (out of lens) |
+| R8.1g | ALIGN |
+| R8.2 | OBJECT (PRIV3-2) |
+| R8.3 | ABSTAIN (out of lens) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ABSTAIN (out of lens) |
+| R8.8 | ALIGN |
+| R8.9 | ABSTAIN (out of lens) |
+| R8.10 | OBJECT (PRIV3-5) |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ABSTAIN (out of lens) |
+| R8.10d | OBJECT (PRIV3-1, PRIV3-3) |
+| R8.10e | OBJECT (PRIV-12) |
+| R8.10f | ABSTAIN (out of lens) |
+| R8.11 | ABSTAIN (out of lens) |
+| E1 | ABSTAIN (out of lens) |
+| E2 | ABSTAIN (out of lens) |
+| E3 | ABSTAIN (out of lens) |
+| E4 | ALIGN |
+| E5 | ABSTAIN (out of lens) |
+| E6 | ABSTAIN (out of lens) |
+| E7 | ABSTAIN (out of lens) |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ABSTAIN (out of lens) |
+| E12 | ABSTAIN (out of lens) |
+| E13 | ABSTAIN (out of lens) |
+| E14 | ABSTAIN (out of lens) |
+| E15 | ABSTAIN (out of lens) |
+| E16 | ABSTAIN (out of lens) |
+| E17 | ALIGN |
+| E18 | ABSTAIN (out of lens) |
+| E19 | ABSTAIN (out of lens) |
+| M1 | ABSTAIN (out of lens) |
+| M2 | ABSTAIN (out of lens) |
+| M3 | ABSTAIN (out of lens) |
+| M4 | ALIGN |
+
+#### peer-product-marketing-manager-reviewer (Claude route)
+
+## Verdict
+Lands & honest once one Major is fixed. All 19 of my round-2 items (the Blockers, the carried PARTIALs and the unrated items) are resolved in the text. The round-2 fixes added one misleading recovery instruction in the new DF E34, which assumes the answer to the still-open sandbox decision (ADR-0007). They also added four smaller wording defects.
+
+## Audience & message context (brief)
+- **Reader.** The Cataloger: a non-expert who has scanned a physical colour collection and is now browsing and fixing it.
+- **What they should come away with.** Which colours on screen are true, which numbers they can trust, what each action will do to their data, and how to get unstuck when the app refuses something.
+- **Surface.** In-app UI copy: E1–E19, the Display labels tables, and the sibling states this round touched (DF E11, E26, E33 and the new E34; Capture R5.8 and R6.6 wording; the post-lock lines).
+- **Register.** Calm, plain and precise. No launch narrative is needed.
+- **What I read.** All four target files, the fence file through F134, both review-log rounds, the round-2 fix file, and `git diff 7861221 HEAD -- docs ':!docs/agent-reviews'`.
+
+## Findings
+
+**Path key**
+- copy = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode-copy.md
+- prd = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md
+- journeys = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode-journeys.md
+- fences = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode-fences.md
+- DF copy = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation-copy.md
+- DF prd = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation.md
+- Capture prd = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/capture-mode/prd-capture-mode.md
+- Capture copy = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/capture-mode/prd-capture-mode-copy.md
+- post-lock = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/post-lock.md
+- ADR queue = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/decisions/README.md
+
+### (1) Round-2 delta: my lens's findings
+
+| Round-2 finding | Result | Evidence |
+|---|---|---|
+| N-B1 (Blocker): E12 filed Outside sRGB under "The chip isn't the true colour" | RESOLVED | copy:219 ("Colour beyond a limit." … "Without Can't show beside it, the chip is still the true colour."); copy:301–302. Agrees with UJ2.1-c at journeys:202 (ZX-002 on P3: outside-sRGB, no cannot-show, unclipped triplet). |
+| N-B2 (Blocker): E8's undo promise outlived R4.7 | RESOLVED | copy:173 and copy:175 against prd:496 (R4.7, F104). journeys:389, :395 and :396 assert the actions that end undo and the ones that don't. A delete after a clear is now a change the copy names. A narrower leftover case is N3-m3. |
+| N-m1: DF E11/E26 "not yet settled" | RESOLVED | DF copy:38 and :39 now say "marked as awaiting your answer", matching the legend at copy:219 and :311 |
+| N-m2: "samples disagreed" meant a cause and a mark | RESOLVED | copy:305 (filter label "Samples disagreed, average accepted"); copy:219 (set-aside sentence). Checked true against Capture copy:54. |
+| N-m3: E9 headline read as the search scope | RESOLVED | copy:182 |
+| N-m4: "observer" jargon on the main surface | RESOLVED | copy:123, :125, :228, :230 |
+| N-m5: E17 described an action absent at P0 | RESOLVED | copy:267 (P0 body); copy:269 ("restore" variant, `[phase: variant-absent]`); prd:521; journeys:352 |
+| N-m6: DF E33 dropped its scope sentence at P1 | RESOLVED | DF copy:27 (the ‹P1› sentence opens "Export first saves all of ⟨collection⟩, these swatches included") |
+| N-n1: Spread read as an earlier-readings mark | RESOLVED | copy:212, copy:219 |
+| N-n2: "from the swatch" | RESOLVED | copy:219 ("from its swatch detail") |
+| N-n3: R5.2b labelled "Instrument" | RESOLVED | copy:347 |
+| N-n4: the not-compared line said "measured under" | RESOLVED as worded. The wording I proposed leaves out the observer; see N3-m4. | copy:351 |
+| N-n5: two deferred wording drifts untracked | RESOLVED | post-lock:66 (the Device line, F126); Capture prd:215 (R5.8) and :233 (R6.6) now read "flagged as missing or damaged" |
+| carried PMM Minor 4: E8 over-promised undo | RESOLVED | as N-B2 |
+| carried PMM Minor 8: DF E33 scope at P1 | RESOLVED | DF copy:27 |
+| carried PMM Minor 9: E17 sentence rendered at P0 | RESOLVED | copy:267–269 |
+| carried PMM Nit 5: Device's "simulated badge" | RESOLVED as a tracked deferral | post-lock:66. The Device PRD's line 266 is unchanged, as F81 and F126 intend. |
+| unrated: E19 should say a column is permanent | RESOLVED | copy:288 |
+| unrated: the F82 check should run on a P3 display | RESOLVED | prd:740–742 (F134) |
+
+### (2) New defects introduced by the round-2 fixes
+
+[MAJOR] **N3-M1: DF E34's recovery sentence assumes one permission model while ADR-0007 is still open.** DF copy:29: "Make sure you can still change that file — its Sharing & Permissions in Finder's Get Info — then try again."
+- **Reader reaction.** A Mac app loses write access to an open file in at least three ways:
+  1. The file's own permissions or ACL changed. Get Info fixes this.
+  2. The file is in a privacy-protected location (Documents, Desktop, Downloads, iCloud Drive, or a removable or network volume), and the app's Files and Folders access was turned off in System Settings › Privacy & Security. Get Info still shows Read & Write and fixes nothing.
+  3. In a sandboxed build, the access the user granted by choosing the file is lost. Get Info can't fix this either.
+
+  There is also a fourth case the pointer gets wrong: a Locked file is set in Get Info's General section, not Sharing & Permissions.
+
+  In cases 2 and 3 the Cataloger follows the instruction and finds nothing wrong. They press Try again and get E34 again. The only other exit is OK, which discards what they did.
+- **Why it is against the brief.** Whether case 3 exists at all is ADR-0007, which is still queued (ADR queue line 25). DF's own copy rule says every promise is "backed by a requirement row" (DF copy:12), and no row backs this pointer. DF R7.6p (DF prd:88) tests only what E34 names as unsaved, that nothing changed, and its actions.
+- **Why Major at the buildability bar.** R8.8 (prd:590) sends "permission to the file was lost" to E34, and R8.10a (prd:598) makes "the app's permission to it" a declared test input. Neither says which kinds of denial count. E34's pointer is the only text that narrows it, and it narrows it to file permissions. So a builder must guess:
+  - If a privacy-folder or sandbox denial counts as lost permission, E34 renders with instructions that don't work.
+  - If it doesn't count, no state is named for it, which breaks DF R1.10's rule that a refused write is named rather than silently dropped (DF prd:107).
+  - DF's case at DF journeys:37 ("restore permission and choose Try again") has a route the user can reach only for case 1.
+- **Trace.** Take an unsandboxed build with the file in ~/Documents, and revoke access through Files and Folders. E34 renders and UJ9.7-g passes. Yet the only recovery E34 offers doesn't restore access, and Try again brings E34 back.
+- **Rewrite** (DF copy only; no PRD body words):
+  - E34 body: "SpectroCapture is no longer allowed to change your file at ⟨path⟩, so the last thing you did wasn't saved and nothing in your file changed. Check that the file isn't locked and that SpectroCapture is still allowed to change it, then try again."
+  - Add an input to the ADR-0007 row: E34's recovery sentence names where access is restored (Finder's Get Info, Privacy & Security's Files and Folders, or choosing the file again) once 0007 picks the model.
+  - Record it in a dated line under DF F53.
+
+[MINOR] **N3-m1: E6's "elsewhere" variant describes the queue the owner turned down.** copy:156: "While any session is running, a change that touches many swatches at once waits until it ends… Nothing has been changed — do it again once the session has ended."
+- **The conflict.** F100 (fences:970) chose to refuse these writes and explicitly did not choose "bulk writes that yield or queue behind capture". "Waits until it ends" says the change is queued; the next sentence says it wasn't made.
+- **Reader reaction.** A Cataloger sets Family on 200 Studio Markers swatches during a Gouache Set session. They read the first sentence, expect the change to land when scanning ends, and walk away. It never lands. This is the same queue reading that round-1 Minor 1 removed from E6's body.
+- **Second problem.** "Running" contradicts the "active, paused or halted" in the sentence before it. A Cataloger whose session is paused reads that the rule doesn't apply to them.
+- **Rewrite** (copy only; the four cases that assert this variant check it by name):
+  - "Scanning in ⟨collection⟩ is active, paused or halted. Until that session ends, changes that touch many swatches at once aren't available in any collection, so the session's saves aren't held up. Nothing has been changed — do it again once the session has ended."
+
+[MINOR] **N3-m2: if R1.7 is deferred, E6 never names the action that was refused.**
+- **The gate.** The "full" variant (copy:155) and R8.3 (prd:585) wait until "every P1 action R8.3 names" is built. R8.3 names E10's "Undo".
+- **Why it may never open.** R1.7 (prd:410) and OQ 10 (prd:761) defer R1.7 if OQ 10 is still open at v1 release. In that case "full" never renders.
+- **What v1 shows instead.** For a refused Flag, "Change code", undo of a code change, or "Set a field" on the session's collection, the user gets the P0 body (copy:152). It lists only "Deleting a swatch or the collection and bringing back an earlier reading", and that list reads as complete. The Cataloger who just pressed Flag is told other things are blocked and not why their own action was refused.
+- **Why only Minor.** The headline and "Nothing has been changed — do it again…" still get the main message across.
+- **Fix** (stays inside F111's pattern):
+  - R8.3: "once every P1 action it names lands" becomes "once every P1 action it names but E10's 'Undo' lands" (+3 words).
+  - Pay for it by removing the rule-free status clause "nothing of this app is measured" from OQ 1's Decision cell (prd:752, 6 words).
+  - The "full" variant drops "and undoing a delete", and its condition line (copy:155) follows R8.3.
+  - The only way E10's Undo can be refused in flight is a delete made before the session started, and the headline covers that.
+  - The journeys preamble (journeys:50) already keys on what the variant names, so it follows without change.
+
+[MINOR] **N3-m3: E8's undo window has a case the reader can't see coming.** copy:173 and :175: "…or you change anything other than swatch details, codes or names."
+- **The gap.** R4.7 (prd:496) also ends the undo history when a column is hidden or shown, or on "New collection" (UJ6.4-l, journeys:395). Nobody thinks of hiding a column as changing something, and no copy says that choice is saved in the file (R2.10).
+- **Scenario.** A Cataloger clears Family on 200 swatches, hides Spread to see better, then realises the clear was wrong. Undo is gone, and E8 has already told them "What was there isn't kept in your file". This is the N-B2 loss on a narrower path.
+- **Rewrite** (under-promises, so it is safe in every phase):
+  - "…Undo change puts it back until the file closes, you read the file again, or you do anything other than edit swatch details, codes or names, however small — scanning doesn't count."
+
+[MINOR] **N3-m4: the "not compared" reasons leave out the viewing angle, and E9 makes unscanned swatches sound like a condition problem.**
+- **Where.** E9 (copy:183, :185) says "worked out under a different light or measurement condition". The R5.4 line (copy:351) uses the same words, because I asked for them in N-n4.
+- **The mismatch.** R3.7 (prd:463) and R5.4 (prd:522) exclude on illuminant, observer and condition, and E3/E13 now call the observer the "viewing angle" (copy:123).
+- **Reader reaction.** An All-items Find similar from a D50/2° swatch excludes swatches from a D50/10° collection; UJ9.5-b declares exactly that mix. E9 blames the light or the condition. The Cataloger checks both, finds them equal, and stops trusting the explanation.
+- **Second problem.** The round-2 phrase "no colour in their own collection's measurement condition" also covers swatches that were simply never scanned, so a Cataloger with 10 unscanned swatches reads it as a condition fault.
+- **Rewrite** (copy only):
+  - E9: "⟨excluded⟩ swatches weren't compared: they have no colour, or none under their collection's measurement condition, or theirs was worked out for a different light, viewing angle or measurement condition."
+  - R5.4 line: "Not compared — worked out for a different light, viewing angle or measurement condition".
+
+[NIT] **N3-n1: E34's "OK" silently discards the unsaved change, and its reassurance is not hedged.** DF copy:29.
+- Every other "OK" in DF copy (E1, E16, E4, E31) only dismisses information. This one throws away the user's change. Add "…then try again; OK leaves it unsaved."
+- E15 hedges its reassurance with "On a local disk…" (DF copy:28), and DF R1.7 (DF prd:105) doesn't promise atomic writes on network volumes. E34's "nothing in your file changed" should carry the same hedge unless DF can rule out a permission refusal partway through a write.
+
+[NIT] **N3-n2: the copy file's list of sibling-owned states omits DF E34.** copy:94–97 lists DF's "E4, E8, E9, E10, E11, E14, E15, E26, E31 and E33". E34 renders on this product's surfaces (prd:590; Build dependencies at prd:300; journeys:522), so add it.
+
+## Biggest risks   (what misleads, confuses, or loses the reader)
+- **A recovery instruction that dead-ends.** For a common unsandboxed cause (a privacy-protected folder), and for the whole sandboxed option, E34 sends the Cataloger to a pane that can't help. That turns Try again into a loop (N3-M1). It is also the only copy that commits to an answer on ADR-0007.
+- **Refusal copy that sounds like a queue.** E6's "elsewhere" variant says the change "waits", which is the design the owner rejected. The user may believe a 200-swatch change is still pending (N3-m1).
+- **Explanations that don't match the cause.** An E6 whose list never includes the refused action (N3-m2), and "not compared" reasons that leave out the viewing angle (N3-m4). Each teaches the Cataloger that the app's explanations can't be trusted, which is the opposite of what the honesty legend is for.
+
+## Genuinely strong   (incl. where plain-and-honest is right that a marketing-zealot would over-hype)
+- **The legend now says when to trust the chip.** "Without Can't show beside it, the chip is still the true colour" is a positive trust statement, rarer and more useful than another warning. It also matches UJ2.1-c on P3.
+- **E8's undo promise is now tested.** It matches R4.7, and UJ6.4-f, -l and -m assert every action that ends it and every one that doesn't.
+- **The phase discipline holds.** E17's P0 body promises nothing that isn't there, and the restore sentence waits in a marked variant.
+- **E19 states the consequence before the choice.** "A column can't be removed once it's added" is true under F63.
+- **Vocabulary now matches across the seam.** "Awaiting your answer" (DF E11, E26 and the legend), "flagged as missing or damaged" (Capture's rows and its table), and the filter label "Samples disagreed, average accepted" each give one word one meaning.
+- **The register stays calm.** There are no speed, quality or competitor claims. E9 still limits itself to "never a named colour library". For in-app copy, plain and honest is correct.
+
+## Missing / over-hyped
+- **Over-hyped:** nothing.
+- **Missing (out of my lens; a pointer only):**
+  - R8.3 (prd:585) refuses E10's "Undo" only on the session's own collection. Yet R8.1g (prd:580) classes E10's undo of a selection or collection delete as a 10-second DELETE_WRITE_BUDGET write.
+  - So undoing a collection delete in collection B while a session on A is in flight is allowed. That is the kind of write F100 was meant to keep away from capture's saves (R8.11).
+  - It also makes the general statement in E6's "elsewhere" variant slightly broader than the rows deliver.
+  - Worth a performance and architecture check against F100's scope. I have not graded it.
+- **Optional:** once ADR-0007 lands, add E34 to the F134-style owner reading: revoke access the way the chosen model allows, follow the copy, and confirm it gets the user back.
+
+Disposition note: I OBJECT only on Major and Minor findings; rows touched only by a Nit are ALIGN.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ABSTAIN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ABSTAIN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ABSTAIN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ABSTAIN |
+| R4.1 | ABSTAIN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | OBJECT (N3-m4) |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ABSTAIN |
+| R6.1 | ABSTAIN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ABSTAIN |
+| R7.1 | ABSTAIN |
+| R7.2 | ABSTAIN |
+| R8.1 | ABSTAIN |
+| R8.1a | ABSTAIN |
+| R8.1b | ABSTAIN |
+| R8.1c | ABSTAIN |
+| R8.1d | ABSTAIN |
+| R8.1e | ABSTAIN |
+| R8.1f | ABSTAIN |
+| R8.1g | ABSTAIN |
+| R8.2 | ABSTAIN |
+| R8.3 | OBJECT (N3-m2) |
+| R8.4 | ALIGN |
+| R8.5 | ABSTAIN |
+| R8.6 | ABSTAIN |
+| R8.7 | ABSTAIN |
+| R8.8 | OBJECT (N3-M1) |
+| R8.9 | ALIGN |
+| R8.10 | ABSTAIN |
+| R8.10a | ABSTAIN |
+| R8.10b | ABSTAIN |
+| R8.10c | ABSTAIN |
+| R8.10d | ABSTAIN |
+| R8.10e | ABSTAIN |
+| R8.10f | ABSTAIN |
+| R8.11 | ABSTAIN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | OBJECT (N3-m1; N3-m2) |
+| E7 | ALIGN |
+| E8 | OBJECT (N3-m3) |
+| E9 | OBJECT (N3-m4) |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ABSTAIN |
+| M2 | ABSTAIN |
+| M3 | ABSTAIN |
+| M4 | ALIGN |
+
+#### peer-architecture-reviewer (Claude route)
+
+## Verdict
+Sound, build it. Of my 10 round-2 findings, 8 are resolved and 2 are partial (A18 and A22). The fix pass adds no Blocker. It adds one Major: E10's "Undo" of a multi-item delete on another collection is still allowed while a session is in flight. That is the largest write this PRD makes, and F100 meant to take bulk writes off capture's path. R1.7 is P1 and waits on OQ 10, so this does not block the P0 build. It should still close before lock.
+
+## Architecture in brief
+- **What Collection Mode owns.** It is the browsing and editing layer over Data Foundation's single-writer SQLite file. It owns in-memory view state (search, filters, sorts, the metadata undo history), the one live-computed mark (cannot-show), and entry points into actions its sibling PRDs own.
+- **How round 2 settled the four storage seams.** Each was settled by an owner fence and mirrored in the sibling PRDs:
+  - **Contention with capture** — refused rather than scheduled. F100 means no bulk writes while any session is in flight, and no ADR-0005 input was added.
+  - **Byte erasure** — made strict. F102: removed text is gone from the moment the write lands, side files included.
+  - **File-wide search** — sized at full imported width. F103 hands the index-or-scan choice to ADR-0003.
+  - **Stored gamut flag** — made one computation with the display check. F127 defines DF R3.4 through OQ 7's interim.
+- **The key tradeoff.** Simple, testable refusals and strict privacy rules are bought at the price of new synchronisation points in the storage layer: erasure against readers of the file, and search against cold-open time. ADR-0003 must now carry those points.
+
+## Findings
+Paths are relative to /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/:
+- prd = docs/product/collection-mode/prd-collection-mode.md
+- jny = …/prd-collection-mode-journeys.md
+- copy = …/prd-collection-mode-copy.md
+- r2fix = …/prd-collection-mode-round-2-fixes.md
+- DF = docs/product/data-foundation/prd-data-foundation.md
+- DFcopy = …/prd-data-foundation-copy.md
+- CAP = docs/product/capture-mode/prd-capture-mode.md
+- ADRQ = docs/decisions/README.md
+
+### (1) Round-2 delta: my findings (the boxes are at r2fix:429-455)
+
+| Round-2 ID | Result | Evidence |
+|---|---|---|
+| A12 (Minor): bulk delete and "Use as scan order" untimed | RESOLVED | prd:279 (DELETE_WRITE_BUDGET); prd:580 (R8.1g); jny:477 (UJ9.5-g times the selection delete, the collection delete, their E10 undo, and "Use as scan order" at ROWS_CEILING) |
+| A16 (Major): byte-erasure hand-off weaker than the rows | RESOLVED | prd:174-175 (Vocabulary: "the file's bytes" includes every side file); prd:590 (R8.8: "from the moment it lands, open or after a crash"); prd:629 (Outbound DF row); ADRQ:22; DF:116 (R2.3); DF:230 (R6.2a). The residual wording is NIT-1. |
+| A17 (Minor): gamut edge judged by two computations | RESOLVED | DF:146 (R3.4 is tested by OQ 7's interim at sRGB); prd:758 (OQ 7); ADRQ:22; jny:216 (UJ2.1-q); jny:69-70 (margin exemption). A new coupling issue is ARCH3-5. |
+| A18 (Minor): capture precedence on a single-writer file | PARTIAL | prd:585 (R8.3 refuses the four bulk actions on any collection); jny:474 (UJ9.5-d is now P0 and can fail); CAP:386 (the F72 mirror). The gap left is E10's "Undo" of a multi-item delete elsewhere (ARCH3-1). The refresh-scheduling half now has a P0 case, and I do not re-open F100's decision not to engineer it under ADR-0005. |
+| A19 (Minor): All items search workload unsized | RESOLVED | prd:584 (R8.2 at full width, "as R8.1d does"); jny:472 (UJ9.5-b declares the width); ADRQ:22. The hand-off is incomplete; see ARCH3-3. |
+| A20 (Minor): R8.8's permission-lost path had no stop or interim | RESOLVED | prd:590 (R8.8 renders DF E34); prd:300 (Build dependencies row 1); DF:107 (R1.10); DFcopy:29 (E34); jny:486 (UJ9.7-g). A new ADR-0007 issue in E34's copy is ARCH3-6. |
+| A21 (Nit): "its container" assumed a sandbox | RESOLVED | prd:602 (R8.10e: "wherever the build puts it") |
+| A22 (Nit): does a capture-side commit end the undo history? | PARTIAL | prd:496 exempts only "a capture save or a session starting". Every other session write (a jump, a Flag, a set-aside, pause or end, a reorder in the queue list) still ends the history, while E8 (copy:173, 175) says "scanning doesn't count". See ARCH3-2. |
+| A23 (Nit): no route for an item a re-read finds removed | RESOLVED | prd:144; prd:226-227 (the new state, removed) |
+| A24 (Nit): Find similar depends on which derived sets happen to be persisted | RESOLVED | prd:463 (R3.7 compares working-set values only); prd:464 (R3.8) |
+
+### (2) New defects introduced by the round-2 fixes
+
+**[MAJOR] ARCH3-1 — R8.3 and F100: E10's "Undo" of a selection or collection delete on another collection is the one bulk write still allowed while a session is in flight.**
+- **Where it sits.** R8.3 (prd:585) puts E10's "Undo" in its "on that collection" list, so only the in-flight collection's undo is refused. The four bulk actions are refused "on any collection".
+- **Scenario.**
+  1. With R1.7 built, delete Gouache Set.
+  2. Bring a bulk session in flight on Studio Markers.
+  3. Fire "Undo" on E10.
+  4. Nothing refuses it. It restores up to ROWS_CEILING items with their readings. R8.1g (prd:580) allows that DELETE_WRITE_BUDGET, 10 s, five times the 2 s write F100 was chosen to remove. R8.8 (prd:590) makes it atomic on the single writer.
+  5. R8.11 (prd:607) forbids delaying the session's row confirmation.
+- **Contradiction in the sibling.** The Capture mirror states the property as holding: "so none holds up a session's saves" (CAP:386, Capture F72). It does not hold on this path.
+- **No case covers it.** UJ4.4-g (jny:299) tests only the same-collection undo, and UJ9.5-g (jny:477) runs with no session in flight.
+- **The builder's guess.** Whoever builds R1.7 must choose between refusing it (unstated), yielding it (the ADR-0005 path F100 declined), or chunking it (which breaks R8.8).
+- **Fix (word-neutral).**
+  - In R8.3, move "E10's 'Undo'" from the "on that collection" group to the "on any collection" group ("…and E10's 'Undo', 'Set a field', 'Delete selected', 'Delete collection' and 'Use as scan order' on any collection").
+  - Add a dated Clarified line under F100, whose title and "applies to a session on any collection" cover this. Get owner confirmation, because F100's quoted option lists four actions.
+  - Mirror it in Capture F72 and CAP:386.
+  - Add a case: Gouache Set deleted; a session in flight on Studio Markers in each in-flight state; "Undo" on E10 renders E6 "elsewhere", and E2 does not list Gouache Set.
+  - If the owner wants single-item undo elsewhere to stay available, use "E10's 'Undo' on that collection, or of more than one swatch on any" instead. That adds about 7 words; pay for them from the fence-provenance parentheses "(F65)" and "(F124)" at prd:314-315.
+
+**[MINOR] ARCH3-2 — R4.7 against the capture PRD's own writes: the undo-history exemption depends on how capture's writes are grouped into transactions, and E8 promises more.**
+- **What R4.7 says.** It ends the history on "any other committed write … a capture save or a session starting not" (prd:496).
+- **What else capture commits.**
+  - A jump makes the target row the remembered row (Capture R6.2, and R3.6 at CAP:160).
+  - Capture's own Flag (its R5.8), a set-aside by the guard, a pause or session end, and a reorder in the queue list (its R6.8) are all committed writes. None of them is a save or a session start.
+- **Scenario.** Set ZX-001's name to Harbour, start a session, and have the operator jump rows. "Undo change" vanishes. E8 (copy:173, 175) told the user "scanning doesn't count".
+- **Why a correct build can fail.** Whether a save's own advance of the remembered row counts as part of "a capture save" is a transaction-layout choice (ADR-0003 or the builder). A build that commits the advance separately fails UJ6.4-m (jny:396).
+- **Fix: owner, as a refinement of F104.**
+  - Replace "a capture save or a session starting not" with "no write a capture session makes counting". That is word-neutral, independent of storage layout, and matches E8 and F104's rationale that each undo re-checks R8.3.
+  - Or keep R4.7 as it is, narrow E8 to "saving a scan doesn't count", and add a case showing that a jump ends the history.
+
+**[MINOR] ARCH3-3 — F103's ADR-0003 input leaves out the two conditions that actually decide index or scan.**
+- **What the hand-off carries.** ADRQ:22, prd:629 and DF F53(5) hand over the width and the byte rule only.
+- **What the rows require.**
+  - R3.1 (prd:457) matches imported values anywhere in the text from the first keystroke.
+  - R8.2 (prd:584) holds R8.1a from the first rows of the view with "nothing left loading that a search waits on" (R8.1d, prd:577).
+  - UJ9.5-b (jny:472) fills 100,000 items × 20 columns × 200 characters, about 400 M characters. The Timing workload (jny:108) types "text nothing matches" at one keystroke per 150 ms.
+- **Why neither obvious choice fits alone.**
+  - A trigram full-text index, the usual "index" for anywhere-in-text search (SQLite FTS5 trigram), cannot answer a 1–2-character substring and falls back to a table scan.
+  - An in-memory scan must load and normalise about 400 MB before the first rows show. That is also a memory cost on the 8 GB interim Mac and a runtime question for ADR-0005.
+  - A persisted index also needs FTS5's secure-delete option to meet F102. That option arrived in SQLite 3.42 and bears on DF's SQLITE_READER_FLOOR (its OQ 2).
+- **Consequence.** An ADR-0003 that picks "an index" from the row as written can fail UJ9.5-b. This is A16's pattern again: the hand-off is weaker than the rows.
+- **Fix (outside the body budget).** Extend the ADRQ:22 input with "answering every keystroke from the first character within BROWSE_RESPONSE_BUDGET, from the first rows of a cold open (R8.2, R8.1d)". Add the same sentence to DF F53(5). The Outbound DF row keeps its words.
+
+**[MINOR] ARCH3-4 — F102 makes the erasure moment a synchronisation point with outside readers, and no row says who waits.**
+- **The three rules in play.**
+  - DF R1.5 (DF:106): the help docs say reading the file elsewhere while the app is open is safe.
+  - F102, with R8.8 (prd:590) and DF R2.3 (DF:116): removed text is gone "from the moment the write lands".
+  - R8.11 (prd:607): no Collection Mode write delays capture's row confirmation.
+- **Rollback-journal mode with secure_delete meets F102, but** any outside reader's shared lock delays every commit, capture saves included.
+- **WAL mode meets F102 only with a truncating checkpoint on each text-removing commit.** That checkpoint waits for readers on older snapshots and blocks new writers while it waits. A passive checkpoint instead leaves the old page in the main file, which breaks F102.
+- **Scenario.** An outside reader holds a long read during a session. The user makes a single edit, which R8.3 allows in flight. Either capture's saves stall, or the edit cannot land, or the erasure moment is broken.
+- **Before round 2.** The option F102 did not choose, "by the next checkpoint or close", was the escape here.
+- **Fix: owner, then an ADR-0003 input.** Name what waits when an outside reader holds a snapshot. Candidates:
+  - The text-removing edit shows not-yet-saved until the reader lets go, and capture saves are never queued behind it.
+  - Or DF R1.5's help docs say reading the file elsewhere during capture may delay saves.
+- **Word budget.** This lands in ADRQ:22 and DF R1.5's help-docs line, both outside the body budget.
+
+**[MINOR] ARCH3-5 — F127: the stored, exported gamut flag now depends on an open question in a downstream PRD.**
+- **The dependency.** DF R3.4 (DF:146) defines a fact stored in users' files and carried into export (the export PRD's R2.1) by pointing at CM OQ 7's interim (prd:758). OQ 7 closes through this PRD's results file (prd:768-770).
+- **Scenario.** OQ 7 closes after v1 ships its interim with a tolerance or a different adaptation. DF's stored flag then changes meaning with no DF fence and no derivation-version bump named. Every flag already in a user's file, and in any past export, is quietly defined by the old test.
+- **A second gap.** DF names no adaptation for the stored sRGB derivation itself (DF:42, DF:143-146). The exported sRGB value and its own flag can disagree near the boundary if the derivation adapts by anything other than Bradford.
+- **Fix.**
+  - DF R3.4 or DF F53 states the test's parameters itself (Bradford, relative colorimetric, zero tolerance, the same adaptation its sRGB derivation uses), and CM OQ 7 cites DF for the sRGB case.
+  - In OQ 7's Decision cell, replace "F40 adds Bradford adaptation at zero tolerance and F64 ratifies the rest of the interim" (15 words of provenance that the Interim cell already restates) with "closing it changes that PRD's R3.4 only through its fence and a new derivation version" (about 15 words).
+
+**[MINOR] ARCH3-6 — DF E34, the sibling half added in this change: its recovery advice assumes a POSIX-permission cause, and ADR-0007 (sandboxing) is still open (ADRQ:26).**
+- **What E34 says.** DFcopy:29: "its Sharing & Permissions in Finder's Get Info — then try again", with the actions Try again and OK.
+- **Why that advice fails in either build.**
+  - A sandboxed build loses access when its security-scoped bookmark goes stale. Get Info cannot fix that, and Try again cannot re-acquire it.
+  - An unsandboxed build loses access when Files and Folders or removable-volume consent is withdrawn in System Settings. Get Info shows nothing wrong.
+- **The only recovery that works under both readings** is choosing the file again. Yet Build dependencies row 1 (prd:300) lists DF E34 as an available contract with no ADR-0007 gate.
+- **Fix (DF copy, outside the CM budget).** Make the body cause-neutral ("check you can still change it, or choose it again, then try again") and add a choose-the-file action through DF R7.3j. Alternatively, gate E34's recovery text on ADR-0007.
+
+**[MINOR] ARCH3-7 — UJ9.4-e's oracle is broader than R8.10 and pre-empts ADR-0007 and ADR-0008.**
+- **The mismatch.** UJ9.4-e (jny:470) asserts that no listening socket or cross-process service "is listed" at all. R8.10 (prd:592) and F132 forbid only one opened for a readback.
+- **Scenario.** A sandboxed build that updates through Sparkle 2 (AGENTS.md §3's recommendation; ADR-0007 and ADR-0008 are queued) must bundle Sparkle's installer XPC service, and nothing stops ADR-0005 from choosing a helper process. Either fails the case while R8.10 holds.
+- **Fix (journeys, outside the budget).** Change the oracle to "no listening socket, and no cross-process service beyond those an Accepted ADR names".
+
+**[NIT] NIT-1 — DF R6.2 (DF:218) and R6.2d (DF:233) still say "unrecoverable from the active file".** They inherit F102 through R2.3 and R6.2a but read narrower on their own. Write "as R6.2a states" (DF, outside the CM budget).
+
+**[NIT] NIT-2 — the Harness's byte check reads a wider set of files than the Vocabulary defines.** The check (jny:53-54) reads "every file beside it", while the Vocabulary (prd:174-175) scopes to files "the app keeps" there. A case whose import CSV sits in the file's folder (UJ6.4-f, UJ6.4-g) would false-match. State that fixture sources sit outside the file's folder, keeping UJ9.8-c's control file as the one deliberate exception.
+
+## Biggest risks
+- **ARCH3-1:** the 10 s restore is the one path where capture can still be starved on the single writer, and the Capture mirror (F72) says it cannot happen.
+- **ARCH3-4:** F102 removes WAL's easy way out. Outside readers, which DF calls safe, now collide either with erasure or with capture timing, and nobody has decided which gives way.
+- **ARCH3-3:** file-wide search at about 400 MB is the scale-limit risk. ADR-0003's input leaves out the conditions (first-character substrings, a cold open with nothing loading) that make the choice between index and scan.
+- **ARCH3-5:** a fact that is stored and exported now changes when a downstream PRD closes an open question.
+
+## Genuinely sound
+- **F100's refusal is the simplest correct answer to one writer and a hardware-paced loop.** It removes transactions of 2 s and more from capture's path without designing a scheduler.
+- **R4.7's re-check already refuses "Undo change" of a bulk set in flight.** The undo re-checks R8.3, which refuses "Set a field" on any collection. A shallow review would flag this as a hole; it is covered.
+- **F102 can be met.** Rollback journal with secure_delete works, and so does WAL with a synchronous truncating checkpoint per text-removing commit. The Harness's internal-tables clause (jny:58) catches sqlite_stat4 samples and FTS5 segments, the two classic places deleted text survives.
+- **F127's single computation is the right design** for the stored flag and the display check. Only the direction of the dependency is wrong (ARCH3-5).
+- **F101 puts the permission-lost state in Data Foundation.** That PRD owns the file and its failure states, so ownership is correct.
+- **The new state, removed, keeps the byte guarantee for the app's own deletes.** The app cannot promise erasure for a change it did not make.
+- **Test-build-only readbacks with no test server (F132) fit ADR-0001's in-process UniFFI core.**
+- **The navigation fork (ADR-0004) is still not selected.**
+- **UJ9.5-d is now P0 and can fail.** That is the right empirical gate for keeping UI refreshes from interfering with capture, and cheaper than an ADR-0005 input.
+
+## Missing / over-engineered
+- **Missing:**
+  - E10's "Undo" in R8.3's "on any collection" group (ARCH3-1);
+  - one exemption from undo-history endings covering every session write (ARCH3-2);
+  - the first-character and cold-open conditions on the ADR-0003 search input (ARCH3-3);
+  - who waits when an outside reader holds a snapshot (ARCH3-4);
+  - Data Foundation owning the sRGB test's parameters (ARCH3-5);
+  - E34 recovery that works either way ADR-0007 goes (ARCH3-6);
+  - UJ9.4-e's oracle scoped to what R8.10 actually forbids (ARCH3-7).
+- **Over-engineered:** nothing structural. The byte check's UTF-16, case-folding and per-word breadth is justified by F35's promise.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | OBJECT (ARCH3-5) |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | OBJECT (ARCH3-2) |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | OBJECT (ARCH3-3) |
+| R8.3 | OBJECT (ARCH3-1) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | OBJECT (ARCH3-7) |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | OBJECT (ARCH3-4) |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | OBJECT (ARCH3-2) |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+#### peer-performance-reviewer (Claude route)
+
+## Verdict
+**Meets budget.** No Blocker remains, and 11 of my 12 round-2 findings are resolved (PERF2-5 is partial). Two new Majors should land before R8.2, R8.3 and R8.11 flip:
+- **ADR-0003's search input is too loose.** It lets file-wide search use "an index or a scan, either one". Under F102's byte rule, SQLite's stock full-text index measured 39 s per 1,000 deleted items on the fastest Mac. That is about 200 times over the budgets it would have to meet.
+- **F100 only works one way.** It refuses bulk writes once a session is in flight. Nothing covers a session started while a bulk write already holds the file's only writer, and that hold can now last up to 10 s (DELETE_WRITE_BUDGET).
+
+## Workload & budget (brief)
+- **Paths.** Root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`. Short names:
+  - `prd` = docs/product/collection-mode/prd-collection-mode.md
+  - `jny` = …/prd-collection-mode-journeys.md
+  - `fen` = …/prd-collection-mode-fences.md
+  - `capture` = docs/product/capture-mode/prd-capture-mode.md
+  - `capfen` = …/prd-capture-mode-fences.md
+  - `df` = docs/product/data-foundation/prd-data-foundation.md
+  - `adr` = docs/decisions/README.md
+- **Scale.**
+  - ROWS_CEILING is 10k items; IMPORTED_COLUMNS_CEILING is 20 columns × 200 characters; FILE_ITEMS_CEILING is 100k items.
+  - Under F103, UJ9.5-b's file holds about 4×10⁸ imported characters across ten collections of about 1.2 GB each (DF OQ 5).
+  - HISTORY_READINGS_CEILING is 500 readings.
+- **Budgets, gated on the M1 MacBook Air 8 GB:**
+  - 100 ms p95 for browsing;
+  - 1 s to first rows, cold, with no lazy tail;
+  - 1% dropped frames;
+  - 2 s for a bulk set, clear or reorder;
+  - 10 s for a delete (new, F99);
+  - R8.11 against TRIGGER_ACK_WINDOW (100 ms) and the engineering plan's ROW_CONFIRM_BUDGET (F120).
+- **Hot paths now:**
+  - an All items keystroke over 4×10⁸ characters;
+  - deletes at the ceiling under F102;
+  - single edits during a session.
+- **Measured this round.**
+  - Setup: Apple M5 Max; SQLite 3.53.4 and the bundled copy in rusqlite 0.37; WAL, `synchronous=FULL`, `fullfsync` on.
+  - Probes are in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/perf/`: `bulk_delete_probe.py`, `r3probe/` (Rust in-memory scan and SQLite load, plus `fts_probe.py`) and `reader_ckpt_probe.py`.
+  - The M1 Air was not measured. Figures marked "est." are extrapolations: about 1.8× slower CPU and about 2 GB/s SSD writes.
+
+| Probe | Result |
+|---|---|
+| Delete a ceiling collection (10k items, 1.3 GB file), page `secure_delete` on, checkpoint included | 3,120 ms (3,108 ms commit + 12 ms TRUNCATE); 887 ms with it off. Est. 6–8 s on the M1 Air |
+| Bulk clear of one 200-character column over 10k items | 129 ms |
+| One-field edit | 7.8 ms commit + 4.1 ms checkpoint |
+| All items in-memory scan: 407 MB of normalised text, 100k items | Single thread: 7.3–8.6 ms for rare-byte needles, 27.9 ms worst (a common-byte phrase). 8 threads: 0.9–4.0 ms |
+| Reading the 461 MB item table from SQLite, warm | 169–188 ms, plus 184–186 ms for an ASCII lower-case pass (a floor for the import PRD's R2.3 normalisation) |
+| FTS5 trigram index over the same 100k items | 1,930 MB file (index about 1.47 GB, 3.2× the text); 35 s to build. Query "ght pig" (13,206 hits): 57 ms. A 2-character contains on one of 22 columns falls back to a scan: 696 ms |
+| Same index with page and FTS5 secure-delete on, as F102 requires | Delete 1,000 items: 39.0 s. Clear one column on 1,000 items: 39.4 s. One-field edit: 122 ms. With both off: 241 ms, 925 ms and 35 ms |
+| TRUNCATE checkpoint after an edit, with one reader open | Returned busy after the 2 s busy timeout, and the old text was still in the main file. After the reader ended: 0.5 ms, and the text was gone |
+
+## Findings
+
+### Round-2 delta (my findings, as the round-2 fix file boxes them)
+
+| Round-2 ID | Status | Evidence |
+|---|---|---|
+| PERF2-1 (Major) | RESOLVED | prd:279 adds DELETE_WRITE_BUDGET (10 s). prd:580 (R8.1g) classes both deletes and E10's undo. jny:477 (UJ9.5-g) times them at ROWS_CEILING. prd:585 (R8.3, F100) refuses them in flight. Re-measured at 3.12 s end to end, est. 6–8 s on the M1 Air, inside 10 s. The reverse race is left over: PERF3-2 |
+| PERF2-2 (Major) | RESOLVED | jny:474 sends a keystroke, a header fire and a single edit at each set's last sample, with Scale searched, filtered and sorted, so every set overlaps a write. F120's interim gives the oracle a value (prd:752) |
+| PERF2-3 (Minor) | RESOLVED | prd:330 lists R8.11 under Interim stated; prd:752 gives OQ 1's interim |
+| PERF2-4 (Minor) | RESOLVED | prd:579 (R8.1f): no progress frame inside BROWSE_RESPONSE_BUDGET (F128). prd:599 (R8.10b) reads "whether a write's progress shows". jny:477 sends inputs every 100 ms during each write; jny:529. Nit: PERF3-9 |
+| PERF2-5 (Minor) | PARTIAL | prd:584: R8.2's first rows follow R8.1d. jny:471–472 type the prefix at each first-rows frame. jny:472 declares UJ9.5-b at full width. But the probe text can't see a lazily loaded imported-value corpus: PERF3-3 |
+| PERF2-6 (Minor) | RESOLVED | jny:108: Page Down every 100 ms, cold per F119, refresh rate and macOS version recorded, nearest-rank p95. prd:735. Page Down against F41's "scrolling": PERF3-4 |
+| PERF2-7 (Minor) | RESOLVED | prd:575 adds toggling one row. prd:574 and prd:578 add the grid. jny:471 adds toggles after "Select all" and the grid workload and paging. jny:477 times "Use as scan order" |
+| PERF2-8 (Minor) | RESOLVED | prd:568: a file of up to FILE_ITEMS_CEILING items. jny:471: UJ9.5-a runs in UJ9.5-b's file. jny:476: UJ9.5-f at twice the ceiling. fen:1144. M1 hasn't followed: PERF3-5 |
+| PERF2-9 (Nit) | RESOLVED | prd:576 (R8.1c's later showing), prd:584 (firing Find similar to E9), prd:735 (R2.5 in M1's start event). The M1 addition sharpened PERF3-5 |
+| carried PERF-2 | RESOLVED | prd:580 |
+| carried PERF-10 | RESOLVED | jny:474; prd:752 |
+| carried PERF-11 | RESOLVED | prd:574, prd:578; jny:471 |
+
+### New findings
+
+**[MAJOR] PERF3-1 — ADR-0003 is told file-wide search may use "an index or a scan, either one". Under F102, the stock index misses the ceiling writes by about 200× and can't answer 1–2 character searches**
+- **Where:**
+  - adr:22 (ADR-0003's seventh input) and prd:629 (the Outbound Data Foundation row);
+  - prd:584 (R8.2), prd:579–580 (R8.1f, R8.1g);
+  - jny:108, jny:472, jny:477; fen:986 (F103).
+- **Cost of the index branch:**
+  - With the erasure F102 requires, deleting or clearing 1,000 items took about 39 s. Extrapolated linearly to UJ9.5-g's 10k items, that is about 6.5 minutes per write on the M5 Max, against 10 s and 2 s.
+  - Any stored text index must shed a removed value's fragments the moment the write lands, so its cost grows with the text removed.
+  - Re-indexing a whole item on one edit took 122 ms (est. about 250 ms on the M1 Air). That weakens F100's premise that in-flight single edits are "~10 ms" (fen:970), and the edit holds the writer that long (R8.11).
+- **Search limits of the index:**
+  - A trigram index can't answer a 1–2 character contains search. Every keystroke of the workload's imported-value text is timed (jny:108), and R3.1 requires those searches.
+  - The scan fallback took 696 ms on one of 22 columns.
+  - A moderately common phrase took 57 ms on the M5 Max, est. about 115 ms on the M1 Air.
+- **The scan branch fits:**
+  - Worst measured was 27.9 ms single-threaded on 407 MB (est. 60 ms or less on the M1 Air; 10 ms or less on its four fast cores), with nothing to erase.
+  - Its cost moves to memory: about 0.4 GB resident on the 8 GB Mac.
+  - It also moves to the cold open. R8.2, through R8.1d, needs the whole corpus searchable at first rows within 1 s.
+  - Reading the corpus took 169–188 ms warm, plus about 185 ms for the lower-case floor. With the full R2.3 normalisation on one thread, est. 0.9–2.4 s on the M1 Air.
+  - So the build must store the normalised text or normalise in parallel.
+- **Scenario:** ADR-0003 reads the input as written and picks SQLite's full-text index, the usual choice. UJ9.5-g's clear and deletes then miss by two orders of magnitude, and nobody finds out until the P1 timing run.
+- **Fix, without reopening F102 or F103, outside the body:**
+  - Change adr:22 from "…uses an index or a scan, either one under that byte rule" to "…either one under that byte rule and within R8.1f's, R8.1g's and R8.2's budgets on OQ 1's Mac, one- and two-character searches and the cold first rows included".
+  - Cite this probe's figures as input evidence for ADR-0003.
+  - prd:629 can stay a pointer, so the body doesn't change.
+- **Why not a Blocker:** no row is wrong, and a design that meets every row exists. The defect is an input that invites a design that doesn't.
+
+**[MAJOR] PERF3-2 — F100 only refuses one way: nothing stops a session starting while a bulk write, now up to 10 s, holds the only writer**
+- **Where:**
+  - prd:585 (R8.3), prd:607 (R8.11), prd:580 (R8.1g), prd:279;
+  - capfen:644 (Capture F72: "so no bulk write holds the file's writer while this PRD's saves need it");
+  - capture:155 (R3.1 durably records a session), capture:164 (R3.10, the first capture action), capture:159 (R3.5 refuses a start only when another session holds the instrument).
+- **How it arises:**
+  - R8.1f and R8.1g keep the surface responsive through a delete. For a ceiling collection that is est. 6–8 s on the M1 Air.
+  - So the user can choose another collection and start capture.
+  - The session's start record and its first set's save then wait for SQLite's writer. R8.11 forbids that delay, and F72 states the opposite of what happens.
+- **The builder guesses between three options:**
+  - refuse the start, a state no copy covers;
+  - queue it, an unbudgeted wait;
+  - let SQLITE_BUSY surface. The obvious mapping for that renders the Data Foundation PRD's E10, "Another copy of SpectroCapture has this file", which is false.
+- **No case covers it.** UJ9.5-g declares no session in flight, and UJ9.5-d sends no bulk write.
+- **Fix — needs owner:** this is the mirror F100 left open.
+  - Recommended rule: "a session does not start or resume while one of R8.3's bulk writes is under way; its start waits for the write to land, its progress showing".
+  - It would land as a capture PRD row, with a dated line under Capture F72, and in this PRD's Inbound line (prd:642). That adds 6 body words, paid for by PERF3-5's trim.
+  - Add a UJ9.5-g run: during the collection delete, fire the capture PRD's start on another of UJ9.5-b's collections. Assert the first row confirmation lands within ROW_CONFIRM_BUDGET of its last sample.
+
+**[MINOR] PERF3-3 — the first-rows probe types a prefix that codes alone answer, so a lazily loaded imported-value corpus passes**
+- **Where:** jny:471, jny:472, jny:108; prd:577 (R8.1d), prd:584; prd:457 (R3.1).
+- **The gap:**
+  - R3.1 matches text as a prefix only against Swatch Code and Swatch Alternate Code. So "a prefix every item matches" is answered from the codes.
+  - The imported-value corpus is never consulted. At FILE_ITEMS_CEILING it is 0.4 GB, the part most tempting to defer.
+  - A build that shows first rows and loads imported values afterwards passes both UJ9.5-a and UJ9.5-b.
+  - This wording came from my own round-2 fix.
+- **Fix, in the journeys only:** at each first-rows frame, type the workload's imported-value text as well as the prefix. Assert that it lists exactly the items holding that text within BROWSE_RESPONSE_BUDGET.
+
+**[MINOR] PERF3-4 — Page Down paging never exercises the scrolling F41 decided to budget**
+- **Where:** jny:108 ("paging as Page Down pressed every 100 ms"), prd:578 (R8.1e), prd:277; fen:575 (F41: "scrolling (a dropped-frame statistic)"), fen:747 (F66: "paging").
+- **The gap:**
+  - Page Down jumps a screen at a time: one new screen every six frames at 60 Hz, with no continuous motion.
+  - The stutter the research names happens during continuous trackpad or momentum scrolling, grid swatches included.
+  - A build that renders each page in one frame but stutters on a continuous scroll stays under 1%.
+- **Fix, in the journeys only, keeping the row's and F66's "paging":**
+  - Add to the timing workload: "and again as a continuous scroll at one screenful per 100 ms".
+  - Have UJ9.5-a do both, in the table and in the grid.
+
+**[MINOR] PERF3-5 — M1's population disagrees with its own oracle and with R8.1's file**
+- **Where:** prd:735; jny:471; prd:568.
+- **The gap:**
+  - M1 says "200 of each kind" on "one collection of ROWS_CEILING items".
+  - UJ9.5-a, M1's worked oracle, sends only 20 each of:
+    - gamut changes, which have been in M1's start event since the PERF2-9 fix;
+    - Table/Grid switches;
+    - swatch-size changes.
+  - UJ9.5-a also runs in UJ9.5-b's 100k-item file, which R8.1 now binds.
+  - So two people computing M1 get different populations.
+- **Fix, saving 14 body words:** "Population: each kind as UJ9.5-a delivers it, in a Release build on OQ 1's interim Mac, warm."
+
+**[MINOR] PERF3-6 — R8.1g budgets E10's undo of a ceiling delete, but nothing sizes what the undo holds while F102 keeps the bytes clean**
+- **Where:** prd:580, prd:761 (OQ 10), prd:222–225 (the deleted-undoable and deleted states), prd:132 (a crash ends the window), jny:121 (T4); df:231 (R6.2b), df:340 (DF OQ 20).
+- **The gap:**
+  - A crash moves an item to "deleted", which is gone from the bytes even before reopening.
+  - So pending content can't sit in the file's bytes. It has to be held in memory, about 1.2 GB raw per ceiling collection (DF OQ 5), or kept under a key held only in memory.
+  - DF OQ 20 now allows two deletes in one window: about 2.4 GB on an 8 GB Mac.
+  - The alternative, erasing when the window ends, puts an est. 6–8 s write on closing the file or quitting. No budget covers it.
+- **Fix, outside the body, with a dated line under DF F53:** DF OQ 20's question adds "and what an undoable delete of ROWS_CEILING items holds in memory, or writes when the window ends, on OQ 1's Mac". R1.7 stays gated.
+
+**[MINOR] PERF3-7 — under F102, a write that removes text can't land while any older read is open, and no budget covers how long a user's edit takes to land**
+- **Where:** prd:590 (R8.8), prd:576 (R8.1c, "from when the write lands"), prd:607 (R8.11); fen:970 (F100's "each ~10 ms"); fen:982 (F102).
+- **Measured:**
+  - With one reader open, the TRUNCATE checkpoint an edit needs to clear the old text returned busy after the 2 s timeout. The old text was still in the main file.
+  - Once the reader ended, the checkpoint took 0.5 ms and the text was gone.
+  - SQLite's FULL, RESTART and TRUNCATE checkpoints also block new writers while they wait. A rollback journal doesn't avoid this: there a writer waits for every reader anyway.
+- **Scenario:**
+  - An export, or All items' cold load (up to 1 s), is reading while the user edits a name during a session.
+  - The edit's landing holds the writer until the read ends, and capture's row save waits behind it (R8.11).
+  - Outside a session, the edit shows as unsaved for as long as the read lasts.
+  - R8.1c's clock starts when the write lands, so no case sees either delay.
+- **Fix:**
+  - (a) Outside the body: an ADR-0003 input that a removing write lands only after every earlier read has ended, so no read transaction may outlast BROWSE_RESPONSE_BUDGET. Long reads, exports included, run in short transactions.
+  - (b) Needs owner: R8.1c times a user's own write from the input, and capture's save from when it lands. That adds 8 body words, paid for below.
+  - (c) Add a UJ9.5-d run with All items cold-loading during the edits.
+- **Severity:** this becomes Major if the export PRD lets an export run while a session is in flight. It says nothing either way.
+
+**[NIT] PERF3-8 — HISTORY_READINGS_CEILING closes by a timing run, which shows 500 readings are met, not that 500 is enough**
+- **Where:** prd:280, beside prd:282, where FILE_ITEMS_CEILING closes by the owner's estimate.
+- **Fix:** "OQ 1 — the owner's estimate of the longest history, timed by UJ9.5-e". That adds 6 body words.
+
+**[NIT] PERF3-9 — UJ9.5-g's collection-delete run doesn't say where its keystrokes and selections land while Scale is being deleted**
+- **Where:** jny:477; prd:579 ("the surface").
+- **Fix:** "during the collection delete, on another of UJ9.5-b's collections".
+
+**Body word accounting.** PERF3-2 adds 6 words, PERF3-7(b) adds 8 and PERF3-8 adds 6, a total of 20. They are paid for by:
+- PERF3-5, which saves 14 words;
+- the §8 preamble's enumerated class list (prd:561–562, 18 words). It is an authoring checklist restating the format's guidance comment, with no rule for a builder.
+
+Net: 12 words fewer.
+
+## Biggest risks   (what degrades first as data/traffic grows)
+1. **The storage choice for file-wide search under F102 (PERF3-1).** A stored text index makes every bulk clear or delete at the ceiling take minutes.
+2. **F102's coupling between reads and writes (PERF3-7).** Every write that removes text waits for every earlier read, and capture's saves stall behind it.
+3. **The cold All items open at full width on the 8 GB Mac.** The corpus is 0.4 GB, and normalising it on one thread is est. 0.9–2.4 s against a 1 s budget.
+4. **A session started during a 6–8 s delete (PERF3-2).**
+5. **Thin delete margins.** A ceiling delete is est. 6–8 s against 10 s on the M1 Air, and the undo may hold gigabytes in memory (PERF3-6).
+
+## Genuinely efficient   (incl. where simple-and-fast-enough is right that a perf-zealot would wrongly flag)
+- **All items search without an index.** An in-memory contains-scan searched 407 MB in 28 ms or less on one thread. So the PRD is right not to mandate an index, and the evidence argues against one.
+- **DELETE_WRITE_BUDGET as its own constant.** Erasure at the page level took 3.12 s end to end (est. 6–8 s on the M1 Air), which fits 10 s. The 2 s budget still easily covers a clear (129 ms). A separate constant was the right call rather than stretching BULK_WRITE_BUDGET.
+- **F100's refusal of bulk writes in flight.** It is simpler and more testable than writers that yield or queue under ADR-0005.
+- **F128.** A write that finishes within 100 ms flashes no progress indicator.
+- **UJ9.5-d** now overlaps a write with every set.
+- **Measurement conditions.** F119's definition of "cold", nearest-rank p95 and the recorded refresh rate and macOS version make runs reproducible.
+- **Other points that need nothing:**
+  - HISTORY_READINGS_CEILING at 500 needs no paging.
+  - Find similar at 100k (9.5 ms in round 1) needs no index.
+  - UJ9.5-f's function-only check at twice the ceiling is the right level.
+- **Sibling halves.**
+  - The Data Foundation PRD's R2.3 and R6.2a wording, and Capture F72, cost nothing beyond PERF3-2 and PERF3-7.
+  - Working out the Data Foundation PRD's R3.4 flag by OQ 7's interim test at sRGB is one matrix operation per value at derivation, which is negligible.
+
+## Missing / over-engineered   (premature optimization)
+- **Missing:**
+  - the budgets in ADR-0003's search input (PERF3-1);
+  - precedence when a session starts during a bulk write (PERF3-2);
+  - an imported-value probe at the first-rows frame (PERF3-3);
+  - a continuous scroll in the timing workload (PERF3-4);
+  - a bound on read transactions under F102 (PERF3-7);
+  - the memory an undoable delete holds (PERF3-6).
+- **Not over-engineered:** a separate delete budget, the 500-reading ceiling, 200 samples per input kind, and the function-only check above the ceilings.
+- **Caution:** don't answer PERF3-1 by having the PRD mandate either an index or a scan. The budgets decide it, and ADR-0003 owns the mechanism.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ABSTAIN |
+| R1.3 | ABSTAIN |
+| R1.4 | ABSTAIN |
+| R1.5 | ABSTAIN |
+| R1.6 | ABSTAIN |
+| R1.7 | ABSTAIN |
+| R1.8 | ABSTAIN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ABSTAIN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ABSTAIN |
+| R2.4c | ABSTAIN |
+| R2.4d | ABSTAIN |
+| R2.4e | ABSTAIN |
+| R2.4f | ABSTAIN |
+| R2.4g | ABSTAIN |
+| R2.4h | ABSTAIN |
+| R2.4i | ABSTAIN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ABSTAIN |
+| R2.8 | ABSTAIN |
+| R2.9 | ALIGN |
+| R2.10 | ABSTAIN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ABSTAIN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ABSTAIN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ABSTAIN |
+| R4.2a | ABSTAIN |
+| R4.2b | ABSTAIN |
+| R4.2c | ABSTAIN |
+| R4.2d | ABSTAIN |
+| R4.2e | ABSTAIN |
+| R4.2f | ABSTAIN |
+| R4.2g | ABSTAIN |
+| R4.2h | ABSTAIN |
+| R4.3 | ALIGN |
+| R4.4 | ABSTAIN |
+| R4.5 | ABSTAIN |
+| R4.6 | ABSTAIN |
+| R4.7 | ALIGN |
+| R4.8 | ABSTAIN |
+| R4.9 | ABSTAIN |
+| R5.1 | ALIGN |
+| R5.2 | ABSTAIN |
+| R5.2a | ABSTAIN |
+| R5.2b | ABSTAIN |
+| R5.2c | ABSTAIN |
+| R5.2d | ABSTAIN |
+| R5.2e | ABSTAIN |
+| R5.3 | ABSTAIN |
+| R5.4 | ALIGN |
+| R5.5 | ABSTAIN |
+| R5.6 | ABSTAIN |
+| R5.7 | ALIGN |
+| R5.8 | ABSTAIN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | OBJECT (PERF3-3, PERF3-4, PERF3-6, PERF3-7) |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | OBJECT (PERF3-7) |
+| R8.1d | OBJECT (PERF3-3) |
+| R8.1e | OBJECT (PERF3-4) |
+| R8.1f | ALIGN |
+| R8.1g | OBJECT (PERF3-2, PERF3-6) |
+| R8.2 | OBJECT (PERF3-1, PERF3-3) |
+| R8.3 | OBJECT (PERF3-2) |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ABSTAIN |
+| R8.8 | OBJECT (PERF3-7) |
+| R8.9 | ABSTAIN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ABSTAIN |
+| R8.10f | ALIGN |
+| R8.11 | OBJECT (PERF3-2, PERF3-7) |
+| E1 | ABSTAIN |
+| E2 | ABSTAIN |
+| E3 | ABSTAIN |
+| E4 | ABSTAIN |
+| E5 | ABSTAIN |
+| E6 | ABSTAIN |
+| E7 | ABSTAIN |
+| E8 | ABSTAIN |
+| E9 | ABSTAIN |
+| E10 | ABSTAIN |
+| E11 | ABSTAIN |
+| E12 | ABSTAIN |
+| E13 | ABSTAIN |
+| E14 | ABSTAIN |
+| E15 | ABSTAIN |
+| E16 | ABSTAIN |
+| E17 | ABSTAIN |
+| E18 | ABSTAIN |
+| E19 | ABSTAIN |
+| M1 | OBJECT (PERF3-5) |
+| M2 | ABSTAIN |
+| M3 | ABSTAIN |
+| M4 | ABSTAIN |
+
+### Round 3 — verify-the-reviewer dispositions (Blocker/Major; Critical→Blocker, High→Major)
+
+Every Major was checked against commit `c4ec992`. Privacy's one Medium (PRIV3-2: nothing places a search index's copy of item content inside the file) is advisory and carried into the round-3 fix list.
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| 1 | R4.7 exempts only "a capture save or a session starting" from ending the undo history, while E8 promises "scanning doesn't count" and E8 omits import and column hide/show | product-manager PM3-1; architecture ARCH3-2; staff-software-engineer 3MN4; product-marketing-manager N3-m3; interface R3-IF-5 | reproduced — R4.7 vs copy E8 | accept — owner decision |
+| 2 | The Data Foundation PRD's new E34 sends the user to Finder's Get Info, which fixes neither a privacy-setting nor a sandbox loss; ADR-0007 is open | product-marketing-manager N3-M1; architecture ARCH3-6; product-manager PM3-8 | reproduced — DF copy E34 | accept — owner decision on wording |
+| 3 | E10's "Undo" of a selection or collection delete (a DELETE_WRITE_BUDGET write) and "Undo change" of a bulk set or clear are not refused while a session on another collection is in flight | architecture ARCH3-1; test R3-M1; product-manager PM3-4; interface R3-IF-4; staff-software-engineer 3MN1 | reproduced — R8.3 lists E10's "Undo" under "on that collection" | accept — owner decision (extends F100) |
+| 4 | R8.1's lead row applies HISTORY_READINGS_CEILING to every budget; F118 scoped it to opening the history view | staff-software-engineer 3MJ1 | reproduced — R8.1 lead row vs F118 and the constants table | accept — fix to the fence, no new decision |
+| 5 | Nothing stops a session starting or resuming while a bulk write or delete (up to 10 s) holds the single writer — F100's reverse ordering | staff-software-engineer 3MJ2; performance PERF3-2 | reproduced — R8.3 checks refusal only when the bulk action fires; UJ9.5-g runs with no session | accept — owner decision |
+| 6 | "The file's bytes equal those before" oracles fail correct SQLite builds (statistics tables, checkpoints, side files existing only while open) | test R3-M2 | reproduced by reasoning — UJ2.1-d, UJ9.4-b, the capture PRD's UJ3.3-l | accept — testability fix |
+| 7 | UJ5.1-a asserts E17 with no variant, which a correct build fails once R5.5 lands and E17's "restore" variant renders | test R3-M3; interface R3-IF-1; staff-software-engineer 3MN7 | reproduced — UJ5.1-a vs UJ5.3-n; the Harness substitutes only E6 | accept — testability fix |
+| 8 | ADR-0003's search input reads "an index or a scan, either one"; the stock full-text index measured ~39 s per 1,000 deleted items under F102 and cannot answer 1–2-character searches; the input omits the budgets that decide the choice | performance PERF3-1; architecture ARCH3-3; privacy PRIV3-2 (Medium: the index's location) | reproduced — docs/decisions/README.md ADR-0003 row; the timings are the reviewer's measurements | accept — hand-off fix under F103 and the Data Foundation PRD's R1.1 |
+
+**Per-row dispositions after round 3.** Flip-eligible (every non-abstaining lens ALIGNs): E1, E2, E3, E4, E5, E7, E10, E11, E13, E14, E15, E16, E18, E19, M2, M3, M4, R1.1, R1.2, R1.5, R1.6, R1.7, R1.8, R1.9, R1.10, R2.1, R2.2, R2.3, R2.4, R2.4a, R2.4b, R2.4c, R2.4d, R2.4e, R2.4f, R2.4g, R2.4h, R2.4i, R2.6, R2.7, R2.9, R2.10, R3.1, R3.2, R3.4, R3.5, R3.6, R3.7, R3.8, R4.2a, R4.2b, R4.2d, R4.2e, R4.2f, R4.2g, R4.2h, R4.4, R4.6, R4.8, R4.9, R5.2, R5.2a, R5.2b, R5.2c, R5.2d, R5.2e, R5.5, R5.6, R5.7, R5.8, R6.1, R7.1, R7.2, R8.1a, R8.4, R8.5, R8.7, R8.10a, R8.10f. A lettered sub-row flips only with its lead and all its siblings.
