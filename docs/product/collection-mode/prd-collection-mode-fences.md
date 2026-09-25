@@ -303,6 +303,8 @@ choices that recommendation states and nothing more.
 - **Decision:** As recommendation 2 states.
 - **Carried by:** R4.3, R4.7
 
+**Clarified 2026-09-24 (owner decision D15, F29):** the undo clause of this fence is refined by F29 — its own label, ended by any non-metadata action, re-checked against the forward rule, held in memory only, no redo.
+
 ### F14 — Editing while a session is running (2026-09-24)
 
 - **Authority:** approved recommendation 3: "While a session is running on a collection: deletes and
@@ -383,6 +385,8 @@ option. F24–F28 are the owner's approval, as a set, of the five lettered loose
 the question "Approve these loose ends as a set?", answered **Approve all**; each fence's Authority
 is its item, and settles what that item states and nothing more.
 
+**Clarified 2026-09-24 (owner decisions D19–D20, F33, F34, F41–F43):** the budgets are gated on an M1 MacBook Air with 8 GB until OQ 1 closes (F33); what they cover and how they are measured is F41's; F42 and F43 add BULK_WRITE_BUDGET and IMPORTED_COLUMNS_CEILING.
+
 ### F21 — Column visibility is kept with the collection in the file (2026-09-24)
 
 - **Authority:** owner decision D12, second post-fill adjudication 2026-09-24. Question: "My F20
@@ -460,6 +464,190 @@ is its item, and settles what that item states and nothing more.
 - **Why:** it sets the Open questions table's Status cells, which carry no requirement ID.
 - **Carried by:** governs no rows
 
+Fences F29–F57 were decided by the owner in the round-1 adjudication of 2026-09-24, over the
+findings review round 1 accepted (the review log's Round 1 disposition table). F29–F35 each answer
+one question, quoted with its chosen option. F36–F57 are the owner's approval, as a set, of 22
+numbered recommendations stated to the owner in full before the question "Approve the numbered
+recommendations 1–21 listed above as a set — plus 22: if DF's OQ 20 is still open at v1 release,
+delete-undo (R1.7) is marked deferred and v1 ships final deletes behind the counted confirmation and
+export-first?", answered **Approve all 1–22**; each fence's Authority is its recommendation, cited by
+number and quoted, and settles what it states and nothing more. Carried-by lines marked for the
+round-1 fix pass are filled by it.
+
+### F29 — Metadata undo: one simple rule (2026-09-24)
+
+- **Authority:** owner decision D15, round-1 adjudication 2026-09-24. Question: "Metadata undo (your F13, P1) — five lenses found it underspecified… Which model?" Chosen: **One simple rule** — "Its own label ('Undo change'), offered only while the most recent committed change is a metadata change — any other action (delete, Flag, restore, reorder, re-scan answer, import, re-read) ends the history. Each undo re-checks the forward rule (unique codes/names, the session guard) and is refused with that rule's state. Replaced values live only in the running app's memory. No Redo in v1." Not chosen: dropping metadata undo from v1; undo with redo.
+- **Decision:** As the chosen option states; it refines F13's undo clause, which stays P1.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F30 — Row-moving actions are refused while a session is in flight (2026-09-24)
+
+- **Authority:** owner decision D16, round-1 adjudication 2026-09-24. Question: "While a capture session is running on a collection, what about actions that move rows under it: restoring a reading (DF E4's and 'Use this reading'), the delete 'Undo' (E10), and answering correction questions (DF E11)?" Chosen: **Block row-movers** — "Restores and the delete Undo are refused with E6 while a session is in flight — same as Flag and delete. Correction answers stay available (they move no row). Mirrored on Capture R5.6/R8.18." Not chosen: blocking correction answers too; allowing all with Capture defining the session's behaviour.
+- **Decision:** As the chosen option states; it extends F14's list.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F31 — "Flag" and "Rename column" each confirm first (2026-09-24)
+
+- **Authority:** owner decision D17, round-1 adjudication 2026-09-24. Question: "Two actions change data with no warning: the collection-side 'Flag' (empties the chip, sets the item aside) and 'Rename column' (a later import of the old header adds a second column). Add confirmations?" Chosen: **Both confirm** — "Flag: 'Set ⟨code⟩ aside to scan again? Its current reading moves to its history…' Rename column: mirrors E16's code warning — imports match columns by name, so a spreadsheet with the old header adds it as a new column." Not chosen: Flag only; neither.
+- **Decision:** Both actions render a confirmation stating their consequence before anything changes, worded in this PRD's copy file; the capture PRD's "Flag" label is unchanged (F10).
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F32 — The item delete confirmation names the collection (2026-09-24)
+
+- **Authority:** owner decision D18, round-1 adjudication 2026-09-24. Question: "Deleting from the All items view: DF's E8 confirmation reads 'Delete ⟨code⟩?' — two same-code items in different collections look identical at a final (P0) delete. Fix?" Chosen: **Name the collection** — "Amend DF E8 (and this PRD's E10) in this PR so the confirmation always names the collection: 'Delete ⟨code⟩ from ⟨collection⟩?'" Not chosen: naming it only from All items; no change.
+- **Decision:** As the chosen option states, the Data Foundation PRD's E8 amended in this change.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F33 — The interim timing budgets are gated on an M1 MacBook Air, 8 GB (2026-09-24)
+
+- **Authority:** owner decision D19, round-1 adjudication 2026-09-24. Question: "Which Mac gates the interim timing budgets (100 ms browse, 1 s open) until OQ 1 closes?" Chosen: **M1 MacBook Air, 8 GB** — "The oldest, lowest-spec Apple-silicon class — a realistic floor for a Cataloger's machine. Measured on its internal disk." Not chosen: the owner's current dev Mac; both.
+- **Decision:** Until OQ 1 closes, BROWSE_RESPONSE_BUDGET, OPEN_COLLECTION_BUDGET and any budget F42 adds are measured on an M1 MacBook Air with 8 GB, on its internal disk.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F34 — FILE_ITEMS_CEILING's candidate is 100,000 items (2026-09-24)
+
+- **Authority:** owner decision D20, round-1 adjudication 2026-09-24. Question: "FILE_ITEMS_CEILING — the scale the All items view and file-wide Find similar must hold budget at…" Chosen: **100,000** — "The scale the browsing research measured; ~10 full collections. Stays a candidate under OQ 2." Not chosen: 50,000; 30,000.
+- **Decision:** As the chosen option states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F35 — Deleted, cleared or replaced text is gone from the file's bytes (2026-09-24)
+
+- **Authority:** owner decision D21, round-1 adjudication 2026-09-24. Question: "When a user deletes a swatch or clears a field, how 'gone' must the old text be? DF R6.2a says 'unrecoverable from the active file by an outside reader' — ambiguous between a SQL client and anyone holding the file's bytes…" Chosen: **Gone from the bytes** — "Unrecoverable even by someone scanning a copy of the file's bytes. Amend DF R6.2a/R2.3 wording in this PR and hand ADR-0003 the requirement (it picks the mechanism, e.g. secure delete); tests read the file's bytes." Not chosen: SQL-level only with softened copy.
+- **Decision:** As the chosen option states: the Data Foundation PRD's R6.2a and R2.3 are amended in this change so "unrecoverable by an outside reader" includes anyone reading the file's bytes; ADR-0003 chooses the mechanism; tests read the file's bytes.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F36 — Approved recommendation 1: E12's "Outside sRGB" wording (2026-09-24)
+
+- **Authority:** approved recommendation 1: "E12's 'Outside sRGB' wording becomes: its sRGB and HSL values, here, in your file and in exports, are the nearest sRGB colour, and its Lab, XYZ and spectral values are unaffected."
+- **Decision:** As recommendation 1 states.
+- **Carried by:** E12
+
+### F37 — Approved recommendation 2: mark labels (2026-09-24)
+
+- **Authority:** approved recommendation 2: "'Value missing' becomes 'Not in this condition'. 'Re-scan to answer' becomes 'Re-scan unanswered'. The reading mark 'unsettled / Not settled' becomes 'Awaiting answer'. Capture's settled/unsettled then means rows only, and the item detail uses Capture's user-facing words ('set aside for good' / 'set aside, still to deal with'). 'Unreadable' says the reading saved in the file is damaged."
+- **Decision:** As recommendation 2 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F38 — Approved recommendation 3: the label table and the legend (2026-09-24)
+
+- **Authority:** approved recommendation 3: "The copy file gains a label table: each mark's chip label, filter label and VoiceOver name. The Colour marks legend shows each mark's shape, is reachable from the item detail and history too, and explains Spread."
+- **Decision:** As recommendation 3 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F39 — Approved recommendation 4: "Close" dismisses E9 and E12 (2026-09-24)
+
+- **Authority:** approved recommendation 4: "E9 and E12's dismiss button becomes 'Close', because Capture reserves 'Done' on this surface."
+- **Decision:** As recommendation 4 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F40 — Approved recommendation 5: the chip shows the true colour (2026-09-24)
+
+- **Authority:** approved recommendation 5: "The chip shows the true colour, colour-managed to the display, never the stored sRGB value. Outside the display's gamut it shows the clipped colour plus the cannot-show mark. On an sRGB display, cannot-show equals the stored flag. The gamut test adapts to the display white with Bradford (a standard chromatic-adaptation method) at zero tolerance. ZX-013 moves inside sRGB, and every fixture keeps a margin from the gamut edge."
+- **Decision:** As recommendation 5 states; the Bradford-and-zero-tolerance clause joins OQ 7's interim.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F41 — Approved recommendation 6: what the timing budgets cover and how they are measured (2026-09-24)
+
+- **Authority:** approved recommendation 6: "They also cover selection, Select all, opening and closing the detail and history, scrolling (a dropped-frame statistic) and the grid. The clock starts when a save lands and ends at the first frame that shows the result. Measure on the internal disk, with a cold first open and warm browsing. M1 is read every release on the named Mac; per-PR timing is only a tripwire."
+- **Decision:** As recommendation 6 states; the dropped-frame statistic is a new named constant under OQ 1.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F42 — Approved recommendation 7: bulk writes and BULK_WRITE_BUDGET (2026-09-24)
+
+- **Authority:** approved recommendation 7: "Bulk writes at ROWS_CEILING show progress, keep the surface responsive, and finish within a new constant, BULK_WRITE_BUDGET (candidate 2 s)."
+- **Decision:** As recommendation 7 states, the constant a candidate under OQ 1.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F43 — Approved recommendation 8: IMPORTED_COLUMNS_CEILING and behaviour above the ceilings (2026-09-24)
+
+- **Authority:** approved recommendation 8: "New constant IMPORTED_COLUMNS_CEILING: budgets hold up to 20 imported columns of up to 200 characters. Above that, or above ROWS_CEILING, everything still works and nothing is refused, but the budgets aren't promised."
+- **Decision:** As recommendation 8 states, the constant a candidate under an open question.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F44 — Approved recommendation 9: selection and live changes (2026-09-24)
+
+- **Authority:** approved recommendation 9: "Any change that stops listing a selected item deselects it, and an item that changes is re-checked against the active search, filters and sort."
+- **Decision:** As recommendation 9 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F45 — Approved recommendation 10: single-row selection is P0 (2026-09-24)
+
+- **Authority:** approved recommendation 10: "Single-row selection is P0. Range, toggle and Select all stay P1."
+- **Decision:** As recommendation 10 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F46 — Approved recommendation 11: Find similar results, ties, and All items search (2026-09-24)
+
+- **Authority:** approved recommendation 11: "Find similar: each result opens its item's detail; ties are ordered by code; it never computes a new derived value set. Search in the All items view also matches collection names."
+- **Decision:** As recommendation 11 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F47 — Approved recommendation 12: displayed precision (2026-09-24)
+
+- **Authority:** approved recommendation 12: "Displayed precision: L*, C* and h° to one decimal; Spread and ΔE to two. Sorting uses the stored values."
+- **Decision:** As recommendation 12 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F48 — Approved recommendation 13: abandoning a rename, and E15's action (2026-09-24)
+
+- **Authority:** approved recommendation 13: "Renames: Escape abandons any rename and keeps the old name. E15's 'OK' becomes 'Try another code'."
+- **Decision:** As recommendation 13 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F49 — Approved recommendation 14: read-only files (2026-09-24)
+
+- **Authority:** approved recommendation 14: "Read-only files: a newer-format file gets Data Foundation R5.3's guaranteed minimum, with the rest left to its OQ 18. Write actions are shown disabled."
+- **Decision:** As recommendation 14 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F50 — Approved recommendation 15: item identity across a code change, and ADR-0003 inputs (2026-09-24)
+
+- **Authority:** approved recommendation 15: "Changing a Swatch Code keeps the same item. This becomes a Data Foundation obligation and an input to the storage-schema decision (ADR-0003), along with per-collection column visibility and renamed column names. The Build dependencies table splits into 'stops' and 'proceeds under interim'."
+- **Decision:** As recommendation 15 states, the Data Foundation half landing in this change.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F51 — Approved recommendation 16: metric M4 (2026-09-24)
+
+- **Authority:** approved recommendation 16: "New metric M4: re-scans still unanswered a week after a dogfood session, target 0."
+- **Decision:** As recommendation 16 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F52 — Approved recommendation 17: the Telemetry PRD's content limit (2026-09-24)
+
+- **Authority:** approved recommendation 17: "Obligation handed to the future Telemetry PRD: no event about a Collection Mode action carries typed text, codes, names or values."
+- **Decision:** As recommendation 17 states, as an outbound obligation to the queued Telemetry PRD.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F53 — Approved recommendation 18: nothing kept outside the file (2026-09-24)
+
+- **Authority:** approved recommendation 18: "Nothing about search, view state or undo is written outside the file, including preferences and saved window state, and a test can read the app's own storage to check."
+- **Decision:** As recommendation 18 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F54 — Approved recommendation 19: L*, C* and h° in the All items view (2026-09-24)
+
+- **Authority:** approved recommendation 19: "L*, C* and h° in the All items view: each item shows its own collection's values; sorting orders items that share the most common illuminant/observer, and the others follow, counted."
+- **Decision:** As recommendation 19 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F55 — Approved recommendation 20: capture PRD R8.18 clarifications (2026-09-24)
+
+- **Authority:** approved recommendation 20: "Capture R8.18 clarifications: 'counts as set aside' applies to collection tallies, not a session's; the unreadable standing always follows Data Foundation's quarantine mark; if an interrupted session's remembered row is deleted, the session resumes at the first pending row."
+- **Decision:** As recommendation 20 states, the capture PRD's half landing in this change.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F56 — Approved recommendation 21: sibling pointer and wording fixes (2026-09-24)
+
+- **Authority:** approved recommendation 21: "Pointer and wording fixes in sibling PRDs: Capture R11.15g and Capture's stale 'Collection Mode remains unwritten'; Data Foundation E33 says 'Export first saves all of ⟨collection⟩'."
+- **Decision:** As recommendation 21 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
+### F57 — Approved recommendation 22: delete-undo's release fate (2026-09-24)
+
+- **Authority:** approved recommendation 22: "if DF's OQ 20 is still open at v1 release, delete-undo (R1.7) is marked deferred and v1 ships final deletes behind the counted confirmation and export-first."
+- **Decision:** As recommendation 22 states.
+- **Carried by:** _(filled by the round-1 fix pass)_
+
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
      fence bodies: no map entry may point at deleted text, and every changed row must appear in
@@ -499,6 +687,35 @@ than deciding a WHAT.
 - **F26** — R5.7, E13
 - **F27** — R5.4
 - **F28** — governs no rows
+- **F29** — _(filled by the round-1 fix pass)_
+- **F30** — _(filled by the round-1 fix pass)_
+- **F31** — _(filled by the round-1 fix pass)_
+- **F32** — _(filled by the round-1 fix pass)_
+- **F33** — _(filled by the round-1 fix pass)_
+- **F34** — _(filled by the round-1 fix pass)_
+- **F35** — _(filled by the round-1 fix pass)_
+- **F36** — E12
+- **F37** — _(filled by the round-1 fix pass)_
+- **F38** — _(filled by the round-1 fix pass)_
+- **F39** — _(filled by the round-1 fix pass)_
+- **F40** — _(filled by the round-1 fix pass)_
+- **F41** — _(filled by the round-1 fix pass)_
+- **F42** — _(filled by the round-1 fix pass)_
+- **F43** — _(filled by the round-1 fix pass)_
+- **F44** — _(filled by the round-1 fix pass)_
+- **F45** — _(filled by the round-1 fix pass)_
+- **F46** — _(filled by the round-1 fix pass)_
+- **F47** — _(filled by the round-1 fix pass)_
+- **F48** — _(filled by the round-1 fix pass)_
+- **F49** — _(filled by the round-1 fix pass)_
+- **F50** — _(filled by the round-1 fix pass)_
+- **F51** — _(filled by the round-1 fix pass)_
+- **F52** — _(filled by the round-1 fix pass)_
+- **F53** — _(filled by the round-1 fix pass)_
+- **F54** — _(filled by the round-1 fix pass)_
+- **F55** — _(filled by the round-1 fix pass)_
+- **F56** — _(filled by the round-1 fix pass)_
+- **F57** — _(filled by the round-1 fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
