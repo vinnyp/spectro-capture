@@ -116,6 +116,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** Recorded in F1's amended text above. **Amended 2026-09-10 (owner, before the pre-lock round):** 7,500, for the lock checks' traceability and vocabulary additions. **Amended 2026-09-14 (owner, after the pre-lock round):** 8,000, for the fresh lenses' rules.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F154](../collection-mode/prd-collection-mode-fences.md), owner decision D35):** the budget is 8,200 words; see F55.
+
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
 **Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8, now the export PRD's R2.4). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
@@ -244,6 +246,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F52 | R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33; DJ2, DJ4, DJ5; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F17, F40 and F50 clarifications. |
 | F53 | R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F4, F17, F50 and F52 clarifications. |
 | F54 | R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F50 and F53 clarifications. Clarified 2026-09-25 (the Collection Mode PRD's F151–F153): R1.5, R1.9, R7.3j, R7.6p, E34; DJ3; the Collection Mode line. |
+| F55 | F1's amended text (the word budget, 8,200 since 2026-09-25); no requirement row. |
 
 ## Rejected findings
 
@@ -537,3 +540,17 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** while a Collection Mode bulk write or delete runs ([its R8.1f and R8.1g](../collection-mode/prd-collection-mode.md#8-operating-envelope-and-quality-attributes)), no re-read or move starts: R1.5 and R1.9 show each disabled until the write lands, DJ3 asserts it, and the Collection Mode inbound obligation line records it. R1.5 and R1.9 keep their alignment. Peer review pending.
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F153](../collection-mode/prd-collection-mode-fences.md), owner decision D34):** E34's body adds "OK leaves it unsaved.", so the one OK here that leaves a change unsaved says so; R7.6p lists it. Peer review pending.
+
+**Editorial compaction 2026-09-25 (process rules 7, 11 and 14; no owner decision):** the PRD body went from 8,917 to 8,218 words by rule 14's method, removing only rule-free prose: fence and provenance cites inside row cells, preambles and obligation cells, with the Capture inbound cell's sibling-fence names kept as the dated 2026-09-18 clarifications record; text restating a rule that an ID row, a sibling row or a fence already states, the cite kept, in preambles, trailers, obligation cells and Open Questions decision cells; lists duplicated where one cites the other; and verbose phrasing of the F50–F54 additions, the status line and the Collection Mode inbound line among them. No rule, row scope, constant, ID, priority or status changed, and R1.2 is back to two sentences. The body is still 218 words over F21's 8,000 budget, and that goes back to the owner.
+
+## Collection Mode budget decision (2026-09-25)
+
+### F55 — Word budget 8,200 (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F154](../collection-mode/prd-collection-mode-fences.md) — owner decision D35, 2026-09-25. Question: "Data Foundation's body is 8,218 words against its 8,000 budget (its F21) after an editorial compaction removed ~700 words. The remaining excess is rule text you ratified in this PR (identity across code changes, the byte rule, E34, bulk-write holds). A further ~48 words can come from shortening sibling-cite labels. How do we close the rest?" Chosen: **Raise DF to 8,200** — "Shorten the cite labels (−48 → ~8,170) and raise DF's budget to 8,200 under a dated DF fence recording that the growth is owner-ratified rule text from this PR. Precedent: you raised DF's budget twice before (7,000→7,500→8,000). Note: the agent-PRD format's own rule says budgets are never raised — this is you overriding it for DF on the record." Not chosen: splitting the Data Foundation PRD; moving the Collection-Mode-driven rules into Collection Mode rows.
+
+**Decision:** This PRD's body budget is 8,200 words, counted by rule 14's method. The owner raised it, overriding the agent-PRD format's rule that a budget is never raised, because the growth over 8,000 is rule text the owner ratified in the Collection Mode change (F50–F54) after an editorial compaction had removed every rule-free word it could; the sibling-cite labels were shortened the same day ("the capture PRD's R1.9" → "Capture R1.9", likewise Device, Export and Import), no rule changing. The body stands at 8,164.
+
+**Why:** splitting the document or moving file-owned rules into Collection Mode would cost more clarity than 164 words of budget.
+
+**Rows:** F1's amended text; no requirement row.

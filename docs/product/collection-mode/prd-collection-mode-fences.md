@@ -1340,6 +1340,13 @@ Fences F151–F153 were decided by the owner on 2026-09-25 over the forks the ro
 - **Decision:** As the chosen option states; it refines F138.
 - **Carried by:** the Data Foundation PRD E34, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
 
+### F154 — The Data Foundation PRD's word budget is 8,200 (2026-09-25)
+
+- **Authority:** owner decision D35, 2026-09-25. Question: "Data Foundation's body is 8,218 words against its 8,000 budget (its F21) after an editorial compaction removed ~700 words. The remaining excess is rule text you ratified in this PR (identity across code changes, the byte rule, E34, bulk-write holds). A further ~48 words can come from shortening sibling-cite labels. How do we close the rest?" Chosen: **Raise DF to 8,200** — "Shorten the cite labels (−48 → ~8,170) and raise DF's budget to 8,200 under a dated DF fence recording that the growth is owner-ratified rule text from this PR. Precedent: you raised DF's budget twice before (7,000→7,500→8,000). Note: the agent-PRD format's own rule says budgets are never raised — this is you overriding it for DF on the record." Not chosen: splitting the Data Foundation PRD; moving the Collection-Mode-driven rules into Collection Mode rows.
+- **Decision:** As the chosen option states: the Data Foundation PRD's budget is 8,200, recorded there as its F55; this PRD's own 12,000-word budget is unchanged.
+- **Why:** it sets a sibling document's budget, which carries no ID here.
+- **Carried by:** governs no rows
+
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
      fence bodies: no map entry may point at deleted text, and every changed row must appear in
@@ -1504,6 +1511,7 @@ than deciding a WHAT.
 - **F151** — the Data Foundation PRD E34, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD DJ3, the Data Foundation PRD F54
 - **F152** — R8.1f, R8.1g, UJ9.5-g, the import PRD R3.2, the import PRD F66, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD DJ3, the Data Foundation PRD F54, the capture PRD R1.1, the capture PRD T7, the capture PRD F73
 - **F153** — the Data Foundation PRD E34, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
+- **F154** — governs no rows
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
