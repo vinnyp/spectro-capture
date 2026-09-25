@@ -93,8 +93,8 @@ without that action, and the state is complete without it.
 
 Sibling-owned states that render on this product area's surfaces are their owners' and are not
 restated here: the capture PRD's E1, E2, E3, E23, E24, E25, E26, E28, E33 and E34; the device PRD's
-E22; the Data Foundation PRD's E4, E8, E9, E10, E11, E14, E15, E26, E31 and E33 and its read-only
-file states; and the Data Export PRD's E1.
+E22; the Data Foundation PRD's E4, E8, E9, E10, E11, E14, E15, E26, E31, E33 and E34 and its
+read-only file states; and the Data Export PRD's E1.
 
 ### E1 — No collections yet
 
@@ -116,7 +116,7 @@ file states; and the Data Export PRD's E1.
 
 ### E3 — Collection shown
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R3.4
 - Headline: ⟨collection⟩
@@ -126,7 +126,7 @@ file states; and the Data Export PRD's E1.
 
 ### E4 — No search matches
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R3.5
 - Headline: Nothing matches ⟨text⟩
@@ -136,7 +136,7 @@ file states; and the Data Export PRD's E1.
 
 ### E5 — Nothing passes the filters
 
-- Status: needs-discussion
+- Status: aligned
 - Phase: none
 - Variants enumerated by: none
 - Headline: No swatch matches these filters
@@ -151,9 +151,9 @@ file states; and the Data Export PRD's E1.
 - Headline: ⟨collection⟩ has a session that hasn't ended
 - Body: Scanning in ⟨collection⟩ is active, paused or halted. Deleting a swatch or the collection and bringing back an earlier reading aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended.
 - Actions: "Go to the session", "Cancel"
-- Variant: "interrupted" — the collection holds an interrupted session and the action is deleting the collection. A session in ⟨collection⟩ was interrupted and hasn't been resumed or ended. Resume it or end it before deleting the collection. Nothing has been changed.
-- Variant: "full" — every P1 action R8.3 names is built, and the session is on the collection the action is on. Scanning in ⟨collection⟩ is active, paused or halted. Deleting swatches or the collection, changing a field on many swatches, changing a swatch's code or undoing that change, flagging a swatch, bringing back an earlier reading and undoing a delete aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended. [phase: variant-absent]
-- Variant: "elsewhere" — the session is on a collection other than the one the action is on, ⟨collection⟩ naming the collection with the session. Scanning in ⟨collection⟩ is active, paused or halted. While any session is running, a change that touches many swatches at once waits until it ends, so the session's saves aren't held up. Nothing has been changed — do it again once the session has ended.
+- Variant: "interrupted" — the collection holds an interrupted session, the action is deleting the collection, and no session is in flight. A session in ⟨collection⟩ was interrupted and hasn't been resumed or ended. Resume it or end it before deleting the collection. Nothing has been changed.
+- Variant: "full" — every P1 action that variant names is built, and the session is on the collection the action is on. Scanning in ⟨collection⟩ is active, paused or halted. Deleting swatches or the collection, changing a field on many swatches, changing a swatch's code or undoing that change, flagging a swatch and bringing back an earlier reading aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended. [phase: variant-absent]
+- Variant: "elsewhere" — the session is on a collection other than the one the action is on, ⟨collection⟩ naming the collection with the session. Scanning in ⟨collection⟩ is active, paused or halted. Until that session ends, changes that touch many swatches at once aren't available in any collection, so the session's saves aren't held up. Nothing has been changed — do it again once the session has ended.
 
 ### E7 — Collection name needed
 
@@ -170,9 +170,9 @@ file states; and the Data Export PRD's E1.
 - Phase: none
 - Variants enumerated by: R6.2
 - Headline: Change ⟨column⟩ on ⟨n⟩ swatches?
-- Body: Every selected swatch in ⟨collection⟩ gets ⟨value⟩ in ⟨column⟩, replacing what each has there now. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file. Undo change puts it back until the file closes, you read the file again, or you change anything other than swatch details, codes or names — scanning doesn't count.
+- Body: Every selected swatch in ⟨collection⟩ gets ⟨value⟩ in ⟨column⟩, replacing what each has there now. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file. Undo change puts it back until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — importing and hiding or showing a column included; scanning doesn't count.
 - Actions: "Apply to ⟨n⟩ swatches", "Cancel"
-- Variant: "clear" — the change empties the field. Every selected swatch in ⟨collection⟩ has ⟨column⟩ emptied. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file. Undo change puts it back until the file closes, you read the file again, or you change anything other than swatch details, codes or names — scanning doesn't count.
+- Variant: "clear" — the change empties the field. Every selected swatch in ⟨collection⟩ has ⟨column⟩ emptied. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file. Undo change puts it back until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — importing and hiding or showing a column included; scanning doesn't count.
 
 ### E9 — Colours close to a swatch
 
@@ -180,15 +180,15 @@ file states; and the Data Export PRD's E1.
 - Phase: none
 - Variants enumerated by: R3.8
 - Headline: Colours close to ⟨code⟩ (⟨collection⟩)
-- Body: ⟨n⟩ swatches in ⟨scope⟩ are within ΔE2000 ⟨distance⟩ of ⟨code⟩, nearest first; open one to see it. ⟨excluded⟩ swatches weren't compared: they have no colour in their own collection's measurement condition, or theirs was worked out under a different light or measurement condition. Only your own swatches are compared — never a named colour library.
+- Body: ⟨n⟩ swatches in ⟨scope⟩ are within ΔE2000 ⟨distance⟩ of ⟨code⟩, nearest first; open one to see it. ⟨excluded⟩ swatches weren't compared: they have no colour, or none under their collection's measurement condition, or theirs was worked out for a different light, viewing angle or measurement condition. Only your own swatches are compared — never a named colour library.
 - Actions: "Close"
-- Variant: "none" — no other swatch is at or within the distance. No other swatch in ⟨scope⟩ is within ΔE2000 ⟨distance⟩ of ⟨code⟩. ⟨excluded⟩ swatches weren't compared: they have no colour in their own collection's measurement condition, or theirs was worked out under a different light or measurement condition.
+- Variant: "none" — no other swatch is at or within the distance. No other swatch in ⟨scope⟩ is within ΔE2000 ⟨distance⟩ of ⟨code⟩. ⟨excluded⟩ swatches weren't compared: they have no colour, or none under their collection's measurement condition, or theirs was worked out for a different light, viewing angle or measurement condition.
 
 ### E10 — Deleted, undo available
 
 E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carries no phase mark of its own.
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R1.7
 - Headline: Deleted
@@ -199,7 +199,7 @@ E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carrie
 
 ### E11 — Column name not accepted
 
-- Status: needs-discussion
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R4.8
 - Headline: That column name can't be used
@@ -212,7 +212,7 @@ E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carrie
 Spread's definition comes first; then each mark shows its shape (R8.9) before its name, and the marks
 are grouped under the Mark labels table's group headings, in that table's order.
 
-- Status: pre-alignment
+- Status: needs-discussion
 - Phase: none
 - Variants enumerated by: none
 - Headline: What the marks mean
@@ -221,7 +221,7 @@ are grouped under the Mark labels table's group headings, in that table's order.
 
 ### E13 — All items shown
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: [phase: surface-absent]
 - Variants enumerated by: R3.4
 - Headline: All items
@@ -260,7 +260,7 @@ are grouped under the Mark labels table's group headings, in that table's order.
 
 ### E17 — History
 
-- Status: pre-alignment
+- Status: needs-discussion
 - Phase: none
 - Variants enumerated by: R5.3
 - Headline: ⟨n⟩ readings of ⟨code⟩
@@ -281,7 +281,7 @@ are grouped under the Mark labels table's group headings, in that table's order.
 
 ### E19 — Rename a column
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: none
 - Headline: Rename ⟨column⟩ to ⟨text⟩?
@@ -348,4 +348,4 @@ awaiting your answer; restore — Earlier reading used again.
 | R5.2c Reason | Why | The reason's words above, and Current on the current reading |
 | R5.2d Standing | Marks | The chip labels of never-true, awaiting-answer and unreadable where they apply |
 | R5.2e Value | Colour | The chip, samples kept and spread |
-| R5.4 distance | From current | ΔE2000 and the distance; or, where the two were worked out under different light, observer or condition: Not compared — worked out under a different light or measurement condition |
+| R5.4 distance | From current | ΔE2000 and the distance; or, where the two were worked out under different light, observer or condition: Not compared — worked out for a different light, viewing angle or measurement condition |

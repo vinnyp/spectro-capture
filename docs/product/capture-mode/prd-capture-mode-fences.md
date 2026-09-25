@@ -637,6 +637,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F22, F84 and F122](../collection-mode/prd-collection-mode-fences.md)):** R5.8 and R6.6 now quote the cause "flagged as missing or damaged", R8.2's words and the Set-aside cause labels table's, and keep their alignment; UJ3.3-k declares its row's quarantine before the session, since Data Foundation R7.2 seeds it and Data Foundation disables re-reading in flight; and UJ3.3-l asserts (3)'s read-only clause. No rule changes. Peer review pending.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F6, F20, F53 and F84](../collection-mode/prd-collection-mode-fences.md), F73):** UJ3.3-l's oracle for (3)'s "nothing is written" is the main file's bytes unchanged plus the same rows in every table read at SQLITE_READER_FLOOR, SQLite's own statistics tables aside, because a correct SQLite build may rewrite side files and statistics at open and close. No rule changes. Peer review pending.
+
 ### F72 — Mirror Collection Mode's refusal of bulk writes while any session is in flight (2026-09-25)
 
 **Authority:** [the Collection Mode PRD's F100](../collection-mode/prd-collection-mode-fences.md) — owner decision D24 in its round-2 adjudication of 2026-09-25; peer review pending.
@@ -644,6 +646,18 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** Under the Collection Mode PRD's F100, while a session is in flight on any collection, Collection Mode refuses its bulk writes — "Set a field", "Delete selected", "Delete collection" and "Use as scan order" — with its E6, so no bulk write holds the file's writer while this PRD's saves need it (R4.8, R4.13); its single edits stay available. The Collection Mode obligation line records it, and Traceability's range reads F1–F72. Nothing in this PRD's rows changes.
 
 **Carried by:** Collection Mode obligation line, Traceability.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F136](../collection-mode/prd-collection-mode-fences.md), owner decision D29, F73):** the refusal also covers Collection Mode's undo of a bulk set or clear and E10's undo of a multi-item delete, on any collection, so none holds up a session's saves either; the obligation line says so. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F137](../collection-mode/prd-collection-mode-fences.md), owner decision D30, F73):** the reverse ordering holds too: while a Collection Mode bulk write or delete runs, no session starts or resumes, R3.5 showing each disabled until the write lands. Peer review pending.
+
+### F73 — Mirror Collection Mode's round-3 decisions: bulk undos refused in flight, sessions held while a bulk write runs, and a row-level read-only oracle (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F136 and F137](../collection-mode/prd-collection-mode-fences.md) — owner decisions D29 and D30 in its round-3 adjudication of 2026-09-25 — with the testability fix its round-3 fix pass makes under its F6, F20, F53 and F84; peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F136, Collection Mode's refusal of bulk writes while any session is in flight also covers its "Undo change" of a bulk set or clear and its E10 "Undo" of a multi-item delete, on any collection; the Collection Mode obligation line records it. (2) Under its F137, while a Collection Mode bulk write or delete runs — its R8.1f's and R8.1g's writes — no session starts or resumes: R3.5 shows each disabled until the write lands, citing Collection Mode's R8.1f, and T7 asserts it; Collection Mode's own writes held meanwhile are its R8.1f's, not an obligation here. (3) Testability only: UJ3.3-l asserts F71 (3)'s read-only clause through the main file's bytes and a row-level read, not the bytes of every file beside it. R3.5 keeps its alignment; Traceability's range reads F1–F73.
+
+**Carried by:** R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability; dated F71 and F72 clarifications.
 
 ## Fence → row map
 
@@ -667,8 +681,9 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F66** summary bases — R7.5/R7.15/R7.18/R11.11, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.5/R3.10/R3.11/R3.13, Legend and UJ3.1-l.
 - **F69** chain capture-rate numerator — R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3 and DF mirrors.
 - **F70** Collection Mode seam mirror, as clarified twice — R1.1, R5.6, R8.2, R8.18, R9.9, R11.15g, M3, M4, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i/j, UJ4-f and the dated F9 clarification.
-- **F71** Collection Mode round-1 mirror, as clarified three times — R1.1, R3.7, R5.6, R5.8, R6.6, R8.18, R11.15g, E1, E30, OQ 13, Legend, Collection Mode obligation line, the Set-aside cause labels table, UJ3.3-h, UJ3.3-k, UJ3.3-l and the dated F9, F11, F15 and F70 clarifications.
-- **F72** Collection Mode bulk-write refusal mirror — Collection Mode obligation line, Traceability.
+- **F71** Collection Mode round-1 mirror, as clarified four times — R1.1, R3.7, R5.6, R5.8, R6.6, R8.18, R11.15g, E1, E30, OQ 13, Legend, Collection Mode obligation line, the Set-aside cause labels table, UJ3.3-h, UJ3.3-k, UJ3.3-l and the dated F9, F11, F15 and F70 clarifications.
+- **F72** Collection Mode bulk-write refusal mirror, as clarified twice — Collection Mode obligation line, Traceability.
+- **F73** Collection Mode round-3 mirror — R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability and the dated F71 and F72 clarifications.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

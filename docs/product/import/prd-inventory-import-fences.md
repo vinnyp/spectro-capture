@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F65 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F66 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -118,6 +118,14 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** Collection Mode's F9 closes the post-lock question of whether a rename moves the stored name, and both sides of that seam land in the same change. Source: the Collection Mode PRD's F9; peer review pending.
 
+### F66 — An import commit waits while any capture session is in flight (2026-09-25)
+
+**Decision:** Mirroring [the Collection Mode PRD's F149](../collection-mode/prd-collection-mode-fences.md) (its approved round-3 recommendation 15, 2026-09-25): an import commit also waits while any capture session is running — active, paused or halted — on any collection, not only the target. R3.2 refuses the commit with E40, whose another-collection variant names the collection holding the session and offers the same actions; an interrupted session on another collection holds no writer and blocks nothing. R3.2 keeps its alignment; E40 gains the variant.
+
+**Not decided:** whether an import commit also waits while a Collection Mode bulk write or delete runs; the Collection Mode PRD's F137 holds only sessions and that PRD's own writes, so it goes back to the owner.
+
+**Why:** the file has one writer, and a commit landing during a session would hold up its saves, as the Collection Mode PRD's F100 and F137 rule for that PRD's bulk writes. Source: the Collection Mode PRD's F149; peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -140,6 +148,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F63** zero-count copy — R3.1; E43; Capture §12 placeholder index.
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
 - **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
+- **F66** Collection Mode one-writer mirror — R3.2; E40; UJ 2.1.
 
 ## Historical ID map
 

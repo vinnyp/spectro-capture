@@ -243,6 +243,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F51 | R2.9; DJ2; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F33 clarification. |
 | F52 | R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33; DJ2, DJ4, DJ5; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F17, F40 and F50 clarifications. |
 | F53 | R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F4, F17, F50 and F52 clarifications. |
+| F54 | R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F50 and F53 clarifications. |
 
 ## Rejected findings
 
@@ -461,6 +462,8 @@ Source: the owner's decisions D7 and D9 in the Collection Mode PRD's post-fill a
 
 **Clarified 2026-09-25 (F53, under [the Collection Mode PRD's F3 and F7](../collection-mode/prd-collection-mode-fences.md)):** OQ 20's question now names E33's selection scope and two deletes in one open-file lifetime, as the Collection Mode PRD's OQ 10 does; no row changes. Peer review pending.
 
+**Clarified 2026-09-25 (F54, under [the Collection Mode PRD's F147](../collection-mode/prd-collection-mode-fences.md)):** OQ 20's question now also asks what an undoable delete of ROWS_CEILING items holds in memory, or writes when the window ends, on the Collection Mode PRD's OQ 1 Mac; R6.3 stays gated and no row changes. Peer review pending.
+
 ## Collection Mode seam amendment, second pass (2026-09-24)
 
 Source: the owner's decision D14 in the Collection Mode PRD's second post-fill adjudication of 2026-09-24, recorded there as [its F23](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation half of that seam; peer review pending.
@@ -506,3 +509,25 @@ Source: the owner's round-2 decisions in the Collection Mode PRD's adjudication 
 **Why:** each is the Data Foundation half of a Collection Mode decision about a state this PRD owns, what the file keeps, or how its copy reads; this PRD owns the file, its failure states and its copy.
 
 **Rows:** R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E33, E34, OQ 20, DJ3, the Collection Mode inbound obligation line, the dated F4, F17, F50 and F52 clarifications.
+
+**Clarified 2026-09-25 (F54, under [the Collection Mode PRD's F138](../collection-mode/prd-collection-mode-fences.md)):** (1)'s recovery is cause-neutral and E34 gains Choose the file again, as F54 records; "nothing in it changed" now holds on a local disk, as E15 says. Peer review pending.
+
+**Clarified 2026-09-25 (F54, under [the Collection Mode PRD's F146](../collection-mode/prd-collection-mode-fences.md)):** (4) is superseded: R3.4 states the flag's test itself rather than pointing at the Collection Mode PRD's OQ 7 interim, as F54 records. Peer review pending.
+
+**Clarified 2026-09-25 (F54, under [the Collection Mode PRD's F87, F88, F102 and F103](../collection-mode/prd-collection-mode-fences.md)):** (2)'s "any journal, log, index or other file beside it" is the files the app keeps beside it, in R2.3 and R6.2a; R6.2 and R6.2d now say unrecoverable "as R6.2a states"; and (5)'s search input reads: file-wide search uses an index kept in the file, or a scan, either one under (2)'s rule, answering every keystroke from the first character within the Collection Mode PRD's BROWSE_RESPONSE_BUDGET from the first rows of a cold open, and within its R8.1f's, R8.1g's and R8.2's budgets on its OQ 1 Mac, the Collection Mode review log's round-3 performance measurements being the evidence; it mandates neither. Peer review pending.
+
+## Collection Mode round-3 amendment (2026-09-25)
+
+Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F138, F139, F146, F147 and F150](../collection-mode/prd-collection-mode-fences.md), with the editorial and hand-off halves its round-3 fix pass carries under its F87, F88, F102 and F103. This fence carries only the Data Foundation halves of those decisions; peer review pending.
+
+### F54 — E34's cause-neutral recovery, R3.4's own flag test, what outside readers may delay, and the ADR hand-offs (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F138, F139, F146, F147 and F150](../collection-mode/prd-collection-mode-fences.md) — owner decision D31 of its round-3 adjudication, 2026-09-25 (F138), and its approved round-3 recommendations 5, 12, 13 and 16 the same day (F139, F146, F147, F150).
+
+**Decision:** (1) Under the Collection Mode PRD's F138, E34 is cause-neutral: SpectroCapture can no longer change the file at ⟨path⟩, so the last thing done wasn't saved; on a local disk the file is as it was; the user checks that the file isn't locked and that SpectroCapture is still allowed to change it, then tries again — or chooses the file again. E34 gains Choose the file again, which R7.3j runs as R7.3d's file-selection path for the file, and R7.6p and DJ3 test it; ADR-0007 takes as an input to name where access is restored once it picks the permission model. (2) Under its F150, ADR-0007 also takes as an input an owner reading once it lands: revoke access the way the chosen model allows, follow E34, and confirm it recovers. (3) Under its F146, R3.4 states the flag's test itself — zero tolerance after Bradford adaptation to sRGB's white, the adaptation the sRGB derivation uses, under relative colorimetric — and closing the Collection Mode PRD's OQ 7 changes it only through a fence here and a new derivation version; ADR-0003's flag input follows. (4) Under its F139, R1.5's help docs say reading the file elsewhere during capture may delay saves, and ADR-0003 takes as an input that a text-removing write lands once every earlier read has ended, this app's own reads — an export, the Collection Mode PRD's All items cold load — running in transactions no longer than its BROWSE_RESPONSE_BUDGET, so capture saves never wait on a removing edit. (5) Under its F147, OQ 20's question adds what an undoable delete of ROWS_CEILING items holds in memory, or writes when the window ends, on the Collection Mode PRD's OQ 1 Mac. (6) Editorial and hand-off only, under its F87, F88, F102 and F103: R2.3 and R6.2a name the files the app keeps beside the file; R6.2 and R6.2d say unrecoverable as R6.2a states; and F53 (5)'s search input gains the index's place and the budgets that decide it, as the dated line under F53 records. R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d and R7.3j keep their alignment; E34 is reworded and gains an action, ready for alignment with R7.6p.
+
+**Not decided:** whether Choose the file again also retries the unsaved write or leaves that to Try again; the Collection Mode PRD's F138 adds the action without deciding it, so it goes back to the owner.
+
+**Why:** each is the Data Foundation half of a Collection Mode decision about a state this PRD owns, what the file keeps or its help docs say, or an input this PRD hands the ADRs.
+
+**Rows:** R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20, DJ3, the Collection Mode inbound obligation line, the dated F50 and F53 clarifications.
