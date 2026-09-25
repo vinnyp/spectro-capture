@@ -37,6 +37,9 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 - [ ] **DF / Data Export** — DF OQ 21 tracks a future distinct unavailable-archive export mark and version bump; interim empty payload cells and quarantine precedence are settled by PR #17, DF F37 / DE F14.
 
+- [ ] **DF** — the reading a Flag moves to history (Collection Mode R4.9, Capture R5.6) is not marked never true, so it re-enters over-time views once the item is re-scanned; accepted for v1 under Collection Mode F77 (a Flag means scan again, not never true) and logged here for the Data Foundation owner.
+- [ ] **DF** — owes Collection Mode a named state for a write refused because permission to the file was lost (Collection Mode R8.8 and F73; DF F52); its wording and actions, and whether it is a new state or a variant of an existing one, go back to the owner.
+
 ### Device Management
 
 Rows and copy:

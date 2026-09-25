@@ -873,43 +873,43 @@ Fences F91–F98 were decided by the owner on 2026-09-25 over the forks the roun
 
 - **Authority:** approved fix (a): "Escape also abandons a Swatch Code change, as it does a rename."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** R4.4, UJ4.3-h
 
 ### F93 — Approved fix (b) A column renamed to itself (2026-09-25)
 
 - **Authority:** approved fix (b): "Renaming a column to its own name with only case/spacing changed is stored as typed, with no E19 import warning (mirrors codes)."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** R4.8, UJ4.6-i
 
 ### F94 — Approved fix (c) The All items tie on the most common illuminant/observer (2026-09-25)
 
 - **Authority:** approved fix (c): "All items L*/C*/h° sort: when two illuminant/observer pairs tie for most common, the pair of the collection first in the collection list wins."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** R3.3, UJ7.1-l
 
 ### F95 — Approved fix (d) Capture E30's spacing phrase (2026-09-25)
 
 - **Authority:** approved fix (d): "Capture E30 carries the same 'spacing doesn't count' overclaim as E1 — fix it the same way."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** the capture PRD E30, the capture PRD F71
 
 ### F96 — Approved fix (e) A copy home for set-aside cause names (2026-09-25)
 
 - **Authority:** approved fix (e): "Set-aside cause names get a copy home in Capture's copy file (Capture owns the causes), cited by this PRD's item detail."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** R4.2b, UJ4.1-c, UJ4.7-a, the capture PRD F71
 
 ### F97 — Approved fix (f) E18's phase mark (2026-09-25)
 
 - **Authority:** approved fix (f): "E18's mention of 'Use this reading' is phase-marked until R5.5 lands."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** R4.9, E18, UJ4.7-a, UJ4.7-f
 
 ### F98 — Approved fix (g) The decision-queue and post-lock halves (2026-09-25)
 
 - **Authority:** approved fix (g): "The out-of-scope halves land in this PR: the ADR-0003 row in docs/decisions/README.md gains the five inputs, and post-lock.md gains the flagged-reading item (F77) and DF's owed permission-lost state."
 - **Decision:** As the item states.
-- **Carried by:** _(filled by the round-1b fix pass)_
+- **Carried by:** governs no rows
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1013,13 +1013,13 @@ than deciding a WHAT.
 - **F89** — R8.11, UJ9.5-d
 - **F90** — the capture PRD F71
 - **F91** — governs no rows
-- **F92** — _(filled by the round-1b fix pass)_
-- **F93** — _(filled by the round-1b fix pass)_
-- **F94** — _(filled by the round-1b fix pass)_
-- **F95** — _(filled by the round-1b fix pass)_
-- **F96** — _(filled by the round-1b fix pass)_
-- **F97** — _(filled by the round-1b fix pass)_
-- **F98** — _(filled by the round-1b fix pass)_
+- **F92** — R4.4, UJ4.3-h
+- **F93** — R4.8, UJ4.6-i
+- **F94** — R3.3, UJ7.1-l
+- **F95** — the capture PRD E30, the capture PRD F71
+- **F96** — R4.2b, UJ4.1-c, UJ4.7-a, the capture PRD F71
+- **F97** — R4.9, E18, UJ4.7-a, UJ4.7-f
+- **F98** — governs no rows
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link

@@ -269,10 +269,11 @@ table's group headings, in that table's order.
 
 - Status: pre-alignment
 - Phase: none
-- Variants enumerated by: none
+- Variants enumerated by: R4.9
 - Headline: Set ⟨code⟩ aside to scan again?
-- Body: Its current reading moves to its history, and the swatch has no colour until it's scanned again or you bring that reading back with Use this reading. Nothing is deleted.
+- Body: Its current reading moves to its history, and the swatch has no colour until it's scanned again. Nothing is deleted.
 - Actions: "Set aside to scan again", "Cancel"
+- Variant: "restore" — R5.5 is built, so Use this reading will be offered on the reading being set aside. Its current reading moves to its history, and the swatch has no colour until it's scanned again or you bring that reading back with Use this reading. Nothing is deleted. [phase: variant-absent]
 
 ### E19 — Rename a column
 
@@ -319,10 +320,8 @@ by the name the file stores for it.
 | Swatch Alternate Name | Alt. name |
 | Collection | Collection |
 
-**Detail lines** (R4.2; F37). Row states use the capture PRD's words (its R10.3); a set-aside cause
-is named in the capture PRD's R8.2 words — light leak, temperature, measurement drift, samples
-disagreed, skipped mid-set, flagged as missing or damaged, flagged after capture, unreadable — which
-that PRD's copy file does not yet carry as strings.
+**Detail lines** (R4.2; F37, F96). Row states use the capture PRD's words (its R10.3), and a
+set-aside cause the label its copy file's Set-aside cause labels table gives it.
 
 | Line | Label | What follows it |
 |---|---|---|

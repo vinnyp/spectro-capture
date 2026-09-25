@@ -631,6 +631,10 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R1.1, R3.7, R5.6, R8.18, R11.15g, E1, OQ 13, Legend, Collection Mode obligation line, UJ3.3-h, UJ3.3-k; dated F9, F11, F15 and F70 clarifications.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F95](../collection-mode/prd-collection-mode-fences.md)):** E30 now says capitals and extra spaces don't count as a difference, as E1 does under (5); this closes the E30 item under **Not decided**, and E30 keeps its alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F96](../collection-mode/prd-collection-mode-fences.md)):** the set-aside causes R8.2 names get one copy home, the copy file's [Set-aside cause labels](prd-capture-mode-copy.md#set-aside-cause-labels) table, each label R8.2's words; Collection Mode's R4.2b and its copy file's Detail lines cite that table rather than restating the causes. R8.2 and its cause set are unchanged and keep their alignment. Peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
