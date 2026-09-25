@@ -30,6 +30,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** GAMUT_REFERENCE_SPACE is sRGB and GAMUT_RENDERING_INTENT is relative colorimetric, stored with the datum, so the flag means the same thing to every reader of the file. A live display-dependent check is Collection Mode's, not this file's. Closes OQ 7.
 
+**Clarified 2026-09-25 (F53, under [the Collection Mode PRD's F127](../collection-mode/prd-collection-mode-fences.md)):** the stored flag is tested as the Collection Mode PRD's OQ 7 interim tests a display's gamut — Bradford adaptation, relative colorimetric, zero tolerance — at sRGB, so the stored flag and the display check are one computation; R3.4 says so and keeps its alignment, and ADR-0003 takes it as an input. Peer review pending.
+
 ### F5 — Export is canonical-only by default with version history as a v1 option (2026-09-09, Phase 3)
 
 **Decision:** The default CSV export is one row per item carrying its canonical value; an explicit option exports every version. The canonical export is P0; the history option is P1. Closes OQ 9 (now the export PRD's OQ 2) and settles the export rows' priority.
@@ -95,6 +97,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 **Decision:** Version history covers measurements. Item metadata and notes are editable and clearable; an edit supersedes the old text without touching any reading.
 
 **Clarified 2026-09-25 (F52, under [the Collection Mode PRD's F35](../collection-mode/prd-collection-mode-fences.md)):** the superseded or cleared text is beyond the recovery of anyone reading the file's bytes, not only a SQL reader, as R2.3 and R6.2a now say; ADR-0003 chooses how. Peer review pending.
+
+**Clarified 2026-09-25 (F53, under [the Collection Mode PRD's F102](../collection-mode/prd-collection-mode-fences.md)):** that text is gone from the moment the write lands, from the file and from any journal, log, index or other file beside it, while the file is open and after a crash; R2.3 says so and keeps its alignment. Peer review pending.
 
 ### F18 — The CSV carries the vendor's raw payload column (2026-09-09, round 1)
 
@@ -238,6 +242,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F50 | R1.2, R6.2, R7.6o, E33; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the copy header and Variants note; DJ4, DJ5. Clarified 2026-09-24 (E33's Export first at collection scope): R6.2, R7.6o, DJ4. |
 | F51 | R2.9; DJ2; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F33 clarification. |
 | F52 | R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33; DJ2, DJ4, DJ5; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F17, F40 and F50 clarifications. |
+| F53 | R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F4, F17, F50 and F52 clarifications. |
 
 ## Rejected findings
 
@@ -454,6 +459,8 @@ Source: the owner's decisions D7 and D9 in the Collection Mode PRD's post-fill a
 
 **Clarified 2026-09-25 (F52, under [the Collection Mode PRD's F56](../collection-mode/prd-collection-mode-fences.md)):** E33's export-first sentence now says it saves all of ⟨collection⟩, these swatches included; what Export first opens is unchanged. Peer review pending.
 
+**Clarified 2026-09-25 (F53, under [the Collection Mode PRD's F3 and F7](../collection-mode/prd-collection-mode-fences.md)):** OQ 20's question now names E33's selection scope and two deletes in one open-file lifetime, as the Collection Mode PRD's OQ 10 does; no row changes. Peer review pending.
+
 ## Collection Mode seam amendment, second pass (2026-09-24)
 
 Source: the owner's decision D14 in the Collection Mode PRD's second post-fill adjudication of 2026-09-24, recorded there as [its F23](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation half of that seam; peer review pending.
@@ -483,3 +490,19 @@ Source: the owner's round-1 decisions in the Collection Mode PRD's adjudications
 **Why:** each is the Data Foundation half of a Collection Mode decision about what the file keeps or how a confirmation reads; this PRD owns the file and those confirmations.
 
 **Rows:** R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33, DJ2, DJ4, DJ5, the Collection Mode inbound obligation line, the dated F17, F40 and F50 clarifications.
+
+**Clarified 2026-09-25 (F53, under [the Collection Mode PRD's F56 and F101](../collection-mode/prd-collection-mode-fences.md)):** E33's ‹P1› sentence now also opens by saying Export first saves all of ⟨collection⟩, these swatches included, so the scope survives when the ‹until P1› sentences are withdrawn; and the **Not decided** point about (6) is closed — F53 supplies the permission-lost state as E34. Peer review pending.
+
+## Collection Mode round-2 amendment (2026-09-25)
+
+Source: the owner's round-2 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F101, F102, F103, F121 and F127](../collection-mode/prd-collection-mode-fences.md), with the editorial halves its round-2 fix pass carries under its F3, F7 and F56. This fence carries only the Data Foundation halves of those decisions; peer review pending.
+
+### F53 — A permission-lost state, removed text gone from the moment the write lands, the awaiting-answer wording, and the stored flag's test (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F101, F102, F103, F121 and F127](../collection-mode/prd-collection-mode-fences.md) — owner decisions D25, D26 and D27 of its round-2 adjudication, 2026-09-25 (F101, F102, F103), and its approved round-2 recommendations 23 and 29 the same day (F121, F127).
+
+**Decision:** (1) Under the Collection Mode PRD's F101, this PRD gains E34, the state for a write refused because the app lost permission to the file: it says the file can't be saved to, that nothing in it changed, and how to recover, offering Try again, which R7.3j retries; R1.10 names it, R7.6p tests it and DJ3 exercises it. Its wording goes through the same peer review. (2) Under its F102, text R2.3 and R6.2a put beyond an outside reader is gone from the moment its write lands, from the file and from any journal, log, index or other file beside it, while the file is open and after a crash; ADR-0003 still chooses the mechanism. (3) Under its F121, E11 and E26 say an earlier reading is marked as awaiting your answer, the Collection Mode PRD's name for that mark, in place of "not yet settled". (4) Under its F127, R3.4's flag is tested as the Collection Mode PRD's OQ 7 interim tests a display's gamut, at sRGB, and ADR-0003 takes that as an input. (5) Under its F103, ADR-0003 takes as an input that file-wide search may use an index or a scan, either one under (2)'s rule. (6) Editorial, under its F3, F7 and F56: OQ 20's question names E33's selection scope and two deletes in one window, and E33's ‹P1› sentence keeps its export-first scope clause. R1.10, R2.3, R3.4, R6.2a and R7.3j keep their alignment; E11, E26 and E33 change wording only; E34 and R7.6p are ready for alignment.
+
+**Why:** each is the Data Foundation half of a Collection Mode decision about a state this PRD owns, what the file keeps, or how its copy reads; this PRD owns the file, its failure states and its copy.
+
+**Rows:** R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E33, E34, OQ 20, DJ3, the Collection Mode inbound obligation line, the dated F4, F17, F50 and F52 clarifications.

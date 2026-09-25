@@ -38,7 +38,7 @@ Document amendments still open. Each waits for the next editing pass over the PR
 - [ ] **DF / Data Export** — DF OQ 21 tracks a future distinct unavailable-archive export mark and version bump; interim empty payload cells and quarantine precedence are settled by PR #17, DF F37 / DE F14.
 
 - [ ] **DF** — the reading a Flag moves to history (Collection Mode R4.9, Capture R5.6) is not marked never true, so it re-enters over-time views once the item is re-scanned; accepted for v1 under Collection Mode F77 (a Flag means scan again, not never true) and logged here for the Data Foundation owner.
-- [ ] **DF** — owes Collection Mode a named state for a write refused because permission to the file was lost (Collection Mode R8.8 and F73; DF F52); its wording and actions, and whether it is a new state or a variant of an existing one, go back to the owner.
+- [x] **DF** — owes Collection Mode a named state for a write refused because permission to the file was lost (Collection Mode R8.8 and F73; DF F52); its wording and actions, and whether it is a new state or a variant of an existing one, go back to the owner. — closed by the Collection Mode round-2 amendment: DF E34, owned by DF R1.10 and tested by DF R7.6p (Collection Mode F101, DF F53), in this change's PR, number pending.
 
 ### Device Management
 
@@ -63,6 +63,7 @@ Indexes and journeys:
 
 Cross-document:
 
+- [ ] **Device** — its Collection Mode obligation line's "simulated badge" becomes "mark", the word Collection Mode's copy uses, at Device's next amendment (Collection Mode F81 and F126).
 - [x] **Device** — the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0, and ride that PRD's OQ 16 amendment. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 - [x] **Device** — OQ 5's and OQ 28's closers name dogfood data no row records. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 
@@ -133,6 +134,7 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **DF** — the remembered-mapping lifecycle.
 - [ ] **DF** — the serial on the device authorization path.
 - [ ] **DF** — the README's gamut gloss ("which most screens can't show accurately").
+- [ ] **DF** — the help docs (R1.5's) say that backups, Time Machine or APFS local snapshots, and a sync provider's version history made before a delete or clear keep what they held (Collection Mode F131, its privacy review's PRIV-15).
 
 ## v2 candidates
 

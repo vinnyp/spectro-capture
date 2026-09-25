@@ -635,6 +635,16 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F96](../collection-mode/prd-collection-mode-fences.md)):** the set-aside causes R8.2 names get one copy home, the copy file's [Set-aside cause labels](prd-capture-mode-copy.md#set-aside-cause-labels) table, each label R8.2's words; Collection Mode's R4.2b and its copy file's Detail lines cite that table rather than restating the causes. R8.2 and its cause set are unchanged and keep their alignment. Peer review pending.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F22, F84 and F122](../collection-mode/prd-collection-mode-fences.md)):** R5.8 and R6.6 now quote the cause "flagged as missing or damaged", R8.2's words and the Set-aside cause labels table's, and keep their alignment; UJ3.3-k declares its row's quarantine before the session, since Data Foundation R7.2 seeds it and Data Foundation disables re-reading in flight; and UJ3.3-l asserts (3)'s read-only clause. No rule changes. Peer review pending.
+
+### F72 — Mirror Collection Mode's refusal of bulk writes while any session is in flight (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F100](../collection-mode/prd-collection-mode-fences.md) — owner decision D24 in its round-2 adjudication of 2026-09-25; peer review pending.
+
+**Decision:** Under the Collection Mode PRD's F100, while a session is in flight on any collection, Collection Mode refuses its bulk writes — "Set a field", "Delete selected", "Delete collection" and "Use as scan order" — with its E6, so no bulk write holds the file's writer while this PRD's saves need it (R4.8, R4.13); its single edits stay available. The Collection Mode obligation line records it, and Traceability's range reads F1–F72. Nothing in this PRD's rows changes.
+
+**Carried by:** Collection Mode obligation line, Traceability.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -657,7 +667,8 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F66** summary bases — R7.5/R7.15/R7.18/R11.11, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.5/R3.10/R3.11/R3.13, Legend and UJ3.1-l.
 - **F69** chain capture-rate numerator — R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3 and DF mirrors.
 - **F70** Collection Mode seam mirror, as clarified twice — R1.1, R5.6, R8.2, R8.18, R9.9, R11.15g, M3, M4, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i/j, UJ4-f and the dated F9 clarification.
-- **F71** Collection Mode round-1 mirror — R1.1, R3.7, R5.6, R8.18, R11.15g, E1, OQ 13, Legend, Collection Mode obligation line, UJ3.3-h, UJ3.3-k and the dated F9, F11, F15 and F70 clarifications.
+- **F71** Collection Mode round-1 mirror, as clarified three times — R1.1, R3.7, R5.6, R5.8, R6.6, R8.18, R11.15g, E1, E30, OQ 13, Legend, Collection Mode obligation line, the Set-aside cause labels table, UJ3.3-h, UJ3.3-k, UJ3.3-l and the dated F9, F11, F15 and F70 clarifications.
+- **F72** Collection Mode bulk-write refusal mirror — Collection Mode obligation line, Traceability.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings
