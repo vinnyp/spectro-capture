@@ -204,6 +204,8 @@ choices that recommendation states and nothing more.
   is treated; those stay with the open question that carries them.
 - **Carried by:** R2.4a, R2.4b, R2.5, R8.7, E12, M2
 
+**Clarified 2026-09-25 (F40, F64, F72):** the points this fence left open are now decided, the two marks standing as decided here: the chip renders the working-set colour managed to the display and, on a display reporting sRGB or none, the cannot-show mark is set exactly when the stored flag is (F40); OQ 7's interim — Bradford adaptation at zero tolerance under relative colorimetric, a display reporting no gamut treated as sRGB — is ratified (F40, F64); and a window across two displays follows the one macOS reports it on (F72).
+
 ### F7 — Both bulk operations are P1, and a selection-scale delete confirmation lands in the Data Foundation PRD in this change (2026-09-24)
 
 - **Authority:** owner decision D7, post-fill adjudication 2026-09-24. Question: "Bulk delete and
@@ -239,6 +241,8 @@ choices that recommendation states and nothing more.
   column.
 - **Carried by:** R4.3, R4.4, E15, E16
 
+**Clarified 2026-09-25 (F48, F70):** a code equal to the item's own under the import PRD's R2.3 rule is stored as entered without the confirmation (F70), and a refused code returns to editing through "Try another code" (F48). The rest of this fence stands.
+
 ### F9 — Renaming an imported column changes the name the file stores; the Data Foundation and Inventory Import PRDs are amended in this change (2026-09-24)
 
 - **Authority:** owner decision D9, post-fill adjudication 2026-09-24. Question: "Renaming an
@@ -255,6 +259,8 @@ choices that recommendation states and nothing more.
   post-lock item that asked the question.
 - **Carried by:** R4.8, E11, T8, UJ4.6-a, UJ4.6-e, UJ4.6-f, the Data Foundation PRD R1.2, the Inventory Import PRD R2.6, the Data Foundation PRD F50, the Inventory Import PRD F65
 
+**Clarified 2026-09-25 (owner decision D17, F31):** "Rename column" first renders a confirmation stating the import consequence (E19); what a rename does to the stored name is unchanged.
+
 ### F10 — A collection-side "Flag" on a captured item, P1 (2026-09-24)
 
 - **Authority:** owner decision D10, post-fill adjudication 2026-09-24. Question: "Capture R9.9
@@ -270,6 +276,8 @@ choices that recommendation states and nothing more.
   picks it up. The capture PRD owns what a Flag does to the item; this PRD owns the entry point,
   which is refused while a session on the collection is running.
 - **Carried by:** R4.9, R8.3, E6, T14, UJ4.7-a, UJ4.7-b, UJ4.7-c, UJ4.7-d, the capture PRD R9.9, the capture PRD F70
+
+**Clarified 2026-09-25 (owner decision D17, F31; F78):** the collection-side Flag first renders a confirmation stating its consequence (E18), and is not offered while the item's current reading awaits the correction answer (F78); the capture PRD's "Flag" label and what a Flag does are unchanged.
 
 ### F11 — An item whose current reading is quarantined is set aside, its cause "unreadable" (2026-09-24)
 
@@ -312,6 +320,8 @@ choices that recommendation states and nothing more.
   interrupted session blocks only deleting the collection."
 - **Decision:** As recommendation 3 states.
 - **Carried by:** R1.4, R2.9, R4.4, R4.5, R6.3, R8.3, E6
+
+**Clarified 2026-09-25 (owner decision D16, F30):** F30 extends this fence's blocked list — restoring a reading (the Data Foundation PRD's E4 restore and "Use this reading") and E10's "Undo" are refused with E6 while a session is in flight — and correction answers stay available. The rest of this fence stands.
 
 ### F15 — The version history view's shape (2026-09-24)
 
@@ -379,13 +389,13 @@ The rest of this fence stands.
 superseded by F21 — the choice is kept with the collection in the file. The rest of this fence
 stands.
 
+**Clarified 2026-09-24 (owner decisions D19–D20, F33, F34, F41–F43):** the budgets are gated on an M1 MacBook Air with 8 GB until OQ 1 closes (F33); what they cover and how they are measured is F41's; F42 and F43 add BULK_WRITE_BUDGET and IMPORTED_COLUMNS_CEILING.
+
 Fences F21–F28 were decided by the owner in a second post-fill adjudication of 2026-09-24, over the
 questions the round-0 fix pass surfaced. F21–F23 each answer one question, quoted with its chosen
 option. F24–F28 are the owner's approval, as a set, of the five lettered loose ends (i)–(v) put in
 the question "Approve these loose ends as a set?", answered **Approve all**; each fence's Authority
 is its item, and settles what that item states and nothing more.
-
-**Clarified 2026-09-24 (owner decisions D19–D20, F33, F34, F41–F43):** the budgets are gated on an M1 MacBook Air with 8 GB until OQ 1 closes (F33); what they cover and how they are measured is F41's; F42 and F43 add BULK_WRITE_BUDGET and IMPORTED_COLUMNS_CEILING.
 
 ### F21 — Column visibility is kept with the collection in the file (2026-09-24)
 
@@ -478,43 +488,43 @@ round-1 fix pass are filled by it.
 
 - **Authority:** owner decision D15, round-1 adjudication 2026-09-24. Question: "Metadata undo (your F13, P1) — five lenses found it underspecified… Which model?" Chosen: **One simple rule** — "Its own label ('Undo change'), offered only while the most recent committed change is a metadata change — any other action (delete, Flag, restore, reorder, re-scan answer, import, re-read) ends the history. Each undo re-checks the forward rule (unique codes/names, the session guard) and is refused with that rule's state. Replaced values live only in the running app's memory. No Redo in v1." Not chosen: dropping metadata undo from v1; undo with redo.
 - **Decision:** As the chosen option states; it refines F13's undo clause, which stays P1.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.7, R8.3, E3, E14, T10, UJ6.2-f, UJ6.4-a, UJ6.4-b, UJ6.4-c, UJ6.4-d, UJ6.4-f, UJ6.4-g, UJ6.4-h, UJ6.4-i, UJ6.4-j, UJ6.4-k
 
 ### F30 — Row-moving actions are refused while a session is in flight (2026-09-24)
 
 - **Authority:** owner decision D16, round-1 adjudication 2026-09-24. Question: "While a capture session is running on a collection, what about actions that move rows under it: restoring a reading (DF E4's and 'Use this reading'), the delete 'Undo' (E10), and answering correction questions (DF E11)?" Chosen: **Block row-movers** — "Restores and the delete Undo are refused with E6 while a session is in flight — same as Flag and delete. Correction answers stay available (they move no row). Mirrored on Capture R5.6/R8.18." Not chosen: blocking correction answers too; allowing all with Capture defining the session's behaviour.
 - **Decision:** As the chosen option states; it extends F14's list.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R1.7, R4.6, R5.5, R8.3, E6, UJ4.4-g, UJ4.5-d, UJ5.2-d, UJ5.3-h, the capture PRD R5.6, the capture PRD R8.18, the capture PRD F71
 
 ### F31 — "Flag" and "Rename column" each confirm first (2026-09-24)
 
 - **Authority:** owner decision D17, round-1 adjudication 2026-09-24. Question: "Two actions change data with no warning: the collection-side 'Flag' (empties the chip, sets the item aside) and 'Rename column' (a later import of the old header adds a second column). Add confirmations?" Chosen: **Both confirm** — "Flag: 'Set ⟨code⟩ aside to scan again? Its current reading moves to its history…' Rename column: mirrors E16's code warning — imports match columns by name, so a spreadsheet with the old header adds it as a new column." Not chosen: Flag only; neither.
 - **Decision:** Both actions render a confirmation stating their consequence before anything changes, worded in this PRD's copy file; the capture PRD's "Flag" label is unchanged (F10).
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.8, R4.9, E18, E19, T8, T14, UJ4.6-a, UJ4.6-g, UJ4.6-h, UJ4.7-a, UJ4.7-e
 
 ### F32 — The item delete confirmation names the collection (2026-09-24)
 
 - **Authority:** owner decision D18, round-1 adjudication 2026-09-24. Question: "Deleting from the All items view: DF's E8 confirmation reads 'Delete ⟨code⟩?' — two same-code items in different collections look identical at a final (P0) delete. Fix?" Chosen: **Name the collection** — "Amend DF E8 (and this PRD's E10) in this PR so the confirmation always names the collection: 'Delete ⟨code⟩ from ⟨collection⟩?'" Not chosen: naming it only from All items; no change.
 - **Decision:** As the chosen option states, the Data Foundation PRD's E8 amended in this change.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.5, E10, T2, UJ4.4-a, UJ4.4-e, UJ6.3-d, UJ7.1-g, the Data Foundation PRD E8, the Data Foundation PRD F52
 
 ### F33 — The interim timing budgets are gated on an M1 MacBook Air, 8 GB (2026-09-24)
 
 - **Authority:** owner decision D19, round-1 adjudication 2026-09-24. Question: "Which Mac gates the interim timing budgets (100 ms browse, 1 s open) until OQ 1 closes?" Chosen: **M1 MacBook Air, 8 GB** — "The oldest, lowest-spec Apple-silicon class — a realistic floor for a Cataloger's machine. Measured on its internal disk." Not chosen: the owner's current dev Mac; both.
 - **Decision:** Until OQ 1 closes, BROWSE_RESPONSE_BUDGET, OPEN_COLLECTION_BUDGET and any budget F42 adds are measured on an M1 MacBook Air with 8 GB, on its internal disk.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.1, M1, UJ9.5-a, UJ9.5-b, UJ9.5-d
 
 ### F34 — FILE_ITEMS_CEILING's candidate is 100,000 items (2026-09-24)
 
 - **Authority:** owner decision D20, round-1 adjudication 2026-09-24. Question: "FILE_ITEMS_CEILING — the scale the All items view and file-wide Find similar must hold budget at…" Chosen: **100,000** — "The scale the browsing research measured; ~10 full collections. Stays a candidate under OQ 2." Not chosen: 50,000; 30,000.
 - **Decision:** As the chosen option states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.2, UJ9.5-b
 
 ### F35 — Deleted, cleared or replaced text is gone from the file's bytes (2026-09-24)
 
 - **Authority:** owner decision D21, round-1 adjudication 2026-09-24. Question: "When a user deletes a swatch or clears a field, how 'gone' must the old text be? DF R6.2a says 'unrecoverable from the active file by an outside reader' — ambiguous between a SQL client and anyone holding the file's bytes…" Chosen: **Gone from the bytes** — "Unrecoverable even by someone scanning a copy of the file's bytes. Amend DF R6.2a/R2.3 wording in this PR and hand ADR-0003 the requirement (it picks the mechanism, e.g. secure delete); tests read the file's bytes." Not chosen: SQL-level only with softened copy.
 - **Decision:** As the chosen option states: the Data Foundation PRD's R6.2a and R2.3 are amended in this change so "unrecoverable by an outside reader" includes anyone reading the file's bytes; ADR-0003 chooses the mechanism; tests read the file's bytes.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.3, R4.7, R6.2, R8.10d, T1, T4, T6, UJ1.3-e, UJ1.3-f, UJ4.2-a, UJ4.2-c, UJ4.4-b, UJ6.2-c, UJ6.3-b, UJ6.4-j, UJ6.4-k, the Data Foundation PRD R2.3, the Data Foundation PRD R6.2a, the Data Foundation PRD R7.2, the Data Foundation PRD F52
 
 ### F36 — Approved recommendation 1: E12's "Outside sRGB" wording (2026-09-24)
 
@@ -526,127 +536,127 @@ round-1 fix pass are filled by it.
 
 - **Authority:** approved recommendation 2: "'Value missing' becomes 'Not in this condition'. 'Re-scan to answer' becomes 'Re-scan unanswered'. The reading mark 'unsettled / Not settled' becomes 'Awaiting answer'. Capture's settled/unsettled then means rows only, and the item detail uses Capture's user-facing words ('set aside for good' / 'set aside, still to deal with'). 'Unreadable' says the reading saved in the file is damaged."
 - **Decision:** As recommendation 2 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.4i, R4.2b, R4.2h, R5.1, R5.2d, R5.3, R5.7, E12, E17, UJ4.1-c, UJ4.7-a, UJ5.1-a, UJ5.1-c
 
 ### F38 — Approved recommendation 3: the label table and the legend (2026-09-24)
 
 - **Authority:** approved recommendation 3: "The copy file gains a label table: each mark's chip label, filter label and VoiceOver name. The Colour marks legend shows each mark's shape, is reachable from the item detail and history too, and explains Spread."
 - **Decision:** As recommendation 3 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.4, R2.8, R8.9, E12, E14, E17, UJ2.1-k, UJ2.1-o, UJ9.6-a
 
 ### F39 — Approved recommendation 4: "Close" dismisses E9 and E12 (2026-09-24)
 
 - **Authority:** approved recommendation 4: "E9 and E12's dismiss button becomes 'Close', because Capture reserves 'Done' on this surface."
 - **Decision:** As recommendation 4 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.8, R3.8, E9, E12, UJ2.1-k, UJ3.4-b
 
 ### F40 — Approved recommendation 5: the chip shows the true colour (2026-09-24)
 
 - **Authority:** approved recommendation 5: "The chip shows the true colour, colour-managed to the display, never the stored sRGB value. Outside the display's gamut it shows the clipped colour plus the cannot-show mark. On an sRGB display, cannot-show equals the stored flag. The gamut test adapts to the display white with Bradford (a standard chromatic-adaptation method) at zero tolerance. ZX-013 moves inside sRGB, and every fixture keeps a margin from the gamut edge."
 - **Decision:** As recommendation 5 states; the Bradford-and-zero-tolerance clause joins OQ 7's interim.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.3, R2.5, R5.2e, R8.10c, M2, UJ2.1-b, UJ2.1-c, UJ9.8-a
 
 ### F41 — Approved recommendation 6: what the timing budgets cover and how they are measured (2026-09-24)
 
 - **Authority:** approved recommendation 6: "They also cover selection, Select all, opening and closing the detail and history, scrolling (a dropped-frame statistic) and the grid. The clock starts when a save lands and ends at the first frame that shows the result. Measure on the internal disk, with a cold first open and warm browsing. M1 is read every release on the named Mac; per-PR timing is only a tripwire."
 - **Decision:** As recommendation 6 states; the dropped-frame statistic is a new named constant under OQ 1.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.1, R8.1a, R8.1b, R8.1c, R8.1d, R8.1e, R8.1f, R8.2, R8.10f, M1, UJ9.5-a, UJ9.5-b
 
 ### F42 — Approved recommendation 7: bulk writes and BULK_WRITE_BUDGET (2026-09-24)
 
 - **Authority:** approved recommendation 7: "Bulk writes at ROWS_CEILING show progress, keep the surface responsive, and finish within a new constant, BULK_WRITE_BUDGET (candidate 2 s)."
 - **Decision:** As recommendation 7 states, the constant a candidate under OQ 1.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.1f, UJ9.5-a
 
 ### F43 — Approved recommendation 8: IMPORTED_COLUMNS_CEILING and behaviour above the ceilings (2026-09-24)
 
 - **Authority:** approved recommendation 8: "New constant IMPORTED_COLUMNS_CEILING: budgets hold up to 20 imported columns of up to 200 characters. Above that, or above ROWS_CEILING, everything still works and nothing is refused, but the budgets aren't promised."
 - **Decision:** As recommendation 8 states, the constant a candidate under an open question.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.1, UJ9.5-a, UJ9.5-c
 
 ### F44 — Approved recommendation 9: selection and live changes (2026-09-24)
 
 - **Authority:** approved recommendation 9: "Any change that stops listing a selected item deselects it, and an item that changes is re-checked against the active search, filters and sort."
 - **Decision:** As recommendation 9 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R3.9, R6.4, UJ6.1-c, UJ9.1-c, UJ9.1-d
 
 ### F45 — Approved recommendation 10: single-row selection is P0 (2026-09-24)
 
 - **Authority:** approved recommendation 10: "Single-row selection is P0. Range, toggle and Select all stay P1."
 - **Decision:** As recommendation 10 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R6.4, R4.5, UJ4.1-b, UJ4.4-c
 
 ### F46 — Approved recommendation 11: Find similar results, ties, and All items search (2026-09-24)
 
 - **Authority:** approved recommendation 11: "Find similar: each result opens its item's detail; ties are ordered by code; it never computes a new derived value set. Search in the All items view also matches collection names."
 - **Decision:** As recommendation 11 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R1.10, R3.7, E9, UJ3.4-d, UJ3.4-e, UJ3.4-f, UJ7.1-j
 
 ### F47 — Approved recommendation 12: displayed precision (2026-09-24)
 
 - **Authority:** approved recommendation 12: "Displayed precision: L*, C* and h° to one decimal; Spread and ΔE to two. Sorting uses the stored values."
 - **Decision:** As recommendation 12 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.11, UJ2.1-i, UJ3.4-a, UJ3.4-d, UJ4.1-a, UJ5.3-a, UJ5.3-b, UJ5.4-a
 
 ### F48 — Approved recommendation 13: abandoning a rename, and E15's action (2026-09-24)
 
 - **Authority:** approved recommendation 13: "Renames: Escape abandons any rename and keeps the old name. E15's 'OK' becomes 'Try another code'."
 - **Decision:** As recommendation 13 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R1.3, R4.4, R4.8, E15, UJ1.1-e, UJ4.3-d, UJ4.6-g
 
 ### F49 — Approved recommendation 14: read-only files (2026-09-24)
 
 - **Authority:** approved recommendation 14: "Read-only files: a newer-format file gets Data Foundation R5.3's guaranteed minimum, with the rest left to its OQ 18. Write actions are shown disabled."
 - **Decision:** As recommendation 14 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.4, E14, UJ9.2-a, UJ9.2-c
 
 ### F50 — Approved recommendation 15: item identity across a code change, and ADR-0003 inputs (2026-09-24)
 
 - **Authority:** approved recommendation 15: "Changing a Swatch Code keeps the same item. This becomes a Data Foundation obligation and an input to the storage-schema decision (ADR-0003), along with per-collection column visibility and renamed column names. The Build dependencies table splits into 'stops' and 'proceeds under interim'."
 - **Decision:** As recommendation 15 states, the Data Foundation half landing in this change.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.10, R4.4, R4.8, the Data Foundation PRD R1.2, the Data Foundation PRD F52
 
 ### F51 — Approved recommendation 16: metric M4 (2026-09-24)
 
 - **Authority:** approved recommendation 16: "New metric M4: re-scans still unanswered a week after a dogfood session, target 0."
 - **Decision:** As recommendation 16 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** M4
 
 ### F52 — Approved recommendation 17: the Telemetry PRD's content limit (2026-09-24)
 
 - **Authority:** approved recommendation 17: "Obligation handed to the future Telemetry PRD: no event about a Collection Mode action carries typed text, codes, names or values."
 - **Decision:** As recommendation 17 states, as an outbound obligation to the queued Telemetry PRD.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.6
 
 ### F53 — Approved recommendation 18: nothing kept outside the file (2026-09-24)
 
 - **Authority:** approved recommendation 18: "Nothing about search, view state or undo is written outside the file, including preferences and saved window state, and a test can read the app's own storage to check."
 - **Decision:** As recommendation 18 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.6, R8.10e, UJ3.3-f, UJ6.4-j, UJ6.4-k, UJ9.4-b, UJ10.1-d
 
 ### F54 — Approved recommendation 19: L*, C* and h° in the All items view (2026-09-24)
 
 - **Authority:** approved recommendation 19: "L*, C* and h° in the All items view: each item shows its own collection's values; sorting orders items that share the most common illuminant/observer, and the others follow, counted."
 - **Decision:** As recommendation 19 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R1.9, R3.3, E3, E13, UJ7.1-i
 
 ### F55 — Approved recommendation 20: capture PRD R8.18 clarifications (2026-09-24)
 
 - **Authority:** approved recommendation 20: "Capture R8.18 clarifications: 'counts as set aside' applies to collection tallies, not a session's; the unreadable standing always follows Data Foundation's quarantine mark; if an interrupted session's remembered row is deleted, the session resumes at the first pending row."
 - **Decision:** As recommendation 20 states, the capture PRD's half landing in this change.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** UJ4.4-f, the capture PRD R3.7, the capture PRD R8.18, the capture PRD UJ3.3-h, the capture PRD F71
 
 ### F56 — Approved recommendation 21: sibling pointer and wording fixes (2026-09-24)
 
 - **Authority:** approved recommendation 21: "Pointer and wording fixes in sibling PRDs: Capture R11.15g and Capture's stale 'Collection Mode remains unwritten'; Data Foundation E33 says 'Export first saves all of ⟨collection⟩'."
 - **Decision:** As recommendation 21 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** the capture PRD R11.15g, the Data Foundation PRD E33, the capture PRD F71, the Data Foundation PRD F52
 
 ### F57 — Approved recommendation 22: delete-undo's release fate (2026-09-24)
 
 - **Authority:** approved recommendation 22: "if DF's OQ 20 is still open at v1 release, delete-undo (R1.7) is marked deferred and v1 ships final deletes behind the counted confirmation and export-first."
 - **Decision:** As recommendation 22 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R1.7
 
 Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 numbered recommendations over the round-1 findings no earlier fence settled — each stated to the owner in full before the question "Approve the 33 round-1 recommendations listed above as a set?", answered **Approve all 1–33**. Recommendation n is fence F(57+n); its Authority quotes the recommendation as it stands in the round-1 fix file's Owner-needed list (the box named in its title), and it settles what that recommendation states and nothing more.
 
@@ -654,199 +664,199 @@ Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 number
 
 - **Authority:** approved round-1 recommendation 1, answering the round-1 fix file's box PM Major 1: Is a collection rename undoable by "Undo change"? Recommended and approved: yes — it is name text like a column rename, re-checked against R1.3 on undo.
 - **Decision:** As recommendation 1 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.7, UJ6.4-e
 
 ### F59 — Approved round-1 recommendation 2 (PM Nit 3 / IF-9) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 2, answering the round-1 fix file's box PM Nit 3 / IF-9: Where are "Clear filters" and "Clear search" offered? Recommended and approved: on E3's and E13's "narrowed" variants too, each only while its own narrowing is active, as R3.4 already reads.
 - **Decision:** As recommendation 2 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R3.4, E3, E13, UJ2.1-g, UJ3.1-a, UJ7.1-b
 
 ### F60 — Approved round-1 recommendation 3 (PM Nit 4) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 3, answering the round-1 fix file's box PM Nit 4: Is "Show history" offered on an item with no readings? Recommended and approved: no, as "Find similar" is withheld without a current value; R4.2f says the item has no readings yet.
 - **Decision:** As recommendation 3 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.2f, UJ5.1-e
 
 ### F61 — Approved round-1 recommendation 4 (PM unrated 1) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 4, answering the round-1 fix file's box PM unrated 1: Moving an item between collections? Recommended and approved: a stated v1 non-goal in the Build contract; a re-import is the route.
 - **Decision:** As recommendation 4 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** governs no rows
 
 ### F62 — Approved round-1 recommendation 5 (PM unrated 2) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 5, answering the round-1 fix file's box PM unrated 2: Copying a value to the clipboard? Recommended and approved: no v1 row beyond platform text selection; export and the file are the data routes.
 - **Decision:** As recommendation 5 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** governs no rows
 
 ### F63 — Approved round-1 recommendation 6 (PM unrated 3) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 6, answering the round-1 fix file's box PM unrated 3: Column delete or merge? Recommended and approved: a stated v1 non-goal; F31's warning makes the split a knowing choice and hiding (R2.10) the mitigation.
 - **Decision:** As recommendation 6 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** governs no rows
 
 ### F64 — Approved round-1 recommendation 7 (PM unrated 4 / SSE unrated 4) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 7, answering the round-1 fix file's box PM unrated 4 / SSE unrated 4: OQ 7's other interim clauses and OQ 11's interim? Recommended and approved: ratify both as drafted.
 - **Decision:** As recommendation 7 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.5, R3.7, R5.4, R5.8, M2
 
 ### F65 — Approved round-1 recommendation 8 (SSE MJ3) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 8, answering the round-1 fix file's box SSE MJ3: Is ADR-0003 a stop for every row? Recommended and approved: yes — every row reads or writes the file whose schema it fixes; the OQ interims proceed alongside.
 - **Decision:** As recommendation 8 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** governs no rows
 
 ### F66 — Approved round-1 recommendation 9 (SSE MJ8) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 9, answering the round-1 fix file's box SSE MJ8: The dropped-frame constant's candidate (F41)? Recommended and approved: no more than 1% of frames missed while paging through ROWS_CEILING rows on F33's Mac, the interim equal to it.
 - **Decision:** As recommendation 9 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.1e, UJ9.5-a
 
 ### F67 — Approved round-1 recommendation 10 (SSE MN2) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 10, answering the round-1 fix file's box SSE MN2: How do the row-state and Spread columns sort, and does the chip column sort? Recommended and approved: row state in lifecycle order (pending, captured, set aside), Spread by number, and the chip column does not sort.
 - **Decision:** As recommendation 10 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R3.2, UJ3.3-i, UJ3.3-j
 
 ### F68 — Approved round-1 recommendation 11 (SSE MN3) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 11, answering the round-1 fix file's box SSE MN3: Where does a within-collection item with DF R3.3e's reference mismatch go in L*, C*, h° sorts? Recommended and approved: F54's rule — after the like-referenced items, counted.
 - **Decision:** As recommendation 11 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R3.3, E3, UJ3.3-k
 
 ### F69 — Approved round-1 recommendation 12 (SSE MN4) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 12, answering the round-1 fix file's box SSE MN4: How does a restore order against its source in "Measured order"? Recommended and approved: ties on measurement time break by record time, the restore after its source.
 - **Decision:** As recommendation 12 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R5.3, UJ5.3-i
 
 ### F70 — Approved round-1 recommendation 13 (SSE MN5) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 13, answering the round-1 fix file's box SSE MN5: A code equal to the item's own but for case or spacing? Recommended and approved: mirror R1.3 — stored as entered, no E16.
 - **Decision:** As recommendation 13 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.4, UJ4.3-g
 
 ### F71 — Approved round-1 recommendation 14 (SSE MN6) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 14, answering the round-1 fix file's box SSE MN6: "The item in view", and do swatch size and Grid/Table persist? Recommended and approved: the selected item if on screen, else the first on screen; both last while the file is open and are written nowhere, as R3.6 does.
 - **Decision:** As recommendation 14 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R7.1, R7.2, R8.6, UJ10.1-d, UJ10.1-e
 
 ### F72 — Approved round-1 recommendation 15 (SSE MN7) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 15, answering the round-1 fix file's box SSE MN7: Which display governs a straddling window? Recommended and approved: the one macOS reports the window is on (holding most of it).
 - **Decision:** As recommendation 15 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.5, UJ2.1-m
 
 ### F73 — Approved round-1 recommendation 16 (SSE MN9) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 16, answering the round-1 fix file's box SSE MN9: Which states render for an edit failing on a vanished volume, lost permission or a held file? Recommended and approved: cite Capture E26 and DF E10 where they apply; hand DF an obligation for a permission-lost state.
 - **Decision:** As recommendation 16 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.8, UJ9.7-e, UJ9.7-f, the Data Foundation PRD F52
 
 ### F74 — Approved round-1 recommendation 17 (SSE MN10) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 17, answering the round-1 fix file's box SSE MN10: What shows once an open detail's item is deleted? Recommended and approved: the detail and history close, returning to the table (E10 over it where R1.7 is built); the same after a re-read.
 - **Decision:** As recommendation 17 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.1, UJ4.4-h, UJ9.3-b
 
 ### F75 — Approved round-1 recommendation 18 (SSE MN11) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 18, answering the round-1 fix file's box SSE MN11: Keyboard routes for drag and Compare? Recommended and approved: leave the mechanism to the build under R8.9 and add a keyboard case for each.
 - **Decision:** As recommendation 18 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.9, UJ5.4-b, UJ8.1-g
 
 ### F76 — Approved round-1 recommendation 19 (SSE MN18) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 19, answering the round-1 fix file's box SSE MN18: Reordering while a search or filter narrows the table? Recommended and approved: neither drag nor "Use as scan order" is offered while narrowed.
 - **Decision:** As recommendation 19 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.9, UJ8.1-h
 
 ### F77 — Approved round-1 recommendation 20 (SSE unrated 1) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 20, answering the round-1 fix file's box SSE unrated 1: A flagged reading re-entering over-time views after a re-scan? Recommended and approved: accept for v1 (a Flag means scan again, not never true); log it for the DF owner on the post-lock list.
 - **Decision:** As recommendation 20 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.9, UJ4.7-a
 
 ### F78 — Approved round-1 recommendation 21 (SSE unrated 2) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 21, answering the round-1 fix file's box SSE unrated 2: Flag while the current reading awaits the correction answer? Recommended and approved: not offered until that question is answered (E11 sits in the same detail).
 - **Decision:** As recommendation 21 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R4.9, UJ4.7-b
 
 ### F79 — Approved round-1 recommendation 22 (TEST n1) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 22, answering the round-1 fix file's box TEST n1: Is a search that normalises to nothing an active search? Recommended and approved: no — no narrowing and no "narrowed" variant.
 - **Decision:** As recommendation 22 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R3.1, UJ3.1-g
 
 ### F80 — Approved round-1 recommendation 23 (PMM Minor 2) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 23, answering the round-1 fix file's box PMM Minor 2: The same spacing phrase in the capture PRD's aligned E1? Recommended and approved: fix it in this change under a dated Capture fence, since Capture is already being amended.
 - **Decision:** As recommendation 23 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** the capture PRD E1, the capture PRD F71
 
 ### F81 — Approved round-1 recommendation 24 (PMM Nit 5) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 24, answering the round-1 fix file's box PMM Nit 5: Device's "simulated badge" wording? Recommended and approved: leave it for Device's next amendment; its R6.5 owns the word.
 - **Decision:** As recommendation 24 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** governs no rows
 
 ### F82 — Approved round-1 recommendation 25 (PMM unrated) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 25, answering the round-1 fix file's box PMM unrated: A dogfood reading of E12? Recommended and approved: a one-line dogfood check beside M4, no metric.
 - **Decision:** As recommendation 25 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** M4
 
 ### F83 — Approved round-1 recommendation 26 (A13) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 26, answering the round-1 fix file's box A13: Does a restore carry its source's device snapshot, agreement verdict and spread? Recommended and approved: yes — a DF clarification of R2.3f's "equal to H" and the ZX-015 B1 case.
 - **Decision:** As recommendation 26 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R5.5, UJ5.3-k, the Data Foundation PRD R2.3f, the Data Foundation PRD F52
 
 ### F84 — Approved round-1 recommendation 27 (A14) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 27, answering the round-1 fix file's box A14: What do the counts show when damage is found on a read-only file? Recommended and approved: whatever quarantine DF reports for the open file, persisted or not; nothing is written.
 - **Decision:** As recommendation 27 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** the capture PRD R8.18, the capture PRD F71
 
 ### F85 — Approved round-1 recommendation 28 (ARCH unrated 1) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 28, answering the round-1 fix file's box ARCH unrated 1: "No stored cannot-show" as an ADR-0003 input? Recommended and approved: yes; F6 already keeps the mark live-only.
 - **Decision:** As recommendation 28 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R2.5, the Data Foundation PRD F52
 
 ### F86 — Approved round-1 recommendation 29 (ARCH unrated 2) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 29, answering the round-1 fix file's box ARCH unrated 2: Does All items search match imported values? Recommended and approved: yes, as R1.10 reads; say so in R1.10.
 - **Decision:** As recommendation 29 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R1.10
 
 ### F87 — Approved round-1 recommendation 30 (PERF-6) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 30, answering the round-1 fix file's box PERF-6: A budget for opening the All items view? Recommended and approved: OPEN_COLLECTION_BUDGET for its first rows at FILE_ITEMS_CEILING.
 - **Decision:** As recommendation 30 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.2, UJ9.5-b
 
 ### F88 — Approved round-1 recommendation 31 (PERF-9) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 31, answering the round-1 fix file's box PERF-9: Do the browse budgets hold from the first-rows moment? Recommended and approved: yes — no lazily loaded tail that a search waits on.
 - **Decision:** As recommendation 31 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.1d
 
 ### F89 — Approved round-1 recommendation 32 (PERF-10) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 32, answering the round-1 fix file's box PERF-10: Capture precedence over this PRD's writes and refreshes? Recommended and approved: yes — add the row and a Demo Device case during a bulk clear; F14's in-session edits stay available.
 - **Decision:** As recommendation 32 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** R8.11, UJ9.5-d
 
 ### F90 — Approved round-1 recommendation 33 (PERF-13) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 33, answering the round-1 fix file's box PERF-13: FIND_BUDGET ≤ BROWSE_RESPONSE_BUDGET? Recommended and approved: yes — state it in OQ 1 and hand Capture a line at its OQ 13.
 - **Decision:** As recommendation 33 states.
-- **Carried by:** _(filled by the round-1 fix pass)_
+- **Carried by:** the capture PRD F71
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -887,68 +897,68 @@ than deciding a WHAT.
 - **F26** — R5.7, E13
 - **F27** — R5.4
 - **F28** — governs no rows
-- **F29** — _(filled by the round-1 fix pass)_
-- **F30** — _(filled by the round-1 fix pass)_
-- **F31** — _(filled by the round-1 fix pass)_
-- **F32** — _(filled by the round-1 fix pass)_
-- **F33** — _(filled by the round-1 fix pass)_
-- **F34** — _(filled by the round-1 fix pass)_
-- **F35** — _(filled by the round-1 fix pass)_
+- **F29** — R4.7, R8.3, E3, E14, T10, UJ6.2-f, UJ6.4-a, UJ6.4-b, UJ6.4-c, UJ6.4-d, UJ6.4-f, UJ6.4-g, UJ6.4-h, UJ6.4-i, UJ6.4-j, UJ6.4-k
+- **F30** — R1.7, R4.6, R5.5, R8.3, E6, UJ4.4-g, UJ4.5-d, UJ5.2-d, UJ5.3-h, the capture PRD R5.6, the capture PRD R8.18, the capture PRD F71
+- **F31** — R4.8, R4.9, E18, E19, T8, T14, UJ4.6-a, UJ4.6-g, UJ4.6-h, UJ4.7-a, UJ4.7-e
+- **F32** — R4.5, E10, T2, UJ4.4-a, UJ4.4-e, UJ6.3-d, UJ7.1-g, the Data Foundation PRD E8, the Data Foundation PRD F52
+- **F33** — R8.1, M1, UJ9.5-a, UJ9.5-b, UJ9.5-d
+- **F34** — R8.2, UJ9.5-b
+- **F35** — R4.3, R4.7, R6.2, R8.10d, T1, T4, T6, UJ1.3-e, UJ1.3-f, UJ4.2-a, UJ4.2-c, UJ4.4-b, UJ6.2-c, UJ6.3-b, UJ6.4-j, UJ6.4-k, the Data Foundation PRD R2.3, the Data Foundation PRD R6.2a, the Data Foundation PRD R7.2, the Data Foundation PRD F52
 - **F36** — E12
-- **F37** — _(filled by the round-1 fix pass)_
-- **F38** — _(filled by the round-1 fix pass)_
-- **F39** — _(filled by the round-1 fix pass)_
-- **F40** — _(filled by the round-1 fix pass)_
-- **F41** — _(filled by the round-1 fix pass)_
-- **F42** — _(filled by the round-1 fix pass)_
-- **F43** — _(filled by the round-1 fix pass)_
-- **F44** — _(filled by the round-1 fix pass)_
-- **F45** — _(filled by the round-1 fix pass)_
-- **F46** — _(filled by the round-1 fix pass)_
-- **F47** — _(filled by the round-1 fix pass)_
-- **F48** — _(filled by the round-1 fix pass)_
-- **F49** — _(filled by the round-1 fix pass)_
-- **F50** — _(filled by the round-1 fix pass)_
-- **F51** — _(filled by the round-1 fix pass)_
-- **F52** — _(filled by the round-1 fix pass)_
-- **F53** — _(filled by the round-1 fix pass)_
-- **F54** — _(filled by the round-1 fix pass)_
-- **F55** — _(filled by the round-1 fix pass)_
-- **F56** — _(filled by the round-1 fix pass)_
-- **F57** — _(filled by the round-1 fix pass)_
-- **F58** — _(filled by the round-1 fix pass)_
-- **F59** — _(filled by the round-1 fix pass)_
-- **F60** — _(filled by the round-1 fix pass)_
-- **F61** — _(filled by the round-1 fix pass)_
-- **F62** — _(filled by the round-1 fix pass)_
-- **F63** — _(filled by the round-1 fix pass)_
-- **F64** — _(filled by the round-1 fix pass)_
-- **F65** — _(filled by the round-1 fix pass)_
-- **F66** — _(filled by the round-1 fix pass)_
-- **F67** — _(filled by the round-1 fix pass)_
-- **F68** — _(filled by the round-1 fix pass)_
-- **F69** — _(filled by the round-1 fix pass)_
-- **F70** — _(filled by the round-1 fix pass)_
-- **F71** — _(filled by the round-1 fix pass)_
-- **F72** — _(filled by the round-1 fix pass)_
-- **F73** — _(filled by the round-1 fix pass)_
-- **F74** — _(filled by the round-1 fix pass)_
-- **F75** — _(filled by the round-1 fix pass)_
-- **F76** — _(filled by the round-1 fix pass)_
-- **F77** — _(filled by the round-1 fix pass)_
-- **F78** — _(filled by the round-1 fix pass)_
-- **F79** — _(filled by the round-1 fix pass)_
-- **F80** — _(filled by the round-1 fix pass)_
-- **F81** — _(filled by the round-1 fix pass)_
-- **F82** — _(filled by the round-1 fix pass)_
-- **F83** — _(filled by the round-1 fix pass)_
-- **F84** — _(filled by the round-1 fix pass)_
-- **F85** — _(filled by the round-1 fix pass)_
-- **F86** — _(filled by the round-1 fix pass)_
-- **F87** — _(filled by the round-1 fix pass)_
-- **F88** — _(filled by the round-1 fix pass)_
-- **F89** — _(filled by the round-1 fix pass)_
-- **F90** — _(filled by the round-1 fix pass)_
+- **F37** — R2.4i, R4.2b, R4.2h, R5.1, R5.2d, R5.3, R5.7, E12, E17, UJ4.1-c, UJ4.7-a, UJ5.1-a, UJ5.1-c
+- **F38** — R2.4, R2.8, R8.9, E12, E14, E17, UJ2.1-k, UJ2.1-o, UJ9.6-a
+- **F39** — R2.8, R3.8, E9, E12, UJ2.1-k, UJ3.4-b
+- **F40** — R2.3, R2.5, R5.2e, R8.10c, M2, UJ2.1-b, UJ2.1-c, UJ9.8-a
+- **F41** — R8.1, R8.1a, R8.1b, R8.1c, R8.1d, R8.1e, R8.1f, R8.2, R8.10f, M1, UJ9.5-a, UJ9.5-b
+- **F42** — R8.1f, UJ9.5-a
+- **F43** — R8.1, UJ9.5-a, UJ9.5-c
+- **F44** — R3.9, R6.4, UJ6.1-c, UJ9.1-c, UJ9.1-d
+- **F45** — R6.4, R4.5, UJ4.1-b, UJ4.4-c
+- **F46** — R1.10, R3.7, E9, UJ3.4-d, UJ3.4-e, UJ3.4-f, UJ7.1-j
+- **F47** — R2.11, UJ2.1-i, UJ3.4-a, UJ3.4-d, UJ4.1-a, UJ5.3-a, UJ5.3-b, UJ5.4-a
+- **F48** — R1.3, R4.4, R4.8, E15, UJ1.1-e, UJ4.3-d, UJ4.6-g
+- **F49** — R8.4, E14, UJ9.2-a, UJ9.2-c
+- **F50** — R2.10, R4.4, R4.8, the Data Foundation PRD R1.2, the Data Foundation PRD F52
+- **F51** — M4
+- **F52** — R8.6
+- **F53** — R8.6, R8.10e, UJ3.3-f, UJ6.4-j, UJ6.4-k, UJ9.4-b, UJ10.1-d
+- **F54** — R1.9, R3.3, E3, E13, UJ7.1-i
+- **F55** — UJ4.4-f, the capture PRD R3.7, the capture PRD R8.18, the capture PRD UJ3.3-h, the capture PRD F71
+- **F56** — the capture PRD R11.15g, the Data Foundation PRD E33, the capture PRD F71, the Data Foundation PRD F52
+- **F57** — R1.7
+- **F58** — R4.7, UJ6.4-e
+- **F59** — R3.4, E3, E13, UJ2.1-g, UJ3.1-a, UJ7.1-b
+- **F60** — R4.2f, UJ5.1-e
+- **F61** — governs no rows
+- **F62** — governs no rows
+- **F63** — governs no rows
+- **F64** — R2.5, R3.7, R5.4, R5.8, M2
+- **F65** — governs no rows
+- **F66** — R8.1e, UJ9.5-a
+- **F67** — R3.2, UJ3.3-i, UJ3.3-j
+- **F68** — R3.3, E3, UJ3.3-k
+- **F69** — R5.3, UJ5.3-i
+- **F70** — R4.4, UJ4.3-g
+- **F71** — R7.1, R7.2, R8.6, UJ10.1-d, UJ10.1-e
+- **F72** — R2.5, UJ2.1-m
+- **F73** — R8.8, UJ9.7-e, UJ9.7-f, the Data Foundation PRD F52
+- **F74** — R4.1, UJ4.4-h, UJ9.3-b
+- **F75** — R8.9, UJ5.4-b, UJ8.1-g
+- **F76** — R2.9, UJ8.1-h
+- **F77** — R4.9, UJ4.7-a
+- **F78** — R4.9, UJ4.7-b
+- **F79** — R3.1, UJ3.1-g
+- **F80** — the capture PRD E1, the capture PRD F71
+- **F81** — governs no rows
+- **F82** — M4
+- **F83** — R5.5, UJ5.3-k, the Data Foundation PRD R2.3f, the Data Foundation PRD F52
+- **F84** — the capture PRD R8.18, the capture PRD F71
+- **F85** — R2.5, the Data Foundation PRD F52
+- **F86** — R1.10
+- **F87** — R8.2, UJ9.5-b
+- **F88** — R8.1d
+- **F89** — R8.11, UJ9.5-d
+- **F90** — the capture PRD F71
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
@@ -956,4 +966,6 @@ than deciding a WHAT.
      brief so the finding is never resurfaced round after round. Not conditional — a file with no
      rejections keeps the heading and says "none". -->
 
-None — no review round has run yet.
+| Finding | Raised by | Disposition | Authority |
+|---|---|---|---|
+| Round 1 Finding-2 (Blocker): "Set a field" could set Swatch Code on a selection and create duplicate codes (R6.2) | peer-staff-software-engineer-reviewer, cross-model on agy | Not reproduced: the Vocabulary's editable field excludes Swatch Code, which only R4.4 changes (F7); not fixed | The review log's Round 1 disposition row 5 |

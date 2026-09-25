@@ -9,7 +9,7 @@ The shipping copy for every error, waiting, choice, and confirmation state in th
 
 | ID | State | Headline | Body | Primary action | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| E1 | Duplicate collection name | You already have a collection called that | Collection names have to be different from each other. Spacing and capitals don't count as a difference, so "Copic Sketch" and "copic sketch" are the same name. | Change the name | 🤝 Aligned |
+| E1 | Duplicate collection name | You already have a collection called that | Collection names have to be different from each other. Capitals and extra spaces don't count as a difference, so "Copic Sketch" and "copic sketch" are the same name. | Change the name | 🤝 Aligned |
 | E2 | Nothing to capture | Empty: "There's nothing to scan in this collection yet" · Finished: "You're done with ⟨collection⟩" | Empty: "Import your swatch list from a spreadsheet, or add one swatch at a time." · Finished: "Every swatch here is scanned or set aside for good. Bring in more from a spreadsheet, add one at a time, or scan one again if something needs correcting. ⟨deferred⟩ swatches are set aside — you can look back over them whenever you like." | Empty: Import a file; Add a swatch ‹P1› · Finished: Import a file; Add a swatch ‹P1›; Re-scan a swatch ‹P1›; Review the set-aside swatches — only while any swatch is set aside | 🤝 Aligned |
 | E3 | Instrument held by another collection | ⟨collection⟩ is using the instrument | One session at a time. Finish or end the session in ⟨collection⟩, then come back here. | Go to ⟨collection⟩ | 🤝 Aligned |
 | E15 | Light leaked in | Light got in — try again | Press the instrument flat against the swatch and scan again. Your samples so far are safe. | Scan again | 🤝 Aligned |

@@ -94,6 +94,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Decision:** Version history covers measurements. Item metadata and notes are editable and clearable; an edit supersedes the old text without touching any reading.
 
+**Clarified 2026-09-25 (F52, under [the Collection Mode PRD's F35](../collection-mode/prd-collection-mode-fences.md)):** the superseded or cleared text is beyond the recovery of anyone reading the file's bytes, not only a SQL reader, as R2.3 and R6.2a now say; ADR-0003 chooses how. Peer review pending.
+
 ### F18 — The CSV carries the vendor's raw payload column (2026-09-09, round 1)
 
 **Decision:** One opaque column per row, documented as the vendor's round-trip string, so the export carries the file's fidelity promise and M3 (now the export PRD's M1) reads as written; a reading with no payload leaves it empty and marked.
@@ -235,6 +237,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F49 | post-lock Data Foundation list; future M10, no metric row yet. |
 | F50 | R1.2, R6.2, R7.6o, E33; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the copy header and Variants note; DJ4, DJ5. Clarified 2026-09-24 (E33's Export first at collection scope): R6.2, R7.6o, DJ4. |
 | F51 | R2.9; DJ2; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F33 clarification. |
+| F52 | R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33; DJ2, DJ4, DJ5; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F17, F40 and F50 clarifications. |
 
 ## Rejected findings
 
@@ -336,6 +339,8 @@ Source: [the owner’s eleven decisions](https://github.com/vinnyp/spectro-captu
 **Why:** A restore must be independently readable and must not revive stale derivations or mutate the source history.
 
 **Rows:** R2.3f, R7.7g, DJ2.
+
+**Clarified 2026-09-25 (F52, under [the Collection Mode PRD's F83](../collection-mode/prd-collection-mode-fences.md)):** the restored reading also carries its source's acquiring-device snapshot, agreement verdict and recorded spread, as R2.3f now says. Peer review pending.
 
 ### F41 — Hand-author the live-kind fixture (2026-09-17)
 
@@ -447,6 +452,8 @@ Source: the owner's decisions D7 and D9 in the Collection Mode PRD's post-fill a
 
 **Clarified 2026-09-24 ([the Collection Mode PRD's F24](../collection-mode/prd-collection-mode-fences.md), its approved loose end (i), second post-fill adjudication):** The "Not decided" point above is settled: E33's Export first opens the export of the whole collection holding the selection, at [the export PRD's R1.1a](../export/prd-data-export.md#row-selection-and-fields) collection scope — that PRD offers no selection scope, and Collection Mode's F3 excludes exporting a selection. R6.2 says so and keeps its alignment, R7.6o lists it and DJ4 asserts it; [the export PRD's F31](../export/prd-data-export-fences.md) adds E33 to its list of the confirmations offering export first. E33's copy is unchanged. Peer review pending.
 
+**Clarified 2026-09-25 (F52, under [the Collection Mode PRD's F56](../collection-mode/prd-collection-mode-fences.md)):** E33's export-first sentence now says it saves all of ⟨collection⟩, these swatches included; what Export first opens is unchanged. Peer review pending.
+
 ## Collection Mode seam amendment, second pass (2026-09-24)
 
 Source: the owner's decision D14 in the Collection Mode PRD's second post-fill adjudication of 2026-09-24, recorded there as [its F23](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation half of that seam; peer review pending.
@@ -460,3 +467,19 @@ Source: the owner's decision D14 in the Collection Mode PRD's second post-fill a
 **Why:** R2.9's "only damage to the current reading removes the item's current value" already contradicted the capture PRD's R5.6 Flag demotion, which Collection Mode's F23 names as the authority to fix here.
 
 **Rows:** R2.9, DJ2, the Collection Mode inbound obligation line, the dated F33 clarification.
+
+## Collection Mode round-1 amendment (2026-09-25)
+
+Source: the owner's round-1 decisions in the Collection Mode PRD's adjudications of 2026-09-24 and 2026-09-25, recorded there as [its F32, F35, F50, F56, F73, F83 and F85](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation halves of those decisions; peer review pending.
+
+### F52 — The item delete names its collection, removed text leaves the bytes, identity survives a code change, a restore keeps its provenance (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F32, F35, F50, F56, F73, F83 and F85](../collection-mode/prd-collection-mode-fences.md) — owner decisions D18 and D21 of its round-1 adjudication, 2026-09-24 (F32, F35); its approved recommendations 15 and 21, the same day (F50, F56); and its approved round-1 recommendations 16, 26 and 28, 2026-09-25 (F73, F83, F85).
+
+**Decision:** (1) Under the Collection Mode PRD's F32, E8's headline names the item's collection, and R7.6k asserts it. (2) Under its F35, "unrecoverable by an outside reader" in R2.3 and R6.2a includes anyone reading the file's bytes, not only a SQL reader; ADR-0003 chooses the mechanism, and R7.2 and DJ4 read the bytes. (3) Under its F50, an item keeps its identity when Collection Mode R4.4 changes its Swatch Code, a reader at SQLITE_READER_FLOOR seeing the same item under the new code, and each collection's column-visibility choice (Collection Mode R2.10) is kept with it; R1.2 and DJ5 say so. (4) Under its F56, E33's export-first sentence says it saves all of ⟨collection⟩. (5) Under its F83, a restore (R2.3f) carries its source's acquiring-device snapshot, agreement verdict and recorded spread, and DJ2 asserts it. (6) Under its F73, this PRD owes Collection Mode a named state for a write refused because permission to the file was lost, recorded on the Collection Mode obligation line. (7) Under its F50 and F85, ADR-0003 takes as inputs item identity kept across a code change, per-collection column visibility, a renamed column's stored name, (2)'s byte-level rule, and that the file keeps no display-relative cannot-show mark, the gamut-clipped flag (R3.4) being the only gamut mark stored. R1.2, R2.3, R2.3f, R6.2a, R7.2 and R7.6k keep their alignment; E8 and E33 change wording only.
+
+**Not decided:** the permission-lost state's wording and actions, and whether it is a new state or a variant of an existing one, are neither the Collection Mode PRD's F73 nor this fence's, and go back to the owner.
+
+**Why:** each is the Data Foundation half of a Collection Mode decision about what the file keeps or how a confirmation reads; this PRD owns the file and those confirmations.
+
+**Rows:** R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33, DJ2, DJ4, DJ5, the Collection Mode inbound obligation line, the dated F17, F40 and F50 clarifications.

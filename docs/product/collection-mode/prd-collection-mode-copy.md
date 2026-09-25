@@ -92,12 +92,13 @@ without that action, and the state is complete without it.
      and says "none" here, rather than leaving the file empty. -->
 
 Sibling-owned states that render on this product area's surfaces are their owners' and are not
-restated here: the capture PRD's E1, E2, E3, E23, E24, E25, E28, E33 and E34; the device PRD's E22;
-the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the Data Export PRD's E1.
+restated here: the capture PRD's E1, E2, E3, E23, E24, E25, E26, E28, E33 and E34; the device PRD's
+E22; the Data Foundation PRD's E4, E8, E9, E10, E11, E14, E15, E26, E31 and E33 and its read-only
+file states; and the Data Export PRD's E1.
 
 ### E1 — No collections yet
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: none
 - Headline: No collections yet
@@ -106,7 +107,7 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 
 ### E2 — Collections
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: none
 - Headline: Collections
@@ -119,9 +120,9 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Phase: none
 - Variants enumerated by: R3.4
 - Headline: ⟨collection⟩
-- Body: ⟨n⟩ swatches.
-- Actions: "Filters", "Colour marks", "Rename collection", "Delete collection", "Export collection", "Delete swatch", "Select all" [phase: action-absent], "Set a field" [phase: action-absent], "Delete selected" [phase: action-absent], "Use as scan order" [phase: action-absent], "Rename column" [phase: action-absent], "Grid" [phase: action-absent], "Table" [phase: action-absent]
-- Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches match.
+- Body: ⟨n⟩ swatches. ⟨unlike⟩ swatches worked out under a different light or observer come after the rest in this order.
+- Actions: "Filters", "Clear search", "Clear filters", "Colour marks", "Rename collection", "Delete collection", "Export collection", "Delete swatch", "Undo change" [phase: action-absent], "Select all" [phase: action-absent], "Set a field" [phase: action-absent], "Delete selected" [phase: action-absent], "Use as scan order" [phase: action-absent], "Rename column" [phase: action-absent], "Grid" [phase: action-absent], "Table" [phase: action-absent]
+- Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches match. ⟨unlike⟩ swatches worked out under a different light or observer come after the rest in this order.
 
 ### E4 — No search matches
 
@@ -129,7 +130,7 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Phase: none
 - Variants enumerated by: none
 - Headline: Nothing matches ⟨text⟩
-- Body: The search looks at the start of each swatch's code and alternate code, and anywhere in its name, its alternate name and the details you imported. Spacing and capitals don't count as a difference.
+- Body: The search looks at the start of each swatch's code and alternate code, and anywhere in its name, its alternate name and the details you imported. Capitals and extra spaces don't count as a difference.
 - Actions: "Clear search"
 
 ### E5 — Nothing passes the filters
@@ -137,7 +138,7 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Status: pre-alignment
 - Phase: none
 - Variants enumerated by: none
-- Headline: No swatch passes these filters
+- Headline: No swatch matches these filters
 - Body: ⟨n⟩ swatches are hidden by the filters you've chosen. Clearing the filters keeps your search.
 - Actions: "Clear filters"
 
@@ -147,13 +148,13 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Phase: none
 - Variants enumerated by: R1.4
 - Headline: ⟨collection⟩ has a session that hasn't ended
-- Body: Scanning in ⟨collection⟩ is under way, paused or held. Deleting swatches or the collection, changing a swatch's code, and flagging a swatch wait until you end that session, so nothing it's working on moves under it. Nothing has been changed.
+- Body: Scanning in ⟨collection⟩ is active, paused or halted. Deleting swatches or the collection, changing a swatch's code, flagging a swatch, bringing back an earlier reading and undoing a delete aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended.
 - Actions: "Go to the session", "Cancel"
 - Variant: "interrupted" — the collection holds an interrupted session and the action is deleting the collection. A session in ⟨collection⟩ was interrupted and hasn't been resumed or ended. Resume it or end it before deleting the collection. Nothing has been changed.
 
 ### E7 — Collection name needed
 
-- Status: pre-alignment
+- Status: needs-discussion
 - Phase: none
 - Variants enumerated by: none
 - Headline: A collection needs a name
@@ -166,29 +167,31 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Phase: none
 - Variants enumerated by: R6.2
 - Headline: Change ⟨column⟩ on ⟨n⟩ swatches?
-- Body: Every selected swatch in ⟨collection⟩ gets ⟨value⟩ in ⟨column⟩, replacing what each has there now. Nothing else changes, and their readings stay as they are.
+- Body: Every selected swatch in ⟨collection⟩ gets ⟨value⟩ in ⟨column⟩, replacing what each has there now. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file; you can undo this while the file stays open.
 - Actions: "Apply to ⟨n⟩ swatches", "Cancel"
-- Variant: "clear" — the change empties the field. Every selected swatch in ⟨collection⟩ has ⟨column⟩ emptied, and what was there is no longer kept in your file. Nothing else changes, and their readings stay as they are.
+- Variant: "clear" — the change empties the field. Every selected swatch in ⟨collection⟩ has ⟨column⟩ emptied. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file; you can undo this while the file stays open.
 
 ### E9 — Colours close to a swatch
 
 - Status: pre-alignment
 - Phase: none
 - Variants enumerated by: R3.8
-- Headline: Colours close to ⟨code⟩
-- Body: ⟨n⟩ swatches in ⟨scope⟩ are within ΔE2000 ⟨distance⟩ of ⟨code⟩, nearest first. ⟨excluded⟩ swatches weren't compared: they have no current colour, or theirs was worked out under a different light or measurement condition. Only your own swatches are compared — never a named colour library.
-- Actions: "Done"
-- Variant: "none" — no other swatch is at or within the distance. No other swatch in ⟨scope⟩ is within ΔE2000 ⟨distance⟩ of ⟨code⟩. ⟨excluded⟩ swatches weren't compared: they have no current colour, or theirs was worked out under a different light or measurement condition.
+- Headline: Colours close to ⟨code⟩ in ⟨collection⟩
+- Body: ⟨n⟩ swatches in ⟨scope⟩ are within ΔE2000 ⟨distance⟩ of ⟨code⟩, nearest first; open one to see it. ⟨excluded⟩ swatches weren't compared: they have no current value, or theirs was worked out under a different light or measurement condition. Only your own swatches are compared — never a named colour library.
+- Actions: "Close"
+- Variant: "none" — no other swatch is at or within the distance. No other swatch in ⟨scope⟩ is within ΔE2000 ⟨distance⟩ of ⟨code⟩. ⟨excluded⟩ swatches weren't compared: they have no current value, or theirs was worked out under a different light or measurement condition.
 
 ### E10 — Deleted, undo available
+
+E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carries no phase mark of its own.
 
 - Status: pre-alignment
 - Phase: none
 - Variants enumerated by: R1.7
 - Headline: Deleted
-- Body: ⟨code⟩ is deleted. You can undo it while this file stays open; closing the file, quitting, or an app crash makes it final.
+- Body: ⟨code⟩ is deleted from ⟨collection⟩. You can undo it while this file stays open; closing the file, quitting, or an app crash makes it final.
 - Actions: "Undo"
-- Variant: "swatches" — a selection was deleted. ⟨n⟩ swatches are deleted. You can undo it while this file stays open; closing the file, quitting, or an app crash makes it final.
+- Variant: "swatches" — a selection was deleted. ⟨n⟩ swatches are deleted from ⟨collection⟩. You can undo it while this file stays open; closing the file, quitting, or an app crash makes it final.
 - Variant: "collection" — a collection was deleted. ⟨collection⟩ and its ⟨n⟩ swatches are deleted. You can undo it while this file stays open; closing the file, quitting, or an app crash makes it final.
 
 ### E11 — Column name not accepted
@@ -199,16 +202,19 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Headline: That column name can't be used
 - Body: A column needs a name, so ⟨column⟩ keeps its name.
 - Actions: "Change the name"
-- Variant: "duplicate" — the name is already another column's or a swatch field's. ⟨text⟩ is already the name of a column or a swatch field here — spacing and capitals don't count as a difference — so ⟨column⟩ keeps its name.
+- Variant: "duplicate" — the name is already another column's or a swatch field's. ⟨text⟩ is already the name of a column or a swatch field here — capitals and extra spaces don't count as a difference — so ⟨column⟩ keeps its name.
 
 ### E12 — What the marks mean
+
+Each mark shows its shape (R8.9) before its name, and the marks are grouped under the Mark labels
+table's group headings, in that table's order.
 
 - Status: pre-alignment
 - Phase: none
 - Variants enumerated by: none
 - Headline: What the marks mean
-- Body: Can't show on this screen: this display can't render the colour, so the chip shows what the screen can manage, not the colour itself. Outside sRGB: the colour falls outside standard sRGB, the reference your exports and your file use. Simulated: the reading came from the Demo Device, not an instrument. No spectral data: the reading has colour values but not the curve behind them, so it can't be worked out again under another light. Samples disagreed: its samples came out further apart than expected and you accepted their average. Value missing: there's no value for the measurement condition this collection is set to. No current value: the swatch hasn't been scanned, or it's set aside. Unreadable: its current reading can't be read, so the swatch is set aside. Re-scan to answer: it was scanned again and you haven't said whether the swatch changed or the old reading was wrong. Never right: you said this earlier reading was wrong, so it's left out of anything showing change over time. Not settled: a later re-scan is waiting for your answer, so this earlier reading's standing isn't settled yet.
-- Actions: "Done"
+- Body: The chip isn't the true colour. Can't show on this screen: this display can't render the colour, so the chip shows the nearest colour it can, not the colour itself. Outside sRGB: the colour is more saturated than standard sRGB can hold, so its sRGB and HSL values — here, in your file and in exports — are the nearest sRGB colour; its Lab, XYZ and spectral values are unaffected. Where the reading came from. Simulated: the reading came from the Demo Device, not an instrument. No spectral data: the reading has colour values but not the curve behind them, so it can't be worked out again under another light. Samples disagreed: its samples came out further apart than expected and you accepted their average. No colour to show. Not in this condition: it has a reading, but none under the measurement condition this collection is set to. No current value: the swatch hasn't been scanned, or it's set aside for a reason other than an unreadable reading. Unreadable: the reading saved in your file is damaged and can't be read, so the swatch is set aside to scan again or to go back to an earlier reading. Waiting on you. Re-scan unanswered: it was scanned again and you haven't said whether the swatch changed or the old reading was wrong; answer it from the swatch, or with Answer re-scans. Earlier readings. Never right: you said this earlier reading was wrong, so it's left out of anything showing change over time. Awaiting answer: a later re-scan is waiting for your answer, so whether this earlier reading still stands isn't known yet. Spread: the largest difference, in ΔE2000, between any one of a reading's samples and their average.
+- Actions: "Close"
 
 ### E13 — All items shown
 
@@ -216,18 +222,19 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Phase: [phase: surface-absent]
 - Variants enumerated by: R3.4
 - Headline: All items
-- Body: ⟨n⟩ swatches across ⟨collections⟩ collections.
-- Actions: "Filters", "Colour marks"
-- Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches across ⟨collections⟩ collections match.
+- Body: Every swatch in your ⟨collections⟩ collections, in one list. ⟨n⟩ swatches in all. ⟨unlike⟩ swatches worked out under a different light or observer come after the rest in this order.
+- Actions: "Filters", "Clear search", "Clear filters", "Colour marks"
+- Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches across ⟨collections⟩ collections match. ⟨unlike⟩ swatches worked out under a different light or observer come after the rest in this order.
 
 ### E14 — Swatch detail
 
 - Status: pre-alignment
 - Phase: none
-- Variants enumerated by: none
+- Variants enumerated by: R8.4
 - Headline: ⟨code⟩ ⟨name⟩
 - Body: A change saves when you press Return or leave the field; Escape puts back what was there before you started typing.
-- Actions: "Show history", "Export swatch", "Delete swatch", "Find similar" [phase: action-absent], "Change code" [phase: action-absent]
+- Actions: "Show history", "Colour marks", "Export swatch", "Delete swatch", "Find similar" [phase: action-absent], "Change code" [phase: action-absent], "Undo change" [phase: action-absent]
+- Variant: "read-only" — the file is open read-only. Your file is open read-only, so nothing here can be changed.
 
 ### E15 — Code not accepted
 
@@ -236,12 +243,12 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Variants enumerated by: R4.4
 - Headline: That code can't be used
 - Body: A swatch needs a code — it's how you and your imports find it — so ⟨code⟩ keeps its code.
-- Actions: "OK"
-- Variant: "duplicate" — the code is already another swatch's in the collection. ⟨text⟩ is already the code of another swatch in ⟨collection⟩ — spacing and capitals don't count as a difference — so ⟨code⟩ keeps its code.
+- Actions: "Try another code"
+- Variant: "duplicate" — the code is already another swatch's in the collection. ⟨text⟩ is already the code of another swatch in ⟨collection⟩ — capitals and extra spaces don't count as a difference — so ⟨code⟩ keeps its code.
 
 ### E16 — Change a swatch's code
 
-- Status: pre-alignment
+- Status: needs-discussion
 - Phase: none
 - Variants enumerated by: none
 - Headline: Change ⟨code⟩ to ⟨text⟩?
@@ -254,6 +261,88 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the D
 - Phase: none
 - Variants enumerated by: R5.3
 - Headline: ⟨n⟩ readings of ⟨code⟩
-- Body: Every reading this swatch has had, the most recently saved first. None can be removed on its own: deleting the swatch or its collection is the only thing that throws a reading away.
-- Actions: "Recorded order", "Measured order", "Use this reading" [phase: action-absent], "Compare" [phase: action-absent]
-- Variant: "measured" — readings are in measurement-time order. The readings in the order they were measured. ⟨left⟩ readings marked never right are left out of this order, and a reading still waiting on a re-scan answer is shown and marked.
+- Body: Every reading this swatch has had, the most recently recorded first. None can be removed on its own: deleting the swatch or its collection is the only thing that throws a reading away. Use this reading, where it's offered, makes an earlier reading the current one again, and the reading it replaces stays in the history.
+- Actions: "Recorded order", "Measured order", "Colour marks", "Use this reading" [phase: action-absent], "Compare" [phase: action-absent]
+- Variant: "measured" — readings are in measurement-time order. The readings in the order they were measured, oldest first. ⟨left⟩ readings marked never right are left out of this order, and a reading still awaiting an answer is shown and marked.
+
+### E18 — Set a swatch aside to scan again
+
+- Status: pre-alignment
+- Phase: none
+- Variants enumerated by: none
+- Headline: Set ⟨code⟩ aside to scan again?
+- Body: Its current reading moves to its history, and the swatch has no colour until it's scanned again or you bring that reading back with Use this reading. Nothing is deleted.
+- Actions: "Set aside to scan again", "Cancel"
+
+### E19 — Rename a column
+
+- Status: pre-alignment
+- Phase: none
+- Variants enumerated by: none
+- Headline: Rename ⟨column⟩ to ⟨text⟩?
+- Body: Imports match columns by name, so a spreadsheet that still has a ⟨column⟩ column will add it as a new column instead of filling this one. Every value in this column stays as it is.
+- Actions: "Rename the column", "Keep this name"
+
+## Display labels
+
+The fixed text the rows show outside the states above, each table citing the row it serves. Tests
+read these by the identifier in the first column, never by the words.
+
+**Mark labels** (R2.4, R3.4, R8.9; F38). A mark's filter label is what "Filters" offers; never-true
+and awaiting-answer mark earlier readings and are not filter values (R3.4 filters by R2.4's marks).
+
+| Mark | Group in E12 | Chip label | Filter label | VoiceOver name |
+|---|---|---|---|---|
+| cannot-show | The chip isn't the true colour | Can't show | Can't show on this screen | can't show on this screen |
+| outside-sRGB | The chip isn't the true colour | Outside sRGB | Outside sRGB | outside sRGB |
+| simulated | Where the reading came from | Simulated | Simulated | simulated reading |
+| non-spectral | Where the reading came from | No spectral data | No spectral data | no spectral data |
+| samples-disagreed | Where the reading came from | Samples disagreed | Samples disagreed | samples disagreed |
+| value-absent | No colour to show | Not in this condition | Not in this condition | not in this condition |
+| no-value | No colour to show | No current value | No current value | no current value |
+| unreadable | No colour to show | Unreadable | Unreadable | unreadable |
+| re-scan-unanswered | Waiting on you | Re-scan unanswered | Re-scan unanswered | re-scan unanswered |
+| never-true | Earlier readings | Never right | — | never right |
+| awaiting-answer | Earlier readings | Awaiting answer | — | awaiting answer |
+
+**Column headers** (R2.1, R1.9). The chip column has no header text; an imported column is headed
+by the name the file stores for it.
+
+| Column | Header |
+|---|---|
+| Swatch Code | Code |
+| Swatch Name | Name |
+| row state | State |
+| L*, C*, h° | L*, C*, h° |
+| Spread | Spread |
+| Swatch Alternate Code | Alt. code |
+| Swatch Alternate Name | Alt. name |
+| Collection | Collection |
+
+**Detail lines** (R4.2; F37). Row states use the capture PRD's words (its R10.3); a set-aside cause
+is named in the capture PRD's R8.2 words — light leak, temperature, measurement drift, samples
+disagreed, skipped mid-set, flagged as missing or damaged, flagged after capture, unreadable — which
+that PRD's copy file does not yet carry as strings.
+
+| Line | Label | What follows it |
+|---|---|---|
+| R4.2a Identity | Swatch | Code, name, alt. code, alt. name, collection, then each imported column under its stored name |
+| R4.2b State | State | The row state; for a set-aside swatch, its cause and then set aside for good, or set aside, still to deal with |
+| R4.2c Current value | Colour | The chip, then each space's values with its light, observer, condition and version; or No current value |
+| R4.2d The current reading | Reading | Measured, then the date · instrument, model, serial and firmware · samples kept · averaged over spectral curves or colour values · spread · samples agreed, or samples disagreed, average accepted |
+| R4.2e Marks | Marks | Each mark's chip label; where a non-spectral reading's reference differs from the collection's: Worked out under a different light from this collection's, because this reading has no spectral data |
+| R4.2f History | History | The number of readings, as 1 reading or 2 readings and so on |
+| R4.2h Re-scans awaiting an answer | Waiting on you | The Data Foundation PRD's E11 |
+
+**History lines** (R5.2, R5.4). A supersession reason is shown in these words: initial — First
+reading; re-measurement — Re-measured; correction — Correction; correction-unconfirmed — Re-scan
+awaiting your answer; restore — Earlier reading used again.
+
+| Line | Label | What follows it |
+|---|---|---|
+| R5.2a Times | Measured, Recorded | The date after each |
+| R5.2b Device | Instrument | The device, with the simulated chip label where it applies |
+| R5.2c Reason | Why | The reason's words above, and Current on the current reading |
+| R5.2d Standing | Marks | The chip labels of never-true, awaiting-answer and unreadable where they apply |
+| R5.2e Value | Colour | The chip, samples kept and spread |
+| R5.4 distance | From current | ΔE2000 and the distance; or, where the two were worked out under different light, observer or condition: Not compared — measured under a different light or condition |

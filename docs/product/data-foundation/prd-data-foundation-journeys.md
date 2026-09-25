@@ -13,7 +13,7 @@ DJ1 moved to [Data Export EJ1](../export/prd-data-export-journeys.md#ej1-export-
 | A → B unresolved | Answer “The swatch has changed” | B reason re-measurement; both legitimate time points, ordered by measurement time | E11 dismissed |
 | A → B unresolved | Ask me later; end session; return to review | No expiry or inferred answer; unresolved pair remains enumerable from item and global review | E11/E26 |
 | A → B → C, both relationships unresolved | Answer B's question, then C's independently | First answer affects A's status, second B's; C stays current throughout, timestamps unchanged | E11/E26 |
-| Readable earlier reading H exists | Restore H | New reading/sequence equal to H with its own sample/decoded-value copies; six spaces freshly derived at current version under collection reference (R3.5 exceptions); H's measurement time retained, new record time; H and its sets unchanged | History shows added restore |
+| Readable earlier reading H exists | Restore H | New reading/sequence equal to H with its own sample/decoded-value copies, H's acquiring-device snapshot, agreement verdict and recorded spread (F52); six spaces freshly derived at current version under collection reference (R3.5 exceptions); H's measurement time retained, new record time; H and its sets unchanged | History shows added restore |
 | Current reading A demoted by the operator's Flag ([Capture R5.6](../capture-mode/prd-capture-mode.md#5-per-scan-failure-and-the-consecutive-failure-guard)), A readable | Inspect the item; then, in separate runs, restore A through [Collection Mode R5.5](../collection-mode/prd-collection-mode.md#5-version-history-and-corrections), or save a fresh set | No current value and no automatic promotion, A retained readable in history; restoring A creates a current reading with reason restore and A's measurement time; the fresh set is current with reason initial and no correction question (R2.9, F51) | History shows added restore or initial |
 | Item has current B | Take a QC comparison | Separate comparison record, no canonical change or supersession reason; excluded from item reading counts | QC PRD owns surface |
 
@@ -45,12 +45,12 @@ Move/re-read are disabled during active, paused or halted capture; E9/E15/E25/E2
 
 | Initial state | Action | Result oracle | State |
 | :--- | :--- | :--- | :--- |
-| Never-scanned item | Request delete | Identity/import data named; no current or historical measurement claimed; delete not default | E8 |
+| Never-scanned item | Request delete | Identity/import data and the item's collection named (F52); no current or historical measurement claimed; delete not default | E8 |
 | One reading, no history / several readings / whole collection | Request delete | Correct item/reading/history counts, never sample counts; actual undo availability shown | E8 / E14 |
 | A selection of several items, some with history ([Collection Mode R6.3](../collection-mode/prd-collection-mode.md#6-selection-and-bulk-operations)) | Request delete; cancel / export first / confirm in separate runs | Selection-scale swatch, current-reading and earlier-reading counts, never sample counts; actual undo availability shown; delete not default; cancel and export first leave every selected item unchanged; confirm removes every selected item and its readings (F50) | E33 |
 | Delete confirmation | Cancel | All content unchanged | Confirmation dismissed |
 | Delete confirmation | Export first, succeed or cancel/fail export | Delete unperformed, confirmation retained; canonical versus full-history behavior follows Export R1.3's independent P1 gate; from E33 the export opened is the whole collection holding the selection, at [Export R1.1a](../export/prd-data-export.md#row-selection-and-fields)'s collection scope (F50) | Export E1 then E8/E14/E33 |
-| P0 delete | Confirm | Deletion final, content unrecoverable from active file at reader floor | Item/collection removed |
+| P0 delete | Confirm | Deletion final, content unrecoverable from active file at reader floor and in its bytes (F52) | Item/collection removed |
 | P1 pending delete | Undo in same open-file lifetime | Original content, identities, samples, readings/history, attempts and decisions restored; OQ 20 must settle outside-reader visibility and reused identifiers before implementation | Item/collection restored |
 | P1 pending delete | Independently test quit, crash, file close and file switch; reopen | Delete stands, no surviving undo, no recoverable deleted content in active file | Item/collection absent |
 | Note / imported value contains known text | Clear each independently | Previous text unrecoverable from active file | Updated item |
@@ -65,7 +65,7 @@ No action deletes one reading out of history. Whole-file deletion remains a Find
 | Query / action | Expected result |
 | :--- | :--- |
 | Read format metadata before collection data | Stable file-format location/form, distinct from CSV export format version |
-| Query item identity, imported fields and canonical selection | Match app values; first-seen resolved column names/positions retained, additions appended after later import; after a [Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing) rename, the new name stored at the same position with the same values (F50) |
+| Query item identity, imported fields and canonical selection | Match app values; first-seen resolved column names/positions retained, additions appended after later import; after a [Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing) rename, the new name stored at the same position with the same values (F50); after a [Collection Mode R4.4](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing) code change, the same item under the new code, and each collection's column visibility (F52) |
 | Read each sample and stored mean | Decoded spectrum/colour values and conditions available without archived vendor bytes |
 | Query current/history, supersession reason, never-true, quarantine and sample archive-unavailable marks, unreadable-set marks and unresolved relationships | Match R2.3a–i and R5.5a–c/f, including A → B → C and restore time axes |
 | Query derived sets and gamut marks | Six spaces when condition exists, explicit absent mark otherwise; illuminant/observer/condition/version present, superseded sets retained |
