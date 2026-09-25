@@ -1007,6 +1007,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 
 **Clarified 2026-09-25 (approved round-3 recommendation 5, F139):** capture saves never wait on a removing edit: ADR-0003 takes as an input that a text-removing write lands once every earlier read has ended, this app's own reads (an export, All items' cold load) running in transactions no longer than BROWSE_RESPONSE_BUDGET; an outside reader's hold leaves the edit shown not yet saved; the Data Foundation PRD's R1.5 help-docs line says reading the file elsewhere during capture may delay saves; and R8.1c times a user's own write from its input.
 
+**Clarified 2026-09-25 (owner decision D38, F157):** removed text is gone from the file's bytes from the moment the write lands, unless a read begun before the write is still running — another app's, or an export this app is making (F158). The text is then wiped when that read ends, or when the file next opens. While another app's read holds it, the Data Foundation PRD's notice says so.
+
 ### F103 — All items search holds its budget at full imported width (2026-09-25)
 
 - **Authority:** owner decision D27, round-2 adjudication 2026-09-25. Question: "All items search matches imported values (your F86). At the file-wide ceiling that's up to 100,000 items × 20 columns × 200 characters searched per keystroke within 100 ms on the M1 Air — likely needing a search index in the file (which must then obey your byte-erasure rule). What width must All items search hold its budget at?" Chosen: **Full width** — "Budgets hold at the full per-collection imported width across the whole file; the storage-schema decision (ADR-0003) takes the index-or-scan choice as an input, under the byte rule. Keeps F86 as approved." Not chosen: imported values unbudgeted; no imported values in All items.
@@ -1193,6 +1195,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Decision:** As recommendation 32 states.
 - **Carried by:** R8.6, R8.10e, UJ9.4-d
 
+**Clarified 2026-09-25 (approved round-4 recommendation 12, F172):** "Handoff" in R8.6 means the system handing an activity to another device. It does not mean the user's own copy and paste, Universal Clipboard included.
+
 ### F131 — Approved round-2 recommendation 33: Help-docs transparency about backups and snapshots (2026-09-25)
 
 - **Authority:** approved round-2 recommendation 33: no change here; the help docs (DF R1.5's) are outside this PRD — note it for them.
@@ -1205,6 +1209,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Authority:** approved round-2 recommendation 34: R8.10's readbacks other than R8.10f exist only in test builds, and no build opens a listening socket or cross-process service for them.
 - **Decision:** As recommendation 34 states.
 - **Carried by:** R8.10, UJ9.4-e
+
+**Clarified 2026-09-25 (approved round-4 recommendation 2, F162):** R8.10d and R8.10e are reads made from outside the app, not in-app readbacks. So a case may make them against a Release build, and the readbacks kept to test builds are all but R8.10d–f.
 
 ### F133 — Approved round-2 recommendation 35: E19 saying a column is permanent (2026-09-25)
 
@@ -1226,11 +1232,15 @@ Fences F135–F150 were decided by the owner on 2026-09-25 over the findings rev
 - **Decision:** As the chosen option states; it refines F29 and F104.
 - **Carried by:** R4.7, E8, UJ6.4-m, UJ6.4-o
 
+**Clarified 2026-09-25 (approved round-4 recommendation 3, F163):** a write the app makes on its own never ends the history either, for example the Data Foundation PRD's damage mark saved when the file is read. Only the user's own writes do.
+
 ### F136 — Bulk undos are refused while any session is in flight (2026-09-25)
 
 - **Authority:** owner decision D29, round-3 adjudication 2026-09-25. Question: "Your F100 refuses bulk writes while any session runs, but two big writes slip through: the delete 'Undo' (E10) of a selection/collection delete (up to 10 s), and 'Undo change' of a bulk set/clear. Refuse them too?" Chosen: **Refuse both** — "While any capture session is in flight, E10's 'Undo' of a multi-item delete and 'Undo change' of a bulk set or clear are refused with E6's 'elsewhere' variant, like the bulk writes themselves. Mirrored in Capture." Not chosen: refusing only the delete undo.
 - **Decision:** As the chosen option states; it extends F100.
 - **Carried by:** R8.3, E6, UJ1.3-g, UJ4.4-j, UJ6.3-g, UJ6.4-p, the capture PRD F73
+
+**Clarified 2026-09-25 (approved round-4 recommendation 1, F161):** "a multi-item delete" means a selection or collection delete, whatever its item count.
 
 ### F137 — A session waits, shown, while a bulk write or delete runs (2026-09-25)
 
@@ -1239,6 +1249,8 @@ Fences F135–F150 were decided by the owner on 2026-09-25 over the findings rev
 - **Carried by:** R8.1f, R8.1g, UJ9.5-g, the capture PRD R3.5, the capture PRD T7, the capture PRD F73
 
 **Clarified 2026-09-25 (owner decision D33, F152):** while such a write runs, no other write anywhere in the app starts — an import commit, the Data Foundation PRD's re-read or move, and the capture PRD's collection creation included — each shown unavailable until it lands.
+
+**Clarified 2026-09-25 (owner decision D36, F155):** the rule's home moves to the Data Foundation PRD's one-writer rule. R8.1f and the capture PRD's rows cite that rule instead of restating it.
 
 ### F138 — The Data Foundation PRD's E34 recovery copy is cause-neutral and offers choosing the file again (2026-09-25)
 
@@ -1253,6 +1265,8 @@ Fences F135–F150 were decided by the owner on 2026-09-25 over the findings rev
 - **Authority:** approved round-3 recommendation 5: capture saves never wait on a removing edit — an ADR-0003 input that a text-removing write lands once every earlier read has ended, this app's own reads (an export, All items' cold load) running in transactions no longer than BROWSE_RESPONSE_BUDGET; an outside reader's hold leaves the edit shown not yet saved, and DF R1.5's help-docs line says reading the file elsewhere during capture may delay saves; R8.1c times a user's own write from the input (+8 body words); the UJ9.5-d run PERF3-7 names.
 - **Decision:** As recommendation 5 states.
 - **Carried by:** R8.1, R8.1c, M1, UJ9.5-a, UJ9.5-d, the Data Foundation PRD R1.5, the Data Foundation PRD F54
+
+**Clarified 2026-09-25 (owner decisions D38 and D39, F157 and F158):** an outside reader's hold no longer leaves the edit shown not yet saved. The edit shows saved, and only the wipe of the text it removed waits (F157). An export reads one snapshot (F158), so "an export" leaves the ADR-0003 input's short-transaction reads.
 
 ### F140 — Approved round-3 recommendation 6: Which E6 variant renders when two apply (2026-09-25)
 
@@ -1328,11 +1342,15 @@ Fences F151–F153 were decided by the owner on 2026-09-25 over the forks the ro
 - **Decision:** As the chosen option states; it refines F138.
 - **Carried by:** the Data Foundation PRD E34, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD DJ3, the Data Foundation PRD F54
 
+**Clarified 2026-09-25 (owner decision D40, F159):** a different file chosen in that picker opens nothing, switches nothing and retries nothing. E34 stays up and the open file stays open.
+
 ### F152 — While a Collection Mode bulk write or delete runs, no other write anywhere in the app starts (2026-09-25)
 
 - **Authority:** owner decision D33, 2026-09-25. Question: "F137 stops sessions and this PRD's other writes while a bulk write/delete runs. Other writers exist: an import commit, Data Foundation's re-read/move, Capture's 'New collection'. Do they also wait?" Chosen: **Everything waits, shown** — "While a Collection Mode bulk write or delete runs, no other write anywhere in the app starts — each is shown unavailable until it lands. One-line mirrors land in Import, Data Foundation and Capture in this PR." Not chosen: only what F137 names.
 - **Decision:** As the chosen option states; it widens F137.
 - **Carried by:** R8.1f, R8.1g, UJ9.5-g, the import PRD R3.2, the import PRD F66, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD DJ3, the Data Foundation PRD F54, the capture PRD R1.1, the capture PRD T7, the capture PRD F73
+
+**Clarified 2026-09-25 (owner decisions D36 and D37, F155 and F156):** the rule becomes one Data Foundation rule. It also holds while an import commit or a file move runs, and closing, switching files and quitting wait for the write to land. Every sibling cites that rule instead of restating it.
 
 ### F153 — E34 says OK leaves the change unsaved (2026-09-25)
 
@@ -1346,6 +1364,131 @@ Fences F151–F153 were decided by the owner on 2026-09-25 over the forks the ro
 - **Decision:** As the chosen option states: the Data Foundation PRD's budget is 8,200, recorded there as its F55; this PRD's own 12,000-word budget is unchanged.
 - **Why:** it sets a sibling document's budget, which carries no ID here.
 - **Carried by:** governs no rows
+
+**Clarified 2026-09-25 (owner decision D41, F160):** raised to 8,300.
+
+Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 review's findings; each answers one question, quoted with its chosen option. F161–F172 record the owner's approval of round-4 recommendations 1–12. Recommendation 13's two declines are in Rejected findings.
+
+### F155 — The one-writer rule is one Data Foundation rule (2026-09-25)
+
+- **Authority:** owner decision D36, round-4 adjudication 2026-09-25. Question: "Your F152 says nothing else writes while a bulk write runs, but that rule is copied row by row into each PRD and misses writers: Capture's settings (\"editable at any time\"), \"Add a swatch\", ending an interrupted session, and a session starting while an import commits. How should it be fixed?" Chosen: **One Data Foundation rule** — "Data Foundation states it once: while a Collection Mode bulk write or delete, an import commit or a file move runs, no session starts or resumes and no other write to the file starts, each shown unavailable. Collection Mode, Import and Capture cite that rule instead of restating it. Where regeneration fits is added to Data Foundation's OQ 17." Not chosen: patching each PRD's copy of the rule.
+- **Decision:** As the chosen option states. It widens F137 and F152: an import commit and a file move now also hold every other write to the file, and a session's start or resume. It moves their home to the Data Foundation PRD.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F156 — Closing, switching files or quitting waits for a long write (2026-09-25)
+
+- **Authority:** owner decision D37, round-4 adjudication 2026-09-25. Question: "While one of those long writes runs (a Collection Mode write lasts at most 10 s), what happens if the user closes the file, switches files or quits?" Chosen: **Wait, shown** — "Closing, switching or quitting waits for the write to finish, with its progress showing, then goes ahead. Nothing is lost and a confirmed delete stays confirmed." Not chosen: making them unavailable until the write is done; stopping the write and undoing it.
+- **Decision:** As the chosen option states; it is part of F155's rule.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F157 — An edit shows saved; a wipe an outside read holds up waits, said (2026-09-25)
+
+- **Authority:** owner decision D38, round-4 adjudication 2026-09-25. Question: "Another app reading your file (a SQL browser or a script) can stop SpectroCapture from wiping an edit's old text out of the file's bytes. Capture saves never wait, so the edit itself is saved. Only the wipe waits. F139 said \"shown not yet saved\", but nothing carries that, and quitting is undecided. What should the user see?" Chosen: **Saved, wipe pending** — "The change shows saved. A Data Foundation notice says the removed text stays in the file until the other app stops reading it, and the app then wipes it on its own, or when the file next opens. Closing and quitting never wait, and no other write waits. This amends F139 and narrows F102 to 'once nothing else is reading'." Not chosen: showing "not yet saved" as F139 said, with closing and quitting waiting for it.
+- **Decision:** As the chosen option states. It amends F139 and narrows F102.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F158 — An export is one snapshot (2026-09-25)
+
+- **Authority:** owner decision D39, round-4 adjudication 2026-09-25. Question: "Should an export be one snapshot? Right now the design has exports read the file in short slices so an edit's wipe isn't held up. The Export PRD never agreed to that." Chosen: **One snapshot** — "An export is the file exactly as it stood when you started it. An edit made while it runs saves at once, and its removed text is wiped when the export finishes. A matching line lands in the Export PRD." Not chosen: reading in short slices, each item whole.
+- **Decision:** As the chosen option states. It amends F139's ADR-0003 input, which drops "an export".
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F159 — Choosing another file in E34's picker changes nothing (2026-09-25)
+
+- **Authority:** owner decision D40, round-4 adjudication 2026-09-25. Question: "Data Foundation E34's \"Choose the file again\" opens a file picker. If the user picks a different file there (say a copy), what happens?" Chosen: **Nothing changes** — "Only the same file restores access. Picking another file opens nothing, switches nothing and retries nothing. E34 stays up and the current file stays open, so the delete undo and \"Undo change\" survive." Not chosen: switching to it and dropping the unsaved change.
+- **Decision:** As the chosen option states. It refines F151, whose "restores access only" the Data Foundation compaction dropped from that PRD's R7.3j; the fix pass restores it.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F160 — The Data Foundation PRD's word budget is 8,300 (2026-09-25)
+
+- **Authority:** owner decision D41, round-4 adjudication 2026-09-25. Question: "These decisions add about 100 words to the Data Foundation body, which has 36 left under the 8,200 you set (D35). The last trim deleted a rule by accident. Which way?" Chosen: **Raise DF to 8,300** — "Record a second budget override as a dated fence. No further trimming, so no risk of changing meaning." Not chosen: keeping 8,200 and trimming again.
+- **Decision:** As the chosen option states: the Data Foundation PRD's budget is 8,300, recorded there by a dated line under its F55. This PRD's own 12,000-word budget is unchanged. The agent-PRD format's rule that a budget is never raised is overridden for that PRD, on the record, by the owner.
+- **Why:** it sets a sibling document's budget, which carries no ID here.
+- **Carried by:** governs no rows
+
+### F161 — Approved round-4 recommendation 1: Which delete's undo R8.3 refuses in flight (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 1: R8.3's "E10's 'Undo' of a multi-item delete" becomes "of a selection or collection delete", as F136's question put it. So the undo of a delete of a one-item or empty collection is refused too. The capture PRD's obligations line follows it, and a case undoes a one-item collection's delete while a session is in flight, asserting E6's "elsewhere" variant.
+- **Decision:** As recommendation 1 states; it clarifies F136.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F162 — Approved round-4 recommendation 2: R8.10d and R8.10e are outside reads (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 2: the readbacks R8.10 keeps to test builds are all but R8.10d–f. R8.10d and R8.10e are reads made from outside the app, which UJ9.4-b and UJ9.4-d may make against a Release build.
+- **Decision:** As recommendation 2 states; it clarifies F132.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F163 — Approved round-4 recommendation 3: A write the app makes by itself never ends "Undo change" (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 3: in R4.7, a write the app makes on its own never ends the undo history. An example is the Data Foundation PRD's damage mark, saved when the file is read. Only the user's own writes end it, as E8 says.
+- **Decision:** As recommendation 3 states; it clarifies F135.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F164 — Approved round-4 recommendation 4: Two test-build inputs (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 4: R8.10a gains two test-build inputs:
+  - a bulk write or delete held running until released;
+  - a read held open on the file from outside the app.
+
+  UJ9.5-g's hold checks, and the sibling cases whose Givens declare R8.1f's hold, use the first. The F157 case uses the second.
+- **Decision:** As recommendation 4 states.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F165 — Approved round-4 recommendation 5: The Data Foundation PRD's R3.4 and R6.2a wording (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 5:
+  - The Data Foundation PRD's R3.4 names "the adaptation its sRGB derivation uses", restoring what the compaction lost.
+  - Its R6.2a leaves R5.8's recovery copies aside from the files the app keeps beside the file.
+- **Decision:** As recommendation 5 states; the Data Foundation PRD records it under its F54 with a dated line.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F166 — Approved round-4 recommendation 6: The seam lines match (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 6:
+  - This PRD's Outbound Data Foundation row takes the Data Foundation PRD's compact form: E34's actions by its R7.3j, and the ADR inputs by the fences that list them.
+  - The Data Foundation PRD's inbound Collection Mode line mends its "R2.9's Flag removal" phrase.
+  - This PRD's Outbound Inventory Import row names F149's refusal of a commit while any session is in flight.
+- **Decision:** As recommendation 6 states.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F167 — Approved round-4 recommendation 7: Where E10 and E6 render (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 7: E10's index row and Surfaces entry add the collection list; E6's add the collection list and the All items view.
+- **Decision:** As recommendation 7 states.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F168 — Approved round-4 recommendation 8: Returning to E9 whose item is gone (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 8: in R4.1, closing a result's detail returns to E9, worked out again, only while E9's own item remains; otherwise the table shows. A case removes E9's item by reading the file again, then closes the result's detail.
+- **Decision:** As recommendation 8 states; it clarifies F144.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F169 — Approved round-4 recommendation 9: The import PRD's E40 another-collection variant (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 9: the import PRD's E40 another-collection variant drops "waits" and reads: "A session in ⟨collection⟩ is active, paused or halted. Until it ends, imports aren't available in any collection, so the session's saves aren't held up." Its shared append asks the user to start the import again. E40 moves to that PRD's ready-for-alignment status, under a dated Import fence.
+- **Decision:** As recommendation 9 states.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F170 — Approved round-4 recommendation 10: Copy wording (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 10:
+  - E8's closing clause reads "— including importing, or hiding or showing a column; scanning doesn't count."
+  - The Data Foundation PRD's E15 and E34 read "as it was before that".
+  - E6's "full" condition names "Use this reading" among the actions it names.
+- **Decision:** As recommendation 10 states.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F171 — Approved round-4 recommendation 11: ADR-0003's search input (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 11: the ADR-0003 search input adds R8.1c's budget to the budgets it names, and names the Mac its evidence was measured on (an M5 Max).
+- **Decision:** As recommendation 11 states.
+- **Carried by:** _(filled by the round-4 fix pass)_
+
+### F172 — Approved round-4 recommendation 12: What "Handoff" means in R8.6 (2026-09-25)
+
+- **Authority:** approved round-4 recommendation 12: "Handoff" in R8.6 means the system handing an activity to another device. It does not mean the user's own copy and paste, Universal Clipboard included.
+- **Decision:** As recommendation 12 states; it clarifies F130.
+- **Carried by:** _(filled by the round-4 fix pass)_
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1512,6 +1655,24 @@ than deciding a WHAT.
 - **F152** — R8.1f, R8.1g, UJ9.5-g, the import PRD R3.2, the import PRD F66, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD DJ3, the Data Foundation PRD F54, the capture PRD R1.1, the capture PRD T7, the capture PRD F73
 - **F153** — the Data Foundation PRD E34, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
 - **F154** — governs no rows
+- **F155** — _(filled by the round-4 fix pass)_
+- **F156** — _(filled by the round-4 fix pass)_
+- **F157** — _(filled by the round-4 fix pass)_
+- **F158** — _(filled by the round-4 fix pass)_
+- **F159** — _(filled by the round-4 fix pass)_
+- **F160** — governs no rows
+- **F161** — _(filled by the round-4 fix pass)_
+- **F162** — _(filled by the round-4 fix pass)_
+- **F163** — _(filled by the round-4 fix pass)_
+- **F164** — _(filled by the round-4 fix pass)_
+- **F165** — _(filled by the round-4 fix pass)_
+- **F166** — _(filled by the round-4 fix pass)_
+- **F167** — _(filled by the round-4 fix pass)_
+- **F168** — _(filled by the round-4 fix pass)_
+- **F169** — _(filled by the round-4 fix pass)_
+- **F170** — _(filled by the round-4 fix pass)_
+- **F171** — _(filled by the round-4 fix pass)_
+- **F172** — _(filled by the round-4 fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
@@ -1522,3 +1683,5 @@ than deciding a WHAT.
 | Finding | Raised by | Disposition | Authority |
 |---|---|---|---|
 | Round 1 Finding-2 (Blocker): "Set a field" could set Swatch Code on a selection and create duplicate codes (R6.2) | peer-staff-software-engineer-reviewer, cross-model on agy | Not reproduced: the Vocabulary's editable field excludes Swatch Code, which only R4.4 changes (F7); not fixed | The review log's Round 1 disposition row 5 |
+| Round 4 N4-n2 (Nit): a trailing clause on E6 for when an interrupted session is also held | peer-product-marketing-manager-reviewer | Declined: the case is rare, and E6 stays short; not fixed | Approved round-4 recommendation 13 |
+| Round 4 PERF4-7 (Nit): hold other writes only while the bulk write's progress shows | peer-performance-reviewer | Declined: it would let a session start in a bulk write's first BROWSE_RESPONSE_BUDGET, the contention F137 stops; not fixed | Approved round-4 recommendation 13 |
