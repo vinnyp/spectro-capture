@@ -233,6 +233,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F47 | R3.3a, R5.4/R5.5f, R7.6g/h, R7.7i, §8, DJ3; retired E32/R7.3l. |
 | F48 | E14 and copy Variants; R6.1/R6.2. |
 | F49 | post-lock Data Foundation list; future M10, no metric row yet. |
+| F50 | R1.2, R6.2, R7.6o, E33; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the copy header and Variants note; DJ4, DJ5. |
 
 ## Rejected findings
 
@@ -424,3 +425,19 @@ Source: [the owner’s three round-2 decisions](https://github.com/vinnyp/spectr
 **Clarified 2026-09-18 ([round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5736942308)):** D11 / Capture F66 corrects summary tallies to collection state at completion/End; only elapsed time and the derived rate use the chain basis, with the numeric basis discriminator in Capture R11.11, not a copy variant. Both obligation cells now name F52/F56 and F53/F57/F66 plus the R11.6/R11.11 test contract; Capture R3.1 durably records the guard counter for reopen readback, while a successor starts at zero and never inherits that counter. Schema remains ADR-0003 and readback remains Capture R11.11.
 
 **Clarified 2026-09-18 ([round-3 owner decision](https://github.com/vinnyp/spectro-capture/pull/20#issuecomment-5738693056)):** D14 / Capture F69 makes the summary rate readback use only the rows captured by that chain over its cumulative elapsed capture time; displayed collection-state tallies are not the numerator. Both Capture/DF obligation cells mirror this distinction under Capture R11.11; schema remains ADR-0003.
+
+## Collection Mode seam amendment (2026-09-24)
+
+Source: the owner's decisions D7 and D9 in the Collection Mode PRD's post-fill adjudication of 2026-09-24, recorded there as [its F7 and F9](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation halves of those two seams; peer review pending.
+
+### F50 — A selection-scale delete confirmation, and a renamed column's stored name (2026-09-24)
+
+**Authority:** [the Collection Mode PRD's F7 and F9](../collection-mode/prd-collection-mode-fences.md) — owner decisions D7 and D9, post-fill adjudication 2026-09-24.
+
+**Decision:** (1) Under the Collection Mode PRD's F7, this PRD gains E33, a selection-scale delete confirmation beside E8 and E14 that Collection Mode's Delete selected opens: it states the selected swatch count and their current and earlier readings, offers export first and cancel as E8 does, and never makes delete the default; R6.2 names it and R7.6o tests it. (2) Under the Collection Mode PRD's F9, a Collection Mode rename changes an imported column's stored name, keeping its position and values, and a later import matches the stored name; R1.2 says so, its first-seen names now meaning first-seen until renamed. Nothing else in deletion, the undo window or the import rules changes, and R1.2 and R6.2 keep their alignment.
+
+**Not decided:** which scope E33's Export first opens — the collection holding the selection, or the selection itself, which the export PRD's R1.1a does not offer — is neither Collection Mode's F7 nor this fence's, and goes back to the owner.
+
+**Why:** Collection Mode's F7 makes its Delete selected buildable only if a selection-scale confirmation exists here, and its F9 closes the post-lock question of whether a rename moves the stored name.
+
+**Rows:** R1.2, R6.2, R7.6o, E33, the Collection Mode inbound obligation line, the copy header and Variants note, DJ4, DJ5.

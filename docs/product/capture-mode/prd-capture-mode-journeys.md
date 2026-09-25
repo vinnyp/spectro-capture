@@ -97,7 +97,7 @@ K and N are declared fixture values, not new release choices. “Sample counter�
 
 ### UJ 3.3 Resolve the deferred-error queue at session end
 
-Captured-row correction is P1; deferred-row acquisition is P0, including a one-row session started from look-through (R8.1a/R8.3). R8.1d forbids scanning while held by guard/device. The matrix remains the single transition authority, with scenarios testing its cells rather than supplying exceptions.
+Captured-row correction is P1; deferred-row acquisition is P0, including a one-row session started from look-through (R8.1a/R8.3). R8.1d forbids scanning while held by guard/device. The matrix remains the single transition authority, with scenarios testing its cells rather than supplying exceptions. UJ3.3-h and UJ3.3-i assert R8.18, whose unsettled standing, guard exclusion and restore-to-captured clauses are drafted readings awaiting the owner (F70).
 
 | Case | Given | When | Assert | Rows |
 | :--- | :--- | :--- | :--- | :--- |
@@ -108,6 +108,8 @@ Captured-row correction is P1; deferred-row acquisition is P0, including a one-r
 | UJ3.3-e | Mixed settled/unsettled rows; one partial current row | Choose Go back, then reopen E39 and confirm Leave them all set aside | Go back retains state; confirm settles only outstanding rows, common note; discards partial set only if current row is among them with cue/E42; no touching already-settled decisions | R8.15/R7.16/R7.17 |
 | UJ3.3-f | No pending rows; final unsettled row; live bulk / interrupted bulk / ended session variants | Capture or deliberately settle last outstanding row | Live completes; interrupted closes complete without gate/Resume; ended session stays ended; appropriate summary still leaves collection entry points reachable | R8.6/R7.11/R7.19/R8.1 |
 | UJ3.3-g | End-of-run vs detour review; unresolved rows remain | Leave list | End-of-run ends early with unresolved rows retained; detour returns to held queue row at sample 0 and continues session | R8.6/R8.1f–k |
+| UJ3.3-h | Collection with no pending row, every row captured except one captured row whose current reading is declared quarantined (DF R7.2); no session | Open the collection; read R11.11 and the tallies; start capture and take a fresh full set on that row | R11.11 reads the row set aside, unsettled, cause unreadable, its quarantined reading kept; the tallies count it deferred; the review offer is present; the start runs the gate and opens the set-aside list listing it with cause unreadable; the saved set makes it captured with reason initial and no correction question | R8.18/R8.2/R3.9/R8.16/R11.11; DF R2.3a/R5.5b |
+| UJ3.3-i | The same declared row, with a readable earlier reading; no session | Restore that earlier reading through DF E4's Use a previous reading | R11.11 reads the row captured, the quarantined reading kept; the tallies count it captured | R8.18; DF R2.3f/R7.3k |
 
 ### UJ 3.4 Pause and end a session early
 
@@ -203,7 +205,7 @@ Run 1–8 in order, resetting fixtures as declared; run 9 per phase. All use the
 | UJ4-c | New pending row; no session / interrupted bulk | Scan through passing gate | One-row session binds device, then ends on capture/defer/abandon; remembered bulk row unchanged; interrupted bulk not resumed | R3.11/R3.13/R9.4/R9.7 |
 | UJ4-d | Same collection bulk operator-paused; P1 | Capture ad-hoc row | Use existing session/device, lift pause for this row without new start gate; afterwards held queue row returns still paused; tallies include new row | R9.6 |
 | UJ4-e | Other collection active, paused or halted | Attempt scan | E3; no second active session | R3.5/R9.5 |
-| UJ4-f | One-row ad-hoc run with failures | Exhaust K / Skip; separately complete row then try flag-after-landing | Failure/Skip defers with retained evidence and closes one-row session; no F16 window after one-row capture, correction via collection | R9.8/R9.9/R3.13 |
+| UJ4-f | One-row ad-hoc run with failures | Exhaust K / Skip; separately complete row then try flag-after-landing | Failure/Skip defers with retained evidence and closes one-row session; no F16 window after one-row capture, correction via collection — a re-scan, or Collection Mode R4.9's Flag, which sets the row aside with cause flagged after capture and its reading in history as R5.6 does | R9.8/R9.9/R3.13; Collection Mode R4.9 |
 | UJ4-g | P1; two pending ad-hoc rows; first readiness fully passing with no advisory; R11.6 device input becomes blocking before second start | Complete first one-row session; attempt second after the readiness change | First gate checks run with presentation suppressed; second reruns checks and presents block; no second session starts, no measurement requested, queue unchanged from immediately before second start | R3.10/R9.4/R11.6; Device §4 |
 
 ### UJ 4.1 Insert an unplanned item mid-session

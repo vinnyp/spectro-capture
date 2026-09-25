@@ -63,7 +63,7 @@ builder reading a case table needs no other source to know which of the two appl
 | Studio Markers item ZX-007 | Chalk White; Family White; captured; one live spectral reading of 1 sample; L* 95, C* 2.5, h° 90; inside sRGB | R8.10 |
 | Studio Markers item ZX-010 | Warm Grey 1; Family Grey; pending; never scanned | R8.10 |
 | Studio Markers item ZX-011 | Lemon; Family Yellow; set aside, unsettled, cause light leak; no reading | R8.10 |
-| Studio Markers item ZX-012 | Ochre; Family Yellow; row state captured as recorded; its current reading quarantined; one readable earlier reading measured 2026-02-01 | R8.10 |
+| Studio Markers item ZX-012 | Ochre; Family Yellow; set aside, unsettled, cause unreadable; its current reading quarantined; one readable earlier reading measured 2026-02-01 | R2.4h, R8.10 |
 | Studio Markers item ZX-013 | Teal; Family Green; captured; three live spectral readings recorded in this order: T1, reason initial, measured 2026-01-10; T2, reason re-measurement, measured 2026-03-02; T3, reason correction-unconfirmed, measured 2026-05-20, current; current value L* 60, C* 40, h° 190; inside sRGB | R8.10 |
 | Studio Markers item ZX-014 | Plum; Family Purple; captured; two live spectral readings: P1, reason initial, measured 2026-01-12, marked never true; P2, reason correction, measured 2026-04-04, current; L* 35, C* 45, h° 320; inside sRGB | R8.10 |
 | Studio Markers item ZX-015 | Brick; Family Red; captured; two spectral readings: B1, reason initial, measured 2026-02-10, from the Demo Device, of the simulated kind; B2, reason re-measurement, measured 2026-06-15, live, current; L* 45, C* 50, h° 35; inside sRGB | R8.10 |
@@ -72,6 +72,7 @@ builder reading a case table needs no other source to know which of the two appl
 | Gouache Set item GS-002 | Cadmium Red; captured; one live spectral reading; L* 50, C* 70, h° 35; inside sRGB | R8.10 |
 | Display | One display, reporting the sRGB gamut, showing the window | R2.5, R8.10 |
 | Sessions | No session on any collection | R8.3, R8.10 |
+| App preferences | None set: every table column is shown | R2.10, R8.10 |
 | Build phase | The first build phase — P0 rows only — unless a journey's preamble or a case's Given names a later one | R8.10 |
 | Named constants | Each at the candidate the PRD's constants table gives | R3.3, R3.7, R6.2, R7.1 |
 | Clock | 2026-09-01T10:00:00Z, advanced only by a case step that says so | R8.10 |
@@ -92,12 +93,13 @@ builder reading a case table needs no other source to know which of the two appl
 | T5 | Gouache Set present | Fire "Rename collection" on Gouache Set and enter Gouache Travel Set | Gouache Travel Set is present with its 2 items, and the file names it Gouache Travel Set | R1.3 |
 | T6 | Studio Markers item ZX-001 present | In ZX-001's detail set Swatch Name to Sky Blue Light and press Return | ZX-001 is present, the file holds Swatch Name Sky Blue Light for it, and it holds 1 reading | R4.3 |
 | T7 | Studio Markers item ZX-001 present; R4.4 built | Fire "Change code" on ZX-001, enter ZX-100, then fire "Change the code" | The item is present as ZX-100 with its 1 reading, and Studio Markers holds no item ZX-001 | R4.4 |
-| T8 | Studio Markers' Family column present; R4.8 built, OQ 8 closed | Fire "Rename column" on Family and enter Hue Family | The file stores the column as Hue Family in the position Family had, with ZX-001's value Blue | R4.8 |
+| T8 | Studio Markers' Family column present; R4.8 built | Fire "Rename column" on Family and enter Hue Family | The file stores the column as Hue Family in the position Family had, with ZX-001's value Blue | R4.8 |
 | T9 | Studio Markers items ZX-001 and ZX-002 present; R6.1 and R6.2 built | Select both, fire "Set a field", choose Family and enter Brights | Both are present with Family Brights in the file, and ZX-003's Family reads Pink | R6.2 |
 | T10 | ZX-001 and ZX-002 holding Family Brights after the bulk change T9's When makes; R4.7 built | Fire "Undo" | The file holds Family Blue for ZX-001 and Family Green for ZX-002 | R4.7 |
 | T11 | Studio Markers item ZX-013 present; R5.5 built | Fire "Show history" in ZX-013's detail, then "Use this reading" on T1 | ZX-013 is present with 4 readings: a new current one whose reason is restore and whose measurement time is 2026-01-10, then T3, T2 and T1 | R5.5 |
 | T12 | Studio Markers item ZX-013 present, T2 unsettled | In ZX-013's detail fire the Data Foundation PRD's E11 swatch-has-changed action | ZX-013 is present, T3's reason reads re-measurement, T2 carries no unsettled mark, E11 is not up, and E2 no longer offers "Answer re-scans" | R4.6, R5.7 |
 | T13 | Studio Markers item ZX-010 present and pending; R2.9 built; table in queue order | Drag ZX-010 above ZX-001 | ZX-010 is present, and the queue order the capture PRD's R11.11 reads begins ZX-010, ZX-001, ZX-002 | R2.9 |
+| T14 | Studio Markers item ZX-001 present and captured; R4.9 built | In ZX-001's detail fire the capture PRD's Flag action | ZX-001 is present with its 1 reading, which is no longer current, and the capture PRD's R11.11 reads its row state set aside | R4.9 |
 
 ## Journeys
 <!-- guidance: one `### UJ n. <name>` section per journey, in the PRD's order. Under each heading:
@@ -154,7 +156,8 @@ in the first build phase, each case from the harness state.
 ### UJ 2. Browse a collection honestly
 
 Scenario 1 runs in the first build phase, each case from the harness state; UJ2.1-h carries the
-collection half of the device PRD's UJ1.2-c.
+collection half of the device PRD's UJ1.2-c. Scenario 2 runs in the phase that lands R2.10, each case
+from the harness state.
 
 | Case | Given | When | Assert | Rows |
 |---|---|---|---|---|
@@ -167,8 +170,10 @@ collection half of the device PRD's UJ1.2-c.
 | UJ2.1-g | The seeded file | Choose Studio Markers and fire E22's action | The table lists only ZX-005, the simulated filter shows as active, and E3 renders its "narrowed" variant stating 1 of 13 | R2.6, R3.4 |
 | UJ2.1-h | The seeded file, with ZX-005's current reading's snapshot of the live kind | Choose Studio Markers, open ZX-015 and fire "Show history" | E22 is not up; ZX-015's chip carries no simulated mark; E17 lists B2 without the simulated mark and B1 with it | R2.6, R5.2 |
 | UJ2.1-i | The seeded file | Choose Studio Markers and read the Spread column | ZX-001 shows 0.4, ZX-005 shows 3.1, and ZX-007 shows none | R2.7 |
-| UJ2.1-j | The seeded file; Studio Markers shows the capture PRD's E24 session summary | Choose Studio Markers and list the collection surface | The table lists the 13 items; E24 is up; the entry points the capture PRD's R11.15g lists are listed beside it; the counts read 11 scanned, 1 set aside and 1 to go | R2.2 |
+| UJ2.1-j | The seeded file; Studio Markers shows the capture PRD's E24 session summary | Choose Studio Markers and list the collection surface | The table lists the 13 items; E24 is up; the entry points the capture PRD's R11.15g lists are listed beside it; the counts read 10 scanned, 2 set aside and 1 to go | R2.2 |
 | UJ2.1-k | The seeded file | Choose Studio Markers and fire "Colour marks" | E12 renders naming eleven marks: the nine R2.4 lists and never-true and unsettled | R2.8 |
+| UJ2.2-a | The seeded file; R2.10 built | Choose Studio Markers and list the columns the user can hide | Swatch Name, row state, L*, C*, h°, Spread, Swatch Alternate Code, Swatch Alternate Name and Family, and neither the chip nor Swatch Code | R2.10 |
+| UJ2.2-b | The seeded file; R2.10 built | In Studio Markers hide Family and Spread; quit the app, relaunch it and choose Studio Markers; then quit it and read the file | After relaunch the columns are the chip, Swatch Code, Swatch Name, row state, L*, C*, h°, Swatch Alternate Code and Swatch Alternate Name; the file holds no record of the hidden columns and still holds the Family column with ZX-001's value Blue | R2.10 |
 
 ### UJ 3. Find a swatch
 
@@ -184,7 +189,7 @@ CIEDE2000 test values OQ 11 names.
 | UJ3.1-d | The seeded file; Studio Markers chosen | Type 12 | E4 renders naming 12, and the table lists no item | R3.1, R3.5 |
 | UJ3.1-e | The seeded file; Studio Markers chosen | Type a space, SKY in upper case, three spaces, blue, and a space | The table lists only ZX-001 | R3.1 |
 | UJ3.1-f | The seeded file; Studio Markers chosen | Type qqq, then fire "Clear search" | E4 renders offering only "Clear search"; after it, E3 renders with no variant and the table lists 13 items | R3.5 |
-| UJ3.2-a | The seeded file; Studio Markers chosen | Choose the row-state filter value set aside | The table lists only ZX-011 | R3.4 |
+| UJ3.2-a | The seeded file; Studio Markers chosen | Choose the row-state filter value set aside | The table lists ZX-011 and ZX-012 | R3.4 |
 | UJ3.2-b | The seeded file; Studio Markers chosen | Choose the mark filter values outside-sRGB and simulated | The table lists ZX-002, ZX-003, ZX-005 | R3.4 |
 | UJ3.2-c | The seeded file; Studio Markers chosen | Choose the row-state value pending and the mark value outside-sRGB, then fire "Clear filters" | E5 renders stating 13 swatches hidden; after it, the table lists 13 items | R3.4, R3.5 |
 | UJ3.2-d | The seeded file; Studio Markers chosen | Type qqq, choose the mark value simulated, then fire "Clear filters" | E5 renders; after "Clear filters" the search field holds qqq and E4 renders | R3.4, R3.5 |
@@ -203,14 +208,16 @@ CIEDE2000 test values OQ 11 names.
 
 Scenarios 1, 2, 4 and 5 run in the first build phase; scenario 2 runs under continuity, each of its
 cases against the state the previous one left, and the others each case from the harness state
-or its own Given. Scenario 3 runs in the phase that lands R4.4, and scenario 6 in the phase that
-lands R4.8 once OQ 8 closes, each case from the harness state.
+or its own Given. Scenario 3 runs in the phase that lands R4.4, scenario 6 in the phase that lands
+R4.8 and scenario 7 in the phase that lands R4.9, each case from the harness state or its own Given,
+except that UJ4.6-e and UJ4.6-f each run against the state UJ4.6-a's When leaves and UJ4.7-d runs
+against the state UJ4.7-a left.
 
 | Case | Given | When | Assert | Rows |
 |---|---|---|---|---|
 | UJ4.1-a | The seeded file | Open Studio Markers' ZX-001 | E14 renders; its lines read Swatch Code ZX-001, Swatch Name Sky Blue, alternate code B-12, alternate name Azure, collection Studio Markers, Family Blue, row state captured, six spaces each stamped D50, 2°, M1 and a derivation version, measured 2026-02-03, device live Spectro 2 SN-100200 firmware 2.1.0, 3 samples, basis spectral curves, spread 0.4, verdict agreed, no mark, 1 reading | R4.1, R4.2 |
 | UJ4.1-b | The seeded file; Studio Markers searched zx-01, view-sorted by Swatch Name, ZX-013 selected, its row the first on screen | Open ZX-013, then close it | The table lists ZX-015, ZX-011, ZX-012, ZX-014, ZX-013, ZX-010, ZX-013 is selected, and ZX-013's row is the first on screen | R4.1 |
-| UJ4.1-c | The seeded file | Open ZX-012 | E14 shows the Data Foundation PRD's E4 in its current variant, states that ZX-012 has no current value, and shows the unreadable mark | R4.2 |
+| UJ4.1-c | The seeded file | Open ZX-012 | E14 shows the Data Foundation PRD's E4 in its current variant, states that ZX-012 has no current value, shows the unreadable mark, and its State line reads set aside, cause unreadable, not settled | R4.2 |
 | UJ4.1-d | The seeded file plus Studio Markers item ZX-016, Moss: captured, its current reading readable, one earlier reading quarantined | Open ZX-016 | E14 shows the Data Foundation PRD's E4 in its history variant, and ZX-016's current value | R4.2 |
 | UJ4.1-e | The seeded file plus Studio Markers item ZX-017, Sand: captured, one sample's archived payload unavailable, its values intact | Open ZX-017 | E14 shows the Data Foundation PRD's E31 and ZX-017's current value | R4.2 |
 | UJ4.1-f | The seeded file | Open ZX-013 | E14 shows the Data Foundation PRD's E11 naming ZX-013 and 2026-05-20 | R4.2 |
@@ -230,12 +237,17 @@ lands R4.8 once OQ 8 closes, each case from the harness state.
 | UJ4.4-e | The seeded file; R1.7 built | Open ZX-010, fire "Delete swatch", E8's delete action, then "Undo" on E10 | E10 renders with no variant naming ZX-010; after Undo the table lists ZX-010, pending, at queue position 8 | R1.7 |
 | UJ4.5-a | The seeded file | Open ZX-001 and fire "Export swatch" | The Data Export PRD's E1 renders at single-item scope naming ZX-001 | R1.8 |
 | UJ4.5-b | The seeded file; the capture PRD's re-scan rows built | Open ZX-001 and fire the capture PRD's re-scan entry | The capture PRD's E28 renders naming ZX-001 | R4.6 |
-| UJ4.5-c | The seeded file | Open ZX-012 and fire the Data Foundation PRD's E4 use-a-previous-reading action | ZX-012's chip shows a colour and no unreadable mark, and its history lists 3 readings, the newest current with reason restore and measurement time 2026-02-01 | R4.6 |
+| UJ4.5-c | The seeded file | Open ZX-012 and fire the Data Foundation PRD's E4 use-a-previous-reading action | ZX-012's chip shows a colour and no unreadable mark, its history lists 3 readings, the newest current with reason restore and measurement time 2026-02-01, and the capture PRD's R11.11 reads its row state captured | R4.6 |
 | UJ4.6-a | The seeded file; R4.8 built | Fire "Rename column" on Family and enter Hue Family | The table's header reads Hue Family, and the file stores the column as Hue Family in the position Family had, with ZX-001's value Blue | R4.8 |
 | UJ4.6-b | The seeded file; R4.8 built | Fire "Rename column" on Family and enter two spaces | E11 renders with no variant naming Family, and the file stores the column as Family | R4.8 |
 | UJ4.6-c | The seeded file; R4.8 built | Fire "Rename column" on Family and enter swatch  NAME, with two spaces between the words | E11 renders its "duplicate" variant, and the file stores the column as Family | R4.8 |
 | UJ4.6-d | The seeded file plus a second Studio Markers imported column named Maker; R4.8 built | Fire "Rename column" on Family and enter MAKER | E11 renders its "duplicate" variant, and the file stores the column as Family | R4.8 |
 | UJ4.6-e | The state UJ4.6-a's When leaves; R4.8 built | Import into Studio Markers a CSV whose code column holds ZX-001 and whose column named Hue Family holds Teal Blue, keeping the new details | The file holds Hue Family Teal Blue for ZX-001, and Studio Markers holds one column named Hue Family and none named Family | R4.8 |
+| UJ4.6-f | The state UJ4.6-a's When leaves; R4.8 built | Import into Studio Markers a CSV whose code column holds ZX-001 and whose column named Family holds Sea Blue | Studio Markers holds the column Hue Family, ZX-001's value there still Blue, and after its existing columns a new column named Family, ZX-001's value there Sea Blue | R4.8 |
+| UJ4.7-a | The seeded file; R4.9 built | Open ZX-001 and fire the capture PRD's Flag action | ZX-001's chip is empty and carries the no-value mark; E14's State line reads set aside, cause flagged after capture, not settled; its history lists 1 reading, not current; the capture PRD's R11.11 reads its row state set aside | R4.9, R4.2 |
+| UJ4.7-b | The seeded file; R4.9 built | Open ZX-010, ZX-011 and ZX-012 in turn and list each detail's actions | None of the three offers the capture PRD's Flag action | R4.9 |
+| UJ4.7-c | The seeded file; R4.9 built; a bulk session in flight on Studio Markers | Open ZX-001 and fire the capture PRD's Flag action | E6 renders with no variant, and the capture PRD's R11.11 reads ZX-001 captured with its 1 reading current | R4.9, R8.3 |
+| UJ4.7-d | The state UJ4.7-a left; R4.9 built | Open the capture PRD's set-aside list from the collection surface | It lists ZX-001 with the cause flagged after capture, beside ZX-011 and ZX-012 | R4.9 |
 
 ### UJ 5. Read a swatch's history and settle its re-scans
 
@@ -256,13 +268,13 @@ and scenario 4 in the phase that lands R5.8, each case from the harness state or
 | UJ5.3-c | The seeded file | Open ZX-013, fire "Show history", then "Use this reading" on T1 | E17 lists 4 readings: a new current one with reason restore and measurement time 2026-01-10, then T3, T2, T1; the file holds all 4 | R5.5 |
 | UJ5.3-d | The seeded file plus ZX-016 as UJ4.1-d declares it | Open ZX-016 and fire "Show history" | Its quarantined earlier reading offers no "Use this reading" | R5.5 |
 | UJ5.3-e | The seeded file plus Studio Markers item ZX-018, Rust: set aside by a flag, its one reading in history, no current value | Open ZX-018 and fire "Show history" | No reading offers "Use this reading" | R5.5 |
+| UJ5.3-f | The seeded file | Open ZX-012, fire "Show history" and list the actions each reading offers, then fire "Use this reading" on its readable earlier reading | Its quarantined reading offers no "Use this reading" and its earlier reading does; afterwards E17 lists 3 readings, the newest current with reason restore and measurement time 2026-02-01, and ZX-012 carries no unreadable mark | R5.5 |
 | UJ5.4-a | Hist as UJ5.3-a declares it | Open HX-001, fire "Show history", select H1 and H3, fire "Compare" | Two chips show side by side with their marks, and the distance reads ΔE2000 2.0425 | R5.8 |
 
 ### UJ 6. Work on many swatches at once
 
 Scenarios 1 and 2 run in the phase that lands R6.1, R6.2 and R4.7, and scenario 3 in the phase that
-lands R6.3 once OQ 9 closes, except UJ6.3-a, which runs while OQ 9 is open; every case runs from the
-harness state or its own Given.
+lands R6.3; every case runs from the harness state or its own Given.
 
 | Case | Given | When | Assert | Rows |
 |---|---|---|---|---|
@@ -276,10 +288,11 @@ harness state or its own Given.
 | UJ6.2-e | The seeded file; Studio Markers chosen | Select ZX-001 and ZX-002 and fire "Set a field" | The fields offered are Swatch Name, Swatch Alternate Code, Swatch Alternate Name and Family, and Swatch Code is not among them | R6.2 |
 | UJ6.2-f | The seeded file after the 11-item clear UJ6.2-c's When makes | Fire "Undo" | The file holds Family Blue for ZX-001, Green for ZX-002 and Yellow for ZX-012 | R4.7 |
 | UJ6.2-g | The seeded file; Studio Markers chosen; the volume holding the file declared full | Select ZX-001 and ZX-002, fire "Set a field", choose Family and enter Brights | The Data Foundation PRD's E15 renders, and the file holds Family Blue for ZX-001 and Green for ZX-002 | R8.8 |
-| UJ6.3-a | The seeded file; Studio Markers chosen; OQ 9 open | Select ZX-010 and ZX-011 | E3 does not offer "Delete selected" | R6.3 |
-| UJ6.3-b | The seeded file; Studio Markers chosen; R6.3 built | Select ZX-010 and ZX-011, fire "Delete selected", then the Data Foundation PRD's selection confirmation's delete action | That confirmation names 2 swatches; afterwards E3 states 11 swatches and the file holds neither item | R6.3 |
+| UJ6.3-a | The seeded file; Studio Markers chosen; R6.3 built | Select ZX-013 and ZX-014, fire "Delete selected", then press Return | The Data Foundation PRD's E33 renders naming 2 swatches; after Return it is not up, the table lists 13 items, and the file holds ZX-013's 3 readings and ZX-014's 2 | R6.3, R1.6 |
+| UJ6.3-b | The seeded file; Studio Markers chosen; R6.3 built | Select ZX-013 and ZX-014, fire "Delete selected", then the Data Foundation PRD's E33 delete action | That E33 names 2 swatches, 2 current readings and 3 earlier readings; afterwards E3 states 11 swatches, and the file read with the app closed holds neither item and 11 Studio Markers readings | R6.3 |
 | UJ6.3-c | The seeded file; R6.3 built; a bulk session in flight on Studio Markers | Select ZX-010 and ZX-011 and fire "Delete selected" | E6 renders with no variant, and the table lists 13 items | R6.3, R8.3 |
 | UJ6.3-d | The seeded file; R6.3 and R1.7 built | Select ZX-010 and ZX-011, fire "Delete selected" and confirm, then fire "Undo" on E10 | E10 renders its "swatches" variant stating 2; after Undo the table lists 13 items, ZX-010 and ZX-011 among them | R1.7, R6.3 |
+| UJ6.3-e | The seeded file; Studio Markers chosen; R6.3 built | Select ZX-013 and ZX-014, fire "Delete selected", then the Data Foundation PRD's E33 export-first action, then close the export | The Data Export PRD's E1 renders; after it closes that E33 is up again naming 2 swatches, and the file holds ZX-013 and ZX-014 with their 5 readings | R6.3 |
 
 ### UJ 7. Browse every collection at once
 
@@ -355,13 +368,13 @@ declared.
 | Surface | Controlled input | Observable result | Rows |
 |---|---|---|---|
 | collection list | Showing it, choosing a collection, "New collection", "All items", "Answer re-scans", "Rename collection" and "Delete collection" with the names a case enters | E1 or E2, the collections listed with their counts in order, which actions are offered | R1.1, R1.2, R1.3, R1.4, R5.7 |
-| collection surface | The search field's text, filter values, header fires, drags, range and toggle selection, "Select all", "Set a field", "Delete selected", "Delete swatch", "Use as scan order", "Rename column", "Export collection", "Colour marks", "Grid", "Table", and the actions of E4–E12 | The rows listed in order, their columns and Spread values, each chip's marks and accessible description, which copy state and variant is up, the selected count, which actions are offered | R1.4–R1.8, R2.1–R2.10, R3.1–R3.8, R6.1–R6.3, R7.1, R7.2, R8.9 |
+| collection surface | The search field's text, filter values, header fires, drags, range and toggle selection, hiding and showing a column, "Select all", "Set a field", "Delete selected", "Delete swatch", "Use as scan order", "Rename column", "Export collection", "Colour marks", "Grid", "Table", and the actions of E4–E12 | The rows listed in order, their columns and Spread values, each chip's marks and accessible description, which copy state and variant is up, the selected count, which actions are offered | R1.4–R1.8, R2.1–R2.10, R3.1–R3.8, R6.1–R6.3, R7.1, R7.2, R8.9 |
 | All items view | "All items", its search field, filters, header fires, opening an item, "Find similar" | E13 and its variant, the rows listed with their collections, which actions are offered, whether the device PRD's E22 is up | R1.9, R1.10, R3.7 |
-| item detail | Opening and closing an item, field edits confirmed by Return or leaving the field or discarded by Escape, "Change code" with the code a case enters, "Change the code", "Keep this code", "Delete swatch", "Export swatch", "Find similar", "Show history", and the actions of the sibling states it shows | E14's lines, E15 or E16 and their variants, the sibling state shown, which actions are offered | R4.1–R4.8 |
+| item detail | Opening and closing an item, field edits confirmed by Return or leaving the field or discarded by Escape, "Change code" with the code a case enters, "Change the code", "Keep this code", "Delete swatch", "Export swatch", "Find similar", "Show history", the capture PRD's Flag action, and the actions of the sibling states it shows | E14's lines, E15 or E16 and their variants, the sibling state shown, which actions are offered | R4.1–R4.9 |
 | version history view | "Show history", "Recorded order", "Measured order", "Use this reading", selecting two readings, "Compare" | The readings listed in order with their lines, marks and distances, E17 and its variant, which actions each reading offers | R5.1–R5.8 |
-| sibling states opened here | The Data Foundation PRD's E4, E8, E9, E11, E14, E15 and E26 actions, the capture PRD's E25, E28, E33 and E34 actions, the device PRD's E22 action, the Data Export PRD's E1, and the capture PRD's creation and re-scan entry | Which sibling state is up, and what the file and the capture PRD's R11.11 read afterwards | R1.2, R1.4, R1.5, R1.8, R2.6, R2.9, R4.5, R4.6, R5.7, R8.5 |
+| sibling states opened here | The Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26 and E33 actions, the capture PRD's E25, E28, E33 and E34 actions, the device PRD's E22 action, the Data Export PRD's E1, and the capture PRD's creation, re-scan entry and set-aside list | Which sibling state is up, what it names, and what the file and the capture PRD's R11.11 read afterwards | R1.2, R1.4, R1.5, R1.8, R2.6, R2.9, R4.5, R4.6, R4.9, R5.7, R6.3, R8.5 |
 | display | The declared gamut of each display, and moving the window from one display to another | Which chips carry the cannot-show mark, and when they change | R2.5, R8.7 |
-| the file | Its seeded contents, a declared outside change, a read-only open, a full volume, an induced loss of unwritten data or a crash, an import into a collection, closing and reopening it | Its contents read with the app closed at SQLITE_READER_FLOOR | R8.4, R8.5, R8.8, R8.10 |
+| the file | Its seeded contents, a declared outside change, a read-only open, a full volume, an induced loss of unwritten data or a crash, an import into a collection, closing and reopening it, quitting and relaunching the app | Its contents read with the app closed at SQLITE_READER_FLOOR | R2.10, R8.4, R8.5, R8.8, R8.10 |
 | sessions | A declared session state on a collection, and a set capture saves on the Demo Device while a case runs | The capture PRD's R11.11 readback of queue order, row states, current and remembered row | R8.3, R8.10 |
 | network | Reachability declared through the device PRD's R6.12 | The device PRD's R6.17 record of outbound attempts | R8.6 |
 | accessibility and keyboard | Actions delivered from the keyboard alone; reading each mark's shape and accessible name and each row's accessible description | Whether each action fired; the shapes, names and descriptions | R8.9 |

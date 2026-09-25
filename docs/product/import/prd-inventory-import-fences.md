@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F64 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F65 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -112,6 +112,12 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** Canceling import does not undo a separately completed collection creation. Accepted explicitly in the [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
 
+### F65 — A Collection Mode rename moves the stored column name (2026-09-24)
+
+**Decision:** Mirroring [the Collection Mode PRD's F9](../collection-mode/prd-collection-mode-fences.md) (owner decision D9, post-fill adjudication 2026-09-24): renaming an imported column in Collection Mode changes its stored name, keeping its position and values, and a later import matches the stored name; a source header equal only to the old name appends as a new column under R2.6's existing rule. Narrows F53's "first-seen spelling" to the stored spelling, first-seen unless renamed. No other import rule changes; R2.6 keeps its alignment.
+
+**Why:** Collection Mode's F9 closes the post-lock question of whether a rename moves the stored name, and both sides of that seam land in the same change. Source: the Collection Mode PRD's F9; peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -133,6 +139,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F62** absent-field fills — R3.1, R3.6g/j, R3.9; E43; UJ 2.1.
 - **F63** zero-count copy — R3.1; E43; Capture §12 placeholder index.
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
+- **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
 
 ## Historical ID map
 

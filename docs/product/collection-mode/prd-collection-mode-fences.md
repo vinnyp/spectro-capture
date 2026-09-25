@@ -221,7 +221,7 @@ choices that recommendation states and nothing more.
   or clear above BULK_CONFIRM_COUNT selected items confirms first, with 10 as the candidate held
   open by its question; an empty value clears the field; Swatch Code cannot be set in bulk; and
   neither bulk operation is offered in the All items view.
-- **Carried by:** R6.1, R6.2, R6.3, E8, _(the Data Foundation PRD IDs the fix pass adds or amends)_
+- **Carried by:** R6.1, R6.2, R6.3, E8, UJ6.3-a, UJ6.3-b, UJ6.3-c, UJ6.3-e, the Data Foundation PRD E33, the Data Foundation PRD R6.2, the Data Foundation PRD R7.6o, the Data Foundation PRD F50
 
 ### F8 — Editable item metadata, and no app-owned notes field in v1 (2026-09-24)
 
@@ -253,7 +253,7 @@ choices that recommendation states and nothing more.
   on it — a source still carrying the old header adding it as a new column. The Data Foundation
   PRD's R1.2 and the Inventory Import PRD's R2.6 are amended in the same change, closing the
   post-lock item that asked the question.
-- **Carried by:** R4.8, E11, _(the Data Foundation and Inventory Import PRD IDs the fix pass amends)_
+- **Carried by:** R4.8, E11, T8, UJ4.6-a, UJ4.6-e, UJ4.6-f, the Data Foundation PRD R1.2, the Inventory Import PRD R2.6, the Data Foundation PRD F50, the Inventory Import PRD F65
 
 ### F10 — A collection-side "Flag" on a captured item, P1 (2026-09-24)
 
@@ -269,8 +269,7 @@ choices that recommendation states and nothing more.
   becomes set aside under the capture PRD's rules, its reading kept as history, so a later session
   picks it up. The capture PRD owns what a Flag does to the item; this PRD owns the entry point,
   which is refused while a session on the collection is running.
-- **Carried by:** _(the row, case and copy IDs the fix pass adds, and the capture PRD IDs it
-  touches)_
+- **Carried by:** R4.9, R8.3, E6, T14, UJ4.7-a, UJ4.7-b, UJ4.7-c, UJ4.7-d, the capture PRD R9.9, the capture PRD F70
 
 ### F11 — An item whose current reading is quarantined is set aside, its cause "unreadable" (2026-09-24)
 
@@ -285,8 +284,7 @@ choices that recommendation states and nothing more.
   other set-aside items. The capture PRD's set-aside rules and counts are amended in the same change
   to carry this cause; the Data Foundation PRD's R5.5b quarantine and its offer of a re-scan or a
   restore of a readable earlier reading are unchanged.
-- **Carried by:** _(the row, case and copy IDs the fix pass changes here, and the capture and Data
-  Foundation PRD IDs it touches)_
+- **Carried by:** R2.4g, R2.4h, R4.2b, E12, UJ2.1-j, UJ3.2-a, UJ4.1-c, UJ4.5-c, the capture PRD R8.2, the capture PRD R8.18, the capture PRD F70
 
 ### F12 — Priority is build order within v1 (2026-09-24)
 
@@ -369,7 +367,94 @@ choices that recommendation states and nothing more.
 - **Decision:** As recommendation 9 states: the three budgets stay candidates under their open
   questions; search, filters and view sorts last while the file is open and are never written to
   it; and the P2 column-visibility choice persists across launches outside the user's file.
-- **Carried by:** R2.10, R3.6, R8.1, R8.6, R7.1, R7.2
+- **Carried by:** R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b
+
+**Clarified 2026-09-24 (owner decision D12, F21):** the column-visibility clause of this fence is
+superseded by F21 — the choice is kept with the collection in the file. The rest of this fence
+stands.
+
+Fences F21–F28 were decided by the owner in a second post-fill adjudication of 2026-09-24, over the
+questions the round-0 fix pass surfaced. F21–F23 each answer one question, quoted with its chosen
+option. F24–F28 are the owner's approval, as a set, of the five lettered loose ends (i)–(v) put in
+the question "Approve these loose ends as a set?", answered **Approve all**; each fence's Authority
+is its item, and settles what that item states and nothing more.
+
+### F21 — Column visibility is kept with the collection in the file (2026-09-24)
+
+- **Authority:** owner decision D12, second post-fill adjudication 2026-09-24. Question: "My F20
+  change (P2 column visibility kept in app preferences, not the file) conflicts with locked Data
+  Foundation R1.1: 'Nothing about a collection or session is kept elsewhere' — the file is the
+  portable whole. How should column visibility persist?" Chosen: **In the file, per collection** —
+  "Revert to the draft: the choice is kept with the collection in the file, so it travels with the
+  file and honours DF R1.1. Supersedes that part of F20." Not chosen: not remembered at all; app
+  preferences with an amendment to the Data Foundation PRD's R1.1.
+- **Decision:** The P2 column-visibility choice is kept per collection, with that collection, in
+  the user's file; nothing about it is kept elsewhere.
+- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it)_
+
+### F22 — The consequences of an item set aside as unreadable (2026-09-24)
+
+- **Authority:** owner decision D13, second post-fill adjudication 2026-09-24. Question: "F11
+  consequences, drafted as Capture R8.18 at P0: an item set aside because its current reading
+  became unreadable is UNSETTLED (the review reopens and the collection is no longer 'finished'
+  until it's re-scanned, restored or deliberately left); it neither counts toward nor breaks the
+  consecutive-failure guard; restoring a readable earlier reading makes it captured again; it's
+  excluded from Capture M4's per-session deferred rate and doesn't reopen M3 once recorded.
+  Approve?" Chosen: **Approve as drafted.** Not chosen: arriving settled.
+- **Decision:** As the question states, the capture PRD's R8.18 carrying it at P0.
+- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it, the capture PRD's first)_
+
+### F23 — Restore is offered on an item set aside by a Flag, and the Data Foundation PRD's R2.9 names the Flag (2026-09-24)
+
+- **Authority:** owner decision D14, second post-fill adjudication 2026-09-24. Question: "An item
+  set aside by the collection-side Flag (F10): can 'Use this reading' restore a readable earlier
+  reading, including the flagged one? Related: DF R2.9 (locked) says 'only damage to the current
+  reading removes the item's current value', which already contradicts Capture's Flag demotion
+  (R5.6)." Chosen: **Offer restore; fix DF R2.9** — "Restore is offered on a flagged item, making
+  it captured again — an out for a mistaken Flag. Amend DF R2.9 in this PR to name the operator's
+  Flag as the other way a current value is removed." Not chosen: no restore on a flagged item.
+- **Decision:** "Use this reading" is offered on a readable earlier reading — the flagged reading
+  included — of an item set aside by a Flag, and makes the item captured again. The Data
+  Foundation PRD's R2.9 is amended in this change to name the operator's Flag (the capture PRD's
+  R5.6) as the other way an item's current value is removed.
+- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it, sibling IDs included)_
+
+### F24 — Export first from a selection delete opens the whole-collection export (2026-09-24)
+
+- **Authority:** approved loose end (i): "E33's 'Export first' opens the whole-collection export
+  (Export has no selection scope; F3 excludes selection export), and Export's list of confirmations
+  offering export-first gains E33."
+- **Decision:** As item (i) states, the Data Export PRD's list amended in this change.
+- **Carried by:** _(the IDs the round-0b fix pass leaves carrying it, sibling IDs included)_
+
+### F25 — The All items view shows no simulated-readings banner, recorded on the device side (2026-09-24)
+
+- **Authority:** approved loose end (ii): "Device gets a dated note, citing F5, that the All items
+  view shows no simulated banner."
+- **Decision:** As item (ii) states; F5 already decides the behaviour, and this fence authorises the
+  device PRD's half of that seam.
+- **Carried by:** R1.10, _(the device PRD IDs the round-0b fix pass touches)_
+
+### F26 — "Answer re-scans" is not offered in the All items view (2026-09-24)
+
+- **Authority:** approved loose end (iii): "'Answer re-scans' is removed from the All items view (F5
+  didn't list it; it stays on the collection list)."
+- **Decision:** As item (iii) states.
+- **Carried by:** R5.7, E13
+
+### F27 — Distance from the current value compares only like with like (2026-09-24)
+
+- **Authority:** approved loose end (iv): "R5.4's distance compares only readings under the same
+  illuminant, observer AND measurement condition (matches F16)."
+- **Decision:** As item (iv) states.
+- **Carried by:** R5.4
+
+### F28 — An answered open question carries the status aligned (2026-09-24)
+
+- **Authority:** approved loose end (v): "Answered OQ 8/9 carry status 'aligned'."
+- **Decision:** As item (v) states, for OQ 8 and OQ 9.
+- **Why:** it sets the Open questions table's Status cells, which carry no requirement ID.
+- **Carried by:** governs no rows
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -388,11 +473,11 @@ than deciding a WHAT.
 - **F4** — R3.3, R3.7, R3.8, E9
 - **F5** — R1.9, R1.10, R3.7, R8.2, E13
 - **F6** — R2.4a, R2.4b, R2.5, R8.7, E12, M2
-- **F7** — R6.1, R6.2, R6.3, E8, _(the Data Foundation PRD IDs the fix pass adds or amends)_
+- **F7** — R6.1, R6.2, R6.3, E8, UJ6.3-a, UJ6.3-b, UJ6.3-c, UJ6.3-e, the Data Foundation PRD E33, the Data Foundation PRD R6.2, the Data Foundation PRD R7.6o, the Data Foundation PRD F50
 - **F8** — R4.3, R4.4, E15, E16
-- **F9** — R4.8, E11, _(the Data Foundation and Inventory Import PRD IDs the fix pass amends)_
-- **F10** — _(the IDs the fix pass adds or touches)_
-- **F11** — _(the IDs the fix pass changes or touches)_
+- **F9** — R4.8, E11, T8, UJ4.6-a, UJ4.6-e, UJ4.6-f, the Data Foundation PRD R1.2, the Inventory Import PRD R2.6, the Data Foundation PRD F50, the Inventory Import PRD F65
+- **F10** — R4.9, R8.3, E6, T14, UJ4.7-a, UJ4.7-b, UJ4.7-c, UJ4.7-d, the capture PRD R9.9, the capture PRD F70
+- **F11** — R2.4g, R2.4h, R4.2b, E12, UJ2.1-j, UJ3.2-a, UJ4.1-c, UJ4.5-c, the capture PRD R8.2, the capture PRD R8.18, the capture PRD F70
 - **F12** — governs no rows
 - **F13** — R4.3, R4.7
 - **F14** — R1.4, R2.9, R4.4, R4.5, R6.3, R8.3, E6
@@ -401,7 +486,15 @@ than deciding a WHAT.
 - **F17** — R3.1, E4
 - **F18** — R2.3, R3.4, R3.5, E5
 - **F19** — R1.2, R1.6, R2.6, R2.8, R3.3, E12
-- **F20** — R2.10, R3.6, R8.1, R8.6, R7.1, R7.2
+- **F20** — R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b
+- **F21** — _(the IDs the round-0b fix pass leaves carrying it)_
+- **F22** — _(the IDs the round-0b fix pass leaves carrying it)_
+- **F23** — _(the IDs the round-0b fix pass leaves carrying it)_
+- **F24** — _(the IDs the round-0b fix pass leaves carrying it)_
+- **F25** — R1.10, _(the device PRD IDs the round-0b fix pass touches)_
+- **F26** — R5.7, E13
+- **F27** — R5.4
+- **F28** — governs no rows
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link

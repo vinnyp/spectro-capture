@@ -1,6 +1,6 @@
 # PRD: Inventory Import
 
-Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16.
+Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review pending).
 
 Import a CSV inventory into one collection without entering metadata between scans. Import never starts capture; only new items become pending.
 
@@ -31,7 +31,7 @@ All requirements are **v1 / P0**. Status and Commit PR track implementation: ⌛
 
 ### Traceability
 
-R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
+R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420); F65 mirrors the Collection Mode PRD's F9 (2026-09-24).
 
 ### Surfaces
 
@@ -67,7 +67,7 @@ Import flow: file selection and read settings → target collection → column m
 | R2.3 | For every code, collection-name or header comparison, trim Unicode White_Space at either end, collapse internal White_Space runs to U+0020, then apply canonical caseless matching (NFD → full default case fold → NFD), without locale tailoring or compatibility normalization. Preserve entered text separately; uniqueness, re-import, find and ad-hoc duplicate checks share this rule. | 🤝 Aligned | |
 | R2.4 | Exclude whitespace-only codes (E9) and every structurally valid record in a duplicate-code group under R2.3 (E10), listing source record numbers. No first-row-wins rule applies, and excluded records change nothing in the collection. | 🤝 Aligned | |
 | R2.5 | Resolve header names before mapping: reserve all nonblank input names under R2.3, retain each group’s first occurrence, and suffix later occurrences in source order until unique against reserved and assigned names (E41). Then name blank headers by source position, suffixing collisions the same way (E12); show original names, positions and resolved names using the [copy file’s naming templates](prd-inventory-import-copy.md#generated-column-names), with "Continue with the listed names", "Pick the file again", and "Cancel". | 🤝 Aligned | |
-| R2.6 | A resolved passthrough header equal under R2.3 to a stored column name reuses that column regardless of how its name arose, retaining its first-seen spelling and position; otherwise append a new column. Reuse within a collision group follows R2.5’s source-order resolution; renaming stored columns remains Collection Mode’s obligation. | 🤝 Aligned | |
+| R2.6 | A resolved passthrough header equal under R2.3 to a stored column name reuses that column regardless of how its name arose, retaining its stored spelling — first-seen unless renamed in Collection Mode — and position; otherwise, including a header equal only to a column's name before such a rename, append a new column. Reuse within a collision group follows R2.5’s source-order resolution; renaming stored columns, which changes the stored name, is [Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing)’s (F65). | 🤝 Aligned | |
 
 ### 3. Preview and commit
 
@@ -143,7 +143,7 @@ Each line is a requirement on the document named, not a suggestion; the Rows col
 | Target PRD | Obligation | Rows |
 | :--- | :--- | :--- |
 | Data Foundation | The one matching rule; field preservation and column identity; atomic imports within R3.2’s cited storage scope; measurement preservation on re-import; decoded values stay directly queryable ([DF inbound mirror](../data-foundation/prd-data-foundation.md#inherited-obligations)). | R2.2, R2.3, R2.5, R2.6, R3.2, R3.3 |
-| Collection Mode | Renaming imported columns; whether a rename changes their stored names remains [post-lock work](../post-lock.md#cross-document). | R2.2, R2.6 |
+| Collection Mode | Renaming imported columns: a rename changes the column's stored name, keeping its position and values, and a later import matches the new name ([Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing), F65). | R2.2, R2.6 |
 | Data Export | Every column an import brought in is carried through, and a column mapped to identity is emitted once rather than twice; order and export-name collisions follow [Export R2.3/R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version). | R2.2, R2.6 |
 | Capture Mode | New items append pending and matched items retain state/position; E40’s "Go to the session" and "End that session" use Capture’s current/resume and §7 ending paths. Design scale and import timing remain [Capture R3.12/OQ 13](../capture-mode/prd-capture-mode.md#3-the-capture-session). | R3.2, R3.3, R3.8h–i |
 

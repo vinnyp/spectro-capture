@@ -60,6 +60,7 @@ Run these cases without hardware or a vendor credential (R4.1/R4.2). Compare sto
 | Only unchanged values supplied | Preview and import | Eligible all-unchanged import finishes without data changes; E43 has unchanged count and no filled/added-columns line | R3.6g/j, R3.9 |
 | New empty target or existing target; preview has zero and nonzero counts (separate cases) | Review E43 | Target name always visible; zero-count sentences and empty list lines absent, remaining counts visible; no “None” placeholders | R3.1; E43; F63 |
 | Stored `Notes` column and value; source ` notes ` in a new position and corrected value | Preview and import twice | One stored `Notes` column at its old position, corrected decoded value, no column addition; second import unchanged | R2.6, R3.6 |
+| Stored column first seen as `Finish`, renamed `Surface` in Collection Mode ([its R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing)); pending item A-1 holds `Matte` there | Import a source whose `surface` column holds `Gloss` for A-1 and whose `Finish` column holds `Satin` | `surface` reuses the stored `Surface` column at its position and A-1's value there becomes `Gloss`; `Finish` is listed as an added column and appends after the existing ones, holding `Satin` for A-1 (F65) | R2.6, R3.6 |
 | Stored metadata `Blue`; source `blue` or ` Blue ` | Import with default choice | Exact text difference counts as updated even though R2.3 would match; store incoming text | R3.6 |
 
 ### UJ 2.2 Mapping metadata fields

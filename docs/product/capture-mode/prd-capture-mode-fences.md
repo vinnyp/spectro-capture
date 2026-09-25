@@ -1,6 +1,6 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge. F70 mirrors the Collection Mode PRD's F10, F11 and F19 (2026-09-24); peer review pending.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
 Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed. For F51–F69, peer review closed 2026-09-18 (PR #20); re-locked on merge (closure recorded under F51).
@@ -597,6 +597,16 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3, Capture/DF obligation mirrors; dated F57/F66 and DF F49 clarifications.
 
+### F70 — Mirror Collection Mode's Flag entry point and the unreadable set-aside cause (2026-09-24)
+
+**Authority:** owner decisions D10 and D11 in the Collection Mode PRD's post-fill adjudication of 2026-09-24, recorded as [the Collection Mode PRD's F10 and F11](../collection-mode/prd-collection-mode-fences.md); the editorial mirrors in (3) cite [its F19](../collection-mode/prd-collection-mode-fences.md) (its approved recommendation 8); peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F10, R9.9's "Flag" from the collection is that PRD's R4.9 entry point on a captured item, refused there while a session on the collection is in flight; what it does to the row is R5.6's Flag — set aside with the cause flagged after capture, its reading to version history. This PRD owns what a Flag does; Collection Mode owns the entry point. (2) Under the Collection Mode PRD's F11, a captured row whose current reading is quarantined ([Data Foundation R5.5b](../data-foundation/prd-data-foundation.md#damage-classification)) is set aside with the cause unreadable and counted as set aside, and a later session takes it as it takes other set-aside rows (R8.18, R8.2, the Vocabulary and the Row transitions). Data Foundation's quarantine and its offer of a re-scan or a restore are unchanged. (3) Editorial, with no change of meaning: R1.1 cites Collection Mode's "New collection"; the Surfaces collection-surface row notes Duplicate collection name on Collection Mode's rename and the reorder states E33/E34 from its reorder controls; R11.15g lists the capture-owned entry points on the collection surface. Rows amended in (1)–(3) keep their alignment.
+
+**Not decided (drafted for the owner):** R8.18's unsettled standing, its exclusion from N_CONSEC_HARD counting and from breaking a run, and a restore making the row captured again are least-surprising readings of the existing rules, not settled by D11; R8.18 is ✋ Needs Discussion until the owner rules on them.
+
+**Carried by:** R1.1, R8.2, R8.18, R9.9, R11.15g, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i, UJ4-f.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -618,6 +628,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F59** queued persistence — §10, Legend, ADR-0003 queue and product README. **F60** review entry — R8.1a–k, UJ3.3-a, OQ 18/results. **F61** Demo interim — R11.3, OQ 22 and Legend. **F62** row corrections — R4.15/R8.2/R11.8 and Device obligation mirror. **F63** structure — Build contract, transition index, Legend and UJ1–UJ5. **F64** file-count provenance — R1.9 and OQ 19/results. **F65** labels — §12, R8.15/E39 and UJ3.3-e.
 - **F66** summary bases — R7.5/R7.15/R7.18/R11.11, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.5/R3.10/R3.11/R3.13, Legend and UJ3.1-l.
 - **F69** chain capture-rate numerator — R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3 and DF mirrors.
+- **F70** Collection Mode seam mirror — R1.1, R8.2, R8.18, R9.9, R11.15g, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i and UJ4-f.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

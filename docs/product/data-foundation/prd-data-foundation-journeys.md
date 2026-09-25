@@ -46,6 +46,7 @@ Move/re-read are disabled during active, paused or halted capture; E9/E15/E25/E2
 | :--- | :--- | :--- | :--- |
 | Never-scanned item | Request delete | Identity/import data named; no current or historical measurement claimed; delete not default | E8 |
 | One reading, no history / several readings / whole collection | Request delete | Correct item/reading/history counts, never sample counts; actual undo availability shown | E8 / E14 |
+| A selection of several items, some with history ([Collection Mode R6.3](../collection-mode/prd-collection-mode.md#6-selection-and-bulk-operations)) | Request delete; cancel / export first / confirm in separate runs | Selection-scale swatch, current-reading and earlier-reading counts, never sample counts; actual undo availability shown; delete not default; cancel and export first leave every selected item unchanged; confirm removes every selected item and its readings (F50) | E33 |
 | Delete confirmation | Cancel | All content unchanged | Confirmation dismissed |
 | Delete confirmation | Export first, succeed or cancel/fail export | Delete unperformed, confirmation retained; canonical versus full-history behavior follows Export R1.3's independent P1 gate | Export E1 then E8/E14 |
 | P0 delete | Confirm | Deletion final, content unrecoverable from active file at reader floor | Item/collection removed |
@@ -63,7 +64,7 @@ No action deletes one reading out of history. Whole-file deletion remains a Find
 | Query / action | Expected result |
 | :--- | :--- |
 | Read format metadata before collection data | Stable file-format location/form, distinct from CSV export format version |
-| Query item identity, imported fields and canonical selection | Match app values; first-seen resolved column names/positions retained, additions appended after later import |
+| Query item identity, imported fields and canonical selection | Match app values; first-seen resolved column names/positions retained, additions appended after later import; after a [Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing) rename, the new name stored at the same position with the same values (F50) |
 | Read each sample and stored mean | Decoded spectrum/colour values and conditions available without archived vendor bytes |
 | Query current/history, supersession reason, never-true, quarantine and sample archive-unavailable marks, unreadable-set marks and unresolved relationships | Match R2.3a–i and R5.5a–c/f, including A → B → C and restore time axes |
 | Query derived sets and gamut marks | Six spaces when condition exists, explicit absent mark otherwise; illuminant/observer/condition/version present, superseded sets retained |

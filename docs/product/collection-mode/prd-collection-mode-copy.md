@@ -93,7 +93,7 @@ without that action, and the state is complete without it.
 
 Sibling-owned states that render on this product area's surfaces are their owners' and are not
 restated here: the capture PRD's E1, E2, E3, E23, E24, E25, E28, E33 and E34; the device PRD's E22;
-the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26 and E31; and the Data Export PRD's E1.
+the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26, E31 and E33; and the Data Export PRD's E1.
 
 ### E1 — No collections yet
 
@@ -147,7 +147,7 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26 and E31; and the Data E
 - Phase: none
 - Variants enumerated by: R1.4
 - Headline: ⟨collection⟩ has a session that hasn't ended
-- Body: Scanning in ⟨collection⟩ is under way, paused or held. Deleting swatches or the collection, and changing a swatch's code, wait until you end that session, so nothing it's working on moves under it. Nothing has been changed.
+- Body: Scanning in ⟨collection⟩ is under way, paused or held. Deleting swatches or the collection, changing a swatch's code, and flagging a swatch wait until you end that session, so nothing it's working on moves under it. Nothing has been changed.
 - Actions: "Go to the session", "Cancel"
 - Variant: "interrupted" — the collection holds an interrupted session and the action is deleting the collection. A session in ⟨collection⟩ was interrupted and hasn't been resumed or ended. Resume it or end it before deleting the collection. Nothing has been changed.
 
@@ -207,7 +207,7 @@ the Data Foundation PRD's E4, E8, E9, E11, E14, E15, E26 and E31; and the Data E
 - Phase: none
 - Variants enumerated by: none
 - Headline: What the marks mean
-- Body: Can't show on this screen: this display can't render the colour, so the chip shows what the screen can manage, not the colour itself. Outside sRGB: the colour falls outside standard sRGB, the reference your exports and your file use. Simulated: the reading came from the Demo Device, not an instrument. No spectral data: the reading has colour values but not the curve behind them, so it can't be worked out again under another light. Samples disagreed: its samples came out further apart than expected and you accepted their average. Value missing: there's no value for the measurement condition this collection is set to. No current value: the swatch hasn't been scanned, or it's set aside. Unreadable: its current reading can't be read. Re-scan to answer: it was scanned again and you haven't said whether the swatch changed or the old reading was wrong. Never right: you said this earlier reading was wrong, so it's left out of anything showing change over time. Not settled: a later re-scan is waiting for your answer, so this earlier reading's standing isn't settled yet.
+- Body: Can't show on this screen: this display can't render the colour, so the chip shows what the screen can manage, not the colour itself. Outside sRGB: the colour falls outside standard sRGB, the reference your exports and your file use. Simulated: the reading came from the Demo Device, not an instrument. No spectral data: the reading has colour values but not the curve behind them, so it can't be worked out again under another light. Samples disagreed: its samples came out further apart than expected and you accepted their average. Value missing: there's no value for the measurement condition this collection is set to. No current value: the swatch hasn't been scanned, or it's set aside. Unreadable: its current reading can't be read, so the swatch is set aside. Re-scan to answer: it was scanned again and you haven't said whether the swatch changed or the old reading was wrong. Never right: you said this earlier reading was wrong, so it's left out of anything showing change over time. Not settled: a later re-scan is waiting for your answer, so this earlier reading's standing isn't settled yet.
 - Actions: "Done"
 
 ### E13 — All items shown
