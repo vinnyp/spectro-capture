@@ -1,6 +1,6 @@
 # PRD: Data Export
 
-Status: locked (2026-09-16); PR #18 agent-build amendment (2026-09-17–18), F15–F30; Collection Mode seam mirror 2026-09-24 under F31 (§5 and the copy header name DF E33; no row changed; peer review pending); requirements aligned, not implemented.
+Status: locked (2026-09-16); PR #18 agent-build amendment (2026-09-17–18), F15–F30; Collection Mode seam mirror 2026-09-24 under F31 (§5 and the copy header name DF E33; no row changed; peer review pending); Collection Mode round-4 mirror 2026-09-25 under F32 (R1.1 amended with alignment kept; peer review pending); requirements aligned, not implemented.
 
 Companion files: the journeys are in [prd-data-export-journeys.md](prd-data-export-journeys.md), the shipping copy in [prd-data-export-copy.md](prd-data-export-copy.md), the answers to closed open questions in [prd-data-export-oq-results.md](prd-data-export-oq-results.md), and the owner's decisions in [prd-data-export-fences.md](prd-data-export-fences.md).
 
@@ -62,7 +62,7 @@ Evidence and rationale: [fences and research inventory](prd-data-export-fences.m
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| R1.1 | v1 | P0 | Export a collection or single item using [Row selection and fields](#row-selection-and-fields), [Missing-data matrix](#missing-data-matrix), [Export eligibility](#export-eligibility), and [Preview contract](#preview-contract); the default is canonical, one row per item on the collection’s chosen condition (F2/F9–F11/F16). Export only reads: every source value, mark and note remains identical at SQLITE_READER_FLOOR after success or failure (R4.3). | 🤝 Aligned | aligned round 7 |
+| R1.1 | v1 | P0 | Export a collection or single item using [Row selection and fields](#row-selection-and-fields), [Missing-data matrix](#missing-data-matrix), [Export eligibility](#export-eligibility), and [Preview contract](#preview-contract); the default is canonical, one row per item on the collection’s chosen condition (F2/F9–F11/F16). Export only reads, taking one snapshot, the file as it stood when the export started — an edit made while it runs saves at once and is not in it — and leaves every source value, mark and note identical at SQLITE_READER_FLOOR after success or failure (R4.3). | 🤝 Aligned | aligned round 7; amended 2026-09-25 (F32), alignment kept |
 | R1.2 | v1 | P0 | A non-spectral reading has empty wavelength cells, a non-spectral mark, averaging basis and derivation version ([Capture R4.24](../capture-mode/prd-capture-mode.md#4-the-scan-loop)). `sc_simulated` is true/false from a known acquiring snapshot, empty without one; consumers treat empty as unknown ([Device R6.5](../device-management/prd-device-management.md#6-mock-device-layer), F19). | 🤝 Aligned |  |
 | R1.3 | v1 | P1 | The explicit history option emits every item reading, including current, superseded and quarantined readings, plus one identity row for each never-scanned item (F2). Each reading supplies its own fields and chosen-condition derived set, sequence, supersession reason and current flag under R1.1a–l; non-chosen sets stay in the file ([DF R3.1](../data-foundation/prd-data-foundation.md#3-derived-values-and-gamut-honesty)). | 🤝 Aligned | aligned round 7 |
 
@@ -170,6 +170,7 @@ Each line is a requirement. A row cited here carries the rule, the naming PRD's 
 | Capture Mode | A collection's queue order lives with the collection ([its R1.9](../capture-mode/prd-capture-mode.md#1-collections)), and an export's rows follow it; the basis an average was taken on and the non-spectral mark travel with the reading ([its R4.24](../capture-mode/prd-capture-mode.md#4-the-scan-loop)). | [R1.1g](#row-selection-and-fields), [R1.2](#1-what-the-export-contains), [R2.3](#2-columns-names-dialect-and-the-version) |
 | Device Management, export | CSV export emits `sc_simulated` as true/false from a known acquiring snapshot, empty without one (F19) ([its R6.5](../device-management/prd-device-management.md#6-mock-device-layer)); every measurement carries the acquiring device's snapshot, which the export writes ([its R1.21](../device-management/prd-device-management.md#1-device-pairing)). | [R1.1](#1-what-the-export-contains), [R1.2](#1-what-the-export-contains) |
 | Inventory Import | Every column an import brought in is carried through, and a column mapped to identity is emitted once rather than twice ([its R2.2/R2.6](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule)) | [R1.1](#1-what-the-export-contains), [R2.3](#2-columns-names-dialect-and-the-version), [R2.4](#2-columns-names-dialect-and-the-version) |
+| Collection Mode | An export reads one snapshot, the file as it stood when it started ([its F158](../collection-mode/prd-collection-mode-fences.md)) | [R1.1](#1-what-the-export-contains) |
 
 **What this PRD imposes on others**
 

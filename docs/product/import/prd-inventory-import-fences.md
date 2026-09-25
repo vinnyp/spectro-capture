@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F66 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F67 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -128,6 +128,14 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** the **Not decided** point above is settled: while a Collection Mode bulk write or delete runs, no other write anywhere in the app starts, so R3.2's commit shows disabled until that write lands, citing Collection Mode's R8.1f, and a UJ 2.1 case asserts it. R3.2 keeps its alignment. Peer review pending.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F155](../collection-mode/prd-collection-mode-fences.md), owner decision D36, F67):** the **Not decided** point's settlement now cites [Data Foundation R1.11](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns), the one-writer rule, in place of Collection Mode's R8.1f. Peer review pending.
+
+### F67 — The import commit follows Data Foundation's one-writer rule both ways; E40's another-collection variant reworded (2026-09-25)
+
+**Decision:** Mirroring [the Collection Mode PRD's F155, F156 and F169](../collection-mode/prd-collection-mode-fences.md) (owner decisions D36 and D37 and its approved round-4 recommendation 9, round-4 adjudication 2026-09-25): R3.2's commit follows [Data Foundation R1.11](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns)'s one-writer rule both ways — shown disabled while another write it names runs, and, while it commits, holding every other write to the file and a session's start or resume — and R3.8i's "End that session" is shown disabled while an R1.11 write runs. E40's another-collection variant drops "waits": a session in ⟨collection⟩ is active, paused or halted, and until it ends imports aren't available in any collection; its shared append asks the user to start the import again. E40 moves to ⌛️ Ready for Alignment; R3.2 and R3.8i keep their alignment, and R3.2 stays at two sentences. UJ 2.1 asserts the commit held behind a Collection Mode bulk write or delete or a Data Foundation move, and a capture start, Collection Mode's Set a field and the Data Foundation re-read held behind this import's commit, each held through Collection Mode R8.10a's held-write input.
+
+**Why:** the file has one writer, and the owner moved that rule's home to Data Foundation so each writer cites it rather than restating it. Source: the Collection Mode PRD's F155, F156 and F169; peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -150,7 +158,8 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F63** zero-count copy — R3.1; E43; Capture §12 placeholder index.
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
 - **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
-- **F66** Collection Mode one-writer mirror, as clarified once — R3.2; E40; UJ 2.1.
+- **F66** Collection Mode one-writer mirror, as clarified twice — R3.2; E40; UJ 2.1.
+- **F67** Collection Mode round-4 mirror — R3.2, R3.8i; E40; UJ 2.1.
 
 ## Historical ID map
 

@@ -674,7 +674,7 @@ round-1 fix pass are filled by it.
 
 - **Authority:** approved recommendation 18: "Nothing about search, view state or undo is written outside the file, including preferences and saved window state, and a test can read the app's own storage to check."
 - **Decision:** As recommendation 18 states.
-- **Carried by:** R8.6, R8.10e, UJ3.3-f, UJ6.4-j, UJ6.4-k, UJ9.4-b, UJ10.1-d
+- **Carried by:** R8.6, R8.10e, UJ3.3-f, UJ6.4-j, UJ6.4-k, UJ7.1-r, UJ9.4-b, UJ10.1-d
 
 **Clarified 2026-09-25 (approved round-2 recommendation 32, F130):** the file gets no system-kept versions, and no collection content goes to system search or Handoff.
 
@@ -1373,31 +1373,31 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
 
 - **Authority:** owner decision D36, round-4 adjudication 2026-09-25. Question: "Your F152 says nothing else writes while a bulk write runs, but that rule is copied row by row into each PRD and misses writers: Capture's settings (\"editable at any time\"), \"Add a swatch\", ending an interrupted session, and a session starting while an import commits. How should it be fixed?" Chosen: **One Data Foundation rule** — "Data Foundation states it once: while a Collection Mode bulk write or delete, an import commit or a file move runs, no session starts or resumes and no other write to the file starts, each shown unavailable. Collection Mode, Import and Capture cite that rule instead of restating it. Where regeneration fits is added to Data Foundation's OQ 17." Not chosen: patching each PRD's copy of the rule.
 - **Decision:** As the chosen option states. It widens F137 and F152: an import commit and a file move now also hold every other write to the file, and a session's start or resume. It moves their home to the Data Foundation PRD.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R8.1f, R8.1g, R8.10a, UJ9.5-g, the Data Foundation PRD R1.11, the Data Foundation PRD R1.3, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD R7.3j, the Data Foundation PRD DJ3, the Data Foundation PRD F56, the import PRD R3.2, the import PRD R3.8i, the import PRD F67, the capture PRD R1.1, the capture PRD R1.3, the capture PRD R1.5, the capture PRD R1.10, the capture PRD R3.5, the capture PRD R7.13, the capture PRD R8.5, the capture PRD R9.3, the capture PRD T7, the capture PRD F74
 
 ### F156 — Closing, switching files or quitting waits for a long write (2026-09-25)
 
 - **Authority:** owner decision D37, round-4 adjudication 2026-09-25. Question: "While one of those long writes runs (a Collection Mode write lasts at most 10 s), what happens if the user closes the file, switches files or quits?" Chosen: **Wait, shown** — "Closing, switching or quitting waits for the write to finish, with its progress showing, then goes ahead. Nothing is lost and a confirmed delete stays confirmed." Not chosen: making them unavailable until the write is done; stopping the write and undoing it.
 - **Decision:** As the chosen option states; it is part of F155's rule.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** UJ9.5-g, the Data Foundation PRD R1.11, the Data Foundation PRD R1.3, the Data Foundation PRD DJ3, the Data Foundation PRD F56
 
 ### F157 — An edit shows saved; a wipe an outside read holds up waits, said (2026-09-25)
 
 - **Authority:** owner decision D38, round-4 adjudication 2026-09-25. Question: "Another app reading your file (a SQL browser or a script) can stop SpectroCapture from wiping an edit's old text out of the file's bytes. Capture saves never wait, so the edit itself is saved. Only the wipe waits. F139 said \"shown not yet saved\", but nothing carries that, and quitting is undecided. What should the user see?" Chosen: **Saved, wipe pending** — "The change shows saved. A Data Foundation notice says the removed text stays in the file until the other app stops reading it, and the app then wipes it on its own, or when the file next opens. Closing and quitting never wait, and no other write waits. This amends F139 and narrows F102 to 'once nothing else is reading'." Not chosen: showing "not yet saved" as F139 said, with closing and quitting waiting for it.
 - **Decision:** As the chosen option states. It amends F139 and narrows F102.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R8.8, R8.10a, UJ9.7-h, the Data Foundation PRD R6.2a, the Data Foundation PRD R2.3, the Data Foundation PRD R1.5, the Data Foundation PRD R7.6q, the Data Foundation PRD E35, the Data Foundation PRD DJ4, the Data Foundation PRD F56
 
 ### F158 — An export is one snapshot (2026-09-25)
 
 - **Authority:** owner decision D39, round-4 adjudication 2026-09-25. Question: "Should an export be one snapshot? Right now the design has exports read the file in short slices so an edit's wipe isn't held up. The Export PRD never agreed to that." Chosen: **One snapshot** — "An export is the file exactly as it stood when you started it. An edit made while it runs saves at once, and its removed text is wiped when the export finishes. A matching line lands in the Export PRD." Not chosen: reading in short slices, each item whole.
 - **Decision:** As the chosen option states. It amends F139's ADR-0003 input, which drops "an export".
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** UJ9.5-d, the Data Export PRD R1.1, the Data Export PRD EJ1, the Data Export PRD F32, the Data Foundation PRD R6.2a, the Data Foundation PRD F56
 
 ### F159 — Choosing another file in E34's picker changes nothing (2026-09-25)
 
 - **Authority:** owner decision D40, round-4 adjudication 2026-09-25. Question: "Data Foundation E34's \"Choose the file again\" opens a file picker. If the user picks a different file there (say a copy), what happens?" Chosen: **Nothing changes** — "Only the same file restores access. Picking another file opens nothing, switches nothing and retries nothing. E34 stays up and the current file stays open, so the delete undo and \"Undo change\" survive." Not chosen: switching to it and dropping the unsaved change.
 - **Decision:** As the chosen option states. It refines F151, whose "restores access only" the Data Foundation compaction dropped from that PRD's R7.3j; the fix pass restores it.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** UJ9.7-i, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD DJ3, the Data Foundation PRD F54
 
 ### F160 — The Data Foundation PRD's word budget is 8,300 (2026-09-25)
 
@@ -1410,19 +1410,19 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
 
 - **Authority:** approved round-4 recommendation 1: R8.3's "E10's 'Undo' of a multi-item delete" becomes "of a selection or collection delete", as F136's question put it. So the undo of a delete of a one-item or empty collection is refused too. The capture PRD's obligations line follows it, and a case undoes a one-item collection's delete while a session is in flight, asserting E6's "elsewhere" variant.
 - **Decision:** As recommendation 1 states; it clarifies F136.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R8.3, UJ1.3-h, the capture PRD F74
 
 ### F162 — Approved round-4 recommendation 2: R8.10d and R8.10e are outside reads (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 2: the readbacks R8.10 keeps to test builds are all but R8.10d–f. R8.10d and R8.10e are reads made from outside the app, which UJ9.4-b and UJ9.4-d may make against a Release build.
 - **Decision:** As recommendation 2 states; it clarifies F132.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R8.10
 
 ### F163 — Approved round-4 recommendation 3: A write the app makes by itself never ends "Undo change" (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 3: in R4.7, a write the app makes on its own never ends the undo history. An example is the Data Foundation PRD's damage mark, saved when the file is read. Only the user's own writes end it, as E8 says.
 - **Decision:** As recommendation 3 states; it clarifies F135.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R4.7, UJ6.4-q
 
 ### F164 — Approved round-4 recommendation 4: Two test-build inputs (2026-09-25)
 
@@ -1432,7 +1432,7 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
 
   UJ9.5-g's hold checks, and the sibling cases whose Givens declare R8.1f's hold, use the first. The F157 case uses the second.
 - **Decision:** As recommendation 4 states.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R8.10a, UJ9.5-g, UJ9.7-h, the capture PRD T7, the Data Foundation PRD DJ3
 
 ### F165 — Approved round-4 recommendation 5: The Data Foundation PRD's R3.4 and R6.2a wording (2026-09-25)
 
@@ -1440,7 +1440,7 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
   - The Data Foundation PRD's R3.4 names "the adaptation its sRGB derivation uses", restoring what the compaction lost.
   - Its R6.2a leaves R5.8's recovery copies aside from the files the app keeps beside the file.
 - **Decision:** As recommendation 5 states; the Data Foundation PRD records it under its F54 with a dated line.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** the Data Foundation PRD R3.4, the Data Foundation PRD R6.2a, the Data Foundation PRD F54
 
 ### F166 — Approved round-4 recommendation 6: The seam lines match (2026-09-25)
 
@@ -1449,25 +1449,25 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
   - The Data Foundation PRD's inbound Collection Mode line mends its "R2.9's Flag removal" phrase.
   - This PRD's Outbound Inventory Import row names F149's refusal of a commit while any session is in flight.
 - **Decision:** As recommendation 6 states.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** the Data Foundation PRD F56
 
 ### F167 — Approved round-4 recommendation 7: Where E10 and E6 render (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 7: E10's index row and Surfaces entry add the collection list; E6's add the collection list and the All items view.
 - **Decision:** As recommendation 7 states.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** E6, E10, UJ1.3-g, UJ1.3-h
 
 ### F168 — Approved round-4 recommendation 8: Returning to E9 whose item is gone (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 8: in R4.1, closing a result's detail returns to E9, worked out again, only while E9's own item remains; otherwise the table shows. A case removes E9's item by reading the file again, then closes the result's detail.
 - **Decision:** As recommendation 8 states; it clarifies F144.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** R4.1, UJ3.4-l
 
 ### F169 — Approved round-4 recommendation 9: The import PRD's E40 another-collection variant (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 9: the import PRD's E40 another-collection variant drops "waits" and reads: "A session in ⟨collection⟩ is active, paused or halted. Until it ends, imports aren't available in any collection, so the session's saves aren't held up." Its shared append asks the user to start the import again. E40 moves to that PRD's ready-for-alignment status, under a dated Import fence.
 - **Decision:** As recommendation 9 states.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** the import PRD E40, the import PRD F67
 
 ### F170 — Approved round-4 recommendation 10: Copy wording (2026-09-25)
 
@@ -1476,19 +1476,19 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
   - The Data Foundation PRD's E15 and E34 read "as it was before that".
   - E6's "full" condition names "Use this reading" among the actions it names.
 - **Decision:** As recommendation 10 states.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** E6, E8, the Data Foundation PRD E15, the Data Foundation PRD E34, the Data Foundation PRD F56
 
 ### F171 — Approved round-4 recommendation 11: ADR-0003's search input (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 11: the ADR-0003 search input adds R8.1c's budget to the budgets it names, and names the Mac its evidence was measured on (an M5 Max).
 - **Decision:** As recommendation 11 states.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** the Data Foundation PRD F53, the Data Foundation PRD F56
 
 ### F172 — Approved round-4 recommendation 12: What "Handoff" means in R8.6 (2026-09-25)
 
 - **Authority:** approved round-4 recommendation 12: "Handoff" in R8.6 means the system handing an activity to another device. It does not mean the user's own copy and paste, Universal Clipboard included.
 - **Decision:** As recommendation 12 states; it clarifies F130.
-- **Carried by:** _(filled by the round-4 fix pass)_
+- **Carried by:** UJ9.4-d
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1553,7 +1553,7 @@ than deciding a WHAT.
 - **F50** — R2.10, R4.4, R4.8, the Data Foundation PRD R1.2, the Data Foundation PRD F52
 - **F51** — M4
 - **F52** — R8.6
-- **F53** — R8.6, R8.10e, UJ3.3-f, UJ6.4-j, UJ6.4-k, UJ9.4-b, UJ10.1-d
+- **F53** — R8.6, R8.10e, UJ3.3-f, UJ6.4-j, UJ6.4-k, UJ7.1-r, UJ9.4-b, UJ10.1-d
 - **F54** — R1.9, R3.3, E3, E13, UJ7.1-i
 - **F55** — UJ4.4-f, the capture PRD R3.7, the capture PRD R8.18, the capture PRD UJ3.3-h, the capture PRD F71
 - **F56** — the capture PRD R11.15g, the Data Foundation PRD E33, the capture PRD F71, the Data Foundation PRD F52
@@ -1655,24 +1655,24 @@ than deciding a WHAT.
 - **F152** — R8.1f, R8.1g, UJ9.5-g, the import PRD R3.2, the import PRD F66, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD DJ3, the Data Foundation PRD F54, the capture PRD R1.1, the capture PRD T7, the capture PRD F73
 - **F153** — the Data Foundation PRD E34, the Data Foundation PRD R7.6p, the Data Foundation PRD F54
 - **F154** — governs no rows
-- **F155** — _(filled by the round-4 fix pass)_
-- **F156** — _(filled by the round-4 fix pass)_
-- **F157** — _(filled by the round-4 fix pass)_
-- **F158** — _(filled by the round-4 fix pass)_
-- **F159** — _(filled by the round-4 fix pass)_
+- **F155** — R8.1f, R8.1g, R8.10a, UJ9.5-g, the Data Foundation PRD R1.11, the Data Foundation PRD R1.3, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD R7.3j, the Data Foundation PRD DJ3, the Data Foundation PRD F56, the import PRD R3.2, the import PRD R3.8i, the import PRD F67, the capture PRD R1.1, the capture PRD R1.3, the capture PRD R1.5, the capture PRD R1.10, the capture PRD R3.5, the capture PRD R7.13, the capture PRD R8.5, the capture PRD R9.3, the capture PRD T7, the capture PRD F74
+- **F156** — UJ9.5-g, the Data Foundation PRD R1.11, the Data Foundation PRD R1.3, the Data Foundation PRD DJ3, the Data Foundation PRD F56
+- **F157** — R8.8, R8.10a, UJ9.7-h, the Data Foundation PRD R6.2a, the Data Foundation PRD R2.3, the Data Foundation PRD R1.5, the Data Foundation PRD R7.6q, the Data Foundation PRD E35, the Data Foundation PRD DJ4, the Data Foundation PRD F56
+- **F158** — UJ9.5-d, the Data Export PRD R1.1, the Data Export PRD EJ1, the Data Export PRD F32, the Data Foundation PRD R6.2a, the Data Foundation PRD F56
+- **F159** — UJ9.7-i, the Data Foundation PRD R7.3j, the Data Foundation PRD R7.6p, the Data Foundation PRD DJ3, the Data Foundation PRD F54
 - **F160** — governs no rows
-- **F161** — _(filled by the round-4 fix pass)_
-- **F162** — _(filled by the round-4 fix pass)_
-- **F163** — _(filled by the round-4 fix pass)_
-- **F164** — _(filled by the round-4 fix pass)_
-- **F165** — _(filled by the round-4 fix pass)_
-- **F166** — _(filled by the round-4 fix pass)_
-- **F167** — _(filled by the round-4 fix pass)_
-- **F168** — _(filled by the round-4 fix pass)_
-- **F169** — _(filled by the round-4 fix pass)_
-- **F170** — _(filled by the round-4 fix pass)_
-- **F171** — _(filled by the round-4 fix pass)_
-- **F172** — _(filled by the round-4 fix pass)_
+- **F161** — R8.3, UJ1.3-h, the capture PRD F74
+- **F162** — R8.10
+- **F163** — R4.7, UJ6.4-q
+- **F164** — R8.10a, UJ9.5-g, UJ9.7-h, the capture PRD T7, the Data Foundation PRD DJ3
+- **F165** — the Data Foundation PRD R3.4, the Data Foundation PRD R6.2a, the Data Foundation PRD F54
+- **F166** — the Data Foundation PRD F56
+- **F167** — E6, E10, UJ1.3-g, UJ1.3-h
+- **F168** — R4.1, UJ3.4-l
+- **F169** — the import PRD E40, the import PRD F67
+- **F170** — E6, E8, the Data Foundation PRD E15, the Data Foundation PRD E34, the Data Foundation PRD F56
+- **F171** — the Data Foundation PRD F53, the Data Foundation PRD F56
+- **F172** — UJ9.4-d
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link

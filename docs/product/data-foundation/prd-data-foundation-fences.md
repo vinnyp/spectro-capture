@@ -118,6 +118,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F154](../collection-mode/prd-collection-mode-fences.md), owner decision D35):** the budget is 8,200 words; see F55.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F160](../collection-mode/prd-collection-mode-fences.md), owner decision D41):** the budget is 8,300 words; see F55.
+
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
 **Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8, now the export PRD's R2.4). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
@@ -192,7 +194,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 
 | Fence | Rows that carry it |
 | :--- | :--- |
-| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its word budget (F21, 8,000 since 2026-09-14). |
+| F1 | Every row in the PRD body, plus its Background scope statement, its shape, and its word budget (F21 and F55, 8,300 since 2026-09-25). |
 | F2 | R1.1, R1.3; the Capture Mode OQ 19 line in [Sibling amendment map](#sibling-amendment-map); OQ 1. |
 | F3 | R2.4; the Capture Mode line in [Sibling amendment map](#sibling-amendment-map); OQ 3. |
 | F4 | R3.4; OQ 7. |
@@ -244,9 +246,10 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F50 | R1.2, R6.2, R7.6o, E33; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the copy header and Variants note; DJ4, DJ5. Clarified 2026-09-24 (E33's Export first at collection scope): R6.2, R7.6o, DJ4. |
 | F51 | R2.9; DJ2; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F33 clarification. |
 | F52 | R1.2, R2.3, R2.3f, R6.2a, R7.2, R7.6k, E8, E33; DJ2, DJ4, DJ5; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F17, F40 and F50 clarifications. |
-| F53 | R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F4, F17, F50 and F52 clarifications. |
-| F54 | R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F50 and F53 clarifications. Clarified 2026-09-25 (the Collection Mode PRD's F151–F153): R1.5, R1.9, R7.3j, R7.6p, E34; DJ3; the Collection Mode line. |
-| F55 | F1's amended text (the word budget, 8,200 since 2026-09-25); no requirement row. |
+| F53 | R1.10, R2.3, R3.4, R6.2a, R7.3j, R7.6p, E11, E26, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F4, F17, F50 and F52 clarifications. Clarified 2026-09-25 (the Collection Mode PRD's F171): the ADR-0003 search input in (5). |
+| F54 | R1.5, R2.3, R3.4, R6.2, R6.2a, R6.2d, R7.3j, R7.6p, E34, OQ 20; DJ3; the Collection Mode line in [Inherited obligations](prd-data-foundation.md#inherited-obligations) → "what other PRDs impose on this one"; the dated F50 and F53 clarifications. Clarified 2026-09-25 (the Collection Mode PRD's F151–F153): R1.5, R1.9, R7.3j, R7.6p, E34; DJ3; the Collection Mode line. Corrected and clarified 2026-09-25 (the Collection Mode PRD's F159 and F165): R3.4, R6.2a, R7.3j, R7.6p; DJ3. |
+| F55 | F1's amended text (the word budget, 8,300 since 2026-09-25); no requirement row. |
+| F56 | R1.3, R1.5, R1.9, R1.11, R2.3, R6.2a, R7.3j, R7.6q, E15, E34, E35, OQ 17; DJ3, DJ4; the Collection Mode inbound line and the Collection Mode, Capture Mode and Inventory Import outbound lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations); F1's map line; the dated F53 clarification. |
 
 ## Rejected findings
 
@@ -519,6 +522,8 @@ Source: the owner's round-2 decisions in the Collection Mode PRD's adjudication 
 
 **Clarified 2026-09-25 (F54, under [the Collection Mode PRD's F87, F88, F102 and F103](../collection-mode/prd-collection-mode-fences.md)):** (2)'s "any journal, log, index or other file beside it" is the files the app keeps beside it, in R2.3 and R6.2a; R6.2 and R6.2d now say unrecoverable "as R6.2a states"; and (5)'s search input reads: file-wide search uses an index kept in the file, or a scan, either one under (2)'s rule, answering every keystroke from the first character within the Collection Mode PRD's BROWSE_RESPONSE_BUDGET from the first rows of a cold open, and within its R8.1f's, R8.1g's and R8.2's budgets on its OQ 1 Mac, the Collection Mode review log's round-3 performance measurements being the evidence; it mandates neither. Peer review pending.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F171](../collection-mode/prd-collection-mode-fences.md), its approved round-4 recommendation 11):** (5)'s search input, as the line above restates it, answers within the Collection Mode PRD's R8.1c's, R8.1f's, R8.1g's and R8.2's budgets on its OQ 1 Mac, adding R8.1c's, and its evidence is the performance lens's round-3 measurements, on an M5 Max, in the Collection Mode review log; F56 (4) records it. Peer review pending.
+
 ## Collection Mode round-3 amendment (2026-09-25)
 
 Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F138, F139, F146, F147 and F150](../collection-mode/prd-collection-mode-fences.md), with the editorial and hand-off halves its round-3 fix pass carries under its F87, F88, F102 and F103. This fence carries only the Data Foundation halves of those decisions; peer review pending.
@@ -543,6 +548,12 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 
 **Editorial compaction 2026-09-25 (process rules 7, 11 and 14; no owner decision):** the PRD body went from 8,917 to 8,218 words by rule 14's method, removing only rule-free prose: fence and provenance cites inside row cells, preambles and obligation cells, with the Capture inbound cell's sibling-fence names kept as the dated 2026-09-18 clarifications record; text restating a rule that an ID row, a sibling row or a fence already states, the cite kept, in preambles, trailers, obligation cells and Open Questions decision cells; lists duplicated where one cites the other; and verbose phrasing of the F50–F54 additions, the status line and the Collection Mode inbound line among them. No rule, row scope, constant, ID, priority or status changed, and R1.2 is back to two sentences. The body is still 218 words over F21's 8,000 budget, and that goes back to the owner.
 
+**Corrected 2026-09-25 ([the Collection Mode PRD's F159 and F165](../collection-mode/prd-collection-mode-fences.md)):** the compaction changed meaning in two rows despite the sentence above — R7.3j lost 'which restores access only' (F151), and R3.4's appositive came to name sRGB's white rather than the adaptation (F146, (3) above); both are restored, R7.3j under the F159 line below and R3.4 under the F165 line. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F159](../collection-mode/prd-collection-mode-fences.md), owner decision D40):** Choose the file again restores access only, as the F151 line above settled and the compaction dropped from R7.3j; a different file chosen in its picker opens nothing, switches nothing and retries nothing, E34 staying up and the open file open. R7.3j says so, R7.6p lists it and DJ3 asserts it; R7.3j keeps its alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F165](../collection-mode/prd-collection-mode-fences.md), its approved round-4 recommendation 5):** R3.4 names the adaptation its sRGB derivation uses, as (3) above states and the compaction had blurred, and R6.2a leaves R5.8's copies aside from the files the app keeps beside the file. Both keep their alignment. Peer review pending.
+
 ## Collection Mode budget decision (2026-09-25)
 
 ### F55 — Word budget 8,200 (2026-09-25)
@@ -554,3 +565,19 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 **Why:** splitting the document or moving file-owned rules into Collection Mode would cost more clarity than 164 words of budget.
 
 **Rows:** F1's amended text; no requirement row.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F160](../collection-mode/prd-collection-mode-fences.md), owner decision D41):** the budget is 8,300 words — a second owner override of the agent-PRD format's never-raise rule, recorded here, so the round-4 rule text lands without further trimming; the body stood at 8,164 when it was raised. After the round-4 fix pass the body stands at 8,292, within the budget: every addition was tightened to its shortest form with the same meaning, and the status line's Collection Mode clauses — status bookkeeping, not rule text — became one clause citing F50–F54 and F56, whose Decision and Rows fields name every row, state and question the old clauses listed; no rule was trimmed.
+
+## Collection Mode round-4 amendment (2026-09-25)
+
+Source: the owner's round-4 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F155, F156, F157 and F158](../collection-mode/prd-collection-mode-fences.md), and its approved round-4 recommendations 6, 10 and 11, recorded as [its F166, F170 and F171](../collection-mode/prd-collection-mode-fences.md). Its F159 (R7.3j, R7.6p, DJ3) and F165 (R3.4, R6.2a) land as dated lines under F54 here, and its F160 under F55 and F21. This fence carries only the Data Foundation halves of those decisions; peer review pending.
+
+### F56 — One one-writer rule, a deferred wipe and its notice, an export read as one snapshot, and the round-4 wording and hand-offs (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F155–F158, F166, F170 and F171](../collection-mode/prd-collection-mode-fences.md) — owner decisions D36–D39 of its round-4 adjudication, 2026-09-25 (F155–F158), and its approved round-4 recommendations 6, 10 and 11 the same day (F166, F170, F171).
+
+**Decision:** (1) Under the Collection Mode PRD's F155 and F156, R1.11 states the one-writer rule: while a [Collection Mode R8.1f or R8.1g](../collection-mode/prd-collection-mode.md#8-operating-envelope-and-quality-attributes) write, an Import R3.2 commit or an R1.9 move runs, no capture starts or resumes and no re-read or other write to the file starts, each shown disabled, and closing the file, switching and quitting wait for it with its progress showing. R1.3, R1.5, R1.9 and R7.3j's move clause cite it, the first three in place of the Collection Mode R8.1f holds F54's F152 line records, and OQ 17's question adds where regeneration fits in it. (2) Under its F157, R6.2a defers the wipe of removed text while a read begun before the write still runs — this app's own or another app's — until that read ends or the file next opens, nothing waiting on it; R2.3 cites the deferral, E35 says so for another app's read and R7.6q tests it, and R1.5's help docs say reading the file elsewhere may delay wiping removed text. This narrows F53 (2), and supersedes F54 (4)'s help-docs clause that reading during capture may delay saves. (3) Under its F158, an export reads one snapshot, the file as it stood when the export started, and is among the reads R6.2a names; [the export PRD's F32](../export/prd-data-export-fences.md) records it there. (4) ADR-0003's inputs change as the Collection Mode PRD's F157, F158 and F171 decide: a text-removing write is saved without waiting on any read, only its wipe following the end of every earlier read, this app's own cold-load reads running short enough that the wipe follows within that PRD's BROWSE_RESPONSE_BUDGET — replacing F54 (4)'s input, which named an export among this app's short reads; and F53 (5)'s search input adds that PRD's R8.1c budget and names the M5 Max its evidence was measured on, as the F171 line under F53 records. (5) Under its F166, the inbound Collection Mode obligation line mends its R2.9 phrase and names E15, E35, R1.11 and the deferred wipe. (6) Under its F170, E15 and E34 read "before that". (7) Editorial, no owner decision: F1's map line names the current budget and points at F55; E33's Status cell, checked, already reads ⌛️ Ready for Alignment, as the status line records, so it needed no edit; and the status line's Collection Mode clauses become one clause citing F50–F54 and F56, which name the rows, states and questions those clauses listed. R1.3, R1.5, R1.9, R2.3, R6.2a and R7.3j keep their alignment; R1.11, R7.6q and E35 are ready for alignment; E15 and E34 change wording only.
+
+**Why:** each is the Data Foundation half of a Collection Mode round-4 decision about the file, a state or surface this PRD owns, its copy, or an input it hands ADR-0003.
+
+**Rows:** R1.3, R1.5, R1.9, R1.11, R2.3, R6.2a, R7.3j, R7.6q, E15, E34, E35, OQ 17, DJ3, DJ4, the Collection Mode inbound obligation line, the Collection Mode, Capture Mode and Inventory Import outbound lines, F1's map line, the dated F53 clarification.
