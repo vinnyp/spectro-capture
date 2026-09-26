@@ -32285,3 +32285,118 @@ The disposition of every lens on the two rows, each at the last round it reviewe
 | DF-R6.2 (with R6.2a) | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | 🤝 Aligned |
 
 Every non-abstaining lens ALIGNs, so both rows flip: Collection Mode R8.8 to `aligned` and the Data Foundation PRD's R6.2 (R6.2a carrying the lead's status) to `🤝 Aligned`. The flips land in the bookkeeping close with the amendment's other status surfaces; the second re-lock record follows below.
+
+## Re-lock (2026-09-26, after the follow-up review)
+
+PR #21's follow-up review, run against the first re-lock record's validated revision `94970c6`,
+verified seven of its eight original findings resolved and reopened the erasure thread (T3): F218's
+fourth Decision bullet still promised the main-file wipe met its normal deadline unconditionally,
+while `post-lock.md` recorded that a full volume refusing the required sync breaks that promise. The
+owner decided **D73** (Collection Mode F219, Data Foundation F63 — retry the main-file wipe like the
+log's clearing, durably, within 5 s of the file being open with room) and **D74** (Collection Mode
+F220 — raise the Data Foundation word budget to 8,480 to fit R6.2a's new clause). Rounds 22–24
+reviewed the fix with all nine lenses (`## Round 22 — the reopened erasure finding`, `## Round 23`,
+`## Round 24`); Data Foundation's R6.2 (with R6.2a) and Collection Mode's R8.8 reopened for round 22
+and flip back to aligned unanimously at round 24, with no standing objection. The validated revision
+is `e136e85d386cd4324361a26d42c29dfa0b26f5d3`. PR #21 carries this second re-lock to an attended
+merge; it does not merge itself.
+
+### Lock record — mechanical checks at the state that locks (2026-09-26)
+
+**What was run.**
+
+- **Subject:** `docs/product/collection-mode/prd-collection-mode.md` and its four companions, plus
+  the Data Foundation PRD (the follow-up's only touched sibling this round — Capture Mode, Inventory
+  Import, Data Export and Device Management were not re-opened).
+- **Commit:** `e136e85` on `docs/collection-mode-prd`, PR #21. Every script guards that
+  `docs/product` and `docs/decisions` equal `e136e85`.
+- **Roster:** checks 1–20 of `writing-agent-prds/references/mechanical-checks.md` (operator-agents
+  1.7.0), the same version both prior locks ran.
+- **Engines:** bash with `set -euo pipefail` and BSD grep, awk and perl; Python 3 `re`.
+- **Baselines.** Preservation baseline: `94970c6da22f9cbda824887eb7822b2f9b053380` (the first
+  re-lock — the commit this reopened round actually starts from; recorded in the CM fence preamble
+  beside `04dfb97` for the original F202–F218 span). Change baseline: `dc1b747f399bc94a29392c69bcfe8bd72bf94412`
+  (unchanged; still predates the PRD's existence on this unmerged branch, for the same reason the
+  first re-lock recorded). **Checks 8 direction 2 and 9 ran against `94970c6...e136e85`**, per the
+  same reasoning as the first re-lock (the change baseline would report the entire first-lock content
+  as unfenced). Both were also re-run against `04dfb97...e136e85` (the original preservation baseline)
+  since it was cheap: identical result — 71/71 id-carrying lines fenced (check 8) and 0
+  added/removed/changed triples (check 9) — confirming the whole amendment F202–F220 is fenced and
+  no row's ID/Pri/Status has drifted since the true first lock either. Check 14 keeps the change
+  baseline, `dc1b747...e136e85`, as before (it scopes to `post-lock.md`'s own ticks, read by hand).
+- **Scripts and outputs:** the orchestrator's scratchpad, `mech-relock/` (guards re-pointed in place;
+  outputs written with an `out2_` prefix alongside the first re-lock's `out/`).
+
+| # | Check | Verdict | Result / disposition |
+|---|---|---|---|
+| 1 | Cross-PRD consistency | PASS (1a disposed) | Unchanged from the first re-lock: 1a's 5 standing dispositions (PRD:476, 477, 479, 480, 497); 1c collide still 7 lines (no new UJ3.4 cases this round). |
+| 2 | Index sync | PASS (4 disposed) | The first re-lock's three dispositions (F205 +UJ2.3-g, F207 +R8.10b/+UJ5.3-q, F218 +DJ3(d)/+DJ3(j)) carry forward unchanged. New: **F219**'s map line reads "…DJ3 (d), (k), (l) and (m)…" against a Carried-by naming only "(d), (k) and (l)" — verified against the round-22 orchestrator-bookkeeping Clarified line ("the Data Foundation PRD's DJ3 (m) … also carries this fence"). F220 = "governs no rows", clean. Legend bullets re-derived Status-aware, unchanged (only OQ 10 open); "Interim stated" derivation and the R8.11 sibling-OQ exemption unchanged. |
+| 3 | Latent-decision inventory | PASS | Unchanged in kind. |
+| 4 | Row-transition index | PASS | Unchanged: A=B (4 states), 18 rows, same wide-verb-net dispositions (DJ3's new (k)/(l)/(m) live in the Data Foundation PRD's own journeys file, out of this check's scope on Collection Mode). |
+| 5 | Variant set | PASS | Unchanged, 12/12. |
+| 6 | Case refs and copy coverage | PASS | Unchanged; no new Collection Mode case IDs this round (DJ3's new cases are Data Foundation's). |
+| 7 | Constants in owning rows | PASS | Unchanged, 12/12; F220 is a budget fence only, no constant. |
+| 8 | Fence map against content | Dir. 1 PASS; dir. 2 PASS | Direction 1: 881 map items resolve (874 + 7 for F219/F220's own entries, including the new `DJ3(m)` form). Direction 2 (baseline note above): 42 changed lines against `94970c6`, 2 id-carrying (R8.8 in the PRD; the test-controls map's "the file" row is idless), both fenced once F219's Clarified-line extension is read in; 40 idless lines, all traced to F219/F220/the round-22-24 record (the new fences themselves, the reopened-then-closed status line, the Authority-index and Reopened/Closed lines, the test-controls map's scratch-file-sync addition) — nothing unattributed. Against `04dfb97` (cheap re-check): 71/71 id-carrying lines fenced, same as the first re-lock. |
+| 9 | ID, Pri and status diff | PASS | Against `94970c6`: 87 triples each side, 0 PARSE-MISS, 0 added/removed/changed, E-status 19/19 clean. Against `04dfb97` (cheap re-check): identical — 0 added/removed/changed. R8.8 and DF R6.2/R6.2a reopened to needs-discussion/⌛️ Ready for Alignment mid-round and flipped back to aligned/🤝 Aligned by round 24 — net no change in either PRD's own `(ID, Pri, Status)` triples at the state that locks. |
+| 10 | Two-sentence scan | PASS | Unchanged, 147 cells, 0 over 2 (R8.8's reworded clause stays within 2 sentences). |
+| 11 | Companion paths and links | PASS (disposed) | Part 1: 4/4. Part 2, at `e136e85` (before this section existed): the 5 standing round-6-fixes.md dispositions plus 3 forward references to this section's own anchor (`README.md:18`, `prd-collection-mode-fences.md:16` and `:1741`, all naming `#re-lock-2026-09-26-after-the-follow-up-review`) — resolved by this append (re-run below). |
+| 12 | Word count | PASS | Collection Mode: 12,399 of 12,400 (F210, unchanged — R8.8's rewording is net-neutral). Data Foundation: **8,473 of 8,480 (F220)** — the budget itself moved from 8,450 to 8,480 under D74; still under. Rule-migration scan: same 14 hits, same disposed classes (F219/F220's own Authority/Decision text cites R8.8/R6.2a inline and does not add a new uncited hit). |
+| 13 | Label check | PASS | 54/54, unchanged — this round added no new user-facing label (it changed row/fence prose and acceptance cases only). |
+| 14 | Post-lock ticks | PASS | Pair `(dc1b747, e136e85)`, change baseline. **7** ticks in `post-lock.md` outside the round fix files (one more than the first re-lock): the prior 6 carry forward (the DF/E34 item's text unchanged; the DF R6.2/R6.2a item's resolution note now extended to read "…flipped to aligned at round 21, then reopened by F219 (D73) for its round 22, and aligned again at rounds 23–24, PR #21" — verified true against rounds 21–24); the new 7th tick is the "needs owner (qualifies Collection Mode F218's fourth bullet, DF F62)" item (`post-lock.md:177`), now resolved: "Settled 2026-09-26 by owner decision D73 (Collection Mode F219, DF F63) … DJ3 (k), (l) and (m) test it" — verified true (F219/F63 exist and state exactly this; DJ3 (k)/(l)/(m) exist and test the full-volume retry). All 7 attributed to PR #21 (a stable identifier). 0 ticks taken back. |
+| 15 | Unresolved fill | PASS | Unchanged, 0 hits. |
+| 16 | Guidance comments deleted | PASS | Unchanged, 0 hits. |
+| 17 | Banned adjectives in asserts | PASS | Unchanged, 0 real hits. |
+| 18 | Test controls and asserted values | PASS | Unchanged: 13/13 surfaces driven (the amendment's scratch-file truncation/sync addition to "the file" row is a declared-surface edit, not a new surface); 7 residual When cells, same disposed class; 0 unsourced asserted values across the same 319 Collection Mode cases (DJ3's new sub-cases are Data Foundation's, outside this check's file scope). |
+| 19 | One priority semantic | PASS | Unchanged, exactly 1. |
+| 20 | Metrics read a stated observable | PASS | Unchanged, M1–M4 resolve. |
+
+**Totals.** MISS 0. NOT-RUN 0.
+
+**Lock conditions (SKILL.md Phase 6)**
+
+- [x] **Every row aligned.** Round 24's unanimous ALIGN (all nine lenses, no standing objection)
+  flips Collection Mode R8.8 back to `aligned` (CM:446) and the Data Foundation PRD's R6.2/R6.2a back
+  to `🤝 Aligned` (DF:216, :228) — confirmed by direct read of both PRDs, not only the log. Every
+  other row this reopening did not touch stayed aligned throughout (unchanged from the first re-lock).
+- [x] **The pre-lock round has run.** Carried from the first re-lock (round 11, with the plan lens).
+  This reopening is itself a delta round on an already-locked amendment, not a fresh pre-lock — round
+  22 (nine lenses, including plan) served that role for the newly reopened content, delta-verified
+  clean through rounds 23–24.
+- [x] **The mechanical preconditions ran clean** against `e136e85`, recorded above.
+- [x] **Zero NOT-RUN checks.**
+- [x] **The OQ contract complete.** Unchanged: the Open Questions table is byte-identical between
+  `94970c6` and `e136e85` (diffed directly) — OQ 1–9, 11, 12 answered with a `## OQ <id>` section
+  each, OQ 10 open with its interim rule, no stray section.
+- [x] **Exactly one priority-semantics bullet.** Check 19.
+- [x] **Template guidance comments deleted.** Check 16.
+- [x] **Zero unresolved placeholders.** Check 15.
+- [x] **No "peer review pending" wording left on any current status surface.** Zero hits on the
+  derived inventory (below).
+
+**No lock condition fails.**
+
+**Status-surface inventory (conversion-flow.md §7).** Re-swept the PRD, its four companions, the
+product-docs index, Data Foundation (body and fences — the only sibling this reopening touched) and
+the ADR decision-queue, for "peer review pending", "Amendment pending" and "not yet aligned". This
+PRD's status line reads "peer review closed" (amendment now F202–F220); Data Foundation's reads
+"peer review closed" (fence range now F50–F63); README row 6 already links the new anchor,
+`#re-lock-2026-09-26-after-the-follow-up-review`; the CM fence preamble carries no live "Amendment
+pending" fourth item and records the new preservation baseline `94970c6` beside `04dfb97`. 13 raw
+"peer review pending" hits, all in Data Foundation's fences file's dated Source: lines (fence
+history) — one more than the first re-lock's count, for F63's own new Source line, same class. 1 raw
+"Amendment pending" hit — the format's own rule paragraph (fences:18) describing the mechanism, not a
+live instance, unchanged from the first re-lock. 2 raw "not yet aligned" hits — `post-lock.md:158`
+(the same ticked-and-resolved post-lock item, its resolution note now extended and reverified true
+above) and a round-15-fixes.md process-history line, both unchanged in kind from the first re-lock.
+Zero hits on any current status surface.
+
+**Observation, outside this PRD's lock conditions.** The sibling fence ranges this second reopening
+touches are narrower than the first: only Data Foundation gained a fence (F63), and only Data
+Foundation's status line and fence range moved (F50–F62 → F50–F63); Capture Mode, Inventory Import,
+Data Export and Device Management are untouched by this round and carry no new pending wording of
+their own to close. Data Foundation's own dated Closed line for F50–F63 is not yet written — as
+before, it lands at the attended merge linking the owner's approval review (conversion-flow step 7
+part 3), extended one further fence from the first re-lock's F50–F62. Collection Mode's own Closed
+line for F202–F220 already landed in the close commit (`e136e85`) — the second amendment's status
+line reads "peer review closed" there directly, and the preamble's F202 Closed line already carries a
+dated Reopened line under it plus a fresh Closed line for F202–F220, both confirmed by direct read.
