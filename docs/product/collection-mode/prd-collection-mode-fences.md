@@ -1909,6 +1909,8 @@ Fences F219 and F220 were decided by the owner on 2026-09-26, over the PR #21 fo
 
 **Clarified 2026-09-26 (round-22 orchestrator bookkeeping; no owner decision):** the Data Foundation PRD's DJ3 (m), a delete with no outside read on a volume that refuses only the file's own sync, also carries this fence.
 
+**Clarified 2026-09-26 (round-23 orchestrator bookkeeping; no owner decision; product-marketing review's PMM23-1):** "refusal state" in the round-22 Clarified line above means any of R8.8's four: the Data Foundation PRD's E15, E10 and E34, and the capture PRD's E26.
+
 ### F220 — The Data Foundation PRD's word budget is 8,480 (2026-09-26)
 
 - **Authority:** owner decision D74, PR #21 follow-up adjudication 2026-09-26 (Data Foundation budget). Question: "The Data Foundation body is at 8,446 of its 8,450-word budget; either choice needs roughly 20–30 words in R6.2a. How should it fit?" Chosen: **Raise DF to 8,480** — "A dated fence like F214 raises the budget; R6.2a gains the clause in plain words." Not chosen: **Compact elsewhere to fit** — "Keep 8,450 and tighten other DF rows to make room; slower, and every compacted row reopens for review."
