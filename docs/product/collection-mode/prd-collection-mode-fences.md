@@ -13,9 +13,7 @@ amendment preserves them and does not re-decide them.
 
 **Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance.
 
-**Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`.
-
-**Amendment pending:** F202–F220 (2026-09-26), peer review pending — F219–F220 reopening F202–F218's re-lock for R8.8 and the Data Foundation PRD's R6.2a.
+**Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`. The follow-up review's reopening re-locked with [its own record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26-after-the-follow-up-review), amendment F202–F220, checks 1–20 at the validated revision it names.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -1739,6 +1737,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 **Closed 2026-09-26 ([re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26)):** For F202–F218, peer review closed 2026-09-26 (PR #21); re-locked on merge.
 
 **Reopened 2026-09-26 ([F219](#f219--a-full-volume-defers-the-main-file-wipe-until-room-returns-2026-09-26), owner decision D73):** PR #21's follow-up review reopened the erasure finding; R8.8 and the Data Foundation PRD's R6.2a reopen, and F202–F220 close together at the next re-lock.
+
+**Closed 2026-09-26 ([re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26-after-the-follow-up-review)):** For F202–F220, peer review closed 2026-09-26 (PR #21); re-locked on merge.
 
 ### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
 

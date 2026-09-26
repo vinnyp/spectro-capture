@@ -31879,3 +31879,409 @@ Correct in ways a quick read would flag:
 | DF-R6.2 (with R6.2a) | ALIGN | OBJECT | OBJECT | ALIGN | ALIGN | ALIGN | OBJECT | OBJECT | OBJECT | ⌛️ Ready for Alignment |
 
 A micro round 24 (product-marketing, staff-engineer, test, plan, database) re-checks the round-23 fix.
+
+## Round 24 — micro re-check of the round-23 fix (2026-09-26)
+
+Subject `5c99f7a`, scope `git diff 5d0a600 5c99f7a` over the DF journeys and both fences files, the five lenses that objected in round 23, under the owner's standing choice of "fix + micro re-check" for a late harness-level Major on rows whose text is unchanged. Every round-23 Major is recorded RESOLVED by its lens (PMM23-1, SSE23-1, TR23-1, PLAN23-M1, DB23-MAJOR-1); the test lens's mutation matrix and the database lens's probe confirm (m).
+
+### product-marketing
+
+## Verdict
+**Lands and is honest.** PMM23-1 is resolved, and the fix adds no new Blocker or Major. In (k), (l) and (m), none of R8.8's four refusal states can now render after the app's own refused wipe without the case failing. (m) also now fails a build that shows a delete that landed as not done, where before that build was only reported "not exercised".
+
+## Audience & message context (brief)
+- **Readers.** Builder agents and the owner read DJ3 (k)–(m), the F219 and DF F63 Clarified lines, and post-lock. The Cataloger reads E15, E10, E34, E26 and E35 as they render.
+- **Intended takeaway.** A delete that landed is shown as done. No refusal state, and no false "another app is reading", is shown for the app's own refused wipe.
+- **Scope.** I ran `git diff 5d0a600 5c99f7a` over the three named files plus post-lock, and read the review log's Round 23 verification and "What landed" sections.
+- **Short names.** DFj, CMf, DFf and PL are `data-foundation/prd-data-foundation-journeys.md`, `collection-mode/prd-collection-mode-fences.md`, `data-foundation/prd-data-foundation-fences.md` and `post-lock.md`, all under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/`.
+
+## Findings
+
+**(1) My round-23 Major**
+
+| ID | Status | Where |
+|---|---|---|
+| PMM23-1 | RESOLVED | All three cases now say "(E15, E10, E34 or the capture PRD's E26)": (k) at DFj:58, (l) at DFj:59 ("at no look, the close and the reopen included"), and (m) at DFj:60 ("at no look in either run, the reopen included … or E35 show"). The bookkeeping lines at CMf:1912 and DFf:727 define "refusal state" as any of R8.8's four, which matches R8.8's list (CM:446). Before the fix, a build could show E26 ("Can't find the file holding your collections") after a delete that landed and still pass. It now fails all three cases, and a correct build cannot fail them, because no other copy of the app and no missing volume exists in these fixtures. |
+
+My round-23 Minors and Nits:
+- **PMM23-2:** resolved. (l) at DFj:59 now covers the close and the reopen.
+- **PMM23-3:** resolved. PL:33 now says E35 "keeps its untrue 'another app is reading' … which (a) or (b) fixes", and the cite is corrected to PMM22-2.
+- **PMM23-4:** resolved in substance. DFf:727 now carries the durability clause, though as a separate line rather than word-identical to the Collection Mode line.
+- **PMM23-5:** routed to PL:32, whose next-pass item adds "or a power loss" to R8.8's "open or after a crash".
+- **PMM23-6:** partial (see the Nit below).
+
+**(2) New from the round-23 fix: no Blocker, no Major.**
+
+What I checked:
+- **(m)'s "the delete shows done" (DFj:60) is true.** Under (m)'s Given, only the file itself refuses new space and syncs, so the delete's commit reaches the log beside the file, which syncs. The second run's reopen also asserts, by an SQL read, that the item stays deleted.
+- **(m) no longer gives a false-green on a false failure.** (d)'s guard moved from "delete does not show done → not exercised" to "does not land, as an SQL read shows" (DFj:53). A build that tells the Cataloger their landed delete "wasn't saved" now fails (m) instead of being reported "not exercised, never passed".
+- **(m)'s second run does not contradict F219/F63 or the help docs.** Its not-exercised guard expects the removed text back in the file's bytes after a power loss while the volume is still full. F219 and F63 only promise the text gone "durably within 5 s of the file being open with room". The help-docs line (PL:218), "can stay in your file … until you free up space", stays true for that case.
+
+[NIT] **PL:33 (PMM23-6 partial): the E35 item now states option (b)'s budget cost twice, and the two statements disagree.**
+- The old wording is still there: "(a) and (b) … each needing a budget line like F214's … so (b) may need a sixth budget line".
+- The new sentence was added after it rather than replacing it: "On budget, (a) needs a budget line and (b) may fit in the 5 words left".
+- The owner weighs this item's "what each fixes and costs" and gets two answers for (b).
+- **Fix:** delete ", each needing a budget line like F214's, the Data Foundation body now standing at 8,475 of 8,480 (F220), so (b) may need a sixth budget line", and keep the "On budget" sentence.
+
+[NIT] **DFj:58, 59 and 60: the E26 link `../capture-mode/prd-capture-mode-copy.md` has no anchor.** Every other link to that file uses `#error--state-copy` (for example DF:239 and DF:322). Add the anchor.
+
+[NIT] **DFf:727: "the Collection Mode PRD's R8.8's four" has a double possessive.** Rewrite as "any of the four refusal states in the Collection Mode PRD's R8.8".
+
+[NIT] **DFj:58: (k)'s no-refusal window stays "from the delete showing done until the declared-full state is lifted", while (l) and (m) now say "at no look".** (m)'s first run, whose lift happens with the app running, largely backs up the time after the lift. Align (k)'s wording with (l) and (m) at the next pass.
+
+**Checked and correct, no change needed**
+- **The round-22 lines still read "(E15, E34)" (CMf:1908, DFf:723).** The dated round-23 line directly below each one corrects this, as the append-only fence convention expects. No reader is left with a two-state list without the correction right under it.
+- **With E26 now in scope, the unscoped line "A refused main-file wipe or sync … renders no refusal state" would also suppress a true E26 when the drive really is gone.** PL:32 already carries the rescoping to "a main-file wipe or sync a full volume refuses", which restores E26 for that case. Not re-raised.
+- **R8.8 and DF R6.2/R6.2a row text did not change in this diff, and status stays honest.** R8.8 is still needs-discussion and DF R6.2 is still ⌛️ Ready for Alignment.
+
+## Biggest risks   (what misleads, confuses, or loses the reader)
+- **None new from this fix.** The false "Can't find the file" and "another copy" screens after a landed delete are now caught by all three cases.
+- **Carried, not re-raised.** When the drive really is gone, the no-refusal line needs PL:32's full-volume scoping before a build reads it literally.
+
+## Genuinely strong   (incl. where plain-and-honest is right that a marketing-zealot would over-hype)
+- **The fix took the round-23 rewrite as written and closed PMM23-2 in the same edit.** (l) now covers the close and the reopen.
+- **(m) now asserts that the Cataloger sees their delete shown as done, sees no refusal state, and never sees an E35.** The last means no false "another app is reading your file" on a path where no other app is reading.
+- **No new user-facing string, no invented figure, and no hype.** Plain wording was the right choice here.
+
+## Missing / over-hyped
+- **Missing:** removing the duplicated budget sentence in PL:33, and the E26 link anchor.
+- **Nothing over-hyped.**
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### staff-software-engineer
+
+## Verdict
+**Ready — proceed.** The round-23 fix resolves SSE23-1. It lands both my preferred fix and my minimum fix: an outcome guard that does not depend on how the app syncs, and a probe that names every kind of sync. The fix introduces no new Blocker or Major. Two one-line Minors can go to post-lock.
+
+## What I reviewed
+- **Artifact.** A requirements document (agent-PRD), a round-24 micro re-check, subject commit `5c99f7a` (the worktree HEAD confirmed as `5c99f7a`). I read `git diff 5d0a600 5c99f7a` over the three scoped files in full, then re-read the resulting rows whole.
+- **Short names.** Under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`:
+  - DFJ = `product/data-foundation/prd-data-foundation-journeys.md`
+  - DF = `product/data-foundation/prd-data-foundation.md`
+  - DFF = `product/data-foundation/prd-data-foundation-fences.md`
+  - CM, CMF, CMJ = `product/collection-mode/prd-collection-mode{,-fences,-journeys}.md`
+  - PL = `product/post-lock.md`
+  - LOG = `agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md`
+- **Rows read in full:**
+  - DJ3 (d), (k), (l) and (m) (DFJ:51, :58–60).
+  - F219 with all its Clarified lines (CMF:1896–1912).
+  - DF F60–F63 with their Clarified lines (DFF:705–727).
+  - CM R8.8 (CM:446).
+  - DF R6.2, R6.2a, R7.3 and R7.4 (DF:216, :228, :239, :240).
+  - The E10, E15, E34 and E35 copy, and the capture PRD's E26.
+- **Also read:**
+  - CMJ's Test-controls map (CMJ:572–590).
+  - PL:32, :34, :35 and :183.
+  - LOG's round-23 "Orchestrator verification" and "What landed" sections (LOG:31858–31873).
+  - My own round-23 review.
+- **Could not verify:**
+  - I ran nothing.
+  - SQLite behaviour is source-level reasoning only. That covers the checkpoint copying pages in ascending page order, and the checkpoint's sync flags taking `SQLITE_SYNC_FULL` when `fullfsync=ON`.
+  - Nothing states whether R7.4's induced loss ends the app process.
+
+## Findings
+
+**(1) Round-23 Major from this lens**
+
+| ID | Status | Evidence |
+|---|---|---|
+| SSE23-1 | RESOLVED | See the three points below. |
+
+- **The probe names every kind of sync (DFJ:51).** (d) now reports (m) not exercised where "any kind of sync of the file itself (fsync(2), F_FULLFSYNC or F_BARRIERFSYNC), each tried from outside while the volume is declared full, succeeds". That is my minimum fix.
+- **The outcome guard landed (DFJ:51 and DFJ:60).**
+  - (d) adds "whose second run's byte read after its first loss, before the lift, finds the removed text in the file's own bytes nowhere".
+  - (m) gains a second run: a loss while the volume is still declared full, then lift, reopen and an SQL read; 5 to 6 s after the reopen, a second loss and a byte read.
+  - That is my preferred fix.
+- **The mutation trace.**
+  - Take SSE22-1's build (it retries only on SQLITE_BUSY and drops IOERR_FSYNC) under a hook that misses `F_BARRIERFSYNC`. Its checkpoint's sync at the delete's landing goes through, so the second run's first-loss read finds clean bytes and the whole of (m) reports not exercised. The `F_BARRIERFSYNC` probe also fires, so it is caught twice.
+  - Under a correct hook, the same build never retries after the lift. The first run's read after the loss then finds the text, and (m) fails.
+  - Because (d) keys on "a run of (m) whose second run's…", both runs are discarded together. That is the right coupling, since the first run's durability verdict depends on the same hook.
+
+**(2) New Blocker or Major introduced by the fix:** none. I traced a correct build through the new (m) Assert "within 5 s of [done]… the file's own bytes hold the removed text nowhere". Only the new space and the sync of the file itself are refused. A PASSIVE checkpoint copies frames in ascending page order. The text's page lies inside the file's seeded length, so it is written before any page past the end of the file, even if the delete grows the file. The bytes therefore read clean, and nothing in the fix contradicts F219, F63, F218, F215, F211, DF F60–F62, D72 or D73.
+
+**Minors for post-lock (one line each)**
+- [MINOR] **SSE24-m1 — DFJ:59 and DFJ:60.** The refusal window in (l) and (m) now runs across the induced loss "the reopen included" and lists the capture PRD's E26. But neither R7.4 (DF:240) nor CMJ's "the file" row says the loss ends the app. So a harness that simulates the loss by force-detaching the volume under a running app would see a correct build render E26 (R7.3's source-disappearance state) before the reopen, and fail. Fix: declare "the induced loss ends the app, as a power loss does" in the "file" row, by the route PL:35 already uses.
+- [MINOR] **SSE24-m2 — DFJ:51 (an addendum to PL:32, not a new item).** (d)'s new "(m) whose delete does not land, as an SQL read shows" does not say which SQL read. If the harness uses the read after the reopen, a delete lost to the loss reads as not exercised, so (m)'s "the SQL read after the reopen does not show the deleted item" can never fail. (l) still fails a lost delete, and PL:32's harness-keyed guard removes the gap. Until then, name "an SQL read taken before the first induced loss".
+
+## Clarifying questions for the author
+1. Does an induced loss (R7.4) end the app process, as a power loss does? Or may the harness leave the app running with its volume detached?
+2. Which SQL read does (d)'s "(m) whose delete does not land, as an SQL read shows" use: one taken before the first loss, or the one after the reopen?
+
+## Claimed properties
+- **"(m)'s guards: the delete lands, as an SQL read shows; every kind of sync of the file itself, each tried from outside, is refused; the second run's byte read after its first loss finds the text":** holds (DFJ:51). The SQL read's timing is SSE24-m2.
+- **"(m)'s declared-full state refuses new space and every kind of sync for the file itself only, with no log-slack precondition":** holds (DFJ:60). It matches PL:183's hook line and resolves DB23-MAJOR-1's refused delete.
+- **"(m)'s Assert gains the bytes clean within 5 s of the delete showing done, and no E35 through the reopen":** holds (DFJ:60). A correct build passes it (see (2) above). No E35 is consistent with F219's "raised nowhere F211 shows none", since there is no outside read.
+- **"The second run induces the loss while the volume is still full, then lifts, reopens and checks durability":** holds (DFJ:60).
+- **"(k), (l) and (m) list all four refusal states":** holds (DFJ:58–60), and matches R8.8 (CM:446).
+- **"(l)'s window covers the close and the reopen, its event comes no sooner than 6 s after read 1's end, and its SQL read moves into the When":** holds (DFJ:59). This resolves SSE23-n1.
+- **The fence bookkeeping lines (CMF:1912, DFF:727): "refusal state" means any of R8.8's four, and the DF line takes the durability tail:** holds. It is consistent with F219's round-22 Clarified line (CMF:1908) and changes no Decision.
+- **"No owner decision":** holds.
+- **The text of R8.8, R6.2 and R6.2a is unchanged:** holds. Neither PRD body is in the diff.
+
+## Genuinely sound
+- **The probe and the outcome guard work together.** The outcome guard catches a leak by any path: `sync(2)`, kernel writeback, or a sync call the list does not name. So the probe's list does not have to be complete.
+- **The second run closes the power-loss half of F219 for a delete with no outside read.** It fails a build that writes its pending-wipe marker only when a read defers the wipe (the narrow reading of PL:175), and a build that never checkpoints when it opens the file.
+- **The new "bytes clean within 5 s of done" Assert closes a real hole.** Take a build that never attempts the wipe while the volume is full. It was never "refused", so it falls outside R6.2a's exception, yet it passed the old (m) through its retry after the lift. It now fails.
+- **Dropping the log-slack precondition is the right fix for DB23-MAJOR-1.** The file-only refusal still reaches the IOERR_FSYNC path that SSE22-1 targeted.
+- **Adding E10 to the reopen after a crash is correct.** A stale hold left by a dead process must never block (DFJ:36).
+- **Not re-raised,** because post-lock carries them:
+  - SSE23-m1 and SSE23-m2 (PL:32);
+  - SSE23-m3 (PL:35);
+  - the `fullfsync=ON` item (PL:183).
+
+## Deferred
+- **peer-test-reviewer:** run the SSE22-1 mutation under `r23tr/probe_m23sys` with the new second run, and confirm that the first-loss guard fires when a hook misses `F_BARRIERFSYNC`.
+- **Database lens:** confirm, under (m)'s file-only state, that a PASSIVE checkpoint copies in ascending page order. Also confirm that a refused write past the end of the file leaves the lower-numbered pages already copied.
+- **Architecture lens / ADR-0003:** the scope of the pending-wipe marker (PL:175). The second run now fails the narrow choice.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+- **R8.8 is ALIGN.** Its full-volume exception is carried through R6.2a, and its acceptance, DJ3 (m), now fails a build that never retries under any hook the guards accept.
+- **DF-R6.2 (with R6.2a) is ALIGN.** SSE23-1 is resolved at DFJ:51 and DFJ:60. SSE24-m1 and SSE24-m2 are post-lock Minors and do not gate either row.
+
+### test
+
+## Verdict
+**The tests are trustworthy. TR23-1 is resolved, and the fix adds no Blocker or Major.** (m) now has two separate guards against a hook that lets a sync through. A mutation run confirms both: the round-23 false pass is now reported not exercised, and under a hook that refuses every kind of sync, the no-retry build fails both runs while a correct build passes both.
+
+## Coverage map (brief)
+- **What I reviewed.**
+  - The subject is `5c99f7a`, via `git diff 5d0a600 5c99f7a` over the three named files. I read them at that commit in `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`; the worktree is clean there and I changed nothing in it.
+  - I also read the round-23 log section and PL:32, :35 and :183.
+  - Short names:
+    - DFJ = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+    - CMF = `docs/product/collection-mode/prd-collection-mode-fences.md`
+    - DFF = `docs/product/data-foundation/prd-data-foundation-fences.md`
+    - PL = `docs/product/post-lock.md`
+- **Probes.** All are in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r24tr/`:
+  - `hook24.c` is (m)'s declared-full hook, which refuses syncs of the file itself only, plus a model of R7.4's loss. The loss restores each file to its bytes at its last sync that counts as safe: F_FULLFSYNC only (PL:183's rule), or any kind.
+  - `probe_m24.c` runs both of (m)'s runs with (d)'s guards (a) and (b). It compares a no-retry build with a build that retries at the lift and at open, both at `synchronous=FULL` with `fullfsync=1`.
+  - `ff_check.c` records which sync call each SQLite library issues.
+- **(m) mutation matrix.** Homebrew SQLite 3.53.4 counts only F_FULLFSYNC as safe. Apple's system SQLite 3.54.0 was run with any sync counted as safe, and gave the same pattern.
+
+| Hook | Build | Run 1 | Run 2 | Reported |
+|---|---|---|---|---|
+| Refuses all 3 kinds | no retry | post-loss byte read FAILS | reopen-clean and post-loss reads FAIL | FAIL (correct) |
+| Refuses all 3 kinds | retry at lift and at open | passes | passes | PASS (correct) |
+| Refuses `fsync(2)` only (TR23-1's hook) | no retry | every assert passes, but guard (a) fires | guards (a) and (b) both fire | NOT EXERCISED (was PASS at `5d0a600`) |
+| Refuses `fsync(2)` only | retry | guard (a) fires | guards (a) and (b) fire | NOT EXERCISED |
+
+  - Some runs of the system library lost the forked child at its start. That is an artifact of `fork()` in the probe; I discarded those runs, and the repeated runs were consistent.
+  - The new Given needs no spare space in the log. The delete's frames append to the log (4,152 bytes). The app's checkpoint returns rc=10 while the file's bytes read clean from cache, so a correct build can meet the new "within 5 s of done" assert.
+
+## Findings
+
+**(1) My round-23 Major**
+
+| ID | Status | Where |
+|---|---|---|
+| TR23-1 | RESOLVED | DFJ:51 and DFJ:60 (see below) |
+
+- **Guard (a), at DFJ:51.** It now reads "any kind of sync of the file itself (fsync(2), F_FULLFSYNC or F_BARRIERFSYNC), each tried from outside while the volume is declared full, succeeds". The round-23 hook fails it in both runs.
+- **Guard (b), at DFJ:51.** It now reads "whose second run's byte read after its first loss, before the lift, finds the removed text in the file's own bytes nowhere". It checks the outcome, so it works whatever kind of sync leaked, as long as the loss counts that sync as safe.
+- **The second run, at DFJ:60.** It induces the loss while the volume is still full, then lifts, reopens, takes the SQL read and checks durability. This also covers the branch round 23 left uncovered: no outside read, then a power loss while full.
+- **Why this closes it.** Under PL:183's loss rule, the only leak that could let a no-retry build pass is a leaked F_FULLFSYNC, and both guards catch that one.
+
+Round-23 Minors and Nits:
+- TR23-n3 is closed: (l)'s event now comes no sooner than 6 s after read 1's end (DFJ:59).
+- TR23-m1, m2, n1, n2 and n4 are carried at PL:35, so I don't re-raise them.
+- TR23-m3 is carried at PL:32. One consequence of the current "as an SQL read shows" wording, which was my own round-23 suggestion: (m)'s only SQL reads come after the reopen. So a delete that is lost is reported not exercised rather than failed; the probe shows this with the system library when only F_FULLFSYNC counts as safe. It never passes, and PL:32's re-key onto the harness fixes it.
+
+**(2) New Blockers or Majors from the fix: none.** I traced these wrong builds, and each one fails (m):
+- no retry, or retry only on SQLITE_BUSY: fails run 1's post-loss read;
+- retry only at the next open: fails run 1's post-loss read;
+- pending wipe remembered only in memory, with no checkpoint at open: fails run 2's reopen check;
+- retry more than 5 s late: fails the loss taken 5 to 6 s after the lift or the reopen;
+- a retry that isn't synced through F_FULLFSYNC: fails the post-loss read under PL:183's rule;
+- any build that shows E35 or a refusal state.
+
+These changed lines are consistent with the fences:
+- The four refusal states in (k), (l) and (m) match R8.8.
+- E10 must not render at a reopen after a crash or a loss; that agrees with R1.5's rule that a dead process's hold never blocks the owner.
+- E26 cannot arise when no capture is in flight.
+- CMF:1912 and DFF:727 agree with F219, F63, their Clarified lines, D73 and F218.
+
+**Minors and Nit (one line each, for post-lock)**
+- [MINOR] TR24-m1 (DFJ:60 (m)'s Given, and PL:35): the fix dropped "the volume reports no free space to the app". The new "within 5 s of done" assert (added for PM23-2) now catches a build that checks free space first only if the harness happens to report none. And PL:35's "TR19-m1 free-space guard extends to (k), (l) and (m)" would report every correct (m) run as not exercised whenever the harness reports some free space; that is never a false pass. Fix: (m)'s Given says a free-space query reports none (the log's new space is the hook's allowance), or PL:35 drops (m) from that extension.
+- [MINOR] TR24-m2 (PL:183, changed in `5c99f7a`): "`fullfsync=ON`, so the commit is F_FULLFSYNC'd" does not hold for Apple's system SQLite 3.54.0.
+  - With `PRAGMA fullfsync=1` and `checkpoint_fullfsync=1`, both reading back as 1, it issues F_BARRIERFSYNC for the commit and for the checkpoint. Homebrew 3.53.4 issues F_FULLFSYNC (`ff_check.c`).
+  - Under PL:183's own rule that only an F_FULLFSYNC'd write is safe, a build on the system library loses the delete itself whatever its pragmas: (l)'s loss run fails it, and (m) reports not exercised.
+  - That outcome is correct, but ADR-0003 needs a SQLite build (or VFS) that actually issues F_FULLFSYNC. The database and architecture lenses own the choice.
+- [NIT] TR24-n1 (CMF:1912): "the round-22 Clarified line above" points to two lines. The "refusal state" wording is in CMF:1908, not in the bookkeeping line at CMF:1910 directly above.
+
+## Biggest risks   (what could ship broken behind a green suite)
+- **The harness is still what the result rests on.** It needs a hook at volume level that refuses all three kinds of sync for the file only, and a loss that counts only F_FULLFSYNC as safe (PL:35, PL:183). If the loss rule changes, guard (b)'s reach changes too, but guard (a) still covers the three named kinds.
+- **The system SQLite trap (TR24-m2).** A builder who follows PL:183 literally on the macOS system library gets a red DJ3 with no row that explains why.
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **The two guards complement each other.** Guard (a) is cheap and checks the hook before anything depends on it. Guard (b) checks the outcome and doesn't care which kind of sync leaked. Only the leak that matters under PL:183 could let a no-retry build pass, and both guards catch it.
+- **The second run is the smallest addition that lets (m) check itself.** It also fails a build that keeps its knowledge of a pending wipe only in memory.
+- **The new Given can be built and is fair to a correct build.** The checkpoint copies pages before it tries to sync the main file, so the bytes read clean within 5 s even though that sync is refused.
+- **(l)'s changes are right.** The 6 s bound, the SQL read moved into the When, and the four refusal states add no false failure.
+- **Correctly not flagged:**
+  - OS writeback before the loss: R7.4's loss drops everything not yet safely written, and the realism guard reports a loss that does nothing.
+  - An exotic build that copies the file and renames it during the full window: it could only be reported not exercised, never pass.
+
+## Missing / over-tested
+- **Missing:** a statement in (m)'s Given of what a free-space query reports (TR24-m1).
+- **Over-tested:** nothing.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### plan
+
+## Verdict
+Ready to execute. My round-23 Major (PLAN23-M1) is resolved twice over, and the fix adds no new Blocker or Major. What remains is three Minors and one Nit, for post-lock.
+
+## Findings
+
+**Scope and file names.** I ran `git diff 5d0a600 5c99f7a` over the three named files. HEAD is `5c99f7a` and the worktree is clean. I read DJ3 (d) and (k)–(m) at HEAD, F218, F219 and every Clarified line under them, DF F63, R6.2, R6.2a, R7.2–R7.4, the round-23 log section (verification, what landed, dispositions) and the post-lock diff. The CM and DF PRD bodies are unchanged between the two commits.
+
+Short names, all under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/`:
+
+| Name | File |
+|---|---|
+| DFJ | `docs/product/data-foundation/prd-data-foundation-journeys.md` |
+| DFF | `docs/product/data-foundation/prd-data-foundation-fences.md` |
+| CMF | `docs/product/collection-mode/prd-collection-mode-fences.md` |
+| PL | `docs/product/post-lock.md` |
+
+**(1) Round-23 Major from this lens**
+
+| ID | Status | Where |
+|---|---|---|
+| PLAN23-M1 | RESOLVED | DFJ:51 (the (m) guards in (d)), DFJ:60 ((m)'s second run) |
+
+- **Fix (a) landed.** (d) now reads "any kind of sync of the file itself (fsync(2), F_FULLFSYNC or F_BARRIERFSYNC), each tried from outside while the volume is declared full, succeeds".
+- **Fix (b) landed.** (d) adds "whose second run's byte read after its first loss, before the lift, finds the removed text in the file's own bytes nowhere". (m)'s When now has a second run whose loss comes at least 5 s after the delete shows done, while the volume is still declared full.
+- **The round-23 mutation now fails.** The mutation was a hook that misses F_BARRIERFSYNC, on a build with no retry path. It is stopped in two ways:
+  - The outside F_BARRIERFSYNC in (a) succeeds, so the run reports not exercised.
+  - The app's leaked checkpoint sync makes its in-place copy durable. The second run's read after the loss is then clean, so (b) reports not exercised whatever primitive leaked.
+- **SSE22-1's build fails now.** That build retries only a wipe that a read deferred. With a hook that refuses every sync, the first run's loss after the lift reverts its unsynced copy, and the final byte read fails.
+- **My round-23 Minors are settled.**
+  - (m)'s E35 window now runs "at no look in either run, the reopen included".
+  - The log-slack precondition is gone.
+  - R8.8's durability wording and the test-controls map are carried at PL:32 and PL:35.
+
+**(2) New Blockers and Majors from the fix:** none.
+
+Correct in ways a quick read might flag:
+- **(b) does not trip a correct build.** Stock SQLite syncs the log first, which (m) allows. It then copies in place, and only then is refused the main file's sync. The copy is never synced, so the loss reverts it and the text is back, and the run counts as exercised.
+- **(m)'s reopen checks bite.** The failed checkpoint does not mark the log copied, so the delete's log frames survive the loss. The SQL read after the reopen therefore hides the item, and the retry at the open with room has real work to redo. This is F219's "first open with room after … a power loss".
+- **The new Assert and guard (b) line up.** The Assert wants the bytes clean within 5 s of done, and (b)'s loss comes no sooner than 5 s after done. So (b) always tests a copy that has already happened.
+- **The refusal-state lists are right.** "E15, E10, E34 or E26" in (k)–(m) matches R8.8's four, as CMF:1912 and DFF:727 now record.
+- **(l)'s move to 6 s is right.** It guarantees a look at or after 5 s before the event, which (d)'s last-look guard needs.
+
+Minors and Nits, one line each, for post-lock:
+
+[MINOR] DJ3 (m) (DFJ:60): "within 5 s of [done] … the file's own bytes hold the removed text nowhere" goes further than F219 while the sync is refused. It relies on R6.2a's "from the moment the delete lands" still binding a wipe the volume allows. Only a build that tests the main file's sync before its checkpoint copies would fail it. A Clarified line under F219/F63 would settle the reading.
+
+[MINOR] DJ3 (m) (DFJ:60) against PL:35: the fix dropped "the volume reports no free space to the app" from (m)'s declared state, but PL:35 still extends TR19-m1's "a free-space query reports free space → not exercised" guard to (m). Either put the phrase back, "until room returns" as in (k), or take (m) out of that extension. Otherwise a retry that keys on reported free space has no signal to act on in (m).
+
+[MINOR] DJ3 (d) realism guard (DFJ:51): the scratch file is overwritten once, at or before the delete (PL:35's TR23-n4), so the guard proves only that the first loss drops unsynced writes. (m)'s second run now depends on a second loss, as (l)'s power-loss run already did. Overwrite the scratch file again before each loss and check it after each. This replaces my round-23 "say 'the last'" Nit, which would have made the guard vacuous.
+
+[NIT] CMF:1912 and DFF:727: "the round-22 Clarified line above" matches two round-22 lines, and only the D73 line has "refusal state". Call it "the D73 line".
+
+## Biggest risks (if executed as-is)
+1. **Reported free space in (m).** The Given says nothing about it, while PL:35 will add a guard that needs it to read zero. A harness author could build either way, and (m) may then report "not exercised" for a correct build.
+2. **The second loss is unproven.** The realism guard checks only the first loss. A harness whose second loss fails quietly weakens (m)'s second run and (l)'s power-loss run.
+
+## Plan strengths
+- **PLAN23-M1 is closed by both fixes.** One checks the mechanism (every kind of sync, named). The other checks behaviour and works whatever primitive the app uses.
+- **DB23-MAJOR-1 is closed the right way.** (m)'s refusal is now scoped to the file itself, so a build that truncates its log to zero still lands its delete. The "delete lands, as an SQL read shows" guard names the harness defect for what it is. Its SQL-read timing is carried at PL:32.
+- **The row text is unchanged.** Every change sits in DJ3 cells and bookkeeping Clarified lines, so the DF budget (8,475 of 8,480) and CM R8.8 are untouched.
+
+## Spec coverage gaps (requirements with no task)
+- None new. The round-23 gap (a read begun after the refused wipe) is now carried at PL:35 ("Round 23 adds: … a second outside read begun while still full…").
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+- **R8.8 (CM:446) is ALIGN.** Its text is unchanged and hands the full volume to R6.2a. Its power-loss wording is carried at PL:32.
+- **DF-R6.2 (with R6.2a) is ALIGN.** Both are unchanged and correct against F219, F63 and their Clarified lines. The acceptance evidence behind the round-23 OBJECT, DJ3 (m), now has both guards, so a build with no retry path cannot pass.
+
+### database
+
+## Verdict
+**Sound.** The round-23 fix resolves DB23-MAJOR-1. On a probe, correct builds with either log clearing, at FULL or NORMAL, pass both of (m)'s runs. The fix adds no Blocker or Major, only one Minor and two Nits.
+
+## Schema & engine (brief)
+- **Subject.** Commit `5c99f7a` (HEAD, worktree clean), read through `git diff 5d0a600 5c99f7a` over the three named files. I also checked post-lock and the review log's round-23 section.
+- **Engine.** There is no DDL; ADR-0003 owns the schema. The rows assume WAL, `secure_delete=ON` and a PASSIVE or TRUNCATE checkpoint as the wipe.
+- **Probe** (under `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round24/db24-probe/`; nothing written to the repo):
+  - `plshim24.c` is round 23's shim plus a mode "L". That mode is a leaky hook: it refuses new space for the main file but refuses no sync.
+  - `probe_m24.py` runs both of (m)'s runs; the output is in `out_m24.txt`.
+  - SQLite 3.53.4. The induced loss restores each file's last-synced image.
+- **Abbreviations** (under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/`): DFJ / DFF = `docs/product/data-foundation/prd-data-foundation{-journeys,-fences}.md`; CMF = `docs/product/collection-mode/prd-collection-mode-fences.md`; PL = `docs/product/post-lock.md`.
+
+## Findings
+
+**(1) My round-23 Major**
+
+| ID | Status | file:line |
+|---|---|---|
+| DB23-MAJOR-1 | RESOLVED | See below |
+
+- **DFJ:60, (m)'s Given.** It now reads "for the file itself, a write that needs new space and every kind of sync fail … while every other operation on the file, and every operation on any other file in its folder, new space and syncs included, succeeds". The log-slack precondition and "reports no free space" are both gone.
+- **PL:183.** The hook line now carries (m)'s file-only state.
+- **Probe result (`out_m24.txt`).** Correct builds pass both runs with either clearing (PASSIVE or TRUNCATE) at either level (FULL or NORMAL). In round 23 a truncating build got SQLITE_FULL and (m) could never run.
+- **Wrong builds still fail:**
+  - A build with no retry after the lift fails run 1 ("text after the induced loss").
+  - A build that never clears at open fails run 2. The new second run adds exactly this discrimination.
+- **The new guard in (d) (DFJ:51) works.** "Second run's byte read after its first loss … finds the removed text … nowhere" reports the leaky hook as not exercised whatever sync primitive leaks. It never fires on a correct build.
+
+**(2) New findings.** No Blocker or Major. The Minor and Nits below are for post-lock, one line each:
+- **[MINOR] DFJ:51, (d)'s "a run of (m) whose delete does not land, as an SQL read shows".** Every SQL read (m) takes comes after an induced loss. So a delete that a power loss undoes is reported "not exercised" instead of failing, and (m)'s own "the SQL read after the reopen does not show the deleted item" can never fail. In the probe, a `synchronous=OFF` build is NOT EXERCISED in both runs; before the fix, run 1 failed it. It still never passes, and (l), R7.4 and PL:35's TR23-m1 run catch a delete that doesn't reach disk. PL:32 already carries re-keying this guard on the harness; add that the key must be read before the first induced loss.
+- **[NIT] CMF:1910 and DFF:725 are stale.** Both still describe (m) as "a volume that refuses only the file's own sync", but (m) now also refuses the file's own new space. Separately, CMF:1912's and DFF:727's "the round-22 Clarified line above" means CMF:1908 and DFF:723, two lines up, not the line directly above.
+- **[NIT] DFJ:60, (m)'s second run.** It counts "within 5 s of the reopen" from the reopen itself. PL:35's round-23 database Nit moves (l)'s reopen timings to the file's opening state (R7.6b); extend it to (m)'s second run.
+
+## Biggest risks   (what corrupts or returns wrong data first as the data grows/ages)
+1. **Hook fidelity, still carried at PL:183.** DJ3 (k)–(m) only test anything if the hook refuses every sync primitive and the induced loss really drops unsynced writes. The new first-loss guard in (m) now catches a leak there, whatever primitive leaks.
+2. **Misattribution.** A build whose delete doesn't reach disk shows up in (m) as "not exercised", not as a failure (the Minor above). A builder could chase the harness instead of the commit's durability.
+
+## Genuinely sound
+- **The file-only state is the right isolation.** The delete's log frames land and sync on every build. The checkpoint's in-place copy lands, and only the main file's sync is refused. So (m) tests exactly "a copy that landed but was never synced is treated as done", and it doesn't depend on how long the build leaves its log at rest.
+- **The added Assert "within 5 s of the delete showing done, the file's own bytes hold the removed text nowhere" is correct.** A correct build's checkpoint copies in ascending page order and overwrites in place. Even a delete transaction that grows the file clears the text page before the growing write fails.
+- **(l) is sound.**
+  - "No sooner than 6 s after read 1's end" guarantees the ≥5 s look that (d) keys on comes before the event.
+  - "At no look, the close and the reopen included" is right: a dead process's hold never raises E10 (R1.5). E26 and E34 don't apply.
+  - Moving (l)'s SQL read into the When answers my round-23 Nit.
+- **The four-state reading of "refusal state" at CMF:1912 and DFF:727 matches R8.8's own list.** It widens, not contradicts, F219's and F63's "no refusal state (E15, E34)" for the app's own wipe. The durability tail at DFF:727 now matches CMF:1908.
+- **Correct not to flag:** NORMAL builds pass (m). Their checkpoint's log sync runs before the loss, and (l)'s power-loss run and PL's TR23-m1 run are what fail them.
+
+## Missing / over-engineered   (absent constraints/migrations OR needless normalization/indexes)
+- **Missing:** a key for (m)'s "delete lands" guard that is read before any loss (extends PL:32).
+- **Over-engineered:** nothing. The second run earns its place: it is the only DJ3 run that fails a build that never clears at open after a power loss taken while the volume was still full.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### Editorial edits
+
+- DJ3 (k), (l) and (m): the capture PRD's E26 link gains its `#error--state-copy` anchor (editorial, a link target in the same owning document).
+- `post-lock.md`: the E35 owner item's duplicated budget clause is removed, keeping "On budget, (a) needs a budget line and (b) may fit in the 5 words left" (editorial).
+
+### Dispositions (final, rounds 23–24)
+
+The disposition of every lens on the two rows, each at the last round it reviewed them. Neither row's text changed after round 22's fix pass; rounds 23–24 changed only DJ3's case wiring and bookkeeping lines.
+
+| Row | PM (r23) | SSE (r24) | TR (r24) | IF (r23) | ARCH (r23) | PRIV (r23) | PMM (r24) | Plan (r23/r24) | DB (r23/r24) | Resulting status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R8.8 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | aligned |
+| DF-R6.2 (with R6.2a) | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | 🤝 Aligned |
+
+Every non-abstaining lens ALIGNs, so both rows flip: Collection Mode R8.8 to `aligned` and the Data Foundation PRD's R6.2 (R6.2a carrying the lead's status) to `🤝 Aligned`. The flips land in the bookkeeping close with the amendment's other status surfaces; the second re-lock record follows below.
