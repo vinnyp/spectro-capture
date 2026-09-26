@@ -1,6 +1,6 @@
 # PRD: Data Foundation
 
-Status: locked (2026-09-16); PR #17 agent-build amendment approved 2026-09-17 (F33–F49); PR #18 Export-mirror amendment (R7.7a/e/i/l/n, Data Export obligation); Collection Mode amendments 2026-09-24 and 2026-09-25 under F50–F54 and F56–F58 (rows, states and questions as those fences list; alignment kept on amended ones, new ones ready for alignment), peer review pending. Requirements remain aligned, not implemented.
+Status: locked (2026-09-16); PR #17 agent-build amendment approved 2026-09-17 (F33–F49); PR #18 Export-mirror amendment (R7.7a/e/i/l/n, Data Export obligation); Collection Mode amendments 2026-09-24 and 2026-09-25 under F50–F54 and F56–F58 (rows, states and questions as those fences list; alignment kept on amended ones, new ones ready for alignment), peer review closed 2026-09-25 (PR #21). Requirements remain aligned, not implemented.
 
 Companions: [journeys](prd-data-foundation-journeys.md), [shipping copy](prd-data-foundation-copy.md), [answered questions](prd-data-foundation-oq-results.md), [owner decisions](prd-data-foundation-fences.md).
 
