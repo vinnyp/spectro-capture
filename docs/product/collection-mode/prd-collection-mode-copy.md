@@ -70,12 +70,12 @@ read-only file states; and the Data Export PRD's E1.
 
 ### E3 — Collection shown
 
-- Status: aligned
+- Status: pre-alignment
 - Phase: none
 - Variants enumerated by: R3.4
 - Headline: ⟨collection⟩
 - Body: ⟨n⟩ swatches. ⟨unlike⟩ swatches whose colour was worked out for a different light or viewing angle come after the rest in this order.
-- Actions: "Filters", "Clear search", "Clear filters", "Colour marks", "Columns" [phase: action-absent], "Rename collection", "Delete collection", "Export collection", "Delete swatch", "Undo change" [phase: action-absent], "Select all" [phase: action-absent], "Set a field" [phase: action-absent], "Delete selected" [phase: action-absent], "Use as scan order" [phase: action-absent], "Rename column" [phase: action-absent], "Grid" [phase: action-absent], "Table" [phase: action-absent]
+- Actions: "Filters", "Clear search", "Clear filters", "Clear sort", "Colour marks", "Columns" [phase: action-absent], "Rename collection", "Delete collection", "Export collection", "Delete swatch", "Undo change" [phase: action-absent], "Select all" [phase: action-absent], "Set a field" [phase: action-absent], "Delete selected" [phase: action-absent], "Use as scan order" [phase: action-absent], "Rename column" [phase: action-absent], "Grid" [phase: action-absent], "Table" [phase: action-absent]
 - Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches match. ⟨unlike⟩ swatches whose colour was worked out for a different light or viewing angle come after the rest in this order.
 
 ### E4 — No search matches
@@ -175,12 +175,12 @@ are grouped under the Mark labels table's group headings, in that table's order.
 
 ### E13 — All items shown
 
-- Status: aligned
+- Status: pre-alignment
 - Phase: [phase: surface-absent]
 - Variants enumerated by: R3.4
 - Headline: All items
 - Body: Every swatch in your ⟨collections⟩ collections, in one list. ⟨n⟩ swatches in all. ⟨unlike⟩ swatches whose colour was worked out for a different light or viewing angle come after the rest in this order.
-- Actions: "Filters", "Clear search", "Clear filters", "Colour marks"
+- Actions: "Filters", "Clear search", "Clear filters", "Clear sort", "Colour marks"
 - Variant: "narrowed" — a search or a filter is active. ⟨shown⟩ of ⟨n⟩ swatches across ⟨collections⟩ collections match. ⟨unlike⟩ swatches whose colour was worked out for a different light or viewing angle come after the rest in this order.
 
 ### E14 — Swatch detail
@@ -265,7 +265,9 @@ and awaiting-answer mark earlier readings and are not filter values (R3.4 filter
 | awaiting-answer | Earlier readings | Awaiting answer | — | awaiting answer |
 
 **Column headers** (R2.1, R1.9). The chip column has no header text; an imported column is headed
-by the name the file stores for it.
+by the name the file stores for it, tagged " (imported)" where that stored name equals a Swatch
+field's name or another header in this table, and, where the tagged label still clashes with
+another column's, by the import PRD's collision form, "⟨base⟩ (⟨suffix⟩)", counting from 2.
 
 | Column | Header |
 |---|---|
@@ -302,4 +304,4 @@ awaiting your answer; restore — Earlier reading used again.
 | R5.2c Reason | Why | The reason's words above, and Current on the current reading |
 | R5.2d Standing | Marks | The chip labels of never-true, awaiting-answer and unreadable where they apply |
 | R5.2e Value | Colour | The chip, samples kept and spread |
-| R5.4 distance | From current | ΔE2000 and the distance; or, where the two were worked out under different light, observer or condition: Not compared — worked out for a different light, viewing angle or measurement condition |
+| R5.4 distance | From current | ΔE2000 and the distance; for an earlier reading with no value in this collection's measurement condition: Not compared — no value in this collection's measurement condition; for an unreadable reading: Not compared — this reading can't be read, which in Compare's single slot wins over the no-value line; or, where both readings have values worked out differently: Not compared — worked out for a different light, viewing angle or measurement condition |

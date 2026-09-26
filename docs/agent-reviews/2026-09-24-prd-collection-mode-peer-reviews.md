@@ -18950,3 +18950,170 @@ The Collection Mode PRD is locked: `Status: locked (2026-09-25)`, commit `2dc7f7
 **Observation, outside this PRD's lock conditions.** No sibling fence file carries a dated Closed line for its PR #21 fence range: DF F50–F58, capture F70–F76, import F65–F68, export F31–F34 and device F32. Capture fences:434 set that precedent for PR #20, and conversion-flow step 7 part 3 asks for one at each sibling's bookkeeping close.
 
 **Orchestrator disposition of the observation.** The dated Closed lines in the five sibling fence files (DF F50–F58, Capture F70–F76, Import F65–F68, Export F31–F34, Device F32) are written at the attended merge. They link the owner's approval review of PR #21, as the PR #20 precedent (Capture fences:434) links its final review. The sibling status lines already record the peer-review gate as closed (PR #21).
+
+
+## Round 10 — the PR #21 review (2026-09-26)
+
+The subject is `04dfb97`. There were two reviews and eight inline threads (T1–T8), relayed as peer-agent feedback; round 10 is an out-of-band review, so no lens was dispatched this round.
+
+### Review 1 — vinnyp, 2026-09-26T04:12:29Z (COMMENTED)
+
+Reviewed against the agent-buildable format used for the other PRDs at `04dfb97`.
+
+The structure follows that format: behavior rows with stable IDs, separate fixture/action/oracle cases and copy, decision fences, explicit sibling ownership, and build gates that preserve the unresolved ADRs. My targeted checks found 122 unique requirement/copy/metric row IDs, 294 unique acceptance-case IDs with resolving source-row references, 201 fence sections and map entries, and no broken Markdown file/heading links in the new PRD and its four companions.
+
+Two format/closure issues remain below. Please complete the promised final lock validation and make the decision authority navigable before merge. The existing post-lock items remain explicitly deferred; this review is not asking to reopen the settled product choices or implement those follow-ups here.
+
+Validation was a read-only document review and targeted structural checks, not a substitute for the full mechanical lock roster. No application tests or hardware checks apply to this documentation-only change.
+
+### Review 2 — vinnyp, 2026-09-26T04:20:15Z (COMMENTED)
+
+Correctness/buildability audit of `04dfb97`, following the owner's request to go beyond format. **I would not hand this revision to a build agent as a complete contract yet.** Six inline findings identify one conflicting storage guarantee and five missing behavior contracts. Each includes a concrete trigger and the decision/case needed to close it. These are additional to the two earlier format comments.
+
+The erasure issue was previously recorded as a post-lock owner item. Under the requested “build without unanswered decisions” standard, it must be resolved in the authoritative contract, not merely carried as a later qualification. I verified its WAL counterexample locally; this review does not choose a storage implementation.
+
+There are also explicit existing readiness gates, separate from the six findings:
+
+- **Every row waits for ADR-0003, ADR-0005 and ADR-0006**, all still queued in the decision index. ADR-0004 separately gates the capture/collection navigation seam.
+- **Delete undo remains unbuildable** until Collection OQ 10 / Data Foundation OQ 20 closes, or its release scope is explicitly settled under the documented deferral rule.
+- **The new Data Foundation contracts R1.11, R7.6p/q and E34/E35 still require their own alignment**, as the first-build post-lock item records.
+- **R8.11 cannot be fully verified without the engineering plan's ROW_CONFIRM_BUDGET.** UJ9.5-d correctly reports that half not exercised until the value is declared; that is not a completed acceptance result.
+- OQ 11 still requires independent validation of the quoted colour-distance fixtures. OQ 1–7/12 have concrete interim rules; those rules let an agent proceed within their stated scope, but they are provisional and should not be represented as closed decisions.
+
+To meet the requested handoff standard, resolve the six findings and actual stop gates, and explicitly ratify any interim values intended to be the v1 contract. An aligned document and an implementation-ready document are different states here.
+
+Validation: traced behavior rows against copy, journeys, fences and sibling contracts; inspected the existing review dispositions and post-lock items; ran a focused SQLite erasure reproduction. No project files were changed, and no application implementation exists to run end-to-end tests against.
+
+### Inline comment T1 — `docs/product/collection-mode/prd-collection-mode.md:3` (2026-09-26T04:12:29Z)
+
+[P2] Record final-state validation before declaring the PRD locked
+
+The body and index already say locked, but the PR checklist explicitly leaves the final full mechanical roster unchecked. The review log ends with round 9's “flip-eligible” disposition; it does not contain the promised final lock record, and earlier check results cover earlier revisions or subsets. A builder cannot tell whether the exact contract now marked locked passed the full gate.
+
+Land the follow-up before merge: identify the validated revision, record the complete roster's results and explicit dispositions for accepted exceptions, and link that record from the lock/status metadata. If that work remains outstanding, keep the current status pending until it is complete. This is closure of the check already promised in the PR, not a request for another product-review round.
+
+### Inline comment T2 — `docs/product/collection-mode/prd-collection-mode-fences.md:52` (2026-09-26T04:12:29Z)
+
+[P2] Link fence authorities to their decision records
+
+The fence grammar at lines 29–31 requires the owner decision “by link,” but none of the 201 Authority fields supplies one. The quoted D-number decisions are useful evidence, while later fields such as “approved round-5 recommendation 11” require an agent to search the review/fix history to find what was approved. This leaves the declared provenance/navigation contract incomplete.
+
+Add repository links to the recorded adjudications or approved recommendation sections, or a compact linked authority index that the fields reference. Where the quoted fence itself is the only committed decision record, explicitly designate that record rather than implying an external source. Preserve the historical decision wording; this needs navigable provenance, not new owner approvals or 201 rewritten decisions.
+
+### Inline comment T3 — `docs/product/collection-mode/prd-collection-mode-fences.md:1641` (2026-09-26T04:20:16Z)
+
+[P1] Resolve the contradictory wipe deadline in the build contract
+
+F200 promises that erasure needs no write lock and its deadline stays exact while another write is held. R8.8, DF R6.2a, DF F58(7), and the ADR-0003 input apply the byte guarantee to journals/logs as well as the main file. But `post-lock.md:151` explicitly says that replaced text in a log frame can survive until a held writer finishes and truncation may briefly hold a write. That qualification still says “needs owner”; it has not amended the governing rules.
+
+I reproduced the conflict with SQLite 3.50.4, WAL, `secure_delete=ON`, and automatic checkpointing off: commit a marker into the WAL; start a reader; replace the marker; hold a second write transaction; release the reader. PASSIVE returned `(0, 2, 2)`, TRUNCATE returned busy `(1, 2, 2)`, and the old marker remained in the WAL. After the writer committed, TRUNCATE returned `(0, 0, 0)` and removed it. This is consistent with [SQLite's checkpoint contract](https://www.sqlite.org/pragma.html#pragma_wal_checkpoint). It disproves the stated WAL premise; it does not select WAL as the architecture.
+
+Before an agent can build this, resolve the already-recorded owner decision and append matching clarifications to the governing fences, rows, ADR input and E35 lifecycle. Cover both main-file-only text and text retained in a WAL frame; the current DF DJ3 fixture deliberately covers only the first. An unapproved post-lock qualification cannot override the exact deadline a builder is otherwise required to implement.
+
+### Inline comment T4 — `docs/product/collection-mode/prd-collection-mode.md:391` (2026-09-26T04:20:16Z)
+
+[P2] Define history comparison eligibility when a colour value is unavailable
+
+R5.4 gates on an item having a current canonical value, which is different from having a usable working-set colour: seeded ZX-006 has a current reading but no measurement in M1. Add readable earlier history to that item and this rule gives no usable operand for its distance. The same gap occurs for a quarantined historical reading whose old derived sets are retained by DF R3.3g. R5.8 inherits the rule for any two selected readings, without saying whether such readings can be selected or what Compare shows.
+
+The only unavailable-distance copy says the readings were worked out under different light/observer/condition. That is not an accurate explanation for a missing condition or a damaged reading. UJ5.3-b covers a missing historical condition with that same explanation, and the cases do not cover an absent current working set or a quarantined comparison operand.
+
+Specify one eligibility/result matrix for R5.4/R5.8: which derived set is compared, readable and present operands, mismatched references, missing working values, and quarantine. State whether each invalid pair hides the action or shows a reason, supply accurate copy, and add the corresponding cases. A builder must not guess whether to compare retained cached values, substitute another condition, or invent a number.
+
+### Inline comment T5 — `docs/product/collection-mode/prd-collection-mode.md:343` (2026-09-26T04:20:16Z)
+
+[P2] Handle an E9 source that still exists but loses its working value
+
+The return rule checks only whether E9's source item remains. Reproduce from UJ3.4-l, but instead of deleting FS-000 externally, leave it present and make its current reading quarantined (or its chosen-condition value absent); re-read, then close FS-002's detail. R4.1/F144 require returning to and recomputing E9, but R3.7 has no valid source colour to compare, and R3.8's “none” variant means a valid comparison found no neighbours, not that comparison was impossible.
+
+Define the return/invalidation behavior for a present source with no usable working value, including the destination or unavailable state and whether any stale results may remain. Extend UJ3.4-l with both missing-value and quarantine variants. Checking only source existence leaves a live refresh path dependent on an invented product decision.
+
+### Inline comment T6 — `docs/product/collection-mode/prd-collection-mode.md:312` (2026-09-26T04:20:16Z)
+
+[P2] Specify what the simulated-banner action does to existing narrowing
+
+With Studio Markers searched for `sky`, E22 is still present because ZX-005 is simulated. R2.6 says its action leaves exactly the simulated items listed, but applying the simulated filter while retaining that search produces no rows under R3.1/R3.4. A pending-state filter has the same problem; adding simulated to an existing mark selection also ORs the marks and can retain non-simulated rows.
+
+Decide whether this action clears the search and row-state filter and replaces the mark selection, or preserves narrowing and changes the “exactly those items” promise. State the resulting search/filter controls explicitly. UJ2.1-g should start with a conflicting search, row-state filter and another mark selected, then assert both the result rows and all remaining controls. Its current unfiltered fixture cannot distinguish these implementations.
+
+### Inline comment T7 — `docs/product/collection-mode/prd-collection-mode.md:327` (2026-09-26T04:20:16Z)
+
+[P2] Provide a defined route back from a view sort to queue order
+
+After clicking L*, R3.2 only alternates ascending/descending, and R3.6 retains the sort when switching collections. R2.9 permits dragging only in queue order and disallows Use as scan order for L*/C*/h°; neither the action copy nor the cases supplies a way to clear the view sort. The only documented reset is closing the file, which also ends the metadata and delete undo windows.
+
+Specify how a user returns to the existing queue order without changing that order or closing the file, including the action/keyboard route and its copy, or explicitly settle a different intended behavior. Add an end-to-end case that sorts by L*, returns to queue order, then drags a pending row, asserting that merely clearing the view sort did not rewrite the queue. The existing cases declare queue order as a Given and never exercise this transition.
+
+### Inline comment T8 — `docs/product/collection-mode/prd-collection-mode.md:290` (2026-09-26T04:20:16Z)
+
+[P2] Disambiguate imported columns that use built-in field/header names
+
+Import R2.2/R2.5/R2.6 permits passthrough headers such as `State`, `Spread`, `L*`, or `Swatch Name`: it resolves collisions among input headers, not against Collection Mode's built-in columns. R2.1 then displays those columns alongside the built-ins, and R4.2a uses their stored names in the detail. R4.8 prevents creating these collisions by rename but does not handle valid files already created by import.
+
+For example, import `Code,Swatch Name,State,Spread` while mapping only Code. Both the editable identity Swatch Name and an imported field named Swatch Name exist, and two State/Spread headers appear. The spec supplies no distinct display/accessibility names for choosing, hiding, sorting or bulk-editing them, so a builder must invent which identically labelled field an action targets.
+
+Define a display/action disambiguation rule with copy and stable field identity, preserving Import's stored names and re-import behavior, or deliberately amend the import collision policy. Add an import-to-browse-to-edit case that proves only the intended field changes and that exporting/re-importing retains both fields.
+
+### Orchestrator verification
+
+- **T1 — reproduced in part.** At `04dfb97` the log ended at round 9. The lock record then landed in `2aca21f` ("## Lock (2026-09-25; record written 2026-09-26)").
+  - It records checks 1–20 against `04dfb97`: 0 MISS, and two NOT-RUNs.
+  - Those two are check 8 direction 2 and check 9. The mechanical-checks reference's Applicability section exempts them in advance on a first lock, so they need no fence.
+  - Still open: no status surface links that record, and the PR's test-plan box is unticked.
+  - Fix: C2 links it, the PR body ticks the box, and this amendment gets its own lock record at close.
+- **T2 — reproduced.** The grammar (fences:29–31) asks for the owner decision "by link", but no Authority field carries one.
+  - Owner-decision fences quote the question and every option verbatim, and no other committed record of those answers exists.
+  - "Approved round-N recommendation M" fences need the round's adjudication record.
+  - Fence text is immutable, so the fix is an Authority index in the preamble (C3), not 201 rewritten fields.
+- **T3 — reproduced.** The orchestrator ran the reviewer's sequence on SQLite 3.53.4 (WAL, secure_delete on, automatic checkpoints off).
+  - PASSIVE returned (0,2,2), and TRUNCATE was busy at (1,2,2). The main file held no marker, and the WAL still held it.
+  - After the writer committed, TRUNCATE returned (0,0,0) and the marker was gone.
+  - F200, R8.8, DF R6.2a, DF F58 (7) and the ADR-0003 input's "never holding a write" each state the deadline for every byte. Only an unratified post-lock item qualified it.
+  - Decided by D55.
+- **T4 — reproduced.**
+  - R5.4 (PRD:391) gates on "an item with a current value", and ZX-006 (journeys:118) has a current reading with no M1 measurement.
+  - The only reason line (copy:305) names light, observer or condition, and UJ5.3-b uses it for a missing condition.
+  - No case covers an absent current working-set value or a quarantined operand, and DF R3.3g keeps a quarantined reading's derived sets.
+  - Decided by D59 and D64.
+- **T5 — reproduced.** R4.1 (PRD:343) tests only that E9's item remains, while R3.7 and R3.8 need a working-set value. UJ3.4-l (journeys:280) covers removal only. Decided by D60.
+- **T6 — reproduced.** R2.6 (PRD:312) promises "exactly those items". R3.4 (PRD:329) ANDs a search with the filters and ORs mark values, and UJ2.1-g (journeys:222) starts unnarrowed. Decided by D56.
+- **T7 — reproduced.** R3.2 (PRD:327) only reverses a sort, and R3.6 keeps it while the file is open. No action or case returns the table to queue order. Decided by D57.
+- **T8 — reproduced.**
+  - The import PRD's R2.5 and R2.6 resolve collisions only among input headers and stored columns.
+  - The copy's Column headers table (copy:267–279) shows State, Spread and L*, and an imported column is headed by its stored name.
+  - R4.8 blocks only renames into those names.
+  - Decided by D58 and D63.
+- **Gate dispositions** (the second review body):
+  - **ADR stops.** ADR-0003, ADR-0005 and ADR-0006 stop every row, and ADR-0004 stops the capture seam. This is true and already recorded, in the Build dependencies and the decision queue. They are architecture decisions (AGENTS.md §2) and cannot close in this PR. C4 makes "locked" and "ready to build" two stated states.
+  - **Delete undo.** R1.7 already settles its release scope under its deferral rule (PRD:279): it is not built while OQ 10 is open, and it is deferred at v1 release if OQ 10 is still open. OQ 10's interim is "R1.7 is not built and E10 does not appear". No change.
+  - **DF rows.** The Data Foundation's R1.11, R7.6o–q and E33–E35 sit at Ready for Alignment. They are in round 11's lens scope, so they can flip.
+  - **R8.11.** ROW_CONFIRM_BUDGET is the capture PRD's constant, under its OQ 5. UJ9.5-d reports that half as not exercised, never passed. C4 lists it as a build gate. It is not decidable here.
+  - **Open questions.** OQ 11 closes on its closer. OQ 1–7 and 12 are ratified by D61 (F209).
+
+### Owner adjudication (2026-09-26)
+
+The owner answered D55–D63 on 2026-09-26, over the PR #21 review's findings T3–T8 and its review-body request to ratify interim values. Each record quotes the question put to the owner, the option chosen with its description, and the option not chosen, verbatim.
+
+**D55 (T3).** Question: "Finding 3 (P1): the reviewer proved that removed text can survive in SQLite's log while another write is running, which breaks F200's 'erase right away' promise. I got the same result running it myself. How should the erase work when a write is running at the moment the other app's read ends?" Chosen: **Log copy waits** — "Text in the main file is erased exactly when the read ends, as now. A copy left in the log goes once the running write lands, at the latest, and clearing the log may make the next write wait a moment. E35 stays up until the text is gone everywhere; its wording holds. F200 gets a dated clarification, and DF R6.2a, R8.8 and the ADR-0003 input change to match." Not chosen: **Block writes while pending** — "While an erase is waiting on another app's read, no write of the app's own can start (shown unavailable), so nothing is running when the read ends and the erase finishes at once. The cost: another app reading your file blocks all editing for as long as it reads."
+
+**D56 (T6).** Question: "Finding 6: the 'Show simulated readings' banner action promises to list exactly the simulated swatches. But if a search or another filter is already active, the result can be empty or include other swatches. What should the action do?" Chosen: **Replace narrowing** — "Clears the search and the row-state filter and sets the mark filter to Simulated alone, so exactly the simulated swatches are listed. 'Clear filters' brings the full table back." Not chosen: **Narrow within current view** — "Keeps the search and row-state filter and replaces only the mark filter with Simulated. The promise changes to 'the simulated swatches among what you're looking at', which can be none."
+
+**D57 (T7).** Question: "Finding 7: after you sort by a column like L*, nothing gets you back to queue order short of closing the file, and closing also ends the undo windows. How should you get back?" Chosen: **'Clear sort' action** — "A 'Clear sort' action, offered while a view sort is applied and reachable from the keyboard like the others, returns the table to queue order. In All items it returns to collection-then-queue order. It writes nothing, and it sits beside 'Clear search' and 'Clear filters'." Not chosen: **Third header click** — "Clicking a sorted header cycles ascending, then descending, then back to queue order. It adds no new label, but it's less discoverable and not the usual Mac table behaviour."
+
+**D58 (T8).** Question: "Finding 8: an import can bring in an unmapped column named 'State', 'Spread', 'L*' or 'Swatch Name', which matches a built-in column's name. How should the two be told apart?" Chosen: **Tag it in the app** — "Wherever the app names such a column (header, column chooser, sort, Set a field, detail), it shows as '<name> (imported)'. Actions target the column itself, not its label. The file keeps the name as imported, so export and re-import are unchanged. No change to the Import PRD." Not chosen: **Rename at import** — "Amend the Import PRD so an import renames such a header on arrival, e.g. 'State 2'. The stored name changes, so the Import PRD's locked matching rules and re-import behaviour change too."
+
+**D59 (T4).** Question: "Finding 4: the history view's 'From current' distance, and Compare, don't say what happens when a reading has no value in the collection's measurement condition or is unreadable. Today the only reason line blames a different light. What's the rule?" Chosen: **Working-set values only** — "Compare only the two readings' values under the collection's light, viewer angle and condition. If the current reading has none, no distance line shows. An earlier reading with none shows 'Not compared — no value in this collection's measurement condition'. An unreadable one shows 'Not compared — this reading can't be read', never using kept values. Today's line stays for a different light or angle. Compare uses the same lines." Not chosen: **Hide the line** — "Any pair missing a usable value shows no distance line at all, with no reason given. Only a different light or angle shows today's line. No new copy, but the user isn't told why."
+
+**D60 (T5).** Question: "Finding 5: you open a swatch from 'Find similar' (E9), and a re-read then leaves the original swatch present but with no usable colour (unreadable, or no value in the condition). What happens when you close the detail?" Chosen: **Back to the table** — "You go back to E9 only while its swatch remains and still has a usable colour. Otherwise closing goes to the table, the same as when the swatch is deleted. No stale results are kept, and no new copy is needed." Not chosen: **E9 explains** — "Go back to E9 in a new variant: '⟨code⟩ has no colour to compare now.' with Close. This needs a new copy string."
+
+**D61 (review body).** Question: "The reviewer asks you to explicitly ratify interim values meant to be v1's contract. OQs 1–7 and 12 each carry one (budgets, 100k items, ΔE 3.0, confirm above 10, C* 3.0, 24 pt, the display-gamut test, 20×200 columns). Separately, OQ 11's check ran today: every quoted ΔE2000 pair matches Sharma's published table, so OQ 11 closes on its own stated closer. What should happen to the eight?" Chosen: **Ratify all eight** — "Each interim value becomes v1's contract, and the OQ closes with a results section. The dogfood checks and the engineering timing and display spike stay as post-lock checks. A failed check changes a value only through a new dated fence." Not chosen: **Ratify six, not OQ 1 or 7** — "Ratify the dogfood values (OQ 2–6, 12). OQ 1 (the speed budgets) and OQ 7 (the display-gamut test) stay open until engineering measures them. Their interim rules still govern the build."; **Keep all provisional** — "Leave all eight open. Their interim rules govern the build, and the docs say plainly that these are provisional."
+
+**D62 (budget).** Question: "Fixing these findings adds roughly 200–300 words to a PRD at 11,987 of its 12,000-word budget. How should the budget be handled?" Chosen: **Raise to 12,400** — "A dated fence raises the cap, as you did twice for Data Foundation. Rows that are already aligned stay untouched." Not chosen: **Compact to fit 12,000** — "Trim other rows to make room. The skill prefers this, but trimming aligned rows reopens them for review, and earlier compaction passes changed meaning."
+
+**D63 (T8 follow-up).** Question: "One follow-up to the '(imported)' tag. In a rare case the tagged label still clashes: one imported column is named 'State' and another is literally named 'State (imported)'. How should the app tell those two apart?" Chosen: **Number it like Import** — "The later one by column position takes Import's existing collision form, '⟨label⟩ (2)' and counting up until unique, e.g. 'State (imported) (2)'. It's deterministic, needs no new template, and the stored names stay unchanged." Not chosen: **Tag every imported column** — "Once any clash exists, every imported column in that collection shows its position, e.g. 'State (imported, column 3)'. Always unique, but noisier."
+
+**OQ 11 (not an owner decision).** Its closer — "Engineering checks every quoted pair against the published table before the first such case runs" — ran on 2026-09-26. Source: Sharma, Wu and Dalal (2005) Table 1, the authors' data file `ciede2000testdata.txt` fetched from hajim.rochester.edu. Two independent CIEDE2000 implementations (one written from the paper's equations, and colour-science's `delta_E(method='CIE 2000')`) each reproduced all 34 published pairs to 4 decimals. Every quoted 4-decimal value in UJ3.4-a, UJ3.4-b, UJ3.4-d, UJ5.3-a equals the published value; every 2-decimal displayed value in UJ3.4-k, UJ5.4-a and UJ5.4-b equals the computed value rounded; UJ3.4-f's grey fixtures (3.0000 and 3.0035) are not Sharma pairs and match the computation exactly; every "Find similar" listing and its at-or-within-3.0 cut agrees with the computed distances. No discrepancy. No quoted value falls on a rounding tie, so the fixtures do not discriminate half-up from half-even.
+
+**D64 (T4 follow-up).** Question: "One follow-up to the history-distance rule. Compare has a single distance slot. If one selected reading can't be read and the other has no value in the collection's condition, which line fills the slot?" Chosen: **'Can't be read' wins** — "An unreadable reading's line takes precedence over the no-value line. Otherwise the slot shows the line for whichever reading lacks a value, and the different-light line applies only when both readings have values but they were worked out differently." Not chosen: **Show both lines** — "The slot lists every reason that applies, one per line. More complete, but the Compare layout needs room for two lines."
+
+This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-10-fixes.md`.

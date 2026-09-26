@@ -1,6 +1,6 @@
 # PRD: Collection Mode
 
-Status: locked (2026-09-25)
+Status: locked (2026-09-25); amendment F202–F210 (2026-09-26), peer review pending
 
 Companions: `docs/product/collection-mode/prd-collection-mode-journeys.md` (acceptance scenarios) ·
 `docs/product/collection-mode/prd-collection-mode-copy.md` (copy) ·
@@ -178,18 +178,18 @@ six values, in this order of progression):
 
 | Constant | Candidate / interim | Owning rows | Closure evidence |
 |---|---|---|---|
-| BROWSE_RESPONSE_BUDGET | 100 ms at the 95th percentile; interim rule — build and test against 100 ms on OQ 1's interim Mac | R2.5, R3.1, R8.1, R8.2 | OQ 1 — its timing run |
-| OPEN_COLLECTION_BUDGET | 1 s; interim rule — build and test against 1 s on the same Mac | R8.1d, R8.2 | OQ 1 — the same timing run |
-| DROPPED_FRAME_SHARE | 1% of frames missed while paging through ROWS_CEILING rows; interim rule — the same 1% on the same Mac | R8.1e | OQ 1 — the same timing run |
-| BULK_WRITE_BUDGET | 2 s; interim rule — build and test a bulk set, clear or reorder at ROWS_CEILING items against 2 s on the same Mac | R8.1f | OQ 1 — the same timing run |
-| DELETE_WRITE_BUDGET | 10 s; interim rule — the same, for a selection or collection delete of ROWS_CEILING items and its undo | R8.1g | OQ 1 — the same timing run |
-| HISTORY_READINGS_CEILING | 500 readings on one item; interim rule — history opens are built and tested at 500 | R8.1b | OQ 1 — the owner's estimate of the longest history a real item reaches, timed by UJ9.5-e |
-| IMPORTED_COLUMNS_CEILING | 20 imported columns, each value up to 200 characters; interim rule — the budgets are built and tested at that width | R8.1, R8.2 | OQ 12 — the widest inventory the owner dogfoods |
-| FILE_ITEMS_CEILING | 100,000 items; interim rule — design and test the file-wide views at 100,000 items across the whole file | R8.1, R8.2 | OQ 2 — the owner's estimate of collections per file, checked by UJ9.5-b |
-| FIND_SIMILAR_DISTANCE | ΔE2000 3.0; interim rule — list items at or within 3.0 | R3.7 | OQ 3 — a dogfood "Find similar" pass over a real collection |
-| BULK_CONFIRM_COUNT | 10 items; interim rule — a bulk set or clear across more than 10 items confirms first | R6.2 | OQ 4 — dogfood bulk edits, then the owner |
-| NEUTRAL_CHROMA | C* 3.0; interim rule — a hue sort places items below C* 3.0 after the chromatic ones | R3.3 | OQ 5 — a dogfood hue sort of a collection holding a grey series |
-| MIN_SWATCH_SIZE | 24 pt; interim rule — no swatch renders smaller than 24 pt on a side | R7.1, R7.2 | OQ 6 — the owner at the P2 build, on the owner's display at working distance |
+| BROWSE_RESPONSE_BUDGET | 100 ms at the 95th percentile; ratified as v1's value (F209) — build and test against 100 ms on the Mac OQ 1's answer names | R2.5, R3.1, R8.1, R8.2 | F209 — OQ 1's timing run stays a post-lock check |
+| OPEN_COLLECTION_BUDGET | 1 s; ratified as v1's value (F209) — build and test against 1 s on the same Mac | R8.1d, R8.2 | F209 — OQ 1's timing run stays a post-lock check |
+| DROPPED_FRAME_SHARE | 1% of frames missed while paging through ROWS_CEILING rows; ratified as v1's value (F209) — the same 1% on the same Mac | R8.1e | F209 — OQ 1's timing run stays a post-lock check |
+| BULK_WRITE_BUDGET | 2 s; ratified as v1's value (F209) — build and test a bulk set, clear or reorder at ROWS_CEILING items against 2 s on the same Mac | R8.1f | F209 — OQ 1's timing run stays a post-lock check |
+| DELETE_WRITE_BUDGET | 10 s; ratified as v1's value (F209) — the same, for a selection or collection delete of ROWS_CEILING items and its undo | R8.1g | F209 — OQ 1's timing run stays a post-lock check |
+| HISTORY_READINGS_CEILING | 500 readings on one item; ratified as v1's value (F209) — history opens are built and tested at 500 | R8.1b | F209 — OQ 1's estimate of the longest history a real item reaches, timed by UJ9.5-e, stays a post-lock check |
+| IMPORTED_COLUMNS_CEILING | 20 imported columns, each value up to 200 characters; ratified as v1's value (F209) — the budgets are built and tested at that width | R8.1, R8.2 | F209 — OQ 12's widest-inventory dogfood stays a post-lock check |
+| FILE_ITEMS_CEILING | 100,000 items; ratified as v1's value (F209) — design and test the file-wide views at 100,000 items across the whole file | R8.1, R8.2 | F209 — OQ 2's estimate of collections per file, checked by UJ9.5-b, stays a post-lock check |
+| FIND_SIMILAR_DISTANCE | ΔE2000 3.0; ratified as v1's value (F209) — list items at or within 3.0 | R3.7 | F209 — OQ 3's dogfood "Find similar" pass over a real collection stays a post-lock check |
+| BULK_CONFIRM_COUNT | 10 items; ratified as v1's value (F209) — a bulk set or clear across more than 10 items confirms first | R6.2 | F209 — OQ 4's dogfood bulk edits stay a post-lock check |
+| NEUTRAL_CHROMA | C* 3.0; ratified as v1's value (F209) — a hue sort places items below C* 3.0 after the chromatic ones | R3.3 | F209 — OQ 5's dogfood hue sort of a collection holding a grey series stays a post-lock check |
+| MIN_SWATCH_SIZE | 24 pt; ratified as v1's value (F209) — no swatch renders smaller than 24 pt on a side | R7.1, R7.2 | F209 — OQ 6's owner check at the P2 build, on the owner's display at working distance, stays a post-lock check |
 
 This table is an index; each constant's owning row is its home and governs. ROWS_CEILING,
 FIND_BUDGET, TRIGGER_ACK_WINDOW and ROW_CONFIRM_BUDGET are the capture PRD's, and DELETE_UNDO_WINDOW
@@ -200,16 +200,16 @@ left there.
 
 | Work | Available contract | What must remain open |
 |---|---|---|
-| Collection list, collection table, honesty marks, search, filters, sorts and selecting one row | R1.1–R1.6, R1.8, R2.1–R2.8, R2.11, R3.1–R3.6, R3.9, R6.4, R8.1, R8.3–R8.11; copy E1–E7, E12; the capture PRD's E1, E2 and E26, the device PRD's E22 and the Data Foundation PRD's E10, E14, E15, E34 and E35 | Stop: ADR-0003; Interim: OQ 1; Interim: OQ 7; Interim: OQ 12 |
+| Collection list, collection table, honesty marks, search, filters, sorts and selecting one row | R1.1–R1.6, R1.8, R2.1–R2.8, R2.11, R3.1–R3.6, R3.9, R6.4, R8.1, R8.3–R8.11; copy E1–E7, E12; the capture PRD's E1, E2 and E26, the device PRD's E22 and the Data Foundation PRD's E10, E14, E15, E34 and E35 | Stop: ADR-0003 |
 | Item detail, editing and history | R4.1–R4.3, R4.5, R4.6, R4.9, R5.1–R5.3, R5.6, R5.7; copy E14, E17, E18; the Data Foundation PRD's E4, E8, E11, E26 and E31; the capture PRD's R5.6, R8.18 and R9.9 | Stop: ADR-0003 |
-| The All items view and "Find similar" | R1.9, R1.10, R3.7, R3.8, R8.2; copy E9, E13 | Stop: ADR-0003; Interim: OQ 2; Interim: OQ 3; Interim: OQ 11 |
-| Multi-item selection, bulk set or clear, undo; R6.2 and R4.7 landing together | R6.1, R6.2, R4.7; copy E8 | Stop: ADR-0003; Interim: OQ 4 |
-| Bulk delete | R6.1, R6.3; the Data Foundation PRD's R6.2 and E33 | Stop: ADR-0003; Interim: OQ 1 |
+| The All items view and "Find similar" | R1.9, R1.10, R3.7, R3.8, R8.2; copy E9, E13 | Stop: ADR-0003 |
+| Multi-item selection, bulk set or clear, undo; R6.2 and R4.7 landing together | R6.1, R6.2, R4.7; copy E8 | Stop: ADR-0003 |
+| Bulk delete | R6.1, R6.3; the Data Foundation PRD's R6.2 and E33 | Stop: ADR-0003 |
 | Undo of a delete | R1.7; copy E10 | Stop: ADR-0003 or a later undo-representation ADR; Stop: OQ 10 — the Data Foundation PRD's OQ 20 |
 | Code change and column rename | R4.4, R4.8; copy E6, E11, E15, E16, E19; the Data Foundation PRD's R1.2 and the import PRD's R2.6 | Stop: ADR-0003 |
 | Reordering from the collection | R2.9; the capture PRD's R6.8–R6.12, E33 and E34 | Stop: ADR-0003; Interim: the capture PRD's OQ 7 — its REORDER_SCOPE interim |
-| Restore and distance from current | R5.4, R5.5; the Data Foundation PRD's R2.3f and R2.9 and the capture PRD's R5.6 and R8.18 | Stop: ADR-0003; Interim: OQ 11 |
-| Swatch grid, column visibility and compare | R2.10, R5.8, R7.1, R7.2; the Data Foundation PRD's R1.1 | Stop: ADR-0003; Interim: OQ 6; Interim: OQ 11 |
+| Restore and distance from current | R5.4, R5.5; the Data Foundation PRD's R2.3f and R2.9 and the capture PRD's R5.6 and R8.18 | Stop: ADR-0003 |
+| Swatch grid, column visibility and compare | R2.10, R5.8, R7.1, R7.2; the Data Foundation PRD's R1.1 | Stop: ADR-0003 |
 | Where capture sits relative to the collection | no row here | Stop: the capture PRD's OQ 8 and ADR-0004 |
 
 A builder builds against the **Available contract** column only. In **What must remain open**, a
@@ -226,16 +226,7 @@ stated** starts on its interim and is re-checked when its question closes.
 
 **Interim stated:**
 
-- R2.5, R3.1, R8.1, R8.2, R8.11, M1 — OQ 1 — F20, F33, F41, F42, F66, F99, F118, F119, F120.
-- R8.1, R8.2 — OQ 2 — F34, F129.
-- R3.7 — OQ 3 — F16.
-- R6.2 — OQ 4 — F7.
-- R3.3 — OQ 5 — F19.
-- R7.1, R7.2 — OQ 6 — F20.
-- R2.5, M2 — OQ 7 — F40 and F64.
 - R1.7 — OQ 10 — the Data Foundation PRD's OQ 20 interim, which that PRD's fences set, and F57.
-- R3.7, R5.4, R5.8 — OQ 11 — F64.
-- R8.1, R8.2 — OQ 12 — F43, F103.
 
 ### Traceability
 
@@ -245,7 +236,7 @@ stated** starts on its interim and is re-checked when its question closes.
   R8.10 do — and a sub-row carries its lead row's release, priority and status.
 - IDs are assigned once and never renumbered. **Retired IDs:** none.
 - The **Commit PR** column names the PR that landed the row.
-- Owner decisions F1–F201 are in the fence file; a row names one for provenance only.
+- Owner decisions F1–F210 are in the fence file; a row names one for provenance only.
 
 ### Surfaces
 
@@ -287,7 +278,7 @@ Traces UJ 2, UJ 8; serves the vision use case *see the collection honestly* (U7)
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
-| R2.1 | v1 | P0 | The collection surface renders E3 and lists the collection's items in a table, one row per item, in queue order until a view sort is applied. Its columns are the colour chip, Swatch Code, Swatch Name, row state, L*, C*, h°, Spread, Swatch Alternate Code, Swatch Alternate Name, and every imported column in its stored position. | aligned | |
+| R2.1 | v1 | P0 | The collection surface renders E3 and lists the collection's items in a table, one row per item, in queue order until a view sort is applied. Its columns are the colour chip, Swatch Code, Swatch Name, row state, L*, C*, h°, Spread, Swatch Alternate Code, Swatch Alternate Name, and every imported column in its stored position. An imported column whose stored name equals, under the import PRD's R2.3 rule, a Swatch field's name or a header the copy file's Column headers table shows is labelled — in its header, "Columns", a view sort, "Set a field", the item detail and VoiceOver — with that stored name followed by the copy file's imported-column tag, or, where the tagged label still clashes with another column's, that PRD's collision form; every action on it targets that column alone. | pre-alignment | |
 | R2.2 | v1 | P0 | Row states and the collection's counts use the capture PRD's words and numbers, identical to its capture surface's (its R10.3), and every entry point and state that PRD places on the collection surface stays reachable and unhidden beside this PRD's (its R7.19). A collection holding no item renders the capture PRD's E2 empty variant in place of the table. | aligned | |
 | R2.3 | v1 | P0 | A chip renders the item's current value in the collection's working set colour-managed to the display showing it, never the Data Foundation PRD's stored sRGB value, and outside that display's gamut renders the display's clipped colour with the cannot-show mark. An item with no current value, or whose working-set value is absent, shows an empty chip, never a stand-in colour, and a chip carries every R2.4 mark that applies to its item, each observable on its own. | aligned | |
 | R2.4 | v1 | P0 | The honesty marks are the nine below, each labelled on the chip, in "Filters" and to VoiceOver as the copy file's Mark labels table words it; each shows wherever this PRD renders the value it describes, and no colour this PRD renders is presented as faithful where a mark says otherwise. | aligned | |
@@ -308,8 +299,8 @@ Traces UJ 2, UJ 8; serves the vision use case *see the collection honestly* (U7)
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
-| R2.5 | v1 | P0 | The cannot-show mark is worked out, as OQ 7's interim states, against the gamut of the display showing the window — for a window across two displays, the one macOS reports it is on — and on a display reporting sRGB or none it is set exactly when R2.4b's flag is; no cannot-show mark is stored (inherited obligation for the Data Foundation doc). It is worked out again within BROWSE_RESPONSE_BUDGET at the 95th percentile whenever that gamut changes — the window moving to another display, or the display's profile or reference mode changing (R8.10a). | aligned | |
-| R2.6 | v1 | P0 | The collection surface renders the device PRD's E22 while any item in the collection has a simulated current reading, and that PRD's E22 action applies R3.4's simulated filter, leaving exactly those items listed. A reading's simulated mark stays on it in the version history view whatever the item's current reading is (the device PRD's R6.5). | aligned | |
+| R2.5 | v1 | P0 | The cannot-show mark is worked out, as OQ 7's answer states, against the gamut of the display showing the window — for a window across two displays, the one macOS reports it is on — and on a display reporting sRGB or none it is set exactly when R2.4b's flag is; no cannot-show mark is stored (inherited obligation for the Data Foundation doc). It is worked out again within BROWSE_RESPONSE_BUDGET at the 95th percentile whenever that gamut changes — the window moving to another display, or the display's profile or reference mode changing (R8.10a). | aligned | |
+| R2.6 | v1 | P0 | The collection surface renders the device PRD's E22 while any item in the collection has a simulated current reading, and that PRD's E22 action clears the search and the row-state filter and sets the mark filter to simulated alone, leaving exactly those items listed. A reading's simulated mark stays on it in the version history view whatever the item's current reading is (the device PRD's R6.5). | pre-alignment | |
 | R2.7 | v1 | P0 | The Spread column shows the current reading's recorded sample spread (the capture PRD's R4.9 and R4.11), and shows none for a reading of one sample. | aligned | |
 | R2.8 | v1 | P0 | "Colour marks", offered on every surface E12's index row names, renders E12, showing each mark R2.4 and R5.2d list with its shape (R8.9), its chip label and what it means, grouped as E12 groups them, and what Spread shows. E12's "Close" closes it. | aligned | |
 | R2.9 | v1 | P1 | With no session in flight on the collection and no search or filter active, the user drags a pending row to a new queue position while the table is in queue order, and fires "Use as scan order" while the table is view-sorted on Swatch Code, Swatch Name, an alternate or an imported column, both under the capture PRD's R6.9–R6.12 with its E33 and E34. While a session on the collection is in flight, or a search or filter is active, neither is offered, reordering in flight being the capture PRD's queue list's (its R6.8). | aligned | |
@@ -324,7 +315,7 @@ Traces UJ 3, UJ 7; serves the vision use case *see the collection honestly* (U7)
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
 | R3.1 | v1 | P0 | Typing in the search field lists only the items whose Swatch Code or Swatch Alternate Code starts with the text, or whose Swatch Name, Swatch Alternate Name or imported value contains it, both sides compared after the import PRD's R2.3 normalisation, and text that normalises to nothing is no search and narrows nothing. The table lists the result within BROWSE_RESPONSE_BUDGET, at the 95th percentile, of the last keystroke. | aligned | |
-| R3.2 | v1 | P0 | Firing a column header view-sorts the table by that column and firing it again reverses the order; text compares as the capture PRD's R6.9 compares codes, row state in the order pending, captured, set aside, and Spread by its number, items with no value in the column following every item with one in either direction and ties keeping their existing order. The chip column does not sort, and a view sort never changes queue order (the capture PRD's R6.7). | aligned | |
+| R3.2 | v1 | P0 | Firing a column header view-sorts the table by that column and firing it again reverses the order; text compares as the capture PRD's R6.9 compares codes, row state in the order pending, captured, set aside, and Spread by its number, items with no value in the column following every item with one in either direction and ties keeping their existing order. The chip column does not sort, a view sort never changes queue order (the capture PRD's R6.7), and "Clear sort", offered while a view sort is applied and reachable from the keyboard as every action is, returns the table to queue order, the All items view to R1.9's collection-then-queue order, writing nothing. | pre-alignment | |
 | R3.3 | v1 | P0 | L*, C* and h° sort by the item's current value in its own collection's working set, and in an h° sort, in either direction, items whose C* is below NEUTRAL_CHROMA follow the chromatic items in ascending L*. Items whose value was worked out under an illuminant and observer other than the like pair — the collection's own in its table, and in the All items view the most common among listed items with a value, a mismatched non-spectral reading not counting, a tie going to the pair of the collection first in the collection list — and non-spectral readings at a reference other than their collection's (the Data Foundation PRD's R3.3e) follow the rest in the same order, E3 or E13 stating how many. | aligned | |
 | R3.4 | v1 | P0 | "Filters" narrows the table by row state — pending, captured, set aside — and by any R2.4 mark under its Mark labels filter label, the row-state values forming one filter and the mark values another: values within a filter combine with or, and the two filters with and. While a search or a filter is active E3 and E13 render their "narrowed" variant, offering "Clear search" while a search is active and "Clear filters" while a filter is, each removing only its own narrowing. | aligned | |
 | R3.5 | v1 | P0 | When the search lists no item, E4 renders whatever filters are active — its "all items" variant in the All items view — and when the filters hide every item the search lists, E5 renders. | aligned | |
@@ -340,7 +331,7 @@ J3's closing step.
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
-| R4.1 | v1 | P0 | Opening an item renders E14 with R4.2's lines, and closing it returns to E9, worked out again, when opened from E9 while E9's item remains, otherwise to the table with its search, filters, view sort, selection and scroll position as they were before it opened, R3.9 governing what is listed. If the item is deleted, or a re-read finds it gone, while its detail or history view is open, both close as closing does, with E10 over it where R1.7 is built. | aligned | |
+| R4.1 | v1 | P0 | Opening an item renders E14 with R4.2's lines, and closing it returns to E9, worked out again, when opened from E9 while E9's item remains and has a working-set value, otherwise to the table with its search, filters, view sort, selection and scroll position as they were before it opened, R3.9 governing what is listed. If the item is deleted, or a re-read finds it gone, while its detail or history view is open, both close as closing does, with E10 over it where R1.7 is built. | pre-alignment | |
 | R4.2 | v1 | P0 | The item detail shows the lines below, the Data Foundation PRD's R7.6g among them, each labelled as the copy file's Detail lines table words it. | aligned | |
 
 **What the item detail shows.** One lettered row per line; every cell is a rule ([R4.2](#4-item-detail-and-editing)).
@@ -388,11 +379,11 @@ Traces UJ 5; serves the vision use case *fix a bad scan without losing history* 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
 | R5.3 | v1 | P0 | E17's body — its "restore" variant once R5.5 lands — lists readings newest-recorded first, and its "measured" variant lists them by measurement time, oldest first, ties broken by record time so a restore follows its source, as an over-time view that leaves out never-true readings and states how many, keeps readings superseded by a re-measurement as ordinary points, and shows readings awaiting an answer with their mark (the Data Foundation PRD's R2.5). "Recorded order" and "Measured order" switch between the two. | aligned | |
-| R5.4 | v1 | P1 | Each earlier reading of an item with a current value shows its ΔE2000 from it when both were worked out under the same illuminant, observer and measurement condition, and otherwise shows the copy file's not-compared distance line in its place, never a distance computed across the two. | aligned | |
+| R5.4 | v1 | P1 | Each earlier reading of an item with a current working-set value shows its ΔE2000 from it when both were worked out under the collection's illuminant, observer and measurement condition, and an item with no current working-set value shows no reading's distance line. An earlier reading with no value in that condition shows the copy file's no-value distance line, an unreadable earlier reading shows its can't-be-read distance line without its kept derived values ever being compared, and one worked out under another illuminant or observer shows the not-compared distance line, never a distance computed across two different bases. | pre-alignment | |
 | R5.5 | v1 | P1 | "Use this reading" on a readable earlier reading, a never-true one included and keeping its mark, makes a new current value equal to it as the Data Foundation PRD's R2.3f states, and is offered on an item with a current value, one whose current reading is quarantined (that PRD's R5.5b), or one set aside by a Flag (the capture PRD's R5.6), the flagged reading included, either of the last two becoming captured again (inherited obligation for the Capture Mode and Data Foundation docs). It is never offered on a quarantined reading, nor on an item with no current value for any other reason, R8.3 governing it in flight. | aligned | |
 | R5.6 | v1 | P0 | No surface this PRD renders offers an action that removes one reading from an item's history (the Data Foundation PRD's R6.1). | aligned | |
 | R5.7 | v1 | P0 | While the file holds any reading awaiting an answer, E2 offers "Answer re-scans", which opens the Data Foundation PRD's E26 (its R2.8); while it holds none, the action is not offered. | aligned | |
-| R5.8 | v1 | P2 | "Compare" on two readings selected in E17 shows their two chips side by side with their marks, and their ΔE2000 under R5.4's rule. | aligned | |
+| R5.8 | v1 | P2 | "Compare" on two readings selected in E17 shows their two chips side by side with their marks, and their distance in a single slot under R5.4's rule, an unreadable reading's line there taking precedence over the no-value line, and the not-compared line applying only when both readings have values worked out differently. | pre-alignment | |
 
 ### 6. Selection and bulk operations
 
@@ -427,7 +418,7 @@ decision.
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
-| R8.1 | v1 | P0 | Each input below meets its budget at ROWS_CEILING items in the collection with up to IMPORTED_COLUMNS_CEILING imported columns, in a file of up to FILE_ITEMS_CEILING items, timed from the input, or a capture save from when it lands, to the first frame showing its result, BROWSE_RESPONSE_BUDGET at the 95th percentile, on the machine OQ 1's interim names. Above any ceiling every row still works and nothing is refused or truncated, but no budget is promised. | aligned | |
+| R8.1 | v1 | P0 | Each input below meets its budget at ROWS_CEILING items in the collection with up to IMPORTED_COLUMNS_CEILING imported columns, in a file of up to FILE_ITEMS_CEILING items, timed from the input, or a capture save from when it lands, to the first frame showing its result, BROWSE_RESPONSE_BUDGET at the 95th percentile, on the machine OQ 1's answer names. Above any ceiling every row still works and nothing is refused or truncated, but no budget is promised. | aligned | |
 
 **The budgets.** One lettered row per class of input; every cell is a rule ([R8.1](#8-operating-envelope-and-quality-attributes)).
 
@@ -449,7 +440,7 @@ decision.
 | R8.5 | v1 | P0 | After the Data Foundation PRD's re-read (its R1.5 and R7.3c) the table, item detail and version history view show the file as re-read, keeping the search, filters and view sort and deselecting any item the file no longer holds. Noticing a change made outside the app is that PRD's OQ 14, and no row here does it. | aligned | |
 | R8.6 | v1 | P0 | Every row here works with no network connection, no action this PRD adds makes a network request, nothing it reads or writes leaves the machine (the Data Foundation PRD's R1.4), and no event about its actions carries typed text, a code, a name or a value (inherited obligation for the Telemetry doc). Search text, filters, view sorts, the grid choices and the undo history are never written to the file or anywhere outside it, preferences and saved window state included, column visibility (R2.10) being the one view choice the file keeps, and the file gets no system-kept versions and no collection content goes to system search or Handoff. | aligned | |
 | R8.7 | v1 | P0 | No row here sets a minimum macOS version or a display requirement: ADR-0006 selects the floor, and a row the selected floor cannot deliver goes back to the owner rather than being dropped. R2.5's mark is worked out on every display the window can be on, built-in or external. | aligned | |
-| R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's bytes from the moment it lands, open or after a crash, unless a read begun before its wipe defers it (the Data Foundation PRD's R1.10 and R6.2a; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | aligned | |
+| R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's own bytes from the moment it lands, open or after a crash, unless a read begun before its wipe defers it; a copy of that text a journal or log beside the file still holds goes once nothing still needs it — that deferring read, and a write running when the wipe runs, both counting — at the latest when a held write lands, clearing it able to hold the next write while it runs (the Data Foundation PRD's R1.10, R6.2a and F59; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | pre-alignment | |
 | R8.9 | v1 | P0 | Every mark the copy file's Mark labels table lists — R2.4's nine and R5.2d's never-true and awaiting-answer — has a shape, distinct from every other mark's, that does not depend on seeing colour, and the VoiceOver name that table gives it, read with the row's Swatch Code, Swatch Name and row state. Every action this PRD offers, the drag reorder and choosing two readings for "Compare" included, can be reached and fired from the keyboard by a route the build chooses. | aligned | |
 | R8.10 | v1 | P0 | A test can declare the inputs and read the results below without matching wording, and can read the file with the app closed at SQLITE_READER_FLOOR (the Data Foundation PRD's R7.1). R8.10b and R8.10c exist only in test builds, and no build opens a listening socket or cross-process service for one. | aligned | |
 
@@ -528,7 +519,7 @@ included, repeat across PRDs; an ID written bare is this document's own.
 |---|---|---|---|---|
 | E1 | No collections yet | Collection list | R1.1 | aligned |
 | E2 | Collections | Collection list | R1.1, R5.7 | aligned |
-| E3 | Collection shown | Collection surface | R2.1, R3.3, R3.4 | aligned |
+| E3 | Collection shown | Collection surface | R2.1, R3.3, R3.4 | pre-alignment |
 | E4 | No search matches | Collection surface; All items view | R3.5 | aligned |
 | E5 | Nothing passes the filters | Collection surface; All items view | R3.5 | aligned |
 | E6 | Waiting for a session to end | Collection list; collection surface; All items view; item detail; version history view | R1.4, R1.5, R4.9, R8.3 | aligned |
@@ -538,7 +529,7 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | E10 | Deleted, undo available | Collection list; collection surface; All items view; item detail | R1.7 | aligned |
 | E11 | Column name not accepted | Collection surface | R4.8 | aligned |
 | E12 | What the marks mean | Collection surface; All items view; item detail; version history view | R2.8 | aligned |
-| E13 | All items shown | All items view | R1.9, R3.3, R3.4 | aligned |
+| E13 | All items shown | All items view | R1.9, R3.3, R3.4 | pre-alignment |
 | E14 | Swatch detail | Item detail | R4.1, R8.4 | aligned |
 | E15 | Code not accepted | Item detail | R4.4 | aligned |
 | E16 | Change a swatch's code | Item detail | R4.4 | aligned |
@@ -573,7 +564,7 @@ requirement row that enumerates its variant set, and that row lists the variant 
 
 | ID | Metric | Definition (start event, end event, statistic, population) | Candidate target | Method | Status |
 |---|---|---|---|---|---|
-| M1 | Browse response time | Start: an R8.1a–c input or R2.5 gamut change, a capture save timed from when it lands; end: the first frame showing its result; statistic: the nearest-rank 95th percentile per input kind; population: each kind as UJ9.5-a delivers it, in a Release build on OQ 1's interim Mac, warm. | ≤ BROWSE_RESPONSE_BUDGET | R8.10f's timing readback; UJ9.5-a is its worked oracle. | aligned |
+| M1 | Browse response time | Start: an R8.1a–c input or R2.5 gamut change, a capture save timed from when it lands; end: the first frame showing its result; statistic: the nearest-rank 95th percentile per input kind; population: each kind as UJ9.5-a delivers it, in a Release build on the Mac OQ 1's answer names, warm. | ≤ BROWSE_RESPONSE_BUDGET | R8.10f's timing readback; UJ9.5-a is its worked oracle. | aligned |
 | M2 | Honesty-mark agreement | Start: a seeded file whose every item's R2.4 conditions are declared, and a declared display gamut; end: the marks R8.10 lists for each chip; statistic: the share of item-and-mark pairs where the listed mark agrees with the declared condition; population: every item of the harness's seeded file — 15, Gouache Set's two included — under each of sRGB, Display P3 and no reported gamut, every PR. | 100% | R8.10c's listing of each chip's marks against R2.4's conditions; UJ9.8-a is its worked oracle. | aligned |
 | M3 | Readings lost to a Collection Mode action | Start: the file before a field edit, a code change, a column rename, a bulk set or clear, a reorder, a restore, a re-scan answer or a Flag; end: the file read with the app closed at SQLITE_READER_FLOOR after it; statistic: the count of readings present before that are not readable after; population: every such action the journeys run, every PR. | 0 | R8.10's read of the file at SQLITE_READER_FLOOR; UJ9.8-b is its worked oracle. | aligned |
 | M4 | Re-scans left unanswered | Start: the end of a dogfood session on a real collection; end: the same file a week later; statistic: the count of re-scans still awaiting an answer; population: each dogfood session ending with at least one re-scan awaiting an answer, that count recorded at the start; a session with none reads not measured, never 0. | 0 | The Data Foundation PRD's E26 count, read through R5.7's "Answer re-scans" a week on. | aligned |
@@ -586,18 +577,18 @@ trust (F82, F134).
 
 | # | Question | Decision so far | Interim rule | Closer | Feeds (row IDs) | Status |
 |---|---|---|---|---|---|---|
-| 1 | The constants table's OQ 1 budgets and ceiling: how fast must browsing answer at scale, and on which machines? | F20, F42, F66, F99 and F118's candidates. | Each candidate, on an M1 MacBook Air with 8 GB, internal disk, the first open cold as the journeys' timing workload defines it and browsing warm; read every release there, per-PR timing only a tripwire; R8.11 against the engineering plan's ROW_CONFIRM_BUDGET while the capture PRD's OQ 5 is open. | Engineering times Release builds at ROWS_CEILING on that Mac and one current Mac; the owner ratifies, and estimates HISTORY_READINGS_CEILING. | R2.5, R3.1, R8.1, R8.2, R8.11, M1 | pre-alignment |
-| 2 | FILE_ITEMS_CEILING: how many items must the file-wide views hold up under? | F34's candidate. | 100,000 items across the whole file. | The owner's estimate of collections per file, checked by UJ9.5-b. | R8.1, R8.2 | pre-alignment |
-| 3 | FIND_SIMILAR_DISTANCE | F16's candidate. | ΔE2000 3.0, at or within. | A dogfood "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner. | R3.7 | pre-alignment |
-| 4 | BULK_CONFIRM_COUNT | F7's candidate. | Confirm a bulk set or clear across more than 10 items. | Dogfood bulk edits, then the owner. | R6.2 | pre-alignment |
-| 5 | NEUTRAL_CHROMA: below what chroma is an item treated as having no meaningful hue? | F19's candidate; no source measured. | C* 3.0. | A dogfood hue sort of a collection holding a grey series; the owner. | R3.3 | pre-alignment |
-| 6 | MIN_SWATCH_SIZE | F20's candidate. | 24 pt. | The owner at the P2 build, on the owner's display at working distance. | R7.1, R7.2 | pre-alignment |
-| 7 | What decides that the display cannot show a colour: which gamut, which rendering intent, and a display reporting none? | The Data Foundation PRD's R3.4 states the stored flag's own test (F127, F146); the display check is this question's. | Adapt the current value to the display's white by Bradford and test it against the display's reported gamut under relative colorimetric at zero tolerance, treating a display reporting none as sRGB. | An engineering spike on one sRGB and one Display P3 display with the harness's seeded file; the owner. | R2.5, M2 | pre-alignment |
+| 1 | The constants table's OQ 1 budgets and ceiling: how fast must browsing answer at scale, and on which machines? | Answered by F209 (D61): F20, F42, F66, F99 and F118's candidates ratified as v1's values. Each candidate, on an M1 MacBook Air with 8 GB, internal disk, the first open cold as the journeys' timing workload defines it and browsing warm; read every release there, per-PR timing only a tripwire; R8.11 against the engineering plan's ROW_CONFIRM_BUDGET while the capture PRD's OQ 5 is open. | | Closed — the owner (F209); the results file carries the answer. | R2.5, R3.1, R8.1, R8.2, R8.11, M1 | pre-alignment |
+| 2 | FILE_ITEMS_CEILING: how many items must the file-wide views hold up under? | Answered by F209 (D61): F34's candidate, 100,000 items across the whole file, ratified as v1's value. | | Closed — the owner (F209); the results file carries the answer. | R8.1, R8.2 | pre-alignment |
+| 3 | FIND_SIMILAR_DISTANCE | Answered by F209 (D61): F16's candidate, ΔE2000 3.0 at or within, ratified as v1's value. | | Closed — the owner (F209); the results file carries the answer. | R3.7 | pre-alignment |
+| 4 | BULK_CONFIRM_COUNT | Answered by F209 (D61): F7's candidate, confirming a bulk set or clear across more than 10 items, ratified as v1's value. | | Closed — the owner (F209); the results file carries the answer. | R6.2 | pre-alignment |
+| 5 | NEUTRAL_CHROMA: below what chroma is an item treated as having no meaningful hue? | Answered by F209 (D61): F19's candidate, C* 3.0, ratified as v1's value. | | Closed — the owner (F209); the results file carries the answer. | R3.3 | pre-alignment |
+| 6 | MIN_SWATCH_SIZE | Answered by F209 (D61): F20's candidate, 24 pt, ratified as v1's value. | | Closed — the owner (F209); the results file carries the answer. | R7.1, R7.2 | pre-alignment |
+| 7 | What decides that the display cannot show a colour: which gamut, which rendering intent, and a display reporting none? | Answered by F209 (D61): the display check's test — adapt the current value to the display's white by Bradford and test it against the display's reported gamut under relative colorimetric at zero tolerance, treating a display reporting none as sRGB — ratified as v1's value; the Data Foundation PRD's R3.4 states the stored flag's own test (F127, F146), unaffected by this ratification. | | Closed — the owner (F209); the results file carries the answer. | R2.5, M2 | pre-alignment |
 | 8 | Does renaming an imported column change the name the file stores? | Answered by F9 (R4.8): yes. | | Closed — the owner (F9); the results file carries the answer. | R4.8 | aligned |
 | 9 | How is deleting a selection confirmed? | Answered by F7 (R6.3): by the Data Foundation PRD's E33. | | Closed — the owner (F7); the results file carries the answer. | R6.3 | aligned |
 | 10 | When may undo of a delete be built? | The Data Foundation PRD's OQ 20 gates its R6.3; if it keeps pending content in the file, the crash route and the deleted state are restated. | R1.7 is not built and E10 does not appear. | The Data Foundation PRD's OQ 20. | R1.7 | pre-alignment |
-| 11 | Which published ΔE2000 values do the "Find similar" and distance cases use? | F64's interim: CIEDE2000 test pairs 1–5 from Sharma, Wu and Dalal (2005). | Use the pairs as the journeys quote them. | Engineering checks every quoted pair against the published table before the first such case runs. | R3.7, R5.4, R5.8 | pre-alignment |
-| 12 | IMPORTED_COLUMNS_CEILING: how wide may a collection's imported data be while the budgets hold? | F43's candidate. | 20 columns of 200 characters. | The widest inventory the owner dogfoods; the owner. | R8.1, R8.2 | pre-alignment |
+| 11 | Which published ΔE2000 values do the "Find similar" and distance cases use? | Answered by OQ 11's closer, run 2026-09-26: F64's interim, CIEDE2000 test pairs 1–5 from Sharma, Wu and Dalal (2005), ratified as v1's value. Use the pairs as the journeys quote them. Every quoted pair checked against the published table with no discrepancy. | | Closed — engineering's check, 2026-09-26; the results file carries the answer. | R3.7, R5.4, R5.8 | pre-alignment |
+| 12 | IMPORTED_COLUMNS_CEILING: how wide may a collection's imported data be while the budgets hold? | Answered by F209 (D61): F43's candidate, 20 columns of 200 characters, ratified as v1's value. | | Closed — the owner (F209); the results file carries the answer. | R8.1, R8.2 | pre-alignment |
 
 Every open question carries an interim rule, or its P0 rows are in the Legend's no-interim list;
 there is no third option.

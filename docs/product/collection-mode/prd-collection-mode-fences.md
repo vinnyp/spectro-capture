@@ -11,6 +11,10 @@ amendment preserves them and does not re-decide them.
 
 **Review log:** `docs/agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md` — created at round 1, 2026-09-24; every later round appends a `## Round N` section to it.
 
+**Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance. A second link, to this amendment's own lock record, is added at its bookkeeping close.
+
+**Amendment pending:** F202–F210 (2026-09-26), peer review pending.
+
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
 range that authorises that amendment. Its presence says that the fences in that range are not yet
@@ -22,13 +26,41 @@ diff checks compare against, each resolved once at round 1 and written here as a
 **preservation baseline**, the commit at which this document was most recently locked, and the
 **change baseline**, the merge-base of this amendment's branch with the trunk it targets. A check
 that asks what has been preserved since the lock reads the first; a check that asks what this
-amendment changed reads the second.
+amendment changed reads the second. Preservation baseline: `04dfb97c9046cd18551df32c7ca74ceb71c788f9`. Change baseline: `dc1b747f399bc94a29392c69bcfe8bd72bf94412`.
 
 ## Fences
 
 **Fence grammar.** Every fence is a `### F<n> — <title> (<date>)` section carrying **Authority**
 (the owner decision that made it, by link), **Decision** (what the owner decided, in the owner's
 terms), **Why** (optional) and **Carried by**, in that order.
+
+**Authority index.** Each Authority field names its source; this index links that source to its
+committed record. Owner decisions D1–D64 designate the fence's own verbatim quote as the committed
+record — no other document restates the question and the chosen option — and this index links each
+one to the review log's section where that adjudication happened. An approved-recommendation form's
+committed record is whichever document actually lists the numbered recommendations: the round-N fix
+file, in every round below.
+
+| Source form | Committed record | Link |
+|---|---|---|
+| owner decision D1–D14 (pre-fill, post-fill and the second post-fill adjudication, 2026-09-24) | The fence's own quote; adjudicated in | [the review log's Round 0 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-0--owner-adjudication-before-round-1-2026-09-24) |
+| owner decision D15–D21 (round-1 adjudication, 2026-09-24) | The fence's own quote; adjudicated in | [the review log's Round 1 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-1-2026-09-24) |
+| owner decision D22–D27 (round-2 adjudication, 2026-09-25) | The fence's own quote; adjudicated in | [the review log's Round 2 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-2-2026-09-25--delta-verification) |
+| owner decision D28–D31 (round-3 adjudication, 2026-09-25) | The fence's own quote; adjudicated in | [the review log's Round 3 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-3-2026-09-25--delta-verification) |
+| owner decision D32–D41 (round-4 adjudication, 2026-09-25) | The fence's own quote; adjudicated in | [the review log's Round 4 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-4-2026-09-25--delta-verification) |
+| owner decision D42–D46 (round-5 adjudication, 2026-09-25) | The fence's own quote; adjudicated in | [the review log's Round 5 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-5-2026-09-25--delta-verification) |
+| owner decision D47–D54 (round-6, pre-lock, adjudication, 2026-09-25) | The fence's own quote; adjudicated in | [the review log's Round 6 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-6-2026-09-25--the-pre-lock-round-with-the-phase-5-priority-pass) |
+| owner decision D55–D64 (round-10 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 10 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-10--the-pr-21-review-2026-09-26) |
+| approved recommendation M and approved loose end (i)–(v) (post-fill and second post-fill, F5–F28) | The round-0 fix file's lists | [round-0 fixes](prd-collection-mode-round-0-fixes.md) |
+| approved round-1 recommendation M and approved fix (a)–(g) | The round-1 fix file's Owner-needed list | [round-1 fixes](prd-collection-mode-round-1-fixes.md) |
+| approved round-2 recommendation M | The round-2 fix file's Owner-needed list | [round-2 fixes](prd-collection-mode-round-2-fixes.md) |
+| approved round-3 recommendation M | The round-3 fix file's Owner-needed list | [round-3 fixes](prd-collection-mode-round-3-fixes.md) |
+| approved round-4 recommendation M | The round-4 fix file's Owner-needed list | [round-4 fixes](prd-collection-mode-round-4-fixes.md) |
+| approved round-5 recommendation M | The round-5 fix file's Owner-needed list | [round-5 fixes](prd-collection-mode-round-5-fixes.md) |
+| approved round-6 recommendation M | The round-6 fix file's Owner-needed list | [round-6 fixes](prd-collection-mode-round-6-fixes.md) |
+| OQ 11's closer, run 2026-09-26 (not an owner decision) | Engineering's check; recorded in | [the results file's OQ 11 section](prd-collection-mode-oq-results.md#oq-11) |
+
+This is editorial: it adds navigation only, over the settled preamble and fences above.
 
 **Carried by grammar.** A **Carried by** value is a comma-separated list of the IDs the decision
 now lives in — row IDs, case IDs, copy-state IDs, metric IDs and sibling fence numbers. A
@@ -164,6 +196,8 @@ choices that recommendation states and nothing more.
   neither bulk operation is offered in the All items view.
 - **Carried by:** R6.1, R6.2, R6.3, E8, UJ6.3-a, UJ6.3-b, UJ6.3-c, UJ6.3-e, the Data Foundation PRD E33, the Data Foundation PRD R6.2, the Data Foundation PRD R7.6o, the Data Foundation PRD F50
 
+**Clarified 2026-09-26 (owner decision D61; F209):** the BULK_CONFIRM_COUNT candidate this fence sets (OQ 4) is ratified as v1's value by F209 (D61).
+
 ### F8 — Editable item metadata, and no app-owned notes field in v1 (2026-09-24)
 
 - **Authority:** owner decision D8, post-fill adjudication 2026-09-24. Question: "What item
@@ -295,6 +329,8 @@ The rest of this fence stands.
 
 **Clarified 2026-09-25 (approved round-2 recommendation 16, F114):** Find similar compares working-set values only, and is not offered on an item without one; such an item's detail shows the value-absent mark in its Current value line.
 
+**Clarified 2026-09-26 (owner decision D61; F209):** the FIND_SIMILAR_DISTANCE candidate this fence sets (OQ 3) is ratified as v1's value by F209 (D61).
+
 ### F17 — What search matches (2026-09-24)
 
 - **Authority:** approved recommendation 6: "Search uses Capture's Find rule (codes match from the
@@ -324,6 +360,10 @@ The rest of this fence stands.
   question.
 - **Carried by:** R1.2, R1.6, R2.6, R2.8, R3.3, E12
 
+**Clarified 2026-09-26 (owner decision D56; F203):** the banner's action clause is superseded — the device PRD's E22 action clears the search and the row-state filter and sets the mark filter to simulated alone, as F203 states.
+
+**Clarified 2026-09-26 (owner decision D61; F209):** the NEUTRAL_CHROMA candidate this fence sets (OQ 5) is ratified as v1's value by F209 (D61).
+
 ### F20 — Candidate budgets, what persists, and where column visibility is kept (2026-09-24)
 
 - **Authority:** approved recommendation 9: "Candidate budgets, all held open as OQs: 100 ms at p95
@@ -343,6 +383,8 @@ stands.
 **Clarified 2026-09-24 (owner decisions D19–D20, F33, F34, F41–F43):** the budgets are gated on an M1 MacBook Air with 8 GB until OQ 1 closes (F33); what they cover and how they are measured is F41's; F42 and F43 add BULK_WRITE_BUDGET and IMPORTED_COLUMNS_CEILING.
 
 **Clarified 2026-09-25 (owner decision D52, F199):** the swatch grid's default size and its range are the build's choice, at or above MIN_SWATCH_SIZE, as R7.2 states.
+
+**Clarified 2026-09-26 (owner decision D61; F209):** the 100 ms and 1 s candidates this fence sets (OQ 1) and the 24 pt candidate it sets (OQ 6) are each ratified as v1's value by F209 (D61).
 
 Fences F21–F28 were decided by the owner in a second post-fill adjudication of 2026-09-24, over the
 questions the round-0 fix pass surfaced. F21–F23 each answer one question, quoted with its chosen
@@ -479,6 +521,8 @@ round-1 fix pass are filled by it.
 - **Decision:** As the chosen option states.
 - **Carried by:** R8.2, UJ9.5-b
 
+**Clarified 2026-09-26 (owner decision D61; F209):** the FILE_ITEMS_CEILING candidate this fence sets (OQ 2) is ratified as v1's value by F209 (D61).
+
 ### F35 — Deleted, cleared or replaced text is gone from the file's bytes (2026-09-24)
 
 - **Authority:** owner decision D21, round-1 adjudication 2026-09-24. Question: "When a user deletes a swatch or clears a field, how 'gone' must the old text be? DF R6.2a says 'unrecoverable from the active file by an outside reader' — ambiguous between a SQL client and anyone holding the file's bytes…" Chosen: **Gone from the bytes** — "Unrecoverable even by someone scanning a copy of the file's bytes. Amend DF R6.2a/R2.3 wording in this PR and hand ADR-0003 the requirement (it picks the mechanism, e.g. secure delete); tests read the file's bytes." Not chosen: SQL-level only with softened copy.
@@ -541,6 +585,8 @@ round-1 fix pass are filled by it.
 
 **Clarified 2026-09-25 (approved round-2 recommendation 30, F128):** a bulk write done within BROWSE_RESPONSE_BUDGET needs no progress frame.
 
+**Clarified 2026-09-26 (owner decision D61; F209):** the BULK_WRITE_BUDGET candidate this fence sets is ratified as v1's value by F209 (D61).
+
 ### F43 — Approved recommendation 8: IMPORTED_COLUMNS_CEILING and behaviour above the ceilings (2026-09-24)
 
 - **Authority:** approved recommendation 8: "New constant IMPORTED_COLUMNS_CEILING: budgets hold up to 20 imported columns of up to 200 characters. Above that, or above ROWS_CEILING, everything still works and nothing is refused, but the budgets aren't promised."
@@ -548,6 +594,8 @@ round-1 fix pass are filled by it.
 - **Carried by:** R8.1, UJ9.5-a, UJ9.5-c
 
 **Clarified 2026-09-25 (approved round-2 recommendations 20 and 31, F118 and F129):** the budgets hold up to HISTORY_READINGS_CEILING, candidate 500 readings on one item, and in a file of up to FILE_ITEMS_CEILING items; above any ceiling everything still works and nothing is refused, but no budget is promised.
+
+**Clarified 2026-09-26 (owner decision D61; F209):** the IMPORTED_COLUMNS_CEILING candidate this fence sets (OQ 12) is ratified as v1's value by F209 (D61).
 
 ### F44 — Approved recommendation 9: selection and live changes (2026-09-24)
 
@@ -697,6 +745,8 @@ Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 number
 - **Decision:** As recommendation 7 states.
 - **Carried by:** R2.5, R3.7, R5.4, R5.8, M2
 
+**Clarified 2026-09-26 (OQ 11's closer, run 2026-09-26; not an owner decision):** the closer ran — two independent CIEDE2000 implementations reproduced all 34 of Sharma, Wu and Dalal (2005) Table 1's published pairs to 4 decimals, every quoted value in UJ3.4-a, UJ3.4-b, UJ3.4-d, UJ3.4-k, UJ5.3-a, UJ5.4-a and UJ5.4-b agreeing, no discrepancy found. OQ 11 closes; the results file carries the answer.
+
 ### F65 — Approved round-1 recommendation 8 (SSE MJ3) (2026-09-25)
 
 - **Authority:** approved round-1 recommendation 8, answering the round-1 fix file's box SSE MJ3: Is ADR-0003 a stop for every row? Recommended and approved: yes — every row reads or writes the file whose schema it fixes; the OQ interims proceed alongside.
@@ -708,6 +758,8 @@ Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 number
 - **Authority:** approved round-1 recommendation 9, answering the round-1 fix file's box SSE MJ8: The dropped-frame constant's candidate (F41)? Recommended and approved: no more than 1% of frames missed while paging through ROWS_CEILING rows on F33's Mac, the interim equal to it.
 - **Decision:** As recommendation 9 states.
 - **Carried by:** R8.1e, UJ9.5-a
+
+**Clarified 2026-09-26 (owner decision D61; F209):** the DROPPED_FRAME_SHARE candidate this fence sets (OQ 1) is ratified as v1's value by F209 (D61).
 
 ### F67 — Approved round-1 recommendation 10 (SSE MN2) (2026-09-25)
 
@@ -930,6 +982,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Decision:** As the chosen option states; it refines F42 for deletes.
 - **Carried by:** R8.1, R8.1f, R8.1g, UJ9.5-g
 
+**Clarified 2026-09-26 (owner decision D61; F209):** the DELETE_WRITE_BUDGET candidate this fence sets (OQ 1) is ratified as v1's value by F209 (D61).
+
 ### F100 — No bulk writes while any session is in flight (2026-09-25)
 
 - **Authority:** owner decision D24, round-2 adjudication 2026-09-25. Question: "The file has one writer. A 2 s bulk write (F42) while a capture session is running would stall capture's saves, which R8.11 forbids. Which rule?" Chosen: **No bulk writes in a session** — "While any capture session is in flight, bulk set/clear, 'Delete selected', 'Delete collection' and 'Use as scan order' are refused with E6; single edits stay available (each ~10 ms). Simple and testable; narrows F14's 'other edits stay available' for bulk only." Not chosen: bulk writes that yield or queue behind capture, engineered under ADR-0005.
@@ -1070,6 +1124,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 
 **Clarified 2026-09-25 (approved round-3 recommendation 14, F148):** HISTORY_READINGS_CEILING closes by the owner's estimate of the longest history a real item reaches, timed by UJ9.5-e.
 
+**Clarified 2026-09-26 (owner decision D61; F209):** the HISTORY_READINGS_CEILING candidate this fence sets (OQ 1) is ratified as v1's value by F209 (D61).
+
 ### F119 — Approved round-2 recommendation 21: What "cold" means for the first open (2026-09-25)
 
 - **Authority:** approved round-2 recommendation 21: the OS file cache purged and the Data Foundation PRD's open-file check already finished.
@@ -1129,6 +1185,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Carried by:** UJ2.1-q, the Data Foundation PRD R3.4, the Data Foundation PRD F53
 
 **Clarified 2026-09-25 (approved round-3 recommendation 12, F146):** the Data Foundation PRD's R3.4 now states the flag's test itself — Bradford to the display white, relative colorimetric, zero tolerance, the adaptation its sRGB derivation uses — under its F54, so closing OQ 7 changes it only through a Data Foundation fence and a new derivation version; ADR-0003's input follows.
+
+**Clarified 2026-09-26 (owner decision D61; F209):** OQ 7's display-check portion (R2.5, M2) — the only part this fence's candidate reaches — is ratified as v1's value by F209 (D61); the stored gamut-clipped flag's test parameters stay the Data Foundation PRD's, under its R3.4 and F54, and are not reopened by this ratification.
 
 ### F128 — Approved round-2 recommendation 30: Progress for a bulk write faster than BROWSE_RESPONSE_BUDGET (2026-09-25)
 
@@ -1262,6 +1320,8 @@ Fences F135–F150 were decided by the owner on 2026-09-25 over the findings rev
 - **Authority:** approved round-3 recommendation 12: the Data Foundation PRD — its R3.4 states the test itself (Bradford to the display white, relative colorimetric, zero tolerance, the adaptation its sRGB derivation uses) under DF F54, closing this PRD's OQ 7 changing DF R3.4 only through a DF fence and a new derivation version; OQ 7's Decision cell swaps its F40/F64 provenance sentence for that (word-neutral) and cites DF for the sRGB case; the ADR-0003 input follows.
 - **Decision:** As recommendation 12 states.
 - **Carried by:** the Data Foundation PRD R3.4, the Data Foundation PRD F54
+
+**Clarified 2026-09-26 (owner decision D61; F209):** OQ 7's display-check portion (R2.5, M2) is ratified as v1's value by F209 (D61); this fence's delegation of the stored gamut-clipped flag's test parameters to the Data Foundation PRD is unaffected.
 
 ### F147 — Approved round-3 recommendation 13: What an undoable ceiling delete holds (2026-09-25)
 
@@ -1641,12 +1701,77 @@ Fences F198–F201 were decided by the owner on 2026-09-25 over the five items t
 - **Authority:** owner decision D53, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "If another app's read ends while a long write (such as a 10 s delete) is held, does erasing old text wait for that write to finish?" Chosen: **Erase right away** — "The erase runs beside the held write. It needs no write lock, so it doesn't contend, and the \"gone once the read ends\" deadline stays exact." Not chosen: treating the erase as an app-made write that waits for the hold.
 - **Decision:** As the chosen option states; the Data Foundation PRD's R1.11 deferral of app-made writes (F182) does not include the wipe.
 - **Carried by:** the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F58
+- **Clarified 2026-09-26 (owner decision D55; F202):** the exact deadline covers text in the file's own bytes; a copy in a journal or log beside the file goes at the latest when a write running at the wipe lands (F202).
 
 ### F201 — Two help-docs lines (2026-09-25)
 
 - **Authority:** owner decision D54, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "Two lines for the help docs, as post-lock items. Add them? (1) \"Move your file from inside SpectroCapture, or with it closed.\" (2) \"While an export, Save a copy or the open-file check runs, text you remove stays in the file until it finishes.\"" Chosen: **Add both** — "Both go into the post-lock help-docs list, to be written when the help docs are." Not chosen: neither.
 - **Decision:** As the chosen option states: both are post-lock help-docs items.
 - **Why:** it adds post-lock help-docs items only, which carry no ID here.
+- **Carried by:** governs no rows
+
+Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 review's findings T3–T8 and its review-body request to ratify interim values, recorded in the review log's "## Round 10 — the PR #21 review (2026-09-26)" section.
+
+### F202 — The log copy of removed text waits for a running write (2026-09-26)
+
+- **Authority:** owner decision D55, round-10 adjudication 2026-09-26. Question: "Finding 3 (P1): the reviewer proved that removed text can survive in SQLite's log while another write is running, which breaks F200's 'erase right away' promise. I got the same result running it myself. How should the erase work when a write is running at the moment the other app's read ends?" Chosen: **Log copy waits** — "Text in the main file is erased exactly when the read ends, as now. A copy left in the log goes once the running write lands, at the latest, and clearing the log may make the next write wait a moment. E35 stays up until the text is gone everywhere; its wording holds. F200 gets a dated clarification, and DF R6.2a, R8.8 and the ADR-0003 input change to match." Not chosen: **Block writes while pending** — "While an erase is waiting on another app's read, no write of the app's own can start (shown unavailable), so nothing is running when the read ends and the erase finishes at once. The cost: another app reading your file blocks all editing for as long as it reads."
+- **Decision:** Removed text in the file's own bytes is wiped at F200's deadline: once every read begun before its wipe has ended, whether or not a write is held. A copy of that text in a journal or log the app keeps beside the file goes once nothing still needs that journal or log. Two things can need it: a read begun before the wipe, and a write running when the wipe runs. The copy goes at the latest when that write lands. Clearing the journal or log may hold the next write while it runs. E35 stays up until the text is in none of those bytes, and its wording is unchanged.
+- **Why:** the review's reproduction, repeated by the orchestrator on SQLite 3.53.4. A WAL log cannot be truncated while a write is in progress.
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F59
+
+### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
+
+- **Authority:** owner decision D56, round-10 adjudication 2026-09-26. Question: "Finding 6: the 'Show simulated readings' banner action promises to list exactly the simulated swatches. But if a search or another filter is already active, the result can be empty or include other swatches. What should the action do?" Chosen: **Replace narrowing** — "Clears the search and the row-state filter and sets the mark filter to Simulated alone, so exactly the simulated swatches are listed. 'Clear filters' brings the full table back." Not chosen: **Narrow within current view** — "Keeps the search and row-state filter and replaces only the mark filter with Simulated. The promise changes to 'the simulated swatches among what you're looking at', which can be none."
+- **Decision:** The device PRD's E22 action clears the search and the row-state filter, and sets the mark filter to simulated alone. The table then lists exactly the items with a simulated current reading, and "Clear filters" lists the whole collection again.
+- **Carried by:** R2.6, UJ2.1-g
+
+### F204 — "Clear sort" returns the table to queue order (2026-09-26)
+
+- **Authority:** owner decision D57, round-10 adjudication 2026-09-26. Question: "Finding 7: after you sort by a column like L*, nothing gets you back to queue order short of closing the file, and closing also ends the undo windows. How should you get back?" Chosen: **'Clear sort' action** — "A 'Clear sort' action, offered while a view sort is applied and reachable from the keyboard like the others, returns the table to queue order. In All items it returns to collection-then-queue order. It writes nothing, and it sits beside 'Clear search' and 'Clear filters'." Not chosen: **Third header click** — "Clicking a sorted header cycles ascending, then descending, then back to queue order. It adds no new label, but it's less discoverable and not the usual Mac table behaviour."
+- **Decision:** "Clear sort" is offered while a view sort is applied, and is reachable from the keyboard as every action is. It returns a collection's table to queue order, and the All items view to R1.9's collection-then-queue order. It writes nothing, and it sits beside "Clear search" and "Clear filters".
+- **Carried by:** R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ7.1-u
+
+### F205 — An imported column named like a built-in one is tagged (2026-09-26)
+
+- **Authority:** owner decision D58, round-10 adjudication 2026-09-26. Question: "Finding 8: an import can bring in an unmapped column named 'State', 'Spread', 'L*' or 'Swatch Name', which matches a built-in column's name. How should the two be told apart?" Chosen: **Tag it in the app** — "Wherever the app names such a column (header, column chooser, sort, Set a field, detail), it shows as '<name> (imported)'. Actions target the column itself, not its label. The file keeps the name as imported, so export and re-import are unchanged. No change to the Import PRD." Not chosen: **Rename at import** — "Amend the Import PRD so an import renames such a header on arrival, e.g. 'State 2'. The stored name changes, so the Import PRD's locked matching rules and re-import behaviour change too."
+- **Decision:** The rule covers an imported column whose stored name equals, under the import PRD's R2.3 rule, a Swatch field's name or a header the copy file's Column headers table shows. Wherever the app names such a column, it is labelled with its stored name followed by the copy file's " (imported)" tag. That means its header, "Columns", a view sort, "Set a field", the item detail and VoiceOver. Every action on it targets that column, never another with the same label. The file keeps its stored name, so export and re-import are unchanged, and the Import PRD does not change.
+- **Carried by:** R2.1, UJ2.3-a, UJ2.3-b
+
+### F206 — A tagged label that still clashes takes Import's collision form (2026-09-26)
+
+- **Authority:** owner decision D63, round-10 adjudication 2026-09-26. Question: "One follow-up to the '(imported)' tag. In a rare case the tagged label still clashes: one imported column is named 'State' and another is literally named 'State (imported)'. How should the app tell those two apart?" Chosen: **Number it like Import** — "The later one by column position takes Import's existing collision form, '⟨label⟩ (2)' and counting up until unique, e.g. 'State (imported) (2)'. It's deterministic, needs no new template, and the stored names stay unchanged." Not chosen: **Tag every imported column** — "Once any clash exists, every imported column in that collection shows its position, e.g. 'State (imported, column 3)'. Always unique, but noisier."
+- **Decision:** This applies where a label F205 gives still equals, under the import PRD's R2.3 rule, another column's label. The later column by position takes that PRD's collision template, "⟨base⟩ (⟨suffix⟩)", with the suffix starting at 2 and rising until unique. Stored names are unchanged.
+- **Carried by:** R2.1, UJ2.3-b
+
+### F207 — History distances compare working-set values only (2026-09-26)
+
+- **Authority:** owner decision D59, round-10 adjudication 2026-09-26 (T4), qualified by owner decision D64, round-10 adjudication 2026-09-26 (T4 follow-up). Question (D59): "Finding 4: the history view's 'From current' distance, and Compare, don't say what happens when a reading has no value in the collection's measurement condition or is unreadable. Today the only reason line blames a different light. What's the rule?" Chosen: **Working-set values only** — "Compare only the two readings' values under the collection's light, viewer angle and condition. If the current reading has none, no distance line shows. An earlier reading with none shows 'Not compared — no value in this collection's measurement condition'. An unreadable one shows 'Not compared — this reading can't be read', never using kept values. Today's line stays for a different light or angle. Compare uses the same lines." Not chosen: **Hide the line** — "Any pair missing a usable value shows no distance line at all, with no reason given. Only a different light or angle shows today's line. No new copy, but the user isn't told why." Question (D64): "One follow-up to the history-distance rule. Compare has a single distance slot. If one selected reading can't be read and the other has no value in the collection's condition, which line fills the slot?" Chosen: **'Can't be read' wins** — "An unreadable reading's line takes precedence over the no-value line. Otherwise the slot shows the line for whichever reading lacks a value, and the different-light line applies only when both readings have values but they were worked out differently." Not chosen: **Show both lines** — "The slot lists every reason that applies, one per line. More complete, but the Compare layout needs room for two lines."
+- **Decision:**
+  - **The rule.** R5.4 and R5.8 compare two readings' values in the collection's working set: its illuminant, observer and measurement condition.
+  - **No current value.** Where the current reading has no such value, no reading shows a distance line, as for an item with no current value.
+  - **No value in the condition.** An earlier reading with no such value shows the new line "Not compared — no value in this collection's measurement condition".
+  - **Unreadable.** An unreadable (quarantined) reading shows the new line "Not compared — this reading can't be read", and its kept derived values are never compared.
+  - **Different light or angle.** Today's not-compared line stays, unchanged, for a value worked out under another illuminant or observer.
+  - **Compare.** Compare's single slot shows the same lines. The unreadable line wins over the no-value line (D64). The different-light line applies only when both readings have values that were worked out differently.
+- **Carried by:** R5.4, R5.8, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.4-c, UJ5.4-d
+
+### F208 — Closing a detail returns to E9 only while its swatch has a usable colour (2026-09-26)
+
+- **Authority:** owner decision D60, round-10 adjudication 2026-09-26. Question: "Finding 5: you open a swatch from 'Find similar' (E9), and a re-read then leaves the original swatch present but with no usable colour (unreadable, or no value in the condition). What happens when you close the detail?" Chosen: **Back to the table** — "You go back to E9 only while its swatch remains and still has a usable colour. Otherwise closing goes to the table, the same as when the swatch is deleted. No stale results are kept, and no new copy is needed." Not chosen: **E9 explains** — "Go back to E9 in a new variant: '⟨code⟩ has no colour to compare now.' with Close. This needs a new copy string."
+- **Decision:** R4.1 returns to E9 only while E9's item remains and has a working-set value. Otherwise it returns to the table, as when that item is gone. No stale results remain, and there is no new copy.
+- **Carried by:** R4.1, UJ3.4-l, UJ3.4-m, UJ3.4-n
+
+### F209 — OQ 1–7 and 12's interim values are v1's contract (2026-09-26)
+
+- **Authority:** owner decision D61, round-10 adjudication 2026-09-26. Question: "The reviewer asks you to explicitly ratify interim values meant to be v1's contract. OQs 1–7 and 12 each carry one (budgets, 100k items, ΔE 3.0, confirm above 10, C* 3.0, 24 pt, the display-gamut test, 20×200 columns). Separately, OQ 11's check ran today: every quoted ΔE2000 pair matches Sharma's published table, so OQ 11 closes on its own stated closer. What should happen to the eight?" Chosen: **Ratify all eight** — "Each interim value becomes v1's contract, and the OQ closes with a results section. The dogfood checks and the engineering timing and display spike stay as post-lock checks. A failed check changes a value only through a new dated fence." Not chosen: **Ratify six, not OQ 1 or 7** — "Ratify the dogfood values (OQ 2–6, 12). OQ 1 (the speed budgets) and OQ 7 (the display-gamut test) stay open until engineering measures them. Their interim rules still govern the build."; **Keep all provisional** — "Leave all eight open. Their interim rules govern the build, and the docs say plainly that these are provisional."
+- **Decision:** Each of the eight interim values is ratified as v1's, and its OQ closes with a results section. The OQ 1 timing, the OQ 7 display spike and the dogfood closers stay as post-lock checks. A failed check changes a value only through a new dated fence. R8.11's ROW_CONFIRM_BUDGET stays the capture PRD's, under its OQ 5. F209 does not touch it.
+- **Carried by:** OQ 1, OQ 2, OQ 3, OQ 4, OQ 5, OQ 6, OQ 7, OQ 12, R2.5, R3.1, R3.3, R3.7, R6.2, R7.1, R7.2, R8.1, R8.2, M1
+
+### F210 — This PRD's word budget is 12,400 (2026-09-26)
+
+- **Authority:** owner decision D62, round-10 adjudication 2026-09-26. Question: "Fixing these findings adds roughly 200–300 words to a PRD at 11,987 of its 12,000-word budget. How should the budget be handled?" Chosen: **Raise to 12,400** — "A dated fence raises the cap, as you did twice for Data Foundation. Rows that are already aligned stay untouched." Not chosen: **Compact to fit 12,000** — "Trim other rows to make room. The skill prefers this, but trimming aligned rows reopens them for review, and earlier compaction passes changed meaning."
+- **Decision:** This PRD's word budget is 12,400 words, counted by rule 14's method. The owner overrides the agent-PRD format's never-raise rule for this PRD, as F177 did for the Data Foundation PRD.
+- **Why:** rows that are already aligned stay untouched; the growth is the round-10 findings' rule text, not restatement.
 - **Carried by:** governs no rows
 
 ## Fence → row map
@@ -1856,6 +1981,15 @@ than deciding a WHAT.
 - **F199** — R7.2
 - **F200** — the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F58
 - **F201** — governs no rows
+- **F202** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F59
+- **F203** — R2.6, UJ2.1-g
+- **F204** — R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ7.1-u
+- **F205** — R2.1, UJ2.3-a, UJ2.3-b
+- **F206** — R2.1, UJ2.3-b
+- **F207** — R5.4, R5.8, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.4-c, UJ5.4-d
+- **F208** — R4.1, UJ3.4-l, UJ3.4-m, UJ3.4-n
+- **F209** — OQ 1, OQ 2, OQ 3, OQ 4, OQ 5, OQ 6, OQ 7, OQ 12, R2.5, R3.1, R3.3, R3.7, R6.2, R7.1, R7.2, R8.1, R8.2, M1
+- **F210** — governs no rows
 
 ## Rejected findings
 

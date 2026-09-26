@@ -254,6 +254,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F56 | R1.3, R1.5, R1.9, R1.11, R2.3, R6.2a, R7.3j, R7.6q, E15, E34, E35, OQ 17; DJ3, DJ4; the Collection Mode inbound line and the Collection Mode, Capture Mode and Inventory Import outbound lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations); F1's map line; the dated F53 clarification. |
 | F57 | R1.11, R6.2a, R6.3, R7.6d, E33, E35, OQ 20; DJ3, DJ4; the copy header; the Collection Mode inbound and outbound lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the dated F21, F54, F55 and F56 clarifications. |
 | F58 | R1.11, R6.2a, R7.6b, E15, E34, E35, OQ 20; DJ3, DJ4; the copy header; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the Corrected F57 line. |
+| F59 | R6.2, R6.2a, E35; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F59. |
 
 ## Rejected findings
 
@@ -621,3 +622,16 @@ Source: the owner's round-6 (pre-lock) decisions in the Collection Mode PRD's ad
 **Why:** each is the Data Foundation half of a Collection Mode round-6 decision or fix about the file, a state or surface this PRD owns, its copy, an input it hands ADR-0003, or the seam.
 
 **Rows:** R1.11, R6.2a, R7.6b, E15, E34, E35, OQ 20, DJ3 (its wipe-beside-a-held-write line among them), DJ4, the copy header, the Collection Mode inbound line, the Corrected F57 line.
+
+**Clarified 2026-09-26 ([the Collection Mode PRD's F202](../collection-mode/prd-collection-mode-fences.md#f202--the-log-copy-of-removed-text-waits-for-a-running-write-2026-09-26), owner decision D55):** (7)'s "needing no write lock, so R6.2a's deadline holds while a write is held" is qualified: that holds for text in the file's own bytes; a copy of it in a journal or log the app keeps beside the file goes at the latest when a held write lands, as F59 states. Peer review pending.
+
+## Collection Mode round-10 amendment (2026-09-26)
+
+Source: the owner's round-10 decisions in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F202](../collection-mode/prd-collection-mode-fences.md#f202--the-log-copy-of-removed-text-waits-for-a-running-write-2026-09-26) (owner decision D55, over the PR #21 review's finding T3). This fence carries only the Data Foundation half of that decision; peer review pending.
+
+### F59 — The log copy of removed text waits for a running write (2026-09-26)
+
+- **Authority:** [the Collection Mode PRD's F202](../collection-mode/prd-collection-mode-fences.md#f202--the-log-copy-of-removed-text-waits-for-a-running-write-2026-09-26) — owner decision D55, its round-10 adjudication, 2026-09-26.
+- **Decision:** R6.2a's deadline is qualified as F202 states: text in the file's own bytes is gone at the read-based deadline R6.2a already states, whether or not a write is held; a copy of that text in a journal or log the app keeps beside the file goes once nothing still needs it — a read begun before the wipe, and a write running when the wipe runs, both counting — at the latest when that write lands, clearing it able to hold the next write while it runs. E35 stays until the wipe lands, meaning the text is in none of R6.2a's bytes. DJ3 gains the log-copy line (D1).
+- **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
+- **Rows:** R6.2, R6.2a, E35, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F59.
