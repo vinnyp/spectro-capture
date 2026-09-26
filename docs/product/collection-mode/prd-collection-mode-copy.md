@@ -148,7 +148,7 @@ read-only file states; and the Data Export PRD's E1.
 
 ### E6 — Waiting for a session to end
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R8.3
 - Headline: ⟨collection⟩ has a session that hasn't ended

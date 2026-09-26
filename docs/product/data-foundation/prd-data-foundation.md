@@ -82,7 +82,7 @@ IDs never change: requirements use `R<section>.<n>`, copy uses `E<n>`, metrics u
 | R7.6n | Vendor-analytics disclosure | That it is present, and what it names | R6.6 | — | 🤝 Aligned |
 | R7.6o | Selection delete confirmation | The swatch, current-reading and earlier-reading counts, the actions, no default delete, and the collection-scope export its Export first opens | R6.2, R6.3 | E33 | ⌛️ Ready for Alignment |
 | R7.6p | Permission-lost state | What it names as unsaved, that on a local disk nothing in the file changed, that OK leaves it unsaved, the actions, that Choose the file again retries no write, and that another file chosen changes nothing | R1.10 | E34 | ⌛️ Ready for Alignment |
-| R7.6q | Wipe-pending notice | That the change is saved, what stays until the other app's read ends, the action | R6.2a | E35 | ⌛️ Ready for Alignment |
+| R7.6q | Wipe-pending notice | That the changes are saved, what stays until the other app's read ends, the action | R6.2a | E35 | ⌛️ Ready for Alignment |
 
 ### Evidence base
 

@@ -40,6 +40,8 @@ Document amendments still open. Each waits for the next editing pass over the PR
 - [ ] **DF** — the reading a Flag moves to history (Collection Mode R4.9, Capture R5.6) is not marked never true, so it re-enters over-time views once the item is re-scanned; accepted for v1 under Collection Mode F77 (a Flag means scan again, not never true) and logged here for the Data Foundation owner.
 - [x] **DF** — owes Collection Mode a named state for a write refused because permission to the file was lost (Collection Mode R8.8 and F73; DF F52); its wording and actions, and whether it is a new state or a variant of an existing one, go back to the owner. — closed by the Collection Mode round-2 amendment: DF E34, owned by DF R1.10 and tested by DF R7.6p (Collection Mode F101, DF F53), in this change's PR, number pending.
 - [ ] **DF** — Collection Mode R8.10a's held-write input (a write R1.11 names, held running until released) moves into R7.2 as a declared state once this PRD's budget has room, R8.10a then citing it (Collection Mode F185, its round-5 architecture review's ARCH5-N2; added in this change's PR, number pending).
+- [ ] **DF** — needs owner: should closing, switching and quitting end a running re-read rather than wait for it? And what is a re-read "failure" (the re-read could not read the file)? (Collection Mode F191, its round-7 architecture and engineering reviews' ARCH7-3 and 7N1; added in this change's PR, number pending).
+- [ ] **DF** — a storage check that nothing about E35's state is kept outside the file (Collection Mode F190, its round-7 privacy review's PRIV7-4; added in this change's PR, number pending).
 
 ### Device Management
 
@@ -123,6 +125,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **Capture** — implement F58/UJ3.1-l’s separate-one-row counter-lifetime case; policy decided in PR #20, build evidence pending.
 - [ ] **Collection Mode** — OQ 11: engineering checks every quoted CIEDE2000 pair against the published table before the first "Find similar" or distance case runs (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — OQ 7: an engineering spike on one sRGB and one Display P3 display with the harness's seeded file, then the owner, settles the display check R2.5 and M2 run on under OQ 7's interim (Collection Mode F197, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode / DF** — the Data Foundation amendment rows Collection Mode's first phase builds against (DF R1.11, R7.6p, R7.6q, E34 and E35) are aligned in that PRD's own review before the first build PR (Collection Mode, its round-7 plan review's PLAN7-4; added in this change's PR, number pending).
+- [ ] **Collection Mode** — the engineering plan declares ROW_CONFIRM_BUDGET, closing UJ9.5-d's row-confirmation half (Collection Mode F120, its round-7 plan review's coverage gap; added in this change's PR, number pending).
 
 ## ADR-0003
 
@@ -135,7 +139,9 @@ Build-review items and the engineering plan's test matrix.
 
 - [ ] **Device** — when ADR-0003 puts saved devices in the file, the device PRD's R1.9/R1.17 writes cite Data Foundation R1.11 (Collection Mode round-5 product-manager and interface reviews; its orchestrator's round-5 ruling; added in this change's PR, number pending).
 
-- [ ] **DF** — a file renamed or moved outside the app while open keeps every committed write and survives a crash, R1.10's promise holding for the file under its new name (Collection Mode F174 and F197, its round-6 engineering and architecture reviews' 6MN3 and ARCH6-3; added in this change's PR, number pending).
+- [ ] **DF** — a file renamed or moved outside the app while open keeps every committed write and survives a crash, R1.10's promise holding for the file under its new name, and no journal or log the app kept beside the file under its old name is left holding its text (Collection Mode F174 and F197, its round-6 engineering and architecture reviews' 6MN3 and ARCH6-3 and its round-7 architecture review's ARCH7-5; added in this change's PR, number pending).
+
+- [ ] **DF** — the wipe is two mechanisms. Copying into the main file waits only on reads begun before it (F200's exact deadline covers main-file text). A copy of replaced text in a log frame goes once no read begun before the wipe and no write in progress needs that log — at the latest when a held write lands — and the log's reset may briefly hold a write. E35 follows the bytes, not the copy-back. Log frames are never overwritten in place. A move's copy tolerates a wipe beside it (Collection Mode F200 and DF F58 (7), its round-7 architecture, engineering and performance reviews' ARCH7-2, 7MN1 and PERF7-4; added in this change's PR, number pending).
 
 ## Dogfood
 
@@ -149,6 +155,8 @@ Readings the owner takes while dogfooding a build.
 - [ ] **Collection Mode** — OQ 12: the widest inventory the owner dogfoods; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — M4: each dogfood session's re-scans still awaiting an answer, read a week later through "Answer re-scans" (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — the E12 reading beside M4: on a Display P3 display with an outside-sRGB swatch listed, the owner reads E12 once and says what each mark tells them they can and cannot trust (Collection Mode F82 and F134, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **DF** — whether E35 at a reopen, "Saved — …" before the user has acted, confuses; reworded only if it does (Collection Mode F190 and F194, its round-7 product-manager review's PM7-3; added in this change's PR, number pending).
+- [ ] **DF** — whether E15's and E34's "your last change" reads well when the failed write was a scan (Collection Mode F193, its round-7 product-marketing review's N7-n1; added in this change's PR, number pending).
 
 ## Documentation
 
@@ -161,14 +169,14 @@ Readings the owner takes while dogfooding a build.
 - [ ] **DF** — the help docs (R1.5's) say that backups, Time Machine or APFS local snapshots, and a sync provider's version history made before a delete or clear keep what they held (Collection Mode F131, its privacy review's PRIV-15).
 - [ ] **DF** — the help docs (R1.5's) say that on a network volume reading the file elsewhere may delay saves as well as the wipe of removed text, the non-waiting save holding only within R1.10's local-volume scope (Collection Mode F183, its round-5 architecture review's ARCH5-4; added in this change's PR, number pending).
 - [ ] **DF** — the help docs (R1.5's) say "Move your file from inside SpectroCapture, or with it closed." (Collection Mode F201, its round-6 architecture review's ARCH6-3; added in this change's PR, number pending).
-- [ ] **DF** — the help docs (R1.5's) say "While an export, Save a copy or the open-file check runs, text you remove stays in the file until it finishes." (Collection Mode F201, its round-6 privacy review; added in this change's PR, number pending).
+- [ ] **DF** — the help docs (R1.5's) say "While an export, Save a copy or the open-file check runs, text you remove stays in the file until it finishes." (Collection Mode F201, its round-6 privacy review; added in this change's PR, number pending). Needs owner at the help-docs pass: as written the line contradicts F195, the open-file check ending before the file takes a write, and covers removed text only; suggested wording "While an export or Save a copy runs, text you remove or replace stays in the file until it finishes.", or, if the reopen is meant, "Text you removed while another app was reading your file is wiped when you next open it, once SpectroCapture has checked the file." (its round-7 reviews' N7-m1, IF7-4, PRIV7-3 and PERF7-6).
 
 ## v1 release
 
 Decisions taken when v1 is cut.
 
 - [ ] **Collection Mode / DF** — at v1 release the owner decides delete-undo's fate: if the Data Foundation PRD's OQ 20 is still open, Collection Mode R1.7 and DF R6.3 are marked deferred and v1 ships final deletes behind the counted confirmation and export first — a decision, not a default (Collection Mode F57, F187 and F196, its round-6 plan review's PLAN-8; added in this change's PR, number pending).
-- [ ] **Collection Mode** — OQ 1: engineering times Release builds at ROWS_CEILING on the M1 MacBook Air with 8 GB and one current Mac; the owner ratifies the OQ 1 constants and estimates HISTORY_READINGS_CEILING (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 1: engineering times Release builds at ROWS_CEILING on the M1 MacBook Air with 8 GB and one current Mac, and the open-file check on UJ9.5-b's file, cold; the owner ratifies the OQ 1 constants and estimates HISTORY_READINGS_CEILING (Collection Mode, its round-6 plan review and its round-7 performance review's PERF7-6; added in this change's PR, number pending).
 
 ## v2 candidates
 
