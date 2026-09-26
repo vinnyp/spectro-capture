@@ -677,13 +677,13 @@ Source: the owner's round-12 decisions in the Collection Mode PRD's adjudication
 - **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
 - **Rows:** R6.2, R6.2a, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F61.
 
-## Collection Mode round-15 amendment (2026-09-26)
-
-Source: the owner's round-15 decision in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F218](../collection-mode/prd-collection-mode-fences.md) (owner decision D72, over round 15's database-lens DB15-MAJOR-1 and privacy-lens PRIV15-1). This fence carries only the Data Foundation half of that decision; peer review pending.
-
 **Clarified 2026-09-26 (round-16 orchestrator bookkeeping; no owner decision; the fence it points to governs):** F62 qualifies this fence's first moment for a full volume.
 
 **Clarified 2026-09-26 (round-16 orchestrator bookkeeping; no owner decision):** "after a crash, at the first open at which that holds" means the first such moment after reopening, as the ADR-0003 input and DJ3 (h) read it.
+
+## Collection Mode round-15 amendment (2026-09-26)
+
+Source: the owner's round-15 decision in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F218](../collection-mode/prd-collection-mode-fences.md) (owner decision D72, over round 15's database-lens DB15-MAJOR-1 and privacy-lens PRIV15-1). This fence carries only the Data Foundation half of that decision; peer review pending.
 
 ### F62 — A full volume defers the log copy until room returns (2026-09-26)
 
@@ -695,3 +695,9 @@ Source: the owner's round-15 decision in the Collection Mode PRD's adjudication 
 **Clarified 2026-09-26 ([the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) and its Clarified line, owner decision D72):** a clearing a full volume stops gives way, holding no write of the app's own, and is retried once room returns.
 
 **Clarified 2026-09-26 ([the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) and its Clarified lines, owner decision D72):** the deferral applies only where a full volume actually stops the clearing; where the clearing can run on the full volume, F61's first moment governs (DJ3 (g) and (i)).
+
+**Clarified 2026-09-26 (round-17 orchestrator bookkeeping; no owner decision):** DJ3 (j), a full volume that refuses truncation and sync until room returns, also carries this fence, beside (g) and (i); (g) is now the full volume that lets the clearing run, and (i) and (j) the clearings a full volume stops.
+
+**Clarified 2026-09-26 ([the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) and its third Clarified line, owner decision D72 read with F211):** "E35 stays up" keeps an E35 already up and raises none where F211 shows none; the clearing once room returns still needs the file open and no read using the log, and no marker of it is kept outside the file (F58 (1)).
+
+**Clarified 2026-09-26 (round-17 orchestrator bookkeeping; no owner decision; [the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) and its Clarified lines govern):** "room to clear it" means room enough for that clearing to succeed, and the clearing once room returns runs at the first such moment after room returns.
