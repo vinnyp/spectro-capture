@@ -6,7 +6,7 @@ A PRD is not a decision about *how*. Architecture is decided only in [`docs/deci
 
 ## The PRD set
 
-Three PRDs remain to be written to cover v1 (five are locked). Priority is authoring order, not a cut line.
+Two PRDs remain to be written to cover v1 (six are locked). Priority is authoring order, not a cut line.
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
@@ -15,7 +15,7 @@ Three PRDs remain to be written to cover v1 (five are locked). Priority is autho
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F64 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) |
 | 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; Import F59 amendment in PR #16; [PR #17](https://github.com/vinnyp/spectro-capture/pull/17) agent-build amendment under F33–F49 (2026-09-17), with OQ 17–21 retained; PR #18 Export-mirror amendment (R7.7a/e/i/l/n, Data Export obligation) |
 | 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16; cross-document amendment under Import F59 in PR #16; PR #17 fixture/export amendment under DE F14 (2026-09-17); [PR #18](https://github.com/vinnyp/spectro-capture/pull/18) agent-build amendment F15–F30 (2026-09-17–18), including Device/DF/Capture mirrors |
-| 6 | Collection Mode | U5, U7 | queued |
+| 6 | [Collection Mode](collection-mode/prd-collection-mode.md) | U5, U7 | **Locked** — review gate closed 2026-09-25 after nine rounds, the pre-lock round and a priority pass included; cross-document amendments to Data Foundation (F50–F58), Capture Mode (F70–F76), Inventory Import (F65–F68), Data Export (F31–F34) and Device Management (F32); peer review closed 2026-09-25 (PR #PENDING) |
 | 7 | QC & Comparison | U4 | queued |
 | 8 | Color Visualization | U7 | queued |
 | 9 | Telemetry | — | queued — v1.x, gated on the provider spike |
@@ -56,9 +56,11 @@ The PRD is [prd-data-export.md](export/prd-data-export.md), with four companion 
 
 Its rows were split out of the Data Foundation PRD on 2026-09-09 under that document's fence F30 with no rule changed — only IDs, citations, and sections. The two share one review log and one fresh-lens ledger.
 
-### 6. Collection Mode
+### 6. Collection Mode — written
 
 Browsing and working with a collection after capture. Browse at scale · search, filter, facet, sort · editing surfaces · selection and bulk operations · the version-history UI · the gamut-aware swatch grid.
+
+The PRD is [prd-collection-mode.md](collection-mode/prd-collection-mode.md), with four companion files: the acceptance scenarios (stable UJ anchors) in [prd-collection-mode-journeys.md](collection-mode/prd-collection-mode-journeys.md), the shipping error and state copy in [prd-collection-mode-copy.md](collection-mode/prd-collection-mode-copy.md), the answers to closed open questions in [prd-collection-mode-oq-results.md](collection-mode/prd-collection-mode-oq-results.md), and the owner decisions in [prd-collection-mode-fences.md](collection-mode/prd-collection-mode-fences.md).
 
 ### 7. QC & Comparison
 

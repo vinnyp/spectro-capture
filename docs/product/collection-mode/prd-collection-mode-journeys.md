@@ -1,32 +1,10 @@
-<!-- guidance: this is the acceptance-scenarios companion to `PRD: Collection Mode`. It is the
-     second of the format's four homes: rows own behaviour, and the cases here supply the
-     fixtures, actions, oracles and source rows that make a row executable. A case never
-     introduces a rule — if a case needs a rule this PRD's rows do not state, the row is missing.
-     Two fill families are placeholders: `{{...}}`, substituted at scaffold time, and `_(prompt)_`,
-     filled during authoring; an unresolved instance of EITHER is a lock-blocking defect. Every
-     guidance comment in this file is deleted at lock, so a rule a BUILDER needs after lock lives
-     in body text and never in a comment. -->
-
 # Acceptance scenarios: Collection Mode
-<!-- guidance: Collection Mode matches the PRD's title exactly, so the pair reads as one
-     document; the file itself is `prd-collection-mode-journeys.md` beside the PRD in
-     docs/product/collection-mode.
-     docs/product/collection-mode: the project's product-docs directory, where the PRD and its four
-     companions live. -->
 
 Rows own behaviour. The cases in this file supply fixtures, actions, oracles and the rows each
 case sources; they restate and cite rules, never introduce them. Every case in this file resolves
 to at least one row of `docs/product/collection-mode/prd-collection-mode.md`.
 
 ## Harness
-<!-- guidance: the harness statement. Name the simulated seam a case drives (what stands in for
-     the real world), and the readback controls a case asserts through (what the test can
-     observe). Then, verbatim: "Declare every exercised seam input; only named defaults are
-     exempt." Fixture values are declared here or in the case's Given — never copied out of the
-     implementation, because a fixture copied from the code asserts the code against itself.
-     The fixture-continuity rule below is BODY text, not guidance: it is the semantics under which
-     a builder reads every case table in this file, and it has to survive lock.
-     Not conditional: a companion with no harness statement cannot be executed unattended. -->
 
 The cases drive the app against a seeded file whose contents a case declares rather than walks to
 (the Data Foundation PRD's R7.2; R8.10a), a declared display gamut, and a declared session state on
@@ -159,10 +137,6 @@ builder reading a case table needs no other source to know which of the two appl
 | Timing workload | Search texts in turn — a prefix every item matches, a prefix one item in a hundred matches, text only an imported value holds, and text nothing matches — each typed one keystroke per 150 ms; filters in turn over every row-state value and every R2.4 mark; headers in turn over every sortable column, each fired twice; paging as Page Down pressed every 100 ms from the first row to the last, and again as a continuous scroll at one screenful per 100 ms; the first choice of a collection after launch timed cold — the OS file cache purged and the Data Foundation PRD's open-file check already finished (F119) — every later input warm; frames read at the display's refresh rate, each run recording the macOS version and that rate; each 95th percentile by nearest rank | R8.1, M1 |
 
 ## Transition index
-<!-- guidance: `T1..Tn`, one case per route through the entity lifecycle — the executable
-     counterpart of the PRD's row-transitions table. Enumerate these from that table and from the
-     rows, not from memory: a route the PRD's transition table names and this index omits is a
-     defect, and so is the reverse. -->
 
 | Case | Given | When | Assert | Rows |
 |---|---|---|---|---|
@@ -184,19 +158,6 @@ builder reading a case table needs no other source to know which of the two appl
 | T16 | Studio Markers item ZX-011 present; then, outside the app, ZX-011 removed from the file | Fire the Data Foundation PRD's E9 read-again action | ZX-011 is removed: the table lists 12 items without it, and the file holds no item ZX-011 | R8.5, R4.1 |
 
 ## Journeys
-<!-- guidance: one `### UJ n. <name>` section per journey, in the PRD's order. Under each heading:
-     one line of phase/preamble (which build phase the journey's cases run in, and any continuity
-     that holds across them, per the Harness's fixture-continuity rule), then the five-column case
-     table.
-     Rules for every case table in this file:
-     - Every Assert names values or observable outcomes. "Correct", "unchanged", "appropriate" and
-       "as expected" are not oracles; a case that asserts a value this document gives no way to
-       read is a defect.
-     - A case whose Given declares a fixture no row grants is a defect: either the row is missing
-       or the fixture is invented.
-     - Every copy state and every variant in the copy companion has a case here.
-     - Per-cause failures get one case each — one case covering "any failure" hides the causes
-       that behave differently. -->
 
 **Case IDs.** A case ID is `UJ<journey>.<scenario>-<letter>` (`UJ3.1-a`, `UJ3.1-b`, `UJ3.2-a`). A
 **scenario** is one continuous run through the journey: a journey that is walked once has a single
@@ -255,7 +216,7 @@ lands R2.10, each case from the harness state.
 | UJ2.1-a | The seeded file | Choose Studio Markers | E3 renders with no variant stating 13 swatches; the table lists ZX-001, ZX-002, ZX-003, ZX-004, ZX-005, ZX-006, ZX-007, ZX-010, ZX-011, ZX-012, ZX-013, ZX-014, ZX-015 in that order, under the columns chip, Swatch Code, Swatch Name, row state, L*, C*, h°, Spread, Swatch Alternate Code, Swatch Alternate Name and Family | R2.1 |
 | UJ2.1-b | The seeded file; display gamut sRGB | Choose Studio Markers and list each chip's marks and fill | ZX-002 and ZX-003 each carry cannot-show and outside-sRGB, ZX-002's chip filled with the working-set value L* 70, C* 80, h° 150 at D50/2°, M1, and a clipped display triplet; ZX-004 non-spectral; ZX-005 simulated and samples-disagreed; ZX-006 value-absent, with an empty chip; ZX-010 and ZX-011 no-value, each with an empty chip; ZX-012 unreadable, with an empty chip; ZX-013 re-scan-unanswered; ZX-001, ZX-007, ZX-014 and ZX-015 carry no mark | R2.3, R2.4 |
 | UJ2.1-c | The seeded file; display gamut Display P3 | Choose Studio Markers and list each chip's marks and fill | ZX-002 carries outside-sRGB and not cannot-show, its chip filled with L* 70, C* 80, h° 150 and an unclipped display triplet of (64.7, 196.8, 103.6)/255, each channel within 1/255, as OQ 7's interim works it out; ZX-003 carries both | R2.3, R2.4, R2.5 |
-| UJ2.1-d | The seeded file; the window on a display reporting Display P3, beside a second display reporting sRGB | Move the window to the sRGB display; then quit the app | Within 5 s, a functional timeout (timing is UJ9.5-a's), ZX-002 carries cannot-show; read with the app closed at SQLITE_READER_FLOOR, every table of the file holds the same rows as the seeded file read before launch, SQLite's own statistics tables aside | R2.5 |
+| UJ2.1-d | The seeded file; the window on a display reporting Display P3, beside a second display reporting sRGB | Move the window to the sRGB display; then quit the app | Within 5 s, a functional timeout (timing is UJ9.5-a's), ZX-002 carries cannot-show; read with the app closed at SQLITE_READER_FLOOR, every table of the file holds the same rows as the seeded file read before launch, SQLite's own statistics tables, and their rows in its schema table, aside | R2.5 |
 | UJ2.1-e | The seeded file; the only display reports no gamut | Choose Studio Markers and list each chip's marks | ZX-002 and ZX-003 each carry cannot-show, and ZX-001 does not | R2.5 |
 | UJ2.1-f | The seeded file | Choose Studio Markers, then Gouache Set | The device PRD's E22 is up on Studio Markers and not up on Gouache Set | R2.6 |
 | UJ2.1-g | The seeded file | Choose Studio Markers and fire the device PRD's E22 action, then "Clear filters" | The table lists only ZX-005, the simulated filter shows as active, and E3 renders its "narrowed" variant stating 1 of 13, offering "Clear filters" and not "Clear search"; after "Clear filters" the table lists 13 items and E3 renders with no variant | R2.6, R3.4 |
@@ -539,7 +500,7 @@ run again in every later build phase, over the actions that phase adds.
 | UJ9.3-b | The seeded file; ZX-013's detail and history open; then, outside the app, ZX-013 removed from the file | Fire the Data Foundation PRD's E9 read-again action | Neither E14 nor E17 is up, and the table lists 12 items | R4.1, R8.5 |
 | UJ9.3-c | The seeded file; Studio Markers with ZX-011 selected; then, outside the app, ZX-011 removed from the file | Fire the Data Foundation PRD's E9 read-again action | The table lists 12 items without ZX-011, and no item is selected | R8.5, R6.4 |
 | UJ9.4-a | The seeded file; network unreachable through the device PRD's R6.12 | Choose Studio Markers, type zx-01, open ZX-001, set Swatch Name to Sky and press Return, then fire "Show history" on ZX-013 | The table lists 6 items, the file holds Sky for ZX-001, E17 lists 3 readings, and the device PRD's R6.17 record holds no outbound attempt | R8.6 |
-| UJ9.4-b | In turn a Release build and a test build; the seeded file | In Studio Markers type qzxqvj, choose the mark value simulated and fire the L* header; close the app, then read the file's bytes and the app's own storage | Neither holds the text qzxqvj; read with the app closed at SQLITE_READER_FLOOR, every table of the file holds the same rows as the seeded file read before launch, SQLite's own statistics tables aside | R8.6 |
+| UJ9.4-b | In turn a Release build and a test build; the seeded file | In Studio Markers type qzxqvj, choose the mark value simulated and fire the L* header; close the app, then read the file's bytes and the app's own storage | Neither holds the text qzxqvj; read with the app closed at SQLITE_READER_FLOOR, every table of the file holds the same rows as the seeded file read before launch, SQLite's own statistics tables, and their rows in its schema table, aside | R8.6 |
 | UJ9.4-c | The seeded file; the Demo configuration, network reachable, telemetry and update checks off where built | Deliver every action this PRD offers in the phase — searches, filters, sorts, "Find similar" in the All items view, renames, edits, bulk set and clear, deletes, the export entries and column visibility | The device PRD's R6.17 records no outbound attempt, the Data Foundation PRD's R1.4 permitting none in that configuration | R8.6 |
 | UJ9.4-d | In turn a Release build and a test build; the seeded file | Open ZX-001, set Swatch Name to Harbour and press Return; quit, then read the system-kept versions of the file and what the app gave system search or Handoff (R8.10e) | No system-kept version of the file exists, and neither system search nor Handoff — the system handing an activity to another device, not the user's own copy and paste (F172) — holds the text Sky Blue or Harbour | R8.6 |
 | UJ9.4-e | In turn a Release build and a test build; the seeded file | While the app runs, list the process's TCP, UDP and Unix sockets through lsof and the services it registers or offers through launchd, and query each; against the Release build, also try each in-app readback, R8.10b and R8.10c; read the Release build's entitlements through codesign | No listening socket and no cross-process service answers with an R8.10b–e value; against the Release build neither R8.10b nor R8.10c answers; the Release build holds none of the iCloud key-value store, iCloud container and CloudKit entitlements | R8.10, R8.6 |
@@ -575,15 +536,11 @@ Given.
 | UJ10.1-a | The seeded file; Studio Markers searched zx-01, view-sorted by L*, ZX-013 selected | Fire "Grid", then "Table" | The grid lists ZX-014, ZX-015, ZX-013, ZX-010, ZX-011, ZX-012 as swatches no smaller than MIN_SWATCH_SIZE, each labelled with its code and carrying the marks UJ2.1-b lists, with ZX-013 selected; back in the table the same six rows list in that order with ZX-013 selected | R7.1 |
 | UJ10.1-b | The seeded file; Studio Markers shown as a grid | Set the swatch size as small as it goes | Every swatch measures the smallest size the build offers, read through R8.10b, and none less than MIN_SWATCH_SIZE on a side | R7.2 |
 | UJ10.1-c | The seeded file; Studio Markers shown as a grid | List ZX-010's swatch | It is an empty chip carrying the no-value mark | R7.2 |
-| UJ10.1-d | The seeded file; the window's frame at a fresh launch and the swatch size the first "Grid" of that launch shows on Studio Markers, each recorded before the Given; every window the case shows held at that frame, the reopened and the relaunched one included; Studio Markers shown as a grid at that size; the Harness's SQL read of the file taken | Set the swatch size to another size S the build offers, S recorded; close the file, read the app's own storage and take the Harness's SQL read of the file again, then reopen the file, choose Studio Markers and fire "Grid"; in a second run, set the swatch size to S, quit the app, relaunch it with window restoration on, open the file if the app has not, choose Studio Markers and fire "Grid" | The app's own storage holds S's number as text nowhere, compared with its baseline read taken before the When; the file holds the same rows, table for table, as the Harness's SQL read of it taken before the When, SQLite's own statistics tables aside; after reopening Studio Markers shows as the table and, after "Grid", its swatches show at the size recorded before the Given; in the second run, after the relaunch Studio Markers shows as the table and, after "Grid", its swatches show at the size recorded before the Given | R7.1, R7.2, R8.6 |
+| UJ10.1-d | The seeded file; the window's frame at a fresh launch and the swatch size the first "Grid" of that launch shows on Studio Markers, each recorded before the Given; the window showing the file held at that frame, the reopened and the relaunched one included; Studio Markers shown as a grid at that size | Set the swatch size to another size S the build offers, S recorded; close the file, read the app's own storage and take the Harness's SQL read of the file, then reopen the file, choose Studio Markers and fire "Grid"; in a second run, set the swatch size to S, quit the app, relaunch it with window restoration on, open the file if the app has not, choose Studio Markers and fire "Grid" | The app's own storage holds S's number as text nowhere, compared with its baseline read taken before the When; the file holds the same rows, table for table, as the seeded file read before the case's launch, SQLite's own statistics tables, and their rows in its schema table, aside; after reopening Studio Markers shows as the table and, after "Grid", its swatches show at the size recorded before the Given; in the second run, after the relaunch Studio Markers shows as the table and, after "Grid", its swatches show at the size recorded before the Given | R7.1, R7.2, R8.6 |
 | UJ10.1-e | The seeded file; Studio Markers in queue order, no item selected, ZX-005's row first on screen | Fire "Grid", then "Table" | In the grid ZX-005's swatch is the first on screen, and back in the table ZX-005's row is first on screen | R7.1 |
 | UJ10.1-f | The seeded file | In Studio Markers fire "Grid" and set the swatch size to a size S the build offers other than the one shown; choose Gouache Set; then choose Studio Markers | Gouache Set shows as the table; Studio Markers shows as the grid, its swatches S on a side | R7.1, R7.2 |
 
 ## Test-controls map
-<!-- guidance: the last section, always. One line per surface: the input a test controls to drive
-     that surface, the result it can observe, and the rows that grant both. Not conditional.
-     This map is also what makes the harness statement's "declare every exercised seam input"
-     checkable: the mechanical checks reconcile every case's `When` cell against it. -->
 
 Every surface a case in this file drives appears in this map, or in the Harness's **Named
 defaults** table. A case that drives a surface named in neither is asserting through a seam nobody

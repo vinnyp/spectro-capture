@@ -1,84 +1,17 @@
-<!-- guidance (the principle this whole format exists to enforce — read before filling anything):
-     Rows own behaviour; acceptance scenarios supply fixtures, actions, oracles and source rows;
-     copy owns displayed text; fences own decisions. Anything a builder needs to know lives in
-     exactly one of those four places and nowhere else. A rule restated in a preamble, a note, a
-     journey or a README is a restatement that cites its owning row — it never introduces.
-     Template shape is never the point; buildability by an agent is — but the shape is fixed
-     rather than advisory: the Format contract below names what a project may change and what it
-     may not, and the mechanical checks parse the sections it fixes by name.
-     Two fill families are placeholders: `{{...}}`, substituted at scaffold time, and `_(prompt)_`,
-     filled during authoring; an unresolved instance of EITHER is a lock-blocking defect. Every
-     guidance comment in this file — this one included — is deleted at lock, so a rule a BUILDER
-     needs after lock lives in body text and never in a comment; a comment carries only what an
-     AUTHOR needs while filling the document. The word budget for this body (companions excluded)
-     is 12000 words: count it with HTML comments, link targets, code fences and table
-     pipes stripped; trim rule-free prose to fit; never raise the budget; a document that cannot
-     fit is two PRDs.
-     12000: the project-supplied word budget for this PRD body, default 12000. -->
-
 # PRD: Collection Mode
-<!-- guidance: Collection Mode is the product or feature area this PRD governs — a short name,
-     substituted once at scaffold time. The PRD's file name and its `prd-collection-mode` are derived from
-     it, and that slug names every state artifact below (journeys, copy, fences, OQ results). -->
 
-Status: draft
-<!-- guidance: the status line has exactly three forms, in this order over the document's life.
-     At scaffold: `Status: draft`. At lock: `Status: locked (<date>)`. An amendment APPENDS to the
-     locked form: `; agent-build amendment <date> under F<n>–F<m> (peer review pending)` — naming
-     the fence range that authorises it. The bookkeeping close then REWRITES that appended clause
-     to `; peer review closed <date> (PR #<n>); re-locked on merge`, and changes nothing else.
-     There is no author line in this document: the owner is named in the fence file. -->
+Status: locked (2026-09-25)
 
 Companions: `docs/product/collection-mode/prd-collection-mode-journeys.md` (acceptance scenarios) ·
 `docs/product/collection-mode/prd-collection-mode-copy.md` (copy) ·
 `docs/product/collection-mode/prd-collection-mode-fences.md` (decisions) ·
 `docs/product/collection-mode/prd-collection-mode-oq-results.md` (open-question results)
-<!-- guidance: name all four companions by path, on one line, so an agent handed only this file
-     can find every other place a rule of this product lives. Not conditional: all four exist from
-     scaffold time, even while empty.
-     The four SUFFIXES are a contract, not a convention: `-journeys.md`, `-copy.md`, `-fences.md`
-     and `-oq-results.md`. The mechanical checks parse this line to resolve the companions and
-     assert that all four are declared, so renaming one is a breaking format change that must be
-     made here and in the checks together.
-     docs/product/collection-mode: the project's product-docs directory, written REPO-ROOT-RELATIVE (e.g.
-     `docs/product`), not as an absolute path and not relative to this file. The mechanical checks
-     resolve companion paths against the repository root, so a path written any other way makes
-     them resolve against the wrong base. Where this PRD and its four
-     companions live — never `/tmp`, always in the project repo. -->
 
 Format: agent-prd v1
-<!-- guidance: the format version this document is authored to, and the version whose checks a
-     re-lock runs. A change to the format that would make a conforming document non-conforming — a
-     renamed section, a changed column set, an added lock condition — is a new major version;
-     re-locking under a newer version is a deliberate migration, recorded as its own fence.
-     What v1 fixes, and what an author may therefore change: every section heading in this
-     document, and the column set of the row-transitions, constants-and-closure-gates,
-     build-dependencies, requirement, obligations, copy-index, metrics and open-questions tables,
-     is fixed — the mechanical checks parse them by name. A project may add a requirement section,
-     add a trailing column to a requirement table, or delete a section this format marks
-     conditional. Any other reshaping is a fork of this format, not an instance of it. This
-     version line is the locked document's one citation of that contract; the contract itself is
-     not restated in body text, because it is a rule for authoring and checking this document and
-     not for building the product. -->
 
 ---
 
 ## Build contract
-<!-- guidance: two paragraphs, no headings inside, and nothing else. This section REPLACES the
-     background section, the problem statement, persona-story headings and every piece of inline
-     narrative a human-audience PRD carries — a building agent needs ownership and rules, not
-     motivation, and narrative is where behaviour hides.
-     Paragraph 1 — ownership: what this PRD owns, and what each sibling document owns instead, one
-     clause per sibling, each naming that sibling BY DOCUMENT NAME, then what this PRD
-     deliberately does not cover. A reader who lands here must be able to route any question to
-     the document that answers it — and a non-goal stated here is a question a builder stops
-     asking, where an unstated one is a gap it fills by guessing.
-     Paragraph 2 — the four-place rule (rows / acceptance scenarios / copy / fences), plus,
-     verbatim: "Preserve row IDs, priorities, statuses and historical decisions; an amendment is
-     not an implementation completion." If this PRD is gated on an open architectural fork, name
-     it here with its open question and its ADR, and state that neither reading is selected here.
-     {{sibling-document-name}}: one per sibling PRD this document shares a seam with — the
-     document names used in this paragraph and in every cross-PRD cite in this file. -->
 
 This PRD owns browsing and working with the collections in the user's file: the collection list,
 the collection surface's item table and — last — its swatch grid, and the All items view; every honesty mark where this PRD renders colour, whether the display in use can show it included; search, filters, view sorts, the lightness, chroma and hue sorts and "Find similar"; the item
@@ -109,13 +42,6 @@ every row states behaviour on the collection surface without deciding how the us
 where it sits relative to capture, and where the session summary sits stays the capture PRD's F20.
 
 ## Row transitions
-<!-- guidance: one table, one row per route between the states of the entity this PRD governs,
-     each naming the requirement rows that own the route. This section REPLACES the lifecycle
-     diagram: a diagram is read, a table is checked.
-     Enumerate the routes FROM THE REQUIREMENT ROWS, not from memory — walk every row that can
-     change the entity's state and give its route a line here. A route any row can cause and this
-     table omits is a defect (two reviewers independently caught one omitted route in the first
-     conversion run of this format). -->
 
 The `Starting state` and `Result` cells carry only terms the Vocabulary marks `(state)`. The entity
 is an item or a collection as this PRD shows it; a reading's states are the Data Foundation PRD's
@@ -141,11 +67,6 @@ and a row's queue states the capture PRD's, and a route changing one names the r
 | present | A re-read finds it gone, removed outside the app | removed | R4.1, R8.5 |
 
 ## User journeys
-<!-- guidance: one paragraph, no table. The journeys themselves are acceptance scenarios and live
-     in the journeys companion; this paragraph points at it and states the three things a reader
-     needs to use it: the `### UJ n. <name>` headings are stable anchors (cite them, never
-     renumber them), cases run per phase, and hardware- or environment-gated findings stay behind
-     their open questions rather than being asserted here. -->
 
 The user journeys are acceptance scenarios in
 `docs/product/collection-mode/prd-collection-mode-journeys.md`, whose `### UJ n. <name>` headings
@@ -156,10 +77,6 @@ depends on an unmeasured environment (timings, display gamut) stays behind its o
 ## Requirements
 
 ### Vocabulary
-<!-- guidance: every term the rows use, one line each — a term a row leans on and this list does
-     not define is a latent decision. Include the product's measurement tiers where it has them
-     (e.g. the raw, the stored and the computed form of whatever this product measures) and EVERY
-     state name the row-transitions table uses. Not conditional. -->
 
 A term naming a state of the entity this PRD governs is written `- **<term>** (state) — …`, and
 the row-transitions table uses only terms marked that way. The Data Foundation PRD's reading, sample,
@@ -224,9 +141,6 @@ pending, captured, set aside, settled, session and remembered row, are used unch
   guarantee applies.
 
 ### Legend
-<!-- guidance: the vocabularies every later table depends on: priority semantics (exactly one of
-     the two bullets survives to lock — delete the other), the phase rule, the status vocabulary,
-     then the two tables and the two bullets below. Not conditional. -->
 
 **Priority — the semantic the `Pri` column carries in this release:**
 
@@ -261,11 +175,6 @@ six values, in this order of progression):
 | deferred | Explicitly cut from this release, not abandoned. |
 
 **Constants and closure gates**
-<!-- guidance: every named provisional constant this product has, its candidate value or "TBD"
-     plus the interim rule that holds until it closes, the rows that use it, and the open question
-     plus the evidence that closes it. Names identify product parameters, not storage columns or
-     API names. Every constant listed here is also named in its owning row — this table is an
-     index, not the constant's home. -->
 
 | Constant | Candidate / interim | Owning rows | Closure evidence |
 |---|---|---|---|
@@ -288,9 +197,6 @@ and SQLITE_READER_FLOOR the Data Foundation PRD's, used here by citation with th
 left there.
 
 **Build dependencies**
-<!-- guidance: what the first build can proceed on, and what must stay gated. One row per unit of
-     work: the contract already available to build against, and what must remain open (an ADR, an
-     open question, hardware, a dogfood run) rather than being guessed at by the builder. -->
 
 | Work | Available contract | What must remain open |
 |---|---|---|
@@ -312,9 +218,6 @@ stopping every row — and work under an Interim:
 item starts on the named question's interim rule and is re-checked when it closes. The Interim stated list and each row's cites complete these cells.
 
 **P0 rows that defer to an open question with no interim rule:**
-<!-- guidance: these two lists stay separate and are NEVER merged into one — merging them hides
-     the difference the body text below states. Derive both from the Open questions table, not
-     from memory. -->
 
 A row listed here cannot be started, its question having no interim rule; a row under **Interim
 stated** starts on its interim and is re-checked when its question closes.
@@ -333,17 +236,8 @@ stated** starts on its interim and is re-checked when its question closes.
 - R1.7 — OQ 10 — the Data Foundation PRD's OQ 20 interim, which that PRD's fences set, and F57.
 - R3.7, R5.4, R5.8 — OQ 11 — F64.
 - R8.1, R8.2 — OQ 12 — F43, F103.
-<!-- guidance: any ID family may appear here, including an `M<n>` metric row, which carries no
-     `Pri` column at all — this list is not priority-filtered, unlike the one above it. A row runs
-     under the named interim whatever its priority, and is re-checked when the question closes. -->
 
 ### Traceability
-<!-- guidance: the ID contract. Three families, one per dispositionable table; lettered sub-rows
-     where a lead row carries a table of its own (`R8.1a`); assigned once at first draft and never
-     renumbered, so a cut or deferred row keeps its ID rather than freeing it for reuse; retired
-     IDs listed by ID so a reader who finds a cite can resolve it. Not conditional.
-     Fill the **Commit PR** column with the pull (or merge) request that landed the row, never with
-     a bare commit SHA: a SHA stops resolving the moment the branch is squashed on merge. -->
 
 - Requirement rows are `R<section>.<n>` (`R7.4`), `<section>` being their section's number; copy
   states are `E<n>` and success metrics `M<n>`.
@@ -354,13 +248,6 @@ stated** starts on its interim and is re-checked when its question closes.
 - Owner decisions F1–F201 are in the fence file; a row names one for provenance only.
 
 ### Surfaces
-<!-- guidance: every user-facing surface this product area touches, what it shows, and the copy
-     states in that surface's flow. Every copy state appears under exactly one surface unless the
-     state is deliberately shared, in which case this preamble says so and names the surfaces.
-     Phase marks (see the Legend's phase rule) go on P1-only surfaces, states and actions. The copy
-     strings themselves are never written here — they live in the copy companion. Conditional: a
-     product area with no user-facing surface deletes this subsection rather than leaving it
-     empty. -->
 
 Every copy state appears under exactly one surface unless this preamble names it as shared. E4 and
 E5 are shared by the collection surface and the All items view; E9 by those two and the item
@@ -377,20 +264,6 @@ by the collection list, the collection surface, the All items view and the item 
 | Swatch grid [phase: surface-absent] | R7.1's and R7.2's swatches | none of its own |
 
 ### 1. Collections and the collection list
-<!-- guidance: one subsection per group of requirements; its heading number is the `<section>` in
-     `R<section>.<n>`, so section 1's rows are `R1.1`, `R1.2`, … Repeat this exact table header on
-     every section. Open each section with a `Traces UJ…` line naming the journeys that exercise
-     it and the vision use case it serves — a section no journey exercises is either unjustified
-     or missing a journey. Each row states its rule in at most two sentences: rationale, evidence
-     cites and fence cites live outside the cell. Every constant a row uses is NAMED IN THAT ROW,
-     not only in the Legend's constants table.
-     {{requirement-section-name}}: the name of this requirement section — one per group of rows
-     this PRD's product area divides into.
-     Three COLUMN NAMES are a contract, here and in the copy index and the metrics table: `ID`,
-     `Pri` and `Status`. The mechanical checks locate them by header name rather than by position,
-     precisely because the three tables put `Status` in three different columns — so adding a
-     column or reordering one is safe, and RENAMING any of those three is a breaking format change
-     that silently empties a check's field. Rename one only as a deliberate format version. -->
 
 Traces UJ 1, UJ 4, UJ 6, UJ 7; serves the vision use case *fix a bad scan without losing history*
 (U5) through the P0 feature *collections and version history*.
@@ -539,17 +412,10 @@ Traces UJ 10; serves the vision use case *see the collection honestly* (U7) thro
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
-| R7.1 | v1 | P2 | "Grid" shows the collection surface's items as swatches no smaller than MIN_SWATCH_SIZE, each labelled with its Swatch Code and carrying every R2.4 mark on the swatch itself, and "Table" returns to the table. Switching either way keeps the search, filters, view sort, selection and the item in view — the selected item if on screen, else the first on screen — and the "Grid" or "Table" choice, kept per collection, lasts while the file stays open and is written nowhere (R8.6). | needs-discussion | |
-| R7.2 | v1 | P2 | The user sets each collection's swatch size, its default and range the build's choice, never below MIN_SWATCH_SIZE, a size that lasts while the file stays open and is written nowhere (R8.6), and an item with no current value shows R2.3's empty chip as its swatch. | pre-alignment | |
+| R7.1 | v1 | P2 | "Grid" shows the collection surface's items as swatches no smaller than MIN_SWATCH_SIZE, each labelled with its Swatch Code and carrying every R2.4 mark on the swatch itself, and "Table" returns to the table. Switching either way keeps the search, filters, view sort, selection and the item in view — the selected item if on screen, else the first on screen — and the "Grid" or "Table" choice, kept per collection, lasts while the file stays open and is written nowhere (R8.6). | aligned | |
+| R7.2 | v1 | P2 | The user sets each collection's swatch size, its default and range the build's choice, never below MIN_SWATCH_SIZE, a size that lasts while the file stays open and is written nowhere (R8.6), and an item with no current value shows R2.3's empty chip as its swatch. | aligned | |
 
 ### 8. Operating envelope and quality attributes
-<!-- guidance: mandatory, and always the LAST numbered requirement section. Its heading takes the
-     number after the project's own requirement sections — assigned at scaffold time, before any
-     ID exists, and never changed afterwards — so its rows are `R<that number>.<n>` and are
-     ordinary requirement rows in every respect: same columns, same priorities, same statuses,
-     same acceptance cases in the journeys companion, same named constants in the Legend's
-     constants table. This is the class of requirement a builder most often has to go back to
-     product for, so the format scaffolds it rather than leaving it to be remembered. -->
 
 Traces UJ 9; serves the vision use case *see the collection honestly* (U7) and AGENTS.md §4's
 local-first, offline, user-owned commitments.
@@ -581,9 +447,9 @@ decision.
 | R8.3 | v1 | P0 | While a session on a collection is in flight, "Delete swatch", "Change code", an "Undo change" reversing a code change, E10's "Undo", the capture PRD's Flag action, "Use this reading" and the Data Foundation PRD's E4 restore action on that collection, and "Set a field", "Delete selected", "Delete collection", "Use as scan order", E10's "Undo" of a selection or collection delete and an "Undo change" of a bulk set or clear on any collection, render E6 — its "elsewhere" variant for another collection's session and its "full" variant once every P1 action that variant names lands, never R1.4's "interrupted" — and change nothing (inherited obligation for the Capture Mode doc), while every other metadata edit and that PRD's E11 answers stay available and move no queue position, row state, remembered row or current row. A reading saved by any session shows in the table without resetting its search, filters, view sort, selection or scroll position, R3.9 governing what is listed. | aligned | |
 | R8.4 | v1 | P0 | With the file open read-only, the collection list, table, item detail and version history view show every item, current value and mark of a format this build reads, a newer-format file (the Data Foundation PRD's E1) showing that PRD's R5.3 minimum with the rest left to its OQ 18, and every action this PRD offers that would write the file shows disabled, E14 rendering its "read-only" variant. An item whose readings cannot be read never stops the rest of its collection being browsed, searched, sorted or edited. | aligned | |
 | R8.5 | v1 | P0 | After the Data Foundation PRD's re-read (its R1.5 and R7.3c) the table, item detail and version history view show the file as re-read, keeping the search, filters and view sort and deselecting any item the file no longer holds. Noticing a change made outside the app is that PRD's OQ 14, and no row here does it. | aligned | |
-| R8.6 | v1 | P0 | Every row here works with no network connection, no action this PRD adds makes a network request, nothing it reads or writes leaves the machine (the Data Foundation PRD's R1.4), and no event about its actions carries typed text, a code, a name or a value (inherited obligation for the Telemetry doc). Search text, filters, view sorts, the grid choices and the undo history are never written to the file or anywhere outside it, preferences and saved window state included, column visibility (R2.10) being the one view choice the file keeps, and the file gets no system-kept versions and no collection content goes to system search or Handoff. | needs-discussion | |
+| R8.6 | v1 | P0 | Every row here works with no network connection, no action this PRD adds makes a network request, nothing it reads or writes leaves the machine (the Data Foundation PRD's R1.4), and no event about its actions carries typed text, a code, a name or a value (inherited obligation for the Telemetry doc). Search text, filters, view sorts, the grid choices and the undo history are never written to the file or anywhere outside it, preferences and saved window state included, column visibility (R2.10) being the one view choice the file keeps, and the file gets no system-kept versions and no collection content goes to system search or Handoff. | aligned | |
 | R8.7 | v1 | P0 | No row here sets a minimum macOS version or a display requirement: ADR-0006 selects the floor, and a row the selected floor cannot deliver goes back to the owner rather than being dropped. R2.5's mark is worked out on every display the window can be on, built-in or external. | aligned | |
-| R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's bytes from the moment it lands, open or after a crash, unless a read begun before its wipe defers it (the Data Foundation PRD's R1.10 and R6.2a; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | pre-alignment | |
+| R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's bytes from the moment it lands, open or after a crash, unless a read begun before its wipe defers it (the Data Foundation PRD's R1.10 and R6.2a; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | aligned | |
 | R8.9 | v1 | P0 | Every mark the copy file's Mark labels table lists — R2.4's nine and R5.2d's never-true and awaiting-answer — has a shape, distinct from every other mark's, that does not depend on seeing colour, and the VoiceOver name that table gives it, read with the row's Swatch Code, Swatch Name and row state. Every action this PRD offers, the drag reorder and choosing two readings for "Compare" included, can be reached and fired from the keyboard by a route the build chooses. | aligned | |
 | R8.10 | v1 | P0 | A test can declare the inputs and read the results below without matching wording, and can read the file with the app closed at SQLITE_READER_FLOOR (the Data Foundation PRD's R7.1). R8.10b and R8.10c exist only in test builds, and no build opens a listening socket or cross-process service for one. | aligned | |
 
@@ -603,13 +469,6 @@ decision.
 | R8.11 | v1 | P0 | No write or refresh this PRD makes while a session is in flight delays that session's trigger acknowledgement or row confirmation past the capture PRD's TRIGGER_ACK_WINDOW or ROW_CONFIRM_BUDGET (its R4.8 and R4.13), and the edits R8.3 leaves available stay available. | aligned | |
 
 ## Inherited obligations
-<!-- guidance: outbound first — every behaviour this PRD's rows require another document's product
-     to implement. The inbound table is conditional on siblings existing: when they do, it carries
-     the same three columns for what those documents require of this one.
-     Standing check, run on every amendment: the obligation summary on each side of a seam says
-     the same thing; a change on one side lands on the other IN THE SAME PR, with a dated
-     clarification on the fence it touches. The most common missing thing in an amendment is the
-     sibling half of a mirror. -->
 
 Every cross-document cite in this PRD and its companions names the owning document in its visible
 label — the device PRD's `R6.27`, never a bare `R6.27` — because ID families, fence numbers
@@ -629,7 +488,6 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | Telemetry, not yet written | No event about a Collection Mode action carries typed text, a code, a name or a value | R8.6 |
 
 **Inbound** — what other documents require of this one:
-<!-- conditional: include only when sibling PRDs exist; delete the heading and table otherwise. -->
 
 | Target PRD | Obligation | Rows |
 |---|---|---|
@@ -665,18 +523,6 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | Data Export | Its R1.1: export of a collection or a single item | the export PRD's R1.1 → R1.8 |
 
 ## Error and state copy index
-<!-- guidance: the index of the copy states, plus the three standing rules below. The copy text
-     itself — headline, body, actions, variants — lives in the copy companion and nowhere else.
-     Labels rule: the copy companion is the ONE place a user-facing label is written, and every
-     action a row names is quoted from it.
-     Placeholders rule: name the tokens in use, the zero-count rule (what a count token renders as
-     at zero), and which row a ⟨code⟩ token names.
-     Variant enumeration rule: the row that enumerates a state's variants lists the variant names
-     verbatim.
-     The Labels rule is enforced by a runnable search over the whole product-docs tree, run on
-     every copy or row amendment. The command lives with the mechanical checks (check 13, "The
-     standing label check, run") and is not carried in this document: it is how the document is
-     checked, not something a builder reads. -->
 
 | ID | State | Surface | Owning rows | Status |
 |---|---|---|---|---|
@@ -724,10 +570,6 @@ it — 1 swatch, ⟨n⟩ swatches; and a named constant renders as the number it
 requirement row that enumerates its variant set, and that row lists the variant names verbatim.
 
 ## Success metrics
-<!-- guidance: precise enough that two people computing the same metric from the same data get the
-     same number. The Method column names the OBSERVABLE a test or a dogfood runbook reads — not
-     "measure adoption" but the event, surface or file it is read from; evidence artifacts are
-     named files. Not conditional. -->
 
 | ID | Metric | Definition (start event, end event, statistic, population) | Candidate target | Method | Status |
 |---|---|---|---|---|---|
@@ -741,10 +583,6 @@ display with an outside-sRGB swatch listed, and says what each mark tells them t
 trust (F82, F134).
 
 ## Open questions
-<!-- guidance: every question this PRD cannot yet answer that blocks a row. Closer names who or
-     what closes it (the evidence, the run, the owner call), Feeds names the row IDs it blocks; an
-     OQ with no row it feeds is scope creep, not a blocker. Reserved numbers stay reserved: a
-     withdrawn OQ keeps its number rather than freeing it. Not conditional. -->
 
 | # | Question | Decision so far | Interim rule | Closer | Feeds (row IDs) | Status |
 |---|---|---|---|---|---|---|
@@ -773,6 +611,3 @@ marker carries its OQ id.
 Upstream: this PRD traces to the product vision at `docs/product/vision.md` and the current
 product strategy at `STRATEGY.md`. Where it narrows or overrides either, the
 build contract says so.
-<!-- guidance: docs/product/vision.md is the durable WHY this PRD serves; STRATEGY.md
-     is the active bets and roadmap it sits inside. Both are project-supplied paths, substituted at
-     scaffold. A divergence from either is stated in the build contract, never left implicit. -->

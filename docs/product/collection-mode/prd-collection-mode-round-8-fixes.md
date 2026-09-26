@@ -56,7 +56,7 @@ The findings are the six round-8 reviews in the review log, section "## Round 8"
 ## C. Post-lock items
 
 - [x] **C1.** The ADR-0003 two-mechanism wipe item gains the prefix "Needs owner (qualifies F200):" (PLAN8-4).
-      Result: Landed as "needs owner (qualifies F200): the wipe is two mechanisms…", lower case as the list's other needs-owner item writes it. No fence edited. ARCH8-4 (the log's "reset" should say truncation) is not in this list and was not applied.
+      Result: Landed as "needs owner (qualifies F200): the wipe is two mechanisms…", lower case as the list's other needs-owner item writes it. No fence edited. ARCH8-4 (the log's "reset" should say truncation) was not in this list, but the orchestrator applied it at post-lock in the same pass: the item reads "the log's truncation (a reset that does not truncate leaves older frames, replaced text included, past the next writer's end) may briefly hold a write" (corrected at lock, per round 9's ARCH9-N1 and PLAN9-5).
 - [x] **C2 — § Dogfood, OQ 6.** The owner's 24 pt check at the P2 build needs MIN_SWATCH_SIZE among the offered sizes. The P2 build offers it for that check, or the owner judges at the smallest size offered (PLAN8-5).
       Result: Appended to the existing OQ 6 item: "The owner's 24 pt check needs MIN_SWATCH_SIZE among the sizes the build offers: the P2 build offers it for that check, or the owner judges at the smallest size it offers (Collection Mode F199, its round-8 plan review's PLAN8-5; …)". Both options stay open, as F199's "You can tune them at the P2 build" leaves them.
 - [x] **C3 — next Data Foundation pass.** DF's inbound Collection Mode line lists R7.6b, which F191 changed (IF7-N4, carried).
