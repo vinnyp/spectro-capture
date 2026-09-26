@@ -1675,6 +1675,32 @@ Fences F189–F192 were decided by the owner on 2026-09-25 over the pre-lock rou
 - **Decision:** As recommendation 5 states.
 - **Carried by:** _(filled by the round-6 fix pass)_
 
+Fences F198–F201 were decided by the owner on 2026-09-25 over the five items the round-6 fix list marked needs owner (two help-docs lines answered together).
+
+### F198 — M2 and M3 run per PR on a Mac until CI has one (2026-09-25)
+
+- **Authority:** owner decision D51, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "M2 and M3 are measured \"on every PR\", but the device PRD's OQ 21 records that CI has no macOS job yet. What's the interim until that closes?" Chosen: **Builder's Mac per PR** — "Until device OQ 21 closes, M2 and M3 run on a Mac for every PR, recorded in the PR. CI takes them over once a macOS job exists." Not chosen: not measuring them per PR until CI has macOS.
+- **Decision:** As the chosen option states; the device PRD's OQ 21 is named as this interim's closer.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F199 — The swatch grid's default and range are the build's choice (2026-09-25)
+
+- **Authority:** owner decision D52, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "The swatch grid (P2) sets a floor of 24 pt (MIN_SWATCH_SIZE) but names no default or largest size. Leave those to the builder?" Chosen: **Builder chooses** — "R7.2 says the default and the range are the build's choice, at or above 24 pt, as R8.9 does for keyboard routes. You can tune them at the P2 build." Not chosen: naming them now as constants.
+- **Decision:** As the chosen option states.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F200 — A deferred wipe runs beside a held write (2026-09-25)
+
+- **Authority:** owner decision D53, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "If another app's read ends while a long write (such as a 10 s delete) is held, does erasing old text wait for that write to finish?" Chosen: **Erase right away** — "The erase runs beside the held write. It needs no write lock, so it doesn't contend, and the \"gone once the read ends\" deadline stays exact." Not chosen: treating the erase as an app-made write that waits for the hold.
+- **Decision:** As the chosen option states; the Data Foundation PRD's R1.11 deferral of app-made writes (F182) does not include the wipe.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F201 — Two help-docs lines (2026-09-25)
+
+- **Authority:** owner decision D54, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "Two lines for the help docs, as post-lock items. Add them? (1) \"Move your file from inside SpectroCapture, or with it closed.\" (2) \"While an export, Save a copy or the open-file check runs, text you remove stays in the file until it finishes.\"" Chosen: **Add both** — "Both go into the post-lock help-docs list, to be written when the help docs are." Not chosen: neither.
+- **Decision:** As the chosen option states: both are post-lock help-docs items.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
      fence bodies: no map entry may point at deleted text, and every changed row must appear in
@@ -1883,6 +1909,10 @@ than deciding a WHAT.
 - **F195** — _(filled by the round-6 fix pass)_
 - **F196** — _(filled by the round-6 fix pass)_
 - **F197** — _(filled by the round-6 fix pass)_
+- **F198** — _(filled by the round-6 fix pass)_
+- **F199** — _(filled by the round-6 fix pass)_
+- **F200** — _(filled by the round-6 fix pass)_
+- **F201** — _(filled by the round-6 fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
