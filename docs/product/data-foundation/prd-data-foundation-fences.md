@@ -262,7 +262,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F60 | R6.2, R6.2a, R1.11; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F60. |
 | F61 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F61. |
 | F62 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F62. |
-| F63 | R6.2, R6.2a; DJ3 (d), (k) and (l); the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F63. |
+| F63 | R6.2, R6.2a; DJ3 (d), (k), (l) and (m); the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F63. |
 
 ## Rejected findings
 
@@ -719,3 +719,7 @@ Source: the owner's decision D73 in the Collection Mode PRD's PR #21 follow-up a
 - **Decision:** Where a full volume refuses a main-file wipe or the sync that makes it last, the wipe is retried, and the removed text is gone from the file's own bytes, durably, within 5 s of the file being open with room: room returning while it is open, or the first open with room after a close, a crash or a power loss. E35 stays up if it was and is raised nowhere F60 shows none, as under F62. F62's "Text in the main file is still wiped at its normal deadline" holds where the volume lets the wipe and its sync complete. R6.2a states it; DJ3 gains (k), a sync refused before the wipe, and (l), its crash and power-loss runs.
 - **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
 - **Rows:** R6.2, R6.2a, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F63.
+
+**Clarified 2026-09-26 ([the Collection Mode PRD's F219](../collection-mode/prd-collection-mode-fences.md) and its round-22 Clarified line, owner decision D73):** "durably" covers the text-removing write itself, which reaches disk before any surface shows it done, so a power loss never undoes it. A refused main-file wipe or sync is the app's own write and renders no refusal state (E15, E34), which stay for a user's change. "With room" means room enough for the wipe and its sync to succeed. A read begun after the wipe was refused does not carry its retry past the 5 s. E35 goes as R6.2a's byte test finds the text gone.
+
+**Clarified 2026-09-26 (round-22 orchestrator bookkeeping; no owner decision; interface review's IF22-m1 and IF22-n5):** "raised nowhere F60 shows none" reads "raised nowhere [the Collection Mode PRD's F211](../collection-mode/prd-collection-mode-fences.md) shows none", F60 carrying no E35 rule; the Rows are R6.2, R6.2a, DJ3 (d), (k), (l) and (m), (m) being a delete with no outside read on a volume that refuses only the file's own sync.

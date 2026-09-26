@@ -15,7 +15,7 @@ amendment preserves them and does not re-decide them.
 
 **Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`.
 
-**Amendment pending:** F219–F220 (2026-09-26), reopening F202–F218's re-lock for R8.8 and the Data Foundation PRD's R6.2a; peer review pending.
+**Amendment pending:** F202–F220 (2026-09-26), peer review pending — F219–F220 reopening F202–F218's re-lock for R8.8 and the Data Foundation PRD's R6.2a.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -1738,6 +1738,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 
 **Closed 2026-09-26 ([re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26)):** For F202–F218, peer review closed 2026-09-26 (PR #21); re-locked on merge.
 
+**Reopened 2026-09-26 ([F219](#f219--a-full-volume-defers-the-main-file-wipe-until-room-returns-2026-09-26), owner decision D73):** PR #21's follow-up review reopened the erasure finding; R8.8 and the Data Foundation PRD's R6.2a reopen, and F202–F220 close together at the next re-lock.
+
 ### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
 
 - **Authority:** owner decision D56, round-10 adjudication 2026-09-26. Question: "Finding 6: the 'Show simulated readings' banner action promises to list exactly the simulated swatches. But if a search or another filter is already active, the result can be empty or include other swatches. What should the action do?" Chosen: **Replace narrowing** — "Clears the search and the row-state filter and sets the mark filter to Simulated alone, so exactly the simulated swatches are listed. 'Clear filters' brings the full table back." Not chosen: **Narrow within current view** — "Keeps the search and row-state filter and replaces only the mark filter with Simulated. The promise changes to 'the simulated swatches among what you're looking at', which can be none."
@@ -1902,6 +1904,10 @@ Fences F219 and F220 were decided by the owner on 2026-09-26, over the PR #21 fo
 - **Decision:** Where a full volume refuses a main-file wipe or the sync that makes it last, the wipe is retried, and the removed text is gone from the file's own bytes, durably, within 5 s of the file being open with room: room returning while it is open, or the first open with room after a close, a crash or a power loss. E35 stays up if it was and is raised nowhere F211 shows none, as under F218. F218's fourth bullet holds where the volume lets the wipe and its sync complete. R8.8 and the Data Foundation PRD's R6.2a state it; that PRD's DJ3 gains (k), a sync refused before the wipe, and (l), its crash and power-loss runs.
 - **Why:** the PR #21 follow-up review reopened the erasure finding: F218's fourth bullet promised a deadline that the post-lock record showed a full volume can break (the checkpoint copying nothing when its sync is refused, or a wipe reverting on clone-shared blocks or after a power loss), and an unconditional guarantee the build cannot keep is not a buildable contract.
 - **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (k) and (l), and the Data Foundation PRD F63
+
+**Clarified 2026-09-26 (owner decision D73's "durably", read with the Data Foundation PRD's R6.2a "Delete final" and this document's F218 give-way line; round-22 architecture, database, product-marketing and staff-engineer reviews' ARCH22-1, DB22-MAJOR-1, PMM22-1 and SSE22-m2/m3):** "durably" covers the text-removing write itself, which reaches disk before any surface shows it done, so a power loss never undoes it. A refused main-file wipe or sync is the app's own write and renders no refusal state (E15, E34), which stay for a user's change. "With room" means room enough for the wipe and its sync to succeed. A read begun after the wipe was refused does not carry its retry past the 5 s. E35 goes as R6.2a's byte test finds the text gone, durability being what DJ3's induced-loss reads assert.
+
+**Clarified 2026-09-26 (round-22 orchestrator bookkeeping; no owner decision):** the Data Foundation PRD's DJ3 (m), a delete with no outside read on a volume that refuses only the file's own sync, also carries this fence.
 
 ### F220 — The Data Foundation PRD's word budget is 8,480 (2026-09-26)
 
@@ -2133,7 +2139,7 @@ than deciding a WHAT.
 - **F216** — R5.8, UJ5.4-f
 - **F217** — R5.4, UJ5.3-r
 - **F218** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (g), (i) and (j), and the Data Foundation PRD F62
-- **F219** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (k) and (l), and the Data Foundation PRD F63
+- **F219** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (k), (l) and (m), and the Data Foundation PRD F63
 - **F220** — governs no rows
 
 ## Rejected findings

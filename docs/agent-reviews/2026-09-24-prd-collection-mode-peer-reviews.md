@@ -30024,3 +30024,941 @@ The other seven original findings are verified resolved. No additional UI findin
 - **Post-lock.** The main-file-wipe owner item is ticked as settled by D73; the help-docs line's "in your file" half holds; the R6.2/R6.2a alignment gate is reopened.
 
 The nine lenses' round-22 reviews follow.
+
+### product-manager
+
+## Verdict
+**Builds the right thing for the user, once one Major is fixed.** D73's single full-volume rule is right for the Cataloger, and the change carries it faithfully everywhere except one place. R6.2a leaves out the word "durably", which is the word that separates the owner's chosen option from the one he turned down. The fix is one word, and the budget has room for it.
+
+## User & problem context (brief)
+- **Who.** The Cataloger, and the data consumer who reads the file in another tool.
+- **The job here.** Text they deleted or replaced is really gone, and stays gone, even on a full disk and even after a power loss. Editing is never blocked, and no notice says something false.
+- **Validated.** A full volume that refuses a sync leaves the main-file text in place, or lets it come back:
+  - the round-19 database probes (`post-lock.md:176`);
+  - the PR #21 follow-up review, which reopened T3 on this point.
+- **Assumed.** How often a Cataloger actually hits a full disk, with or without another app reading. How reachable the no-reader path is also depends on the build's log slack and sync mode.
+- **What I read.** `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'`, all 7 targets and all 7 sources, in `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`.
+- **Short names.** Under `docs/product/`:
+  - DF, DFJ, DFF = `data-foundation/prd-data-foundation{,-journeys,-fences}.md`
+  - CM, CMF, CMJ = `collection-mode/prd-collection-mode{,-fences,-journeys}.md`
+  - PL = `post-lock.md`
+  - ADRQ = `docs/decisions/README.md`
+
+## Findings
+
+**[MAJOR] PM22-1 — DF R6.2a's full-volume clause (DF:228) leaves out F219's and F63's "durably".**
+- **What the fences say.** F219 (CMF:1902) and F63 (DFF:719) both decide that the text is gone from the file's own bytes "durably, within 5 s of the file being open with room".
+- **Why that word matters.** It is exactly what separates D73's chosen "Retry like the log" from its not-chosen "Disclose only", whose text is "…or return after a power loss".
+- **What the row says instead.**
+  - R6.2a gains only "…within 5 s of the file being open with room".
+  - The time scope of its promise is "while the file is open and after a crash".
+  - DF's own R1.10 (DF:104) names "a crash, a power loss" as separate events. So nothing in the row promises that the retried wipe survives a power loss, and a builder has to guess whether "crash" covers it.
+- **What the other artifacts assert.**
+  - DJ3 (k) (DFJ:58) and (l) (DFJ:59) each end on "the file's own bytes read after the induced loss of unwritten data hold it nowhere".
+  - The ADR-0003 input (ADRQ:22) says "the wipe then reaching disk".
+  - So those cases assert a rule their row does not state, which DFJ:3 forbids ("nothing here adds a rule").
+- **User scenario.**
+  - A Cataloger on a full MacBook deletes a swatch whose note they wanted gone while another app is reading the file, then frees space.
+  - A build that is correct to R6.2a's wording rewrites the page within 5 s but never forces it to disk. The battery then dies, and the note is back in the file's bytes.
+  - That build meets the row and fails (k)'s last assert.
+- **Mutation that shows the gap.** Delete "durably" from F63. R6.2a would not need to change, because it already reads as if the owner had chosen "retry, durability not promised".
+- **Fix.**
+  - R6.2a: "…within 5 s of the file being open with room, durably,". That is one word; DF goes to 8,470 of 8,480 (F220).
+  - R8.8 inherits it through "save as … R6.2a states for … a full volume", so R8.8 needs no edit.
+  - Optionally, the ADR input could read "…with room, reaching disk within those 5 s", since "then" leaves the sync without a time bound.
+
+**Minors and Nits, for post-lock:**
+
+[MINOR] PM22-2 — No case refuses a main-file wipe when no outside read ever ran, though F219 is not limited to that case and it is the likelier Cataloger path: a text-removing edit that fits the log's slack on a full volume, with E35 never up. DJ3 (k) and (l) both go through read 1, so a build that arms the retry only when a read ends passes every case. Fix: post-lock item 33 (PL:33) currently says its edit "removes no text or its Assert covers that edit's main-file wipe". Make the edit remove text and assert F219's deadline (gone durably within 5 s of room, E35 never up). Also change R6.2a's "that wipe" to "the delete's wipe", so the clause does not borrow its antecedent from the parenthetical before it.
+
+[MINOR] PM22-3 — F219 names "a close" as one route to "the first open with room", but (l) runs only a crash and a power loss. The Cataloger's ordinary sequence after a full disk (quit, free space, relaunch) is untested for the main file. Fix: extend the close, lift, reopen run already filed in PL:34 (R19-3) so it also starts from (k)'s state.
+
+[MINOR] PM22-4 — (k) and (l) never assert that E15 stays down. A build that maps the refused wipe's IOERR_FSYNC to E15 would tell the user "your last change wasn't saved… your file is exactly as it was" after a delete that was saved, and still pass. Fix: add "E15 never renders" to (k) and (l), as (i) already does before its edit (DFJ:56).
+
+[NIT] PM22-5 — In (k), E35 goes "within 5 s of a byte read first finding it nowhere". That is the byte check's view, not durability. Where the overwrite lands in cache but the sync is refused (the clone-shared-block path F219's Why names), E35 therefore drops while the text can still come back. Fix: add this unsynced all-clear to the reopen all-clear already listed in PL:32, or add a one-line Clarified under F219 saying E35's end follows R6.2a's byte test.
+
+[NIT] PM22-6 — (k)'s When ends with "then reopen", but nothing is asserted after that reopen (DFJ:58). Either drop the step or assert E35 is not up and the text is nowhere.
+
+[NIT] PM22-7 — PL:104 (E8's copy) and PL:225 (the v1 full-disk item) list only log-copy causes. Add "or the file itself, while a full volume refuses its wipe (F219)". The rewording and the recommendation each item already proposes still hold.
+
+## Biggest risks   (what builds the wrong thing or fails the user)
+- **The row is out of step with the decision again (PM22-1).** This is the same pattern that reopened T3. The row does not state D73's defining promise, while the fence, the ADR input and the cases all do.
+- **The cases only cover the read-deferred path (PM22-2, PM22-3).** A full disk with no other app reading, and an ordinary quit and relaunch, are the more frequent real sequences, and a partial build passes both.
+- **The harness is the long pole.** DJ3 now needs a fault hook that selectively refuses syncs and drops unwritten data. The PL:34 gate already sequences this before the first DJ3 build PR, so it is a build-order risk, not a defect in any row.
+
+## Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **One full-volume rule for both halves.** PL:216's help line ("in your file, or in a file beside it … wipes it on its own once there's room") is now true as written, with no copy churn and no new state.
+- **R8.8 points to R6.2a instead of restating it.** That keeps Collection Mode at 12,399 words and avoids two statements drifting apart.
+- **(k) isolates the main file.** It seeds the text only there, in no log frame, which is exactly what the reviewer said (j)'s already-clean setup could not cover. Its 10 s full window forces the first attempt to happen under full. Its induced loss after the lift tests durability, not just the visible bytes.
+- **(d)'s new guards** (text seeded in the main file, the scratch-file sync must fail) turn a broken hook into "not exercised" rather than a pass.
+- **The ADR input scopes "exactly"** to a volume that lets the wipe and its sync complete. That removes the unconditional promise the reviewer flagged.
+- **Status is reported honestly.** R8.8 is back to needs-discussion, DF R6.2 to Ready for Alignment, the status lines read "peer review pending", and PL:157 is reopened. Nothing claims closure early.
+- **The change is right-sized.** Editing is never blocked, there is no new notice, and the help docs carry the disclosure. That fits a single-owner, local v1.
+
+## Missing / over-specified
+- **Missing:**
+  - "durably" in R6.2a (PM22-1);
+  - a run with no outside reader and a close run for the main file (PM22-2, PM22-3);
+  - an assert that E15 stays down in (k) and (l) (PM22-4).
+- **Over-specified:** nothing new. The erasure contract is now heavy, with 12 DJ3 runs for a rare combination, but each step was decided by the owner (D55–D74), and this round adds only what D73 asked for.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (PM22-1) |
+
+R8.8 (CM:446) is faithful to F219: it points to R6.2a for the full-volume exception, so it takes on PM22-1's fix without its own edit. DF R6.2 and R6.2a (DF:216, :228) object only on the missing "durably". Everything else in the row matches F219, F63, F218 as clarified, F215, F211, DF F60–F62 and D72–D73.
+
+### staff-software-engineer
+
+## Verdict
+**Proceed after addressing Majors.** The rows, fences and ADR-0003 input match D73 as written, and DJ3 (k) and (l) test the read-deferred wipe well. One new Major remains. The state (k) and (l) declare refuses every sync, so under it:
+- a checkpoint-based build never overwrites the file;
+- a delete with no outside read can never land;
+- the failure mode F219 itself names as observed never happens: a wipe refused at the delete's own landing, which then reverts after a power loss.
+
+A realistic wrong build passes every DJ3 case.
+
+## What I reviewed
+- **Artifact.** A requirements document (agent-PRD) in Round 22, subject commit `8bed4c5`. I read `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'` in full: 9 files.
+- **Short names.** Root is `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`.
+  - CM = `product/collection-mode/prd-collection-mode.md`
+  - CMJ = `…/prd-collection-mode-journeys.md`
+  - CMF = `…/prd-collection-mode-fences.md`
+  - DF = `product/data-foundation/prd-data-foundation.md`
+  - DFJ = `…/prd-data-foundation-journeys.md`
+  - DFF = `…/prd-data-foundation-fences.md`
+  - PL = `product/post-lock.md`
+  - ADR = `decisions/README.md`
+- **What I read:**
+  - CM R8.8 (CM:446) and the Test-controls map's "the file" row (CMJ:587).
+  - DF R1.10 and R1.11 (DF:104–105), R6.2 (DF:216), R6.2a–d (DF:228–231) and R7.2–R7.4.
+  - DJ3 (a)–(l) (DFJ:47–59) and DJ4 (DFJ:67–91), including the row with a read begun after the delete (DFJ:84).
+  - E35's copy (DF copy file :30).
+  - F200–F220 with every Clarified line (CMF:1709–1910) and the fence map line (CMF:2136).
+  - DF F55, F57's Corrected line and F58–F63 (DFF:574–721).
+  - The ADR-0003 queue row (ADR:22).
+  - PL:27–55, :157, :176 and :216.
+  - The review log's re-lock and Round 22 sections (log :29855–30026), and my Round 19 and 21 reviews.
+- **Could not verify:**
+  - I ran nothing.
+  - SQLite behaviour comes from tracing `walCheckpoint`: it syncs the log before copying, and it does not advance nBackfill after a failed sync of the file. This agrees with the round-19 database evidence recorded at PL:176.
+  - The APFS clone-sharing behaviour (SQLITE_IOERR_FSYNC, reverting after a remount) comes only from PL:176.
+  - The word counts (DF 8,469 of 8,480; CM 12,399 of 12,400) are unverified; I did not run rule 14's command.
+
+## Findings
+
+[MAJOR] **SSE22-1 — DJ3 (k) and (l) (DFJ:58–59) with (d) (DFJ:51), against F219/F63's Decision and Why (CMF:1902–1903, DFF:719) and R6.2a (DF:228).** F219 covers any main-file wipe ("Where a full volume refuses a main-file wipe or the sync that makes it last"). Its Why names two failure modes:
+- the checkpoint copies nothing when its sync is refused;
+- a wipe reverts on clone-shared blocks or after a power loss. PL:176 records the observed case: SQLITE_IOERR_FSYNC where a clone or snapshot shares the file's blocks.
+
+(k) and (l) exercise only the first mode, and only for a read-deferred wipe:
+- **Nothing is ever overwritten.** Their declared state refuses a sync of the file and of every file beside it. SQLite's checkpoint syncs the log before it copies a frame (PL:176: "a PASSIVE checkpoint whose log sync is refused copies nothing"). So under this state a checkpoint-based build never overwrites the file's bytes, and a power loss has nothing to revert. For such a build, (l)'s power-loss run is its crash run repeated.
+- **The at-landing path is unreachable.** Under the same state, a delete's commit sync is refused, so the delete fails with E15 (ARCH19-2's point for (j)). The only state where a delete lands and its wipe's sync is then refused is the clone-shared one: the log's sync allowed, the file's refused. No run declares that state.
+
+**The mutation that passes every DJ3 case.** At the landing checkpoint, mark the wipe pending, and so retried, only when the checkpoint returns SQLITE_BUSY; log and drop any other failure.
+- In (k) and (l), read 1 makes the landing checkpoint BUSY. The wipe is therefore pending before the refusal, and the pending loop retries through IOERR_FSYNC until the lift. Both cases pass.
+- On a full volume where the file's blocks are clone-shared, with no outside read:
+  1. The delete lands.
+  2. The checkpoint returns IOERR_FSYNC, and nBackfill does not advance.
+  3. Nothing retries.
+  4. Room returns, and the text is still not durable.
+  5. A power loss puts it back in the file's bytes.
+
+  This breaks F219's "gone from the file's own bytes, durably, within 5 s of the file being open with room".
+
+**Fix.** It needs no body words: a DJ3 run plus bookkeeping lines.
+- **Add DJ3 (m).**
+  - *Given:* no capture in flight and no outside read. The file is seeded and checkpointed, with the text only in the main file. The file's blocks are shared with an APFS clone made before the fill (or a declared-full state in which a sync of the file itself fails while a sync of any file beside it, a truncation and an in-place overwrite succeed). The log keeps space past its last frame, so the delete's frames fit.
+  - *When:* delete. Lift the declared-full state no sooner than 10 s after the delete shows done. No sooner than 5 s after that, induce a loss of unwritten data, read the file's own bytes, then reopen.
+  - *Assert:* the delete shows done, with no E15 and no E35 at any look. Within 5 s of the lift, a functional timeout, neither the file nor any file beside it holds the text. After the loss, the file's own bytes hold it nowhere.
+- **Add a (d) guard:** a run of (m) whose delete does not show done, or in which a sync of a file beside the file fails while the volume is declared full, is reported not exercised.
+- **Bookkeeping:** add Clarified lines under F219 and F63 naming (m).
+- **Optional wording fix:** R6.2a's and the ADR input's "refuses that wipe" become "refuses a wipe of the file's own bytes", at 0 net words, so "that" cannot bind only to the read-deferred wipe in the parenthetical.
+- **Fallback:** if the owner prefers, record (m) as a post-lock item gating the first build PR that runs DJ3, on PL:33's precedent.
+
+**Minors and Nits (post-lock, one line each)**
+- [MINOR] **SSE22-m1 — E35's lifetime when the wipe shows in the bytes but its sync failed (DFJ:58).** (k)'s "within 5 s … of a byte read first finding it nowhere, E35 is not up" ties E35 to the bytes as read. PL:176's settled option reads "E35 and the retry tied to the wipe reaching disk". (k) is safe only because its state also refuses the log's sync, so nothing is overwritten. Settle this before any run in which the file's sync alone is refused adds a read-deferred variant.
+- [MINOR] **SSE22-m2 — a later read and the retried wipe (DF:228, DFJ:84, DFF:622).** Take an outside read begun after a refused wipe that is still running when room returns. DJ4's row with a read begun after the delete (and F57's Corrected line) lets that read defer the wipe; F219's 5 s does not. R6.2a joins the two with "or" and does not say which governs. A checkpoint-based build wipes anyway, and no case separates the two readings. Add a Clarified line under F219.
+- [MINOR] **SSE22-m3 — "with room" (DF:228, CMF:1902).** It does not say how much room. F218 defines "room to clear it" for the log (CMF:1889, DFF:708); add the same line for the main file, "room enough for the wipe and its sync to succeed".
+- [MINOR] **SSE22-m4 — DFJ:59.** "The file's own bytes read after the second induced loss of unwritten data": the crash run has only one induced loss. Write "the last induced loss".
+- [MINOR] **SSE22-m5 — DFJ:51, the (k)/(l) guards.**
+  - There is no outcome guard, unlike (i) and (j). Add: "a run of (k) or (l) whose look, at least 5 s after read 1's end and before the lift or the crash, finds the removed text in the file's own bytes nowhere" is reported not exercised. Without it, a hook that refuses the scratch file's sync but not the app's own passes a build that never retries.
+  - The scratch probe's timing relative to read 1's end is not stated.
+- [MINOR] **SSE22-m6 — DFJ:59, E35 after the reopen.** (l) checks E35 only at the 5 s mark after the reopen, so a build that raises E35 at the reopen passes, against F219's "raised nowhere F211 shows none". Assert that E35 is up at no look after the first reopen.
+- [MINOR] **SSE22-m7 — a clean close (CMF:1902).** F219's "the first open with room after a close" has no run, only the crash and power-loss runs. Add a close variant to (l), or state that its crash run covers it.
+- [MINOR] **SSE22-m8 — durability wording (ADR:22, DF:228).**
+  - The ADR input's "the wipe then reaching disk" does not bound the disk write by the 5 s. F219 says "durably, within 5 s", and (k)'s loss taken 5 s after the lift enforces that. Write "reaching disk by then".
+  - R6.2a carries no durability word and relies on "unrecoverable".
+- [MINOR] **SSE22-m9 — Move my file.** A main-file wipe pending across E15's "Move my file" has no run. PL:34 carries the log half (R18-3); extend that item to the main file.
+- [NIT] **DFJ:58.** (k)'s last step, "then reopen", has no Assert. Mark it as cleanup or assert the state after the reopen.
+
+## Clarifying questions for the author
+1. Does F219's retry cover a main-file wipe refused at the delete's own landing, with no outside read (the clone-shared case: the log's sync succeeds, the file's is refused)? If so, does DJ3 gain a run for it?
+2. Where a wipe shows in the bytes but its sync was refused, does an E35 already up stay until the sync succeeds, or go within 5 s of the bytes reading clean?
+3. Does an outside read begun after a refused wipe, still running when room returns, defer the retried main-file wipe, or does F219's 5 s govern?
+4. Does "with room" mean room enough for the wipe and its sync to succeed?
+5. In (l)'s crash run, is the durability read taken after its one induced loss?
+6. Is the ADR input's "reaching disk" bound by the same 5 s?
+7. Should (d) report as not exercised a (k)/(l) run whose file bytes are clean before the lift?
+8. Does (l)'s crash run stand for "after a close", or does a close need its own run?
+
+## Claimed properties
+- **R6.2a gains "or, where a full volume refuses that wipe or its sync, within 5 s of the file being open with room":** holds (DF:228). The durability and antecedent wording are SSE22-m8 and SSE22-1.
+- **R8.8 reads "save as … R6.2a states for a read begun before its wipe, a full volume and a copy in a journal or log":** holds (CM:446). Its status is needs-discussion.
+- **The ADR input mirrors the retry and scopes "exactly" to a volume that lets the wipe and its sync complete:** holds (ADR:22). The looseness of "then" is SSE22-m8.
+- **"(k), a sync refused before the main-file wipe, with a durability read after an induced loss; (l), its crash and power-loss runs":** holds as written (DFJ:58–59).
+  - It covers only the read-deferred wipe.
+  - For a checkpoint-based build, the power-loss run adds nothing beyond the crash run (SSE22-1).
+- **(d) gains the seeding and scratch-sync guards:** holds (DFJ:51). There is no outcome guard (SSE22-m5).
+- **The Test-controls map declares the scratch-file truncation and sync:** holds (CMJ:587).
+- **F218's fourth bullet and DF F62 are scoped to a volume that lets the wipe and its sync complete:** holds (CMF:1895, DFF:710).
+- **The fence map and Carried-by lines:** hold (CMF:2136; DFF:265, :721).
+- **Post-lock:** holds.
+  - The owner item is ticked as settled by D73 (PL:176).
+  - The help-docs line's "in your file" half holds (PL:216).
+  - The R6.2/R6.2a alignment gate is reopened (PL:157).
+- **The T3 reviewer's request (a case that refuses the sync before the wipe, plus crash and power-loss variants):** met in its letter. The "wipe reverting" mode that the thread and F219's Why describe is not produced (SSE22-1).
+- **Budgets (DF 8,469 of 8,480; CM 12,399 of 12,400):** unverified.
+
+## Genuinely sound
+- **The fixture.** Seeding the text only in a checkpointed main file keeps (k) and (l) separate from F218's log half. It is the right way to test the main-file clause alone.
+- **(k)'s timing.**
+  - The lift comes at least 10 s after read 1's end, which separates a wipe triggered by room returning from one timed from the read's end.
+  - The loss comes at least 5 s after the lift, which ties durability to F219's 5 s rather than "eventually".
+- **(l) lifts the declared-full state before it reopens.** That avoids ARCH19-1's failed open on a full volume.
+- **The declared state lets a truncation succeed.** That keeps (k) and (l) from overlapping (j)'s refused log truncation.
+- **The scratch-sync guard fails only toward not exercised.** It can never turn a failure into a pass.
+- **R8.8 points to R6.2a rather than restating it.** It is right for a single source, and it fits R8.8's one-word budget margin.
+- **R6.2a's new clause dictates no mechanism.** It is the smallest wording that states the deadline.
+- **F220's budget raise** is an owner decision under F214's precedent, and it is correctly not flagged.
+- **Not re-raised**, because post-lock already carries them:
+  - the E35 copy (PL:32);
+  - the log-half DJ3 runs, including no-read and move (PL:34);
+  - the positive full-volume edit case (PL:33);
+  - E34 wipes (PL:49).
+
+## Deferred
+- **peer-test-reviewer:** the wording and guard of SSE22-1's (m), and a mutation check of the BUSY-only build against (k), (l) and (m). Also SSE22-m4 to m6.
+- **Database lens:** confirm by probe on APFS:
+  - a delete lands on a clone-shared full volume, and its checkpoint returns IOERR_FSYNC with nBackfill unchanged;
+  - the text reverts after a remount or a power loss;
+  - under (k)'s declared state, a checkpoint copies nothing.
+- **Privacy and product-manager lenses:** SSE22-m1, E35's lifetime under a wipe that is not yet on disk.
+- **Architecture lens:** nothing new. The retry policy's structure belongs to ADR-0003.
+- **Product-marketing lens:** nothing new beyond PL:32.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | OBJECT (SSE22-1) |
+| DF-R6.2 | OBJECT (SSE22-1) |
+
+- **R8.8 is OBJECT.** Its "a full volume" exception carries F219, and no DJ3 case tests F219 for a wipe refused at the delete's own landing.
+- **DF-R6.2, with R6.2a, is OBJECT.** DJ3 is R6.2a's acceptance, and a build that retries only a read-deferred wipe passes it.
+- **What clears both.** Neither row's text has to change. Both clear once (m) lands, or once the owner records (m) as a gated post-lock item.
+
+### test
+
+## Verdict
+**Trustworthy after one Major is fixed. There are no Blockers.** The row text in R8.8, R6.2a and the ADR-0003 input matches F219/F63. The gap is in DJ3 (k) and (l), the only acceptance evidence for F219: (d)'s new guards check a proxy (a harness scratch file's sync), never whether the app's own wipe was refused. A declared-full hook that misses the app's sync call therefore turns (k) and (l) green on a build with no retry at all (TR22-1). I reproduced this against SQLite.
+
+## Coverage map (brief)
+- **Subject and short names.** Subject is `8bed4c5`, reviewed via `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'`; every target and source was read at `8bed4c5`.
+  - DFJ = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+  - DF = `.../data-foundation/prd-data-foundation.md`
+  - DFF = its fences file
+  - CM = `docs/product/collection-mode/prd-collection-mode.md`
+  - CMJ = its journeys file
+  - CMF = its fences file
+  - PL = `docs/product/post-lock.md`
+  - ADRQ = `docs/decisions/README.md`
+- **Probes.** In `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r22tr/`:
+  - `hook.c` is an interposed declared-full hook: it refuses `fsync(2)` while a flag file exists, and optionally also refuses `fcntl` `F_FULLFSYNC` / `F_BARRIERFSYNC`.
+  - `probe_k22.c` (Homebrew SQLite 3.53.4) and `probe_k22sys.c` (Apple's system SQLite 3.54.0, at its defaults) run (k)'s seeding, read 1, the delete, the full state, the scratch-file guard, read 1's end and one PASSIVE wipe attempt.
+  - `probe_real22.c` runs the same steps on genuinely full 64 MB APFS and HFS+ images. I detached and deleted all the images afterwards. No repo file was touched, and the tree is clean at `8bed4c5`.
+- **F219's branches against the cases:**
+
+| Branch | Covered by |
+|---|---|
+| Sync refused, room returns while the file is open | (k) |
+| Sync refused, crash, first open with room | (l) crash run |
+| Power loss, first open with room | (l) loss run |
+| Durably | (k)/(l) post-loss reads (loose timing, TR22-m1) |
+| E35 stays up while the text remains | (k) |
+| No outside read (E35 never raised) | uncovered (TR22-m3) |
+| Clean close, then open with room | uncovered (TR22-m3) |
+| Reopen while still full, then room returns while open | uncovered (TR22-m3) |
+| A cleared note or imported value (R6.2d) | uncovered (TR22-m3) |
+| The wipe's own write refused (clone-shared blocks) | uncovered; already carried at PL:177/178 (ARCH16-4, DB m2), not re-raised |
+
+## Findings
+
+[MAJOR] **TR22-1: DFJ:51 (d), with DFJ:58 (k) and DFJ:59 (l). Nothing checks that the full volume actually refused the app's own main-file wipe, so (k) and every run of (l) pass a build with no retry path.**
+- **What (d) checks today.** Its two new guards cover only:
+  - "a run of (k) or (l) whose own seeding byte read … does not find the removed text in the file's own bytes";
+  - "a sync of a scratch file beside the file … succeeds".
+- **Why that is not enough.** The scratch file is a stand-in. Nothing ties the hook's refusal to the sync call the app actually makes.
+- **Mutation 1 (Apple's system SQLite at its defaults, `probe_k22sys`, an `fsync`-only hook).**
+  - The scratch sync is refused, so that guard is satisfied. The seeding read finds the text, so that guard is satisfied too.
+  - The checkpoint's syncs go only through `F_BARRIERFSYNC` (`checkpoint_fullfsync` defaults to 1), which the hook never sees.
+  - Result: `rc=0`, and the main file is clean at read 1's end.
+  - I then remove the retry path from the build: it never retries a refused wipe. It still wipes on time, so (k) passes (E35 down within 5 s, clean after the lift, clean after the loss). The (l) crash and loss runs pass too.
+  - The same hook still refuses the commit's `fsync`, so every other full-volume case looks healthy.
+- **Mutation 2 (Homebrew SQLite with `fullfsync=1`, `probe_k22` variant A).** Same result through `F_FULLFSYNC`, which is the sync PL:175, :178 and :180 prescribe for ADR-0003.
+- **Controls.**
+  - When the hook covers the primitive the app uses (variants B and C), the PASSIVE checkpoint returns `rc=10` (disk I/O error) and the text stays in the main file. So a correct fixture does exercise (k).
+  - On real full APFS and HFS+ volumes, the scratch sync succeeded 4 of 4 times, so the existing guard correctly reports a real volume "not exercised". The hole is only hook fidelity.
+- **Why only (k) and (l).** Every other full-volume case has an "it really was stopped" guard:
+  - (j): "whose first look after E15 renders finds the removed text beside the file nowhere";
+  - (i): "finds the removed text beside the file nowhere before room is restored".
+- **Fix.** Add to (d):
+  > "a run of (k) or (l) whose last look before the lift, the crash or the loss, taken no sooner than 5 s after read 1's end, finds the removed text in the file's own bytes nowhere; or a run of (l)'s loss variant whose byte read after that loss, before the reopen, finds it in the file's own bytes nowhere"
+  - The second clause works for any build.
+  - The first clause costs only a build that overwrites the main file before its sync. That build is reported "not exercised", never passed.
+  - The mechanism-level half belongs on PL:175: the hook refuses every sync primitive — `fsync(2)`, `F_FULLFSYNC` and `F_BARRIERFSYNC`.
+
+[MINOR] **TR22-m1: DFJ:58, :59 — the durability check has no upper time limit.**
+- "No sooner than 5 s after [the lift / the reopen], induce a loss of unwritten data" lets a harness induce the loss at, say, 30 s.
+- A build whose retried wipe copies at once but reaches disk on a later timer then passes F219's "durably, within 5 s".
+- Fix: "5 to 6 s after".
+
+[MINOR] **TR22-m2: DFJ:59 (l), loss run — a failure can point at the wipe when the delete itself was lost.**
+- A build that commits at synchronous NORMAL loses the delete's unsynced log frames in the induced loss, and fails on "neither … holds the removed text".
+- Failing it is correct under R6.2a's "Delete final" and F219. But the Assert blames the wipe, not the lost delete.
+- Fix: add "after the first reopen, the deleted item is absent at SQLITE_READER_FLOOR". Also give the trailing "then reopen" in (k) and (l) an oracle, or drop it.
+
+[MINOR] **TR22-m3: DFJ:58–59 — F219 branches with no case.**
+- **No outside read, so no E35.** F219 says E35 "is raised nowhere F211 shows none". A build that raises E35 on every refused wipe passes today. The app's own export can supply the silent deferral that separates the commit from the wipe.
+- **A clean close or quit while full, then a reopen with room.**
+- **A reopen while still full, with room returning while open.**
+- **A clear (R6.2d).** R6.2d's "test each independently" now covers the full-volume clause, but only deletes run.
+- These are the main-file twins of PL:34's M5, R18-2 and R19-3; append them there.
+
+[MINOR] **TR22-m4: PL:175 against DFJ:58–59 — the hook contract is out of date.**
+- PL:175 says the declared-full hook "must provide two declared-full states". (k) and (l) need a third: syncs refused, truncation and in-place overwrite allowed.
+- (k) and (l) should say they run under the hook. A real full volume let the checkpoint's syncs succeed in 4 of 4 runs.
+- Their refusal is scoped to "the file or any file the app keeps beside it", but the guard probes a harness scratch file. IF19-m1's "any file in its folder" fix for (g) at PL:34 applies to (k) and (l) as well.
+
+[NIT] **TR22-n1: DFJ:51** — (d)'s Initial state cell still declares (a)'s fixture (the text in a log frame, a held write), which (k) and (l) do not have. Read "each guarded row's own Given".
+
+[NIT] **TR22-n2: CMJ:587** — two gaps in the "the file" row:
+- The Observed cell doesn't list the scratch-file truncation's and sync's own result, which (d)'s (g), (k) and (l) guards key on.
+- "An induced loss of unwritten data" doesn't say it ends the app, as a power loss does. (k)'s and (l)'s "then reopen" assumes it.
+
+[NIT] **TR22-n3: DF:228** — R6.2a's new clause leaves out F63's "durably". Its closing "while the file is open and after a crash" doesn't name a power loss. "Unrecoverable" carries the meaning, so (k)'s and (l)'s post-loss asserts are sourced, but only via F63.
+
+**Checked against the fences, no contradiction found:**
+- CM:446 (R8.8), DF:228 (R6.2a), ADRQ:22 (the ADR-0003 input, "the wipe then reaching disk"), and the Clarified lines at CMF:1895 and DFF:710 match F219/F63. They also match F215, F211, F212, DF F60–F62, D72 and D73.
+- (k)'s "E35 up while the text is in the file or beside it, until the lift" matches F219's "stays up if it was" and F218.
+
+## Biggest risks   (what could ship broken behind a green suite)
+- **TR22-1: F219's whole retry could be missing and (k)/(l) still go green.** It takes a hook that refuses `fsync(2)` but not the barrier or full-sync `fcntl` calls. That is exactly Apple's system SQLite's default checkpoint path, and the hook still looks healthy on every other full-volume case.
+- **TR22-m1: a retried wipe that reaches disk late** passes whenever the harness induces its loss late.
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **(k)'s fixture is sound.** The delete lands (its commit synced) before the full state, and read 1 sits at read-mark 0. That separates the commit from the wipe, and it is the only way to get a refused wipe after a landed delete. The probe confirmed the text stays in the main file after the delete, and a PASSIVE checkpoint whose sync is refused copies nothing. The proposed guard therefore won't false-red a standard SQLite build.
+- **(k) catches real mistakes:**
+  - a build that drops E35 at read 1's end while the text remains;
+  - a retry that only happens on the next write;
+  - a retry that doesn't sync (the post-loss read).
+- **(l) catches** a retry that runs only while the file is open, and a pending-wipe marker written during the full window (ARCH16-7).
+- **The spacing is right:** the 10 s wait before the lift puts the normal 5 s deadline inside the full window.
+- **The existing scratch-sync guard works** against a genuinely full volume: it reports "not exercised" there.
+- **Correctly not flagged:**
+  - the clone-shared-block branch (PL:177/178);
+  - the E35 copy choice (PL:32);
+  - render lag (PL:33);
+  - (k)/(l) covering only the combination with an outside read, which is the one shape that can separate the commit from the wipe under a hook that refuses every sync.
+
+## Missing / over-tested
+- **Missing:**
+  - (d)'s check that the refusal actually reached the app (TR22-1);
+  - an upper time limit on the durability check (TR22-m1);
+  - the no-read, clean-close, reopen-while-full and clear runs (TR22-m3);
+  - the third hook state (TR22-m4).
+- **Over-tested:** nothing.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | OBJECT (TR22-1) |
+| DF-R6.2 | OBJECT (TR22-1) |
+
+- **R8.8:** its text matches F219. The objection is to its inherited verification: (k) and (l) can pass without exercising the retry R8.8 now promises. It flips to ALIGN once (d) gains TR22-1's guard.
+- **DF-R6.2, with R6.2a:** R6.2a's clause matches F63 (TR22-n3 is a Nit). Same objection, same fix, at DFJ:51.
+
+### interface
+
+## Verdict
+**Sound after fixing one Major.** The F219/F63 retry is carried correctly through the fences, the ADR-0003 input and DJ3 (k)/(l). But the row builders read, DF R6.2a, leaves out the "durably" that the fence, the ADR input and (k)/(l)'s last asserts all require. A build that follows R6.2a as written fails (k).
+
+## Surface & consumers (brief)
+- **Surface.** Collection Mode R8.8, DF R6.2/R6.2a, the ADR-0003 input, DF DJ3 (d)/(k)/(l), the CM Test-controls map's "the file" row, fences CM F218 (its Clarified line)/F219/F220 and DF F62 (its Clarified line)/F63, the product README and post-lock.
+- **Consumers.** The builders of both PRDs, the DJ3 harness author, the ADR-0003 author and the lock-check tooling.
+- **Diff read.** `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'`, plus the review log's Round 22 section and my round-19 interface review.
+- **Changes.** No ID was renamed or removed. R6.2a gains a full-volume clause, and R8.8 defers to it. R8.8 went to needs-discussion and DF R6.2 to ⌛️ Ready for Alignment, each in its own document's status vocabulary. DJ3 adds (k) and (l), and (d) adds their guards.
+- **Paths.** Root is `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`. DF = `docs/product/data-foundation/prd-data-foundation.md`, DFJ = `…/prd-data-foundation-journeys.md`, DFf = `…/prd-data-foundation-fences.md`, CM = `docs/product/collection-mode/prd-collection-mode.md`, CMf = `…/prd-collection-mode-fences.md`, PL = `docs/product/post-lock.md`.
+
+## Findings
+
+[MAJOR] **IF22-M1 — DF:228, R6.2a's new clause "or, where a full volume refuses that wipe or its sync, within 5 s of the file being open with room" — the retry is not required to be durable.**
+- **What the row says.** R6.2a's only survival bound is "while the file is open and after a crash". DF R1.10 (DF:104) and CM R8.8 (CM:446) list "a crash" and "a power loss" separately, so "crash" does not cover power loss.
+- **What everything else says.**
+  - DF F63 (DFf:719) and CM F219 (CMf:1902) say "gone from the file's own bytes, **durably**".
+  - The ADR-0003 input (`docs/decisions/README.md:22`) says "the wipe then reaching disk".
+  - DJ3 (k) (DFJ:58) and (l) (DFJ:59) each end with a byte read after an induced loss of unwritten data.
+- **Why it matters.** DF:19 and DFJ:3 both say the journeys add no rule. Here the durability rule lives only in a journey, a fence and the ADR input, not in the row.
+- **Mutation.** A retry that overwrites the page in place and treats clean bytes as success, with no completed sync (for example a checkpoint at synchronous=OFF), meets R6.2a's text: the bytes are clean within 5 s and survive an app crash. It fails the last assert of (k) and of (l). A builder reading only the row has to guess.
+- **R8.8.** It inherits R6.2a through "save as … R6.2a states for … a full volume", so fixing R6.2a is enough. Collection Mode stands at 12,399 of 12,400 words.
+- **Fix.** Write "…within 5 s of the file being open with room, durably," or "…, the wipe reaching disk". Data Foundation stands at 8,469 of 8,480 words.
+
+[MINOR] **IF22-m1 — DFf:719.** F63 says E35 is "raised nowhere F60 shows none", but DF F60's Decision (DFf:666) has no E35 rule. That rule is CM F211's "It appears only when another app's read defers a wipe" (CMf:1811), which DF's own F62 Clarified line (DFf:706) cites as "read with F211". Fix: "raised nowhere the Collection Mode PRD's F211 shows none". This is the same cite-by-proxy fault as IF19-m3.
+
+[MINOR] **IF22-m2 — `docs/product/README.md:18`.** The Collection Mode index row still reads "cross-document amendments to Data Foundation (F50–F62)". The DF row (:16) and the DF status line (DF:3) read F50–F63. Fix: change it to F50–F63.
+
+[MINOR] **IF22-m3 — CM:3 against CMf:18–24.** The status line reads "amendment F202–F220 … peer review pending". The preamble's pending item reads "F219–F220 … reopening F202–F218's re-lock for R8.8 and … R6.2a". The preamble's own rule says the pending item is "the same amendment clause the PRD's status line carries", and that the range it names marks rows as "not yet re-ratified". Read from the status line, the whole of F202–F218 reopens, which contradicts F202's "Closed" line (CMf:1739). Fix: make the two clauses identical and name only F219–F220 as pending.
+
+[MINOR] **IF22-m4 — DFJ:51, (d)'s new scratch-file sync guard, against the declared-full state of (k)/(l) at DFJ:58–59.** The guard syncs "a scratch file beside the file". The declared state refuses only a sync "of the file or of any file the app keeps beside it", and the harness's scratch file is neither.
+- With a hook scoped to the app (a VFS shim), the scratch sync succeeds, so every (k)/(l) run is reported not exercised. That is a loud failure, never a false green.
+- A scratch file "written before" the fill may already have been flushed, and can then sync cleanly even on a volume that refuses syncs.
+- This is IF19-m1 again. Its post-lock fix (PL:34) names only (g).
+- Fix: widen the state to "any file in the file's folder", and write the scratch file, unsynced, just before the fill.
+
+[MINOR] **IF22-m5 — DFJ:58–59, the retry is only reached while the notice is up.** (k) reaches the full-volume retry only with E35 up and never dismissed. (l) reaches it only at a reopen.
+- No case runs the retry with E35 hidden by its OK (R6.2a: "OK hiding it until another such write…"), or with E35 never raised (the app's own export deferring the wipe, under F211's own-reads clause).
+- So a build that drives the retry from the E35 controller passes all of DJ3.
+- Fix (post-lock): add a (k) sub-run that presses OK before the declared-full state is lifted.
+
+[MINOR] **IF22-m6 — DFJ:59, (l) has no close run.** F219 and F63 name "the first open with room after a close, a crash or a power loss", but (l) runs only a crash and a power loss (D73 asked only for those). A clean close takes a different path: its own checkpoint fails on the refused sync, and R1.11 does not wait on a wipe. Post-lock :34 carries close-and-reopen runs for the log only, from (i)'s state. Fix (post-lock): an (l) run that closes the file instead of crashing.
+
+[MINOR] **IF22-m7 — DFJ:58, (k) drops E35 on clean-looking bytes while syncs are still refused.** (k) requires E35 down within 5 s of a byte read first finding the text nowhere, even while syncs are still refused. F219's own clone-shared path (the overwrite visible in cache, the sync refused, the text reverting after a remount) then clears E35 while the wipe can still revert. This matches R6.2a's "until the text is in none of the bytes", so the contract holds. But it is an all-clear PL:32 does not name, which covers only the reopen case. Fix: add this case to PL:32's E35 owner item.
+
+[NIT] **IF22-n1 — DFJ:58–59.** Both (k) and (l) end "…, then reopen" with nothing asserted on that reopen. Either drop the step or assert on it, for example that the delete still stands and E35 is not up.
+
+[NIT] **IF22-n2 — DFJ:59.** (l)'s "within 5 s of the first reopen … E35 is not up" lets E35 show briefly at the reopen, which F211 and F58 (1) forbid; (c) has the same wording. Fix: "E35 never up after the reopen".
+
+[NIT] **IF22-n3 — DF:228.** "Refuses that wipe" grammatically points back to the wipe named inside the preceding parenthetical. Fix: "refuses the main-file wipe or its sync".
+
+[NIT] **IF22-n4 — `docs/decisions/README.md:22`.** "Within 5 s of the file being open with room, the wipe then reaching disk" leaves reaching disk with no deadline. Fix: "…, the wipe reaching disk within those 5 s".
+
+[NIT] **IF22-n5 — DFf:721.** F63's Rows line names "DJ3" with no letters, while the DF fence table (DFf:265) and the CM map (CMf:2136) name (d), (k) and (l).
+
+[NIT] **IF22-n6 — DF:280 and CM:478.** Neither obligation line names the full-volume main-file retry; it rides only on "its deferred wipe" and the F52–F63 range. The DF line has room to add "and its full-volume retry".
+
+## Biggest risks   (what existing consumers/scripts/agents break)
+- **Builders working from the row (IF22-M1).** An agent builder that follows R6.2a will ship a retry that isn't durable, and learns the rule only when DJ3 (k) fails. The ADR-0003 author reads "reaching disk" in the input and not in the row, so two statements of one contract drift apart.
+- **A retry tied to E35 (IF22-m5).** It passes every DJ3 case and leaves deleted text in the user's file for as long as the notice stays dismissed. That is a privacy-promise break no test catches.
+- **Index drift (IF22-m2, IF22-m3).** Lock-check tooling that keys on the status line or the README reads the wrong fence ranges and the wrong set of reopened rows.
+
+## Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **(k) and (l) catch three likely wrong builds between them:**
+  - a retry that waits for the next write fails (k), because nothing is written after room returns;
+  - a retry that runs only at reopen fails (k), because (k) never reopens inside its 5 s window;
+  - a retry that runs only while the file is open fails (l).
+  - The byte read after an induced loss then catches a retry that isn't durable.
+- **The declared-full state of (k)/(l) is explicit.** It names what fails (syncs, writes that need new space) and what succeeds (truncation, in-place overwrite), which avoids (j)'s ambiguity (IF19-n3). No guard on the overwrite is needed, because the refused-wipe and refused-sync paths meet the same assert.
+- **(d) keeps its guards apart.** Its "beside the file" seeding guard stays scoped to (a)–(c) and (e)–(j), and a separate guard checks the main-file seeding of (k)/(l).
+- **No read condition is needed in the full-volume clause.** A shallow read would flag the missing "no read uses it" condition that the log clause has, but it isn't needed. The main-file wipe can only be refused after the read that deferred it has ended. A WAL checkpoint can also copy past a read begun after the delete. So "within 5 s of the file being open with room" composes correctly with reads.
+- **The two status values differ correctly.** R8.8 at needs-discussion and DF R6.2 at ⌛️ Ready for Alignment follow each document's own vocabulary (CM:171–176, DF:57–58). This is not an inconsistency.
+- **F218 is scoped, not rewritten.** A dated Clarified line scopes its fourth bullet, the ADR input's "exactly where the volume lets that wipe and its sync complete" follows it, and every new cross-document cite (F219, F63, (k), (l), R8.8, the ADR input) names its owning document.
+- **Earlier interface findings are applied.** The fence-to-row map includes (d) for F219 (IF19-n5), and the Test-controls map now declares the scratch-file controls (the first half of IF19-m2).
+
+## Missing / over-engineered
+- **Missing:** "durably" in R6.2a (IF22-M1); a close run (IF22-m6); a retry run with E35 hidden or never raised (IF22-m5).
+- **Over-engineered:** nothing material. The Givens of (k) and (l) repeat word for word, but separate rows match the pattern of (a)–(j).
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (IF22-M1) |
+
+### architecture
+
+## Verdict
+Sound. Build it once ARCH22-1 is carried. D73's retry is deliverable on SQLite WAL and needs no new component. The one gap is that DJ3 (l)'s power-loss run requires something no row states: the delete's own commit must be on disk before the volume fills. Today R8.8's "complete or absent" allows a build that is correct against every row and still fails (l).
+
+## Architecture in brief
+- **The pieces.** The file is a SQLite main file with a log (WAL) beside it. A **main-file wipe** is a checkpoint copying the delete's zeroed page images (secure_delete) into the main file and syncing them. A **log clearing** is the truncation after that. A poll retries both, and E35 is the user-visible state.
+- **Ownership.** Data Foundation owns the file and its deletion lifecycle (R6.2a, F63). Collection Mode R8.8 inherits by reference. The ADR-0003 input carries the mechanism obligations.
+- **The tradeoff.** D73 chooses retry over disclose. The pending main-file wipe is recorded implicitly: the WAL frames not yet copied into the main file are the durable record. SQLite's recovery at the next open re-derives the pending state, so no marker is needed.
+
+## Findings
+**[MAJOR] ARCH22-1 — DF R6.2a / CM R8.8 against DJ3 (l): the text-removing write's own durability is unstated, and a build correct by the rows fails (l).**
+- **What (l) needs.** (l)'s power-loss run (`docs/product/data-foundation/prd-data-foundation-journeys.md:59`) passes only if the delete's commit reached disk before the volume is declared full.
+- **What the rows say.**
+  - R8.8 (`docs/product/collection-mode/prd-collection-mode.md:446`) says "a crash or power loss leaves it complete or absent", and scopes the erase to "open or after a crash".
+  - DF R1.10 (`docs/product/data-foundation/prd-data-foundation.md:104`) makes only *a reading* durable before it is shown.
+  - DF R6.2a (`prd-data-foundation.md:228`) ends "while the file is open and after a crash". It never carries F219/F63's "durably … a crash or a power loss" (`prd-collection-mode-fences.md:1902`, `prd-data-foundation-fences.md:719`).
+- **What the probe showed.** Setup: system SQLite behind a VFS shim that refuses syncs and new-space writes (the declared-full state) and drops unsynced writes on an induced loss. At `synchronous=NORMAL` (SQLite's own recommendation for WAL mode, under which a commit may roll back after a power loss):
+  1. The delete's WAL frames are written but not synced.
+  2. Read 1 holds read-lock 0, so the checkpoint stops before its WAL sync (`nCkpt=0`).
+  3. The full volume then refuses that sync (`rc=10`, nothing copied).
+  4. The induced loss drops the frames.
+  5. At the reopen the deleted item is back (`rows=1`), and the token is still in the main file after the reopen's checkpoint.
+
+  So (l) fails, though the build met R8.8's "absent" and R1.10. At `synchronous=FULL` the same run passes: the delete survives, and the reopen checkpoint copies it (`nLog=1 nCkpt=1`) and removes the token.
+- **Why it matters.** A builder must guess the durability level, and only a test case settles it. E35's body (`prd-data-foundation-copy.md:30`, "Your changes are saved.") promises the durability that R8.8 allows a build to lack.
+- **Mutation.** `PRAGMA synchronous=NORMAL` fails (l)'s power-loss run at "within 5 s of the first reopen, neither the file's own bytes … holds the removed text".
+- **Fix.** Carry F219's words into the owning row, where DF has 11 words of headroom and CM 1:
+  - R6.2a ends "…after a crash or a power loss" and states that a text-removing write is on disk before any surface shows it done. R8.8 already defers to R6.2a.
+  - Add an ADR-0003 input line: text-removing commits sync before showing done. `synchronous=FULL` measured 0.5–1.5 ms per single-row commit in this log's round-3 run.
+  - (l) gains an SQL read after the first reopen showing the deleted item absent, so a lost delete is diagnosed as that and not as a failed retry.
+- **The alternative, and its cost.** If the owner instead keeps "absent" for deletes, (l) must declare the delete on disk before the fill, and (d) must report the lost-delete run as not exercised. That leaves F219's power-loss leg untested for exactly the build that breaks it.
+
+**Minor and Nit items**
+
+- **[MINOR] ARCH22-2 — (k)/(l) against R6.2a's main-file clause: no case has room return while a write is held.**
+  - R6.2a correctly gives the main-file retry no "no write runs" condition. A PASSIVE checkpoint copies the delete beside a held write: probe `held.c` got `nCkpt=1`, token gone, write still open.
+  - But D73's "one full-volume rule for both halves" invites a single retry loop gated on F215's "no write runs". That build passes (k) and (l).
+  - Add a (k) variant: lift the full state while an R8.1f/g write is held; the main file must be clean within 5 s, the write still held. This is row 47's rule meeting F219.
+- **[MINOR] ARCH22-3 — no case for F219's branch where E35 is never shown.**
+  - The branch: the app's own export or Save a copy defers the wipe silently (F211), then the full volume refuses it. A retry run only inside the E35 state machine passes (k) and (l).
+  - This is realistic: a large export to the same volume is what fills it.
+  - Add a (k) variant with the app's own export as the deferring read: E35 never up, text gone within 5 s of the lift. It is the main-file twin of post-lock's M5 run.
+- **[MINOR] ARCH22-4 — the "refuses a main-file wipe" branch.** The hook in (k) and (l) lets in-place overwrites succeed. On real APFS a clone- or snapshot-shared block makes the checkpoint's write itself fail with SQLITE_FULL. Post-lock's DB m1 note lists only IOERR_TRUNCATE and IOERR_FSYNC. Add SQLITE_FULL / IOERR_WRITE from a checkpoint to that ADR-0003 note as a refused wipe, retried; this extends ARCH16-4.
+- **[MINOR] ARCH22-5 — F219's "a close" leg has no run.** (l) covers a crash and a power loss only. Add a close run from (l)'s state: the close's own checkpoint fails, the log stays, and the text is gone within 5 s of a reopen with room.
+- **[MINOR] ARCH22-6 — ADR-0003 input wording (`docs/decisions/README.md:22`).** "within 5 s of the file being open with room, the wipe then reaching disk" loosens F219's "gone … durably, within 5 s": "then" reads as after the deadline. Reword to "gone from the file's bytes, on disk, within 5 s of …".
+- **[NIT] ARCH22-7 — R6.2a antecedent (`prd-data-foundation.md:228`).** In "where a full volume refuses that wipe", "that" binds to the parenthetical's read-deferred wipe, while F219 covers any main-file wipe. Read "refuses the main-file wipe or its sync", at the same word count.
+
+## Biggest risks
+- **ARCH22-1.** A build at `synchronous=NORMAL` ships a delete that a power loss can undo: the item comes back and its text returns to the file after E35 said "saved". Only a test pins this, and a rows-only reading allows it.
+- **ARCH22-2.** The "one rule for both halves" framing invites bundling the main-file retry into the log-clearing loop gated on no running write. The main-file deadline then silently slips behind long bulk writes, and no case catches it.
+- **Hook fidelity.** The only full-volume behavior (k) and (l) model is a refused sync. Real APFS failure modes (a refused in-place write on shared blocks; about 1.3 MB still reported free) run through untested error paths (ARCH22-4 and items post-lock already carries).
+
+## Genuinely sound
+- **No new persistent state.** The WAL frames not yet copied are the durable record of a pending main-file wipe. In the probe at FULL, after a simulated loss while full, the reopen checkpoint copied the frames and removed the token. "The first open with room after a close, a crash or a power loss" is delivered by one checkpoint at open, with no marker. F58 (1) is intact. Extending ARCH14-4's marker to the main file would be wrong: it adds a write that a full volume refuses.
+- **The main-file clause rightly has no read or write precondition.** A read begun after the delete does not block the copy: probe read 2 was open, `nCkpt=1`, token gone. A held write does not block it either (`held.c`). A dogmatic review would copy the log clause's "no read uses it, no write runs" conditions onto the main-file half, and that would be wrong.
+- **(k)'s hook matches the mechanism.** The checkpoint syncs the WAL before copying anything, so a refused sync copies nothing (probe: `rc=10`, token still in the main file). (d)'s scratch-sync guard makes a hook that does not refuse syncs report not exercised.
+- **D73 adds no component and no one-way door.** It reuses the poll and activity assertion the log clearing already needs (ARCH16-5/6). ADR-0003 stays free to choose a rollback journal instead, where a full volume refuses the delete itself.
+- **F219 is deliverable on real APFS**, clone-shared files included: once room returns, the copy-on-write allocation succeeds.
+- The ADR input's "exactly where the volume lets that wipe and its sync complete" narrows the old unconditional promise correctly.
+
+## Missing / over-engineered
+- **Missing:**
+  - the durability requirement for text-removing writes (ARCH22-1);
+  - (l)'s SQL read showing the delete itself survived;
+  - (k) variants for room returning during a held write, the silent own-read branch, and a close (ARCH22-2, 3, 5).
+- **Not over-engineered.** (k) and (l) are the minimum D73 asked for. Their pacing (≥10 s, ≥5 s) gives a correct build clear margins.
+
+Probe sources are in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round22/arch22-probe/`:
+- `shim.c`, the VFS shim;
+- `main.c`, which runs (l)'s power-loss run at NORMAL and FULL, plus the reader begun after the delete;
+- `held.c`, the retry beside a held write.
+
+All repo files named in the brief were read at `8bed4c5`, and the worktree is clean.
+
+| Row ID | disposition |
+|---|---|
+| Collection Mode R8.8 | OBJECT (ARCH22-1) |
+| DF-R6.2 | OBJECT (ARCH22-1) |
+
+### privacy
+
+## Verdict
+**Privacy-sound to ship.** D73 is written into R8.8, DF R6.2a, the ADR-0003 input and DJ3 (k) and (l) with no contradiction of F219/F63, F218, F215, F211, DF F60–F62, D72 or D73, and there is no Critical or High. What remains is two Lows and four Infos about test coverage and post-lock wording. Each is one line, for post-lock.
+
+## Data-flow & PII map (brief)
+- **Who and what.** The data subject is the Cataloger, plus anyone named in notes, swatch or collection names, or free text from an imported CSV. None of it is special-category data. The delta adds no field, no store, no marker content, no log sink and no egress (R8.6 is unchanged).
+- **Main file.** Removed text goes when the delete lands, or once a read begun before the wipe ends. New: where a full volume refuses that wipe or its sync, it goes within 5 s of the file being open with room. That covers room returning while the file is open, and the first open with room after a close, a crash or a power loss.
+- **Log beside the file.** Unchanged: F215/F218's first moment with room.
+- **Notice.** E35 appears only where an outside read ran (F219 "raised nowhere F211 shows none"). A main-file wipe stalled with no outside read gets no notice. The only disclosure is the help-docs line (PL:216), whose "in your file" half now holds.
+
+## Findings
+**Short names used below:**
+- CM = `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md`
+- CMF = `…/collection-mode/prd-collection-mode-fences.md`
+- DF = `…/docs/product/data-foundation/prd-data-foundation.md`
+- DFJ = `…/data-foundation/prd-data-foundation-journeys.md`
+- DFF = `…/data-foundation/prd-data-foundation-fences.md`
+- PL = `…/docs/product/post-lock.md`
+- ADR = `…/docs/decisions/README.md`
+
+**What I read:**
+- `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'` in full.
+- R8.8 (CM:446), R6.2 and R6.2a (DF:216, DF:228) and R2.3.
+- DJ3 (a)–(l) (DFJ:48–59) and DJ4 (DFJ:71–87).
+- F211, F212, F215, F218 and F219 (CMF:1806–1904); DF F58–F63 (DFF:628–721).
+- The ADR-0003 input (ADR:22) and the Test-controls map row "the file" (CMJ:587).
+- PL:28–49, :104, :154–190 and :214–226.
+- The review log's Round 22 section and my round-19 review.
+
+**Checked, no finding:**
+- **R8.8 against F219.** R8.8's "save as … R6.2a states for a read begun before its wipe, a full volume and a copy in a journal or log" delegates both full-volume rules (F218's log, F219's file) without restating them.
+- **R6.2a against F63.** "Where a full volume refuses that wipe or its sync, within 5 s of the file being open with room" matches F63.
+- **ADR-0003 input.** It scopes "exactly" to a volume that lets the wipe and its sync complete, as F218's Clarified line does, and adds "the wipe then reaching disk".
+- **Fence ranges.** F52–F63 and F59–F63 are consistent in both directions.
+
+**Findings:**
+- [LOW] **PRIV22-1** — DFJ:58–59 (DJ3 (k), (l)) and PL:34 — main-file text after a graceful close while the volume is full.
+  - **Gap:** F219/F63's "the first open with room after a close", and a move to a volume with room, have no main-file run. (l) only crashes or cuts power, and PL:34's close-and-reopen and move runs start from (i)'s state. In (i) syncs succeed, so the main file is already wiped there.
+  - **Harm:** a build that drops a pending main-file wipe on a graceful close passes every case. The removed text then stays readable in the file's own bytes with no end date.
+  - **Fix:** add to PL:34 a close-while-full → lift → reopen run and a move-to-room run from (k)'s state (GDPR Art. 17, 25).
+- [LOW] **PRIV22-2** — DFJ:51 ((d)) — the durability check in (k)/(l).
+  - **Gap:** no guard proves that the induced "loss of unwritten data" in (k)/(l) actually drops a write whose sync the declared-full state refused. The hook refuses the app's syncs, not the OS's own writeback. If the writeback lands the overwrite before the loss, (k)'s post-loss byte read proves nothing.
+  - **Harm:** a build that overwrites in place and never retries the sync would pass. That is the one new "durably" promise D73 made, left untested.
+  - **Fix:** (d) gains "a run of (k) or (l) whose scratch file, overwritten in place after the volume is declared full, still reads back that overwrite after the induced loss" → reported not exercised.
+- [INFO] **PRIV22-3** — DFJ:58–59 — the overwrite-refused branch.
+  - (k)/(l)'s declared-full state lets in-place overwrites succeed. F219's "refuses a main-file wipe" branch is where the text stays readable in the file's bytes: clone-shared blocks, for example after a Finder Duplicate.
+  - It is exercised only through the same checkpoint-retry path that (k)'s refused sync exercises.
+  - Note it beside PL:177's "the hook does not model shared blocks". Have ADR-0003 treat a failed checkpoint copy (SQLITE_FULL or SQLITE_IOERR_WRITE) as a refused wipe too, not only IOERR_FSYNC or IOERR_TRUNCATE (PL:178).
+- [INFO] **PRIV22-4** — DF:228 (R6.2a) — wording.
+  - The full-volume clause leaves out F63's "durably … or a power loss" and the ADR input's "the wipe then reaching disk", and the row still ends on "after a crash".
+  - (k)/(l)'s post-loss reads carry the durability requirement, so no builder has to guess.
+  - "Durably" is the user-facing promise D73 bought, so add it at the next DF edit (11 words of budget remain).
+- [INFO] **PRIV22-5** — DF:228 and DFF:718 — which deadline wins.
+  - Unstated: which governs when a full volume has refused the wipe and an outside read begun after the delete is still running when room returns. That read may defer the wipe (F58 (8): "permitted, never required").
+  - Both readings keep E35 up, so no user is misled. State "the later of" at the next pass.
+- [INFO] **PRIV22-6** — PL:104 and PL:225 — wording of two post-lock items.
+  - Both still describe only the journal-or-log copy, or "a clearing", as outlasting the erase promise.
+  - Under F219 the file itself holds removed text through a full volume and across a close while full. Where no outside read ran it does so silently, for example when the app's own Save a copy defers the wipe (DFJ:85) and the full volume then refuses it.
+  - Extend both lines to "your file or a file beside it" (GDPR Art. 12–13 transparency).
+
+## Biggest privacy risks
+1. **The durability promise may go untested.** Whether "gone, durably" is tested at all depends on the harness's simulated power loss really dropping unsynced writes (PRIV22-2). Without a guard, the only check of D73's new promise can pass without ever exercising it.
+2. **Silent retention where no outside read ran.** Removed text can now sit in the file itself, as well as in the log, while the volume is full, and there is no notice where no outside read ran. The only true disclosure is still the help-docs line, and whether it ships is a v1-release decision (PL:216, PL:225). That is already carried; I note it only because F219 widens it to the file itself.
+3. **No test for the close-while-full path** (PRIV22-1). It is the most likely way a user later shares or archives a file that still holds removed text.
+
+## Genuinely privacy-respecting
+- **Owner choice.** The owner chose the stronger promise (retry, a 5 s bound, durable) over "disclose only". That closes reopened thread T3 with a guarantee a build can keep and a test can check, rather than an exception with no deadline.
+- **(k) isolates the main-file path.** The text is seeded only in the main file and in no WAL frame, and (d)'s seeding guard enforces that. Read 1 blocks any checkpoint until after the volume is declared full, so (k) truly tests "sync refused before the wipe", as the reviewer asked.
+- **(l)'s power-loss run catches resurrection.** It fails a build that "erases" by throwing away the log, which would bring the deleted item back. That protects both erasure and R8.8's "whole or not at all".
+- **A shallow read would flag E35 in (k); it is fine.** (k) drops E35 once the overwrite shows in the bytes even though its sync is still refused. F219's "stays up if it was" read with F211 and R6.2a's "until the text is in none of the bytes" means E35 follows the bytes, not durability. There is no contradiction, and the reopen all-clear consequence is already carried at PL:32.
+- **Honest scope.** R5.8 copies and pre-existing snapshots are declared outside the erase promise (DJ4:86) rather than over-promised. The pending marker records no content (PL:177). Nothing leaves the machine.
+
+## Missing controls / over-collection
+- **Over-collection:** none. No new personal data, store, marker content or egress.
+- **Missing test controls:**
+  - a main-file close-while-full run and a move run (PRIV22-1)
+  - a guard that the induced loss is real (PRIV22-2)
+  - an overwrite-refused variant, or an ADR-0003 note on it (PRIV22-3)
+- **Missing disclosure wording:** PL:104 and PL:225 do not yet name the file itself (PRIV22-6).
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### product-marketing
+
+## Verdict
+**Lands after fixing one Major (no Blocker).** D73 makes the full-disk erasure story simpler and more honest for the Cataloger: "free up space and it's wiped on its own" is now true for both the file and the files beside it, so the help-docs line needs no power-loss caveat. But the two new DJ3 cases, (k) and (l), never assert that no refusal state appears when the app's own wipe or sync is refused. A build that shows E15 or E34 there would tell the user "your last change wasn't saved" about a delete that did land, and it would still pass both cases.
+
+## Audience & message context (brief)
+- **Readers.** The owner and builder agents read the rows, the fences, DJ3 and post-lock. The Cataloger reads E35, E15 and E34 as they render, and later the help docs from R1.5, including the full-disk line (PL:216).
+- **What each should take away.** A builder should know exactly when removed text leaves the file's bytes on a full disk, and what the user is shown meanwhile. The Cataloger should get a notice that is never false, and one simple promise: free space and the app wipes the text by itself.
+- **Scope.** I ran `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'` (9 files). I also read the review log's Round 22 section and my own round-19 review.
+- **Short names.** All paths are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/`:
+  - CM = `collection-mode/prd-collection-mode.md`
+  - CMf = `collection-mode/prd-collection-mode-fences.md`
+  - CMj = `collection-mode/prd-collection-mode-journeys.md`
+  - DF = `data-foundation/prd-data-foundation.md`
+  - DFj = `data-foundation/prd-data-foundation-journeys.md`
+  - DFc = `data-foundation/prd-data-foundation-copy.md`
+  - DFf = `data-foundation/prd-data-foundation-fences.md`
+  - PL = `post-lock.md`
+
+## Findings
+
+**My round-19 Minors and Nits, checked at `8bed4c5`.** All five are resolved:
+- PMM19-1 is moot: D73 chose retry, and PL:216 now says the line's "in your file" half "holds as written".
+- PMM19-2 and PMM19-4 landed in PL:216 ("Keep the files beside yours with it…", "saved changes not yet copied into your file").
+- PMM19-3 landed in PL:225 ("option (c) alone ships no true disclosure").
+- PMM19-5 landed in PL:32 ("at odds with E15's 'wasn't saved' once E15 shows").
+
+**New from this change**
+
+[MAJOR] **PMM22-1 — DFj:58 (k) and DFj:59 (l): no guard against a refusal state for the app's own refused wipe or sync.**
+- **The path.** In (k), the delete lands and shows done. Then the declared-full state refuses the sync that makes the main-file wipe last. No user write is in play.
+- **Nothing forbids E15 or E34 there.**
+  - R8.8's second sentence, "A write refused because the volume is full renders that PRD's E15" (CM:446), read literally, covers the wipe. R1.11 calls the wipe a write the app makes itself (DF:105).
+  - A refused sync surfaces as SQLITE_IOERR_FSYNC, not SQLITE_FULL, which makes a mapping to cause-neutral E34 just as plausible.
+  - (k) and (l) assert only E35 and the byte reads. The State column is not an exhaustive oracle ("state IDs refer to shipping copy", DFj:3).
+  - The authors already know that absence has to be asserted: (i) says "E15 does not render before the edit" for a clearing the full volume stops (DFj:56), and (f) says "no refusal state rendering" (DFj:53). (k) and (l) have no counterpart.
+- **What the user sees.** The Cataloger has just watched the swatch disappear. Then they read "⟨path⟩ is full, so your last change wasn't saved. On a local disk your file is exactly as it was before that" (DFc:28), or E34's "can't save to your file… check that the file isn't locked" (DFc:29). Both are false.
+  - They conclude the delete failed and go looking for a swatch that is gone, or hunt for a lock or permission problem that does not exist.
+  - E15's Try again retries an operation that already landed.
+  - This is the "wasn't saved" beside "Saved" contradiction PL:32 already worries about, now with no true notice beside it.
+- **Mutation that passes today.** A build that maps the checkpoint's SQLITE_IOERR_FSYNC during (k)'s full window to E15 (or E34) passes (k) and (l) as written. It fails once the guard below is added.
+- **Rewrite.**
+  - Add to (k)'s Then: "from the delete showing done until the declared-full state is lifted, no refusal state renders (E15, E34), the delete having landed".
+  - Add to (l)'s Then: "…until the crash or the induced loss, no refusal state renders".
+  - Add a Clarified line under F219 and DF F63: "a refused main-file wipe or sync is the app's own and renders no refusal state; E15 and E34 stay for a user's change." This follows F218's Clarified line from the PM16-2 review ("holding no write of the app's own") and (i)'s precedent. Neither fix touches a row, which matters because CM stands at 12,399 of 12,400 words.
+
+[MINOR] **PMM22-2 — Is E35 tied to the bytes or to durability? F219's "E35 stays up if it was" (CMf:1903) against (k)'s "within 5 s… of a byte read first finding it nowhere, E35 is not up" (DFj:58).**
+- A build can overwrite the main file in place (which the declared-full state allows) while its sync is refused. E35 then drops while a power loss could still bring the text back, and the user reads the notice going away as an all-clear.
+- Fix: add one Clarified line saying which reading governs. The honest reading keeps E35 up until the wipe is synced.
+
+[MINOR] **PMM22-3 — PL:32's cost framing is stale.** It still says "the Data Foundation body standing at 8,448 of 8,450". The body is now at 8,469 of 8,480 (F220). With 11 words of headroom, option (b)'s edits to R7.6q and R6.2a may fit without a sixth budget override, so the owner is being shown the wrong cost for an open decision. Update the figure and restate the cost.
+
+[MINOR] **PMM22-4 — PL:32's defect list ("DJ3 (i); on (j)'s path possibly never") should add (k).** On the main-file path, E35's untrue "another app is reading your file" is the only thing on screen for the whole full window, with no E15 ever beside it. This is the strongest case for option (a) or (b).
+
+[MINOR] **PMM22-5 — DF R6.2a (DF:228) states F63's deadline but not its "durably".** Only (k), (l) and the ADR-0003 input's "the wipe then reaching disk" carry the power-loss half. Fix: "…within 5 s of the file being open with room, durably," which is one word inside DF's headroom.
+
+[NIT] **PMM22-6 — PL:225's rationale** ("no E35 option covers a clearing a full volume stops with no outside read ever running") should add "or a main-file wipe it refuses" and cite F219 and F63. The help-docs line is now the only disclosure for both.
+
+[NIT] **PMM22-7 — PL:49** still names only F218 and F62 as settling the full-volume half. Add F219 and F63 for the main-file wipe.
+
+[NIT] **PMM22-8 — R8.8's "for… a full volume" (CM:446) is terse.** "a wipe a full volume refuses" would be clearer if the budget ever allows. Otherwise leave it, since R6.2a is precise.
+
+**Checked and correct, no change needed**
+- **The help-docs line (PL:216) is true under F219.**
+  - "while the file is open or the next time you open it" matches F219's "room returning while it is open, or the first open with room".
+  - "no other app is reading it" is exact for the log half. For the main-file half it is at most conservative: a read begun after the delete does not stop the main-file copy.
+  - Nothing it promises is untrue.
+- **Option (a)'s sample body in PL:32** ("stays with your file until there's room… wipes it on its own") is now true for both halves. The note "'with' wording covering the file itself too, whose wipe F219 retries" is accurate.
+- **The ADR-0003 input** ("the wipe then reaching disk"; "exactly where the volume lets that wipe and its sync complete") matches F219 and F63 and adds their cites.
+- **E35's shipping copy (DFc:30) is unchanged.** E8, E14 and E33's "Once it's done it's final" (DFc:25–27) is about undo, not wipe timing, so it is unaffected.
+- **Status is honest everywhere:**
+  - R8.8 is set to needs-discussion; DF R6.2 is set to Ready for Alignment.
+  - Both PRD headers say "peer review pending".
+  - README row 6 names F219 as reopening R8.8 and R6.2/R6.2a.
+  - The PL:157 gate is reopened rather than left ticked.
+  - PL:176 is ticked with the settlement stated.
+
+## Biggest risks   (what misleads, confuses, or loses the reader)
+- **PMM22-1** can put a false "your last change wasn't saved" on screen after a delete that landed, and still pass every case. The main-file wipe's refused sync is exactly the error code most likely to be mis-mapped.
+- **PMM22-2**: E35 can go away before the wipe survives a power loss, which reads as "it's gone" in a window where it could come back.
+- **PMM22-3**: the owner could weigh the open E35 copy choice against a budget cost that no longer applies.
+
+## Genuinely strong   (incl. where plain-and-honest is right that a marketing-zealot would over-hype)
+- **D73 picked the promise the product can now keep in one sentence.** The help-docs line stays short and calm, with no "can come back after a power loss" caveat, which is a better story than "disclose only" would have given.
+- **F219's "Why" is candid:** "an unconditional guarantee the build cannot keep is not a buildable contract". The fifth budget override is recorded openly as an override (DFf, under F55).
+- **The reopen is labelled plainly.** The row statuses, headers, README, fence preamble and post-lock all say what was reopened and why, with no quiet re-lock.
+- **No hype, no invented number, no new user-facing string.** Plain was right here.
+
+## Missing / over-hyped
+- **Missing:** a "no refusal state" guard in (k) and (l), with a matching Clarified line (PMM22-1).
+- **Missing:** a statement of whether E35's end is tied to the bytes or to durability on the main-file path (PMM22-2).
+- **Missing:** PL:32, PL:225 and PL:49 have not caught up with F219 and F220 (PMM22-3, PMM22-4, PMM22-6, PMM22-7).
+- **Nothing over-hyped.**
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | OBJECT (PMM22-1) |
+| DF-R6.2 | OBJECT (PMM22-1) |
+
+Both objections clear once DJ3 (k) and (l) gain the no-refusal-state guard. Neither row's text needs to change for that.
+
+### plan
+
+## Verdict
+Execute after fixing Blockers. There are no Blockers, but one Major blocks the DF-R6.2 flip: DF R6.2a leaves out F219's "durably", and DJ3 (k) and (l) assert it. The fix is one word. Everything else is Minor or Nit, for post-lock.
+
+## Findings
+
+Scope: `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'`, with HEAD confirmed at `8bed4c5` and the worktree clean. I read the review log's Round 22 section and my round-19 review (log :29174–29302). I read every contract source at its path. All paths are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/`.
+
+Short names used below:
+
+| Name | File |
+|---|---|
+| DF | `docs/product/data-foundation/prd-data-foundation.md` |
+| DFJ | `docs/product/data-foundation/prd-data-foundation-journeys.md` (DJ3 (d) :51, (k) :58, (l) :59) |
+| DFF | `docs/product/data-foundation/prd-data-foundation-fences.md` |
+| CM | `docs/product/collection-mode/prd-collection-mode.md` |
+| CMF | `docs/product/collection-mode/prd-collection-mode-fences.md` |
+| CMJ | `docs/product/collection-mode/prd-collection-mode-journeys.md` |
+| PL | `docs/product/post-lock.md` |
+| ADR | `docs/decisions/README.md:22` |
+
+[MAJOR] Row DF R6.2a (DF:228), cases DJ3 (k) and (l) (DFJ:58–59). The row does not state the durability F219 decided, but the new cases assert it.
+- **What the fence says.** F219 (CMF:1902) and DF F63 (DFF:719): the removed text is gone from the file's own bytes "durably … the first open with room after a close, a crash or a power loss". F219 adds "R8.8 and the Data Foundation PRD's R6.2a state it". The ADR-0003 input says it too: "the wipe then reaching disk" (ADR).
+- **What the row says.** R6.2a's new clause reads only "within 5 s of the file being open with room". Its scope sentence still ends "while the file is open and after a crash". This PRD treats a crash and a power loss as two different things (DF R1.10: "a crash, a power loss …"; CM R8.8, CM:446: "a crash or power loss … open or after a crash").
+- **What the cases assert.** (k) ends on "the file's own bytes read after the induced loss of unwritten data hold it nowhere". (l) adds a whole power-loss run. These are the first byte-rule cases that read the file after a power loss. DFJ:3 says "nothing here adds a rule" and "Requirement rows are authoritative".
+- **Mutation.** Take a build whose retry after room returns rewrites the page in place, or re-runs the checkpoint with no sync, and leaves the flush to the kernel. It meets R6.2a word for word: the bytes are clean within 5 s, both while open and after a crash. (k)'s read after the induced loss fails it. So a build that matches the row fails the case, and a gate that holds the row authoritative would call (k)'s last assert out of contract. The durability half is the whole point of D73: the reopened T3 thread was about a wipe that "can revert".
+- **Fix.** R6.2a reads "…or, where a full volume refuses that wipe or its sync, durably within 5 s of the file being open with room…". "Durable" is DF R1.10's own word for surviving R7.4's induced loss. That is one word, taking DF to about 8,470 of 8,480 (F220). R8.8 hands the full volume over to R6.2a, so it inherits the fix and needs no edit.
+
+[MINOR] F219 against R6.2a's E35 lifetime and (k)'s E35 assert: F219 says "E35 stays up if it was" while the sync is refused, but R6.2a (DF:228) and (k) (DFJ:58: "within 5 s … of a byte read first finding it nowhere, E35 is not up") tie E35 to what a byte read shows. A wipe copied in place with its sync refused reads clean but can still revert. On SQLite's own order, which syncs the log before copying, (k) never reaches that window, but a copy-first build or the revert path does. A Clarified line under F219 should say whether E35 follows the bytes or the durable wipe.
+
+[MINOR] DF R6.2a's main-file full-volume clause (DF:228) lacks the log clause's "(within 5 s of room returning, when room comes last)". Take two reads begun before the wipe: the first ends while the volume is full, and room returns while the second still pins the wipe. Read literally, "within 5 s of the file being open with room" is then due, and no build can meet it. Fix: add "when room comes last", or "once every read begun before it has ended".
+
+[MINOR] F219 / DF R6.2a "with room" (DF:228) for the main-file wipe does not carry F218's Clarified reading: room enough for that wipe and its sync to succeed. Extend PL:179's "room to clear it" item to the main-file clause.
+
+[MINOR] Case DJ3 (l) (DFJ:59): "within 5 s of the first reopen … E35 is not up" passes a build that raises E35 at the reopen, with no outside read, as long as it drops it within 5 s. That breaks F219's "raised nowhere F211 shows none". Assert E35 is not up at every look from the reopen onwards.
+
+[NIT] `docs/product/README.md:18` (row 6) still reads "cross-document amendments to Data Foundation (F50–F62)", while row 4 (:16) and DF F63 now make it F50–F63.
+
+[NIT] ADR: "within 5 s …, the wipe then reaching disk" can be read as reaching disk after the 5 s. (k) enforces "within": its induced loss comes no sooner than 5 s after the lift. Say "reaching disk within those 5 s".
+
+[NIT] DFJ:58–59 induce R7.4's loss of unwritten data, but neither case cites R7.4, and DJ3's index row (DF:24) does not list it.
+
+[NIT] Two small gaps in the (k)/(l) harness wiring:
+- CMJ:587's Observable cell does not name the scratch-file truncation or sync result that (d)'s new guards read. Fold this into PL:34's Observed-cell item.
+- PL:34's TR19-m1 guard ("a free-space query reports free space") covers (g), (i) and (j). It should also cover (k) and (l), whose declared state says the volume "reports no free space".
+
+[NIT] DF:228: the inserted ", or, where a full volume …, within 5 s of the file being open with room," sits right before "and from any journal or log …". That clause can then be read as conditional on a full volume. A semicolon would separate them.
+
+Two things that look wrong on a quick read but are correct:
+- (k)'s clause that takes E35 down once a byte read is clean does not fail a correct SQLite build. With every sync refused, a PASSIVE checkpoint copies nothing (the round-19 database evidence at PL:176), so the main file keeps the text and E35 stays up until the lift.
+- (d)'s scratch-sync guard ("written before the volume is declared full") is right. It makes the hook refuse even a sync with nothing to flush, which is what makes (k) take the copy-nothing path every time.
+
+## Biggest risks (if executed as-is)
+1. **The row and the cases disagree on durability (the Major).** A builder or a gate reviewer reading R6.2a as authoritative either lets a build without the sync pass review and then fail (k), or rules (k)'s post-loss assert out of contract. Either way the one property D73 added is contested at build time.
+2. **(k) and (l) never reach the path F219's own Why names first.** Their declared state refuses every sync, and SQLite syncs the log before copying, so the checkpoint always copies nothing. The case where the copy lands in place and only the file's own sync is refused (clone-shared blocks, common on APFS with local snapshots) never runs. Neither does the no-read path, where the wipe right after a delete is refused and E35 never shows. A build that retries only wipes a read deferred, or only wipes whose copy failed, passes every case (see the spec coverage gaps below).
+3. **E35's end while a copied wipe waits on its sync is unsettled (first Minor).** A build that drops E35 there shows an all-clear while the text can still come back after a power loss.
+
+## Plan strengths
+- **The order in (k) is sound.** The delete lands under read 1, and the volume is declared full before read 1 ends. So the wipe falls due on a full volume for certain. The main-file seeding guard and the scratch-sync guard turn a failed setup into a loud "not exercised".
+- **(k)'s durability read after the lift has teeth.** It fails a build that retries only at the next open, only once, only at a later write start, or never syncs.
+- **(l) covers the reopen.** It fails a build that retries only while the file is open. Its power-loss run fails a build whose pending-wipe marker was written while the volume was full and lost with the unwritten data.
+- **The fences are scoped precisely.** The Clarified lines under F218 (CMF:1895) and DF F62 (DFF:710) limit the fourth bullet to "where the volume lets that wipe and its sync complete". The ADR-0003 input mirrors both halves, including "exactly where the volume lets that wipe and its sync complete".
+- **Post-lock is honest.** PL:157 is unticked with the reason given, PL:176 is ticked against D73 and its cases, and PL:216's "in your file" half is confirmed.
+- **The rest checks out:**
+  - R8.8 hands the full volume over to R6.2a rather than restating it.
+  - Both statuses were reopened correctly.
+  - The budget fits, and the F219 and DF F63 map lines match their Carried by.
+
+## Spec coverage gaps (requirements with no task)
+- **F219's sync-only and no-read path has no case, and nothing carries it.** This is "the sync that makes it last" refused after an in-place copy, with no outside read and E35 never up, which is F219's clone-shared-blocks cause. Suggested sub-run:
+  - Declared before the delete, with no read held: only the file's own sync is refused, while the log's sync succeeds.
+  - Asserts: the bytes read clean, E35 is never up, and within 5 s of the lift the file reads clean after an induced loss.
+  - A (d) guard: a sync of the file itself succeeds, so the run is not exercised.
+  - This is next to PL:177's note that "the declared-full test hook does not model shared blocks", but it is not the same item. Gate it with PL:34.
+- **F219's "first open with room after a close" has no case.** Neither does a reopen while the volume is still full followed by room returning while the file is open. (l) runs only the crash and power loss D73 named. The log-side twins are carried at PL:34; the main-file side is not.
+- **No clear or edit case under F219.** R6.2d says "test each independently", but (k) and (l) are deletes only. This follows the shape of (g)–(j), and nothing carries it.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (PLAN22-M1 — the Major above: R6.2a omits F219's "durably" that DJ3 (k)/(l) assert) |
+
+- **R8.8 is ALIGN.** Its changed clause (CM:446) hands the full-volume exception to DF R6.2a, which is F219's "R8.8 … state[s] it" by delegation. Its E15, E10, E34 and E26 clause is unchanged. Once the Major lands in R6.2a, R8.8 inherits the durability.
+- **DF-R6.2 (with R6.2a) is OBJECT on the Major.** R6.2's own text is unchanged (DF:216). R6.2a's new clause (DF:228) leaves out the durability F219 says it states, and that DJ3 (k) and (l) assert.
+
+### database
+
+## Verdict
+Sound once one Major is fixed. D73's retry can be built on stock SQLite, and DJ3 (k) tells a correct build apart from one that never makes the wipe last. The problem is DJ3 (l)'s power-loss run: it fails a build that runs at SQLite's default WAL durability (the macOS system library's `synchronous=NORMAL`), because no row says a delete must survive a power loss.
+
+## Schema & engine (brief)
+- **Subject.** Commit `8bed4c5`, reviewed through `git diff 404fb2b 8bed4c5 -- docs ':!docs/agent-reviews'`. The worktree is clean, and `docs/product` and `docs/decisions` are identical to `8bed4c5`.
+- **Engine.** There is no DDL; ADR-0003 owns the schema. The rows assume:
+  - WAL with `secure_delete=ON`;
+  - a PASSIVE checkpoint to wipe the main file;
+  - a TRUNCATE checkpoint with no busy handler to clear the log.
+- **`synchronous` is unpinned.**
+  - Apple's system SQLite 3.54.0 is compiled with `DEFAULT_WAL_SYNCHRONOUS=1` and `DEFAULT_CKPTFULLFSYNC`. After `journal_mode=wal`, `PRAGMA synchronous` returns 1 (NORMAL).
+  - Homebrew's 3.53.4 defaults to FULL.
+- **Probes.** In `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round22/db22-probe/`:
+  - `plshim.c` is a loadable VFS. While the volume is declared full:
+    - a write past a file's end fails with SQLITE_FULL;
+    - every xSync fails with SQLITE_IOERR_FSYNC;
+    - truncations and in-place overwrites succeed.
+
+    Each successful sync snapshots the file, so the harness can model R7.4's "loses everything not yet safely written".
+  - `probe_kl22.py` runs (k) and (l) as worded, each actor in its own OS process.
+  - `probe_resurrect22b.py` tests whether a write refused at its sync comes back.
+  - Outputs are `out_kl22.txt` and `out_resurrect22b.txt`. I wrote nothing to the repo.
+- **File abbreviations** (under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/`):
+  - DFJ = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+  - DFP = `docs/product/data-foundation/prd-data-foundation.md`
+  - DFF = `docs/product/data-foundation/prd-data-foundation-fences.md`
+  - CMP = `docs/product/collection-mode/prd-collection-mode.md`
+  - CMF = `docs/product/collection-mode/prd-collection-mode-fences.md`
+  - CMJ = `docs/product/collection-mode/prd-collection-mode-journeys.md`
+  - PL = `docs/product/post-lock.md`
+
+## Findings
+
+**[MAJOR] DB22-MAJOR-1 — DFJ:59, (l)'s power-loss run, read with CMP:446 and DFP:104: (l) fails a build the rows allow.**
+- **The rows involved.**
+  - CMP:446 (R8.8) says "a crash or power loss leaves it complete or absent".
+  - DFP:104 (R1.10) makes only a reading durable: "A reading is durable before the operator is told it landed".
+- **What (l) does.** The volume is declared full right after the delete lands, while read 1 is still running.
+  - Read 1 began on a fully checkpointed log, so it holds WAL_READ_LOCK(0).
+  - A checkpoint syncs the log only after it takes that lock, so neither a checkpoint nor a log sync runs before the declaration.
+  - After the declaration, every sync is refused.
+- **Why NORMAL fails.**
+  - At `synchronous=NORMAL`, a commit does not sync the log, so the delete's frames never reach disk. The induced loss removes the delete itself.
+  - Probe `(l-power) synchronous=NORMAL`: after the first reopen, SQL shows the deleted item again (`count=1`, 59 rows). The main file holds the text at 5 s and still holds it after the second loss.
+  - (l) therefore fails on "within 5 s of the first reopen … hold the removed text nowhere". That reads like a broken retry, but the retry works; it is the delete that is gone.
+- **What passes.**
+  - At FULL the same run passes: 58 rows, clean bytes, `integrity_check` ok.
+  - (l)'s crash run passes at both levels, and (k) passes at both.
+- **Why a builder guesses.**
+  - R8.8 and R1.10 promise that this write is atomic ("complete or absent"), not that it is durable. Only readings are promised durability.
+  - F63's "durably … after a power loss" governs "the removed text". A builder at NORMAL can fairly argue there is no removed text once the delete is absent, as R8.8 allows.
+- **Mutation.** With `PRAGMA synchronous=NORMAL`, or with no pragma on the system library, (l)'s power-loss run fails. With FULL it passes.
+- **Fix (no body words needed).**
+  1. Add a Clarified line under F219 and DF F63 reading D73's "durably" as covering the removing write itself: "a text-removing write reaches disk before it shows done, so a power loss never undoes it".
+  2. Add the same clause to the ADR-0003 input, beside "the wipe then reaching disk".
+  3. Add to (l)'s Assert: "after the first reopen, an SQL read at SQLITE_READER_FLOOR does not show the deleted item", so a failure names its real cause.
+  - The alternative is for (l) to accept "the delete absent in full". That is the weaker promise D73 did not choose.
+
+**The other changed lines match their fences.** I checked each against F219/F63, F218 and its new Clarified line (CMF:1895), F215, F211, DF F60–F62 (with DFF:710) and D72/D73:
+- R8.8's "save as … R6.2a states for … a full volume";
+- R6.2a's new clause (DFP:228);
+- the ADR-0003 input's retry and its "exactly where the volume lets that wipe and its sync complete";
+- (d)'s two new guards (DFJ:51);
+- CMJ:587's scratch-file controls.
+
+**Minors and Nits (post-lock, one line each)**
+- **[MINOR] DFJ:58–59 with DFP R7.4 — unsynced truncation.** The loss model does not say whether a truncation that was never synced survives. (l)'s verdict on a build that checkpoints without syncing while the volume is full, then truncates the log, depends on it. In probe `offtrunc` the truncation reverts and the build passes; in `offtrunc-kept` it survives and the landed delete is lost. Fix: declare that a truncation survives the loss and unsynced data does not.
+- **[MINOR] DFJ:51 and DFJ:58–59 — which sync.** "A sync" should mean every kind of sync, fsync and F_FULLFSYNC. SQLite's unix VFS retries a failed F_FULLFSYNC as `fsync()`. A hook that refuses only F_FULLFSYNC lets the wipe's checkpoint succeed while "full", and (k) and (l) then pass a build with no retry.
+- **[MINOR] CMF:1901 — no clean-close run.** F219 names "the first open with room after a close", but no DJ3 run closes the file cleanly while a main-file wipe is pending, and PL:34's close-and-reopen runs seed only the log half. `sqlite3_close` ignores the failure of its own checkpoint, so a build that skips its open-time retry after a clean exit passes DJ3. Fix: add a close variant to (l).
+- **[MINOR] PL:180 — extends it; not a re-raise.** A commit refused at its log sync is also replayed after a clean quit while the volume is still full, not only after a crash. Probe at FULL:
+  - a 5-item delete is refused with SQLITE_IOERR_FSYNC, and the app still counts 400 rows;
+  - the app quits while full; the close's checkpoint fails and the log stays;
+  - reopening with room shows 395 rows.
+
+  (k)'s declared-full state, with space left in the log, is where a case for this can run.
+- **[NIT] DFP:228 — "that wipe".** In R6.2a, "that wipe" binds to the wipe a read deferred. F63 covers any main-file wipe, so "its wipe" is closer.
+- **[NIT] DFJ:58–59 — seeding.** "Seeded and checkpointed" should read "seeded, checkpointed and synced". If the seeded text never reached disk, the induced loss removes it too, and (k) passes a build that never syncs the wipe.
+
+## Biggest risks   (what corrupts or returns wrong data first as the data grows/ages)
+1. **DB22-MAJOR-1.** A build on the system library's defaults fails (l) with a failure that points at the retry. The tempting "fixes" — weakening the retry or skipping (l) — are both wrong.
+2. **Fixing it with FULL makes PL:180's replay the live hazard.** A delete refused while the volume is full comes back done after a crash or a quit. ADR-0003 has to settle the two together.
+3. **Hook fidelity.** The truncation-loss model, and fsync versus F_FULLFSYNC, decide whether (k) and (l) test anything at all.
+
+## Genuinely sound
+- **D73's retry can be built on stock SQLite.** At FULL and at NORMAL, a PASSIVE checkpoint whose log sync is refused returns SQLITE_IOERR_FSYNC having copied nothing. Once syncs work again, a retry on the same connection returns (0,1,1) and the main file is clean.
+- **Retrying is the right call, though a textbook DBA would treat a failed fsync as fatal.** The checkpoint's backfill counter advances only after the main file's sync returns. Each retry therefore copies again from the log and syncs again, and never relies on pages a failed sync may have dropped.
+- **(k) tells builds apart.**
+  - Correct builds pass at FULL and at NORMAL.
+  - A build that copies without syncing while full, and never syncs after room returns, fails: the main file holds the text after the induced loss.
+- **(l)'s crash run** passes correct builds at both levels. Its order (lift the full state, then reopen) avoids the full-APFS reopen failure (SQLITE_IOERR_SHMOPEN) from my round 19.
+- **Separate guards for (k) and (l) are right.** They seed the text in the main file only, so (a)'s "beside the file" seeding guard would wrongly report them not exercised.
+
+## Missing / over-engineered   (absent constraints/migrations OR needless normalization/indexes)
+- **Missing:**
+  - the removing write's own durability (DB22-MAJOR-1);
+  - a stated loss model for truncations;
+  - "every kind of sync" in the declared-full state;
+  - a clean-close run for the main-file half;
+  - a case for PL:180's replay.
+- **Over-engineered:** nothing.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | OBJECT (DB22-MAJOR-1) |
+| DF-R6.2 | OBJECT (DB22-MAJOR-1) |
+
+- **R8.8 is OBJECT.** F219 lists R8.8 and DJ3 (l) as carriers, yet R8.8's own "a crash or power loss leaves it complete or absent" allows the outcome that (l)'s power-loss run fails. The fix is a Clarified reading under F219, not new row text.
+- **DF-R6.2 (with R6.2a) is OBJECT.** DJ3 (l) is R6.2a's acceptance, and it fails a build at the system library's default durability without any row saying why. The fix is one fence line, one clause in the ADR-0003 input and one clause in (l)'s Assert.
+
+### Orchestrator verification (round 22)
+
+- **Confirmed at `8bed4c5`, each by reading the changed lines:**
+  - R6.2a's new clause read "within 5 s of the file being open with room" without F219/F63's "durably", and the row ended "after a crash" with no power loss, while DJ3 (k) and (l) assert a byte read after an induced loss (PM22-1, PLAN, IF22-M1).
+  - Nothing required the text-removing write itself to reach disk before it shows done: the architecture lens's `arch22-probe/main.c` and the database lens's `db22-probe/probe_kl22.py` show (l)'s power-loss run losing the delete at SQLite's `synchronous=NORMAL`, the macOS system library's WAL default (ARCH22-1, DB22-MAJOR-1).
+  - (k) and (l) never asserted that no refusal state renders for the app's own refused wipe or sync (PMM22-1); (i) and (f) do.
+  - (k) and (l) cover only a read-deferred wipe under a state that refuses every sync, so a build that retries only a read-deferred wipe passes (SSE22-1).
+  - (d)'s guards checked a harness scratch file's sync, not the app's own refusal; the test lens's `r22tr/probe_k22sys.c` passes a no-retry build through a hook that misses F_BARRIERFSYNC (TR22-1).
+- **No owner decision.** Each fix reads D73's "durably" (with R6.2a's "Delete final" and F218's give-way line) or adds a case; recorded as dated Clarified lines under F219 and DF F63.
+- **Not taken, with reason.** The plan lens's "when room comes last" condition for the main-file clause: the interface and architecture lenses show the main-file wipe is attempted, so refused, only once every read that deferred it has ended, and a PASSIVE checkpoint copies past a later read; no read condition is needed. The product-marketing lens's "E35 until the wipe is synced": R6.2a ties E35 to its byte test as written; the residual all-clear goes to post-lock's E35 owner item.
+
+### What landed (round-22 fix pass)
+
+- **R6.2a** reads "or, where a full volume refuses the main-file wipe or its sync, durably within 5 s of the file being open with room;" and ends "while the file is open and after a crash or a power loss" (DF 8,475 of 8,480).
+- **Fences.** A Clarified line under F219 and one under DF F63 read "durably" as covering the text-removing write itself, no refusal state for the app's own refused wipe, "with room" as room enough for the wipe and its sync, a later read never carrying the retry past 5 s, and E35 following R6.2a's byte test; bookkeeping lines add DJ3 (m) and fix F63's F211 cite and Rows. The preamble's pending item now matches the status line (F202–F220), and a dated Reopened line sits under F202's Closed line.
+- **DJ3.** (k) and (l): "seeded, checkpointed and synced"; every kind of sync of the file or any file in its folder refused; no refusal state; the durability read 5 to 6 s after the lift or the reopen; (l) gains a close run, an SQL read showing the deleted item absent, and "E35 up at no look after the reopen". New (m): a delete with no outside read on a volume that refuses only the file's own sync. (d) gains the "it really was refused" guard for (k) and (l), (m)'s guards, and an induced-loss realism guard.
+- **ADR-0003 input.** "gone from the file's bytes, on disk, within 5 s …, a text-removing write itself reaching disk before any surface shows it done".
+- **Post-lock.** The Minors and Nits of all nine lenses, each by trigger.
+
+### Dispositions (round 22)
+
+| Row | PM | SSE | TR | IF | ARCH | PRIV | PMM | R22 | DB | Resulting status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R8.8 | ALIGN | OBJECT | OBJECT | ALIGN | OBJECT | ALIGN | OBJECT | ALIGN | OBJECT | needs-discussion |
+| DF-R6.2 (with R6.2a) | OBJECT | OBJECT | OBJECT | OBJECT | OBJECT | ALIGN | OBJECT | OBJECT | OBJECT | ⌛️ Ready for Alignment |
+
+Round 23 re-reviews the fix pass with all nine lenses, R6.2a's text having changed.
