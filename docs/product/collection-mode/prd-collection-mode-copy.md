@@ -70,7 +70,7 @@ read-only file states; and the Data Export PRD's E1.
 
 ### E3 — Collection shown
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R3.4
 - Headline: ⟨collection⟩
@@ -175,7 +175,7 @@ are grouped under the Mark labels table's group headings, in that table's order.
 
 ### E13 — All items shown
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: [phase: surface-absent]
 - Variants enumerated by: R3.4
 - Headline: All items
@@ -308,5 +308,7 @@ awaiting your answer; restore — Earlier reading used again.
 | R5.2e Value | Colour | The chip, samples kept and spread |
 | R5.4 distance | From current | ΔE2000 and the distance |
 | R5.4 no-value | From current | for a reading with no value in this collection's measurement condition: Not compared — no value in this collection's measurement condition |
-| R5.4 unreadable | From current | for an unreadable reading: Not compared — this reading can't be read, which wins over the no-value line |
-| R5.4 not-compared | From current | where either reading's value was worked out under another illuminant or observer: Not compared — worked out for a different light, viewing angle or measurement condition |
+| R5.4 unreadable | From current | for an unreadable reading: Not compared — this reading can't be read |
+| R5.4 not-compared | From current | where R5.4 or R5.8 gives the not-compared line: Not compared — worked out for a different light, viewing angle or measurement condition |
+
+R5.8's Compare slot shows the same line with no label, between the two chips (F216).

@@ -258,6 +258,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F58 | R1.11, R6.2a, R7.6b, E15, E34, E35, OQ 20; DJ3, DJ4; the copy header; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the Corrected F57 line. |
 | F59 | R6.2, R6.2a, E35; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F59. |
 | F60 | R6.2, R6.2a, R1.11; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F60. |
+| F61 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F61. |
 
 ## Rejected findings
 
@@ -653,3 +654,16 @@ Source: the owner's round-11 decisions in the Collection Mode PRD's adjudication
 - **Decision:** R6.2a's journal-or-log deadline is completed as F211 and F212 state. The copy goes once no read still using it remains — one begun after the wipe included — and the write running at the wipe has ended or failed, at the next open after a crash. Clearing it holds the next write only for its own copy and truncation, never while it waits on a read; a clearing a read blocks gives way and is retried once that read ends. R1.11's "but a wipe (R6.2a)" exemption covers this clearing the same way. DJ3 gains sub-runs for a second outside read begun during the held write, and for a crash in that window.
 - **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
 - **Rows:** R6.2, R6.2a, R1.11, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F60.
+
+**Clarified 2026-09-26 (F61; ARCH12-1):** this fence's Decision reads "R1.11's 'but a wipe (R6.2a)' exemption covers this clearing the same way"; that is corrected. R1.11's exemption covers the wipe of the file's own bytes, which needs no write lock. The clearing needs the write lock and runs once no write runs, as F61 states.
+
+## Collection Mode round-12 amendment (2026-09-26)
+
+Source: the owner's round-12 decisions in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F215](../collection-mode/prd-collection-mode-fences.md) (owner decision D69, over round 12's privacy and architecture findings PRIV12-1 and ARCH12-1). This fence carries only the Data Foundation half of that decision; peer review pending.
+
+### F61 — The log copy goes at the first moment nothing uses the log (2026-09-26)
+
+- **Authority:** [the Collection Mode PRD's F215](../collection-mode/prd-collection-mode-fences.md) — owner decision D69, its round-12 adjudication, 2026-09-26.
+- **Decision:** R6.2a's journal-or-log deadline is restated as a principle, replacing F60's case-by-case list: the copy of removed text in a journal or log beside the file goes at the first moment, with the file open, that no read uses that journal or log and no write runs; after a crash, at the first open at which that holds. Clearing it holds the next write only for its own copy and truncation, never while it waits on a read, running before the next write starts (F60). DJ3 gains sub-runs for a second write started while a clearing waits on a read, a write made while a clearing is blocked, and the held write failing instead of landing.
+- **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
+- **Rows:** R6.2, R6.2a, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F61.

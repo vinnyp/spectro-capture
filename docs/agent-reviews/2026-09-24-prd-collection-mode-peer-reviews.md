@@ -20691,8 +20691,6 @@ No DDL exists yet; ADR-0003 owns the schema, so the rows are the storage contrac
 
 ### Owner adjudication (2026-09-26)
 
-### Owner adjudication (2026-09-26)
-
 The owner answered D65–D67 on 2026-09-26, over round 11's database-lens MAJOR-1 and MAJOR-2 (both reproduced by the orchestrator on SQLite 3.53.4) and the Compare fork the interface, staff-engineer, test and plan lenses raised (IF-4, SSE11-3, TR-6, R11-M3). Each record quotes the question, the option chosen with its description, and the option not chosen, verbatim.
 
 **D65 (round-11 database MAJOR-1; plan R11-m4).** Question: "Round 11 found two more SQLite facts about the erase (F202). I reproduced both. First: a read that starts AFTER the wipe (another app's, or this app's own export or Save a copy) also keeps the log copy alive, even after the running write lands. So 'at the latest when that write lands' can't always hold. What should the deadline say?" Chosen: **Any read in use defers it** — "The log copy goes once no read still using the log remains, including one begun after the wipe, and the write running at the wipe has ended (landed or failed); after a crash, at the next open. E35 stays up while another app's read holds it. The app's own export or copy holds it silently, as the app's own earlier reads already do (F57)." Not chosen: **App's own reads wait** — "Same, except the app starts no export, Save a copy or check of its own while a log copy awaits clearing; they wait, shown, until it clears. Then only other apps' reads can hold it. The cost: an export can wait as long as another app keeps reading."
@@ -20741,3 +20739,1159 @@ PRIV (privacy), PMM (product-marketing), R11 (plan), DB (database).
 | DF-E35 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | aligned |
 
 This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-11-fixes.md`.
+
+## Round 12 — delta-verify of round 11 (2026-09-26)
+
+Subject: `3cf3b55`. Nine lenses read the amendment `cee1fb2..3cf3b55`: product-manager,
+staff-software-engineer, test, interface, architecture, privacy, product-marketing, plan and
+database — the same nine lenses as round 11, run again as a delta-verify pass over round 11's
+fixes.
+
+### product-manager
+
+## Verdict
+Builds the right thing for the user. All three of my round-11 Majors are resolved, and the new behaviours (Clear sort, the imported-column tag, the history distance lines, the banner reset, E9's return, the erase timing) leave the Cataloger no dead end or unexplained state. One new Major must be fixed before re-lock: the new tagged-surface case asserts a confirmation that R6.2 never shows for two items, so a correct build fails it.
+
+## User & problem context (brief)
+- **User and job.** The Cataloger browses, trusts and fixes a digitized collection after heads-down capture. In this delta that means: get back to queue order after sorting; tell an imported "State" apart from the built-in one on every surface where they edit; read honest reasons when two readings can't be compared; and have removed text actually gone.
+- **Validated vs assumed.** The round-11 defects were reproduced by the orchestrator (the SQLite facts on 3.53.4, the rest by grep). D65–D68 are owner judgment for a single-owner dogfood product. That is the right evidence standard at this scale.
+- **Scope.** I read `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'` and the seven targets and seven sources at repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`. All paths below are relative to that root.
+
+## Findings
+
+**(1) Round-11 Blockers and Majors from this lens**
+| Finding | Status | Where |
+|---|---|---|
+| PM-1 (UJ2.3-b fixture could not clash) | RESOLVED | docs/product/collection-mode/prd-collection-mode-journeys.md:238 (Tags Three stores State, then State (imported); the Assert binds each label to its stored column); :239 (UJ2.3-c, the reversed order, consistent with F206's "later by position") |
+| PM-2 (the detail labelled imported columns by stored name) | RESOLVED | docs/product/collection-mode/prd-collection-mode-copy.md:290 ("under its R2.1 label"); docs/product/collection-mode/prd-collection-mode.md:551 (the Placeholders rule's ⟨column⟩ is the R2.1 label); prd-collection-mode-journeys.md:237 (UJ2.3-a asserts TG-001's detail shows "Swatch Name (imported)") |
+| PM-3 (R8.11's interim was not listed) | RESOLVED | prd-collection-mode.md:204 (Interim entry in Build dependencies row 1); :231 (Interim stated); :583 (OQ 1's pointer, with R8.11 dropped from Feeds); docs/product/README.md:18; prd-collection-mode-fences.md:1144 (the Clarified line under F120) |
+
+Round-11 Minors:
+- **Resolved:** PM-4 (PRD:283), PM-7 (journeys:389, :393, :395), PM-8 (journeys:277, :279), PM-9 (PRD:445 now uses the defined term "the file's bytes"), PM-10 (docs/decisions/README.md:22) and PM-11 (journeys:237).
+- **PM-5:** resolved in intent by UJ2.3-d, but its E8 part is broken (PM12-1).
+- **PM-6:** partial. R5.4's unreadable-over-no-value order is fixed; the rest carries into PM12-4.
+- **PM-12:** moved to post-lock (docs/product/post-lock.md:47).
+
+**(2) New in the round-11 fix pass**
+
+[MAJOR] **PM12-1 — UJ2.3-d asserts E8 for a two-item bulk set, but E8 never renders for two items. prd-collection-mode-journeys.md:240, against R6.2 at prd-collection-mode.md:397.**
+- **The defect.** UJ2.3-d selects TT-001 and TT-002, fires "Set a field", chooses State (imported), enters Nova, and asserts "E8's ⟨column⟩ reads State (imported)".
+  - R6.2 renders E8 only "above BULK_CONFIRM_COUNT selected items", and BULK_CONFIRM_COUNT is 10 (PRD:191).
+  - UJ6.2-a (journeys:410) asserts "E8 does not render" for exactly this two-item "Set a field".
+- **Effect on builds.** A correct build never shows E8 here, so it fails UJ2.3-d. A build that confirms at two items passes UJ2.3-d and fails UJ6.2-a. No build can pass both cases.
+- **User scenario.** A Cataloger bulk-sets their imported State column across a real selection of more than 10 swatches. The confirmation must say "Change State (imported) on 11 swatches?" rather than a bare "State", or they may think they are changing the row state. The only case meant to prove that label (the goal of round-11's PM-5) cannot pass, so an E8 that names the column untagged goes unguarded.
+- **Mutation.** Rendering E8 at 10 or fewer items makes UJ2.3-d pass; the correct build fails it.
+- **Fix.**
+  - In UJ2.3-d, replace "E8's ⟨column⟩ reads State (imported)" with "E8 does not render" and keep the SQL read.
+  - Add UJ2.3-f: Tags Two with 11 items. Select all 11 by range, fire "Set a field", choose State (imported), type Nova and press Return.
+  - UJ2.3-f's Assert: E8 renders with ⟨column⟩ State (imported) and ⟨n⟩ 11. After "Apply to 11 swatches", an SQL read shows only the State (imported) column changed, to Nova.
+
+[MINOR] **PM12-2 — Compare's slot shows a "From current" label that can be false (copy:309–312).** All four R5.4 rows carry the label "From current", and R5.8 reuses those lines. UJ5.4-f (journeys:396, new under F213) compares two earlier readings, so "From current: ΔE2000 0.00" would be untrue. Fix: add a Compare-slot label, or state that the slot shows the line without its label.
+
+[MINOR] **PM12-3 — rule text inside a copy string (copy:311).** The unreadable row's string cell ends ", which wins over the no-value line". That is rule text, and F207 quotes the string as ending at "can't be read". R5.4 and R5.8 now carry the precedence, so drop it from the cell. Otherwise a builder may show it to the user.
+
+[MINOR] **PM12-4 — R5.4 (PRD:384) and R5.8 (PRD:388) leave two precedence and scope gaps.**
+- **R5.4.** It orders the unreadable line over the no-value line, but not the no-value line against the not-compared line in the history view. Both apply when the current value was worked out under another illuminant (R5.4's new "either reading") and an earlier reading has no value in the condition. R5.8 does give the order.
+- **R5.8.** "Worked out differently" still reads either as "from each other" or as "from the working set" when both readings sit at the same foreign reference.
+- **Fix.** Add "then the not-compared line" to R5.4. In R5.8, write "differently from the working set".
+
+[MINOR] **PM12-5 — "Clear sort" has a budget but no timing case (PRD:429).** R8.1a now budgets "Clear sort", but the timing workload (journeys:138) and UJ9.5-a/b (journeys:530–531) never fire it, so a Clear sort that takes seconds at ROWS_CEILING passes. Fix: add "then 'Clear sort'" after each header pair.
+
+[MINOR] **PM12-6 — UJ2.3-d's phases (journeys:240).**
+- **Late check.** Its Given declares R2.10 (P2) built for the whole case, so the tagged VoiceOver name, a P0 R2.1 surface, is first checked in the P2 phase.
+- **Phase mix.** "In R6.2's phase" sits inside a case that already needs P2.
+- **Fix.** Move the accessible-name read into UJ2.3-a, which runs at P0.
+
+[MINOR] **PM12-7 — DJ3's crash timing in (c) (docs/product/data-foundation/prd-data-foundation-journeys.md:48).**
+- **The gap.** Sub-run (c) says "crash the app after read 1 ends" without waiting for (a)'s second look.
+- **Why a correct build can fail.** A crash inside the 5 s before the main-file wipe legitimately leaves the text in the file's own bytes: R6.2a's deadline needs the read ended and the file open. The Assert then fails a correct build.
+- **Fix.** Crash "once (a)'s second look finds the file's own bytes clean".
+- **Ownership.** The test and database lenses own the severity.
+
+[NIT] PRD:231: the Interim stated line "R8.11 — the capture PRD's OQ 5 — F120." names a fence rather than the interim. Use "— the engineering plan's declared ROW_CONFIRM_BUDGET (F120)", as R1.7's line names its interim.
+[NIT] PRD:583: "Each candidate is measured" comes right after "ratified as v1's values". Write "Each value".
+[NIT] PRD:74–75: "a display-gamut finding stays behind F209's post-lock display spike" could be read as holding back UJ2.1-d/e/q, which run on declared gamuts at P0. Write "a finding on a real display's gamut".
+
+## Biggest risks   (what builds the wrong thing or fails the user)
+- **PM12-1.** The only case guarding the bulk-set confirmation's column label cannot pass. A build that names the imported State untagged in E8 would ship unguarded, and that is the exact T8 confusion, on the surface where a mis-target changes more than 10 swatches at once.
+- **Nothing else rises above Minor.** Every other new behaviour has a row, a copy string and a discriminating case.
+
+## Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **Clear sort.**
+  - UJ3.3-n's Set Order fixture makes queue, code and L* orders all differ, so a no-op Clear sort fails.
+  - UJ3.3-p proves "offered only while sorted", and UJ3.3-q proves search and filter survive (ZX-013..015's L* order differs from their queue order).
+  - UJ3.3-o proves the drag works straight after a clear.
+  - UJ7.1-u, after the orchestrator's rename, discriminates too.
+  - There is no dead end: sort, then clear, then drag.
+- **E11 and E19 use the stored name, not the tag (PRD:551). This is the right product call.** E19's body warns that "a spreadsheet that still has a ⟨column⟩ column will add it as a new column", which is only true of the stored name. Tagging it there would mislead.
+- **F213's cases.** UJ5.4-g tests the D67 fork exactly: the current reading has no value, the earlier one has a value, so the slot shows the no-value line. UJ5.4-f's identical values give 0.00 without external computation, and UJ5.4-a's 2.04 still catches a reading compared with itself.
+- **DF R6.2a (false positive, not a finding).** It nests the journal-or-log clause under "while a read begun before its wipe runs", which looks narrower than F211 but isn't. With no earlier read, R1.11's one-writer rule means no write is held at the wipe, so the copy-back completes and a later reader reads the main file without pinning the log. The only later reads that can pin the log are in the held-write case the parenthetical covers. The database lens can confirm.
+- **UJ2.1-g's switch to "pending".** Rival builds still return 0 rows (keep search, keep row state), and the three narrowings together still list nothing.
+- **The E35 stale-headline window** goes to a dogfood check (post-lock:171) rather than new copy. That is right-sized for a one-owner product.
+
+## Missing / over-specified
+- **Missing:** a working E8 case for a tagged column (PM12-1); a label for Compare's slot (PM12-2); "Clear sort" in the timing workload (PM12-5).
+- **Over-specified:** nothing. The delta adds only what D65–D68 and the round-11 findings require. The four-row History lines split is justified by R8.10b's read-by-identifier.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | OBJECT (PM12-1) |
+| R3.2 | ALIGN |
+| R5.4 | ALIGN |
+| R5.8 | ALIGN |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ALIGN |
+| DF-R6.2 | ALIGN |
+### staff-software-engineer
+
+## Verdict
+Proceed after addressing Blockers. There are none, but two new Majors must be fixed before re-lock. The round-11 fix pass resolves every row-level Major my lens raised: R8.11's interim, the ADR-0003 input, R5.4/R5.8, and F206 ordering. Both new Majors are in the cases:
+- One new case cannot pass on a correct build.
+- The new F212 rule, "clearing never holds a write while it waits on a read", has no case that can fail. SQLite's default behaviour, the option the owner rejected, passes every case.
+
+## What I reviewed
+- **Artifact.** `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'` (14 files), read at 3cf3b55. Repo root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`; every cite below is relative to it. I also read the full current state of:
+  - the Collection Mode PRD, its journeys, copy and oq-results;
+  - the Data Foundation PRD, its journeys and copy.
+- **Upstream contract.**
+  - CM fences F200–F214, with F33, F118, F120 and F204–F213 read in full.
+  - DF fences F21, F55, F59 and F60.
+  - The review log's Round 11: my review, the orchestrator verification, D65–D68 and the dispositions.
+  - `prd-collection-mode-round-11-fixes.md`, including the orchestrator's edits at its end.
+  - `post-lock.md`, `docs/decisions/README.md` and `docs/product/README.md`.
+- **Sibling contracts traced.**
+  - Capture PRD: its Legend, R4.13, OQ 5 (ROW_CONFIRM_BUDGET still TBD), OQ 7 and R6.12 (REORDER_SCOPE).
+  - Import PRD: R3.5, R3.6c, R3.8g and E14.
+  - Export PRD: R2.4, R2.4a–c and R4.1a.
+  - DF R3.3a–g.
+  - The first-lock text of R5.4, R5.8, R8.8 and R6.2a (`git show 04dfb97`).
+- **Codebase.** None exists yet; the repo is docs only.
+- **Word counts.** I used a read-only perl count by rule 14's method, calibrated against round 11's recorded figures. See Claimed properties.
+- **Could not verify.**
+  - Live anchor rendering.
+  - The SQLite reproductions behind D65 and D66; I did not re-run them.
+  - The exact DF word count (±4 against my calibration).
+
+## Findings
+
+**(1) My round-11 Blockers and Majors**
+
+| Finding | Status | Where |
+|---|---|---|
+| SSE11-1: R8.11 lost its interim | RESOLVED | All sources now agree with F120 and F209, and ROW_CONFIRM_BUDGET is still TBD under the capture PRD's OQ 5 (capture PRD:69, :435). Locations: <br>• PRD:204 (Build dependencies row 1, Interim entry)<br>• PRD:231 (Interim stated)<br>• PRD:583 (OQ 1 pointer; R8.11 out of Feeds)<br>• oq-results:13<br>• docs/product/README.md:18<br>• fences:1144 (F120 Clarified) |
+| SSE11-2: the ADR-0003 input kept the pre-F202 deadline and "never wait" | RESOLVED | docs/decisions/README.md:22. <br>• The journal/log aside is now on the general clause.<br>• F211 and F212 are stated with their cites.<br>• The tail reads "never wait on a read a removing edit defers, and on a clearing only within … R8.11's budgets".<br>• The fence lists gain F211, F212 and DF F60. |
+| SSE11-3: R5.4/R5.8 left operand cases to guess | RESOLVED, with a new Minor (SSE12-3) | <br>• PRD:384: "either reading's value" matches the not-compared line as it stood at 04dfb97 ("where the two were worked out under different light…"), which F207 keeps "unchanged".<br>• PRD:388: R5.8 has its own slot rule with full precedence.<br>• copy:310: "for a reading with no value".<br>• journeys:393: UJ5.4-c declares the current reading and runs both orders.<br>• journeys:395–397: UJ5.4-e, -f and -g. |
+| SSE11-4: F206 ordering; UJ2.3-b could not pass | RESOLVED | <br>• PRD:283 and copy:267–272: "the later of the clashing columns by stored position".<br>• journeys:238: UJ2.3-b has a standalone Given and binds each label to its stored column.<br>• journeys:239: UJ2.3-c, the reversed order, is consistent with F206. |
+| SSE11-5: the tag reached only the header | PARTIAL | Fixed:<br>• copy:290 (R4.2a "under its R2.1 label")<br>• PRD:548 (⟨column⟩ is the R2.1 label; E11 and E19 use the stored name)<br>• journeys:237 (the detail label asserted)<br><br>Not fixed: the E8 leg of the new coverage case, journeys:240, cannot be observed (SSE12-1). |
+
+**(2) New Majors from the round-11 fixes**
+
+**[MAJOR] SSE12-1: UJ2.3-d's E8 assertion cannot pass on a correct build**
+- **Where.** `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode-journeys.md:240`, against PRD:397 (R6.2) and PRD:191 (BULK_CONFIRM_COUNT = 10).
+- **The defect.**
+  - The case selects two items (TT-001 and TT-002), fires "Set a field", and asserts "E8's ⟨column⟩ reads State (imported)".
+  - R6.2 renders E8 only "above BULK_CONFIRM_COUNT selected items". With two selected, Return applies directly and E8 never renders.
+  - UJ6.2-a (journeys:410) already asserts "E8 does not render" for two items.
+- **Mutation.** A build that follows R6.2 fails this case. The only build that shows E8 is one that ignores BULK_CONFIRM_COUNT. That build then waits on "Apply", so the SQL half fails too, and no build passes.
+- **Secondary problem.** The first When step reads "Set a field"'s field list before any selection. R6.2 offers "Set a field" only with two or more items selected.
+- **Fix.** Either:
+  - give Tags Two 11 items, select all 11, read "Set a field"'s fields, choose State (imported), enter Nova, assert E8 reads "Change State (imported) on 11 swatches?", fire "Apply to 11 swatches", then run the SQL read over all 11; or
+  - keep UJ2.3-d at two items without the E8 leg, and add UJ2.3-f with 11 or more items for E8's ⟨column⟩.
+
+**[MAJOR] SSE12-2: F212's "never while it waits on a read" has no case a wrong build fails**
+- **Where.** `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation.md:228` (R6.2a: "clearing it holding the next write only for its own copy and truncation, never while it waits on a read"), and `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation-journeys.md:48` (DJ3's WAL line).
+- **Mutation.** A build that clears the log with SQLite's usual `wal_checkpoint(TRUNCATE)` under a busy timeout passes every case. This is D66's not-chosen "Allow the wait", and the orchestrator's 3.53.4 run showed it holding the write lock for the whole wait.
+  - DJ3 (b) holds read 2 open after the held write lands, which is exactly when that clearing blocks. But no write is attempted during read 2, and the only deadline is "within 5 s of read 2's end".
+  - UJ9.5-d's outside read defers the wipe itself, so no clearing is attempted during capture there.
+  - DJ4's lines never make a clearing due while a read blocks it.
+  - No case contains "truncat", "clearing" or "next write". The rule the owner chose to protect capture saves can't be told apart from the one the owner rejected.
+- **Fix.** Add sub-run (e) to DJ3, as (b) with two additions:
+  - hold read 2 open for at least 30 s after the write lands;
+  - at +1 s make a single-item edit (Collection Mode R8.1c). Assert it shows done within 5 s (a functional timeout) and is never refused, E35 still up, with the removed text still beside the file until read 2 ends.
+  - Add F212 to that run's cites. The test and database lenses should confirm the oracle.
+
+**Minors and Nits (post-lock)**
+- **[MINOR] SSE12-3.** "Either reading's value…" now overlaps R5.4's other two lines, and R5.4 orders only can't-be-read over no-value. When the current value is off-basis and the earlier reading is unreadable or has no value, two lines apply. Where: PRD:384. Fix: add R5.8's order to R5.4: can't-be-read, then no-value, then not-compared only when both readings have values.
+- **[MINOR] SSE12-4.** "A display-gamut finding stays behind F209's post-lock display spike" dropped the old "depends on an unmeasured environment". Read literally, it could exempt the seam-declared cases UJ2.1-b, -d, -e and -q from gating. Where: PRD:74–76. Fix: "a finding on a real display's reported gamut, not one R8.10a declares".
+- **[MINOR] SSE12-5.** Compare's slot has no label worded anywhere. All four distance rows are labelled "From current", which is wrong for UJ5.4-f's two earlier readings. Where: copy:309–312.
+- **[MINOR] SSE12-6.** The "R5.4 unreadable" string cell still carries the rule text ", which wins over the no-value line". Tests read by identifier, so a build that renders that text passes. Where: copy:311. Fix: move the rule to the row.
+- **[MINOR] SSE12-7.** R8.1a now names "Clear sort", but no timing case delivers it (UJ9.5-a, journeys:531). This is the residual of SSE11-8.
+- **[MINOR] SSE12-8.** R6.2a shows E35 only when the read begun before the wipe is another app's. If that read was the app's own export, a read another app begins after the wipe can hold the removed text beside the file with no notice. F211's "only when" allows this but doesn't decide it. Where: DF PRD:228. Owner and privacy question.
+- **[NIT]** "⟨column⟩ a column's R2.1 label" doesn't settle a built-in column's label: R2.1 says "Swatch Name", the copy header says "Name". This matters for E8 on Swatch Name; the old "a column's name" had the same gap. Where: PRD:548.
+- **[NIT]** UJ2.3-a's re-import fires E14's "Take the new details" but not the explicit "Import" that the import PRD's R3.8g still requires. Where: journeys:237.
+- **[NIT]** fences:1144's "(D2; …)" reads as owner decision D2, which exists (fences:98). This is the same ambiguity IF m4 fixed for DF F59's "(D1)".
+- **[NIT]** The Carried-by lines of F204, F205 and F206 don't name the new cases UJ3.3-p, UJ3.3-q, UJ2.3-c, UJ2.3-d and UJ2.3-e. Mechanical lens.
+
+## Clarifying questions for the author
+1. Does UJ2.3-d grow to 11 or more items, or does its E8 leg move to its own case of 11 or more items?
+2. May DJ3 gain sub-run (e): read 2 held for at least 30 s after the write lands, and an edit in that window showing done within 5 s, never refused?
+3. In R5.4, when the current value is off-basis and an earlier reading is unreadable or has no value, does R5.8's order (can't-be-read, no-value, not-compared) apply?
+4. When two readings both carry values worked out under the same illuminant and observer, but not the collection's, does Compare show their ΔE2000 (F213's "alike") while the history view shows not-compared for the same pair?
+5. What label does Compare's single slot carry?
+6. Does PRD:76's "display-gamut finding" mean only findings on a real display's reported gamut?
+7. Should E35 appear when another app's post-wipe read holds the log copy and the pre-wipe read was the app's own?
+8. Does a Release-build timing case over budget block the release? (Carried from round 11, Q9.)
+
+## Claimed properties
+- **"D2: all four landed verbatim"** — holds.
+- **"The ADR-0003 input is one coherent set"** — holds.
+- **"R5.4's 'either reading' reads F207's existing text, not a new decision"** — holds. 04dfb97's not-compared line covered either reading, and F207 keeps it "unchanged".
+- **"F206 settles UJ2.3-c; no fork needed"** — holds.
+- **"UJ5.4-f needs no external computation"** — holds: identical triples give ΔE2000 0.00.
+- **"UJ3.3-n and UJ7.1-u discriminate the queue order"** — holds. Set Order: code order, L* order and queue order all differ. Zone: a Swatch Name sort gives ZO-1, ZT-1, ZO-2; Clear sort gives ZO-2, ZO-1, ZT-1.
+- **"R8.8 and R6.2a are faithful to F211 and F212"** — holds for the row text. The rule is unverified by any case (SSE12-2).
+- **"E1: CM 12,348 ≤ 12,400; DF 8,412 ≤ 8,450"** — holds within the budgets. The CM figure matches my calibrated count (+71 words since cee1fb2). For DF my calibrated count is 8,416 against the claimed 8,412; either is under the cap.
+- **"E2 checks 6, 17 and 18 pass"** — hold for what they check. None checks reachability, so UJ2.3-d's unobservable E8 passed them (SSE12-1).
+- **"D10 statuses"** — hold, verified at PRD:283, 320, 384, 388, 423, 445 and 583 and DF PRD:216.
+
+## Genuinely sound
+- **R8.11's interim** reads the same in all five places, and correctly stays out of OQ 1's Feeds.
+- **R8.8** restores the defined term "the file's bytes" and delegates the log copy to DF R6.2a. No WAL mechanism leaks into Collection Mode.
+- **The orchestrator's R6.2a edit is right.** It kept "nothing waiting on it" on the main-file clause and put the later-read wait only on the journal-or-log copy. This matches F211's scope and the architecture probe.
+- **DJ3 (a) and (b)'s "E35 up exactly when…" is not racy, though a shallow read would flag it.** F202's Why (no truncation while a write runs) and the D65 reproduction (no truncation while read 2 is open) mean nothing changes inside the looked-at windows.
+- **The UJ2.3-b/c, UJ5.4-c/e/f/g, UJ3.3-n..q and UJ7.1-u fixtures are tight.** I checked each expected list against its Given and the Named defaults, including UJ3.3-q's ZX-013, ZX-014, ZX-015.
+- **Not flagged:**
+  - The retained "Candidate / interim" header.
+  - E35's unchanged wording.
+  - DJ3 (d)'s "not exercised". It is the honest outcome for a fixture that can't seed a log frame.
+
+## Deferred
+- **Test and database lenses.** The exact oracle and timeout for SSE12-2's sub-run.
+- **Privacy.** SSE12-8.
+- **Product and product-marketing.** The Compare slot label (SSE12-5), and E19's stored-name headline for a tagged column.
+- **Architecture and ADR-0003.** F212's copy-back-then-truncate mechanism. The post-lock list already carries it.
+- **Mechanical.** The Carried-by bookkeeping and the "(D2)" ambiguity.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | OBJECT (SSE12-1) |
+| R3.2 | ALIGN |
+| R5.4 | ALIGN |
+| R5.8 | ALIGN |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ALIGN |
+| DF-R6.2 | OBJECT (SSE12-2) |
+### test
+
+## Verdict
+Trustworthy after fixing five Majors (no Blockers). Five of my six round-11 Majors are resolved and TR-4 is partial. The fix pass added five new Majors: UJ2.3-d's E8 clause fails a correct build; F212's write-hold rule has no case; nothing covers R5.4's new "either reading" wording where the current reading is the mismatched one; DJ3's crash sub-run doesn't say when to crash, so it races the wipe; and R8.1a's new "Clear sort" input is never timed.
+
+## Coverage map (brief)
+This round is requirements-only, so there is no suite to run. Each "mutation" below is a named wrong build that passes a case, or a correct build that fails one.
+- **What the delta must prove:** that TR-1 to TR-6 are closed; F205/F206 across every surface that shows a label (UJ2.3-a to e); F211/F212 (R8.8, DF R6.2a, DJ3); F213 (UJ5.4-c, e, f, g); R5.4's "either reading" wording; R8.1a's "Clear sort"; and OQ 1's split from R8.11.
+- **Well covered:**
+  - "Clear sort": UJ3.3-n to q and UJ7.1-u. Queue order, code order and sorted order now all differ.
+  - The collision suffix, in both stored orders.
+  - UJ2.3-a's values.
+  - F213's rule that Compare uses the two selected readings alone.
+  - F211's read begun after the wipe (DJ3 (b)).
+- **Load-bearing gaps:**
+  - F212's "never holds a write while it waits on a read" has no case.
+  - R5.4 has no case where the current reading is the mismatched one.
+  - "Clear sort" is never timed.
+  - UJ2.3-d's E8 clause fails a correct build.
+  - DJ3 (c) never says when to crash.
+
+## Findings
+
+Paths: PRD, journeys and copy mean `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode{,-journeys,-copy}.md`. "DF PRD" and "DF journeys" mean `.../docs/product/data-foundation/prd-data-foundation{,-journeys}.md`. Every named path was read.
+
+**(1) My round-11 Majors**
+
+| Finding | Status | Evidence |
+|---|---|---|
+| TR-1 | RESOLVED | journeys:245–246 give UJ3.3-o its continuity from UJ3.3-n, in R2.9's phase. journeys:277 uses Set Order: queue SO-3, SO-1, SO-2, SO-4, which differs from code order and from L* order in either direction. journeys:278 asserts the table order and the R11.11 order after the drag. journeys:279–280 add UJ3.3-p and q. journeys:474 is UJ7.1-u: Swatch Name sort gives ZO-1, ZT-1, ZO-2; "Clear sort" gives ZO-2, ZO-1, ZT-1; collection-then-code order would be ZO-1, ZO-2, ZT-1. A "Clear sort" that restores code order, does nothing, or clears the search or filter now fails. |
+| TR-2 | RESOLVED | journeys:238–239. Stored positions are declared and each column's label is asserted, in both orders, and the labels match R2.1's "later by stored position" (PRD:283). A build that suffixes the earlier column fails. |
+| TR-3 | RESOLVED | journeys:237. The first import raises no E14, because TG-001's imported fields were absent before (Import R3.6d). The re-import raises E14 for Amber vs Sunflower only (R3.5, R3.6c); State and Spread are equal (R3.6b). The file is read right after the Amber edit. The export is checked by values, and the literal "Swatch Name" column stays unrenamed under Export R2.4b. The two mutations from round 11 now fail. |
+| TR-4 | PARTIAL | copy:290 is fixed. UJ2.3-d (journeys:240) now covers "Columns", detail labels, "Set a field", header names, hiding, sorting and bulk-setting by SQL, but its E8 clause fails a correct build (TR12-1). |
+| TR-5 | RESOLVED | journeys:390. UJ5.3-q sits in scenario 3, R5.4's phase. A ΔE2000 computed across two bases now fails. The other orientation is TR12-4. |
+| TR-6 | RESOLVED | journeys:393 declares SL-001's current M1 value and Q1's retained values, and runs both selection orders. The fork went to F213; journeys:395–397 cover it. |
+
+**(2) New Majors**
+
+**[MAJOR] TR12-1 — journeys:240 (UJ2.3-d), PRD:397 (R6.2), PRD:191 — the case asserts an E8 that R6.2 never shows for two items.**
+- **The conflict:** R6.2 renders E8 only above BULK_CONFIRM_COUNT (10) selected items. The case selects two items, TT-001 and TT-002, and then asserts "E8's ⟨column⟩ reads State (imported)".
+- **A correct build fails:** Return applies the value directly, so E8 never comes up.
+- **A wrong build passes:** one that shows E8 for 2 items, breaking R6.2's threshold.
+- **Fix:** seed Tags Two with 11 items, "Select all", and fire "Apply to 11 swatches". Then assert E8's ⟨column⟩, and ⟨n⟩ = 11, and make the SQL read cover all 11. Or drop the E8 clause and keep the 2-item SQL read.
+
+**[MAJOR] TR12-2 — DF journeys:48 (DJ3), DF PRD:228 (R6.2a), PRD:445 (R8.8) — F212 has no case.**
+- **The gap:** No case makes a write while another app's read is blocking the log clearing.
+- **Mutation:** clear the log with SQLite's TRUNCATE checkpoint under a busy timeout. That is exactly the D66 reproduction: it holds the write lock while waiting on read 2. It passes everything:
+  - DJ3 (b): nothing writes between the held write landing and read 2's end.
+  - UJ9.7-h (journeys:546): no time bound on its second edit.
+  - UJ9.5-d: its row-confirmation half is gated on F120's interim, and it times no write in that window.
+- **Fix:** in DJ3 (b), after the held write lands and while read 2 still runs, make a metadata edit. It must show done within BROWSE_RESPONSE_BUDGET, with no write's progress showing (R8.10b), before read 2 ends. Where capture is built, add a Demo Device save against ROW_CONFIRM_BUDGET, reported "not exercised" until that budget is declared.
+
+**[MAJOR] TR12-3 — DF journeys:48, sub-run (c) — the crash moment isn't bound to the main-file wipe.**
+- **The problem:** R6.2a (DF PRD:228) wipes the main file "once that read has ended and the file is open". A correct build notices read 1's end by retrying its wipe within the 5 s the line allows.
+- **A correct build fails:** if the harness crashes 50 ms after read 1 ends, the main file legitimately still holds the text, and "before the reopen the file's own bytes hold the removed text nowhere" fails.
+- **Fix:** crash only once (a)'s look, within 5 s of read 1's end, has found the file's own bytes clean, with the write still held. Or assert only the state at reopen, for both the main file and the files beside it.
+
+**[MAJOR] TR12-4 — PRD:384 (R5.4's new "either reading's value"), copy:312, journeys:390 and :394 — the new orientation has no case.**
+- **What is missing:** a case where the current reading is the mismatched one. This is SSE11-3a, which the orchestrator settled by D64's text but never gave a case. UJ5.3-q and UJ5.4-d both put the mismatch on the earlier reading.
+- **Mutation:** a history view that checks only each earlier reading's basis. It computes ΔE2000 from a D65/10° non-spectral current value (which DF R3.3e keeps at its own reference) to D50/2° earlier readings, and passes every case.
+- **The builder also has to guess:** whether that current value counts as "a current working-set value". Yes means the not-compared line; no means no line at all. Both builds pass the suite.
+- **Fix:** add UJ5.3-r with MR-002: current reading non-spectral at D65/10°, L* 50, C* 20, h° 60; earlier reading spectral at D50/2°, L* 52, C* 22, h° 62. Assert the earlier reading shows "R5.4 not-compared" and no number. Also run UJ5.4-d in both selection orders.
+
+**[MAJOR] TR12-5 — PRD:429 (R8.1a), journeys:138 and :530, PRD:570 (M1) — "Clear sort" is never timed.**
+- **The gap:** R8.1a now lists "Clear sort", but neither the timing workload nor UJ9.5-a delivers one. M1's population is "each kind as UJ9.5-a delivers it", so "Clear sort" is never measured.
+- **Mutation:** a "Clear sort" that re-reads queue order from the file and takes 400 ms at ROWS_CEILING passes every case.
+- **Fix:** change the workload to "headers … each fired twice, then 'Clear sort'". Add 200 "Clear sort"s to UJ9.5-a, including its grid phase, and to UJ9.5-b's All items run.
+
+**Minors** (for post-lock)
+- **[MINOR] TR12-6 — DF journeys:48 (a)/(b).**
+  - "E35 is up exactly when a byte read taken after it finds the text" is a two-way rule.
+  - (a) explicitly allows a build that clears the beside-file copy early. For that build, E35 can be read as up and the text cleared before the byte read, so a correct build fails intermittently.
+  - Use DJ4:73's one-way form ("whenever"), together with the existing 5 s "not up" check.
+- **[MINOR] TR12-7 — journeys:240.**
+  - Tags Two's queue order is undeclared. The State (imported) sort beats a sort on the built-in row state (both captured, so tied) only if TT-001 is first.
+  - The imported Spread values are undeclared, so the built-in Spread can't be told from the imported one by value.
+  - "Columns" is only checked for containing the tagged names, so a build that also tags the built-in State passes.
+  - Fix: declare the queue order and the imported values. Assert the full "Columns" list, as UJ2.2-a does, and that the Spread column still shown holds 0.20 and 0.30.
+- **[MINOR] TR12-8 — journeys:240.** The Given needs R2.10, which is P2. So the P0 header and accessible-name reads and the P1 "Set a field" read first run at P2, and the When's "in R6.2's phase" contradicts the Given. Split the case by phase.
+- **[MINOR] TR12-9 — journeys:240 and :585, PRD:454.** The case reads the headers' accessible names "through R8.10b", but neither R8.10b nor the Test-controls map declares that readout. Add it to the map's accessibility row.
+- **[MINOR] TR12-10 — journeys:396 (UJ5.4-f).**
+  - Identical values give ΔE2000 0.00. A build that compares a reading with itself, or shows a missing distance as 0.00, passes too.
+  - Use a published pair on a Hist item that has no current M1 value, for example H1 and H3's values, giving 2.04.
+- **[MINOR] TR12-11 — journeys:393.** No Compare case pairs Q1, with its retained values, against a reading that has a value; N1 has none, so "never the ΔE2000" is vacuous there. Add Q1 vs O1, expecting can't-be-read.
+- **[MINOR] TR12-12 — copy:267.** "The L*, C* and h° row counting as three headers" has no case. Add an imported column C* that should read "C* (imported)".
+- **[MINOR] TR12-13 — DF journeys:48.** F211's "landed or failed" has no sub-run where the held write fails.
+- **[MINOR] TR12-14 — DF PRD:228.** F211's "after a crash, at the next open" for the log copy is implied only by "and the file is open"; DJ3 (c) carries it.
+- **[MINOR] TR12-15.** Round-11 Minors TR-14 (fire E34's OK) and TR-15 (actions under a held move) were neither fixed nor added to post-lock.md.
+
+**Nits**
+- **[NIT] TR12-16 — PRD:454.** R8.10b reads "R5.8's distance line by identifier", but copy:309–312 define only R5.4 identifiers. Say that Compare's slot reads those.
+- **[NIT] TR12-17 — journeys:389.** ZX-016's current value is undeclared, so "never the ΔE2000 its retained values would give" names a number nobody can compute.
+- **[NIT] TR12-18 — journeys:240.** "Spread 0.20/0.30" is given on readings with no declared sample count, and R2.7 shows no spread for a one-sample reading.
+
+## Biggest risks   (what could ship broken behind a green suite)
+- The D66 bug ships green: a log clearing that holds the write lock while it waits on a read (TR12-2).
+- A ΔE2000 computed across two bases in the history view, when the current reading is the non-spectral one (TR12-4).
+- A slow "Clear sort" (TR12-5).
+- UJ2.3-d and DJ3 (c) fail correct builds, which invites "fixing" the build to match the case (TR12-1, TR12-3).
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **UJ2.1-g:** with "pending" as the row-state value, each narrowing alone lists something and all three together list nothing. A build that keeps the row-state filter, or ORs "simulated" into the mark filter, now fails.
+- **UJ3.3-q:** zx-01 plus captured traces to ZX-013, 014 and 015 (L* 60, 35, 45). Sorted, they read 014, 015, 013; cleared, 013, 014, 015. A clear that drops the search or filter fails.
+- **UJ2.3-b/c:** both orders follow from R2.1's text; no fork was needed. UJ2.3-e fails an exact-match build.
+- **UJ5.4-c, run in both orders:** fails a build where the first-selected reading wins, and one that treats a quarantined reading as readable. UJ5.4-f and g fail F213's rejected "blank like history" option.
+- **DJ3's seeding:** the text is now in both the main file and a committed log frame, so the main-file assertion is no longer true before any wipe runs. (d) reports "not exercised".
+- **UJ3.4-m/n:** they declare their end states through DF R7.2.
+- **R8.8:** it again uses the Vocabulary's "the file's bytes". UJ9.5-d still fits F211: later exports are covered by "the end of the last export started".
+- **Correctly left untested:** F214 and the index and status bookkeeping; OQ closures whose values didn't change; "Clear sort"'s keyboard route, which UJ9.6-b's every-action sweep covers.
+
+## Missing / over-tested
+**Missing:**
+- A write made while a clearing is blocked (TR12-2).
+- A history case where the current reading is the mismatched one (TR12-4).
+- "Clear sort" in the timing workload (TR12-5).
+- A valid E8 fixture for UJ2.3-d, or no E8 clause (TR12-1).
+- A bound crash moment in DJ3 (c) (TR12-3).
+- Q1 vs O1 in Compare (TR12-11).
+
+**Over-tested:** none.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | OBJECT (TR12-1) |
+| R3.2 | ALIGN |
+| R5.4 | OBJECT (TR12-4) |
+| R5.8 | ALIGN |
+| R8.1 | OBJECT (TR12-5) |
+| R8.8 | OBJECT (TR12-2, TR12-3) |
+| OQ 1 | ALIGN |
+| DF-R6.2 | OBJECT (TR12-2, TR12-3) |
+### interface
+
+## Verdict
+Contract sound. All seven round-11 Majors from my lens (IF-1 to IF-7) are resolved at `3cf3b55`, and the fix pass added no new Blocker or Major. Two of the Minors below (m1 and m2) are mechanical-check MISSes, so they should be fixed in the pre-lock editorial pass, not moved to post-lock.
+
+## Surface & consumers (brief)
+- **Repo root:** `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`. Every path below is relative to it. I read every target and source file the brief names, and the whole of `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'`.
+- **Surface:**
+  - Collection Mode rows R2.1, R3.2, R5.4, R5.8, R8.1/R8.1a, R8.8, R8.10b and OQ 1.
+  - The copy's Column headers note, the History lines identifiers, E3 and E13, and the Placeholders rule.
+  - Data Foundation R6.2a, R1.11, DJ3 and F60, plus the inbound/outbound obligation lines between the two PRDs.
+  - The ADR-0003 input.
+- **Consumers:**
+  - build agents for both PRDs;
+  - test harnesses that read R8.10b/c by identifier;
+  - sibling PRD authors (Import R2.5 and its Collision template, Export R2.4/R4.1a, the device PRD's E22);
+  - the ADR-0003 author.
+- **What changed:**
+  - The tag scope now extends to E8's ⟨column⟩ and the detail line.
+  - The collision rule is "later by stored position".
+  - The distance line is split into four identifiers.
+  - Compare's slot is re-scoped (F213).
+  - The erase deadline is completed (F211, F212, DF F60), with the fence ranges at F52–F60 in both directions.
+  - "Clear sort" is added to R8.1a.
+  - No label or stored name was renamed or removed.
+
+## Findings
+
+**(1) Round-11 Blockers/Majors from this lens**
+
+| Finding | Status | Where |
+|---|---|---|
+| IF-1 tag missing from the detail and from ⟨column⟩ | RESOLVED | copy:290; PRD:551 (the E11/E19 stored-name exception is correct, see below); journeys:237 (detail label asserted), :240 (asserts E8's ⟨column⟩, "Columns", the "Set a field" list and accessible names) |
+| IF-2 collision suffix on a different column than F206 | RESOLVED | PRD:283; copy:267–272; journeys:238 (UJ2.3-b), :239 (UJ2.3-c, reversed order). Matches F206 (fences:1747) and Import R2.5 / Collision template ("suffix starts at 2 and increments until unique") |
+| IF-3 export header pre-empting Export's golden | RESOLVED | journeys:237. The `sc_` name is left to Export R2.4/R4.1a. The literal "Swatch Name" passthrough holds under Export R2.4b, since "swatch name" neither begins `sc_` nor collides |
+| IF-4 Compare slot fork | RESOLVED | F213 (fences:1805); R5.8 (PRD:388); copy:310 ("for a reading with no value"); journeys:393 (UJ5.4-c declares the current reading, runs both orders), :395–397 (UJ5.4-e/f/g cover the no-value case, fork (a) and current-lacks-value) |
+| IF-5 F59 obligation index false | RESOLVED | PRD:477 and DF PRD:280 both read F52–F60 and name "R6.2a's journal-or-log copy"; DF fences:260 (F60 map line), :644 (F59 clarified), :650 (F60) |
+| IF-6 "the file's own bytes" in R8.8 | RESOLVED | PRD:445 uses "the file's bytes" in its Vocabulary sense (PRD:89–90) and hands the journal/log copy to DF R6.2a. An index or other side file keeps the exact deadline. (Residual term outside R8.8: n1) |
+| IF-7 three "Not compared" lines share one identifier | RESOLVED | copy:309–312 give four identifiers (R5.4 distance / no-value / unreadable / not-compared); R8.10b (PRD:454) reads "R5.4's and R5.8's distance line by identifier". (Residual naming: m8) |
+
+**(2) New Blockers/Majors introduced by the round-11 fixes:** none.
+- I checked every changed line against the Decision of its fence: F204–F207, F209, F120, F202 and F211–F214, plus DF F59 and F60.
+- F213 is carried exactly.
+- F211 and F212 are carried in R8.8, R6.2a, R1.11 and the ADR-0003 input. R6.2a has one scoping Minor (m4).
+
+**Minors (one line each; m1 and m2 are pre-lock because they are mechanical MISSes):**
+- [MINOR, pre-lock: checks 1c and 13 MISS] **UJ2.3-a** (journeys:237) — "fire E14's "Take the new details"" writes a bare E14. By PRD:468 a bare ID is this document's own, and this PRD's E14 is Swatch detail, which has no such action. The case also quotes a sibling's label, which the Labels rule (PRD:543–545) and copy:5–6 forbid. It is the only quoted label in the journeys that is missing from the copy file, and the fix file reported checks 1 and 13 as PASS. — Fix: "fire the import PRD's E14 take-the-new-details action (its R3.5)".
+- [MINOR, pre-lock: status reconciliation] **E3 and E13** — D10 flipped both to aligned in the PRD copy index (PRD:525, :535), but the copy file still reads "Status: pre-alignment" (copy:73, :178). copy:38–40 requires the two to be reconciled at every lock. — Fix: flip both in the copy file.
+- [MINOR] **R8.1a "Clear sort"** (PRD:429) — the Timing workload (journeys:138) and UJ9.5-a/-b (journeys:530–531) deliver keystrokes, filter changes and header fires only. "Clear sort" is the one R8.1a–c input kind no timing case sends, so a slow one passes. — Fix: add "then "Clear sort"" after each header's second fire in the Timing workload.
+- [MINOR] **DF R6.2a** (DF PRD:228) — F211's journal-or-log rule sits inside the "while a read begun before its wipe runs" parenthetical. F211 (fences:1788), DF F60 (DF fences:650) and the ADR-0003 input state it with no such condition. With no read begun before the wipe, a read begun between copy-back and truncation leaves R6.2a still demanding a clean log "from the moment the delete lands". This is a narrow race and no case exercises it. — Fix: move the journal-or-log clause out of the parenthetical; this costs no words.
+- [MINOR] **copy:311 "R5.4 unreadable"** — the cell ends "…can't be read, which wins over the no-value line" right after the displayed string, with no delimiter. That clause is rule text, which R5.4 and R5.8 already state. A build that renders it passes every case, because tests read by identifier. — Fix: drop the clause from the copy cell.
+- [MINOR] **copy:309–312 label "From current" in Compare** — R5.8 (PRD:388) shows these lines in Compare's slot. Under F213 that slot no longer depends on the current reading, so UJ5.4-a and UJ5.4-f (two earlier readings) would show "From current" over a distance that is not from the current reading. This predates round 11; F213 makes it sharper. — Fix: state the slot's label (none, or a copy label for Compare).
+- [MINOR] **copy:312 trigger** — the cell says "either reading's value was worked out under another illuminant or observer", which is R5.4's sense: other than the collection's. R5.8 and F213 instead say "worked out differently/alike", meaning from each other. For two non-spectral readings both at D65/10° in a D50/2° collection (DF R3.3e), R5.8 gives ΔE2000 and the copy row gives not-compared. No case pins it. — Fix: "…where R5.4 or R5.8 gives the not-compared line".
+- [MINOR] **Cases name the distance lines descriptively** — UJ5.3-p/q and UJ5.4-c/d/e/g say "can't-be-read / no-value / not-compared distance line", not the identifiers the D4 box said they would assert. "can't-be-read" also differs from the identifier "R5.4 unreadable". A reader can resolve it, but not character for character. — Fix: assert the identifiers.
+
+**Nits:**
+- [NIT] n1 — "the file's own bytes" survives in the ADR-0003 input (decisions/README:22) and DF DJ3 (a) and (c) (DF journeys:48). In the DF PRD it reads as "the main file", which is harmless. But (c) checks a side-file index only after the reopen, while R6.2a gives an index the read-based deadline.
+- [NIT] n2 — R6.2a's journal-or-log clause does not state F211's crash case ("at the next open") explicitly, though the D1 box asked for it. The outer "and after a crash" and DJ3 (c) carry it.
+- [NIT] n3 — "⟨column⟩ a column's R2.1 label" (PRD:551): R2.1 labels only imported columns. For "Set a field" on Swatch Name, E8 could read "Swatch Name" or the header "Name". Say "its Column headers header, or R2.1's label for an imported column".
+- [NIT] n4 — F211's and F212's Carried by (fences:1795, :1803; map :2035–2036) do not name the Data Foundation PRD's F60, whereas F202's (fences:1725) names DF F59.
+- [NIT] n5 — UJ5.4-f's identical values give 0.00, which a build that compares a reading with itself also shows. A Sharma pair would tell them apart.
+- [NIT] n6 — the identifier "R5.4 no-value" reuses the mark identifier "no-value" (copy:261, "No current value") for the condition the marks call value-absent (copy:260).
+
+## Biggest risks   (what existing consumers/scripts/agents break)
+- **Re-lock mechanical checks fail (m1, m2).** A check-1c/13 run flags UJ2.3-a, and a status-reconciliation run flags E3 and E13. Both were reported PASS or skipped by this fix pass. Neither misleads a builder, but both block a clean lock record.
+- **Unmeasured budget (m3).** "Clear sort" joins BROWSE_RESPONSE_BUDGET with no timing input behind it.
+- **Compare labelling (m6, m7).** A Compare build either shows a false "From current" label or invents one. In the same-basis, off-reference case, the copy row and R5.8 disagree about which line to show.
+- **Sibling contract:** nothing breaks. Import's matching and re-import contract and Export's stored-name emission stay byte-identical. Every cross-PRD fence range agrees in both directions at F52–F60.
+
+## Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **The E11/E19 stored-name exception** in the Placeholders rule looks inconsistent with R2.1, but it is correct:
+  - F205's list of places the tag shows leaves out both states;
+  - E19's "a spreadsheet that still has a ⟨column⟩ column" and E11's "keeps its name" are statements about the name imports match on.
+- **"Clear sort" cases now discriminate:**
+  - UJ3.3-n: Set Order's queue order differs from both code order and L* order, and the case ends with "Clear sort" no longer offered.
+  - UJ7.1-u: the Swatch Name sort (ZO-1, ZT-1, ZO-2) differs from collection-then-queue order (ZO-2, ZO-1, ZT-1).
+  - UJ3.3-q: the L* order (014, 015, 013) differs from queue order.
+  - So a "Clear sort" that does nothing, or one that falls back to code order, fails.
+- **UJ2.3-b and UJ2.3-c** assert each stored column's own label in both position orders. That is exactly F206's "later by position", independent of which column carries the tag.
+- **Four distance identifiers** that R8.10b reads mean a wrong-reason build no longer passes by matching marks. That is D59's intent.
+- **F213 is stated once**, and F207 gets a dated clarification that leaves its body untouched.
+- **UJ5.4-g** pins the fork a style reviewer would miss: the current reading lacking a value, compared against an earlier reading that has one.
+- **ADR-0003 input:** the journal/log clause and the clearing clause now sit outside "on a local volume", which is correct because F211 and F212 carry no volume scope. The input still lists eight inputs, now naming F211, F212 and DF F60.
+- **UJ2.1-g** now makes each narrowing count on its own while the three together list nothing ("pending" lists only ZX-010), and it names the device PRD's E22 action by document and state.
+
+## Missing / over-engineered
+- **Missing — tests:** no timing input for "Clear sort" (m3), and no Compare case with two same-basis, off-reference readings (m7).
+- **Missing — copy:** no stated label for Compare's slot (m6).
+- **Over-engineered:** the ADR-0003 input is still one sentence of about 400 words. The byte rule would read more reliably as a four-item list (main file and index / journal-log copy / clearing hold / capture saves). This is not a defect.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | ALIGN |
+| R3.2 | ALIGN |
+| R5.4 | ALIGN |
+| R5.8 | ALIGN |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ALIGN |
+| DF-R6.2 | ALIGN |
+### architecture
+
+## Verdict
+**Sound, build it, but re-lock only after two Majors are fixed; each needs about one clause.** No Blocker. The round-11 pass resolves ARCH11-1 for the case it named. I reproduced two new problems on SQLite 3.53.4:
+- **ARCH12-1.** F211 still lists the things that can hold the log. It leaves out a write that begins while a read is holding the clearing back.
+- **ARCH12-2.** DJ3's new WAL line can be seeded in a way that tests nothing, and its "not exercised" guard does not notice.
+
+## Architecture in brief
+- **Ownership.** Collection Mode browses and edits Data Foundation's single user-owned SQLite file. Data Foundation owns the file, the deletion lifecycle, E35 and the one-writer rule (R1.11). ADR-0003 owns the mechanism.
+- **WAL is already forced.** The ADR input's "a text-removing write is saved without waiting on any read" rules out a rollback journal. The rows themselves stay storage-neutral.
+- **What round 11 did.** It finished F202's two-part erase:
+  - text in the file's own bytes goes when the deferring read ends;
+  - the journal or log copy goes once no read still uses it, including one begun after the wipe, and the write running at the wipe has ended (F211);
+  - clearing holds the next write only for its own copy and truncation, never while it waits on a read (F212).
+- **The tradeoff kept.** Writes stay non-blocking, and the log copy trails them.
+
+Paths, under repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`:
+
+| Short | File |
+|---|---|
+| CM | `docs/product/collection-mode/prd-collection-mode.md` |
+| CMJ | `docs/product/collection-mode/prd-collection-mode-journeys.md` |
+| CMF | `docs/product/collection-mode/prd-collection-mode-fences.md` |
+| CMR10 | `docs/product/collection-mode/prd-collection-mode-round-10-fixes.md` |
+| DF | `docs/product/data-foundation/prd-data-foundation.md` |
+| DFJ | `docs/product/data-foundation/prd-data-foundation-journeys.md` |
+| DFF | `docs/product/data-foundation/prd-data-foundation-fences.md` |
+| ADRQ | `docs/decisions/README.md` |
+| PL | `docs/product/post-lock.md` |
+| PROBE | Run inline on SQLite 3.53.4 (WAL, `secure_delete=ON`, `wal_autocheckpoint=0`, busy timeout 0). The databases are in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round12/arch-probe/` (`w2b.db`, `seed.db`). |
+
+Scope read: `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'`, the round-11 fix file, my Round 11 review in the log, the Round 11 adjudication, F200, F202, F211–F214, DF F57–F60, and every row and case listed below. I read the journeys diff only where it touches storage.
+
+## Findings
+
+### (1) My round-11 findings
+
+| Finding | Status | file:line |
+|---|---|---|
+| ARCH11-1 (MAJOR) | **RESOLVED** for the case it named: a read begun during the held write. F211 adds "a read begun after the wipe included", "landed or failed" and the crash clause, and decides that the app's own reads hold the copy silently (F57). That is mirrored in R6.2a, the ADR input, DF F60, DJ3 (b) and (c), and the PL items. PROBE control C confirms a correct build passes DJ3 (b). The list is still a closed list rather than the rule my fix proposed, and the next case it misses is ARCH12-1. | CMF:1788–1795, CM:445, DF:228, DFF:650–655, DFJ:48, ADRQ:22, PL:157, PL:171 |
+| ARCH11-2 (MINOR) | RESOLVED. F212 bans waiting on a read. The ADR input's opening clause now sets journals and logs aside. Capture saves are bounded by R8.11. PL:157 carries copy-back-then-clear. | CMF:1797–1803, ADRQ:22, PL:157 |
+| ARCH11-3 (MINOR) | PARTIAL. R1.11's "but a wipe (R6.2a)" routes correctly to R6.2a's split. But DF F60 adds "R1.11's … exemption covers this clearing the same way", which undoes that. It is folded into ARCH12-1. | DF:105, DFF:653 |
+| ARCH11-4 (MINOR) | RESOLVED. Both ranges read F52–F60. | DF:280, CM:477 |
+| ARCH11-5 (MINOR) | RESOLVED. The export is asserted by value under the golden's `sc_` name. The literal "Swatch Name" passthrough column fits Export R2.4b: no `sc_` prefix, no collision. | CMJ:237 |
+| ARCH11-N1 | RESOLVED. "a held write" is gone, and R8.8 now defers to R6.2a. | CM:445 |
+| ARCH11-N2 | UNRESOLVED, record only. The round-10 record still says DF was 8,402 words. | CMR10:246 |
+
+### (2) New in the round-11 fixes
+
+**[MAJOR] ARCH12-1 — The log-copy deadline waits only for "the write running at the wipe". A write that begins while a read is holding the clearing back also holds the log. And F60's new R1.11 sentence says the clearing is exempt from a hold it physically cannot run beside.**
+
+*Where:*
+- F211's rule (CMF:1792);
+- R6.2a, "and the write running at the wipe has ended" (DF:228);
+- the ADR input, "…has ended, landed or failed" (ADRQ:22);
+- F60, "R1.11's 'but a wipe (R6.2a)' exemption covers this clearing the same way" (DFF:653).
+
+*PROBE results* (the removed text seeded in the main file and in a committed log frame):
+
+| Run | Sequence | TRUNCATE at the F211 deadline | Where the text is |
+|---|---|---|---|
+| A | read 1 defers the wipe; read 2 begins after the delete; read 1 ends, then PASSIVE `(0,2,2)` and TRUNCATE `(1,2,2)`; W2 (BEGIN IMMEDIATE, held) begins; read 2 ends, and both F211 conditions now hold | `(1,2,2)` busy | Main file clean; still in `-wal` |
+| B | DJ3 (b), then W2: TRUNCATE at W1's landing `(1,3,2)`; W2 begins; read 2 ends | `(1,3,3)` busy | Still in `-wal` |
+| A and B | …then W2 lands | `(0,0,0)` | Gone |
+| Control C | DJ3 (b) as written, with no W2 | `(0,0,0)` at read 2's end | Gone. DJ3 as written stays passable. |
+| Control D | W2 is short and lands before read 2 ends | `(0,0,0)` | Gone |
+
+*Why no build can meet the deadline:*
+- TRUNCATE and RESTART need SQLite's writer lock.
+- F212 is settled and forbids holding W2 while the clearing waits on read 2; that is D66's rejected "allow the wait". So W2 has to run.
+- When read 2 ends while W2 is still running, nothing can clear the log until W2 lands.
+- The slip is one write: up to DELETE_WRITE_BUDGET's 10 s, an Import commit's full length, or without limit for a test build's held write.
+
+*How F60 makes it worse.* Without that sentence, a builder could read R1.11 as deferring the clearing through W2's hold, which would excuse the slip. F60 removes that reading. It also reverses F200 and F202, where only the wipe of the file's own bytes runs beside a held write, and F202's Why states that the log cannot be truncated while a write is in progress.
+
+*Where it bites.*
+- The builder has to choose which rule to break: F211's deadline or F212's ban.
+- ADR-0003 receives a hard deadline that no WAL design meets in this ordering. The dangerous way to "fix" it is to hold writes while a clearing is pending. That brings back D55's and D66's rejected behaviour: editing and capture stall for as long as another app reads.
+
+*Change that exposes it.* Add a DJ3 run (e):
+- as (b), but once the write lands and while read 2 is still open, start a second R8.1f/g write held running (R8.10a);
+- end read 2, then release that write.
+Asserting R6.2a's text ("within 5 s of read 2's end, no file beside the file holds it") then fails every correct build whose held write owns SQLite's write lock.
+
+*This does not reopen D65 or D66.* Both chosen options stand. It is the fifth time this list has been one case short of what actually blocks WAL truncation: ARCH6-1, ARCH7-2, ARCH11-1 with DB MAJOR-1, and now this.
+
+*Fix.* A dated Clarified line under F211 and DF F60, mirrored in R6.2a and ADRQ:22:
+- Wording: "…and the write running at the wipe, and any write begun while a read held the clearing back, has ended". That is about 10 words; DF has 38 words of headroom.
+- Better, to end the chase: state the rule SQLite actually applies. "It goes at the first moment no read uses it and no write is running; after a crash, at the first open at which that holds."
+- Correct F60's sentence to: "R1.11's exemption covers the wipe of the file's own bytes; the clearing, needing the write lock, runs once no write holds it."
+- Add DJ3 (e), asserting "within 5 s of the second write landing".
+- This can be settled as a reading of F202's standing principle ("goes once nothing still needs that journal or log") under D66, since it is the only answer consistent with D55 and D66. If it is treated as an owner fork, its only alternative (hold W2) is the option D66 rejected.
+
+**[MAJOR] ARCH12-2 — DJ3's WAL line can be seeded so that it tests nothing, and (d)'s guard does not catch it (DFJ:48).**
+
+*What changed.* The Given now reads "seeded in the main file and, before the delete, in a committed log frame". Run (d) reports "not exercised" only when that seeding fails.
+
+*How the seeding goes wrong.* The natural harness order is: truncate, insert the text, run PASSIVE to get the text into the main file, then open read 1.
+- A read-only read that opens on a fully copied-back log reads only the main file. So it does not stop the delete's writer from restarting the log at frame 1.
+- The delete then overwrites the seeded frame.
+- PROBE `seed.db`: "delete landed, read 1 running: main=True wal=False".
+
+*Result.* A build that never clears the log (PASSIVE only) passes every beside-file assertion in (a). It also passes (b) and (c), which inherit the seeding. The same build fails only if the harness happens to skip the first truncate, because then the frame survives past the restarted log's end.
+
+*Why it matters.*
+- This is the only case whose removed text is in a log frame when the delete lands. DJ3's checkpointed line and DJ4 seed text that has already been copied into the main file.
+- So this false pass leaves the log half of R6.2a untested.
+- The round-11 seeding change made the checkpoint-first order the natural one. That change was D1 item 1 answering DB NIT-1, which asked for the text to be in the main file too.
+
+*Mutation.* The never-clearing build, run under the truncate-first harness.
+
+*Fix.*
+- In (a), add: "a byte read taken after the delete lands, while read 1 runs, finds the removed text in a file the app keeps beside the file".
+- Make (d): "a run in which that byte read does not find it reports not exercised, never passed".
+
+**Minors and Nits (for post-lock)**
+- **[MINOR] ARCH12-3.** DJ3 (a) and (b) require "E35 is up exactly when a byte read taken after it finds the removed text beside the file" (DFJ:48). The half that says "E35 up means the text is there" is stronger than F211's "stays until". It is also racy at the moment of clearing, for a build that pauses its held write before taking SQLite's lock. Use DJ4's form ("whenever… E35 read before the bytes") plus "E35 is not up within 5 s once no beside-file copy remains".
+- **[NIT] ARCH12-N1.** F211's "After a crash, it goes at the next open" (CMF:1792) reads as if it had no condition. An outside read held open across the app's crash still keeps the log at the reopen (TRUNCATE busy). R6.2a and ADRQ:22 correctly tie it to the read condition; ADR-0003 should keep that reading.
+- **[NIT] ARCH12-N2.** R6.2a puts the journal-or-log rule inside the deferral parenthetical, while F211 and ADRQ:22 state it for every case (DF:228). A read that begins during a non-deferred delete's own copy-back, before the truncation, holds the log copy. Read "a read begun before its wipe" as "before the wipe completes".
+- **[NIT] ARCH12-N3.** F212's "only for its own copy" literally lets a TRUNCATE-mode clearing hold writes for the whole copy-back of a large log, such as the log a delete at DELETE_WRITE_BUDGET scale leaves. R8.11 bounds only capture. PL:157's "copies pages back without holding a write" is the approach ADR-0003 should adopt.
+
+## Biggest risks
+- **ARCH12-1.** A hard deadline goes into ADR-0003 that no WAL design meets in a realistic sequence: a database browser left open while the user runs a bulk edit. The likely wrong response is to hold writes while a clearing is pending. Stating the rule as a principle ("no read uses it and no write is running") ends a chase now in its fifth round.
+- **ARCH12-2.** The one test of the log half can pass on a build that never clears the log.
+- **Durability ordering.** Copied pages must reach stable storage (F_FULLFSYNC on macOS) before the log is truncated. This is still the one mechanism-level trap; it is recorded at PL:157.
+
+## Genuinely sound
+- **F211's read rule matches SQLite exactly.** A read begun during the hold keeps the log until it ends, and then TRUNCATE returns `(0,0,0)` (control C). "Landed or failed" matches round 11's rollback control.
+- **F212 can be built as written.** TRUNCATE takes the writer lock before it copies back. With no busy handler, it returns busy at once when a reader is still using the log; every probe returned `(1,…)` immediately. So PASSIVE first, then a no-wait TRUNCATE, holds a write only for the short tail and the truncation. D66 was the right call over "allow the wait", which blocked a write for 2.14 s in round 11.
+- **R8.8 now only points to R6.2a.** The log deadline has one source of truth, so ARCH12-1's fix touches no Collection Mode row.
+- **The rows stay storage-neutral.** Under a DELETE or TRUNCATE rollback journal, the journal copy exists only inside the removing write and goes at commit, so F211 and F212 hold trivially. Excluding PERSIST mode stays ADR-0003's job. The non-waiting save forces WAL, not these rows; a dogmatic review would wrongly say the rows pre-decide WAL.
+- **F213 makes Compare depend only on the two selected readings,** with no item-level state. Sets DF R3.3g keeps for a quarantined reading are still never compared.
+- **R2.1's tag and collision numbering are display-only.** They are worked out from stored position. Stored names, export and Import's matching are unchanged, and UJ2.3-d's SQL read proves actions target the stored column.
+- **"Clear sort" stays view state.** UJ3.3-n compares the file row for row, and UJ7.1-u's fixture now tells a real "Clear sort" from one that does nothing.
+- **The OQ 1 / R8.11 split restores F120's interim.** This matters here: F212's bound on capture saves rests on R8.11.
+- **E35 still follows the bytes.** It stays up truthfully through a later write. The stale headline in that window is already a dogfood item (PL:171).
+
+## Missing / over-engineered
+- **Missing before re-lock:** ARCH12-1's clause, the F60 correction and DJ3 (e); ARCH12-2's byte check after the delete.
+- **Post-lock:** ARCH12-3, ARCH12-N1–N3, ARCH11-N2.
+- **Over-engineered:** nothing in this lens.
+- **Suggestion, not a finding:** the ADR input's erase clauses are now one sentence of about 250 words. ADR-0003 should restate them as a state table (main-file copy, log copy, clearing), with what blocks each.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | ALIGN |
+| R3.2 | ALIGN |
+| R5.4 | ALIGN |
+| R5.8 | ALIGN |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ALIGN |
+| DF-R6.2 | OBJECT (ARCH12-1, ARCH12-2) |
+### privacy
+
+## Verdict
+**Ship after fixing Critical+High.** The round-11 High (PRIV11-1) is resolved and nothing user-facing overstates the erase promise, but the fix pass introduced one new High: F211 and F212 together set a log-copy deadline that no F212-compliant build can meet once a second write is running, and no case catches it.
+
+## Data-flow & PII map (brief)
+- **Whose data.** The Cataloger, plus anyone named in notes, swatch or collection names, or imported free text. None of it is special-category. The round-11 fixes add no personal field, no store outside the file and no network path.
+- **Where removed text can survive (F202 + F211 + F212):**
+  - **The main file:** until every read begun before its wipe has ended and the file is open.
+  - **A journal or log beside the file:** until no read uses it (a read begun after the wipe included) and the write running at the wipe has ended. After a crash or a close, until the next open.
+  - **Copies outside the promise:** R5.8 snapshots, Save a copy, exports and backups.
+- **What the user is told.** E35 shows while another app's read defers a wipe and stays until the bytes are clean. The app's own export, Save a copy or check holds the text silently, and the help docs are the only disclosure.
+- **Egress.** Only exports and copies the user starts. Removed text left in the log can be read only by something reading raw bytes (a sync client, a Time Machine/APFS snapshot, a copy of the folder). A read begun after the delete sees a snapshot taken after it, so no SQL reader recovers the text.
+
+## Findings
+Root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`. I read all seven targets and seven sources at `3cf3b55` and ran `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'`.
+
+| Short | File |
+|---|---|
+| CM | `product/collection-mode/prd-collection-mode.md` |
+| CMF | `product/collection-mode/prd-collection-mode-fences.md` |
+| DF | `product/data-foundation/prd-data-foundation.md` |
+| DFJ | `product/data-foundation/prd-data-foundation-journeys.md` |
+| DFF | `product/data-foundation/prd-data-foundation-fences.md` |
+| ADRQ | `decisions/README.md` |
+| PL | `product/post-lock.md` |
+| LOG | `agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md` |
+
+**(1) My round-11 Critical/High findings**
+
+| Finding | Status | file:line |
+|---|---|---|
+| PRIV11-1 (High): the ADR-0003 input gave the log copy two deadlines | **RESOLVED** | ADRQ:22. The general clause now reads "the file's bytes, a journal or log kept beside it aside". F211 and F212 sit in that general clause, not the volume-scoped one, which keeps only the non-waiting save. The "capture saves never wait" clause is fixed too (PRIV11-10). |
+
+My round-11 Lows:
+- **Resolved:** PRIV11-2 at CM:445; PRIV11-3 at PL:171; PRIV11-4 at DFJ:48 (c); PRIV11-5 at PL:157; PRIV11-6 at DF:280 and CM:477; PRIV11-7 at CM:551; PRIV11-9 at PL:46; PRIV11-12 at the round-10 fix file's line 23.
+- **Disposed with no change:** PRIV11-8, which is fine.
+- **Disposed but not carried:** PRIV11-11 (see PRIV12-7).
+
+**(2) New findings from the round-11 fixes**
+
+[HIGH] **PRIV12-1 — DF:228 (R6.2a's journal-or-log clause), ADRQ:22 (the input's copy clause), CMF:1792 (F211) with CMF:1801 (F212): a write begun after the wipe keeps the log copy past the stated deadline.**
+- **The sequence F212 now allows:**
+  1. Read 1 defers a wipe while W1 is held.
+  2. Read 1 ends, and the main file is wiped.
+  3. Read 2 begins (F211's case).
+  4. W1 lands. The clearing is blocked by read 2 and, under F212, "gives way".
+  5. A second write, W2, starts: a Set a field, an import commit, a move or a capture save.
+  6. Read 2 ends while W2 runs.
+- **The stated deadline.** R6.2a, F60 and ADRQ:22 say the copy goes once no read uses it and "the write running at the wipe has ended". Both conditions are true at read 2's end. W2 is not counted.
+- **What SQLite does.** Truncating the log needs no writer. I checked this myself on SQLite 3.53.4 (WAL, secure_delete on, automatic checkpoints off), with my script at `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round12/privacy-probe/probe.py`:
+  - After read 2 ended with W2 held, TRUNCATE returned busy (1,3,3) and PASSIVE returned (0,3,3). The main file held no marker, but the WAL still did.
+  - Only after W2 committed did TRUNCATE return (0,0,0), and the marker was gone.
+- **Why the builder must guess.** An F212-compliant build cannot meet R6.2a's deadline in this sequence. The only way to meet it is to stop W2 from starting while a clearing waits on a read, which is the shape D55 and D66 rejected. So the builder has to guess which rule gives way.
+- **Why no case catches it.** DJ3 (b) (DFJ:48) ends read 2 only after W1 lands and starts no later write. A build that never retries the clearing after W2 until the next open passes every case.
+- **Introduced by round 11.** Before F212, a clearing held the next write while it waited on read 2 (DB MAJOR-2's reproduction), so W2 could not start.
+- **Harm.** Removed notes, names and imported values stay in the log beside the file past the deadline for all of W2's run. That is milliseconds for a capture save, up to 2 s for a bulk edit, and no stated limit for an import commit or a move. Only raw-byte readers can see it. E35 stays up if another app's read started the chain; otherwise the window is silent.
+- **Why High.** This is the brief's contract bar: a builder would guess, and a wrong build passes. On data-subject impact alone it would be Medium.
+- **Fix — a fork for the owner; the fix pass should not decide it.** A dated clarification under F211, in the direction of D65 and D66: "…and the write running at the wipe, and any write running when that last read ends, has ended; the clearing then runs before the next write starts (F212)".
+  - Carry it into R6.2a (about 9 words; the Data Foundation PRD has 38 words of headroom), F60 and ADRQ:22. R8.8 delegates to R6.2a and needs no change.
+  - Add a DJ3 sub-run (e):
+    - As (b), but begin a second held Collection Mode R8.1f/g write after the first lands, while read 2 runs. End read 2 while that write is held, then release it.
+    - Assert: until it lands, E35 is up exactly when a byte read finds the text beside the file, and the file's own bytes hold it nowhere. Within 5 s of it landing, no beside-file copy remains and E35 is not up.
+  - Against today's literal deadline ("within 5 s of read 2's end"), every F212-compliant build fails (e). That failure is the contradiction made visible.
+- (GDPR Art. 5(1)(e), Art. 17, Art. 25(1))
+
+[LOW] **PRIV12-2 — ADRQ:22:** the log clause lacks R6.2a's "and the file is open". After a normal close with an outside read still holding the log, its literal deadline falls while the app isn't running. Also, "landed or failed, at the next open after a crash" can be misread as the write failing at the next open. Fix: "…has ended, the file open — after a close or a crash, at the next open".
+
+[LOW] **PRIV12-3 — ADRQ:22:** the explicit "any journal, log, index or other file" list became "the file's bytes, a journal or log kept beside it aside", and the queue never defines "the file's bytes" (CM:89 does). The same clause also says "the file's own bytes". Fix: add "(Collection Mode's Vocabulary: the file and any journal, log, index or other file the app keeps beside it)".
+
+[LOW] **PRIV12-4 — PL:185:** the help-docs line suggested there predates F211. Under F211, an export or Save a copy begun *after* a removal also holds the log copy, silently. Add to the note: "…or removed shortly before it started, in a file beside yours". (Art. 12/13)
+
+[LOW] **PRIV12-5 — PL:182:** "backups… made before a delete or clear keep what they held" misses a snapshot or sync upload of the log file taken after the delete but before its wipe ends. F211 widened that window. Fix: "…or before SpectroCapture has wiped it".
+
+[LOW] **PRIV12-6 — DFJ:48 (c):** the crash sub-run doesn't assert that E35 is not up after the reopen, when no outside read is running. Add it.
+
+[INFO] **PRIV12-7 — LOG:20689:** PRIV11-11 is disposed as "post-lock (D10)", but no post-lock line exists. DJ3 (d) only reports "not exercised". If ADR-0003 picks a rollback journal, that journal's copy would go untested and nothing would say so. Add the post-lock line, or reword the disposition.
+
+## Biggest privacy risks
+1. **PRIV12-1.** The contract hands ADR-0003, the one-way door, a log-copy deadline that an F212-compliant build can't meet, and no case catches the miss.
+2. **A close while an outside read holds the log** leaves removed text beside the file until the next open, possibly for days. E35 and R1.5's help line disclose it, but a backup or sync taken meanwhile keeps it (PRIV12-5).
+3. **The app's own exports and copies hold the text silently** (F57, F211). The help docs are the only notice, and their wording lags F211 (PRIV12-4).
+
+## Genuinely privacy-respecting
+- **PRIV11-1 is properly closed.** Each byte class gets one deadline, with no volume scope.
+- **The orchestrator's edit is correct.** It moved "one begun after the wipe included" to the log clause only. My probe shows the main file clean after PASSIVE while read 2 is open.
+- **R6.2a and ADRQ:22 do not diverge,** though the log clause sits inside the deferred case in one and at top level in the other. With no deferring read, both put the log deadline at the landing.
+- **R8.8 is honest.** It delegates to R6.2a and restores the Vocabulary meaning of "the file's bytes".
+- **F60's R1.11 exemption for the clearing is fine,** even though the log can't be truncated during a write: the deadline waits for that write.
+- **E35 errs on the safe side and stays up through read 2.** When only the app's own read deferred the wipe, E35 does not appear for a later outside read. That is fine: that read's snapshot is taken after the delete.
+- **No user-facing copy makes a timing claim it can't keep.** This covers E8's "won't keep what was there", E35's "on its own, or when you next open the file", and R1.5's "may delay".
+- **R2.1's "targets that column alone" keeps a clear on the column the user meant.** "Clear sort" writes nothing. The new DJ3 (c) tests clearing at the next open.
+
+## Missing controls / over-collection
+- PRIV12-1's fence clarification, R6.2a/F60/ADRQ wording and DJ3 (e) are the only change needed before re-lock.
+- ADRQ wording (PRIV12-2, PRIV12-3), the help-docs lines (PRIV12-4, PRIV12-5), DJ3 (c)'s E35 check (PRIV12-6) and the PRIV11-11 carry (PRIV12-7) can go to post-lock.
+- No over-collection.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | ALIGN |
+| R3.2 | ALIGN |
+| R5.4 | ABSTAIN |
+| R5.8 | ABSTAIN |
+| R8.1 | ABSTAIN |
+| R8.8 | ALIGN |
+| OQ 1 | ABSTAIN |
+| DF-R6.2 | OBJECT (PRIV12-1) |
+### product-marketing
+
+## Verdict
+Lands & honest. There is no Blocker, and my round-11 Major (PMM11-1) is resolved. One new Major needs fixing before re-lock: every distance line the copy gives Compare is labelled "From current". That label is false when both selected readings are earlier ones, which is exactly what F213 and the new cases UJ5.4-e and UJ5.4-f exercise.
+
+## Audience & message context (brief)
+- **Who reads what.** Builder agents and the owner read the PRD and its copy. The Cataloger reads the rendered strings.
+- **What each string must get across:**
+  - "Clear sort": back to my scan order.
+  - " (imported)": this is my spreadsheet's column, not the built-in field.
+  - The Not-compared lines: why no distance is shown, stated truthfully.
+  - E35: my change is saved, and the old text lingers until the other app lets go.
+- **Surface.** In-app state and label copy. Calm, plain copy is the right register.
+- **Scope.** I ran `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'`. HEAD is 3cf3b55; the only modified file is the review log, which is out of scope.
+- **Paths.** All are under /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/:
+  - CM = collection-mode/prd-collection-mode.md
+  - CMc = collection-mode/prd-collection-mode-copy.md
+  - CMj = collection-mode/prd-collection-mode-journeys.md
+  - CMr = collection-mode/prd-collection-mode-oq-results.md
+  - CMf = collection-mode/prd-collection-mode-fences.md
+  - DF = data-foundation/prd-data-foundation.md
+  - DFc = data-foundation/prd-data-foundation-copy.md
+  - DFj = data-foundation/prd-data-foundation-journeys.md
+  - PL = post-lock.md
+
+## Findings
+
+**(1) Round-11 Blocker/Major delta**
+
+| Finding | Result | Where |
+|---|---|---|
+| PMM11-1 | RESOLVED | CMc:290 now reads "then each imported column under its R2.1 label". CMj:237 (UJ2.3-a) asserts that TG-001's detail labels the field "Swatch Name (imported)". CMj:240 (UJ2.3-d) reads the detail's Identity labels, "Set a field"'s list, the headers' accessible names and E8's ⟨column⟩ as "⟨name⟩ (imported)". A build that ships an untagged detail now fails two cases. |
+
+**Round-11 Minors and Nits, one line each:**
+- PMM11-2 is recorded at PL:171, which names the held-write, own-export and Save-a-copy window.
+- PMM11-3 is RESOLVED (CM:384, CMc:311).
+- PMM11-4 is RESOLVED (CM:551). E11 and E19 keep the stored name, so E19's warning about the next import is true.
+- PMM11-5 is RESOLVED (DF:3).
+- PMM11-6 is RESOLVED (CM:187, CMr:15, PL:138).
+- PMM11-7 is RESOLVED (CM:587, CMr:61).
+- All four Nits landed: "a header" (CMc:269), OQ 11 "confirmed" (CM:593, CMr:121), CMr's ascending order, and CMr:13 is now a full sentence.
+
+**(2) New in the round-11 fixes**
+
+**[MAJOR] PMM12-1 — CMc:309–312 with CM:388 (R5.8): Compare's slot has only the history view's "From current" label, which is false when neither selected reading is current.**
+- **What the copy says.**
+  - All four R5.4 rows carry the Label "From current", and the copy file gives Compare no other label.
+  - R5.8 fills its slot from those rows ("the no-value line", "the not-compared line").
+  - R8.10b (CM:454) reads R5.8's line by the R5.4 identifiers.
+  - The Labels rule (CM:545) says the copy file is the only place a label is written.
+  - So a faithful builder shows "From current" in Compare. Any other builder has to invent a label or drop it. Either way the builder is guessing.
+- **Reader reaction.**
+  - In UJ5.4-f (CMj:396) the Cataloger compares ZX-006's two earlier readings and sees "From current ΔE2000 0.00".
+  - ZX-006's current reading has no value in the condition (UJ5.3-o). The line tells them the current reading matches, a comparison that never happened.
+  - UJ5.4-c and UJ5.4-e (CMj:393, :395) also pair two earlier readings, so their "From current: Not compared …" is untrue too.
+  - In a product whose promise is honest colour, a false distance label does more damage than it would elsewhere.
+- **Why it's in the delta.**
+  - F213 (CMf:1805–1810) says the slot "depends only on the two selected readings". D67's own text calls the history lines "From-current lines" and keeps them "with the history view".
+  - The fix pass rewrote all four rows and kept "From current" on each.
+  - It widened the no-value row from "an earlier reading" to "a reading" so the row serves Compare.
+  - It deleted the copy file's only mention of Compare.
+  - To be fair to the record: UJ5.4-c already had this latent at cee1fb2, and I aligned R5.8 then. I missed it. UJ5.4-f turns it into a wrong label beside a number.
+- **Why no case catches it.** Cases assert identifiers only. A build that shows "From current" in Compare passes UJ5.4-a through UJ5.4-g, so a wrong build passes.
+- **Fix (no new copy words).**
+  - Set the Label cell of CMc:309–312 to "From current; none in Compare's slot (R5.8), which sits between the two chips".
+  - Add to UJ5.4-f's Assert: "the slot carries no From current label".
+  - If a label is wanted instead, a neutral one such as "Between these readings" would work, but that is new copy for the owner to approve.
+
+**[MINOR] PMM12-2 — CMc:73 and CMc:178 against CM:525 and CM:535.**
+- D10 flipped E3 and E13 to aligned in the PRD's copy index.
+- The copy file's own E3 and E13 entries still read "Status: pre-alignment", so the two files disagree about the states that carry "Clear sort".
+- Fix: flip both lines before re-lock.
+
+**[MINOR] PMM12-3 — CMj:237 (UJ2.3-a): "fire E14's "Take the new details"".**
+- Under CM:468, a bare ID is this document's own. Collection Mode's E14 is Swatch detail, which has no such action; the label belongs to the import PRD's E14.
+- Check 1 reported PASS and missed this.
+- Fix: "fire the import PRD's E14 "Take the new details"".
+
+**[MINOR] PMM12-4 — CMc:311: rule text inside a rendered cell.**
+- The cell reads "Not compared — this reading can't be read, which wins over the no-value line".
+- The other cells state their condition, then end on the rendered string. A literal builder could render the trailing clause.
+- R5.4 and R5.8 already state the precedence.
+- Fix: delete ", which wins over the no-value line".
+
+**[MINOR] PMM12-5 — CM:551, "⟨column⟩ a column's R2.1 label".**
+- R2.1 defines a label only for a tagged imported column.
+- For a built-in field set through "Set a field", E8 could read "Change Swatch Name…" or "Change Name…". The header shows "Name".
+- This was already ambiguous under "a column's name".
+- Fix, post-lock: "a column's header as the Column headers table words it, or an imported column's R2.1 label, except in E11 and E19…".
+
+**[MINOR] PMM12-6 — CM:583 (OQ 1) and CMr:13: "Each candidate is measured on an M1 MacBook Air…".**
+- Nothing has been timed yet; the timing is a post-lock check (PL:138).
+- Beside "ratified", "is measured" reads as hardware-validated. This is the same caveat OQ 5 now carries.
+- "candidate" is also stale after ratification.
+- Fix: "Each is to be timed on an M1 MacBook Air…".
+
+**E35 (DFc:30) under F202, F211 and F212: no new finding.**
+- F211 makes E35 appear only when another app's read defers a wipe, so the headline is true when it goes up.
+- The stale-headline window is recorded at PL:171, and the wording is frozen by F202.
+- DFj:48's oracle, "E35 is up exactly when a byte read finds the text beside the file", ties the notice to the bytes.
+
+**Nit — CMc:310.** It says "in this collection's measurement condition" where E9 and E12 say "under". D59 froze this wording, so there is nothing to do.
+
+## Biggest risks
+- **PMM12-1.** Compare, the one place a Cataloger compares two readings directly, can show a false "From current" distance, and every case still passes.
+- **PMM12-2.** Two files disagree on E3's and E13's status at re-lock.
+- **PMM12-3.** A builder looking up the Swatch detail state for an Import action.
+
+## Genuinely strong
+- **The " (imported)" tag.**
+  - It is now uniform across the header, "Columns", a sort, "Set a field", the detail, VoiceOver and E8.
+  - E11 and E19 keep the stored name exactly where the sentence is about what the next import matches. A zealot would have tagged it everywhere and made E19 lie.
+- **The collision form.**
+  - It is deterministic and uses Import's template.
+  - UJ2.3-b and UJ2.3-c prove both orders.
+  - UJ2.3-e keeps the user's own lower-case spelling.
+- **"Clear sort".**
+  - It joins "Clear search" and "Clear filters".
+  - UJ3.3-q proves it leaves both narrowings in place.
+  - It is not offered when nothing is sorted (UJ3.3-p), so there is no dead control, and the ⟨unlike⟩ sentence drops out.
+- **The four identified distance rows.**
+  - They are testable without matching wording.
+  - UJ5.3-p and UJ5.4-c declare the retained values, so a leaky build fails.
+- **Honest claims.**
+  - R8.8's promise now states both carve-outs.
+  - The Data Foundation status line no longer claims "aligned".
+  - OQ 5's "no source measured" is restored.
+  - OQ 11 says "confirmed", not "ratified".
+- **Tone.** No hype and no colour-library claim anywhere.
+
+## Missing / over-hyped
+- Nothing is over-hyped.
+- **Missing:** a label rule for Compare's slot (PMM12-1).
+- **Still missing:** a help-docs line saying " (imported)" is display-only, so a CSV export still reads "Swatch Name". It is not in post-lock yet and should be added there.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | ALIGN |
+| R3.2 | ALIGN |
+| R5.4 | ALIGN |
+| R5.8 | OBJECT (PMM12-1) |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ALIGN |
+| DF-R6.2 | ALIGN |
+### plan
+
+## Verdict
+Execute after fixing Blockers. There are no Blockers, and all seven round-11 Majors are resolved. The round-11 fixes did introduce two new Majors, and both should land before the re-lock:
+- R5.4's rewritten "either reading" branch has no case where the current reading is the foreign one, so a build that shows a cross-basis ΔE2000 passes every case.
+- DJ3's new crash sub-run (c) can fail a correct build.
+
+Everything else I checked in `git diff cee1fb2 3cf3b55 -- docs ':!docs/agent-reviews'` matches F211–F214 and DF F60.
+
+## Findings
+
+Path key (all under /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/):
+- PRD = docs/product/collection-mode/prd-collection-mode.md
+- J = …/prd-collection-mode-journeys.md
+- C = …/prd-collection-mode-copy.md
+- FN = …/prd-collection-mode-fences.md
+- RES = …/prd-collection-mode-oq-results.md
+- DF = docs/product/data-foundation/prd-data-foundation.md
+- DFF = …/prd-data-foundation-fences.md
+- DFJ = …/prd-data-foundation-journeys.md
+- ADR = docs/decisions/README.md
+- IDX = docs/product/README.md
+- PL = docs/product/post-lock.md
+
+**(1) Round-11 Blockers and Majors from this lens**
+
+| Finding | Status | Where | Note |
+|---|---|---|---|
+| R11-M1 | RESOLVED | PRD:204, PRD:231, PRD:583, RES:13, IDX:18, FN:1144 | R8.11 is back under Interim stated and has an Interim entry in the first Build-dependencies row. OQ 1's cell and RES:13 now carry only a pointer, and R8.11 is gone from OQ 1's Feeds. IDX:18 says "builds against … until … closes (F120)". F209 (FN:1776) agrees with all six surfaces, and so do UJ9.5-d and PL:140. |
+| R11-M2 | RESOLVED | ADR:22 | The opening clause now sets journals and logs aside. The log-copy clause follows F211 and the clearing clause follows F212. The closing clause is qualified. A wording residue remains (R12-m1). |
+| R11-M3 | RESOLVED | PRD:388; J:393, J:395–397; FN:1805–1811 | R5.8 no longer cites R5.4's rule, so the item-level blank does not apply to Compare. UJ5.4-c declares SL-001's current reading and runs in both orders. UJ5.4-f (ZX-006, ΔE2000 0.00) and UJ5.4-g pin F213. |
+| R11-M4 | RESOLVED | J:390 | UJ5.3-q guards the earlier-reading-foreign direction. The mirror direction is uncovered: see R12-M1. |
+| R11-M5 | RESOLVED | J:238–239 | Stored order is declared, and each Assert names the column it checks. UJ2.3-c's reversed order follows F206 with no fork needed. |
+| R11-M6 | RESOLVED | J:237 | The read happens with the app closed, after the Amber edit and before the export. The re-import mapping is restated, and the end state is asserted by value. A bare-ID residue remains (R12-m2). |
+| R11-M7 | RESOLVED | C:290; PRD:551; J:237 | The detail line uses the R2.1 label, and UJ2.3-a asserts "Swatch Name (imported)". |
+
+**(2) New Majors from the round-11 fixes**
+
+[MAJOR] R12-M1 — R5.4's new "either reading" branch (PRD:384; C:312; J:390, J:394)
+- **What changed.** Fix box D4 rewrote the different-light clause. It used to cover "one [earlier reading] worked out under another illuminant or observer". It now says "either reading's value worked out under another illuminant or observer shows the not-compared distance line", and C:312 matches.
+- **The gap.** UJ5.3-q is the branch's only history case, and in it the current reading is spectral at D50/2° (J:394). No case opens the history of an item whose current reading is non-spectral at another reference (DF R3.3e), as RF-3 is (J:274).
+- **Effect: builders will guess.** "Working set" is defined two ways:
+  - CM's Vocabulary (PRD:103): values "under its illuminant and observer". Under this, a D65/10° current value is "no current working-set value", so R5.4's item-level clause blanks every line.
+  - DF R3.1: the working set is selected by condition, with the reference left as it was. Under this, the item has a value and each earlier line reads not-compared, which is how the orchestrator read D64 ("either reading").
+- **Effect: a wrong build passes.** A third build shows a ΔE2000 from the D65/10° current value to a D50/2° earlier value. That is the cross-basis distance R5.4 exists to forbid, and it passes UJ5.3-a, -b, -l, -o, -p and -q.
+- **Second gap.** With a foreign current reading and an earlier reading that has no M1 value, both the no-value and the not-compared clauses match. R5.8 orders them (no-value first). R5.4 does not, although F207's "No value in the condition" bullet and D64 ("the different-light line applies only when both readings have values") settle it.
+- **Fix:**
+  - Add "the not-compared line applying only when both readings have values" to R5.4, as in R5.8.
+  - Add UJ5.3-r in scenario 3: a collection at M1, D50/2°, holding an item whose current reading is non-spectral, worked out at D65/10° (DF R3.3e), with two spectral earlier readings, E1 with an M1 value and E2 with no M1 measurement. Open its history and assert that E1 shows the R5.4 not-compared identifier with no ΔE2000 number, and E2 shows R5.4 no-value.
+  - If the owner meant the blank reading instead, that is a fork, not an edit.
+
+[MAJOR] R12-M2 — DJ3 sub-run (c) can fail a correct build (DFJ:48; DF:228)
+- **What it says.** (c) is "crash the app after read 1 ends while the write is still held", and it asserts "Before the reopen the file's own bytes hold the removed text nowhere".
+- **Why that can fail.** R6.2a's deadline for the file's own bytes is "once that read has ended and the file is open", and (a) allows 5 s after read 1 ends for it.
+  - A crash inside that window legitimately leaves the text in the main file until the next open.
+  - A harness that crashes as soon as read 1 ends fails a correct build; one that waits for the wipe passes.
+  - Whether (c) inherits (a)'s "within 5 s" look before the crash is unstated, so the harness author has to guess.
+- **Fix.** Crash only once a byte read, taken within 5 s of read 1's end, finds the text nowhere in the file's own bytes, with the write still held. After the reopen, assert that no file, the file's own bytes included, holds the text within 5 s.
+
+**Minors** (one line each; post-lock)
+- [MINOR] R12-m1 — ADR:22: "never wait on a read a removing edit defers" reverses who defers whom (the read defers the wipe) and is narrower than F212's "never waits on another app's read". Use F212's wording. "The file's own bytes" also survives beside "the file's bytes, a journal or log … aside"; keep one term.
+- [MINOR] R12-m2 — J:237: UJ2.3-a's "fire E14's 'Take the new details'" is a bare E14. By PRD:468 that is this PRD's Swatch detail, so write "the import PRD's E14". The fix file's check 1 reported PASS; this is a MISS.
+- [MINOR] R12-m3 — PL:139 (R11-m8's third bullet, still open; also IDX:18):
+  - The first-build-PR gate names DF R1.11, R7.6p, R7.6q, E34 and E35. All five are now aligned, so the item can be ticked.
+  - It still omits DF R6.2 and R6.2a, the two rows still Ready for Alignment that first-phase R8.8 builds against.
+  - IDX:18's "ready to build once ADR-0003, ADR-0005 and ADR-0006 are accepted" also omits the amendment's re-lock.
+- [MINOR] R12-m4 — DFJ:48 (a)/(b): "E35 is up exactly when a byte read taken after it finds the text" is racy in the up-implies-found direction if the copy clears between the two reads. DJ4's oracle (DFJ:73) asserts only found-implies-up. A SQLite WAL build is unaffected, since nothing clears while the write or read 2 holds the log; say that a look spanning a clearing is retaken.
+- [MINOR] R12-m5 — PRD:388: R5.8's "worked out differently" does not say relative to what. Two readings that are both non-spectral at D65/10° in a D50/2° collection get a ΔE2000 under F213's literal "alike", and a not-compared line under F207's collection-basis rule. No case pins it; add one, or raise it as a fork.
+- [MINOR] R12-m6 — C:309–312: Compare's slot inherits the label "From current", which is now wrong in UJ5.4-f (J:396), where neither reading is current.
+- [MINOR] R12-m7 — PRD:429, J:138, J:530: R8.1a now times "Clear sort", but neither the Timing workload nor UJ9.5-a fires it. Add "then 'Clear sort'" after each pair of header fires.
+- [MINOR] R12-m8 — J:533: UJ9.5-d releases the outside read after the 20th set, so no clearing overlaps a capture save. F212's "waits on a clearing only within R8.11's budgets" is never exercised; release after the 10th set.
+- [MINOR] R12-m9 — J:240: UJ2.3-d reads "Set a field"'s fields before anything is selected, although R6.2 needs two or more items. It also leaves Tags Two's queue order and its imported Spread values undeclared.
+- [MINOR] R12-m10 — PRD:74–76: "a display-gamut finding stays behind F209's post-lock display spike" can be read as holding R2.5's declared-gamut cases until the spike. Say those cases run on declared gamuts (R8.10a) and only the real-display check waits.
+- [MINOR] R12-m11 — PRD:384: R5.4's "which wins over the no-value line" has no history case, because UJ5.3-p's quarantined reading holds M1 values.
+- [MINOR] R12-m12 — DFJ:48: F211's "the app's own reads" bullet has no case. DJ3 (b) uses only an outside read 2; add a run where the app's Save a copy is read 2 (E35 stays up, and the copy goes within 5 s of the copy's end).
+- [MINOR] R12-m13 — PRD:551: under the Placeholders exception, E19's headline "Rename ⟨column⟩ to ⟨text⟩?" shows the stored name, so renaming an imported State beside the built-in one reads "Rename State to …?". F205's "wherever the app names such a column" and its list of surfaces disagree here; state which governs.
+
+**Nits**
+- [NIT] PRD:583, RES:13: "stays under F120's interim, the capture PRD's OQ 5" reads as if OQ 5 were the interim. Write "under F120's interim while the capture PRD's OQ 5 is open".
+- [NIT] DF:24: DJ3's "Rows exercised" column lists E35, which is a copy state, not a row.
+- [NIT] IDX:16: row 4 (Data Foundation) does not mention PR #21's pending F50–F60 amendment, though DF:3 does.
+
+## Biggest risks (if executed as-is)
+1. **R5.4's history view has no guard on a foreign current reading (R12-M1).** A build that shows a D65/10°-to-D50/2° ΔE2000 passes every case, and builders will diverge between blanking the lines and showing not-compared.
+2. **DJ3 (c) is flaky against a correct build (R12-M2).** It fails whenever the harness crashes inside the wipe's allowed 5 s window, and someone has to step in to debug a non-defect.
+3. **The first-build gate is stale (R12-m3).** PL:139's rows are all aligned while DF R6.2 and R6.2a are not, so the gate can be ticked with R8.8's upstream row still open.
+
+## Plan strengths
+- **Meaning check.** Every changed line matches its fence's Decision:
+  - R2.1 and C:267–271 match F205/F206.
+  - R8.8, DF R6.2a, DF R1.11 and ADR:22 match F211, F212 and DF F60. The main-file clause keeps "nothing waiting on it", and the later-read clause sits only on the log copy, matching the orchestrator's finding that a later read never delays the main-file copy.
+  - R5.8 matches F213, and the constants, OQ and results edits match F209 and F120.
+- **False positives checked:**
+  - UJ2.3-a: the first import raises no E14, because all three CSV fields are new to TG-001 (Import R3.6d). Dropping "keeping the new details" there is correct. The re-import's E14 comes from Amber → Sunflower, and its default replaces (R3.5, R3.6c), so "reads Sunflower" is right.
+  - UJ2.3-c: F206 gives the suffix to the later column even when that column is the tagged one. It needs no fork.
+- **The new fixtures tell the orders apart:**
+  - UJ3.3-n: L* order SO-2, SO-3, SO-1, SO-4 differs from queue order, which differs from code order.
+  - UJ3.3-q: the sort reorders ZX-013–015 (35/45/60).
+  - UJ7.1-u: with collections ordered by name (R1.1, R1.9), the code, name and queue orders are all distinct.
+  - UJ2.1-g's "pending" now catches a build that leaves the row-state filter set.
+- **UJ9.5-d already catches F212's main hazard.** A clearing that waits on the outside read with a busy timeout would refuse capture saves.
+- **The gate surfaces agree.** Interim stated, Build dependencies, OQ 1, RES:13, IDX:18, PL:140 and UJ9.5-d all state R8.11 the same way. The results file is now in ascending order (1–9, 11, 12), and PL:138 sits under "First build PR" with the owner's estimate.
+
+## Spec coverage gaps (requirements with no task)
+- None at the fence → row level. Every Decision clause in F211–F214 and DF F60 is carried by a row: R8.8, DF R6.2a, R1.11, R5.8 and ADR:22. The case-level gaps are in Findings (R12-M1, R12-m8, R12-m12).
+
+## Per-row dispositions
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | ALIGN |
+| R3.2 | ALIGN |
+| R5.4 | OBJECT (R12-M1) |
+| R5.8 | ALIGN |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ALIGN |
+| DF-R6.2 | OBJECT (R12-M2) |
+
+DF-R6.2 is OBJECT because DJ3 (c) is R6.2a's crash case, not because of R6.2a's text: the text itself matches F211, F212 and F60.
+### database
+
+## Verdict
+The rows are sound, but two new Majors need fixing before re-lock; there are no Blockers. All four of my round-11 Majors are addressed: MAJOR-1, MAJOR-2 and MAJOR-4 are resolved, and MAJOR-3 is partly resolved. F211 and F212 match what SQLite actually does; I re-ran both on SQLite 3.53.4. The two new Majors are both in DJ3's rewritten log line, and a correct build can fail each one:
+- Sub-runs (a) and (b) compare E35 to the bytes both ways ("E35 is up exactly when…"). I suggested that wording in round 11, and it races the clearing.
+- Sub-run (c) never says when to crash, so the crash can land before the main-file wipe that its first check needs.
+
+## Schema & engine (brief)
+Repo root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`; file:line references below are relative to it.
+- **No DDL exists yet.** ADR-0003 owns the schema, so these rows are the storage contract.
+- **Engine and settings.** The engine is SQLite. The ADR-0003 input's "a text-removing write is saved without waiting on any read" (decisions/README.md:22) rules out rollback-journal mode, so the rows assume WAL (write-ahead log) mode with secure_delete=ON. foreign_keys, busy_timeout and synchronous/checkpoint_fullfsync are unset and belong to ADR-0003.
+- **What F212 needs from the build.** The clearing must run without a busy handler, and it should copy pages back with a PASSIVE checkpoint before the TRUNCATE. Then the only time it holds the write lock is the truncation itself.
+- **Where I checked it.** I reproduced every SQLite claim below on 3.53.4 (WAL, secure_delete=ON, wal_autocheckpoint=0), using scratch databases in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r12db`.
+
+## Findings
+
+**(1) Round-11 Blockers and Majors (my lens)**
+
+| Finding | Result | Where |
+|---|---|---|
+| MAJOR-1 (a read begun after the wipe holds the log copy) | RESOLVED | DF PRD:228 (R6.2a), CM fences:1792 (F211), DF fences:653 (F60), decisions/README.md:22, CM PRD:445 (R8.8 delegates to R6.2a), DF journeys:48 (b) |
+| MAJOR-2 (clearing the log holds the next write without limit) | RESOLVED | DF PRD:228, CM fences:1801 (F212), DF fences:653, decisions/README.md:22 ("so capture saves never wait on a read a removing edit defers, and on a clearing only within Collection Mode R8.11's budgets") |
+| MAJOR-3 (DJ3's log line required the removed text to survive) | PARTIAL | DF journeys:48 |
+| MAJOR-4 (UJ2.3-a checked a value its own re-import overwrites) | RESOLVED | CM journeys:237 |
+
+- **MAJOR-1: resolved.** The rule now lists every read, including one begun after the wipe. SQLite agrees:
+  - With the write holding SQLite's lock and read 2 begun after read 1 ended, a TRUNCATE after the write landed returned busy, (1,3,2), and the marker stayed in the WAL.
+  - Once read 2 ended, the TRUNCATE returned (0,0,0).
+  - A read 2 that began before the copy into the main file blocked the truncation even with no write running, (1,2,2).
+- **MAJOR-2: resolved.** A TRUNCATE with no busy handler gave way at once, (1,2,2), and held no lock after returning. So "never while it waits on a read … retried once that read ends" can be built, by polling within DJ3's 5 s.
+- **MAJOR-3: partial.** The requirement that the text survive is gone ("no beside-file copy being required to survive that window"). NIT-1 is fixed: (a) now seeds the text in a committed log frame, and (d) reports "not exercised". But the replacement oracle is DB12-MAJOR-1 below.
+- **MAJOR-4: resolved.** The file is read with the app closed, right after the Amber edit and before the export. The end state after the re-import is stated: Marigold unchanged, the imported column reading Sunflower, no column added. That also proves T8's point that the re-import writes the imported column and not the true field.
+
+**(2) New Majors from the round-11 fix pass**
+
+**[MAJOR] DB12-MAJOR-1: DJ3 (a) and (b)'s two-way E35 check races the clearing (DF journeys:48, under R6.2a and E35)**
+- **Where.**
+  - (a): "at each look E35 is up exactly when a byte read taken after it finds the removed text in a file the app keeps beside the file".
+  - (b): "Until read 2 ends, E35 is up exactly when a byte read taken after it finds the removed text beside the file".
+- **The defect.** E35 is read first and the bytes second, so only one direction is sound.
+  - Sound direction: if the later byte read finds the text, E35 must have been up at the earlier read, because removed text never returns. DJ4:73's agreement oracle uses only this direction.
+  - Unsound direction: "E35 up, so the text must be found". It fails whenever the clearing lands between the two reads. It also fails in the moment before the app lowers E35, which it can only do after the truncation returns.
+- **When a correct build hits it.** It bites a build whose R8.10a hold sits before SQLite's write lock. That is the build round-11 MAJOR-3 asked this line to allow. Such a build clears the log inside both windows:
+  - In (a), right after read 1 ends, while the write still "runs": a TRUNCATE returned (0,0,0).
+  - In (b), with read 2 begun after the main-file copy (so read 2 reads the main file only), a TRUNCATE returned (0,0,0) while read 2 was still open and the write was not yet in.
+
+  The look that straddles that moment sees E35 up and no text, and the case fails. A build that holds the SQLite lock clears only after the write lands, in (a), or after read 2 ends, in (b). Those points are outside the check windows, so that build passes. The oracle therefore separates correct builds by where they place the hold, which R8.10a leaves open.
+- **Fix.** Replace "exactly when" in (a) and (b) with: "at each look, E35 read first, a byte read finding the removed text beside the file finds E35 up at that look, as DJ4's agreement oracle does; and within 5 s, a functional timeout, of a byte read first finding it beside the file nowhere, E35 is not up".
+- **Change that exposes it.** Take a correct hold-before-lock build that lowers E35 one frame after its truncation returns, and have the harness look every 100 ms. The look that brackets the truncation fails (a), or (b).
+
+**[MAJOR] DB12-MAJOR-2: DJ3 (c) leaves the crash moment open, so a correct build fails its before-reopen check (DF journeys:48, under R6.2a)**
+- **Where.**
+  - (c)'s action: "crash the app after read 1 ends while the write is still held".
+  - Its oracle: "Before the reopen the file's own bytes hold the removed text nowhere".
+- **The defect.** The main-file wipe is allowed to lag the read's end.
+  - R6.2a (DF PRD:228) lets it follow "once that read has ended and the file is open". The cases time that at 5 s, and after a crash it happens at the next open.
+  - The app can learn that another app's read has ended only by retrying its copy. So its wipe trails read 1's end by up to its retry interval.
+  - If the app is crashed inside that interval, the main file still holds the text, and that is correct behavior.
+- **Reproduced.** I ran the (c) sequence and abandoned the connections right after read 1's COMMIT, before any checkpoint ran. The main file held the marker (True), and so did the WAL (True).
+- **Why it bites.** An automated harness that ends read 1 and crashes straight after will fail a correct build.
+- **Fix.** "(c) As (a), but once a look after read 1's end finds the removed text nowhere in the file's own bytes, the write still held, crash the app; before reopening read the file's own bytes, then reopen."
+- **Change that exposes it.** Crash the app 10 ms after ending read 1. A build that retries its copy every second fails (c).
+
+**Minors and Nits (for post-lock)**
+- **[MINOR]** R6.2a (DF PRD:228) leaves out F211's crash clause ("at the next open after a crash") for the journal-or-log copy. It also nests that clause inside the parenthetical for a read begun before the wipe, while R8.8 (CM PRD:445) and the ADR-0003 input state it for every case. Move the clause out of the parenthetical and add the crash clause.
+- **[MINOR]** The ADR-0003 input's "at the next open after a crash" (decisions/README.md:22), like F211's own text, reads as unconditional. If another app's read spans the crash and the reopen, SQLite cannot truncate at that open. Add a dated line under F211 and F60 saying the crash clause keeps the read condition, as the main-file clause does ("that read has ended and the file is open").
+- **[MINOR]** DJ3 (b) (DF journeys:48) says "As (a)" but does not set aside (a)'s clause that nothing is left beside the file within 5 s of the write landing. Read 2 still holds the copy after the write lands (the (1,3,2) result above), so a tester who applies that clause fails a correct build. Add "(a)'s post-landing clause aside".
+- **[MINOR]** UJ2.3-d (CM journeys:240) checks "Spread 0.20 and 0.30" by SQL. The file holds both the readings' recorded spread and an imported column stored literally as Spread, and the imported Spread values are not declared. So "only the State (imported) column changed" has no baseline. Declare the imported Spread values and write "recorded spread".
+- **[MINOR]** UJ2.3-a (CM journeys:237) says "fire E14's 'Take the new details'". A bare E14 in this PRD is its own Swatch detail (CM PRD:536). Write "the import PRD's E14".
+- **[NIT]** DJ3 (a) says "list the sibling state up", but E35 is the Data Foundation PRD's own state, not a sibling's. Write "list the state up".
+- **[NIT]** The ADR-0003 input uses both "the file's bytes, a journal or log kept beside it aside" and "the file's own bytes" in one sentence for the same set of bytes. Pick one.
+- **Round-11 Minors and Nits.**
+  - Resolved: MINOR-1 through MINOR-6, at CM PRD:445, CM journeys:238, :277 and :294, DF PRD:280 with CM PRD:477, and CM PRD:384. NIT-1 and NIT-2 are also resolved, at DF journeys:48 and DF PRD:3.
+  - Moved to post-lock: MINOR-7 and NIT-3, at post-lock.md:46 and :48.
+
+## Biggest risks
+1. **A flaky erase check.** DB12-MAJOR-1 fails a correct hold-before-lock build on a large share of runs, once the harness looks at a normal interval. The case gates R6.2a, so a flaky failure there is expensive.
+2. **An outside reader left open.** DJ5 invites outside query tools, so a database browser left open is realistic. It does three things:
+   - It keeps removed text in the -wal file for as long as it stays open. D55 and D65 accepted this, and E35 says so.
+   - It stops the WAL from ever restarting, so every capture save grows it. The size and speed cost is the performance lens's.
+   - The app's own export can then hold the copy after the other app stops, and E35's headline goes stale. That is already on the post-lock dogfood list.
+3. **Durability order on macOS.** Clearing the log is now routine. The pages copied into the main file must reach stable storage, which on macOS means F_FULLFSYNC, before the truncation. Otherwise a power loss can undo the delete. This is already an ADR-0003 note in post-lock.
+
+## Genuinely sound
+- **F211's rule is exactly SQLite's.** A read still using the log, including one begun after the wipe, blocks the truncation. The rule sets only a latest time and never requires the text to stay, so a build that clears earlier stays correct.
+- **F212 can be built and is the right call.** A PASSIVE copy followed by a TRUNCATE with no busy handler never holds the write lock while it waits on a read. Rejecting "Allow the wait" (D66) is correct, because the ordinary busy-timeout TRUNCATE blocks capture saves for as long as another app keeps reading.
+- **D65's "the app's own reads hold the copy without notice" is the right SQLite trade.** Forcing exports to wait behind other apps' reads would be worse. A textbook database engineer might insist on the stronger guarantee; it is not worth that cost here.
+- **The rewritten text reads cleanly.**
+  - The ADR-0003 input is now one set of clauses that agree with each other, and its fence lists cite F211, F212 and F60.
+  - R8.8 hands the log copy to R6.2a and keeps "the file's bytes" in its Vocabulary meaning.
+  - F60 says R1.11's wipe exemption also covers the clearing. That matches SQLite: the clearing is not deferred at app level, but it cannot truncate while the held write owns the lock.
+- **DJ3 (d)'s "not exercised, never passed"** is the right answer for a harness that cannot place the text in a log frame.
+- **The display-only "(imported)" tag (F205 and F206) needs no schema change.**
+  - UJ2.3-b and UJ2.3-c declare their stored column order and read the stored names at the floor.
+  - UJ2.3-a proves that a re-import matches by stored name.
+- **UJ3.3-n's table-for-table check now uses the full exclusion wording**, which proves R3.2's "writes nothing".
+
+## Missing / over-engineered
+- **Missing:**
+  - the sub-run fixes above;
+  - a dated clarifying line on F211's crash clause;
+  - R6.2a's crash clause.
+
+  Nothing else is missing in this lens.
+- **Over-engineered:** nothing. The status and budget bookkeeping (F214, D68) has no effect on the data.
+
+| Row ID | disposition |
+|---|---|
+| R2.1 | ALIGN |
+| R3.2 | ALIGN |
+| R5.4 | ALIGN |
+| R5.8 | ALIGN |
+| R8.1 | ALIGN |
+| R8.8 | ALIGN |
+| OQ 1 | ABSTAIN (out of lens) |
+| DF-R6.2 | OBJECT (DB12-MAJOR-1, DB12-MAJOR-2) |### Orchestrator verification
+
+- **Grepped at `3cf3b55` and confirmed:**
+  - PMM12-1: copy:309–312 carry "From current" and R5.8 fills its slot from them.
+  - PM12-1, TR12-1, SSE12-1: UJ2.3-d asserts E8 for two items, while R6.2 shows E8 only above BULK_CONFIRM_COUNT (10).
+  - R12-M1, TR12-4: no case has a foreign current reading, and the Vocabulary's working set (PRD:103) is "under its illuminant and observer".
+  - DB12-MAJOR-1, TR12-6, ARCH12-3: DJ3's "E35 is up exactly when…" is a two-way check.
+  - DB12-MAJOR-2, R12-M2, TR12-3, PM12-7: DJ3 (c) leaves the crash moment unset.
+  - ARCH12-2: DJ3 (a) never shows that the seeded log frame survives the delete.
+  - TR12-2, SSE12-2: no case writes while a clearing is blocked.
+  - TR12-5: R8.1a's "Clear sort" is in no timing workload.
+- **Reproduced on SQLite 3.53.4:** PRIV12-1 and ARCH12-1, a second write begun while read 2 holds the clearing back.
+- **Decided by the owner:** D69 (PRIV12-1, ARCH12-1, and the database lens's crash-spanning read), D70 (PMM12-1) and D71 (R12-M1, TR12-4).
+- **Every Major reproduces.** None was rejected.
+- **Disposed with no change:**
+  - **The "(D2; …)" wording in F120's Clarified line.** It is fence text and immutable. It means the round-11 fix file's box D2, as this note records.
+  - **DF:24's "E35" in Rows exercised.** It follows that table's existing practice.
+  - **ARCH11-N2**, the round-10 record's 8,402. It is a historical record, and the round-11 E1 note corrects it.
+
+### Owner adjudication (2026-09-26)
+
+
+The owner answered D69–D71 on 2026-09-26, over round 12's privacy PRIV12-1 and architecture ARCH12-1 (a write begun while a read holds the clearing back; the privacy lens's probe re-run by the orchestrator on SQLite 3.53.4), the product-marketing lens's PMM12-1 (with PM12-2, IF m6, SSE12-5, R12-m6), and the plan and test lenses' R12-M1 and TR12-4. Each record quotes the question, the option chosen with its description, and the option not chosen, verbatim.
+
+**D69 (PRIV12-1, ARCH12-1; DB round-12 Minor on a read spanning a crash).** Question: "One more SQLite gap in the erase rule, reproduced: after the later read (D65) ends, a second write that started meanwhile (a bulk edit, an import commit) also keeps the log copy alive, and D66 lets that write start. Adding cases one by one keeps missing some. Should the rule be stated as a principle?" Chosen: **State it as a principle** — "The log copy goes at the first moment, with the file open, that no read uses the log and no write is running. The clearing then runs before the next write starts, holding it only for the clearing's own work (D66). This covers the running write, later reads, later writes and a read that spans a crash, and it ends the case-by-case list." Not chosen: **Add this one case** — "Keep D65's list and add 'and any write running when that last read ends'. Narrower, but the next unlisted combination could reopen it."
+
+**D70 (PMM12-1).** Question: "Compare's distance slot currently inherits the history view's label 'From current', which is false when you compare two earlier readings (e.g. 'From current ΔE2000 0.00' on two old readings). What label should Compare's slot carry?" Chosen: **No label** — "The slot sits between the two chips and shows just the distance or the Not compared line, with no label. No new copy." Not chosen: **'Between these readings'** — "A neutral label for Compare's slot. New copy string."
+
+**D71 (R12-M1, TR12-4).** Question: "In the history view, an item's current reading can be non-spectral, kept at a different light (e.g. D65/10° in a D50/2° collection). Does each earlier reading show the 'Not compared — worked out for a different light…' line, or no distance line at all?" Chosen: **Not compared lines** — "The current reading has a value, just at another light, so each earlier reading with a value shows the not-compared line. One with no value in the condition shows the no-value line, and an unreadable one the can't-be-read line. The user sees why there's no number. 'No current value, no lines' then means no value in the collection's condition at all." Not chosen: **No lines** — "A current value at another light counts as no current working-set value, so the history view shows no distance lines, the same as for an item with no value."
+
+**Verification of PRIV12-1 / ARCH12-1 (orchestrator, SQLite 3.53.4, WAL, secure_delete on, automatic checkpoints off).** Re-running the privacy lens's probe: with read 2 begun after the wipe and a second write W2 begun after W1 landed, TRUNCATE after read 2 ended returned busy (1,3,3) and the WAL still held the marker; only after W2 committed did TRUNCATE return (0,0,0) with the marker gone. PASSIVE at each step left the main file clean.
+
+### Dispositions
+
+Per row: which lenses ALIGN, OBJECT or ABSTAIN, and the resulting status. Lens order: PM
+(product-manager), SSE (staff-software-engineer), TR (test), IF (interface), ARCH (architecture),
+PRIV (privacy), PMM (product-marketing), R12 (plan), DB (database).
+
+| Row | PM | SSE | TR | IF | ARCH | PRIV | PMM | R12 | DB | Resulting status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R2.1 | OBJECT | OBJECT | OBJECT | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | needs-discussion |
+| R3.2 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | aligned |
+| R5.4 | ALIGN | ALIGN | OBJECT | ALIGN | ALIGN | ABSTAIN | ALIGN | OBJECT | ALIGN | pre-alignment |
+| R5.8 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ABSTAIN | OBJECT | ALIGN | ALIGN | pre-alignment |
+| R8.1 | ALIGN | ALIGN | OBJECT | ALIGN | ALIGN | ABSTAIN | ALIGN | ALIGN | ALIGN | needs-discussion |
+| R8.8 | ALIGN | ALIGN | OBJECT | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | needs-discussion |
+| OQ 1 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ABSTAIN | ALIGN | ALIGN | ABSTAIN | aligned |
+| DF-R6.2 (with R6.2a) | ALIGN | OBJECT | OBJECT | ALIGN | OBJECT | OBJECT | ALIGN | OBJECT | OBJECT | ⌛️ Ready for Alignment (unchanged) |
+
+This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-12-fixes.md`.

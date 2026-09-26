@@ -13,7 +13,7 @@ amendment preserves them and does not re-decide them.
 
 **Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance. A second link, to this amendment's own lock record, is added at its bookkeeping close.
 
-**Amendment pending:** F202–F214 (2026-09-26), peer review pending.
+**Amendment pending:** F202–F217 (2026-09-26), peer review pending.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -60,6 +60,7 @@ file, in every round below.
 | approved round-6 recommendation M | The round-6 fix file carries no numbered recommendations list; the fence's own Authority quote is the committed record | [round-6 fixes](prd-collection-mode-round-6-fixes.md) |
 | OQ 11's closer, run 2026-09-26 (not an owner decision) | Engineering's check; recorded in | [the results file's OQ 11 section](prd-collection-mode-oq-results.md#oq-11) |
 | owner decision D65–D68 (round-11 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 11 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-11--the-amendments-delta-and-pre-lock-round-2026-09-26) |
+| owner decision D69–D71 (round-12 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 12 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-12--delta-verify-of-round-11-2026-09-26) |
 
 This is editorial: it adds navigation only, over the settled preamble and fences above.
 
@@ -1736,19 +1737,19 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 
 - **Authority:** owner decision D57, round-10 adjudication 2026-09-26. Question: "Finding 7: after you sort by a column like L*, nothing gets you back to queue order short of closing the file, and closing also ends the undo windows. How should you get back?" Chosen: **'Clear sort' action** — "A 'Clear sort' action, offered while a view sort is applied and reachable from the keyboard like the others, returns the table to queue order. In All items it returns to collection-then-queue order. It writes nothing, and it sits beside 'Clear search' and 'Clear filters'." Not chosen: **Third header click** — "Clicking a sorted header cycles ascending, then descending, then back to queue order. It adds no new label, but it's less discoverable and not the usual Mac table behaviour."
 - **Decision:** "Clear sort" is offered while a view sort is applied, and is reachable from the keyboard as every action is. It returns a collection's table to queue order, and the All items view to R1.9's collection-then-queue order. It writes nothing, and it sits beside "Clear search" and "Clear filters".
-- **Carried by:** R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ7.1-u
+- **Carried by:** R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ3.3-p, UJ3.3-q, UJ7.1-u
 
 ### F205 — An imported column named like a built-in one is tagged (2026-09-26)
 
 - **Authority:** owner decision D58, round-10 adjudication 2026-09-26. Question: "Finding 8: an import can bring in an unmapped column named 'State', 'Spread', 'L*' or 'Swatch Name', which matches a built-in column's name. How should the two be told apart?" Chosen: **Tag it in the app** — "Wherever the app names such a column (header, column chooser, sort, Set a field, detail), it shows as '<name> (imported)'. Actions target the column itself, not its label. The file keeps the name as imported, so export and re-import are unchanged. No change to the Import PRD." Not chosen: **Rename at import** — "Amend the Import PRD so an import renames such a header on arrival, e.g. 'State 2'. The stored name changes, so the Import PRD's locked matching rules and re-import behaviour change too."
 - **Decision:** The rule covers an imported column whose stored name equals, under the import PRD's R2.3 rule, a Swatch field's name or a header the copy file's Column headers table shows. Wherever the app names such a column, it is labelled with its stored name followed by the copy file's " (imported)" tag. That means its header, "Columns", a view sort, "Set a field", the item detail and VoiceOver. Every action on it targets that column, never another with the same label. The file keeps its stored name, so export and re-import are unchanged, and the Import PRD does not change.
-- **Carried by:** R2.1, UJ2.3-a, UJ2.3-b
+- **Carried by:** R2.1, UJ2.3-a, UJ2.3-b, UJ2.3-c, UJ2.3-d, UJ2.3-e, UJ2.3-f
 
 ### F206 — A tagged label that still clashes takes Import's collision form (2026-09-26)
 
 - **Authority:** owner decision D63, round-10 adjudication 2026-09-26. Question: "One follow-up to the '(imported)' tag. In a rare case the tagged label still clashes: one imported column is named 'State' and another is literally named 'State (imported)'. How should the app tell those two apart?" Chosen: **Number it like Import** — "The later one by column position takes Import's existing collision form, '⟨label⟩ (2)' and counting up until unique, e.g. 'State (imported) (2)'. It's deterministic, needs no new template, and the stored names stay unchanged." Not chosen: **Tag every imported column** — "Once any clash exists, every imported column in that collection shows its position, e.g. 'State (imported, column 3)'. Always unique, but noisier."
 - **Decision:** This applies where a label F205 gives still equals, under the import PRD's R2.3 rule, another column's label. The later column by position takes that PRD's collision template, "⟨base⟩ (⟨suffix⟩)", with the suffix starting at 2 and rising until unique. Stored names are unchanged.
-- **Carried by:** R2.1, UJ2.3-b
+- **Carried by:** R2.1, UJ2.3-b, UJ2.3-c
 
 ### F207 — History distances compare working-set values only (2026-09-26)
 
@@ -1763,6 +1764,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 - **Carried by:** R5.4, R5.8, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.4-c, UJ5.4-d
 
 **Clarified 2026-09-26 (F213):** Compare's slot is worked out from the two selected readings alone (F213); the item-level "no current value" bullet above stays with the history view.
+
+**Clarified 2026-09-26 (F217):** where the current reading has a value in the collection's measurement condition but worked out under another illuminant or observer, each earlier reading follows R5.4's order — can't-be-read, then no-value, then not-compared — rather than showing no distance line; the "no current value" bullet above now means no value in the collection's measurement condition at all (F217).
 
 ### F208 — Closing a detail returns to E9 only while its swatch has a usable colour (2026-09-26)
 
@@ -1792,7 +1795,9 @@ Fences F211–F214 were decided by the owner on 2026-09-26, over round 11's data
   - **The rule.** A copy of removed text in a journal or log beside the file goes once two things are true: no read still uses that journal or log, a read begun after the wipe included; and the write running at the wipe has ended, landed or failed. After a crash, it goes at the next open.
   - **E35.** It appears only when another app's read defers a wipe. Once up, it stays until the text is in none of those bytes.
   - **The app's own reads.** Its own export, Save a copy or check holds the copy without any notice, as the app's earlier reads already do (F57).
-- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F60, the Data Foundation PRD F61
+
+**Clarified 2026-09-26 (F215):** this list of what can hold the copy is replaced by F215's principle — the copy goes at the first moment, with the file open, that no read uses the log and no write runs, after a crash at the first open at which that holds — which covers every case this fence's list did, and the case F215 itself answers besides. The E35 and own-reads clauses above stand.
 
 ### F212 — Clearing a log never holds a write while it waits on a read (2026-09-26)
 
@@ -1800,7 +1805,7 @@ Fences F211–F214 were decided by the owner on 2026-09-26, over round 11's data
 - **Decision:**
   - **The rule.** Clearing a journal or log holds the next write only for its own copy and truncation, never while it waits on a read. A clearing that a read blocks gives way, and is retried once that read ends.
   - **Capture saves.** A capture save never waits on another app's read, and waits on a clearing only within R8.11's budgets.
-- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F60, the Data Foundation PRD F61
 
 ### F213 — Compare depends only on the two selected readings (2026-09-26)
 
@@ -1808,13 +1813,44 @@ Fences F211–F214 were decided by the owner on 2026-09-26, over round 11's data
 - **Decision:**
   - **The rule.** Compare's slot shows the two readings' ΔE2000 when both have values in the working set, worked out alike. Otherwise it shows the line for the reading that lacks one, the can't-be-read line first.
   - **Scope.** The history view's rule that an item with no current working-set value shows no From-current line stays with the history view.
-- **Carried by:** R5.8, UJ5.4-c, UJ5.4-e, UJ5.4-f, UJ5.4-g
+- **Carried by:** R5.8, UJ5.4-c, UJ5.4-e, UJ5.4-f, UJ5.4-g, UJ5.4-h, UJ5.4-i
+
+**Clarified 2026-09-26 (D71's record; R12-m5):** "alike" means worked out under the collection's illuminant, observer and condition, per F207's working-set rule, so two readings both worked out at the same foreign reference show the not-compared line, not their ΔE2000.
 
 ### F214 — The Data Foundation PRD's word budget is 8,450 (2026-09-26)
 
 - **Authority:** owner decision D68, round-11 adjudication 2026-09-26 (Data Foundation budget). Question: "Writing D65 and D66 into Data Foundation's R6.2a, and fixing two cites the reviewers flagged, adds about 11 words. The Data Foundation body is exactly at its 8,400-word cap (you raised it to 8,400 in F177). How should that be handled?" Chosen: **Raise DF to 8,450** — "A dated fence raises the cap by 50. Aligned rows stay untouched, and the new wording keeps its precision." Not chosen: **Compact DF to fit 8,400** — "Trim other Data Foundation text to make room. That reopens aligned rows for review, and earlier trims changed meaning."
 - **Decision:** The Data Foundation PRD's word budget is 8,450 words, counted by rule 14's method. It is recorded there by a dated line under its F55, following F177's precedent, which overrides the never-raise rule for that PRD.
 - **Carried by:** governs no rows
+
+Fences F215–F217 were decided by the owner on 2026-09-26, over round 12's privacy PRIV12-1 and
+architecture ARCH12-1 (a write begun while a read holds the clearing back; the privacy lens's probe
+re-run by the orchestrator on SQLite 3.53.4), the product-marketing lens's PMM12-1 (with PM12-2,
+IF m6, SSE12-5, R12-m6), and the plan and test lenses' R12-M1 and TR12-4, recorded in the review
+log's "## Round 12 — delta-verify of round 11 (2026-09-26)" section.
+
+### F215 — A log copy goes at the first moment nothing uses the log (2026-09-26)
+
+- **Authority:** owner decision D69, round-12 adjudication 2026-09-26 (PRIV12-1, ARCH12-1; DB round-12 Minor on a read spanning a crash). Question: "One more SQLite gap in the erase rule, reproduced: after the later read (D65) ends, a second write that started meanwhile (a bulk edit, an import commit) also keeps the log copy alive, and D66 lets that write start. Adding cases one by one keeps missing some. Should the rule be stated as a principle?" Chosen: **State it as a principle** — "The log copy goes at the first moment, with the file open, that no read uses the log and no write is running. The clearing then runs before the next write starts, holding it only for the clearing's own work (D66). This covers the running write, later reads, later writes and a read that spans a crash, and it ends the case-by-case list." Not chosen: **Add this one case** — "Keep D65's list and add 'and any write running when that last read ends'. Narrower, but the next unlisted combination could reopen it."
+- **Decision:**
+  - **The rule.** A copy of removed text in a journal or log beside the file goes at the first moment, with the file open, that no read uses that journal or log and no write runs. After a crash, it goes at the first open at which that holds.
+  - **Clearing.** The clearing then runs before the next write starts, holding that write only for its own copy and truncation (F212).
+  - **Scope.** This replaces F211's list of what can hold the copy. F211's E35 and own-reads clauses stand.
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F61
+
+### F216 — Compare's slot carries no label (2026-09-26)
+
+- **Authority:** owner decision D70, round-12 adjudication 2026-09-26 (PMM12-1). Question: "Compare's distance slot currently inherits the history view's label 'From current', which is false when you compare two earlier readings (e.g. 'From current ΔE2000 0.00' on two old readings). What label should Compare's slot carry?" Chosen: **No label** — "The slot sits between the two chips and shows just the distance or the Not compared line, with no label. No new copy." Not chosen: **'Between these readings'** — "A neutral label for Compare's slot. New copy string."
+- **Decision:** The slot sits between the two chips and shows the distance or a Not compared line, with no label. No new copy.
+- **Carried by:** R5.8, UJ5.4-f
+
+### F217 — A current value at another light shows the not-compared lines (2026-09-26)
+
+- **Authority:** owner decision D71, round-12 adjudication 2026-09-26 (R12-M1, TR12-4). Question: "In the history view, an item's current reading can be non-spectral, kept at a different light (e.g. D65/10° in a D50/2° collection). Does each earlier reading show the 'Not compared — worked out for a different light…' line, or no distance line at all?" Chosen: **Not compared lines** — "The current reading has a value, just at another light, so each earlier reading with a value shows the not-compared line. One with no value in the condition shows the no-value line, and an unreadable one the can't-be-read line. The user sees why there's no number. 'No current value, no lines' then means no value in the collection's condition at all." Not chosen: **No lines** — "A current value at another light counts as no current working-set value, so the history view shows no distance lines, the same as for an item with no value."
+- **Decision:**
+  - **The rule.** Where the current reading has a value in the collection's measurement condition but worked out under another illuminant or observer, each earlier reading follows R5.4's order: can't-be-read, then no-value, then not-compared.
+  - **What "no current value" means.** In the history view's no-lines rule, it now means no value in the collection's measurement condition.
+- **Carried by:** R5.4, UJ5.3-r
 
 ## Fence → row map
 
@@ -2025,17 +2061,20 @@ than deciding a WHAT.
 - **F201** — governs no rows
 - **F202** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F59
 - **F203** — R2.6, UJ2.1-g
-- **F204** — R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ7.1-u
-- **F205** — R2.1, UJ2.3-a, UJ2.3-b
-- **F206** — R2.1, UJ2.3-b
+- **F204** — R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ3.3-p, UJ3.3-q, UJ7.1-u
+- **F205** — R2.1, UJ2.3-a, UJ2.3-b, UJ2.3-c, UJ2.3-d, UJ2.3-e, UJ2.3-f
+- **F206** — R2.1, UJ2.3-b, UJ2.3-c
 - **F207** — R5.4, R5.8, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.4-c, UJ5.4-d
 - **F208** — R4.1, UJ3.4-l, UJ3.4-m, UJ3.4-n
 - **F209** — OQ 1, OQ 2, OQ 3, OQ 4, OQ 5, OQ 6, OQ 7, OQ 12, R2.5, R3.1, R3.3, R3.7, R6.2, R7.1, R7.2, R8.1, R8.2, M1
 - **F210** — governs no rows
-- **F211** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
-- **F212** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
-- **F213** — R5.8, UJ5.4-c, UJ5.4-e, UJ5.4-f, UJ5.4-g
+- **F211** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F60, the Data Foundation PRD F61
+- **F212** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F60, the Data Foundation PRD F61
+- **F213** — R5.8, UJ5.4-c, UJ5.4-e, UJ5.4-f, UJ5.4-g, UJ5.4-h, UJ5.4-i
 - **F214** — governs no rows
+- **F215** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F61
+- **F216** — R5.8, UJ5.4-f
+- **F217** — R5.4, UJ5.3-r
 
 ## Rejected findings
 
