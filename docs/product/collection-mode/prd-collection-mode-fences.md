@@ -1753,6 +1753,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 - **Decision:** The rule covers an imported column whose stored name equals, under the import PRD's R2.3 rule, a Swatch field's name or a header the copy file's Column headers table shows. Wherever the app names such a column, it is labelled with its stored name followed by the copy file's " (imported)" tag. That means its header, "Columns", a view sort, "Set a field", the item detail and VoiceOver. Every action on it targets that column, never another with the same label. The file keeps its stored name, so export and re-import are unchanged, and the Import PRD does not change.
 - **Carried by:** R2.1, UJ2.3-a, UJ2.3-b, UJ2.3-c, UJ2.3-d, UJ2.3-e, UJ2.3-f
 
+**Clarified 2026-09-26 (re-lock orchestrator bookkeeping; no owner decision; its re-lock check 8):** UJ2.3-g, an imported column stored C\* reading "C\* (imported)" (round 12, TR12-12), also carries this fence.
+
 ### F206 — A tagged label that still clashes takes Import's collision form (2026-09-26)
 
 - **Authority:** owner decision D63, round-10 adjudication 2026-09-26. Question: "One follow-up to the '(imported)' tag. In a rare case the tagged label still clashes: one imported column is named 'State' and another is literally named 'State (imported)'. How should the app tell those two apart?" Chosen: **Number it like Import** — "The later one by column position takes Import's existing collision form, '⟨label⟩ (2)' and counting up until unique, e.g. 'State (imported) (2)'. It's deterministic, needs no new template, and the stored names stay unchanged." Not chosen: **Tag every imported column** — "Once any clash exists, every imported column in that collection shows its position, e.g. 'State (imported, column 3)'. Always unique, but noisier."
@@ -1774,6 +1776,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 **Clarified 2026-09-26 (F213):** Compare's slot is worked out from the two selected readings alone (F213); the item-level "no current value" bullet above stays with the history view.
 
 **Clarified 2026-09-26 (F217):** where the current reading has a value in the collection's measurement condition but worked out under another illuminant or observer, each earlier reading follows R5.4's order — can't-be-read, then no-value, then not-compared — rather than showing no distance line; the "no current value" bullet above now means no value in the collection's measurement condition at all (F217).
+
+**Clarified 2026-09-26 (re-lock orchestrator bookkeeping; no owner decision; its re-lock check 8):** UJ5.3-q, an earlier reading's not-compared line with no ΔE2000 number (round 11), and R8.10b's reading of R5.4's and R5.8's distance line by identifier (round 12's IF-7) also carry this fence.
 
 ### F208 — Closing a detail returns to E9 only while its swatch has a usable colour (2026-09-26)
 
@@ -2095,9 +2099,9 @@ than deciding a WHAT.
 - **F202** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F59
 - **F203** — R2.6, UJ2.1-g
 - **F204** — R3.2, E3, E13, UJ3.3-n, UJ3.3-o, UJ3.3-p, UJ3.3-q, UJ7.1-u
-- **F205** — R2.1, UJ2.3-a, UJ2.3-b, UJ2.3-c, UJ2.3-d, UJ2.3-e, UJ2.3-f
+- **F205** — R2.1, UJ2.3-a, UJ2.3-b, UJ2.3-c, UJ2.3-d, UJ2.3-e, UJ2.3-f, UJ2.3-g
 - **F206** — R2.1, UJ2.3-b, UJ2.3-c
-- **F207** — R5.4, R5.8, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.4-c, UJ5.4-d
+- **F207** — R5.4, R5.8, R8.10b, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.3-q, UJ5.4-c, UJ5.4-d
 - **F208** — R4.1, UJ3.4-l, UJ3.4-m, UJ3.4-n
 - **F209** — OQ 1, OQ 2, OQ 3, OQ 4, OQ 5, OQ 6, OQ 7, OQ 12, R2.5, R3.1, R3.3, R3.7, R6.2, R7.1, R7.2, R8.1, R8.2, M1
 - **F210** — governs no rows
