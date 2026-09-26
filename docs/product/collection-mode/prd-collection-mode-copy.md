@@ -309,6 +309,6 @@ awaiting your answer; restore — Earlier reading used again.
 | R5.4 distance | From current | ΔE2000 and the distance |
 | R5.4 no-value | From current | for a reading with no value in this collection's measurement condition: Not compared — no value in this collection's measurement condition |
 | R5.4 unreadable | From current | for an unreadable reading: Not compared — this reading can't be read |
-| R5.4 not-compared | From current | where either reading's value was worked out under another illuminant or observer: Not compared — worked out for a different light, viewing angle or measurement condition |
+| R5.4 not-compared | From current | where, both having values in this collection's measurement condition, either was worked out under another illuminant or observer: Not compared — worked out for a different light, viewing angle or measurement condition |
 
 R5.8's Compare slot shows whichever of these lines R5.8 gives, with no label, between the two chips (F216).

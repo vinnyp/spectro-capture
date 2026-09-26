@@ -1728,6 +1728,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 
 **Clarified 2026-09-26 (F211; F212):** the log copy's deadline is completed by F211 (a read begun after the wipe also defers it) and F212 (clearing the log never holds a write while it waits on a read).
 
+**Clarified 2026-09-26 (round-14 orchestrator bookkeeping; no owner decision; the fence it points to governs; IF14-m2, ARCH14-N1):** this fence's Decision and the Clarified line above are superseded by F215's principle — the copy goes at the first moment, with the file open, that no read uses the log and no write runs, after a crash at the first open at which that holds. F215 governs.
+
 ### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
 
 - **Authority:** owner decision D56, round-10 adjudication 2026-09-26. Question: "Finding 6: the 'Show simulated readings' banner action promises to list exactly the simulated swatches. But if a search or another filter is already active, the result can be empty or include other swatches. What should the action do?" Chosen: **Replace narrowing** — "Clears the search and the row-state filter and sets the mark filter to Simulated alone, so exactly the simulated swatches are listed. 'Clear filters' brings the full table back." Not chosen: **Narrow within current view** — "Keeps the search and row-state filter and replaces only the mark filter with Simulated. The promise changes to 'the simulated swatches among what you're looking at', which can be none."

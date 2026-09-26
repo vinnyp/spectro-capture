@@ -646,6 +646,8 @@ Source: the owner's round-10 decisions in the Collection Mode PRD's adjudication
 
 **Clarified 2026-09-26 (F60):** its "(D1)" above means the Collection Mode round-10 fix file's box D1, not an owner decision numbered D1; F60 carries the round-11 completion of this same deadline.
 
+**Clarified 2026-09-26 (round-14 orchestrator bookkeeping; no owner decision; the fence it points to governs; IF14-m2):** this fence's Decision is superseded by F61's principle — the copy of removed text in a journal or log beside the file goes at the first moment, with the file open, that no read uses that journal or log and no write runs; after a crash, at the first open at which that holds. F61 governs.
+
 ## Collection Mode round-11 amendment (2026-09-26)
 
 Source: the owner's round-11 decisions in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F211 and F212](../collection-mode/prd-collection-mode-fences.md) (owner decisions D65 and D66, over round 11's database-lens MAJOR-1 and MAJOR-2). This fence carries only the Data Foundation half of those decisions; peer review pending.
