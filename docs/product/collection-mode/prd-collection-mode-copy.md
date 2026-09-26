@@ -265,9 +265,11 @@ and awaiting-answer mark earlier readings and are not filter values (R3.4 filter
 | awaiting-answer | Earlier readings | Awaiting answer | — | awaiting answer |
 
 **Column headers** (R2.1, R1.9). The chip column has no header text; an imported column is headed
-by the name the file stores for it, tagged " (imported)" where that stored name equals a Swatch
-field's name or another header in this table, and, where the tagged label still clashes with
-another column's, by the import PRD's collision form, "⟨base⟩ (⟨suffix⟩)", counting from 2.
+by the name the file stores for it, tagged " (imported)" where that stored name equals, under the
+import PRD's R2.3 rule, a Swatch field's name or a header in this table, the L*, C* and h° row
+counting as three headers, and, where the tagged label still clashes with another column's, the
+later of the clashing columns by stored position takes the import PRD's collision form,
+"⟨base⟩ (⟨suffix⟩)", counting from 2.
 
 | Column | Header |
 |---|---|
@@ -285,7 +287,7 @@ set-aside cause the label its copy file's Set-aside cause labels table gives it.
 
 | Line | Label | What follows it |
 |---|---|---|
-| R4.2a Identity | Swatch | Code, name, alt. code, alt. name, collection, then each imported column under its stored name |
+| R4.2a Identity | Swatch | Code, name, alt. code, alt. name, collection, then each imported column under its R2.1 label |
 | R4.2b State | State | The row state; for a set-aside swatch, its cause and then set aside for good, or set aside, still to deal with |
 | R4.2c Current value | Colour | The chip, then each space's values with its light, observer, condition and version; Not in this condition where the collection's condition has no value; or No current value |
 | R4.2d The current reading | Reading | Measured, then the date · instrument, model, serial and firmware · samples kept · averaged over spectral curves or colour values · spread · samples agreed, or samples disagreed, average accepted |
@@ -304,4 +306,7 @@ awaiting your answer; restore — Earlier reading used again.
 | R5.2c Reason | Why | The reason's words above, and Current on the current reading |
 | R5.2d Standing | Marks | The chip labels of never-true, awaiting-answer and unreadable where they apply |
 | R5.2e Value | Colour | The chip, samples kept and spread |
-| R5.4 distance | From current | ΔE2000 and the distance; for an earlier reading with no value in this collection's measurement condition: Not compared — no value in this collection's measurement condition; for an unreadable reading: Not compared — this reading can't be read, which in Compare's single slot wins over the no-value line; or, where both readings have values worked out differently: Not compared — worked out for a different light, viewing angle or measurement condition |
+| R5.4 distance | From current | ΔE2000 and the distance |
+| R5.4 no-value | From current | for a reading with no value in this collection's measurement condition: Not compared — no value in this collection's measurement condition |
+| R5.4 unreadable | From current | for an unreadable reading: Not compared — this reading can't be read, which wins over the no-value line |
+| R5.4 not-compared | From current | where either reading's value was worked out under another illuminant or observer: Not compared — worked out for a different light, viewing angle or measurement condition |

@@ -122,6 +122,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F177](../collection-mode/prd-collection-mode-fences.md), owner decision D46):** the budget is 8,400 words; see F55.
 
+**Clarified 2026-09-26 ([the Collection Mode PRD's F214](../collection-mode/prd-collection-mode-fences.md), owner decision D68):** the budget is 8,450 words; see F55.
+
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
 **Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8, now the export PRD's R2.4). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
@@ -255,6 +257,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F57 | R1.11, R6.2a, R6.3, R7.6d, E33, E35, OQ 20; DJ3, DJ4; the copy header; the Collection Mode inbound and outbound lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the dated F21, F54, F55 and F56 clarifications. |
 | F58 | R1.11, R6.2a, R7.6b, E15, E34, E35, OQ 20; DJ3, DJ4; the copy header; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations); the Corrected F57 line. |
 | F59 | R6.2, R6.2a, E35; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F59. |
+| F60 | R6.2, R6.2a, R1.11; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F60. |
 
 ## Rejected findings
 
@@ -577,6 +580,8 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F177](../collection-mode/prd-collection-mode-fences.md), owner decision D46):** the budget is 8,400 words — a third owner override of the agent-PRD format's never-raise rule, recorded here, so the round-5 rule text and the seam line the lock checks require land without trimming; the body stood at 8,292 when it was raised. After the round-5 fix pass the body stands at 8,381, within the budget: every addition landed at its drafted tightest form, and no rule was trimmed.
 
+**Clarified 2026-09-26 ([the Collection Mode PRD's F214](../collection-mode/prd-collection-mode-fences.md), owner decision D68):** the budget is 8,450 words — a fourth owner override of the agent-PRD format's never-raise rule, recorded here, so R6.2a's F60 wording and the two fence-range cite fixes land without trimming an aligned row.
+
 ## Collection Mode round-4 amendment (2026-09-25)
 
 Source: the owner's round-4 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F155, F156, F157 and F158](../collection-mode/prd-collection-mode-fences.md), and its approved round-4 recommendations 6, 10 and 11, recorded as [its F166, F170 and F171](../collection-mode/prd-collection-mode-fences.md). Its F159 (R7.3j, R7.6p, DJ3) and F165 (R3.4, R6.2a) land as dated lines under F54 here, and its F160 under F55 and F21. This fence carries only the Data Foundation halves of those decisions; peer review pending.
@@ -635,3 +640,16 @@ Source: the owner's round-10 decisions in the Collection Mode PRD's adjudication
 - **Decision:** R6.2a's deadline is qualified as F202 states: text in the file's own bytes is gone at the read-based deadline R6.2a already states, whether or not a write is held; a copy of that text in a journal or log the app keeps beside the file goes once nothing still needs it — a read begun before the wipe, and a write running when the wipe runs, both counting — at the latest when that write lands, clearing it able to hold the next write while it runs. E35 stays until the wipe lands, meaning the text is in none of R6.2a's bytes. DJ3 gains the log-copy line (D1).
 - **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
 - **Rows:** R6.2, R6.2a, E35, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F59.
+
+**Clarified 2026-09-26 (F60):** its "(D1)" above means the Collection Mode round-10 fix file's box D1, not an owner decision numbered D1; F60 carries the round-11 completion of this same deadline.
+
+## Collection Mode round-11 amendment (2026-09-26)
+
+Source: the owner's round-11 decisions in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F211 and F212](../collection-mode/prd-collection-mode-fences.md) (owner decisions D65 and D66, over round 11's database-lens MAJOR-1 and MAJOR-2). This fence carries only the Data Foundation half of those decisions; peer review pending.
+
+### F60 — The log copy waits for every read still using it, and clearing never holds a write on a read (2026-09-26)
+
+- **Authority:** [the Collection Mode PRD's F211 and F212](../collection-mode/prd-collection-mode-fences.md) — owner decisions D65 and D66, its round-11 adjudication, 2026-09-26.
+- **Decision:** R6.2a's journal-or-log deadline is completed as F211 and F212 state. The copy goes once no read still using it remains — one begun after the wipe included — and the write running at the wipe has ended or failed, at the next open after a crash. Clearing it holds the next write only for its own copy and truncation, never while it waits on a read; a clearing a read blocks gives way and is retried once that read ends. R1.11's "but a wipe (R6.2a)" exemption covers this clearing the same way. DJ3 gains sub-runs for a second outside read begun during the held write, and for a crash in that window.
+- **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
+- **Rows:** R6.2, R6.2a, R1.11, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F60.

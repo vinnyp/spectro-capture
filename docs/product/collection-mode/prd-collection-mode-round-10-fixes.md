@@ -20,7 +20,7 @@ This is the resume point for the amendment that answers the PR #21 review of `04
   - Report both counts when the pass ends.
 - **Ticking.** Tick each box with a one-line Result note, as the round-8 fix file does.
 
-`scratchpad` below is `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad`.
+`scratchpad` below is the orchestrator's scratchpad.
 
 ## A. The record
 

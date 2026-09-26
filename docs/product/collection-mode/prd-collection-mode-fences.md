@@ -13,7 +13,7 @@ amendment preserves them and does not re-decide them.
 
 **Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance. A second link, to this amendment's own lock record, is added at its bookkeeping close.
 
-**Amendment pending:** F202–F210 (2026-09-26), peer review pending.
+**Amendment pending:** F202–F214 (2026-09-26), peer review pending.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -55,10 +55,11 @@ file, in every round below.
 | approved round-1 recommendation M and approved fix (a)–(g) | The round-1 fix file's Owner-needed list | [round-1 fixes](prd-collection-mode-round-1-fixes.md) |
 | approved round-2 recommendation M | The round-2 fix file's Owner-needed list | [round-2 fixes](prd-collection-mode-round-2-fixes.md) |
 | approved round-3 recommendation M | The round-3 fix file's Owner-needed list | [round-3 fixes](prd-collection-mode-round-3-fixes.md) |
-| approved round-4 recommendation M | The round-4 fix file's Owner-needed list | [round-4 fixes](prd-collection-mode-round-4-fixes.md) |
-| approved round-5 recommendation M | The round-5 fix file's Owner-needed list | [round-5 fixes](prd-collection-mode-round-5-fixes.md) |
-| approved round-6 recommendation M | The round-6 fix file's Owner-needed list | [round-6 fixes](prd-collection-mode-round-6-fixes.md) |
+| approved round-4 recommendation M | The round-4 fix file carries no numbered recommendations list; the fence's own Authority quote is the committed record | [round-4 fixes](prd-collection-mode-round-4-fixes.md) |
+| approved round-5 recommendation M | The round-5 fix file carries no numbered recommendations list; the fence's own Authority quote is the committed record | [round-5 fixes](prd-collection-mode-round-5-fixes.md) |
+| approved round-6 recommendation M | The round-6 fix file carries no numbered recommendations list; the fence's own Authority quote is the committed record | [round-6 fixes](prd-collection-mode-round-6-fixes.md) |
 | OQ 11's closer, run 2026-09-26 (not an owner decision) | Engineering's check; recorded in | [the results file's OQ 11 section](prd-collection-mode-oq-results.md#oq-11) |
+| owner decision D65–D68 (round-11 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 11 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-11--the-amendments-delta-and-pre-lock-round-2026-09-26) |
 
 This is editorial: it adds navigation only, over the settled preamble and fences above.
 
@@ -514,6 +515,8 @@ round-1 fix pass are filled by it.
 - **Authority:** owner decision D19, round-1 adjudication 2026-09-24. Question: "Which Mac gates the interim timing budgets (100 ms browse, 1 s open) until OQ 1 closes?" Chosen: **M1 MacBook Air, 8 GB** — "The oldest, lowest-spec Apple-silicon class — a realistic floor for a Cataloger's machine. Measured on its internal disk." Not chosen: the owner's current dev Mac; both.
 - **Decision:** Until OQ 1 closes, BROWSE_RESPONSE_BUDGET, OPEN_COLLECTION_BUDGET and any budget F42 adds are measured on an M1 MacBook Air with 8 GB, on its internal disk.
 - **Carried by:** R8.1, M1, UJ9.5-a, UJ9.5-b, UJ9.5-d
+
+**Clarified 2026-09-26 (F209; SSE11-14):** OQ 1 closed under F209, and its answer carries the Mac this fence names — an M1 MacBook Air, 8 GB, internal disk — as v1's timing machine.
 
 ### F34 — FILE_ITEMS_CEILING's candidate is 100,000 items (2026-09-24)
 
@@ -1138,6 +1141,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Decision:** As recommendation 22 states.
 - **Carried by:** R8.11, UJ9.5-d
 
+**Clarified 2026-09-26 (D2; PM-3, SSE11-1, R11-M1, TR-17):** R8.11's interim is unchanged by F209 — F209's Decision text says so explicitly — and R8.11 is listed again under Interim stated and in the first Build dependencies row.
+
 ### F121 — Approved round-2 recommendation 23: DF E11 and E26's "not yet settled" (2026-09-25)
 
 - **Authority:** approved round-2 recommendation 23: "marked as awaiting your answer", under a dated DF fence (DF F53), both keeping their alignment.
@@ -1719,6 +1724,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 - **Why:** the review's reproduction, repeated by the orchestrator on SQLite 3.53.4. A WAL log cannot be truncated while a write is in progress.
 - **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F59
 
+**Clarified 2026-09-26 (F211; F212):** the log copy's deadline is completed by F211 (a read begun after the wipe also defers it) and F212 (clearing the log never holds a write while it waits on a read).
+
 ### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
 
 - **Authority:** owner decision D56, round-10 adjudication 2026-09-26. Question: "Finding 6: the 'Show simulated readings' banner action promises to list exactly the simulated swatches. But if a search or another filter is already active, the result can be empty or include other swatches. What should the action do?" Chosen: **Replace narrowing** — "Clears the search and the row-state filter and sets the mark filter to Simulated alone, so exactly the simulated swatches are listed. 'Clear filters' brings the full table back." Not chosen: **Narrow within current view** — "Keeps the search and row-state filter and replaces only the mark filter with Simulated. The promise changes to 'the simulated swatches among what you're looking at', which can be none."
@@ -1755,6 +1762,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
   - **Compare.** Compare's single slot shows the same lines. The unreadable line wins over the no-value line (D64). The different-light line applies only when both readings have values that were worked out differently.
 - **Carried by:** R5.4, R5.8, UJ5.3-b, UJ5.3-o, UJ5.3-p, UJ5.4-c, UJ5.4-d
 
+**Clarified 2026-09-26 (F213):** Compare's slot is worked out from the two selected readings alone (F213); the item-level "no current value" bullet above stays with the history view.
+
 ### F208 — Closing a detail returns to E9 only while its swatch has a usable colour (2026-09-26)
 
 - **Authority:** owner decision D60, round-10 adjudication 2026-09-26. Question: "Finding 5: you open a swatch from 'Find similar' (E9), and a re-read then leaves the original swatch present but with no usable colour (unreadable, or no value in the condition). What happens when you close the detail?" Chosen: **Back to the table** — "You go back to E9 only while its swatch remains and still has a usable colour. Otherwise closing goes to the table, the same as when the swatch is deleted. No stale results are kept, and no new copy is needed." Not chosen: **E9 explains** — "Go back to E9 in a new variant: '⟨code⟩ has no colour to compare now.' with Close. This needs a new copy string."
@@ -1772,6 +1781,39 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 - **Authority:** owner decision D62, round-10 adjudication 2026-09-26. Question: "Fixing these findings adds roughly 200–300 words to a PRD at 11,987 of its 12,000-word budget. How should the budget be handled?" Chosen: **Raise to 12,400** — "A dated fence raises the cap, as you did twice for Data Foundation. Rows that are already aligned stay untouched." Not chosen: **Compact to fit 12,000** — "Trim other rows to make room. The skill prefers this, but trimming aligned rows reopens them for review, and earlier compaction passes changed meaning."
 - **Decision:** This PRD's word budget is 12,400 words, counted by rule 14's method. The owner overrides the agent-PRD format's never-raise rule for this PRD, as F177 did for the Data Foundation PRD.
 - **Why:** rows that are already aligned stay untouched; the growth is the round-10 findings' rule text, not restatement.
+- **Carried by:** governs no rows
+
+Fences F211–F214 were decided by the owner on 2026-09-26, over round 11's database-lens MAJOR-1 and MAJOR-2 (both reproduced by the orchestrator on SQLite 3.53.4), the Compare fork the interface, staff-engineer, test and plan lenses raised, and the resulting Data Foundation budget question, recorded in the review log's "## Round 11 — the amendment's delta and pre-lock round (2026-09-26)" section.
+
+### F211 — The log copy waits for every read still using it (2026-09-26)
+
+- **Authority:** owner decision D65, round-11 adjudication 2026-09-26 (round-11 database MAJOR-1; plan R11-m4). Question: "Round 11 found two more SQLite facts about the erase (F202). I reproduced both. First: a read that starts AFTER the wipe (another app's, or this app's own export or Save a copy) also keeps the log copy alive, even after the running write lands. So 'at the latest when that write lands' can't always hold. What should the deadline say?" Chosen: **Any read in use defers it** — "The log copy goes once no read still using the log remains, including one begun after the wipe, and the write running at the wipe has ended (landed or failed); after a crash, at the next open. E35 stays up while another app's read holds it. The app's own export or copy holds it silently, as the app's own earlier reads already do (F57)." Not chosen: **App's own reads wait** — "Same, except the app starts no export, Save a copy or check of its own while a log copy awaits clearing; they wait, shown, until it clears. Then only other apps' reads can hold it. The cost: an export can wait as long as another app keeps reading."
+- **Decision:**
+  - **The rule.** A copy of removed text in a journal or log beside the file goes once two things are true: no read still uses that journal or log, a read begun after the wipe included; and the write running at the wipe has ended, landed or failed. After a crash, it goes at the next open.
+  - **E35.** It appears only when another app's read defers a wipe. Once up, it stays until the text is in none of those bytes.
+  - **The app's own reads.** Its own export, Save a copy or check holds the copy without any notice, as the app's earlier reads already do (F57).
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
+
+### F212 — Clearing a log never holds a write while it waits on a read (2026-09-26)
+
+- **Authority:** owner decision D66, round-11 adjudication 2026-09-26 (round-11 database MAJOR-2). Question: "Second SQLite fact: SQLite's usual way of clearing the log holds the write lock while it waits for readers to finish. In my run a capture save was refused for the whole wait. 'Clearing may make the next write wait a moment' therefore needs a bound. Which rule?" Chosen: **Never wait on a read** — "Clearing the log holds the next write only for its own copy and truncation, never while it waits on a read. A clearing a read blocks gives way and retries once that read ends. A capture save never waits on another app's read, and waits on a clearing only within R8.11's budgets." Not chosen: **Allow the wait** — "Clearing may hold the next write until the reads it waits on end. It's simpler, but a capture save can stall for as long as another app keeps the file open for reading."
+- **Decision:**
+  - **The rule.** Clearing a journal or log holds the next write only for its own copy and truncation, never while it waits on a read. A clearing that a read blocks gives way, and is retried once that read ends.
+  - **Capture saves.** A capture save never waits on another app's read, and waits on a clearing only within R8.11's budgets.
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
+
+### F213 — Compare depends only on the two selected readings (2026-09-26)
+
+- **Authority:** owner decision D67, round-11 adjudication 2026-09-26 (IF-4, SSE11-3, TR-6, R11-M3). Question: "Compare (P2) on an item whose current reading has no value in the collection's condition: the two selected readings may both have values. Does the slot show their ΔE2000, or nothing (because 'no current value, no distance lines' in the history view)?" Chosen: **Two readings alone** — "Compare's slot depends only on the two selected readings. If both have values worked out alike, it shows their ΔE2000; otherwise it shows the line for the one lacking (can't-be-read first). The history view's 'no current value, no From-current lines' rule stays with the history view." Not chosen: **Blank like history** — "When the item has no current value in the condition, Compare shows no distance at all, the same as the history view's From-current lines."
+- **Decision:**
+  - **The rule.** Compare's slot shows the two readings' ΔE2000 when both have values in the working set, worked out alike. Otherwise it shows the line for the reading that lacks one, the can't-be-read line first.
+  - **Scope.** The history view's rule that an item with no current working-set value shows no From-current line stays with the history view.
+- **Carried by:** R5.8, UJ5.4-c, UJ5.4-e, UJ5.4-f, UJ5.4-g
+
+### F214 — The Data Foundation PRD's word budget is 8,450 (2026-09-26)
+
+- **Authority:** owner decision D68, round-11 adjudication 2026-09-26 (Data Foundation budget). Question: "Writing D65 and D66 into Data Foundation's R6.2a, and fixing two cites the reviewers flagged, adds about 11 words. The Data Foundation body is exactly at its 8,400-word cap (you raised it to 8,400 in F177). How should that be handled?" Chosen: **Raise DF to 8,450** — "A dated fence raises the cap by 50. Aligned rows stay untouched, and the new wording keeps its precision." Not chosen: **Compact DF to fit 8,400** — "Trim other Data Foundation text to make room. That reopens aligned rows for review, and earlier trims changed meaning."
+- **Decision:** The Data Foundation PRD's word budget is 8,450 words, counted by rule 14's method. It is recorded there by a dated line under its F55, following F177's precedent, which overrides the never-raise rule for that PRD.
 - **Carried by:** governs no rows
 
 ## Fence → row map
@@ -1990,6 +2032,10 @@ than deciding a WHAT.
 - **F208** — R4.1, UJ3.4-l, UJ3.4-m, UJ3.4-n
 - **F209** — OQ 1, OQ 2, OQ 3, OQ 4, OQ 5, OQ 6, OQ 7, OQ 12, R2.5, R3.1, R3.3, R3.7, R6.2, R7.1, R7.2, R8.1, R8.2, M1
 - **F210** — governs no rows
+- **F211** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
+- **F212** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3
+- **F213** — R5.8, UJ5.4-c, UJ5.4-e, UJ5.4-f, UJ5.4-g
+- **F214** — governs no rows
 
 ## Rejected findings
 
