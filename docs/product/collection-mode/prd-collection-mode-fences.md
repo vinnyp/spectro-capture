@@ -279,6 +279,8 @@ choices that recommendation states and nothing more.
 
 **Clarified 2026-09-25 (owner decision D17, F31; F78):** the collection-side Flag first renders a confirmation stating its consequence (E18), and is not offered while the item's current reading awaits the correction answer (F78); the capture PRD's "Flag" label and what a Flag does are unchanged.
 
+**Clarified 2026-09-25 (owner decision D47, F189):** the collection-side Flag moves to P0.
+
 ### F11 — An item whose current reading is quarantined is set aside, its cause "unreadable" (2026-09-24)
 
 - **Authority:** owner decision D11, post-fill adjudication 2026-09-24. Question: "An item whose
@@ -707,6 +709,8 @@ round-1 fix pass are filled by it.
 - **Carried by:** R1.7
 
 **Clarified 2026-09-25 (approved round-5 recommendation 10, F187):** the Data Foundation PRD's R6.3 and its OQ 20 carry the same deferral, so if that OQ is still open at v1 release, delete-undo is deferred there too and v1's deletes are final.
+
+**Clarified 2026-09-25 (approved round-6 recommendation 4, F196):** ADR-0003 need not wait for delete-undo's representation, which may come in a later ADR; a post-lock release item makes the R1.7 call at release a decision, not a default.
 
 Fences F58–F90 are the owner's approval, on 2026-09-25, as a set, of 33 numbered recommendations over the round-1 findings no earlier fence settled — each stated to the owner in full before the question "Approve the 33 round-1 recommendations listed above as a set?", answered **Approve all 1–33**. Recommendation n is fence F(57+n); its Authority quotes the recommendation as it stands in the round-1 fix file's Owner-needed list (the box named in its title), and it settles what that recommendation states and nothing more.
 
@@ -1160,6 +1164,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 - **Why:** it sets the Build dependencies paragraph and removes an item from its first row's cells, which carry no ID.
 - **Carried by:** governs no rows
 
+**Clarified 2026-09-25 (owner decision D50, F192):** ADR-0005 joins ADR-0003 and ADR-0006 as a stop on every row.
+
 ### F125 — Approved round-2 recommendation 27: "Samples disagreed" as a cause and a mark (2026-09-25)
 
 - **Authority:** approved round-2 recommendation 27: the filter label becomes "Samples disagreed, average accepted" (R4.2d's words), and E12 says a set-aside swatch shows it only as its State cause.
@@ -1379,6 +1385,8 @@ Fences F155–F160 were decided by the owner on 2026-09-25 over the round-4 revi
 - **Decision:** As the chosen option states. It widens F137 and F152: an import commit and a file move now also hold every other write to the file, and a session's start or resume. It moves their home to the Data Foundation PRD.
 - **Carried by:** R8.1f, R8.1g, R8.10a, UJ9.5-g, the Data Foundation PRD R1.11, the Data Foundation PRD R1.3, the Data Foundation PRD R1.5, the Data Foundation PRD R1.9, the Data Foundation PRD R7.3j, the Data Foundation PRD DJ3, the Data Foundation PRD F56, the import PRD R3.2, the import PRD R3.8i, the import PRD F67, the capture PRD R1.1, the capture PRD R1.3, the capture PRD R1.5, the capture PRD R1.10, the capture PRD R3.5, the capture PRD R7.13, the capture PRD R8.5, the capture PRD R9.3, the capture PRD T7, the capture PRD F74
 
+**Clarified 2026-09-25 (owner decision D49, F191):** a re-read joins the writes that hold: while "Read it again" and its checks run, edits and every other write show unavailable, with progress shown.
+
 ### F156 — Closing, switching files or quitting waits for a long write (2026-09-25)
 
 - **Authority:** owner decision D37, round-4 adjudication 2026-09-25. Question: "While one of those long writes runs (a Collection Mode write lasts at most 10 s), what happens if the user closes the file, switches files or quits?" Chosen: **Wait, shown** — "Closing, switching or quitting waits for the write to finish, with its progress showing, then goes ahead. Nothing is lost and a confirmed delete stays confirmed." Not chosen: making them unavailable until the write is done; stopping the write and undoing it.
@@ -1516,6 +1524,8 @@ Fences F173–F177 were decided by the owner on 2026-09-25 over the round-5 revi
 - **Decision:** As the chosen option states; it refines F157.
 - **Carried by:** UJ9.7-h, the Data Foundation PRD R6.2a, the Data Foundation PRD E35, the Data Foundation PRD DJ4, the Data Foundation PRD F57
 
+**Clarified 2026-09-25 (owner decision D48, F190):** E35 closes with its file and never shows over another; at the next open, if the other app is still reading, it shows again, an earlier OK notwithstanding. Nothing about it is kept outside the file.
+
 ### F174 — "The same file" in E34's picker is the open file, wherever it now is (2026-09-25)
 
 - **Authority:** owner decision D43, round-5 adjudication 2026-09-25. Question: "In E34's \"Choose the file again\" picker (only the same file restores access), what counts as \"the same file\" if you renamed or moved it in Finder while it was open?" Chosen: **The open file, wherever it is** — "Picking your file under its new name or folder restores access. A copy or any other file still changes nothing." Not chosen: the same path only.
@@ -1527,6 +1537,8 @@ Fences F173–F177 were decided by the owner on 2026-09-25 over the round-5 revi
 - **Authority:** owner decision D44, round-5 adjudication 2026-09-25. Question: "Other than an export, the app has reads that can run for seconds: \"Save a copy\" and the checks a re-read runs. An edit made while one is running can't have its old text erased until that read finishes. What's the rule?" Chosen: **Like an export** — "Old text is erased as soon as the copy or check finishes. No notice is shown, because the app started the read itself. Every other read the app makes stays short (under 100 ms)." Not chosen: every read but an export's always short.
 - **Decision:** As the chosen option states; it refines F157 and F158, and restores the bound on every other read the app makes that the round-4 rewrite of the ADR-0003 input had narrowed to cold loads.
 - **Carried by:** the Data Foundation PRD DJ4, the Data Foundation PRD F56, the Data Foundation PRD F57
+
+**Clarified 2026-09-25 (owner decision D49, F191):** since edits wait while a re-read runs, a re-read's checks never overlap an edit; an export and Save a copy remain the app's own long reads that may defer a wipe, beside the open-file check (approved round-6 recommendation 3, F195), which ends before the file takes a write.
 
 ### F176 — A held write that fails cancels the close, switch or quit (2026-09-25)
 
@@ -1606,6 +1618,62 @@ Fences F173–F177 were decided by the owner on 2026-09-25 over the round-5 revi
 - **Authority:** approved round-5 recommendation 11: the capture and import PRDs, whose format has no inbound-obligations table, carry what this PRD imposes on them by their rows' cites and dated fences, accepted in place of adding tables to two locked PRDs. The Data Foundation, capture, import and Data Export PRDs' outbound lines to Collection Mode name every row this PRD's inbound lines cite, the Data Export PRD gaining that line; lock check 1a.
 - **Decision:** As recommendation 11 states.
 - **Carried by:** the Data Foundation PRD F57, the capture PRD F75, the import PRD F68, the Data Export PRD F33
+
+Fences F189–F192 were decided by the owner on 2026-09-25 over the pre-lock round's findings and the Phase 5 priority pass; each answers one question, quoted with its chosen option. F193–F197 record the owner's approval of round-6 recommendations 1–5.
+
+### F189 — The collection-side Flag is P0 (2026-09-25)
+
+- **Authority:** owner decision D47, round-6 (pre-lock) adjudication 2026-09-25. Question: "The priority review found that the first build (P0) can show a bad scan but can't fix it without destroying history. The collection-side Flag, \"Use this reading\" and re-scan are all P1, so only a final delete remains. Capture's Flag, set-aside review and re-scan of a set-aside row are already P0 in the capture PRD. Raise this PRD's Flag (R4.9) to P0?" Chosen: **Yes, Flag at P0** — "At P0 you can Flag a captured swatch from its detail, then review and re-scan it through capture's own P0 rows. History is kept. It changes your F10's priority only." Not chosen: keeping P1 and narrowing the trace lines.
+- **Decision:** As the chosen option states; it changes F10's priority. R4.9 moves to P0, with the copy and cases that depend on it (E18's base and E6's base naming the Flag, UJ 4 scenario 7 in the first phase), and the capture PRD's row carrying the collection-side Flag entry mirrors P0 for that entry only.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F190 — E35 goes with its file (2026-09-25)
+
+- **Authority:** owner decision D48, round-6 (pre-lock) adjudication 2026-09-25. Question: "E35 (\"another app is reading your file\") belongs to one file. What happens to it when you close that file or switch to another, and when you reopen with the other app still reading?" Chosen: **Goes with the file** — "E35 closes with the file and never shows over another file. At the next open, if the other app is still reading, it shows again, even if you'd pressed OK before. Nothing is remembered outside the file." Not chosen: remembering OK across a quit and reopen.
+- **Decision:** As the chosen option states; it refines F173.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F191 — Edits wait while a re-read runs (2026-09-25)
+
+- **Authority:** owner decision D49, round-6 (pre-lock) adjudication 2026-09-25. Question: "\"Read it again\" runs checks that can take seconds on a big file. Can you keep editing while they run?" Chosen: **No, edits wait** — "While a re-read runs, edits and other writes show unavailable, like the one-writer rule, with progress shown. There's nothing to reconcile afterwards, and undo history ends cleanly at the re-read." Not chosen: editing during the checks, the refresh reconciling them.
+- **Decision:** As the chosen option states: the Data Foundation PRD's R1.11 names a re-read among the operations that hold writes. It refines F155 and F175.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F192 — ADR-0005 is a stop on every row (2026-09-25)
+
+- **Authority:** owner decision D50, round-6 (pre-lock) adjudication 2026-09-25. Question: "ADR-0005 decides module layout and where the test doubles live. The project rules forbid a builder from choosing a layout itself, but this PRD lists only ADR-0003 and ADR-0006 as the ADRs that must land before any row is built. Add ADR-0005?" Chosen: **Add ADR-0005** — "Every row waits for ADR-0003, ADR-0005 and ADR-0006. The build can't start on a guessed module layout." Not chosen: leaving it out.
+- **Decision:** As the chosen option states; it widens F124.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F193 — Approved round-6 recommendation 1: DF E15 and E34 name the last change (2026-09-25)
+
+- **Authority:** approved round-6 recommendation 1: the Data Foundation PRD's E15 and E34 read "so your last change wasn't saved" in place of "so the last thing you did wasn't saved", which after a cancelled quit (F176) pointed at the quit.
+- **Decision:** As recommendation 1 states.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F194 — Approved round-6 recommendation 2: DF E35 is plural (2026-09-25)
+
+- **Authority:** approved round-6 recommendation 2: the Data Foundation PRD's E35 reads "Your changes are saved.", since one notice now covers several edits (F173).
+- **Decision:** As recommendation 2 states.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F195 — Approved round-6 recommendation 3: The open-file check beside the long reads (2026-09-25)
+
+- **Authority:** approved round-6 recommendation 3: the ADR-0003 input's bound on this app's reads names the open-file check (the Data Foundation PRD's R5.4) beside the export and Save a copy: it ends before the file takes a write.
+- **Decision:** As recommendation 3 states; it refines F175.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F196 — Approved round-6 recommendation 4: ADR-0003 need not wait for delete-undo (2026-09-25)
+
+- **Authority:** approved round-6 recommendation 4: the Build dependencies' delete-undo row states that its undo representation may come in a later ADR, so ADR-0003 need not wait for the Data Foundation PRD's OQ 20; a post-lock release item makes F57's R1.7 call a decision at release.
+- **Decision:** As recommendation 4 states; it refines F57.
+- **Carried by:** _(filled by the round-6 fix pass)_
+
+### F197 — Approved round-6 recommendation 5: Three post-lock items (2026-09-25)
+
+- **Authority:** approved round-6 recommendation 5: post-lock.md gains: OQ 7's display spike (one sRGB and one Display P3 display); a file renamed or moved while open keeps every committed write and survives a crash (ADR-0003); R8.11's timing is promised on a local volume only (Data Foundation R1.10's scope).
+- **Decision:** As recommendation 5 states.
+- **Carried by:** _(filled by the round-6 fix pass)_
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1806,6 +1874,15 @@ than deciding a WHAT.
 - **F186** — the capture PRD R8.14, the capture PRD F75
 - **F187** — the Data Foundation PRD R6.3, the Data Foundation PRD F57
 - **F188** — the Data Foundation PRD F57, the capture PRD F75, the import PRD F68, the Data Export PRD F33
+- **F189** — _(filled by the round-6 fix pass)_
+- **F190** — _(filled by the round-6 fix pass)_
+- **F191** — _(filled by the round-6 fix pass)_
+- **F192** — _(filled by the round-6 fix pass)_
+- **F193** — _(filled by the round-6 fix pass)_
+- **F194** — _(filled by the round-6 fix pass)_
+- **F195** — _(filled by the round-6 fix pass)_
+- **F196** — _(filled by the round-6 fix pass)_
+- **F197** — _(filled by the round-6 fix pass)_
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link
