@@ -142,6 +142,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** the lock checks pair each seam both ways, and a first-phase build offers no Set a field. Source: the Collection Mode PRD's F188; peer review pending.
 
+**Clarified 2026-09-25 ([the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md), its round-6 fix pass, editorial):** the Collection Mode obligation line's cite reads "Collection Mode R1.3, R3.1 and R4.4" as one label, so R3.1 no longer reads as this document's; UJ 2.1's held-write lines name a Collection Mode R8.1f/g write, as Data Foundation R1.11 does. No rule changes; peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.

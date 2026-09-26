@@ -395,13 +395,15 @@ The rest of this fence stands.
 - **Decision:** As recommendation 9 states: the three budgets stay candidates under their open
   questions; search, filters and view sorts last while the file is open and are never written to
   it; and the P2 column-visibility choice persists across launches outside the user's file.
-- **Carried by:** R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b
+- **Carried by:** R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b, UJ7.1-t
 
 **Clarified 2026-09-24 (owner decision D12, F21):** the column-visibility clause of this fence is
 superseded by F21 — the choice is kept with the collection in the file. The rest of this fence
 stands.
 
 **Clarified 2026-09-24 (owner decisions D19–D20, F33, F34, F41–F43):** the budgets are gated on an M1 MacBook Air with 8 GB until OQ 1 closes (F33); what they cover and how they are measured is F41's; F42 and F43 add BULK_WRITE_BUDGET and IMPORTED_COLUMNS_CEILING.
+
+**Clarified 2026-09-25 (owner decision D52, F199):** the swatch grid's default size and its range are the build's choice, at or above MIN_SWATCH_SIZE, as R7.2 states.
 
 Fences F21–F28 were decided by the owner in a second post-fill adjudication of 2026-09-24, over the
 questions the round-0 fix pass surfaced. F21–F23 each answer one question, quoted with its chosen
@@ -1017,6 +1019,8 @@ Fences F99–F134 were decided by the owner on 2026-09-25 over the findings revi
 
 **Clarified 2026-09-25 (owner decision D44 and approved round-5 recommendation 7, F175 and F184):** the read that defers a wipe is any read begun before that wipe, another app's or this app's own; of this app's reads only an export, Save a copy and a re-read's checks may run longer than BROWSE_RESPONSE_BUDGET.
 
+**Clarified 2026-09-25 (owner decision D42, F173):** the F157 line above reads in the order F157's F173 line states — the wipe follows the read's end, on its own or at the first open after it — as the Data Foundation PRD's F56 Corrected line records.
+
 ### F103 — All items search holds its budget at full imported width (2026-09-25)
 
 - **Authority:** owner decision D27, round-2 adjudication 2026-09-25. Question: "All items search matches imported values (your F86). At the file-wide ceiling that's up to 100,000 items × 20 columns × 200 characters searched per keystroke within 100 ms on the M1 Air — likely needing a search index in the file (which must then obey your byte-erasure rule). What width must All items search hold its budget at?" Chosen: **Full width** — "Budgets hold at the full per-collection imported width across the whole file; the storage-schema decision (ADR-0003) takes the index-or-scan choice as an input, under the byte rule. Keeps F86 as approved." Not chosen: imported values unbudgeted; no imported values in All items.
@@ -1583,6 +1587,8 @@ Fences F173–F177 were decided by the owner on 2026-09-25 over the round-5 revi
 - **Decision:** As recommendation 5 states; it refines F155.
 - **Carried by:** the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F57
 
+**Clarified 2026-09-25 (owner decision D53, F200):** the wipe is not one of the app-made writes that wait during a hold: it runs beside a held write, as the Data Foundation PRD's R1.11 states.
+
 ### F183 — Approved round-5 recommendation 6: ADR-0003's non-waiting save is scoped to a local volume (2026-09-25)
 
 - **Authority:** approved round-5 recommendation 6: the ADR-0003 input's "a text-removing write is saved without waiting on any read" is scoped to the Data Foundation PRD's R1.10 local-volume scope; the help-docs line for a network volume becomes a post-lock item.
@@ -1593,7 +1599,7 @@ Fences F173–F177 were decided by the owner on 2026-09-25 over the round-5 revi
 
 - **Authority:** approved round-5 recommendation 7: the Data Foundation PRD's R6.2a defers the wipe while any read begun before the wipe runs, not only a read begun before the write, as F157's "until the other app stops reading it" states.
 - **Decision:** As recommendation 7 states; it clarifies F157.
-- **Carried by:** the Data Foundation PRD R6.2a, the Data Foundation PRD DJ4, the Data Foundation PRD F57
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ4, the Data Foundation PRD F57
 
 ### F185 — Approved round-5 recommendation 8: R8.10a's held-write grant stays here for now (2026-09-25)
 
@@ -1625,55 +1631,57 @@ Fences F189–F192 were decided by the owner on 2026-09-25 over the pre-lock rou
 
 - **Authority:** owner decision D47, round-6 (pre-lock) adjudication 2026-09-25. Question: "The priority review found that the first build (P0) can show a bad scan but can't fix it without destroying history. The collection-side Flag, \"Use this reading\" and re-scan are all P1, so only a final delete remains. Capture's Flag, set-aside review and re-scan of a set-aside row are already P0 in the capture PRD. Raise this PRD's Flag (R4.9) to P0?" Chosen: **Yes, Flag at P0** — "At P0 you can Flag a captured swatch from its detail, then review and re-scan it through capture's own P0 rows. History is kept. It changes your F10's priority only." Not chosen: keeping P1 and narrowing the trace lines.
 - **Decision:** As the chosen option states; it changes F10's priority. R4.9 moves to P0, with the copy and cases that depend on it (E18's base and E6's base naming the Flag, UJ 4 scenario 7 in the first phase), and the capture PRD's row carrying the collection-side Flag entry mirrors P0 for that entry only.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** R4.9, E6, E18, T14, UJ4.7-a, UJ4.7-b, UJ4.7-c, UJ4.7-d, UJ4.7-e, UJ4.7-f, UJ9.1-f, UJ9.2-a, UJ9.8-b, the capture PRD R9.9, the capture PRD F76
 
 ### F190 — E35 goes with its file (2026-09-25)
 
 - **Authority:** owner decision D48, round-6 (pre-lock) adjudication 2026-09-25. Question: "E35 (\"another app is reading your file\") belongs to one file. What happens to it when you close that file or switch to another, and when you reopen with the other app still reading?" Chosen: **Goes with the file** — "E35 closes with the file and never shows over another file. At the next open, if the other app is still reading, it shows again, even if you'd pressed OK before. Nothing is remembered outside the file." Not chosen: remembering OK across a quit and reopen.
 - **Decision:** As the chosen option states; it refines F173.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD R6.2a, the Data Foundation PRD DJ4, the Data Foundation PRD F58
 
 ### F191 — Edits wait while a re-read runs (2026-09-25)
 
 - **Authority:** owner decision D49, round-6 (pre-lock) adjudication 2026-09-25. Question: "\"Read it again\" runs checks that can take seconds on a big file. Can you keep editing while they run?" Chosen: **No, edits wait** — "While a re-read runs, edits and other writes show unavailable, like the one-writer rule, with progress shown. There's nothing to reconcile afterwards, and undo history ends cleanly at the re-read." Not chosen: editing during the checks, the refresh reconciling them.
 - **Decision:** As the chosen option states: the Data Foundation PRD's R1.11 names a re-read among the operations that hold writes. It refines F155 and F175.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD R1.11, the Data Foundation PRD R7.6b, the Data Foundation PRD DJ3, the Data Foundation PRD DJ4, the Data Foundation PRD F58
 
 ### F192 — ADR-0005 is a stop on every row (2026-09-25)
 
 - **Authority:** owner decision D50, round-6 (pre-lock) adjudication 2026-09-25. Question: "ADR-0005 decides module layout and where the test doubles live. The project rules forbid a builder from choosing a layout itself, but this PRD lists only ADR-0003 and ADR-0006 as the ADRs that must land before any row is built. Add ADR-0005?" Chosen: **Add ADR-0005** — "Every row waits for ADR-0003, ADR-0005 and ADR-0006. The build can't start on a guessed module layout." Not chosen: leaving it out.
 - **Decision:** As the chosen option states; it widens F124.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Why:** it sets the Build dependencies paragraph, which carries no ID, as F124 does.
+- **Carried by:** governs no rows
 
 ### F193 — Approved round-6 recommendation 1: DF E15 and E34 name the last change (2026-09-25)
 
 - **Authority:** approved round-6 recommendation 1: the Data Foundation PRD's E15 and E34 read "so your last change wasn't saved" in place of "so the last thing you did wasn't saved", which after a cancelled quit (F176) pointed at the quit.
 - **Decision:** As recommendation 1 states.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD E15, the Data Foundation PRD E34, the Data Foundation PRD F58
 
 ### F194 — Approved round-6 recommendation 2: DF E35 is plural (2026-09-25)
 
 - **Authority:** approved round-6 recommendation 2: the Data Foundation PRD's E35 reads "Your changes are saved.", since one notice now covers several edits (F173).
 - **Decision:** As recommendation 2 states.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD E35, the Data Foundation PRD F58
 
 ### F195 — Approved round-6 recommendation 3: The open-file check beside the long reads (2026-09-25)
 
 - **Authority:** approved round-6 recommendation 3: the ADR-0003 input's bound on this app's reads names the open-file check (the Data Foundation PRD's R5.4) beside the export and Save a copy: it ends before the file takes a write.
 - **Decision:** As recommendation 3 states; it refines F175.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD F58
 
 ### F196 — Approved round-6 recommendation 4: ADR-0003 need not wait for delete-undo (2026-09-25)
 
 - **Authority:** approved round-6 recommendation 4: the Build dependencies' delete-undo row states that its undo representation may come in a later ADR, so ADR-0003 need not wait for the Data Foundation PRD's OQ 20; a post-lock release item makes F57's R1.7 call a decision at release.
 - **Decision:** As recommendation 4 states; it refines F57.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD F58
 
 ### F197 — Approved round-6 recommendation 5: Three post-lock items (2026-09-25)
 
 - **Authority:** approved round-6 recommendation 5: post-lock.md gains: OQ 7's display spike (one sRGB and one Display P3 display); a file renamed or moved while open keeps every committed write and survives a crash (ADR-0003); R8.11's timing is promised on a local volume only (Data Foundation R1.10's scope).
 - **Decision:** As recommendation 5 states.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Why:** it adds post-lock items only, which carry no ID here.
+- **Carried by:** governs no rows
 
 Fences F198–F201 were decided by the owner on 2026-09-25 over the five items the round-6 fix list marked needs owner (two help-docs lines answered together).
 
@@ -1681,25 +1689,26 @@ Fences F198–F201 were decided by the owner on 2026-09-25 over the five items t
 
 - **Authority:** owner decision D51, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "M2 and M3 are measured \"on every PR\", but the device PRD's OQ 21 records that CI has no macOS job yet. What's the interim until that closes?" Chosen: **Builder's Mac per PR** — "Until device OQ 21 closes, M2 and M3 run on a Mac for every PR, recorded in the PR. CI takes them over once a macOS job exists." Not chosen: not measuring them per PR until CI has macOS.
 - **Decision:** As the chosen option states; the device PRD's OQ 21 is named as this interim's closer.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** M2, M3
 
 ### F199 — The swatch grid's default and range are the build's choice (2026-09-25)
 
 - **Authority:** owner decision D52, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "The swatch grid (P2) sets a floor of 24 pt (MIN_SWATCH_SIZE) but names no default or largest size. Leave those to the builder?" Chosen: **Builder chooses** — "R7.2 says the default and the range are the build's choice, at or above 24 pt, as R8.9 does for keyboard routes. You can tune them at the P2 build." Not chosen: naming them now as constants.
 - **Decision:** As the chosen option states.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** R7.2
 
 ### F200 — A deferred wipe runs beside a held write (2026-09-25)
 
 - **Authority:** owner decision D53, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "If another app's read ends while a long write (such as a 10 s delete) is held, does erasing old text wait for that write to finish?" Chosen: **Erase right away** — "The erase runs beside the held write. It needs no write lock, so it doesn't contend, and the \"gone once the read ends\" deadline stays exact." Not chosen: treating the erase as an app-made write that waits for the hold.
 - **Decision:** As the chosen option states; the Data Foundation PRD's R1.11 deferral of app-made writes (F182) does not include the wipe.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Carried by:** the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F58
 
 ### F201 — Two help-docs lines (2026-09-25)
 
 - **Authority:** owner decision D54, round-6 (pre-lock) adjudication 2026-09-25, over an item the round-6 fix list marked needs owner. Question: "Two lines for the help docs, as post-lock items. Add them? (1) \"Move your file from inside SpectroCapture, or with it closed.\" (2) \"While an export, Save a copy or the open-file check runs, text you remove stays in the file until it finishes.\"" Chosen: **Add both** — "Both go into the post-lock help-docs list, to be written when the help docs are." Not chosen: neither.
 - **Decision:** As the chosen option states: both are post-lock help-docs items.
-- **Carried by:** _(filled by the round-6 fix pass)_
+- **Why:** it adds post-lock help-docs items only, which carry no ID here.
+- **Carried by:** governs no rows
 
 ## Fence → row map
 <!-- guidance: one line per fence. This is the index the mechanical checks reconcile against the
@@ -1731,7 +1740,7 @@ than deciding a WHAT.
 - **F17** — R3.1, E4
 - **F18** — R2.3, R3.4, R3.5, E5
 - **F19** — R1.2, R1.6, R2.6, R2.8, R3.3, E12
-- **F20** — R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b
+- **F20** — R2.10, R3.6, R8.1, R8.6, R7.1, R7.2, R8.10, UJ2.2-a, UJ2.2-b, UJ7.1-t
 - **F21** — R2.10, R8.10, UJ2.2-a, UJ2.2-b
 - **F22** — the capture PRD R8.18, the capture PRD M3, the capture PRD M4, the capture PRD UJ3.3-h, the capture PRD F70, R4.2b, UJ4.1-c, UJ4.5-c
 - **F23** — R5.5, UJ5.3-e, UJ5.3-g, the capture PRD R5.6, the capture PRD UJ3.3-j, the capture PRD F9, the capture PRD F70, the Data Foundation PRD R2.9, the Data Foundation PRD DJ2, the Data Foundation PRD F33, the Data Foundation PRD F51
@@ -1895,24 +1904,24 @@ than deciding a WHAT.
 - **F181** — E10, UJ1.3-h
 - **F182** — the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F57
 - **F183** — the Data Foundation PRD F57
-- **F184** — the Data Foundation PRD R6.2a, the Data Foundation PRD DJ4, the Data Foundation PRD F57
+- **F184** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ4, the Data Foundation PRD F57
 - **F185** — R8.10a
 - **F186** — the capture PRD R8.14, the capture PRD F75
 - **F187** — the Data Foundation PRD R6.3, the Data Foundation PRD F57
 - **F188** — the Data Foundation PRD F57, the capture PRD F75, the import PRD F68, the Data Export PRD F33
-- **F189** — _(filled by the round-6 fix pass)_
-- **F190** — _(filled by the round-6 fix pass)_
-- **F191** — _(filled by the round-6 fix pass)_
-- **F192** — _(filled by the round-6 fix pass)_
-- **F193** — _(filled by the round-6 fix pass)_
-- **F194** — _(filled by the round-6 fix pass)_
-- **F195** — _(filled by the round-6 fix pass)_
-- **F196** — _(filled by the round-6 fix pass)_
-- **F197** — _(filled by the round-6 fix pass)_
-- **F198** — _(filled by the round-6 fix pass)_
-- **F199** — _(filled by the round-6 fix pass)_
-- **F200** — _(filled by the round-6 fix pass)_
-- **F201** — _(filled by the round-6 fix pass)_
+- **F189** — R4.9, E6, E18, T14, UJ4.7-a, UJ4.7-b, UJ4.7-c, UJ4.7-d, UJ4.7-e, UJ4.7-f, UJ9.1-f, UJ9.2-a, UJ9.8-b, the capture PRD R9.9, the capture PRD F76
+- **F190** — the Data Foundation PRD R6.2a, the Data Foundation PRD DJ4, the Data Foundation PRD F58
+- **F191** — the Data Foundation PRD R1.11, the Data Foundation PRD R7.6b, the Data Foundation PRD DJ3, the Data Foundation PRD DJ4, the Data Foundation PRD F58
+- **F192** — governs no rows
+- **F193** — the Data Foundation PRD E15, the Data Foundation PRD E34, the Data Foundation PRD F58
+- **F194** — the Data Foundation PRD E35, the Data Foundation PRD F58
+- **F195** — the Data Foundation PRD F58
+- **F196** — the Data Foundation PRD F58
+- **F197** — governs no rows
+- **F198** — M2, M3
+- **F199** — R7.2
+- **F200** — the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F58
+- **F201** — governs no rows
 
 ## Rejected findings
 <!-- guidance: every reviewer finding the owner rejected, with the same authority-by-link

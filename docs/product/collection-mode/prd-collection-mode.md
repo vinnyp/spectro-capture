@@ -230,7 +230,7 @@ pending, captured, set aside, settled, session and remembered row, are used unch
 
 **Priority — the semantic the `Pri` column carries in this release:**
 
-- **Build order within the release — nothing droppable.** Every P0/P1/P2 row ships in this
+- **Build order within the release — nothing droppable.** Every P0/P1/P2 row but a deferred R1.7 ships in this
   release; priority only orders the sequence work happens in.
 
 | Pri | Meaning |
@@ -242,7 +242,7 @@ pending, captured, set aside, settled, session and remembered row, are used unch
 **Release.** The `Release` column names the release a row ships in, in the project's own
 vocabulary; priority orders work inside it, and an unassigned row leaves the cell empty.
 
-**Phase rule.** A P0 state offering an action whose rows are P1 shows without it until those rows
+**Phase rule.** A P0 state offering an action whose rows are of a later priority shows without it until those rows
 land. A phase mark names one of three kinds of absence — `[phase: surface-absent]`, a surface not
 yet built; `[phase: action-absent]`, an action absent from a surface that exists; and
 `[phase: variant-absent]`, a body variant not yet produced — the complete set, here and in the copy
@@ -294,22 +294,22 @@ left there.
 
 | Work | Available contract | What must remain open |
 |---|---|---|
-| Collection list, collection table, honesty marks, search, filters, sorts and selecting one row | R1.1–R1.6, R1.8, R2.1–R2.8, R2.11, R3.1–R3.6, R3.9, R6.4, R8.1, R8.3–R8.11; copy E1–E7, E12; the capture PRD's E1, E2 and E26, the device PRD's E22 and the Data Foundation PRD's E10, E15, E34 and E35 | Stop: ADR-0003; Interim: OQ 1; Interim: OQ 7; Interim: OQ 12 |
-| Item detail, editing and history | R4.1–R4.3, R4.5, R4.6, R5.1–R5.3, R5.6, R5.7; copy E14, E17; the Data Foundation PRD's E4, E8, E11, E14, E26 and E31; the capture PRD's R8.18 | Stop: ADR-0003 |
+| Collection list, collection table, honesty marks, search, filters, sorts and selecting one row | R1.1–R1.6, R1.8, R2.1–R2.8, R2.11, R3.1–R3.6, R3.9, R6.4, R8.1, R8.3–R8.11; copy E1–E7, E12; the capture PRD's E1, E2 and E26, the device PRD's E22 and the Data Foundation PRD's E10, E14, E15, E34 and E35 | Stop: ADR-0003; Interim: OQ 1; Interim: OQ 7; Interim: OQ 12 |
+| Item detail, editing and history | R4.1–R4.3, R4.5, R4.6, R4.9, R5.1–R5.3, R5.6, R5.7; copy E14, E17, E18; the Data Foundation PRD's E4, E8, E11, E26 and E31; the capture PRD's R5.6, R8.18 and R9.9 | Stop: ADR-0003 |
 | The All items view and "Find similar" | R1.9, R1.10, R3.7, R3.8, R8.2; copy E9, E13 | Stop: ADR-0003; Interim: OQ 2; Interim: OQ 3; Interim: OQ 11 |
-| Selection of several rows, bulk set or clear, and undo | R6.1, R6.2, R4.7; copy E8 | Stop: ADR-0003; Interim: OQ 4 |
-| Bulk delete | R6.3; the Data Foundation PRD's R6.2 and E33 | Stop: ADR-0003; Interim: OQ 1 |
-| Undo of a delete | R1.7; copy E10 | Stop: ADR-0003; Stop: OQ 10 — the Data Foundation PRD's OQ 20 |
-| Code change, column rename and Flag | R4.4, R4.8, R4.9; copy E6, E11, E15, E16, E18, E19; the Data Foundation PRD's R1.2, the import PRD's R2.6, and the capture PRD's R5.6 and R9.9 | Stop: ADR-0003 |
+| Selection of several rows, bulk set or clear, and undo, landing together | R6.1, R6.2, R4.7; copy E8 | Stop: ADR-0003; Interim: OQ 4 |
+| Bulk delete | R6.1, R6.3; the Data Foundation PRD's R6.2 and E33 | Stop: ADR-0003; Interim: OQ 1 |
+| Undo of a delete | R1.7; copy E10 | Stop: ADR-0003 or a later undo-representation ADR; Stop: OQ 10 — the Data Foundation PRD's OQ 20 |
+| Code change and column rename | R4.4, R4.8; copy E6, E11, E15, E16, E19; the Data Foundation PRD's R1.2 and the import PRD's R2.6 | Stop: ADR-0003 |
 | Reordering from the collection | R2.9; the capture PRD's R6.8–R6.12, E33 and E34 | Stop: ADR-0003; Interim: the capture PRD's OQ 7 — its REORDER_SCOPE interim |
-| Restore, distance from current, compare | R5.4, R5.5, R5.8; the Data Foundation PRD's R2.3f and R2.9 and the capture PRD's R5.6 and R8.18 | Stop: ADR-0003; Interim: OQ 11 |
-| Swatch grid and column visibility | R2.10, R7.1, R7.2; the Data Foundation PRD's R1.1 | Stop: ADR-0003; Interim: OQ 6 |
-| Where capture sits relative to the collection | no row here | Stop: the capture PRD's OQ 8 and ADR-0004 — navigation and placement are never guessed |
+| Restore and distance from current | R5.4, R5.5; the Data Foundation PRD's R2.3f and R2.9 and the capture PRD's R5.6 and R8.18 | Stop: ADR-0003; Interim: OQ 11 |
+| Swatch grid, column visibility and compare | R2.10, R5.8, R7.1, R7.2; the Data Foundation PRD's R1.1 | Stop: ADR-0003; Interim: OQ 6; Interim: OQ 11 |
+| Where capture sits relative to the collection | no row here | Stop: the capture PRD's OQ 8 and ADR-0004 |
 
 A builder builds against the **Available contract** column only. In **What must remain open**, a
-Stop: item is a stop — that work waits for the ADR or question named, ADR-0003 and ADR-0006
+Stop: item is a stop — that work waits for the ADR or question named, ADR-0003, ADR-0005 and ADR-0006
 stopping every row — and work under an Interim:
-item starts on the named question's interim rule and is re-checked when it closes.
+item starts on the named question's interim rule and is re-checked when it closes. The Interim stated list and each row's cites complete these cells.
 
 **P0 rows that defer to an open question with no interim rule:**
 <!-- guidance: these two lists stay separate and are NEVER merged into one — merging them hides
@@ -351,7 +351,7 @@ stated** starts on its interim and is re-checked when its question closes.
   R8.10 do — and a sub-row carries its lead row's release, priority and status.
 - IDs are assigned once and never renumbered. **Retired IDs:** none.
 - The **Commit PR** column names the PR that landed the row.
-- Owner decisions F1–F188 are in the fence file; a row names one for provenance only.
+- Owner decisions F1–F201 are in the fence file; a row names one for provenance only.
 
 ### Surfaces
 <!-- guidance: every user-facing surface this product area touches, what it shows, and the copy
@@ -370,11 +370,11 @@ by the collection list, the collection surface, the All items view and the item 
 | Surface | Shows | The copy states in this surface's flow |
 |---|---|---|
 | Collection list | Every collection in the file with its item count, and the entries to create a collection, to the All items view [phase: action-absent] and to the re-scans awaiting an answer | E1, E2, E6, E10 |
-| Collection surface | One collection's item table with search, filters and sorts, one-row selection, "Select all" [phase: action-absent], "Set a field" [phase: action-absent], "Delete selected" [phase: action-absent], reordering, "Use as scan order" [phase: action-absent], "Undo change" [phase: action-absent], "Columns" [phase: action-absent], "Rename column" [phase: action-absent], "Grid" [phase: action-absent] and "Table" [phase: action-absent], and the entries to rename, delete and export the collection, beside every entry point and state the capture PRD places there | E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E19 |
+| Collection surface | One collection's item table with search, filters and sorts, one-row selection, "Select all" [phase: action-absent], "Set a field" [phase: action-absent], "Delete selected" [phase: action-absent], reordering [phase: action-absent], "Use as scan order" [phase: action-absent], "Undo change" [phase: action-absent], "Columns" [phase: action-absent], "Rename column" [phase: action-absent], "Grid" [phase: action-absent] and "Table" [phase: action-absent], and the entries to rename, delete and export the collection, beside every entry point and state the capture PRD places there | E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E19 |
 | All items view [phase: surface-absent] | Every item of every collection, one row each naming its collection, with search, filters and sorts | E13, E4, E5, E6, E9, E10, E12 |
-| Item detail | R4.2's lines, its editable fields and its actions, "Find similar" [phase: action-absent], "Change code" [phase: action-absent] and "Undo change" [phase: action-absent] among them | E14, E15, E16, E18, E6, E9, E10, E12 |
+| Item detail | R4.2's lines, its editable fields and its actions, "Find similar" [phase: action-absent], "Change code" [phase: action-absent], "Undo change" [phase: action-absent] and the capture PRD's re-scan entry [phase: action-absent] among them | E14, E15, E16, E18, E6, E9, E10, E12 |
 | Version history view | Every reading one item holds, in recorded or measured order, with R5.2's lines, "Use this reading" [phase: action-absent] and "Compare" [phase: action-absent] | E17, E6, E12 |
-| Swatch grid [phase: surface-absent] | The collection surface's items as swatches at a chosen size, with their marks | none of its own |
+| Swatch grid [phase: surface-absent] | R7.1's and R7.2's swatches | none of its own |
 
 ### 1. Collections and the collection list
 <!-- guidance: one subsection per group of requirements; its heading number is the `<section>` in
@@ -399,7 +399,7 @@ Traces UJ 1, UJ 4, UJ 6, UJ 7; serves the vision use case *fix a bad scan withou
 |---|---|---|---|---|---|
 | R1.1 | v1 | P0 | The collection list renders E2, naming every collection in the file with its item count, ordered by name as the capture PRD's R6.9 orders codes; a file holding no collection renders E1 instead. | aligned | |
 | R1.2 | v1 | P0 | "New collection" runs the capture PRD's collection creation (its R1.1–R1.3, R1.5 and R1.10), and choosing a collection in the collection list shows it on the collection surface. | aligned | |
-| R1.3 | v1 | P0 | "Rename collection" stores the new name as entered unless it is blank, when E7 renders, or another collection's name equals it under the import PRD's R2.3 rule, when the capture PRD's E1 renders; either way the old name stays, and E7's "Change the name" and that PRD's E1 action each return to editing it. Escape abandons a rename and keeps the old name, a new name equal to the collection's own under that rule, differing only in spacing or letter case, is accepted, and a stored name leaves the one it replaces nowhere in the file's bytes (inherited obligation for the Data Foundation doc). | pre-alignment | |
+| R1.3 | v1 | P0 | "Rename collection" stores the new name as entered unless it is blank, when E7 renders, or another collection's name equals it under the import PRD's R2.3 rule, when the capture PRD's E1 renders; either way the old name stays, and E7's "Change the name" and that PRD's E1 action each return to editing it. Escape abandons a rename and keeps the old name, a new name equal to the collection's own under that rule, differing only in spacing or letter case, is accepted, and a stored name leaves the one it replaces nowhere in the file's bytes (inherited obligation for the Data Foundation doc). | aligned | |
 | R1.4 | v1 | P0 | "Delete collection" renders E6's "interrupted" variant and deletes nothing while the collection holds an interrupted session, R8.3 governing it in flight; otherwise it opens the Data Foundation PRD's E14. | aligned | |
 | R1.5 | v1 | P0 | E6's "Go to the session" opens that session where the capture PRD returns to it — the session itself while in flight (its R3.5), its E25 resume offer while interrupted — and "Cancel" closes E6 having changed nothing. | aligned | |
 | R1.6 | v1 | P0 | Every delete this PRD offers opens its confirmation before anything is deleted, and in each such confirmation the Return key fires the confirmation's cancel action. No surface this PRD renders makes a delete its default action. | aligned | |
@@ -488,10 +488,10 @@ J3's closing step.
 | R4.3 | v1 | P0 | Swatch Name, Swatch Alternate Code, Swatch Alternate Name and each imported column's value can be set or cleared in the item detail, and neither such an edit nor a code change under R4.4 changes a reading, the queue order or the row state. An edit lands in the file when the user presses Return or leaves the field, leaving the text it replaces nowhere in the file's bytes (the Data Foundation PRD's R2.3; inherited obligation for the Data Foundation doc), and Escape before then discards it. | aligned | |
 | R4.4 | v1 | P1 | A Swatch Code entered through "Change code" that is blank renders E15, and one equal under the import PRD's R2.3 rule to another item's code in the collection renders E15's "duplicate" variant, E15's "Try another code" returning to editing it; either way, and when Escape abandons the change, the old code stays. One equal to the item's own code under that rule is stored as entered; any other renders E16, whose "Change the code" stores it on the same item, readings and history kept (inherited obligation for the Data Foundation doc), and "Keep this code" keeps the old one, R8.3 governing "Change code" in flight. | aligned | |
 | R4.5 | v1 | P0 | "Delete swatch", in the item detail or on the one selected row (R6.4), opens the Data Foundation PRD's E8 for that item, naming its collection (inherited obligation for the Data Foundation and Capture Mode docs); while a session on the collection is in flight R8.3 governs it. | aligned | |
-| R4.6 | v1 | P0 | The item detail offers the capture PRD's re-scan entry for the item (its R8.7) once that PRD's re-scan rows land, and the actions of the Data Foundation PRD's E4 and E11 shown there act as that PRD's R7.3k and R2.3c–e state, R8.3 governing that PRD's E4 restore in flight. | pre-alignment | |
+| R4.6 | v1 | P0 | The item detail offers the capture PRD's re-scan entry for the item (its R8.7) once that PRD's re-scan rows land, and the actions of the Data Foundation PRD's E4 and E11 shown there act as that PRD's R7.3k and R2.3c–e state, R8.3 governing that PRD's E4 restore in flight. | aligned | |
 | R4.7 | v1 | P1 | "Undo change", offered only where its latest change's collection is shown, never in the All items view, reverses committed metadata changes — a field edit, a code change, a column or collection rename, a bulk set or clear — most recent first while the file stays open, until any other write the user commits, a column hidden or shown and "New collection" included, or a re-read ends that history, no write a capture session makes counting; there is no redo. Each undo re-checks the rule its change first passed (R1.3, R4.4, R4.8 and R8.3), rendering that rule's state, changing nothing and keeping its entry when refused, and a replaced value is held only in the running app's memory, never in the file or anywhere outside it (the Data Foundation PRD's R6.2d and R1.1; F53). | needs-discussion | |
 | R4.8 | v1 | P1 | "Rename column" on an imported column renders E11 for a blank name, E11's "duplicate" variant for a name equal under the import PRD's R2.3 rule to another of the collection's columns, a Swatch field's name or a header the copy file's Column headers table shows — the old name staying, E11's "Change the name" returning to editing it — and E19 for any other except one equal to the column's own name under that rule, stored as entered, Escape abandoning the rename. E19's "Rename the column" changes the name the file stores, so the table, an export and an outside reader show it and a later import matches on it (inherited obligation for the Data Foundation and Inventory Import docs), and "Keep this name" keeps the old one. | aligned | |
-| R4.9 | v1 | P1 | On a captured item carrying no re-scan-unanswered mark (R2.4i), the item detail offers the capture PRD's Flag action (its §12 Labels), which renders E18, its "restore" variant once R5.5 lands; E18's "Set aside to scan again" sets the item aside as that PRD's R5.6 and R9.9 state, its reading kept as history and not marked never true, and its "Cancel" changes nothing. The action is not offered on an item that is not captured or that carries that mark, R8.3 governing it in flight. | aligned | |
+| R4.9 | v1 | P0 | On a captured item carrying no re-scan-unanswered mark (R2.4i), the item detail offers the capture PRD's Flag action (its §12 Labels), which renders E18, its "restore" variant once R5.5 lands; E18's "Set aside to scan again" sets the item aside as that PRD's R5.6 and R9.9 state, its reading kept as history and not marked never true, and its "Cancel" changes nothing. The action is not offered on an item that is not captured or that carries that mark, R8.3 governing it in flight. | pre-alignment | |
 
 ### 5. Version history and corrections
 
@@ -540,7 +540,7 @@ Traces UJ 10; serves the vision use case *see the collection honestly* (U7) thro
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
 | R7.1 | v1 | P2 | "Grid" shows the collection surface's items as swatches no smaller than MIN_SWATCH_SIZE, each labelled with its Swatch Code and carrying every R2.4 mark on the swatch itself, and "Table" returns to the table. Switching either way keeps the search, filters, view sort, selection and the item in view — the selected item if on screen, else the first on screen — and the "Grid" or "Table" choice, kept per collection, lasts while the file stays open and is written nowhere (R8.6). | needs-discussion | |
-| R7.2 | v1 | P2 | The user sets each collection's swatch size, never below MIN_SWATCH_SIZE, a size that lasts while the file stays open and is written nowhere (R8.6), and an item with no current value shows R2.3's empty chip as its swatch. | needs-discussion | |
+| R7.2 | v1 | P2 | The user sets each collection's swatch size, its default and range the build's choice, never below MIN_SWATCH_SIZE, a size that lasts while the file stays open and is written nowhere (R8.6), and an item with no current value shows R2.3's empty chip as its swatch. | pre-alignment | |
 
 ### 8. Operating envelope and quality attributes
 <!-- guidance: mandatory, and always the LAST numbered requirement section. Its heading takes the
@@ -561,7 +561,7 @@ decision.
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
-| R8.1 | v1 | P0 | Each input below meets its budget at ROWS_CEILING items in the collection with up to IMPORTED_COLUMNS_CEILING imported columns, in a file of up to FILE_ITEMS_CEILING items, timed from the input, or a capture save from when it lands, to the first frame showing its result, BROWSE_RESPONSE_BUDGET at the 95th percentile, on the machine OQ 1's interim names. Above any ceiling every row still works and nothing is refused or truncated, but no budget is promised. | pre-alignment | |
+| R8.1 | v1 | P0 | Each input below meets its budget at ROWS_CEILING items in the collection with up to IMPORTED_COLUMNS_CEILING imported columns, in a file of up to FILE_ITEMS_CEILING items, timed from the input, or a capture save from when it lands, to the first frame showing its result, BROWSE_RESPONSE_BUDGET at the 95th percentile, on the machine OQ 1's interim names. Above any ceiling every row still works and nothing is refused or truncated, but no budget is promised. | needs-discussion | |
 
 **The budgets.** One lettered row per class of input; every cell is a rule ([R8.1](#8-operating-envelope-and-quality-attributes)).
 
@@ -583,9 +583,9 @@ decision.
 | R8.5 | v1 | P0 | After the Data Foundation PRD's re-read (its R1.5 and R7.3c) the table, item detail and version history view show the file as re-read, keeping the search, filters and view sort and deselecting any item the file no longer holds. Noticing a change made outside the app is that PRD's OQ 14, and no row here does it. | aligned | |
 | R8.6 | v1 | P0 | Every row here works with no network connection, no action this PRD adds makes a network request, nothing it reads or writes leaves the machine (the Data Foundation PRD's R1.4), and no event about its actions carries typed text, a code, a name or a value (inherited obligation for the Telemetry doc). Search text, filters, view sorts, the grid choices and the undo history are never written to the file or anywhere outside it, preferences and saved window state included, column visibility (R2.10) being the one view choice the file keeps, and the file gets no system-kept versions and no collection content goes to system search or Handoff. | needs-discussion | |
 | R8.7 | v1 | P0 | No row here sets a minimum macOS version or a display requirement: ADR-0006 selects the floor, and a row the selected floor cannot deliver goes back to the owner rather than being dropped. R2.5's mark is worked out on every display the window can be on, built-in or external. | aligned | |
-| R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's bytes from the moment it lands, open or after a crash, unless an earlier read defers its wipe (the Data Foundation PRD's R1.10 and R6.2a; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | pre-alignment | |
+| R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's bytes from the moment it lands, open or after a crash, unless a read begun before its wipe defers it (the Data Foundation PRD's R1.10 and R6.2a; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | pre-alignment | |
 | R8.9 | v1 | P0 | Every mark the copy file's Mark labels table lists — R2.4's nine and R5.2d's never-true and awaiting-answer — has a shape, distinct from every other mark's, that does not depend on seeing colour, and the VoiceOver name that table gives it, read with the row's Swatch Code, Swatch Name and row state. Every action this PRD offers, the drag reorder and choosing two readings for "Compare" included, can be reached and fired from the keyboard by a route the build chooses. | aligned | |
-| R8.10 | v1 | P0 | A test can declare the inputs and read the results below without matching wording, and can read the file with the app closed at SQLITE_READER_FLOOR (the Data Foundation PRD's R7.1). R8.10b and R8.10c exist only in test builds, and no build opens a listening socket or cross-process service for one. | pre-alignment | |
+| R8.10 | v1 | P0 | A test can declare the inputs and read the results below without matching wording, and can read the file with the app closed at SQLITE_READER_FLOOR (the Data Foundation PRD's R7.1). R8.10b and R8.10c exist only in test builds, and no build opens a listening socket or cross-process service for one. | needs-discussion | |
 
 **The verification seam.** One lettered row per kind of input or readback; every cell is a rule ([R8.10](#8-operating-envelope-and-quality-attributes)).
 
@@ -622,8 +622,8 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | Data Foundation | A selection-scale delete confirmation beside its E8 and E14 — its E33 — stating the selected item count and their current and earlier readings, with cancel as E8 offers it and an export first that opens, and says it saves, the whole collection holding the selection, tested by its R7.6o; made in this change | R6.3 |
 | Capture Mode, Data Foundation | Restoring a readable earlier reading of an item set aside by a Flag — the flagged reading included — makes it captured again, and the operator's Flag is named beside damage as a way an item's current value is removed; a restore carries its source's device snapshot, agreement verdict and spread; made in this change in the capture PRD's R5.6 and the Data Foundation PRD's R2.9 and R2.3f | R5.5 |
 | Data Foundation, Inventory Import | A renamed imported column keeps its position and values under the new name the file stores, and a later import matches that name, a source header equal to the old name arriving as a new column; made in this change in the Data Foundation PRD's R1.2 and the import PRD's R2.6 | R4.8 |
-| Data Foundation | Made in this change, as its F52–F57 record: its E8, E11, E15, E26, E34 and E35 wording, E34's actions as its R7.3j states; its R1.2's identity under a new code and column visibility, R2.3's and R6.2a's byte rule and its deferred wipe, R3.4's own flag test and R1.5's help docs; its R1.11 one-writer rule; its OQ 20 sizing an undoable ceiling delete; and the ADR-0003 and ADR-0007 inputs those fences list | R1.3, R1.7, R2.4b, R2.5, R2.10, R4.2h, R4.3, R4.4, R4.5, R5.7, R6.2, R8.1f, R8.2, R8.8, R8.11 |
-| Capture Mode | Made in this change: its R5.6 and R8.18 refuse a restore while a session is in flight; its writes and session starts follow the Data Foundation PRD's R1.11; its R8.18 counts an unreadable row in collection tallies only, follows the Data Foundation PRD's quarantine mark, and on a read-only file shows what that PRD reports; its R3.7 resumes at the first pending row when the remembered row was deleted; its R11.15g points at E3 and Surfaces; its copy file's Set-aside cause labels table words each cause R4.2b shows; and its FIND_BUDGET closes at or below BROWSE_RESPONSE_BUDGET (its OQ 13) | R4.2b, R4.5, R8.1f, R8.3 |
+| Data Foundation | Made in this change, as its F52–F58 record: its E8, E11, E15, E26, E34 and E35 wording, E34's actions as its R7.3j states; its R1.2's identity under a new code and column visibility, R2.3's and R6.2a's byte rule and its deferred wipe, R3.4's own flag test and R1.5's help docs; its R1.11 one-writer rule; its OQ 20 sizing an undoable ceiling delete; and the ADR-0003 and ADR-0007 inputs those fences list | R1.3, R1.7, R2.4b, R2.5, R2.10, R4.2h, R4.3, R4.4, R4.5, R5.7, R6.2, R8.1f, R8.2, R8.8, R8.11 |
+| Capture Mode | Made in this change: its R5.6 and R8.18 refuse a restore while a session is in flight; its writes and session starts follow the Data Foundation PRD's R1.11; its R8.18 counts an unreadable row in collection tallies only, follows the Data Foundation PRD's quarantine mark, and on a read-only file shows what that PRD reports; its R3.7 resumes at the first pending row when the remembered row was deleted; its R11.15g points at E3 and Surfaces; its copy file's Set-aside cause labels table words each cause R4.2b shows; its R8.14 and R9.9's Flag entry at P0; and its FIND_BUDGET closes at or below BROWSE_RESPONSE_BUDGET (its OQ 13) | R4.2b, R4.5, R4.9, R8.1f, R8.3 |
 | Inventory Import | Made in this change: its R3.2 refuses a commit while any session is in flight and follows the Data Foundation PRD's R1.11 | R8.1f |
 | Data Export | Made in this change: its R1.1 reads one snapshot, the file as it stood when the export started | R1.8, R8.8 |
 | Telemetry, not yet written | No event about a Collection Mode action carries typed text, a code, a name or a value | R8.6 |
@@ -636,7 +636,7 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | Product README (§6, Coverage) | §6's scope, the UI half of U5 and the swatch-grid half of U7 | R1.1, R2.1, R3.1–R3.9, R4.1–R4.9, R5.1–R5.8, R6.1–R6.4, R7.1, R7.2 |
 | Capture Mode | Its R1.8: rename and delete a collection under the one naming rule, a delete guarded against an active or interrupted session, warned with export first and never the default; its journeys' UJ1.2-a–c, carried in UJ 1 | the capture PRD's R1.2, R1.8 → R1.3, R1.4, R1.5, R1.6, R8.3 |
 | Capture Mode | Its R4.11: show the spread recorded on a reading | the capture PRD's R4.11 → R2.4e, R2.7, R4.2d, R5.2e |
-| Capture Mode | Its R9.9: a Flag from the collection on a captured item, doing what its R5.6 Flag does | the capture PRD's R5.6, R9.9 → R4.9, R8.3 |
+| Capture Mode | Its R9.9: a Flag from the collection on a captured item, at P0, doing what its R5.6 Flag does | the capture PRD's R5.6, R9.9 → R4.9, R8.3 |
 | Capture Mode | Its obligations line: restores of set-aside rows, and bulk writes, refused in flight | the capture PRD's R4.13, R5.6, R8.18 → R8.3 |
 | Capture Mode | Its R8.18: an item whose current reading is quarantined is set aside with the cause unreadable and counted as set aside | the capture PRD's R8.18 → R2.4g, R2.4h, R4.2b |
 | Capture Mode | Its R8.14: the simulated-readings banner, the recorded spread and the non-spectral mark surfaced where the collection is browsed | the capture PRD's R8.14 → R2.4c, R2.4d, R2.6, R2.7 |
@@ -687,9 +687,9 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | E5 | Nothing passes the filters | Collection surface; All items view | R3.5 | aligned |
 | E6 | Waiting for a session to end | Collection list; collection surface; All items view; item detail; version history view | R1.4, R1.5, R4.9, R8.3 | pre-alignment |
 | E7 | Collection name needed | Collection surface | R1.3 | aligned |
-| E8 | Change a field on many swatches | Collection surface | R6.2 | pre-alignment |
+| E8 | Change a field on many swatches | Collection surface | R6.2 | aligned |
 | E9 | Colours close to a swatch | Collection surface; All items view; item detail | R3.7, R3.8 | aligned |
-| E10 | Deleted, undo available | Collection list; collection surface; All items view; item detail | R1.7 | pre-alignment |
+| E10 | Deleted, undo available | Collection list; collection surface; All items view; item detail | R1.7 | aligned |
 | E11 | Column name not accepted | Collection surface | R4.8 | aligned |
 | E12 | What the marks mean | Collection surface; All items view; item detail; version history view | R2.8 | aligned |
 | E13 | All items shown | All items view | R1.9, R3.3, R3.4 | aligned |
@@ -731,7 +731,7 @@ requirement row that enumerates its variant set, and that row lists the variant 
 
 | ID | Metric | Definition (start event, end event, statistic, population) | Candidate target | Method | Status |
 |---|---|---|---|---|---|
-| M1 | Browse response time | Start: an R8.1a–c input or R2.5 gamut change, a capture save timed from when it lands; end: the first frame showing its result; statistic: the nearest-rank 95th percentile per input kind; population: each kind as UJ9.5-a delivers it, in a Release build on OQ 1's interim Mac, warm. | ≤ BROWSE_RESPONSE_BUDGET | R8.10f's timing readback; UJ9.5-a is its worked oracle. | needs-discussion |
+| M1 | Browse response time | Start: an R8.1a–c input or R2.5 gamut change, a capture save timed from when it lands; end: the first frame showing its result; statistic: the nearest-rank 95th percentile per input kind; population: each kind as UJ9.5-a delivers it, in a Release build on OQ 1's interim Mac, warm. | ≤ BROWSE_RESPONSE_BUDGET | R8.10f's timing readback; UJ9.5-a is its worked oracle. | aligned |
 | M2 | Honesty-mark agreement | Start: a seeded file whose every item's R2.4 conditions are declared, and a declared display gamut; end: the marks R8.10 lists for each chip; statistic: the share of item-and-mark pairs where the listed mark agrees with the declared condition; population: every item of the harness's seeded file — 15, Gouache Set's two included — under each of sRGB, Display P3 and no reported gamut, every PR. | 100% | R8.10c's listing of each chip's marks against R2.4's conditions; UJ9.8-a is its worked oracle. | aligned |
 | M3 | Readings lost to a Collection Mode action | Start: the file before a field edit, a code change, a column rename, a bulk set or clear, a reorder, a restore, a re-scan answer or a Flag; end: the file read with the app closed at SQLITE_READER_FLOOR after it; statistic: the count of readings present before that are not readable after; population: every such action the journeys run, every PR. | 0 | R8.10's read of the file at SQLITE_READER_FLOOR; UJ9.8-b is its worked oracle. | aligned |
 | M4 | Re-scans left unanswered | Start: the end of a dogfood session on a real collection; end: the same file a week later; statistic: the count of re-scans still awaiting an answer; population: each dogfood session ending with at least one re-scan awaiting an answer, that count recorded at the start; a session with none reads not measured, never 0. | 0 | The Data Foundation PRD's E26 count, read through R5.7's "Answer re-scans" a week on. | aligned |
@@ -757,7 +757,7 @@ trust (F82, F134).
 | 7 | What decides that the display cannot show a colour: which gamut, which rendering intent, and a display reporting none? | The Data Foundation PRD's R3.4 states the stored flag's own test (F127, F146); the display check is this question's. | Adapt the current value to the display's white by Bradford and test it against the display's reported gamut under relative colorimetric at zero tolerance, treating a display reporting none as sRGB. | An engineering spike on one sRGB and one Display P3 display with the harness's seeded file; the owner. | R2.5, M2 | pre-alignment |
 | 8 | Does renaming an imported column change the name the file stores? | Answered by F9 (R4.8): yes. | | Closed — the owner (F9); the results file carries the answer. | R4.8 | aligned |
 | 9 | How is deleting a selection confirmed? | Answered by F7 (R6.3): by the Data Foundation PRD's E33. | | Closed — the owner (F7); the results file carries the answer. | R6.3 | aligned |
-| 10 | When may undo of a delete be built? | The Data Foundation PRD's OQ 20 gates its R6.3; if it keeps pending content in the file, the crash route and the deleted state are restated. Still open at v1 release, R1.7 is deferred (F57). | R1.7 is not built and E10 does not appear. | The Data Foundation PRD's OQ 20. | R1.7 | pre-alignment |
+| 10 | When may undo of a delete be built? | The Data Foundation PRD's OQ 20 gates its R6.3; if it keeps pending content in the file, the crash route and the deleted state are restated. | R1.7 is not built and E10 does not appear. | The Data Foundation PRD's OQ 20. | R1.7 | pre-alignment |
 | 11 | Which published ΔE2000 values do the "Find similar" and distance cases use? | F64's interim: CIEDE2000 test pairs 1–5 from Sharma, Wu and Dalal (2005). | Use the pairs as the journeys quote them. | Engineering checks every quoted pair against the published table before the first such case runs. | R3.7, R5.4, R5.8 | pre-alignment |
 | 12 | IMPORTED_COLUMNS_CEILING: how wide may a collection's imported data be while the budgets hold? | F43's candidate. | 20 columns of 200 characters. | The widest inventory the owner dogfoods; the owner. | R8.1, R8.2 | pre-alignment |
 

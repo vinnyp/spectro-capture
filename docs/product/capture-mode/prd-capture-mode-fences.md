@@ -679,6 +679,14 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R8.14, Collection Mode obligation line, Traceability.
 
+### F76 — Mirror Collection Mode's round-6 decision: the collection-side Flag entry is P0 (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F189](../collection-mode/prd-collection-mode-fences.md) — owner decision D47, its round-6 (pre-lock) adjudication 2026-09-25; peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F189, that PRD's R4.9 — the collection-side "Flag" entry point on a captured item — moves to P0; R9.9 names the entry point as P0 there, the rest of R9.9 staying P1, and keeps its alignment; the Collection Mode obligation line says the entry point is P0. What a Flag does stays R5.6's, P0 already, and R8.3 and R8.16, which the flagged item's re-scan and review use, are P0 already. (2) Editorial, no owner decision: the Collection Mode obligation line's "this document's states never hiding its entry points" reads "…the surface's entry points", as F43 states it. Traceability's range reads F1–F76.
+
+**Carried by:** R9.9, Collection Mode obligation line, Traceability.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -706,6 +714,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F73** Collection Mode round-3 mirror, as clarified twice — R1.1, R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability and the dated F71 and F72 clarifications.
 - **F74** Collection Mode round-4 mirror — R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5, R9.3, T7, Collection Mode obligation line, Traceability and the dated F73 clarification.
 - **F75** Collection Mode round-5 mirror — R8.14, Collection Mode obligation line, Traceability.
+- **F76** Collection Mode round-6 mirror — R9.9, Collection Mode obligation line, Traceability.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

@@ -208,6 +208,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** the lock checks pair each seam both ways, and F32's clause made R1.1 contradict itself. Source: [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11), with the editorial and testability halves its round-5 fix pass carries under its F158; peer review pending.
 
+### F34 — R4.3's no-change clause and EJ1's timeout (2026-09-25)
+
+**Decision:** R4.3's read-back reads "it reads back at SQLITE_READER_FLOOR that the export itself changed no value, mark or note", as R1.1's clause does since F33, so its test-build hold and EJ1's mid-export edit no longer contradict it; R4.3 keeps its alignment. EJ1's mid-export line reads the file's bytes within 5 s of the export's end, a functional timeout.
+
+**Why:** the Collection Mode round-6 reviews found R4.3 still said "identical" beside a held export an edit changes, the contradiction F33 removed from R1.1, and EJ1's byte read without a tolerance. Source: [the Collection Mode PRD's F158](../collection-mode/prd-collection-mode-fences.md) and its round-6 fix pass, editorial and testability; peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
@@ -280,6 +286,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F31 | §5's delete-confirmation sentence and the copy header, both naming DF E33 and R1.1a's collection scope; no requirement row. DF R6.2/R7.6o and DJ4 carry the Data Foundation half under DF F50 as clarified. |
 | F32 | R1.1; EJ1; the Collection Mode inbound line |
 | F33 | R1.1, R4.3; EJ1; the Collection Mode inbound and outbound lines |
+| F34 | R4.3; EJ1 |
 
 ## Rejected findings
 

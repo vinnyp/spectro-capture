@@ -87,6 +87,10 @@ Cross-document:
 - [x] **Import** — Vocabulary defines Swatch Name and both alternates, including their search-only role versus the re-import match key — PR #16 (commit `cf9974f`).
 - [x] **Import** — UJ 2.1 covers active, paused and interrupted sessions, a session starting after preview, and E40's three routes — PR #16 (commit `cf9974f`).
 
+### Collection Mode
+
+- [ ] **Collection Mode** — R8.11's timing is promised on a local volume only, Data Foundation R1.10's scope, as ADR-0003's non-waiting save is (Collection Mode F183 and F197, its round-6 architecture review; added in this change's PR, number pending).
+
 ### Cross-document
 
 - [x] **Import / Capture** — round-2 owner fence F63: Capture §12’s token index includes Import’s preview counts/settings and generated-name placeholders; E43 follows its existing zero-count rule. — PR #16
@@ -117,6 +121,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **Capture** — a run spanning the queue → review boundary.
 - [x] **Capture** — whether N_CONSEC_HARD carries across consecutive one-row look-through sessions. — Owner D3 / F58 in PR #20 sets a session-scoped counter starting at zero; separate one-row sessions never accumulate.
 - [ ] **Capture** — implement F58/UJ3.1-l’s separate-one-row counter-lifetime case; policy decided in PR #20, build evidence pending.
+- [ ] **Collection Mode** — OQ 11: engineering checks every quoted CIEDE2000 pair against the published table before the first "Find similar" or distance case runs (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 7: an engineering spike on one sRGB and one Display P3 display with the harness's seeded file, then the owner, settles the display check R2.5 and M2 run on under OQ 7's interim (Collection Mode F197, its round-6 plan review; added in this change's PR, number pending).
 
 ## ADR-0003
 
@@ -129,6 +135,21 @@ Build-review items and the engineering plan's test matrix.
 
 - [ ] **Device** — when ADR-0003 puts saved devices in the file, the device PRD's R1.9/R1.17 writes cite Data Foundation R1.11 (Collection Mode round-5 product-manager and interface reviews; its orchestrator's round-5 ruling; added in this change's PR, number pending).
 
+- [ ] **DF** — a file renamed or moved outside the app while open keeps every committed write and survives a crash, R1.10's promise holding for the file under its new name (Collection Mode F174 and F197, its round-6 engineering and architecture reviews' 6MN3 and ARCH6-3; added in this change's PR, number pending).
+
+## Dogfood
+
+Readings the owner takes while dogfooding a build.
+
+- [ ] **Collection Mode** — OQ 2: the owner's estimate of collections per file, checked by UJ9.5-b (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 3: a "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 4: dogfood bulk edits, then the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 5: a hue sort of a collection holding a grey series; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 6: the owner at the P2 build, on the owner's display at working distance (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 12: the widest inventory the owner dogfoods; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — M4: each dogfood session's re-scans still awaiting an answer, read a week later through "Answer re-scans" (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — the E12 reading beside M4: on a Display P3 display with an outside-sRGB swatch listed, the owner reads E12 once and says what each mark tells them they can and cannot trust (Collection Mode F82 and F134, its round-6 plan review; added in this change's PR, number pending).
+
 ## Documentation
 
 - [ ] **DF** — the help-docs column dictionary carries a formula-injection note for spreadsheet consumers, and nothing yet gates a release on that dictionary existing.
@@ -139,6 +160,15 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **DF** — the README's gamut gloss ("which most screens can't show accurately").
 - [ ] **DF** — the help docs (R1.5's) say that backups, Time Machine or APFS local snapshots, and a sync provider's version history made before a delete or clear keep what they held (Collection Mode F131, its privacy review's PRIV-15).
 - [ ] **DF** — the help docs (R1.5's) say that on a network volume reading the file elsewhere may delay saves as well as the wipe of removed text, the non-waiting save holding only within R1.10's local-volume scope (Collection Mode F183, its round-5 architecture review's ARCH5-4; added in this change's PR, number pending).
+- [ ] **DF** — the help docs (R1.5's) say "Move your file from inside SpectroCapture, or with it closed." (Collection Mode F201, its round-6 architecture review's ARCH6-3; added in this change's PR, number pending).
+- [ ] **DF** — the help docs (R1.5's) say "While an export, Save a copy or the open-file check runs, text you remove stays in the file until it finishes." (Collection Mode F201, its round-6 privacy review; added in this change's PR, number pending).
+
+## v1 release
+
+Decisions taken when v1 is cut.
+
+- [ ] **Collection Mode / DF** — at v1 release the owner decides delete-undo's fate: if the Data Foundation PRD's OQ 20 is still open, Collection Mode R1.7 and DF R6.3 are marked deferred and v1 ships final deletes behind the counted confirmation and export first — a decision, not a default (Collection Mode F57, F187 and F196, its round-6 plan review's PLAN-8; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 1: engineering times Release builds at ROWS_CEILING on the M1 MacBook Air with 8 GB and one current Mac; the owner ratifies the OQ 1 constants and estimates HISTORY_READINGS_CEILING (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 
 ## v2 candidates
 

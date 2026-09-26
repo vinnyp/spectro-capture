@@ -80,7 +80,10 @@ A mark on the `Phase:` field applies to the whole state; a mark written after an
 quote applies to that action; a mark written at the end of a `Variant:` line applies to that
 variant. A state, surface or action marked here carries the same mark in the PRD, and the two are
 reconciled at every lock. A builder renders a state whose action is marked `[phase: action-absent]`
-without that action, and the state is complete without it.
+without that action, and the state is complete without it. Two capabilities the PRD's Surfaces table marks `[phase: action-absent]` have no label in this
+file: the collection surface's drag reorder (R2.9) and the item detail's entry to the capture PRD's re-scan
+(R4.6); each is absent until its rows land. A state whose owning rows are all of a later priority carries no mark:
+it arrives with those rows, as E10 does with R1.7.
 
 ## States
 <!-- guidance: one section per copy state, `### E<n> — <state>`, numbered per PRD. Every state here
@@ -132,7 +135,7 @@ read-only file states; and the Data Export PRD's E1.
 - Headline: Nothing matches ⟨text⟩
 - Body: The search looks at the start of each swatch's code and alternate code, and anywhere in its name, its alternate name and the details you imported. Capitals and extra spaces don't count as a difference.
 - Actions: "Clear search"
-- Variant: "all items" — the search is in the All items view. The search looks at the start of each swatch's code and alternate code, and anywhere in its name, its alternate name, the details you imported and its collection's name. Capitals and extra spaces don't count as a difference.
+- Variant: "all items" — the search is in the All items view. The search looks at the start of each swatch's code and alternate code, and anywhere in its name, its alternate name, the details you imported and its collection's name. Capitals and extra spaces don't count as a difference. [phase: variant-absent]
 
 ### E5 — Nothing passes the filters
 
@@ -149,7 +152,7 @@ read-only file states; and the Data Export PRD's E1.
 - Phase: none
 - Variants enumerated by: R8.3
 - Headline: ⟨collection⟩ has a session that hasn't ended
-- Body: Scanning in ⟨collection⟩ is active, paused or halted. Deleting a swatch or the collection and bringing back an earlier reading aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended.
+- Body: Scanning in ⟨collection⟩ is active, paused or halted. Deleting a swatch or the collection, flagging a swatch and bringing back an earlier reading aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended.
 - Actions: "Go to the session", "Cancel"
 - Variant: "interrupted" — the collection holds an interrupted session, the action is deleting the collection, and no session is in flight. A session in ⟨collection⟩ was interrupted and hasn't been resumed or ended. Resume it or end it before deleting the collection. Nothing has been changed.
 - Variant: "full" — every P1 action that variant names — Use this reading among them — is built, and the session is on the collection the action is on. Scanning in ⟨collection⟩ is active, paused or halted. Deleting swatches or the collection, changing a field on many swatches, changing a swatch's code or undoing that change, flagging a swatch and bringing back an earlier reading aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended. [phase: variant-absent]
@@ -166,7 +169,7 @@ read-only file states; and the Data Export PRD's E1.
 
 ### E8 — Change a field on many swatches
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R6.2
 - Headline: Change ⟨column⟩ on ⟨n⟩ swatches?
@@ -188,7 +191,7 @@ read-only file states; and the Data Export PRD's E1.
 
 E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carries no phase mark of its own. When the deleted collection held no swatch, the "collection" variant renders ⟨collection⟩ is deleted. as its first sentence, in place of the one the zero rule leaves out (F181).
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: R1.7
 - Headline: Deleted
