@@ -29851,3 +29851,121 @@ The final disposition of every lens on the two rows not yet aligned, each at the
 
 Every non-abstaining lens ALIGNs, so both rows flip: Collection Mode R8.8 to `aligned` and the Data Foundation PRD's R6.2 (its sub-row R6.2a carrying the lead's status) to `🤝 Aligned`. The status flips land in the bookkeeping close with the amendment's other status surfaces; the re-lock record follows below.
 
+
+## Re-lock (2026-09-26)
+
+This is the re-lock record for the Collection Mode PRD's amendment under owner fences F202–F218,
+decided over the PR #21 review (T3–T8) and delta-verified through rounds 11–21. Two mechanical
+findings surfaced during this re-lock and were fixed before it was written: an unmirrored inbound
+obligation (check 1a, fixed in `12cceb8`) and three changed rows this amendment never named in a
+fence's Carried by (check 8 direction 2, fixed in `94970c6`). The validated revision is
+`94970c6da22f9cbda824887eb7822b2f9b053380`. Round 21's unanimous ALIGN flips Collection Mode's R8.8
+and the Data Foundation PRD's R6.2 (its sub-row R6.2a carrying the lead's status) to their aligned
+statuses; every other row this amendment touches was already aligned by round 16 and stood
+unchallenged through round 19. PR #21 carries this re-lock to an attended merge; it does not merge
+itself.
+
+### Lock record — mechanical checks at the state that locks (2026-09-26)
+
+**What was run.**
+
+- **Subject:** `docs/product/collection-mode/prd-collection-mode.md` (`Format: agent-prd v1`) and its
+  four companions, plus the sibling PRDs this amendment touches — chiefly Data Foundation
+  (`docs/product/data-foundation/`), and Capture Mode, Inventory Import, Data Export and Device
+  Management for their mirrored fence ranges.
+- **Commit:** `94970c6` on `docs/collection-mode-prd`, PR #21. Every script guards that
+  `docs/product` and `docs/decisions` equal `94970c6`. Two commits landed between the state first
+  reported to the orchestrator and this one, each fixing one mechanical finding this re-lock's own
+  checks surfaced: `12cceb8` (check 1a — the import PRD's Collection Mode obligation line gained
+  R2.5) and `94970c6` (check 8 direction 2 — F205 and F207 gained dated Clarified lines naming
+  UJ2.3-g, UJ5.3-q and R8.10b, mirroring F218's own round-17 precedent).
+- **Roster:** checks 1–20 of `writing-agent-prds/references/mechanical-checks.md` (operator-agents
+  1.7.0), the same version the first lock ran.
+- **Engines:** bash with `set -euo pipefail` and BSD grep, awk and perl; Python 3 `re`.
+- **Baselines:** preservation baseline `04dfb97c9046cd18551df32c7ca74ceb71c788f9` (the commit this
+  PRD was first locked at); change baseline `dc1b747f399bc94a29392c69bcfe8bd72bf94412` (merge-base
+  with `origin/main`, confirmed by direct computation). **Baseline choice recorded:** checks 8
+  direction 2 and 9 are, per mechanical-checks.md, nominally scoped to the change and preservation
+  baselines respectively; on this branch `dc1b747` predates the Collection Mode PRD's existence
+  entirely (the whole branch — original authoring, first lock and this amendment — is still
+  unmerged), so a diff against it reports the PRD's entire first-lock content as this amendment's
+  unfenced change. Both checks instead ran against the preservation baseline, `04dfb97...94970c6`
+  — the amendment's real fork point — which check 9 already uses by its own spec and which check 8
+  direction 2 adopts here as a deliberate, recorded deviation for the same reason. Check 14 keeps its
+  spec's change baseline, `dc1b747...94970c6`, as intended (it scopes to `post-lock.md`'s own ticks,
+  which are read and attributed by hand regardless of how wide the diff is).
+- **Scripts and outputs:** the orchestrator's scratchpad, `mech-relock/` (adapted from the first
+  lock's `mech-final/`).
+
+| # | Check | Verdict | Result / disposition |
+|---|---|---|---|
+| 1 | Cross-PRD consistency | PASS (1a disposed) | 1a's standing dispositions (PRD:476, 477, 479, 480 under F188; PRD:497 capture R6.9 via DF) still apply. The one new asymmetry this re-lock found — Collection Mode's new inbound cite of the import PRD's R2.5 (F206) not mirrored in the import PRD's own Collection Mode obligation line — is fixed in `12cceb8`; re-run clean. 1b: every phase claim and conditional agrees. 1c: 35 candidates (one more than first lock's 34 — two new UJ3.4-m/n cases in UJ3.4-l's already-disposed shape), all chained. 1c collide: 7 lines (UJ1.4-c, plus UJ3.4-l/m/n, the two new cases confirmed identical in shape to the disposed UJ3.4-l); collide lines ours (F168). |
+| 2 | Index sync | PASS (3 disposed) | Map = Carried-by for 215 of 218 fences without qualification. Three fences carry a dated Clarified-line extension beyond their own Carried-by text, each read and verified against its cited case rows: **F205** (+UJ2.3-g, round-12 TR12-12), **F207** (+UJ5.3-q, +R8.10b, rounds 11–12), **F218** (+DJ3(d), +DJ3(j), round-17 orchestrator bookkeeping — the map line reads "DJ3 (d), (g), (i) and (j)" against a Carried-by naming only "(g) and (i)"). Legend bullets re-derived Status-aware: OQ 1–7, 11, 12 are now CLOSED (their blank Interim-rule cells are the answered state, not a live "no interim" case), leaving only OQ 10 open — 0 no-interim P0 pairs, matching the Legend's "None" bullet. "Interim stated" derives 1 local pair (R1.7—OQ10) plus one sibling-qualified line (R8.11 — the capture PRD's OQ 5), exempted from local derivation the same way check 2's own build-dependencies scan already exempts a sibling OQ cite. Surfaces/copy index and phase marks agree both ways. |
+| 3 | Latent-decision inventory | PASS | Unchanged in kind from first lock: classes 1–2 zero hits; class 3 splits fenced; class 4 quoted labels only. |
+| 4 | Row-transition index | PASS | A = B (4 states, unchanged). 18 rows named across 16 table lines (unchanged from first lock). The wide-verb-net sweep's hits — R1.6, R8.8 and others — read and disposed as per-state response/quality-attribute rules, none moving an item between states; R8.8's amendment-added clause (the journal-or-log copy) is the same class. |
+| 5 | Variant set | PASS | 12 of 12 enumerated verbatim; 7 `none` (unchanged). |
+| 6 | Case refs and copy coverage | PASS | All Rows IDs (including the amendment's new UJ2.3-g, UJ3.4-m/n, UJ3.3-n/o/p/q, UJ5.3-q, UJ5.4-h/i, UJ7.1-u) live; E1–E19 each in at least one case. |
+| 7 | Constants in owning rows | PASS | 12 of 12, both directions — unchanged; this amendment ratified constants' values (F209) without adding or removing any. |
+| 8 | Fence map against content | Dir. 1 PASS; dir. 2 PASS | Direction 1: 874 map items resolve (871 + 3 from the check-2 grammar extensions), including the `OQ <n>` and `DJ<n>(<letter>)` forms F209 and F218 introduce. Direction 2 (see baseline note above): against `04dfb97...94970c6`, 71 id-carrying changed lines, all 71 resolve to a fence's Carried by once the same three Clarified-line extensions (F205, F207, F218) are read in. The idless half was reviewed over the 5 real content files (PRD + 4 companions; the amendment's round-10–20 fix files, also inside `docs/product/collection-mode`, are excluded as process history rather than locked-document content, the same convention check 11 and check 12 already give them) — 501 changed lines, every modal/structural line traced to a named F202–F218 fence or an OQ 1–7/11/12 closure; nothing unattributed found. |
+| 9 | ID, Pri and status diff | PASS | Now runnable (see baseline note above). 87 triples at `04dfb97`, 87 at head, 0 PARSE-MISS either side; 0 added, 0 removed, 0 changed (Pri/Status) — this amendment added new cases and fence content but renumbered, reprioritized or re-statused no existing R/E/M row. E-status cross-check (PRD index vs. copy companion `- Status:` field): 19 states each end, 0 disagreement. |
+| 10 | Two-sentence scan | PASS | 147 cells (unchanged), 0 over 2. |
+| 11 | Companion paths and links | PASS (disposed) | Part 1: 4 of 4. Part 2, at `94970c6` (before this section existed): 8 raw hits — the 5 standing round-6-fixes.md dispositions (:496, :522 x4) plus 3 forward references to this section's own anchor (`docs/product/README.md:18`, `prd-collection-mode-fences.md:16` and `:1736`, all naming `#re-lock-2026-09-26`), which this append resolves. |
+| 12 | Word count | PASS | Collection Mode: 12,399 of 12,400 (F210). Data Foundation: 8,446 of 8,450 (F214 / DF F55). Both by process rule 14's exact command. Rule-migration scan: 14 hits (12 at first lock plus 2 new, both the same disposed classes — fence Authority/Decision/Clarified prose and OQ-results "Question" restatement, neither a modal rule migrated out of a row). |
+| 13 | Label check | PASS | Direction 2: 54 of 54 (was 53; the amendment's one new label, "Clear sort", added). Direction 1: the new label's every other-file mention is quoted (`prd-collection-mode-round-10-fixes.md`, `-11-fixes.md`, the PRD body, the journeys companion) — none bare; matches round-10-fixes.md's own record of this same check run mid-amendment. 0 variant hits. |
+| 14 | Post-lock ticks | PASS | Pair `(dc1b747, 94970c6)`, change baseline (kept per spec — see note above). 6 ticks in `post-lock.md` outside the round fix files, all true and attributed to PR #21 (a stable identifier): the DF/E34 permission-lost state, the Collection Mode PRD's F9/DF F50 rename-mirror settlement, OQ 11's closer, the DF R1.11/R7.6p/R7.6q/E34/E35 alignment, the DF R6.2/R6.2a alignment (round 21), and the journal-or-log wipe-mechanism note (settled by F202/DF F59). 0 ticks taken back. The round fix files' own internal resume-checkboxes are process bookkeeping, not read individually (same exclusion as check 8's idless scan). |
+| 15 | Unresolved fill | PASS | 0 `{{`, 0 `_(…)_`, 0 `<prd-slug>` (unchanged). |
+| 16 | Guidance comments deleted | PASS | 0 `<!-- guidance` (unchanged). |
+| 17 | Banned adjectives in asserts | PASS | 0 word-bounded hits (the one raw grep hit is "correction"/"correction-unconfirmed", not the banned adjective). |
+| 18 | Test controls and asserted values | PASS | 13 of 13 surfaces driven; 7 residual When cells disposed (first lock's 6 plus UJ3.3-p, same class — a generic "list the actions offered"/read phrasing against an already-declared surface). 0 unsourced asserted values across 319 cases. |
+| 19 | One priority semantic | PASS | 1 (build order) — unchanged. |
+| 20 | Metrics read a stated observable | PASS | M1–M4 resolve, each source row states what its metric reads — unchanged. |
+
+**Totals.** MISS 0. NOT-RUN 0 — both of the first lock's exempted NOT-RUNs (check 8 direction 2,
+check 9) are now clean PASSes, per the baseline note above.
+
+**Lock conditions (SKILL.md Phase 6)**
+
+- [x] **Every row aligned.** Round 21 (log, this section's heading above) flips R8.8 and the Data
+  Foundation PRD's R6.2/R6.2a to aligned, unanimously and without a standing objection. Every other
+  Collection Mode R/E/M row (99 R rows — 64 leads plus 35 status-carrying sub-rows — 19 E, 4 M; 122
+  total, unchanged in count from first lock) and every Data Foundation row this amendment touches
+  (R1.11, R6.2, R6.2a, R7.6o, R7.6p, R7.6q, and E33–E35 by cross-reference) reads aligned / 🤝
+  Aligned, confirmed by direct read.
+- [x] **The pre-lock round has run**, with its findings adjudicated per Phase 3. Round 11 — "the
+  amendment's delta and pre-lock round" — carried the plan lens (nine lenses total: product-manager,
+  staff-software-engineer, test, interface, architecture, privacy, product-marketing, plan,
+  database), and was delta-verified clean through rounds 12–21.
+- [x] **The mechanical preconditions ran clean** against the state being locked (`94970c6`), recorded
+  above.
+- [x] **Zero NOT-RUN checks.** All 20 reached PASS.
+- [x] **The OQ contract complete.** OQ 1–9, 11 and 12 (11 answered questions) each have a `## OQ <id>`
+  section in `prd-collection-mode-oq-results.md`; OQ 10, the only remaining open question, carries an
+  interim rule (R1.7 is not built and E10 does not appear) and is named in no "no-interim" bullet
+  need, since the Legend's own bullet reads "None — every open question below carries an interim
+  rule" and derives clean. No stray results section (11 headings, 11 answered questions).
+- [x] **Exactly one priority-semantics bullet.** Check 19.
+- [x] **Template guidance comments deleted.** Check 16.
+- [x] **Zero unresolved placeholders**, both fill families and `<prd-slug>`. Check 15.
+- [x] **No "peer review pending" wording left on any current status surface.** Zero hits on the
+  derived inventory (below); every raw hit is fence history, round-fix-file process history, or a
+  ticked-and-resolved post-lock item.
+
+**No lock condition fails.**
+
+**Status-surface inventory (conversion-flow.md §7).** Swept the PRD, its four companions, the
+product-docs index, and every sibling this re-lock touches (Data Foundation, Capture Mode, Inventory
+Import, Data Export, Device Management — bodies and fence files) plus the ADR decision-queue, for
+"peer review pending", "Amendment pending" and "not yet aligned". 58 raw hits, 0 on a status surface;
+every current status line (this PRD's, all five siblings', the two README rows) already reads "peer
+review closed" or carries no pending clause. The full file:line list with each hit's classification
+is in the orchestrator's scratchpad,
+`mech-relock/out/relock_status_surface_inventory.txt`.
+
+**Observation, outside this PRD's lock conditions.** No sibling fence file carries a dated Closed
+line for its PR #21 fence range yet: Data Foundation F50–F62 (extended from the first lock
+disposition's F50–F58, since this amendment added DF F56–F62), Capture Mode F70–F76, Inventory
+Import F65–F68, Data Export F31–F34 and Device Management F32. As the first lock's disposition
+already states and capture fences:434 sets the precedent for, these land at the attended merge,
+linking the owner's approval review, per conversion-flow step 7 part 3 — this is not a defect of the
+current state. Collection Mode's own Closed line for F202–F218 is different: it already landed, in
+the close commit (`7e19186`), ahead of this re-lock record.
