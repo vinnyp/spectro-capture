@@ -15,6 +15,8 @@ amendment preserves them and does not re-decide them.
 
 **Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`.
 
+**Amendment pending:** F219–F220 (2026-09-26), reopening F202–F218's re-lock for R8.8 and the Data Foundation PRD's R6.2a; peer review pending.
+
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
 range that authorises that amendment. Its presence says that the fences in that range are not yet
@@ -26,7 +28,7 @@ diff checks compare against, each resolved once at round 1 and written here as a
 **preservation baseline**, the commit at which this document was most recently locked, and the
 **change baseline**, the merge-base of this amendment's branch with the trunk it targets. A check
 that asks what has been preserved since the lock reads the first; a check that asks what this
-amendment changed reads the second. Preservation baseline: `04dfb97c9046cd18551df32c7ca74ceb71c788f9`. Change baseline: `dc1b747f399bc94a29392c69bcfe8bd72bf94412`.
+amendment changed reads the second. Preservation baseline: `94970c6da22f9cbda824887eb7822b2f9b053380` (the re-lock; `04dfb97` for F202–F218). Change baseline: `dc1b747f399bc94a29392c69bcfe8bd72bf94412`.
 
 ## Fences
 
@@ -62,6 +64,7 @@ file, in every round below.
 | owner decision D65–D68 (round-11 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 11 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-11--the-amendments-delta-and-pre-lock-round-2026-09-26) |
 | owner decision D69–D71 (round-12 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 12 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-12--delta-verify-of-round-11-2026-09-26) |
 | owner decision D72 (round-15 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 15 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-15--delta-verify-of-round-14-2026-09-26) |
+| owner decision D73–D74 (PR #21 follow-up adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 22 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-22--the-reopened-erasure-finding-2026-09-26) |
 
 This is editorial: it adds navigation only, over the settled preamble and fences above.
 
@@ -1889,6 +1892,23 @@ Fence F218 was decided by the owner on 2026-09-26, over round 15's database-lens
 
 **Clarified 2026-09-26 (owner decision D72 read with F211 and F215; round-16 privacy review's PRIV16-2 and PRIV16-3):** "E35 stays up" keeps an E35 already up and raises none where F211 shows none; the clearing once room returns still needs the file open and no read using the log, at the first such moment after room returns, and no marker of it is kept outside the file (DF F58 (1)).
 
+**Clarified 2026-09-26 ([F219](#f219--a-full-volume-defers-the-main-file-wipe-until-room-returns-2026-09-26), owner decision D73):** the fourth Decision bullet's "Text in the main file is still wiped at its normal deadline" holds where the volume lets that wipe and its sync complete; where a full volume refuses either, F219 governs.
+
+Fences F219 and F220 were decided by the owner on 2026-09-26, over the PR #21 follow-up review's reopened erasure finding (its T3 thread, reopened at `404fb2b`), recorded in the review log's "## Round 22 — the reopened erasure finding (2026-09-26)" section.
+
+### F219 — A full volume defers the main-file wipe until room returns (2026-09-26)
+
+- **Authority:** owner decision D73, PR #21 follow-up adjudication 2026-09-26. Question: "When a full volume refuses the save that makes a main-file wipe permanent, what should the contract promise?" Chosen: **Retry like the log** — "One full-volume rule for both halves: the text is gone from the file's bytes, durably, within 5 s of room returning while the file is open (or at the first open with room after a close or crash); E35 stays up if it was, as F218. New DJ3 cases: sync refused before the wipe, plus crash and power-loss variants." Not chosen: **Disclose only** — "R6.2a states the exception (the text can stay, or return after a power loss, until the next successful checkpoint) with no deadline; the help docs disclose it. Weaker privacy promise, simpler build."
+- **Decision:** Where a full volume refuses a main-file wipe or the sync that makes it last, the wipe is retried, and the removed text is gone from the file's own bytes, durably, within 5 s of the file being open with room: room returning while it is open, or the first open with room after a close, a crash or a power loss. E35 stays up if it was and is raised nowhere F211 shows none, as under F218. F218's fourth bullet holds where the volume lets the wipe and its sync complete. R8.8 and the Data Foundation PRD's R6.2a state it; that PRD's DJ3 gains (k), a sync refused before the wipe, and (l), its crash and power-loss runs.
+- **Why:** the PR #21 follow-up review reopened the erasure finding: F218's fourth bullet promised a deadline that the post-lock record showed a full volume can break (the checkpoint copying nothing when its sync is refused, or a wipe reverting on clone-shared blocks or after a power loss), and an unconditional guarantee the build cannot keep is not a buildable contract.
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (k) and (l), and the Data Foundation PRD F63
+
+### F220 — The Data Foundation PRD's word budget is 8,480 (2026-09-26)
+
+- **Authority:** owner decision D74, PR #21 follow-up adjudication 2026-09-26 (Data Foundation budget). Question: "The Data Foundation body is at 8,446 of its 8,450-word budget; either choice needs roughly 20–30 words in R6.2a. How should it fit?" Chosen: **Raise DF to 8,480** — "A dated fence like F214 raises the budget; R6.2a gains the clause in plain words." Not chosen: **Compact elsewhere to fit** — "Keep 8,450 and tighten other DF rows to make room; slower, and every compacted row reopens for review."
+- **Decision:** The Data Foundation PRD's word budget is 8,480 words, counted by rule 14's method. It is recorded there by a dated line under its F55, following F214's precedent.
+- **Carried by:** governs no rows
+
 ## Fence → row map
 
 Each line of this map names the IDs one fence governs, by the **Carried by** grammar above — or
@@ -2113,6 +2133,8 @@ than deciding a WHAT.
 - **F216** — R5.8, UJ5.4-f
 - **F217** — R5.4, UJ5.3-r
 - **F218** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (g), (i) and (j), and the Data Foundation PRD F62
+- **F219** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (k) and (l), and the Data Foundation PRD F63
+- **F220** — governs no rows
 
 ## Rejected findings
 

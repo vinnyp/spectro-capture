@@ -29969,3 +29969,58 @@ already states and capture fences:434 sets the precedent for, these land at the 
 linking the owner's approval review, per conversion-flow step 7 part 3 — this is not a defect of the
 current state. Collection Mode's own Closed line for F202–F218 is different: it already landed, in
 the close commit (`7e19186`), ahead of this re-lock record.
+
+
+## Round 22 — the reopened erasure finding (2026-09-26)
+
+PR #21's follow-up review, at `404fb2b` (after the re-lock at `94970c6`), verified seven of the eight original findings as resolved and reopened the erasure thread (T3) for one remaining part: F218's fourth Decision bullet, carried by R8.8, the Data Foundation PRD's R6.2a and the ADR-0003 input, still promised that text in the main file is wiped at its normal deadline, while `post-lock.md` recorded that a full volume refusing the wipe's sync breaks that promise and left the choice to the owner. External review content is recorded verbatim below as data.
+
+### The follow-up review (verbatim)
+
+Follow-up review at `404fb2b`: **seven of the eight original findings are verified resolved; the erasure finding is partially resolved.** I replied to and reopened its original thread with the remaining discrepancy.
+
+Verified:
+- Final lock validation is recorded at `94970c6`; the only change from there to this head is the appended review-log record, so the validated product/decision content matches.
+- The Authority index resolves the decision and recommendation records.
+- History and Compare now define working-value eligibility, unreadable/no-value/reference-mismatch precedence, and appropriate cases.
+- E9 returns safely when its source remains but loses its usable value.
+- The simulated banner explicitly replaces existing narrowing.
+- Clear sort restores queue order without writing, with an end-to-end drag case.
+- Imported headers are disambiguated in display/action labels while preserving stored names and re-import behavior.
+
+The WAL deadline correction is also in place. **The remaining P1 is the main-file erasure guarantee:** F218 still promises its normal deadline while post-lock explicitly says the promise fails under a full-volume sync refusal and leaves the recovery/disclosure choice to the owner. That product decision must be reconciled with the normative rows to meet the requested complete agent-build contract. This is supported by the PR's own recorded evidence, rather than a new claim that I repeated its APFS/VFS experiments.
+
+The distinction between locked and ready to build is now explicit. ADR-0003/0005/0006, ADR-0004 for the navigation seam, delete undo, the declared ROW_CONFIRM_BUDGET and the two DJ3 first-build items remain gates; the owner-ratified constants and closed OQ 11 are correctly recorded. These gates should stay visible, and this review does not authorize bypassing them.
+
+Validation: reviewed the delta and new acceptance cases against the eight findings and sibling amendments; checked 122 unique row IDs and 319 cases with no missing source-row references; checked links in the PRD and four companions with no broken local file/heading targets. No source changes or merge. No application or hardware tests were run.
+
+### The reopened T3 thread (verbatim)
+
+Rechecked at `404fb2b`. The **journal/WAL half is fixed**: F202/F211/F212/F215/F218, DF R6.2a and the new cases now specify its deferrals and retry deadline. I am reopening this finding for one remaining part of the same erasure guarantee, not the original WAL counterexample.
+
+[F218's fourth Decision bullet](https://github.com/vinnyp/spectro-capture/blob/404fb2bc1845bde4dbb179d383e11eae7652ee7c/docs/product/collection-mode/prd-collection-mode-fences.md#L1880) still says main-file text is wiped at its normal deadline. R8.8, DF R6.2a and the ADR-0003 input retain that promise. But [post-lock.md:176](https://github.com/vinnyp/spectro-capture/blob/404fb2bc1845bde4dbb179d383e11eae7652ee7c/docs/product/post-lock.md#L176) explicitly records that the promise does not hold when a full volume refuses the required sync: the wipe can revert, or the checkpoint copies nothing and the text remains. It still asks the owner to choose between retrying the main-file wipe like the log clearing and only disclosing the limitation. The round-19 database review records the latter counterexample; I have not independently rerun its filesystem/VFS probes.
+
+This is a pending **product guarantee/recovery decision**, not merely an implementation mechanism for ADR-0003. Gating ADR-0003 prevents a premature build, but it does not make the current unconditional guarantee correct or the feedback fully addressed under the requested no-open-decisions handoff standard.
+
+Please settle that owner choice and append consistent clarifications to F218/DF F62, R8.8/DF R6.2a, the ADR input and the applicable notice/retry behavior. Add an acceptance case that refuses the sync **before** the main-file wipe, plus a crash/power-loss variant; DJ3(j)'s already-clean main-file setup does not cover this. Otherwise retain this as an unresolved finding and label the affected guarantee as pending instead of claiming all correctness feedback is closed.
+
+The other seven original findings are verified resolved. No additional UI finding from this pass.
+
+### Orchestrator verification
+
+- **Confirmed at `404fb2b`.** F218's fourth bullet (fences:1880) reads "Text in the main file is still wiped at its normal deadline"; R8.8 (PRD:446) reads "text it removes is nowhere in the file's bytes from the moment it lands … unless a read begun before its wipe defers it"; DF R6.2a (DF:228) states the main-file deadline without a full-volume exception; and `post-lock.md:176`'s needs-owner item records, from the round-16 architecture, round-17 and round-18 privacy and round-19 database reviews, that a full volume refusing the wipe's sync leaves the text in place (a PASSIVE checkpoint whose log sync is refused copies nothing) or lets it revert (clone-shared blocks, a power loss). The reviewer's point stands: a guarantee the build cannot keep, with its fix parked as an owner question, is not a buildable contract.
+
+### Owner adjudication (2026-09-26)
+
+- **D73.** Question: "When a full volume refuses the save that makes a main-file wipe permanent, what should the contract promise?" Chosen: **Retry like the log** — "One full-volume rule for both halves: the text is gone from the file's bytes, durably, within 5 s of room returning while the file is open (or at the first open with room after a close or crash); E35 stays up if it was, as F218. New DJ3 cases: sync refused before the wipe, plus crash and power-loss variants." Not chosen: **Disclose only** — "R6.2a states the exception (the text can stay, or return after a power loss, until the next successful checkpoint) with no deadline; the help docs disclose it. Weaker privacy promise, simpler build."
+- **D74.** Question: "The Data Foundation body is at 8,446 of its 8,450-word budget; either choice needs roughly 20–30 words in R6.2a. How should it fit?" Chosen: **Raise DF to 8,480** — "A dated fence like F214 raises the budget; R6.2a gains the clause in plain words." Not chosen: **Compact elsewhere to fit** — "Keep 8,450 and tighten other DF rows to make room; slower, and every compacted row reopens for review."
+
+### What landed (before the lens round)
+
+- **Fences.** Collection Mode F219 (D73) and F220 (D74), with a Clarified line under F218 scoping its fourth bullet; Data Foundation F63 (D73's half), a Clarified line under F62, and D74's budget lines under F55 and beside F214's. Authority index row D73–D74; the fence preamble's pending item (F219–F220) and preservation baseline `94970c6`.
+- **Rows.** DF R6.2a gains "or, where a full volume refuses that wipe or its sync, within 5 s of the file being open with room" (DF 8,469 of 8,480). Collection Mode R8.8 reads "save as the Data Foundation PRD's R6.2a states for a read begun before its wipe, a full volume and a copy in a journal or log beside the file" (Collection Mode 12,399 of 12,400). Both reopen: R8.8 to needs-discussion, DF R6.2 to ⌛️ Ready for Alignment.
+- **ADR-0003 input.** It mirrors the retry and scopes "exactly" to a volume that lets the wipe and its sync complete.
+- **Acceptance.** DJ3 gains (k), a sync refused before the main-file wipe with a durability read after an induced loss of unwritten data, and (l), its crash and power-loss runs; (d) gains their seeding and scratch-sync guards; the Collection Mode Test-controls map declares the scratch-file truncation and sync.
+- **Post-lock.** The main-file-wipe owner item is ticked as settled by D73; the help-docs line's "in your file" half holds; the R6.2/R6.2a alignment gate is reopened.
+
+The nine lenses' round-22 reviews follow.
