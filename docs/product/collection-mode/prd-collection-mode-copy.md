@@ -295,7 +295,7 @@ set-aside cause the label its copy file's Set-aside cause labels table gives it.
 | R4.2f History | History | The number of readings, as 1 reading or 2 readings and so on |
 | R4.2h Re-scans awaiting an answer | Waiting on you | The Data Foundation PRD's E11 |
 
-**History lines** (R5.2, R5.4). A supersession reason is shown in these words: initial — First
+**History lines** (R5.2, R5.4, R5.8). A supersession reason is shown in these words: initial — First
 reading; re-measurement — Re-measured; correction — Correction; correction-unconfirmed — Re-scan
 awaiting your answer; restore — Earlier reading used again.
 
@@ -309,6 +309,6 @@ awaiting your answer; restore — Earlier reading used again.
 | R5.4 distance | From current | ΔE2000 and the distance |
 | R5.4 no-value | From current | for a reading with no value in this collection's measurement condition: Not compared — no value in this collection's measurement condition |
 | R5.4 unreadable | From current | for an unreadable reading: Not compared — this reading can't be read |
-| R5.4 not-compared | From current | where R5.4 or R5.8 gives the not-compared line: Not compared — worked out for a different light, viewing angle or measurement condition |
+| R5.4 not-compared | From current | where either reading's value was worked out under another illuminant or observer: Not compared — worked out for a different light, viewing angle or measurement condition |
 
-R5.8's Compare slot shows the same line with no label, between the two chips (F216).
+R5.8's Compare slot shows whichever of these lines R5.8 gives, with no label, between the two chips (F216).

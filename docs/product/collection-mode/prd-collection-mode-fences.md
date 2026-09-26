@@ -1708,6 +1708,7 @@ Fences F198–F201 were decided by the owner on 2026-09-25 over the five items t
 - **Decision:** As the chosen option states; the Data Foundation PRD's R1.11 deferral of app-made writes (F182) does not include the wipe.
 - **Carried by:** the Data Foundation PRD R1.11, the Data Foundation PRD DJ3, the Data Foundation PRD F58
 - **Clarified 2026-09-26 (owner decision D55; F202):** the exact deadline covers text in the file's own bytes; a copy in a journal or log beside the file goes at the latest when a write running at the wipe lands (F202).
+- **Clarified 2026-09-26 (round-13 orchestrator bookkeeping; no owner decision; the fence it points to governs):** the journal-or-log deadline this fence's Clarified line above states is superseded by F215's principle — the copy goes at the first moment, with the file open, that no read uses the log and no write runs, after a crash at the first open at which that holds; F215 governs.
 
 ### F201 — Two help-docs lines (2026-09-25)
 

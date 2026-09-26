@@ -631,6 +631,8 @@ Source: the owner's round-6 (pre-lock) decisions in the Collection Mode PRD's ad
 
 **Clarified 2026-09-26 ([the Collection Mode PRD's F202](../collection-mode/prd-collection-mode-fences.md#f202--the-log-copy-of-removed-text-waits-for-a-running-write-2026-09-26), owner decision D55):** (7)'s "needing no write lock, so R6.2a's deadline holds while a write is held" is qualified: that holds for text in the file's own bytes; a copy of it in a journal or log the app keeps beside the file goes at the latest when a held write lands, as F59 states. Peer review pending.
 
+**Clarified 2026-09-26 (round-13 orchestrator bookkeeping; no owner decision; the fence it points to governs):** the journal-or-log deadline (7) and the Clarified line above state is superseded by F61's principle; F61 governs.
+
 ## Collection Mode round-10 amendment (2026-09-26)
 
 Source: the owner's round-10 decisions in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F202](../collection-mode/prd-collection-mode-fences.md#f202--the-log-copy-of-removed-text-waits-for-a-running-write-2026-09-26) (owner decision D55, over the PR #21 review's finding T3). This fence carries only the Data Foundation half of that decision; peer review pending.
@@ -656,6 +658,8 @@ Source: the owner's round-11 decisions in the Collection Mode PRD's adjudication
 - **Rows:** R6.2, R6.2a, R1.11, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F60.
 
 **Clarified 2026-09-26 (F61; ARCH12-1):** this fence's Decision reads "R1.11's 'but a wipe (R6.2a)' exemption covers this clearing the same way"; that is corrected. R1.11's exemption covers the wipe of the file's own bytes, which needs no write lock. The clearing needs the write lock and runs once no write runs, as F61 states.
+
+**Clarified 2026-09-26 (round-13 orchestrator bookkeeping; no owner decision; the fence it points to governs; IF13-m3):** this fence's list of what can hold the journal or log copy is replaced by F61's principle — the copy goes at the first moment, with the file open, that no read uses that journal or log and no write runs, after a crash at the first open at which that holds — which covers every case this fence's list did. F61 governs.
 
 ## Collection Mode round-12 amendment (2026-09-26)
 
