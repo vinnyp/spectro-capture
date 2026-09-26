@@ -25134,3 +25134,1059 @@ orchestrator's already-landed rewrite of rows (a)-(i); only DB15-MAJOR-1 and PRI
 R6.2a's own text, and D72 settles them.
 
 This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-15-fixes.md`.
+
+## Round 16 — delta-verify of round 15 (2026-09-26)
+
+Subject: `74f058b`. Nine lenses read the amendment `17de231..74f058b`: product-manager,
+staff-software-engineer, test, interface, architecture, privacy, product-marketing, plan and
+database — product-marketing rejoining after round 15 left it out, the rest run again as a
+delta-verify pass over round 15's fixes.
+
+### product-manager
+
+## Verdict
+Builds the right thing for the user. My lens raised no Blocker or Major in round 15, and the round-15 fixes add none. Owner decision D72 keeps the Cataloger's trust job intact: removed text still clears with no action from the user, within 5 s of room returning, and nothing leaves the user at a dead end. The one weak spot is E35's explanation while the volume is full, and D72 already settled that it is the notice shown then.
+
+## User & problem context (brief)
+- **User and jobs.** The user is the Cataloger. In this delta they need to trust that deleted text is really gone, and to read a notice that is true about why it isn't gone yet.
+- **Evidence.** D72 rests on reproduced probes: SQLITE_IOERR_TRUNCATE in 8 of 46 APFS runs, and the growth case reproduced on HFS+ and APFS by three lenses. That is the right evidence bar for a single-owner dogfood product.
+- **What I read.** I ran `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'`. I read every target and contract source, plus my round-15 review in the log (lines 24182–24270), under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`.
+- **Uncommitted edits in the worktree.** The worktree holds edits made after `74f058b` that I did not review:
+  - `docs/decisions/README.md:22`
+  - Collection Mode PRD:446
+  - Collection Mode journeys UJ5.4-g
+  - `docs/product/post-lock.md:46` and `:183`
+
+  All file:line cites below are at `74f058b`. The line numbers are unchanged by those edits. Several of my Minors and Nits look already in progress there (PM16-1, PM16-4, PM16-5, PM16-6).
+
+## Findings
+
+**(1) My round-15 Blockers and Majors**
+
+My round-15 review raised no Blocker or Major (review log :24185). For completeness, here is the state of its Minors and Nits:
+
+| Finding | Status | Where |
+|---|---|---|
+| N1 (main-file wipe while E15 is up, left off the open list) | RESOLVED | `prd-collection-mode-fences.md:1872` (F218: "Text in the main file is still wiped at its normal deadline"); `prd-data-foundation-journeys.md:56` (i) now tests that wipe on a full volume; `post-lock.md:46` |
+| N2 ((d) should name its rows) | RESOLVED | `prd-data-foundation-journeys.md:51` |
+| N3 (post-lock:183's cite for a crash that discards a held write) | PARTIAL | See the N3 finding below. |
+| N4 (UJ2.3-d read through the wrong Test-controls row) | RESOLVED | `prd-collection-mode-journeys.md:241`, pointing at :581 and :583 |
+| N5 (wording of the pointer lines vs the README) | RESOLVED | `prd-collection-mode-fences.md:1734`; `prd-data-foundation-fences.md:652` |
+| Nit (UJ2.3-d's baseline SQL read belongs in the When) | RESOLVED | `prd-collection-mode-journeys.md:241` |
+
+**(2) New in the round-15 fixes.** No new Blocker or Major. I checked each changed line against its fence's Decision:
+- **R6.2a against F62/F218.** They agree. The copy stays; E35 stays up under R6.2a's own end condition; the copy clears within 5 s of room returning; the main-file clause is unchanged.
+- **DJ3 (g).** It accepts both outcomes: an immediate clear where truncation works, and a stall. So a correct build is never failed by it.
+- **DJ3 (i).** A build that retries only at the next write or the next open fails (i) because of its 10 s gap.
+- **DJ3 (h).** It now reads back the landed write, so E35's "Your changes are saved" is true at the reopen.
+- **Everything else.** UJ2.3-d, R5.4 (a status change only) and README row 6 are consistent.
+
+Minors and Nits for post-lock:
+
+[MINOR] PM16-1 — The E35 notice while the volume is full.
+- **Where:** `prd-data-foundation-copy.md:30` (E35), `prd-data-foundation.md:85` (R7.6q) and `post-lock.md:183`.
+- **User scenario, DJ3 (i) at `prd-data-foundation-journeys.md:56`.** An import commit lands, the disk fills, and the other app stops reading. No E15 appears.
+  - E35 says the text stays "until the other app stops reading it". It also says the app wipes it "or when you next open the file".
+  - Both are false until room returns, and nothing points the user at freeing space.
+  - After a quit and relaunch during the wait, E35 doesn't return at all: F58 (1) at `prd-data-foundation-fences.md:627` shows it again only while another app reads.
+- **Status.** The owner accepted E35 as the notice for this wait (D72's question text at `prd-collection-mode-fences.md:1867`), so this is not re-litigated.
+- **Fix:** add it as a fifth window on post-lock:183's E35 watch item.
+
+[MINOR] PM16-2 — No give-way rule when a full volume stops the clearing.
+- **Where:** `prd-data-foundation.md:228` (R6.2a); F218 at `prd-collection-mode-fences.md:1868–1872`; F62 at `prd-data-foundation-fences.md:687`.
+- **The gap.** F212 says a clearing that a read blocks "gives way". F218 states no equivalent for a clearing a full volume stops. R6.2a's trailing "…its clearing then running before the next write starts and holding that write…" now follows the full-volume branch. A literal reader could therefore hold edits until room returns, which is D72's rejected "Also stop new writes" option. No DJ3 row makes a write during the wait, so that build would pass.
+- **Frequency is low.** Under the declared-full test hook, every write during the wait needs room and fails with E15 either way.
+- **Fix:** a Clarified line under F218 and F62, costing no body words: "a clearing a full volume stops gives way, holding no write, and is retried once room returns."
+
+[MINOR] PM16-3 — (i) has no not-exercised guard.
+- **Where:** `prd-data-foundation-journeys.md:51` (d).
+- **The gap.** (d) guards (g)'s write landing but not a run of (i) whose clearing was never actually stopped. On such a run, a build that never retries when room returns passes (i).
+- **Fix:** add "a run of (i) in which a byte read finds the removed text beside the file nowhere before room is restored" to (d). The test lens owns this.
+
+[NIT] N3 (PARTIAL) — `post-lock.md:183` now cites DJ3 (c) for "a crash that discards a held write". But (c) at `prd-data-foundation-journeys.md:50` asserts E35 is *not* up at the reopen, so no case shows E35's "saved" after a lost edit. Drop the cite and keep the dogfood watch.
+
+[NIT] PM16-4 — `prd-collection-mode.md:446`: R8.8 cites "F59–F61", although F218 names R8.8 as a carrier. The behavior still carries through R6.2a by reference. Make it F59–F62 at the next body edit.
+
+[NIT] PM16-5 — `docs/decisions/README.md:22`: "and where a full volume stops that clearing within 5 s of room returning" is missing R6.2a's commas and reads as one run-on clause. Match R6.2a's wording.
+
+[NIT] PM16-6 — `post-lock.md:46` files (i) under "the journal-or-log copy under E15", but (i) has no E15. Its "E35 up" is also true only where E35 was already up (F211).
+
+## Biggest risks   (what builds the wrong thing or fails the user)
+- **E35 is the only signal during a full-volume wait (PM16-1).** In the growth case it names the wrong cause and a remedy that doesn't work. The privacy promise still holds on its own, so this is a trust and wording risk, not data exposure. It must stay on the dogfood watch.
+- **The give-way rule is implied, not stated (PM16-2).** The rejected blocking behavior is caught only by the fence's "Not chosen" text, not by any row or case.
+
+## Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **D72's "no user action" auto-clear is right for the Cataloger.** Erasure never depends on the user understanding SQLite, and edits are not blocked on a full disk.
+- **(g) is written by outcome, and (i) is the one forcing case.** That split is the right way to test a behavior that is non-deterministic on APFS: (g) tolerates it and (i) proves the retry.
+- **(h)'s read-back of the landed write closes the round-14 concern** that E35 said "saved" at a reopen when nothing had been saved.
+- **Not a finding:** a wait with no other app's read shows no E35. That silence is F211's settled own-reads clause.
+- **README row 6's "not yet aligned" note is honest.** It tells a builder not to start R8.8 or R6.2a.
+- **The pass is right-sized.** No new copy string, and one word of body growth.
+- **The six behaviors the brief asks about.** Clear sort, the simulated banner's reset and E9's return are untouched. The distance lines changed only in R5.4's status, and the imported-column tag only in UJ2.3-d's test surface. The erase timing leaves no dead end: E15 offers Try again and Move my file, E35 offers OK, and the clearing is automatic. Every state traces to a row: E35 to R6.2a, E15 to R8.8 and Data Foundation R1.10.
+
+## Missing / over-specified
+- **Missing:**
+  - the fifth E35 window on post-lock:183 (PM16-1);
+  - the give-way Clarified line under F218/F62 (PM16-2);
+  - (i)'s not-exercised guard in (d) (PM16-3).
+- **Over-specified:** nothing in this delta.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### staff-software-engineer
+
+## Verdict
+Proceed after addressing Blockers. There are no Blockers. My one round-15 Major, SSE15-1, is resolved. The round-15 fix pass introduces one new Major, SSE16-1. The rewrite of DJ3 (g) under D72 no longer tells apart two builds:
+- **Build C**, which clears the log at F215's first moment whenever the full volume does not stop the clearing;
+- **Build W**, which waits for room whenever the volume is full.
+
+F218's gloss "the volume has room to clear it" can be read either way. Both builds pass every row. The fix is journeys and fence lines only, with no PRD words.
+
+## What I reviewed
+- **Subject.** Commit `74f058b`, a delta-verify of round 15. I read `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'` in full, plus `prd-collection-mode-round-15-fixes.md` and the review log's "## Round 15" section (lines 24175–25136), including my own round-15 review.
+- **Repo root:** `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`. Short names below, all under it:
+  - DFJ = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+  - DF = `docs/product/data-foundation/prd-data-foundation.md`
+  - DFF = `docs/product/data-foundation/prd-data-foundation-fences.md`
+  - CMF = `docs/product/collection-mode/prd-collection-mode-fences.md`
+  - CM = `docs/product/collection-mode/prd-collection-mode.md`
+  - J = `docs/product/collection-mode/prd-collection-mode-journeys.md`
+  - PL = `docs/product/post-lock.md`
+  - ADRQ = `docs/decisions/README.md`
+- **Read at `74f058b`:**
+  - DJ3 in full (DFJ:44–62) and DJ4 (DFJ:64–87)
+  - DF R1.10, R6.2 (DF:216), R6.2a (DF:228), R7.2, R7.3 and OQ 20 (DF:335)
+  - DF copy E15 and E35
+  - DFF F57–F62 (:600–689)
+  - CMF F202 and F211–F218 (:1723–1873)
+  - CM constants, Build dependencies and Interim stated (CM:180–232); R8.1a–g, R8.8 (CM:446), R8.10a–f and R8.11; the inherited-obligation lines (CM:475–481)
+  - J UJ2.3-d (:241), UJ5.4-c…i (:397–403), UJ6.2-g (:422) and the Test-controls map (:572–592)
+  - PL:46, :169 and :183; ADRQ:22; README row 6
+  - The CM copy file and oq-results, and the DF copy file, are untouched by this diff.
+- **Word counts.** Raw-token deltas by rule 14's strip method: CM +0 and DF +15. That is consistent with CM 12,397 of 12,400 and DF 8,445 of 8,450.
+- **Worktree state.** The worktree is not clean. A concurrent session has uncommitted edits in nine files (DFJ, DFF, DF, CMF, CM, J, PL, ADRQ, README), attributed to round-16 findings (IF16-1, PM16-2, PRIV16-2/3, PMM16-1). I did not review them as the subject. Every citation here is against `git show 74f058b`. I re-confirmed DFJ:51, :54 and :56 there after noticing the edits.
+- **Could not verify (I do not run code):**
+  - The lenses' SQLite 3.53.4 probes.
+  - Whether D72's fourth bullet ("main file still wiped at its normal deadline") holds on a full APFS volume that also holds a local snapshot, where an in-place overwrite needs a new block.
+  - My reading that read 2, now always begun after the copy-in, takes read-mark 0 and so does not block a WAL restart by the held write.
+
+## Findings
+
+**(1) My round-15 Blockers and Majors**
+
+| Finding | Status | file:line |
+|---|---|---|
+| SSE15-1: (h) crashed without a clean-bytes gate | RESOLVED | DFJ:55 |
+
+How SSE15-1 was resolved:
+- (h) now reads "…end read 1; once a look finds the file's own bytes clean, the write still held, begin … read 2 …; release the write; once it has landed, read 2 still running, crash the app".
+- The gate is placed earlier than I proposed, before read 2 rather than before the crash. That is stronger, because the crash follows read 2's start, so the main file is clean at the crash. It also closes ARCH15-9 and R15-m5.
+- A 1 s-poll correct build now passes. The "before the reopen they still hold it nowhere" clause can no longer race the harness.
+
+My round-15 Minors:
+- **m1:** RESOLVED (DFJ:48).
+- **m2:** PARTIAL (see SSE16-m8).
+- **m3:** RESOLVED by D72.
+- **m4:** PARTIAL (Nit below).
+- **m5:** RESOLVED (DFJ:55, "once the file's opening state is up").
+- **m6:** UNRESOLVED and not carried (SSE16-m9).
+- **Nits:** the (d) row list, (g)'s landing guard and the "As in (b)" wording are all RESOLVED.
+
+**(2) New Blocker or Major from the round-15 fixes**
+
+[MAJOR] **SSE16-1 — DFJ:54 (g), read with F218's third bullet (CMF:1871), DF F62 (DFF:687) and R6.2a (DF:228).** Under D72, (g) no longer fails a build that skips clearing whenever the volume is full, and the fence gloss does not rule that build out.
+- **Before (`17de231`).** (g) asserted "within 5 s of the failure … the volume still full, no file … holds the removed text, and E35 is not up", with room restored at least 10 s later. That was the discriminator PRIV14-1 (a High), IF14-2 and ARCH14-2 asked for: "a build that waits for free space now fails".
+- **Now.** (g)'s only deadline for the log copy is "within 5 s of room being restored". Before that, it asserts only the one-way E35 check.
+- **The two readings of the gloss.** F218 and F62 say F215's first moment reads "…and the volume has room to clear it". Transcribed literally, that is `firstMoment = noRead ∧ noWrite ∧ volumeHasRoom()`, and the obvious `volumeHasRoom()` is a free-space check. R6.2a's "where a full volume stops that clearing" can be read the same way.
+- **Mutation that passes: Build W.**
+  - When E15 is up or statfs reports the volume full, W skips the clearing, polls free space each second, and clears within 1 s of room returning.
+  - In (g)'s state the clearing is a truncation only. F218's own Why records it failing in just 8 of 46 APFS runs. In the other runs, and in every HFS+ run the lenses made, TRUNCATE returned (0,0,0) with the volume still full.
+  - W therefore keeps removed text in the `-wal` beside the file for as long as the disk stays full, with E35 up.
+  - W passes (g), (i) and every other DJ3 and DJ4 row. Build C also passes.
+- **Why this counts as a Major.** D72's question premised "SQLite *sometimes* can't clear the log", and the owner chose "While a full volume stops the clearing…". The case for "when it can clear" is now gone, and a builder transcribing the fence can build W.
+- **Fix (fences and journeys only; no PRD words):**
+  1. Add a dated Clarified line under F218 and DF F62: "'has room to clear it' means the clearing, tried at F215's first moment, is not stopped for want of room; where a full volume does not stop it, the first moment stands".
+  2. In (g), declare the volume full through R7.3's hook in the state PL:169 describes: allocating writes fail, while truncation and in-place overwrites succeed. Restore the assertion "within 5 s of E15 rendering, a functional timeout, the volume still declared full, no file the app keeps beside the file holds the removed text and E35 is not up". (i) stays the path where the volume stops the clearing.
+  3. In (d), add "a run of (g) whose byte read at E15's render finds the removed text beside the file nowhere". A held write that restarts the log can overwrite the seeded frame before failing, which makes the new assertion vacuous.
+- The uncommitted worktree text, which is not the subject, appears to carry fixes 1 and 2 under IF16-1.
+
+**Minors and Nits (post-lock, one line each)**
+- [MINOR] **SSE16-m1 — DF:228.** "Within 5 s of room returning" drops F218's "first moment … and has room". If room returns while a read still uses the log, no build can meet it; for example, a sync client's new read holds a non-zero read mark in (i)'s un-backfilled state. Clarify it as "within 5 s of the first such moment once room returns".
+- [MINOR] **SSE16-m2 — DFJ:51 (d) and DFJ:56 (i).** No guard covers an (i) run whose log is clean before room is restored, for instance when the write reuses free pages or a hook lets the checkpoint grow the file. Such a run passes a build with no retry when room returns. Add it to (d).
+- [MINOR] **SSE16-m3 — DFJ:56 (i).** Nothing asserts that E15 stays down. A build that routes the failed checkpoint's SQLITE_FULL to E15 tells the user "your last change wasn't saved", offering Try again, about a change that landed. Add "E15 does not render".
+- [MINOR] **SSE16-m4 — DFJ:56 (i) Given.** It asks for "an R8.1f/g write … that adds at least 1 MB of new rows". No P0 R8.1f/g write adds rows: those writes are set, clear, scan order and delete, and undo of a delete is P1. Write "writes at least 1 MB of new values, e.g. a 'Set a field' of a long value across enough items".
+- [MINOR] **SSE16-m5 — DFJ:54, DFJ:56 and PL:169.** As specified, the hook's truncation always succeeds, so no case exercises D72's first-named cause: a truncation the volume stops (APFS SQLITE_IOERR_TRUNCATE). A build that retries only on SQLITE_FULL passes. Add a hook mode in which truncation fails until room returns, and run (g) in it.
+- [MINOR] **SSE16-m6 — (g) and (i).** No row makes a write while a clearing is stuck. D72's not-chosen "Also stop new writes" is excluded only by its Authority text and F212, so a build that holds every write until room returns passes. Add a single-item edit to (i) while the volume is full: it shows E15 within 1 s, with no write's progress showing.
+- [MINOR] **SSE16-m7 — DFJ:54 (g).** Neither the held write's size nor where it is held is stated. Take a correct build, whose clearing is deferred while the write is held (F215), with the write held before SQLite's write lock. A write smaller than the existing log then lands in place, as in DB15-MAJOR-2's 5 of 5 runs, so (d) reports (g) not exercised forever. Declare (g)'s write at least 1 MB, as in (i), or hold it after it begins writing.
+- [MINOR] **SSE16-m8 (SSE15-m2, PARTIAL) — the crash-clause gloss.** It landed under the superseded F202 and F59 (CMF:1734, DFF:652), not under the governing F215 and F61 (CMF:1842, DFF:676). F61 also lacks F215's "F218 qualifies the first moment" pointer (CMF:1847). Add both lines under F215 and F61.
+- [MINOR] **SSE16-m9 — round-15 Minors neither fixed nor carried to post-lock:**
+  - SSE15-m6 / TR m6: J:591's "Compare slot's accessible text" still lets a sibling "From current" label through;
+  - IF15-m1: (d) is written as a row with no oracle when its condition is false;
+  - the DJ4:77–78 "at the reopen, E35 is up" render race (TR15 m2, and the DJ4 half of ARCH15-10 and R15-m6).
+- [MINOR] **J:422 UJ6.2-g (untouched by the diff).** A two-item "Set a field" on a declared-full volume expects E15. A write that fits in the log's existing length lands in place (DB15-MAJOR-2), and under PL:169's hook that fails a correct build unless the log is empty. Declare the log truncated to zero, or add a not-exercised guard.
+- [NIT] **ADRQ:22.**
+  - The D72 clause lacks R6.2a's commas: "and where a full volume stops that clearing within 5 s of room returning" misparses.
+  - Its parenthetical still cites only F211, F212, F215, F60 and F61.
+- [NIT] **CM:446 R8.8.** It cites "F59–F61", though F218 names R8.8 as a carrier. Read "F59–F62".
+- [NIT] **PL:46.** It files the settled copy "under E15" but cites (i), which has no E15. Read "on a full volume, with or without E15".
+- [NIT] **PL:183 (SSE15-m4, PARTIAL).** It now cites DJ3 (c). But (c) ends read 1 before its crash, so no E35 shows at the reopen and "Your changes are saved" never appears. Drop the cite ("dogfood only").
+- [NIT] **DFJ:48–56.** Looks start "from once the delete shows done". That absorbs E35's render lag only if E35 renders together with the done state. Give E35 a 1 s functional timeout after it, as (h) gates on the opening state.
+- [NIT] **DFJ:47–48.** Neither row holds the write until a clean look, so a harness that releases it at once leaves "while the write still runs" unchecked. Gate the release as (b) gates read 2.
+- [NIT] **DFJ:55 (h).** "The landed write's change reads back from the file" should specify a short SQL read, ended before read 2 ends, because a long read-back holds the log itself.
+- [NIT] **Fix-file D3 and the review log's Dispositions note.** Both place the rewrite of rows (a)–(i) "at `17de231`". It landed at `74f058b`; `17de231` had rows (a)–(h).
+
+## Clarifying questions for the author
+1. Does "the volume has room to clear it" mean the clearing, tried at F215's first moment, is not stopped? In that case a full volume whose truncation succeeds still clears at the first moment.
+2. When room returns while a read still uses the log, does the 5 s run from room's return, or from the first moment after it that no read uses the log and no write runs?
+3. While a full volume stops a clearing, does the app keep starting its own writes, each clearing attempt giving way at once, as D72's rejection of "Also stop new writes" implies?
+4. Should (g) run under the declared-full hook whose truncation succeeds, with APFS's stopped truncation as a separate hook mode?
+5. In (i), must E15 stay down while the stuck clearing's checkpoint reports SQLITE_FULL?
+6. Which P0 R8.1f/g write does (i) intend by "adds at least 1 MB of new rows"?
+7. Must D72's main-file deadline hold on a full APFS volume that holds a local snapshot, or does that case also wait for room?
+
+## Claimed properties
+- **SSE15-1's fix and "read 2 gated on clean bytes" (b, e, f, h):** holds (DFJ:49, 52, 53, 55).
+- **"Nine self-contained rows":** holds. (e) and (f) now spell out their own actions.
+- **"Looks start from once the delete shows done":** holds in all eight rows that take looks. For render lag, see the Nit.
+- **(a)'s "while the write still runs":** holds (DFJ:48).
+- **(h)'s read-back, opening-state gate and F212 cite:** hold.
+- **(g) "under D72":** holds as text. It no longer discriminates (SSE16-1).
+- **(d) naming (a)–(c) and (e)–(i), plus (g)'s landing guard:** holds.
+- **(i) as described:** holds. Gaps are SSE16-m2 to m4.
+- **R6.2a's D72 clause:** holds, word for word. See SSE16-m1.
+- **"The ADR-0003 input carries the same clause and cites F218 and DF F62":** partly. The header list cites both, but the clause lacks its commas and its own parenthetical cites neither.
+- **B3's Clarified lines:** hold as scoped. The gloss sits under the wrong fences (SSE16-m8).
+- **E1 word counts, CM 12,397 and DF 8,445:** hold. My deltas are +0 and +15.
+- **D1 (PL:46, PL:169):** holds. The PL:183 re-point does not show the window (Nit).
+- **D2 (UJ2.3-d, re-pointed to J:581 and J:583, SQL read scoped, baseline moved into the When):** holds.
+- **D3 statuses:** hold. R5.4 is aligned, R8.8 is needs-discussion, and DF R6.2 is ⌛️ Ready for Alignment.
+- **"Nothing points at an interim that no longer exists":** holds.
+  - The diff touched no constant, build dependency or OQ.
+  - R1.7 goes through OQ 10 to DF OQ 20, whose interim "As R6.2a–c and R6.3 state" still resolves.
+  - R8.11 and Build-dependencies row 1 still cite the capture PRD's OQ 5 and ROW_CONFIRM_BUDGET (F120).
+  - Every new cite resolves: F62, F218, R7.3 and the J:581/583 rows. R8.8's F-range is a stale range, not an interim (Nit).
+
+## Genuinely sound
+- **Gating read 2 on clean bytes is a better fix than the one I proposed.** It removes the harness race, and it stops read 2 from deferring the main-file wipe. Per the architecture and plan probes, (h) stays exercised with read 2 begun after the copy-in.
+- **Routing the full-volume case to the owner (D72) was right.** A tweak to the case would have hidden a physical limit. R6.2a's bound is a concrete owner-ratified 5 s, so it needs no named constant.
+- **(i) is the right addition.** It is the realistic path: a long outside read plus captures grow the log until the disk is full. It pins the main-file wipe on a full volume, which PM N1, IF15-m4 and R15-m7 had asked for.
+- **(d)'s guard for a (g) write that lands** turns DB15-MAJOR-2's false red into an honest "not exercised".
+- **Not flagged:**
+  - the raw "5 s" in R6.2a;
+  - DF R6.2 moving to Ready for Alignment ahead of the lens dispositions, which is a recorded process call with a stated reason;
+  - (e) and (f) spelling out their actions.
+
+## Deferred
+- **Database lens:**
+  - whether the main-file wipe holds on a full APFS volume with a local snapshot (Q7);
+  - whether read 2, now always a read-mark-0 reader, lets the held write restart the log over the seeded frame in (b), (e), (f) and (h) when the write is held before SQLite's lock;
+  - UJ6.2-g's log slack.
+- **Privacy lens:** an export or Save a copy of the app's own that holds the log onto a full volume keeps removed text silently for the whole full-volume period (F211 with F218).
+- **Product-manager and product-marketing lenses:** in (i), E35's "another app is reading" cause and its "when you next open the file" remedy are both untrue while the clearing is stuck with no E15 up. The worktree shows PMM16-1 raising this.
+- **Test lens:** hook modes (SSE16-m5); E35 render-lag timeouts; observing "no label" in the Compare slot.
+- **Architecture lens:** whether ARCH14-4's in-file pending-wipe marker can itself be written while the volume is full.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (SSE16-1) |
+
+### test
+
+## Verdict
+Trustworthy after one new Major is fixed; there are no Blockers. My round-15 Major, TR15-1, is resolved. But the round-15 gate that starts read 2 only once the main file is clean creates a new false-green path, TR16-1. That gate sits in (b), (e), (f) and (h) at DF journeys:49, :52, :53 and :55. When the test hook holds the write before it takes SQLite's write lock, (b), (e) and (f) pass without ever exercising read 2's hold on the log. (h) then never runs at all.
+
+## Coverage map (brief)
+- **What I read.** The subject is `74f058b`. I ran `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'` and read every target and source file at that commit with `git show 74f058b:…`.
+  - The worktree has uncommitted edits beyond `74f058b` from a concurrent pass. I did not review them as the subject. None of them touches the read-2 gate or (d)'s cover of (b), (e) and (f).
+- **Probes.** SQLite 3.53.4, all in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r16tr/`: `probe_h16.py`, `probe_h16_eager.py`, `probe_h16_oldorder.py` and `probe_h16_oldorder_eager.py`. No repo file was touched.
+- **Covered, each row killing named wrong builds:**
+  - F218's deferral, through (i) — and through (g) only when a real APFS truncation fails;
+  - the main-file wipe beside a held write: (a), (b)–(h)'s gates, and :47;
+  - E35 honesty, through the one-way checks in every row;
+  - F58 (1) after a crash, through (h).
+- **Load-bearing gaps:**
+  - **TR16-1.** Read 2 now starts after the log has been fully copied into the main file, so SQLite gives it read-mark 0. That pins the log copy only if the held write already holds SQLite's write lock.
+  - **(i) has no not-exercised guard.** It is the only case that deterministically carries F218's room-return retry.
+
+## Findings
+
+**(1) My round-15 Blockers and Majors**
+
+| Finding | Status | Where |
+|---|---|---|
+| TR15-1 ((h) crashed without waiting for clean main-file bytes) | RESOLVED | DF journeys:55. Read 2 now starts only "once a look finds the file's own bytes clean, the write still held", and the crash comes after read 2 starts. The crash is therefore gated on clean bytes by construction, and harness speed can no longer beat the app's wipe. `probe_h16.py A 0`: main file clean at +0.23 s; after the crash, "main holds text: False"; the landed write reads back after the reopen; TRUNCATE returns (1,3,2) while read 2 runs and (0,0,0) once it ends. |
+
+My round-15 Minors and Nits:
+- **Resolved at `74f058b`:**
+  - m1 at :48;
+  - m2 at :55;
+  - m3 in every row ("from once the delete shows done");
+  - m4 at :51;
+  - m5 at :54 (room restored ≥ 10 s after E15 renders; "volume still full" is gone);
+  - the UJ2.3-d Nit at CM journeys:241;
+  - the F212 cite at :55;
+  - the "As in (b)" Nit at :52–53.
+- **Still open:** m6. It is neither fixed nor carried to post-lock; see the Minors below.
+
+**(2) New Major from the round-15 fixes**
+
+[MAJOR] **TR16-1 — DF journeys:49 (b), :52 (e), :53 (f) and :55 (h): the new read-2 gate lets the removed text leave the log before or at the held write's landing, so the read-2 cases no longer test that a later read holds the log copy (F211/F212, R6.2a).**
+
+- **The mechanism.** Once the main file is clean, the log is fully copied in, and read 2 begins at SQLite's read-mark 0. A read at mark 0 blocks copying further frames into the main file. It blocks neither of these:
+  - **A clearing before the landing.** If the build clears eagerly and the hold sits before SQLite's write lock, TRUNCATE succeeds as soon as the main file is clean. `probe_h16_eager.py B 6`: "main clean at +0.22s; log holds text: False", before read 2 even begins.
+  - **A log restart at the landing.** If the build clears late, a held write that starts its SQLite transaction only at release begins on a fully copied-in log. Its commit then restarts the log and overwrites it from the first frame.
+    - `probe_h16.py B 0`, with the text in the log's first frame as the natural seeding puts it: "landed (1, 1, 0); after landing: log holds text: False", and TRUNCATE is still busy. The text left through SQLite's restart, not through the build's clearing.
+    - `probe_h16.py B 6`, with the text frame later in the log: the text survives and stays pinned.
+- **Round 14's order pinned the text in every configuration.** There, read 2 began before the wipe, at a nonzero mark. `probe_h16_oldorder.py B 0` returns (1,3,2) and `probe_h16_oldorder_eager.py B 6` returns (1,20,19), with the text kept in both.
+- **Which builds this affects.** Holding the write before SQLite's write lock is a placement rounds 13–14 accepted (see DB15-MAJOR-2). R8.10a (CM PRD:454) does not fix the hold's placement. (d) at :51 reports this only for (h), and only after the reopen. It has no guard for (b), (e) or (f).
+- **Mutations that pass (b), (e) and (f) with that placement and first-frame seeding:**
+  - **W-F211:** the build treats only reads begun before the wipe as holding the log, so it drops E35 when the held write lands while read 2 runs.
+  - **W-F212:** the build tries the clearing once when the held write lands and never again when a read ends. This is SSE14-1's build.
+- **What those builds do in the field.** In real use, the text's frame can lie beyond the frames the write overwrites, or a read may hold a nonzero mark. Both builds then leave the removed text beside the file, either with E35 down or past R6.2a's first moment.
+- **The same builds fail (b) under `probe_h16.py A`,** where the hold sits after SQLite's write lock.
+- **(h) is affected too.** For these builds it is always reported not exercised, so F58 (1) after a crash is never checked.
+- **Fix, in the journeys only, with no PRD words:**
+  - In the journal-or-log fixture that (a) declares and (b)–(i) restate, add: the held write is "held only once it has begun writing to the file, before read 1 ends". This blocks both the early clearing and the restart. It also makes (g)'s write fail rather than land, which was DB15-MAJOR-2's root cause.
+  - Add to (d): "a run of (b), (e) or (f) whose first byte read after the held write lands finds the removed text beside the file nowhere" reports not exercised.
+  - Do not revert the gate. It correctly stops read 2 being "a read begun before its wipe" under R6.2a (R15-m5, ARCH15-9).
+
+**Minors (post-lock, one line each)**
+- [MINOR] DF journeys:51/:56 — (i) has no not-exercised guard for a run whose log copy is gone before room is restored (for example, the ≥ 1 MB write reuses free pages so nothing grows). A build with no room-return retry then passes (i), which is F218's only deterministic carrier.
+- [MINOR] DF journeys:56 — (i) never asserts that E15 stays down. A build that maps the clearing's SQLITE_FULL to E15 ("your last change wasn't saved") passes even though the change landed.
+- [MINOR] DF journeys:56 — (i)'s main-file clause needs a declared-full state in which in-place overwrites succeed. That rule lives only at post-lock:169 (ARCH15-8), so a harness that makes every write fail would fail a correct build. Cite it in (i).
+- [MINOR] DF journeys:56 — "adds at least 1 MB of new rows" fits no clear P0 R8.1f/g write, since a bulk set grows existing rows. Say "adds at least 1 MB to the file's stored content".
+- [MINOR] CM journeys:397–403 and :591 — my round-15 m6 is still open and not carried. "No label" is read as the Compare slot's accessible text, so a sibling "From current" element still passes.
+- [MINOR] DF journeys:44 (pre-existing) — "volume declared full before its release … the write fails" has the same land-by-restart path as (g) when the hold sits before SQLite's write lock, and it has no guard. TR16-1's fixture line fixes it if stated there too.
+- [NIT] CM PRD:446 — R8.8 still cites "F59–F61", although F218 pairs R8.8 with DF F62. A digit-only fix.
+- [NIT] docs/decisions/README.md:22 — "where a full volume stops that clearing within 5 s of room returning" lacks R6.2a's comma, so it reads as the volume stopping the clearing within 5 s.
+- [NIT] F218 (CM fences:1871) — "has room to clear it" can mean "not full" or "room enough for this clearing". (g) accepts both, so no build has to guess, but ADR-0003 should pick one.
+- [NIT] DF journeys:48 — (a) has "while the write still runs" back, but no floor on when the write is released. A harness that releases it at once makes the clause vacuous. (b)–(h)'s gates and :47 still pin F200.
+- [NIT] CM journeys:241 — UJ2.3-d's baseline and final SQL reads run with the app open, but the map's "the file" row observes contents read with the app closed.
+- [NIT] post-lock:169 — the round-11 note "a read begun after the wipe while the running write is still held also holds the log copy" is true only when that write already holds SQLite's write lock. Qualify it for ADR-0003.
+
+## Biggest risks   (what could ship broken behind a green suite)
+- **TR16-1.** Suppose a build places the R8.10a hold before SQLite's write lock and gets F211 or F212 wrong. It passes all of DJ3's read-2 cases, and (h) never runs. It then ships:
+  - with E35 down while removed text sits beside the file; or
+  - with the log copy outliving a later read's end until the next write or open.
+- **(i)'s missing guard.** If the growth precondition silently fails, F218's room-return retry ships untested, because (g) under the declared-full hook clears as soon as E15 renders.
+- **m6.** A stray "From current" label next to Compare's slot stays green.
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **TR15-1's fix is exact.** The clean-bytes gate now sits upstream of the crash, so the harness-speed race is gone (`probe_h16.py A`).
+- **(g) under D72 is correctly minimal.** Asserting a clearing at E15 would fail correct builds 8 times in 46 on APFS. The one-way E35 check plus the room-return deadline is the only oracle that holds on every run, and (d) covers a write that lands.
+- **(h) is stronger.**
+  - It now asserts that the landed write reads back after the reopen, which kills a build that discards the log file at open.
+  - Its E35 check starts from the opening state, which removes the look-while-opening race.
+- **(i) works whatever the hold placement.** Read 1 stops the log restarting, and the growth makes the clearing fail with the volume full. It deterministically kills a build with no room-return retry and a build that drops E35 when read 1 ends. The probe evidence from the database and architecture lenses (probe_room.py, probe15_growth.py) shows the main file still comes out clean.
+- **Untouched cases.** UJ2.1-g, UJ2.3-a/b, UJ3.3-n/o, UJ3.4-m/n, UJ5.3-b/o/p, UJ5.4-c/d and UJ7.1-u are not in this diff and stand as round 15 found them.
+- **Correctly not flagged:**
+  - (g) not checking E35 before E15, since (a) carries that check;
+  - the 5 s and 10 s functional timeouts, which are not budgets;
+  - R6.2a's D72 clause, which matches F218 and F62 exactly.
+
+## Missing / over-tested
+- **Missing:**
+  - TR16-1's fixture line and the matching (d) guard;
+  - (i)'s not-exercised guard, an assert that E15 stays down, and a cite of the declared-full hook's rule;
+  - a readout of the region around Compare's slot (m6).
+- **Over-tested:** nothing. Each of DJ3's nine rows kills a named wrong build.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | OBJECT (TR16-1) |
+| DF-R6.2 | OBJECT (TR16-1) |
+
+### interface
+
+## Verdict
+Sound after fixing one Major. There is no Blocker. My lens raised no Blocker or Major in round 15, and the fix pass lands cleanly, with one exception: the D72 rewrite of DJ3 (g) no longer catches a build that postpones every journal-or-log clearing while the volume is full. That reverses what resolved my round-14 IF14-2.
+
+## Surface & consumers (brief)
+- **What I read.** Repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`, HEAD `74f058b`. I read the whole of `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'`, plus the fix log, the Round 15 section of the review log (my own review is at lines 24507–24608), and every target and source file named in the brief.
+- **Short names used below:**
+  - DFJ = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+  - DF = `…/prd-data-foundation.md`
+  - DFf = `…/prd-data-foundation-fences.md`
+  - CM = `docs/product/collection-mode/prd-collection-mode.md`
+  - CMf = `…/prd-collection-mode-fences.md`
+  - PL = `docs/product/post-lock.md`
+  - ADRQ = `docs/decisions/README.md`
+  - IDX = `docs/product/README.md`
+- **What changed:**
+  - F218 (CMf:1863–1874) and DF F62 (DFf:680–689).
+  - R6.2a's D72 clause (DF:228).
+  - DJ3 (a)–(h) regenerated and (i) added (DFJ:48–56).
+  - Clarified lines under F202, DF F59 and F215 (CMf:1734, DFf:652, CMf:1847).
+  - The ADR-0003 input (ADRQ:22).
+  - PL:46, PL:169 and PL:183.
+  - UJ2.3-d; fence ranges and statuses.
+- **Consumers:** build agents for both PRDs, harness authors, the ADR-0003 author, and the sibling PRDs.
+- **No label, stored name or copy string was renamed.** The round's label checks all still resolve character for character (both copy files were untouched by the diff):
+  - "Clear sort": copy:78 and :183, CM:321 and CM:430.
+  - The " (imported)" tag and its collision form "⟨base⟩ (⟨suffix⟩)": copy:266–271, and R2.1 at CM:284 through "the copy file's imported-column tag".
+  - The two Not compared lines: copy:311–313.
+  - The device PRD's E22 action "Show simulated readings": device copy:31; R2.6 at CM:306 and UJ2.1-g at J:225 reach it by reference.
+  - The DF F59 mirror: DFf:652 is byte-identical to CMf:1734 (checked with `diff`).
+
+## Findings
+
+**(1) My round-15 Blockers and Majors:** none. Round 15's interface verdict was "Contract sound", with Minors only. Where those Minors stand now:
+
+| Finding | Status | Where |
+|---|---|---|
+| IF15-m1: (d) is a table row | PARTIAL | DFJ:51. The scope is now "(a)–(c) or (e)–(i)". It is still a row with no outcome when its condition is false, and each sibling row still asserts the seeding find as a pass condition. |
+| IF15-m2: the F202 and F59 pointers over-supersede | RESOLVED | CMf:1734 and DFf:652 now narrow the supersession to the journal-or-log deadline. |
+| IF15-m3: two wordings of the crash clause | PARTIAL | The gloss sits only under the superseded F202 (CMf:1734) and F59 (DFf:652). The governing F215 (CMf:1842) and F61 (DFf:676) still read "at the first open at which that holds", unglossed, and so do the F200, F211 and DF F60 pointers (CMf:1712, CMf:1806, DFf:667). |
+| IF15-m4: PL:46 | RESOLVED as asked | Punctuation and the qualified cite are fixed, and F218's fourth bullet settles the main-file wipe under E15. The new wording has its own problem, covered under IF16-1. |
+| IF15-m5: looks had no start point | RESOLVED | DFJ:48–56 add "from once the delete shows done"; (h) adds "once the file's opening state is up". |
+| Round-15 Nits on (e), (f) and (g) | RESOLVED | (g) now cites R7.3 and times itself from E15; (e) and (f) state their own actions; (f) now has its seeding clause. |
+
+**(2) New Major from the round-15 fixes**
+
+[MAJOR] **IF16-1 — DJ3 (g) at DFJ:54 against DF R6.2a (DF:228) and F218; also PL:46.** (g) now passes a build that postpones every clearing while the volume is full, and no case catches it.
+- **What the contract says.** R6.2a's D72 clause applies only "where a full volume stops that clearing". F218's first bullet says the same. Where truncation succeeds on a full volume, the normal "first moment" deadline still applies. The owner's own question assumed that: "SQLite *sometimes* can't clear the log".
+- **What changed in (g).**
+  - Old (17de231): "within 5 s of the failure, … the volume still full, no file … holds the removed text, and E35 is not up".
+  - New: only the one-way E35 check, then "within 5 s of room being restored … no file … holds the removed text".
+- **Traced by hand, under the declared-full hook PL:169 already requires ("writes that allocate fail, while truncation and in-place overwrites succeed", ARCH15-8):**
+  - A correct build clears when the write fails, well within 5 s. It passes.
+  - The mutation: gate the clearing on "the volume is not full". That build keeps the copy for at least 10 s, E35 up, and clears when room returns. It also passes the new (g), and it failed the old (g).
+  - (i), at DFJ:56, forces growth, so it cannot tell these two builds apart either. No other case combines a full volume with a log copy. I searched both journeys files.
+- **Three texts now read the rule the wrong way:**
+  - PL:46's new wording: "the log copy stays, E35 up, until room returns", with no condition.
+  - The literal reading of F218's third bullet and F62's "'first moment' reads '…and the volume has room to clear it'" (CMf:1871, DFf:687).
+  - (g)'s acceptance of both behaviours.
+
+  So a builder can choose between "try the clearing, fall back to waiting" and "wait whenever the volume is full". The second leaves removed text in the log for the whole full period, even in the 38 of 46 APFS runs, and every HFS+ run, where it could have been cleared.
+- **Fix (does not reopen D72):**
+  1. In (g)'s action, pin what the declared-full state lets through: "declare the volume full (R7.3), a declared-full state in which a write that needs new space fails and a truncation or in-place overwrite succeeds". This is the post-lock hook ARCH15-8 already names, and it removes the APFS flakiness DB15-MAJOR-1 found.
+  2. Restore (g)'s old assertion: "within 5 s of E15 rendering, a functional timeout, the volume still full, no file the app keeps beside the file holds the removed text and E35 is not up".
+  3. Keep (i) as the D72 case: the clearing is stopped, the copy stays, and it clears within 5 s of room returning.
+  4. Make PL:46 conditional: "where the full volume stops the clearing".
+  5. Add an orchestrator Clarified line under F218 and under F62: "room to clear it" means room enough for that clearing to succeed.
+  6. If the orchestrator reads D72 as "wait whenever the volume is full", that is a question for the owner, not an edit.
+
+**Minors and Nits (post-lock, one line each)**
+- [MINOR] **IF16-m1, R8.8 at CM:446.** Its cite still reads "(its R1.10 and F59–F61)". F218's Carried-by lists R8.8, and the fix pass changed the same range at CM:478 and DF:280 but not here. Fix: F59–F62, a word-neutral digit swap.
+- [MINOR] **IF16-m2, IDX:18 (row 6).** It still reads "Data Foundation (F50–F61)", while row 4 (IDX:16) now reads F50–F62. Fix: F50–F62.
+- [MINOR] **IF16-m3, ADRQ:22.** Two problems:
+  - The inner cite after the journal-or-log clause, "(Collection Mode F211, F212 and F215; Data Foundation F60 and F61)", does not name F218 or F62, which own the new clause.
+  - "and where a full volume stops that clearing within 5 s of room returning" is missing R6.2a's commas and reads as a garden path. Fix: "and, where a full volume stops that clearing, within 5 s of room returning,".
+- [MINOR] **IF16-m4 (IF15-m3 carried), CMf:1842 and DFf:676.** Put the "first such moment after reopening" gloss under the governing F215 and F61, not only under the superseded F202 and F59.
+- [MINOR] **IF16-m5, DJ3 (i) at DFJ:56.** Two gaps:
+  - (d) has no not-exercised branch for (i). If the fixture's "would grow the file past its own end" is not met (for example, the new rows reuse the freed pages), a build that never clears once room returns passes (i) with nothing tested, and that clearing is D72's only new obligation. Fix: add to (d) "a run of (i) whose last byte read before room is restored finds the removed text beside the file nowhere".
+  - (i) never asserts that E15 does not render. A build that raises E15 ("so your last change wasn't saved") for its own failed clearing passes, although the change was saved. Fix: add "E15 does not render" to (i)'s Result.
+- [MINOR] **IF16-m6, PL:183.** The E35 dogfood windows do not list D72's (i) window. There, E35's body ("until the other app stops reading it") is false: no app is reading, no E15 is up, and the real gate is room.
+- [MINOR] **IF15-m1, carried, DFJ:51.** Move (d) out of the table into a note, and state the seeding find as each row's precondition.
+- [NIT] **DF:228.** "where a full volume stops that clearing": "that clearing" has nothing before it to refer to; "clearing" first appears later in the sentence. Use "the clearing".
+- [NIT] **CMf:1869 and DFf:687.** "E35 stays up" assumes E35 is already up. Where only the app's own read held the copy, F211 keeps it silent. Say "E35, if up, stays up".
+- [NIT] **DFf:687.** "DJ3 gains sub-runs (g)'s full-volume timing and (i)'s growth case" is ungrammatical, and (g) is not new.
+- [NIT] **DFJ:55 (h).** "The file's opening state": cite R7.6b's File-opening states so the harness knows what to watch for.
+- [NIT] **DFJ:48 (a).** Nothing requires E35 to be up at the moment the delete shows done; allow a short settling time or state that E35 renders with the done state.
+- [NIT] **Carried, untouched by this diff:**
+  - copy:314 "whichever of these lines".
+  - DFf:635 "(7) and the Clarified line above state is superseded".
+  - Bare "F215" in DF items at PL:49 and PL:52.
+  - PL:113 cites PRD:103, but the term is at CM:104.
+  - UJ5.4-a/b/g still lack "with no label".
+
+## Biggest risks   (what existing consumers/scripts/agents break)
+- **A builder reads D72 as "wait whenever the volume is full" (IF16-1) and ships it green.** PL:46 and the literal F218/F62 wording invite that reading, and (g) no longer fails it. The cost is removed text lingering in the log beside the user's file whenever the volume is full, including the common case where it could have been cleared.
+- **The ADR-0003 author takes the input's inner cite as the full source list and misses F218/F62 (IF16-m3).** The outer list does name them, so this is recoverable.
+- **A harness whose (i) fixture does not force the growth passes a build with no clearing on room return (IF16-m5).**
+
+## Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **F218 and F62 mirror each other properly.** Each has an Authority that quotes D72 word for word or points to it, a conditional first bullet, "Carried by" and "Rows" fields that point at each other, and matching entries in both fence → row maps. D72 is in the Authority index with a working anchor.
+- **Every cross-document cite in the changed DJ3 rows names its owning document.** Examples: "(F61, F62, the Collection Mode PRD's F211, F215 and F218)" and "[the Collection Mode PRD's F215 and F218]". CM:478 and DF:280 now both read F52–F62.
+- **(i) is a strong case for the deferral path.** Growth is forced, so under the ARCH15-8 hook the clearing is certain to be stopped, and "within 5 s of room being restored" then fails any build that does not clear once room returns. Its main-file clause matches F218's fourth bullet.
+- **(d)'s "a run of (g) whose released write lands" closes DB15-MAJOR-2 without weakening the case.**
+- **(h) now gates the crash on clean main-file bytes and asserts that the landed change reads back.** Those were the two gaps behind round 15's (h) objections.
+- **The one-way E35 check in (g) and (i) is right.** "E35 up wherever text is beside the file; down within 5 s once it is gone" works under either truncation outcome. The defect is only that (g) lost its separate deadline for the case where the clearing is not stopped, not the check itself.
+- **UJ2.3-d now points at the collection-surface and item-detail rows (J:581, J:583).** Their Observable columns cover what the case asserts.
+
+## Missing / over-engineered
+- **Missing:**
+  - Any case that pins what the declared-full state lets through, so that "stopped" versus "not stopped" can be tested (IF16-1).
+  - A not-exercised guard for (i) (IF16-m5).
+  - The crash-clause gloss on the governing fences (IF16-m4).
+  - The range sync at R8.8 and IDX row 6 (IF16-m1, IF16-m2).
+- **Over-engineered (acceptable):** the nine DJ3 rows each repeat the fixture summary and the definition of a look. That costs words, but it keeps each row self-contained, which is what ended the inheritance bugs of rounds 12–14.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (IF16-1) |
+
+### architecture
+
+## Verdict
+**Sound: build it.** Both of my round-15 Majors are resolved at `74f058b`, and the round-15 fixes add no new Blocker or Major. What remains is seven Minors and five Nits for post-lock. The most useful of them comes from a new probe: a full APFS volume can stop the main-file wipe from being saved to disk (ARCH16-4). No DJ3 case fails because of it.
+
+## Architecture in brief
+- **Who owns what.** Data Foundation owns the file, the erase lifecycle, E35 and the one-writer rule (R1.11). CM R8.8 hands the journal-or-log copy to DF R6.2a, and ADR-0003 owns the mechanism.
+- **Two deadlines.** Text in the main file is wiped at the read-based deadline (F200/F202). The log copy goes at F215's first moment.
+- **What D72 adds (F218/F62).** Where a full volume stops the clearing, the copy stays, E35 stays up, and the app clears it within 5 s of room returning.
+- **Tradeoff, unchanged.** Writes never wait on reads, the log copy trails behind, and E35 discloses it. WAL is forced by the ADR input's non-waiting save, not by these rows.
+- **Subject.** `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'`, with every cited line read at `74f058b`.
+- **Working tree.** It carries uncommitted round-16 edits in 9 files (DFJ:51/54/56, DF:228, CM:446, ADRQ:22, CMF after F218, DFF after F62, PL:46/183). I did not review them as the subject. They appear to address ARCH16-1, ARCH16-2, ARCH16-3 and the first, second and fourth Nits.
+
+| Short | File |
+|---|---|
+| CM / CMF | `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md` / `-fences.md` |
+| DF / DFJ / DFF | `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation.md` / `-journeys.md` / `-fences.md` |
+| ADRQ / PL | `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/decisions/README.md` / `.../docs/product/post-lock.md` |
+| Probes | `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round16/arch16-probe/` (`probe16_clone.py`, `probe16_sql.py`, `probe16_remount.py`, `probe16_remount_growth.py`) |
+
+Probe setup: SQLite 3.53.4, WAL, `secure_delete=ON`, `wal_autocheckpoint=0`, on a 16 MB APFS image filled until ENOSPC. The image is detached.
+
+## Findings
+
+**(1) My round-15 Majors**
+
+| Finding | Status | file:line |
+|---|---|---|
+| ARCH15-1 — (h) crashed without waiting for the main-file wipe | RESOLVED. Read 2 now begins only "once a look finds the file's own bytes clean, the write still held", and the crash follows read 2's start and the write landing, so a correct build that wipes late can no longer be killed before its wipe. | DFJ:55 |
+| ARCH15-2 — PL:46 treated full-volume clearing as settled on a false "needs no room" premise | RESOLVED. D72 states the outcome: DF R6.2a gains "or, where a full volume stops that clearing, within 5 s of room returning". The growth case has its own row, (i). PL:46 now cites F218/F62. PROBE: (i) behaves as the row states on plain APFS, 3/3 runs, with integrity `ok`. | DF:228; DFJ:56; PL:46; CMF:1865–1874; DFF:684–689 |
+
+Round-15 Minors:
+- **Resolved:** ARCH15-3 (PL:169), ARCH15-4 (CMF:1734, DFF:652), ARCH15-5 (DFJ:48), ARCH15-7, ARCH15-9 and ARCH15-10 (DFJ:49, 52, 53, 55).
+- **Carried to PL:169:** ARCH15-6 and ARCH15-8.
+- **Nits resolved:** the crash wording, PL:183 now pointing at (c), (d) naming its rows, and (e)/(f) no longer starting "As in (b)".
+- **Nit still unrecorded:** ADRQ:22's capture-save attribution.
+
+**(2) New Blockers or Majors from the round-15 fixes:** none.
+
+**Minors and Nits (post-lock, one line each)**
+- **[MINOR] ARCH16-1 — (g) (DFJ:54) with R6.2a (DF:228).** (g) never defines "where a full volume stops that clearing", so it passes a build that suspends all clearing after any SQLITE_FULL until room returns. That build is wrong whenever the declared-full state lets truncation succeed (PL:169's ARCH15-8 hook), because the clearing was never stopped. Fix: state the hook's behaviour in (g) and assert the clearing within 5 s of E15 rendering.
+- **[MINOR] ARCH16-2 — (d) (DFJ:51) and (i) (DFJ:56).** There is no not-exercised guard for an (i) run whose log is clean before room returns. For example, the 1 MB write may reuse freelist pages the delete freed, so nothing grows. Such a run passes a build that never retries after SQLITE_FULL. Fix: add that guard.
+- **[MINOR] ARCH16-3 — (i) (DFJ:56).** Nothing asserts E15. A build that raises E15 ("your last change wasn't saved", DFF:627 (3)) for the failed clearing shows a false state and passes. Fix: assert that E15 does not render.
+- **[MINOR] ARCH16-4 — F218's "Text in the main file is still wiped at its normal deadline" (CMF:1872) and (i)'s main-file clause (DFJ:56).** The storage cannot make this wipe durable when the file shares disk blocks with an APFS clone.
+  - PROBE, raw write: an in-place write plus fsync on a full volume succeeded 3/3 on a plain file and failed ENOSPC 3/3 on a file cloned with `/bin/cp -c`.
+  - PROBE, SQLite on a cloned file (4 runs): PASSIVE and TRUNCATE failed with SQLITE_IOERR_FSYNC. A byte read found the main file clean while mounted. After detach and re-attach, still full, the removed text was back in the main file. The `-wal` still held the delete's frames.
+  - Control: the same growth case on an unshared file stayed clean across detach and re-attach.
+  - Where it bites: Finder Duplicate, a clone-based copy should ADR-0003 choose one, or a Time Machine local snapshot (the snapshot case is unprobed; it uses the same copy-on-write mechanism). A byte-read oracle cannot see this, and the ARCH15-8 hook ("in-place overwrites succeed") hides it.
+  - Fix, not re-litigating D72: an ADR-0003 note that a wipe whose sync fails for want of room is handled like F218's stopped clearing. That falls out if E35 and the retry are tied to the log clearing succeeding, since SQLite syncs the main file before it truncates. Also record that the hook does not model shared blocks.
+- **[MINOR] ARCH16-5 — R6.2a's D72 clause (DF:228).** "Within 5 s of room returning, its clearing then running before the next write starts" is met only if the pending clearing is attempted at each write start as well as by a poll. With a poll alone, a long R8.1f/g write begun between room returning and the poll holds the clearing past 5 s. Needs an ADR-0003 note.
+- **[MINOR] ARCH16-6 — every "within 5 s" wipe deadline.**
+  - macOS gives the app no signal when free space returns or when another app's read ends, so these deadlines depend on a background poll.
+  - App Nap can throttle that poll when the app is not frontmost; the only mention of App Nap in the docs is a named gap in the Rust research results.
+  - D72's pending state can last hours, which makes this worse. The engineering plan should hold an activity assertion while any wipe or clearing is pending.
+- **[MINOR] ARCH16-7 — the pending-wipe marker (PL:169, ARCH15-6).** Under D72 a pending clearing can outlive a close or crash while the volume is full, and a full volume refuses the marker's own write. So the marker must be written with, or before, the text-removing write, not when the deferral is first noticed. No DJ3 row crashes while the volume is full.
+- **[NIT] ADRQ:22.** "and where a full volume stops that clearing within 5 s of room returning" lacks R6.2a's commas and can parse as the condition. Its inline parenthetical still cites only F211/F212/F215 and F60/F61.
+- **[NIT] CM:446.** R8.8 cites "F59–F61" where "F59–F62" is a word-neutral swap.
+- **[NIT] DFF:673–678.** F61 has no Clarified pointer to F62, while CMF:1847 points F215 to F218.
+- **[NIT] DF:228.** "that clearing" has no antecedent until "its clearing" later in the same sentence.
+- **[NIT] Stacked pointer lines.** To assemble the log rule a builder reads F200 → F202 → F211 → F212 → F215 → F218, with pointer lines under four fences. Name R6.2a and ADRQ:22 as the consolidated statement.
+
+## Biggest risks
+- **The full-volume path is tested only through a declared-full hook.** Real APFS differs in two ways the hook does not show:
+  - truncation fails in about 1 run in 6 (the database lens's round-15 probe);
+  - pages written in place to a file that shares blocks with a clone never reach disk (ARCH16-4).
+
+  D72's defer-and-retry covers both, but only if ADR-0003 ties E35 and the retry to the clearing actually succeeding.
+- **The pending-wipe marker is a schema-level one-way door.** It now also has to survive a full volume (ARCH16-7).
+- **The deadlines depend on background polling that nothing owns** (ARCH16-5, ARCH16-6).
+
+## Genuinely sound
+- **Both round-15 fixes are minimal and correct.** (h) is gated on clean bytes. D72 plus (i) turn a physical limit into a stated, testable outcome, with no PRD words beyond R6.2a's clause.
+- **D72's rejected "Also stop new writes" was the right call.** On a full volume a log append needs new space and fails on its own with E15. In the growth state SQLite cannot restart the log. Blocking writes would add a mode and no protection.
+- **The rows stay storage-neutral.** In rollback-journal DELETE mode the journal is unlinked at each commit, so D72 holds trivially.
+- **One source of truth.** R8.8 delegates to R6.2a, and ADRQ:22 mirrors it without naming a checkpoint mode. "Within 5 s of room returning" is a behaviour, not a mechanism.
+- **(i) is well built.** The main-file bytes are clean even though the checkpoint fails, because pages inside the file are copied in place first (PROBE 3/3). The file stays clean across an unmount when no clone shares its blocks.
+- **The DJ3 set now holds together.** Each of (a)–(i) has its own action sequence and result. With the shared look start point and read 2 gated on clean bytes, the timing guesses behind rounds 12–15 are gone.
+
+## Missing / over-engineered
+- **Missing:**
+  - ADR-0003 notes for ARCH16-4, ARCH16-5 and ARCH16-7;
+  - an engineering-plan note for ARCH16-6;
+  - the small DJ3 tightenings ARCH16-1 to ARCH16-3, which appear to be in flight in the working tree.
+- **Over-engineered:** nothing new. Nine rows over one fixture is warranted, since each row covers a distinct failure path.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### privacy
+
+## Verdict
+**Privacy-sound to ship.** D72 closes PRIV15-1, and the round-15 fixes bring in no new Critical or High. Two Mediums and two Lows go to post-lock, all on disclosure or case strength. None is in R8.8's or R6.2a's own text.
+
+## Data-flow & PII map (brief)
+- **Data subjects:** the Cataloger, and anyone named in notes, swatch names, collection names or imported free text. None of it is special-category. The delta adds no personal field, no store and no egress.
+- **Where removed text survives:**
+  - **Main file:** until reads begun before the wipe have ended. F218 keeps this deadline on a full volume, and DJ3 (i) tests it.
+  - **The log beside the file:** until the first moment, with the file open, that no read uses it and no write runs. New under D72: where a full volume stops that clearing, until room returns, plus 5 s.
+  - **Outside the promise:** R5.8's copies, Save a copy, exports and backups.
+- **Disclosure:**
+  - E35 shows for another app's read and stays up through a full-volume stall.
+  - Nothing shows for the app's own export or Save a copy (F211). Nothing shows for a stall that follows one, or for a stall that spans a close and reopen.
+- **Readers of a log copy:** sync clients, backups, and copies of the folder.
+
+## Findings
+Root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`. Subject `74f058b`, read with `git show 74f058b:<path>`.
+- **Short names:**
+  - DFJ = `product/data-foundation/prd-data-foundation-journeys.md`
+  - DF = `…/prd-data-foundation.md`
+  - DFC = `…/prd-data-foundation-copy.md`
+  - DFF = `…/prd-data-foundation-fences.md`
+  - CM, CMC and CMF = the Collection Mode PRD, copy file and fences file
+  - PL = `product/post-lock.md`
+  - ADRQ = `decisions/README.md`
+- **What I read:** all 7 targets and 7 sources, and I ran the scoped `git diff 17de231 74f058b`.
+- **Working tree:** it holds uncommitted edits beyond `74f058b`, at ADRQ:22, CM:446, PL:46, PL:183 and CM journeys UJ5.4-g. I did not review them as the subject.
+
+**(1) My round-15 Critical/High findings: none were raised.** For completeness, my round-15 Lows and Infos:
+
+| Finding | Status | file:line |
+|---|---|---|
+| PRIV15-1 (Low): full volume stalls the log clearing, no retry stated | RESOLVED by D72 | CMF:1865–1874 (F218), DFF:684–689 (F62), DF:228, DFJ:54 (g), DFJ:56 (i), ADRQ:22, PL:46. See the PRIV16-1 and PRIV16-2 caveats. |
+| PRIV15-2 (Low): pointer lines swept in the main-file clause | RESOLVED | CMF:1734, DFF:652 |
+| PRIV15-3 (Low): pending-wipe marker must stay in the file | RESOLVED | PL:169, "keep it in the file itself (DF F58 (1))" |
+| Info: PL:183 cited (h) | RESOLVED | PL:183, now DJ3 (c) |
+| Info: README:22 wording differed from F215/F61 | RESOLVED | CMF:1734 and DFF:652 now define the fence wording as the ADR-0003 input's reading |
+| Info: PL:46 missing full stop | RESOLVED | PL:46 |
+
+**(2) New Critical or High from the round-15 fixes: none.**
+
+[MEDIUM] **PRIV16-1 — DFJ:54 (g), with PL:46: (g) now passes the mutation PRIV14-1 closed.**
+- **The problem.** Re-timed to room's return, (g) accepts a build that suspends every clearing while the volume is full.
+- **What R6.2a and F218 require.** DF:228 and CMF:1871 clear at the failure, unless the full volume actually stops the clearing.
+- **Why it is never stopped in (g).** In (g), the clearing is an in-place copy back plus a truncation.
+  - Under the declared-full hook PL:169 now specifies (ARCH15-8: truncation and in-place overwrites succeed), that is never stopped.
+  - It is also never stopped on HFS+, and not in about 5 of 6 runs on real APFS (DB15-MAJOR-1).
+- **Mutation.** Gate the clearing on "the volume has room". It passes (g) today.
+- **PL:46.** It states the same unconditional reading: "the log copy stays, E35 up, until room returns".
+- **Why Medium, not High as in round 14.**
+  - The extra retention is removed text beside the file for the whole full-disk period, where the correct build keeps none.
+  - E35 stays up throughout, though its reason is stale.
+  - That is the kind of retention D72 accepted for a stopped clearing.
+- **Fix.**
+  - Declare the volume full through the hook in (g), and assert "within 5 s of E15 rendering, no file the app keeps beside the file holds the removed text and E35 is not up". Leave the stopped path to (i).
+  - Scope PL:46 to "where a full volume stops that clearing".
+  - (GDPR Art. 5(1)(e), storage limitation.)
+
+[MEDIUM] **PRIV16-2 — CMF:1869 and DFF:687: "E35 stays up" assumes E35 is already up.**
+- **Why it may not be.** F211 (CMF:1802) raises E35 only for another app's read.
+- **Two silent cases.** In each, removed text stays beside the file with no notice until room returns and the file is open:
+  - A stall after the app's own export or Save a copy. A long read of the app's own is exactly what grows the log until the disk fills.
+  - Any stall that spans a close, quit and reopen. E35 goes with the file, and F58 (1) shows it again only while another app reads.
+- **User-facing text that then overstates:**
+  - E35's "or when you next open the file" (DFC:30).
+  - The bulk-edit confirmation's "Your file won't keep what was there" (CMC:127, CMC:129).
+  - R1.5's help-docs clause (DF:103) and PL:195–198, which name reading elsewhere and exports but never a full disk.
+- **Fix (post-lock; costs no body words).**
+  - Help docs: "If your disk is full, text you removed or replaced can stay in a file beside yours until you free space; SpectroCapture then wipes it on its own the next time the file is open."
+  - A Clarified line under F218 and F62: "raises no E35 where none is up (F211)".
+  - Add DJ3 (i)'s window (E35 up, no E15, no app reading) to PL:183's dogfood item.
+  - (GDPR Art. 5(1)(a) and Art. 12, transparency.)
+
+[LOW] **PRIV16-3 — DF:228, the D72 clause read as a stand-alone deadline.**
+- **The problem.** "Or, where a full volume stops that clearing, within 5 s of room returning" reads as its own deadline. F218's third bullet (CMF:1871) makes it conditional on the first moment: file open, no read, no write.
+- **Consequences.**
+  - Read literally, it cannot be met when a read holds the log, or the app is closed, as room returns.
+  - It nudges a builder toward a background watcher that records the file's path outside the file, against DF F58 (1).
+  - No DJ3 row exercises either case, so no case fails today.
+- **Fix.** A Clarified line: "…the file open and nothing else holding the log; otherwise at the first such moment after; the log itself is the only marker (DF F58 (1))."
+
+[LOW] **PRIV16-4 — DFJ:51 (d) has no guard for (i) (DFJ:56).**
+- **The problem.** A run where the log is already clean just before room is restored passes (i) without exercising D72's retry.
+- **Fix.** Add to (d): "…or a run of (i) whose last byte read before room is restored finds the removed text beside the file nowhere".
+
+[INFO] **Nits, one line each:**
+- CM:446: R8.8 cites "F59–F61", but F218 (CMF:1874) names R8.8 as a carrier. It should read "F59–F62", a digit-only change.
+- ADRQ:22: "stops that clearing within 5 s of room returning" has no comma after "clearing", so it reads as the full volume stopping the clearing within 5 s.
+- ADRQ:22: its parenthetical cites F215/F61, not F218/F62.
+- README:18: row 6 still reads "Data Foundation (F50–F61)", where row 4 now says F50–F62.
+- **Not a gap:** (i)'s main-file claim is deliverable. SQLite copies pages back in ascending order, so the in-range page is wiped before the growth pages fail. My round-15 probe and the database lens's probe_room.py both show this.
+
+## Biggest privacy risks
+1. **PRIV16-2:** a silent full-volume stall after the app's own export, or across a reopen, while the copy promises the text is gone.
+2. **PRIV16-1:** a build that holds the log copy for the whole full-disk period passes (g).
+3. **Carried from earlier rounds:**
+   - the app's own export holds the log copy silently (PL:198, still needs the owner);
+   - the window between a crash and the reopen;
+   - an orphaned log after a Finder move (PL:197).
+
+## Genuinely privacy-respecting
+- **D72 keeps the main-file wipe at its normal deadline on a full volume, and (i) tests it.** A build that leaves main-file text until room returns fails.
+- **(i) tests the retry.** Room returns at least 10 s after read 1 ends, against a 5 s deadline, so a build without a retry fails.
+- **The full-volume exception is in R6.2a's own text, not hidden in a fence.** README:18 also says plainly that R8.8 and R6.2/R6.2a are not yet aligned.
+- **(h) crashes only once the main file is clean.** It asserts E35 from the opening state after the reopen.
+- **Declining "Also stop new writes" costs no privacy.**
+  - Writes that need room already fail with E15.
+  - In-place writes do not keep the text past room's return.
+- **The UJ2.3-d edit and the R5.4 flip carry no personal data.**
+
+## Missing controls / over-collection
+- **Missing:**
+  - a help-docs line for a full disk (PRIV16-2);
+  - Clarified lines for E35's assumption and for the conditional reading of the D72 clause (PRIV16-2, PRIV16-3);
+  - (g)'s early-deadline assert under the hook (PRIV16-1);
+  - a not-exercised guard for (i) (PRIV16-4).
+- **No over-collection.**
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### product-marketing
+
+## Verdict
+Lands and honest. This lens raised no Blocker or Major in round 15 because it did not run then. The round-15 fixes add no new Blocker or Major. One copy honesty gap that D72 created goes to the owner as a post-lock Minor.
+
+## Audience & message context (brief)
+- **Readers.** Builder agents and the owner read the rows, fences and cases. The Cataloger reads the rendered strings.
+- **What each string must get across:**
+  - "Clear sort": back to my scan order.
+  - " (imported)" and its "⟨base⟩ (⟨suffix⟩)" collision form: this is my spreadsheet's column, not the built-in one.
+  - The three Not compared lines: why these two readings have no distance.
+  - E35: my change is saved, and the old text goes on its own.
+- **Surface.** In-app labels and state copy, where plain, calm wording is the right tone.
+- **Scope.** I ran `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'` at HEAD 74f058b with a clean tree. Neither copy file is in that diff.
+- **Paths.** All are under /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/:
+  - CM = docs/product/collection-mode/prd-collection-mode.md
+  - CMj = …/prd-collection-mode-journeys.md
+  - CMc = …/prd-collection-mode-copy.md
+  - DF = docs/product/data-foundation/prd-data-foundation.md
+  - DFj = …/prd-data-foundation-journeys.md
+  - DFc = …/prd-data-foundation-copy.md
+  - PL = docs/product/post-lock.md
+  - DR = docs/decisions/README.md
+
+## Findings
+
+**(1) My round-15 Blockers and Majors**
+
+| Finding | Result | Where |
+|---|---|---|
+| None. Product-marketing did not run in round 15 (the review log's "## Round 15" intro), so it raised no Blocker or Major there. | — | — |
+
+My round-14 Minors and Nits, checked against this tree:
+
+| Finding | Result | Where |
+|---|---|---|
+| PMM14-1 | Carried to post-lock, and the item still holds | PL:183, third window |
+| PMM14-2 | RESOLVED | PL:46 now names "DJ3 (g), (i)" |
+| PMM14-3 | PARTIAL | CMj:401 (see PMM16-2) |
+| PMM14-4 | RESOLVED | PL:110, "widened by … PMM14-4" |
+
+**(2) New from the round-15 fixes.** There is no new Blocker or Major.
+
+I checked each changed line against its fence's Decision:
+- DF:228's D72 clause matches F218 and DF F62.
+- DJ3 (g) and (i) at DFj:54 and DFj:56 match F218.
+- PL:46 and DR:22 match F218, with small exceptions noted in the Nits below.
+
+Minors and Nits, one line each, for post-lock:
+
+- [MINOR] **PMM16-1 — DFj:56 (DJ3 (i)) against DFc:30 (E35), under F218.**
+  - **What the user sees.** In the growth case no write fails, so E15 never shows. From read 1's end until room returns, E35 is the only thing on screen.
+  - **Why it misleads.** Its headline, "another app is reading your file", is false by then. Its condition, "stays … until the other app stops reading it", has already happened. Its fallback, "or when you next open the file", does not clear anything while the volume stays full. The one step that does work, freeing space, appears nowhere.
+  - **The reader's reaction.** "I closed the other app and this is still here." They then reopen the file, and nothing changes.
+  - **(g) has changed too.** D72 also stretches (g)'s E35-beside-E15 window, "Your changes are saved" next to "your last change wasn't saved", from at most 5 s to however long the volume stays full. There, at least, E15's "Free up space" fixes both.
+  - **Why it is only a Minor.** D72's question quoted this headline as "what the user sees meanwhile", so the wording belongs to the owner. I am not re-litigating it.
+  - **Fix.** Add a fifth window to PL:183, marked needs owner: "DJ3 (i): a full volume stops the clearing with no E15 up; E35 is alone, its cause and its reopen remedy both untrue until room returns." Offer two options:
+    - (a) a ‹no room› body: "Your changes are saved. What was there before stays beside your file until there's room on ⟨path⟩ to wipe it; free up space and SpectroCapture wipes it on its own."
+    - (b) a cause-neutral body: "…stays in your file for now, while another app reads it or until there's room to wipe it, and SpectroCapture wipes it on its own as soon as it can."
+- [MINOR] **PMM16-2 — CMj:401 (UJ5.4-g).** PMM14-3 named UJ5.4-d, -g and -i. The round-14 fixes file (round-14-fixes.md:22) fixed -d, -f and -i and dropped -g. A build that labels the slot "From current" when the current reading is one of the pair still passes -g, against F216 and CMc:314. Fix: append "with no label, read through the Test-controls map's accessibility row" to -g's Result.
+- [NIT] **PMM16-3 — CM:446 (R8.8).** R8.8 cites "F59–F61", but F218 names R8.8 as a carrier and F218's Data Foundation half is F62. Fix: change it to "F59–F62", a digit-only change that costs no words.
+- [NIT] **PMM16-4 — PL:46.** "The journal-or-log copy under E15 is settled…" cites (i), where E15 never shows. Fix: "…on a full volume, with or without E15 up, is settled…".
+- [NIT] **PMM16-5 — DR:22.** The clause reads "and where a full volume stops that clearing within 5 s of room returning". It lacks DF:228's commas, so it can be parsed as the volume stopping the clearing within 5 s. Its trailing cite also still stops at "F215; … F60 and F61". Fix: "and, where a full volume stops that clearing, within 5 s of room returning,", and add F218 and F62 to that cite.
+
+**Checked and correct, no change needed:**
+- **E35's "SpectroCapture then wipes it on its own" (DFc:30).** It holds under F218, which promises clearing "on its own, with no user action".
+- **E35's "Your changes are saved".** It holds in (i), where the write lands before the volume is declared full, and in (h), where the write lands before the crash.
+- **DF:228's new clause.** It names the full-volume limit and does not hide it. "Unrecoverable as R6.2a states" in R6.2 (DF:216), and the "Once it's done it's final" line in E8, E14 and E33 (which is about undo, not bytes), therefore overclaim nothing.
+- **UJ2.3-d's new read route (CMj:241).** The tagged labels are now read through the collection-surface row, whose inputs include "Columns" and "Set a field", and the item-detail row ("each line's content"). Both rows can carry them.
+- **"Clear sort", the " (imported)" tag, its collision form (CMc:267–272) and the three Not compared lines (CMc:310–314).** None of these is touched by this diff, and they stay consistent with each other and with F216.
+
+## Biggest risks   (what misleads, confuses, or loses the reader)
+- **PMM16-1.** In a full-volume growth case, the only message on screen gives a cause that is no longer true and a remedy (reopen) that does not work, and never mentions the one that does (free space). The chance is low and the data is not sensitive, but it is the one place where the app's copy now says something false for as long as the disk stays full.
+- **PMM16-2.** One Compare case still lets a builder label the slot, against F216.
+
+## Genuinely strong   (incl. where plain-and-honest is right that a marketing-zealot would over-hype)
+- **No new string for a rare fault.** D72 adds no new copy and states the full-volume limit plainly in the row instead of papering over it. For a problem that happens about 1 run in 6 on a full APFS disk, that is the right size.
+- **(g)'s single recovery.** E15's "Free up space and try again" now also clears the log copy within 5 s. One action from the user fixes both notices.
+- **Honest status.** The README's row 6 now says "R8.8 and the Data Foundation PRD's R6.2/R6.2a are not yet aligned", and CM:3 still says "peer review pending".
+- **Tone.** There is no hype and no colour-library claim anywhere in the delta.
+
+## Missing / over-hyped
+- Nothing is over-hyped.
+- **Missing:** an owner call on what E35 says when a full volume, not another app, keeps the old text (PMM16-1).
+- **Missing:** the no-label clause on UJ5.4-g (PMM16-2).
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+- **R8.8 is ALIGN.** It is unchanged. Its promises, "before any surface shows it done" and the named refusal states, are true, and it hands the log copy to R6.2a.
+- **DF-R6.2 (with R6.2a) is ALIGN.** R6.2a's D72 clause matches F218 and DF F62, and its user-facing promises now state the full-volume limit honestly. E35's wording in that window is D72's to decide, and it goes to the owner through PMM16-1, not as an objection to this row.
+
+### plan
+
+## Verdict
+Execute after fixing Blockers. There are no Blockers, and my round-15 Major (R15-M1) is resolved. The round-15 rewrite of DJ3 (g) introduced two new Majors. First, (g)'s result now passes a build that keeps the log copy when nothing stops the clearing. Second, (g)'s held write has no declared size, so a correct build can get "not exercised" on every run. Both are edits to one journeys row plus post-lock:46 and cost no PRD-body words. Land them before the re-lock.
+
+## Findings
+
+All paths are under /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/. Short names used below:
+
+| Short name | File |
+|---|---|
+| PRD | docs/product/collection-mode/prd-collection-mode.md |
+| J | docs/product/collection-mode/prd-collection-mode-journeys.md |
+| FN | docs/product/collection-mode/prd-collection-mode-fences.md |
+| DF | docs/product/data-foundation/prd-data-foundation.md |
+| DFJ | docs/product/data-foundation/prd-data-foundation-journeys.md |
+| DFF | docs/product/data-foundation/prd-data-foundation-fences.md |
+| PL | docs/product/post-lock.md |
+| IDX | docs/product/README.md |
+| ADR | docs/decisions/README.md |
+
+How I checked:
+- I read every target and source at 74f058b, the fixes file in full, and my own round-15 review in the log (lines 24873–24979).
+- I read the whole of `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'`.
+- I checked every changed line against F215, F218, DF F61 and DF F62.
+
+**(1) My round-15 Majors**
+
+| Finding | Status | file:line |
+|---|---|---|
+| R15-M1 (DJ3's looks had no start point) | RESOLVED | DFJ:48, and the same clause in DFJ:49, 50 and 52–56 |
+
+- **Why R15-M1 is resolved.** Every row's look sentence now reads "looks run at least once a second from once the delete shows done". With that start point, (a)'s "while read 1 runs, E35 is up at each look" and the "until read 2 ends" clauses in (b) and (f) can no longer be tested before any wipe is pending.
+
+**Status of my round-15 Minors:**
+
+| Minor | Status | Where |
+|---|---|---|
+| R15-m1 | RESOLVED | IDX:18 now says R8.8 and DF R6.2/R6.2a are not yet aligned |
+| R15-m2 | RESOLVED | PL:169 adds "and no write has committed since it began" |
+| R15-m3 | RESOLVED | FN:1734, DFF:652 |
+| R15-m4 | RESOLVED | same two Clarified lines, which add the "first such moment after reopening" gloss |
+| R15-m5 | RESOLVED | read 2 now waits for a clean look: DFJ:49, 52, 53, 55 |
+| R15-m6 | PARTIAL | (h)'s post-reopen check now starts "once the file's opening state is up" (DFJ:55); the first look at "shows done" still has no render timeout for E35 (see Minors) |
+| R15-m7 | RESOLVED | F218's "main file still wiped at its normal deadline", tested by (i) (DFJ:56) |
+| R15-m8 | RESOLVED | DFJ:51 |
+
+Round-15 Nits: the R7.2→R7.3 cite in (g), (f)'s "As in (b)" and the J:241 scope are resolved. The unbounded clean-look trigger is carried (see Nits).
+
+**(2) New Majors introduced by the round-15 fixes**
+
+[MAJOR] R16-M1 — DJ3 (g) (DFJ:54), with PL:46 and PL:169 — under the declared-full test hook this pass wrote into PL:169, (g)'s clearing is only a truncation and is never stopped, yet (g) now asserts only F218's "within 5 s of room being restored". A build that keeps the log copy whenever the volume reads full passes (g) and (i), although F215 and F218 require it to clear at the first moment.
+
+- **What changed.**
+  - Before round 15, (g) asserted that the copy was gone "within 5 s of the failure, the volume still full".
+  - Under D72 the orchestrator rewrote (g) so that the copy may stay "from then until room is restored" and must be gone "within 5 s of room being restored".
+  - The same pass added ARCH15-8 to PL:169: "the declared-full test hook must behave like a real full volume, writes that allocate failing while truncation and in-place overwrites succeed".
+- **Why (g) can never reach F218's branch.** (g) declares the volume full only "once a look finds the file's own bytes clean". At that point every committed frame is already copied into the main file, so the clearing is a pure truncation.
+  - Under the ARCH15-8 hook, that truncation succeeds.
+  - The architecture lens's round-15 control (log line 24684) and the database lens's HFS+ runs (log line 25037) show the same on a real HFS+ volume: TRUNCATE returned (0,0,0) with the volume still full.
+  - So at E15 there is no read, no write, and the volume has room to clear the log. That is F215's first moment as F218 qualifies it (FN:1871; DFF:687), and the correct build clears within 5 s of E15.
+  - F218 keeps the copy only "where a full volume stops the clearing" (FN:1869). Under the hook, that never happens in (g). Only (i), the growth case, stops it.
+- **What goes wrong.**
+  - (g) accepts both the correct build and a build that holds the copy until room returns.
+  - (i) cannot tell the two apart either, because the clearing really is stopped there.
+  - PL:46 now summarises the rule as unconditional: "the log copy stays, E35 up, until room returns, then clears within 5 s (DJ3 (g), (i))". That drops F218's condition, so an ADR-0003 author reading post-lock would build the wrong behaviour.
+  - F218's Carried-by field names (g) as a carrier (FN:1874), but under the hook (g) cannot exercise F218's branch.
+- **Mutation.** Gate the clearing loop on free space (statfs f_bavail > 0), or skip clearing while E15 is up and retry only once room returns. Today (a)–(i) all stay green. Under the fix below, (g) goes red.
+- **Fix (journeys and post-lock only, no PRD words).**
+  - Make (g) the full-volume case where only a truncation remains:
+    - its When reads "declare the volume full (R7.3), writes that allocate failing while truncation and in-place overwrites succeed";
+    - its Result reads "within 5 s of E15 rendering, a functional timeout, the volume still declared full, no file the app keeps beside the file holds the removed text and E35 is not up; until then, at each look, a byte read finding the removed text beside the file finds E35 up at that look";
+    - it cites F61 and F215 (with F211 for E15).
+  - Leave F218's stopped-clearing branch to (i). Change F218's and F62's Carried-by and the F218 map line to "(i)".
+  - Rewrite PL:46 as "…where only a truncation remains, the copy clears at the first moment (F215 / DF F61; DJ3 (g)). Where a full volume stops the clearing — frames not yet copied in that would grow the file, or a truncation the volume refuses — it stays, E35 up, until room returns, then clears within 5 s (F218 / DF F62, D72; DJ3 (i))".
+  - PL:169's ARCH15-8 note says "like a real full volume", but F218's own Why records APFS refusing the truncation. Reword it to "a full volume that lets truncation run".
+- **This does not re-litigate D72.** It enforces F218's own "where a full volume stops the clearing" condition.
+
+[MAJOR] R16-M2 — DJ3 (g)'s Given (DFJ:54) and (d) (DFJ:51) — (g)'s held write has no declared size. Under the same hook, a small write released after a full copy-back lands, so (d) reports every such run "not exercised", and a correct build can never pass (g).
+
+- **The configuration.** The hold sits before SQLite's write lock, and the build defers its clearing until "no write runs". The database lens noted in round 15 that F215 allows this and that rounds 13 and 14 accepted the placement.
+- **What happens.** The released write restarts the fully copied-back log and overwrites it in place. The database lens's probe_g15.py showed the COMMIT succeeding on a full volume in 5 of 5 runs on APFS and HFS+. PL:169's hook now makes "in-place overwrites succeed" explicit.
+- **The gap.** This pass's new (d) clause, "a run of (g) whose released write lands rather than failing", turns the old false red into a permanent "not exercised". Nothing tells a harness author that the write must be too big for the log. (i) declares its write's size; (g) does not.
+- **Mutation.** A correct, F215-literal build with a two-item bulk set as (g)'s write gets "not exercised" from (g) on every run, so the case never passes. An unattended loop stalls there or guesses.
+- **Fix.** Give (g)'s Given the declaration (i) has: "its Collection Mode R8.1f/g write one that adds at least 1 MB of new rows". Released on the full volume, that write must extend the log and fail. This is the optional half of DB15-MAJOR-2 that the pass did not take.
+
+**Minors and Nits (post-lock, one line each)**
+- [MINOR] R16-m1 — IDX:18: row 6 still says "cross-document amendments to Data Foundation (F50–F61)", while row 4 (IDX:16) and DF:3 read F62; change it to F50–F62. Otherwise row 6 now states the document correctly.
+- [MINOR] R16-m2 — PRD:446: R8.8 cites the Data Foundation "F59–F61", but F218 names R8.8 as a carrier and DF F62 is its Data Foundation half; change it to "F59–F62" (digits only, no word cost).
+- [MINOR] R16-m3 — DF:228 (R6.2a), and F218's second bullet at FN:1870: "within 5 s of room returning" is unconditional, but F218's third bullet puts room inside the first moment (no read, no write). If a read or a write is running when room returns, the literal deadline cannot be met, and F212 forbids waiting on the read. Add a post-lock gloss: "within 5 s of room returning, or of the first moment after it".
+- [MINOR] R16-m4 — DF:228: with the D72 clause inserted, "its clearing then running before the next write starts" can be read as holding writes while a full volume stops the clearing. That is D72's rejected option, "Also stop new writes". F218's and F62's Decisions do not say that writes may start; only the Authority's not-chosen option shows it. Add a post-lock line.
+- [MINOR] R16-m5 — DFJ:44 and J:422 (UJ6.2-g): the ARCH15-8 hook (PL:169) lets in-place overwrites succeed, so a small "declared full" write that restarts a fully copied-back log can land instead of rendering E15. The latent risk exists on a real volume too; the new note makes it explicit. Declare those writes as needing room, as (i) does, or record it in the test matrix.
+- [MINOR] R16-m6 — DFJ:51: (d) has no guard for a run of (i) whose ≥1 MB write reuses free pages and never grows the file. Such a run passes (i) without exercising F218. Add "a run of (i) whose byte read finds the removed text beside the file nowhere before room is restored" to (d).
+- [MINOR] R15-m6 (carried) — DFJ:48–56 and DFJ:77: no functional timeout for E35 to render at the first look once the delete "shows done".
+- [NIT] PL:183: the dogfood window is re-pointed to DJ3 (c), but (c) ends read 1 before its crash, so E35 need not show at (c)'s reopen. No DJ3 row now has "a discarded held write plus E35 at the reopen"; say "dogfood only".
+- [NIT] DFJ:50, 54 (and 49, 52, 53, 55): "once a look finds the file's own bytes clean" has no bound. (c) and (g) carry no main-file clause, so a build that never wipes the main file hangs them with no verdict. (a) still catches that build.
+- [NIT] DFJ:55: "the landed write's change reads back from the file" should name the channel, e.g. an SQL read at SQLITE_READER_FLOOR, as UJ2.3-d does (J:241).
+
+## Biggest risks (if executed as-is)
+1. **R16-M1.** (g) gives a green to a build that keeps removed text in the log for the whole time the volume is full, even though it could clear at E15. PL:46 then points the ADR-0003 author at that behaviour as the settled rule.
+2. **R16-M2.** A correct build with the hold before the write lock and a small bulk set never passes (g), so an unattended build loop stalls on "not exercised" with no instruction to enlarge the write.
+3. **R16-m3 and R16-m4.** R6.2a's full-volume clause has two readings that no case separates: whether the room-return deadline ignores reads and writes running at that moment, and whether writes are held while the clearing is stopped.
+
+## Plan strengths
+- **R15-M1's fix is uniform and minimal.** The same start-point clause is in all nine rows, so (a)'s one-way E35 check can no longer fire before a wipe is pending.
+- **(h) is sound as rewritten.** Its crash now waits for clean main-file bytes, and it asserts that the landed write survives the reopen. Its E35 check starts "once the file's opening state is up".
+- **(i) is deterministic under the hook,** and it is the right twin for F218:
+  - read 1 holds the copy-back until the volume is full;
+  - the main-file clause relies only on in-range pages being overwritten in place;
+  - growth past the file's end then fails for certain.
+- **R6.2a's D72 clause (DF:228) matches F218 and F62.** The ADR-0003 input (ADR:22) carries the same clause and cites F218 and F62. The ADR's "eight inputs" count is unaffected, because F218 joins an existing input.
+- **The status bookkeeping and gates are right.**
+  - R5.4 flipped only on unanimous non-abstaining ALIGN, and DF R6.2 moved to ⌛️ with a stated reason.
+  - README row 6 names the rows that are not aligned, and PL:151 is still open.
+  - The Build dependencies, the Interim stated list, the constants table, the OQ table and the results file were not touched, and they still agree.
+- **The Clarified lines are now scoped** to "this fence's journal-or-log deadline" (FN:1734, DFF:652), which removes R15-m3's over-supersession.
+
+## Spec coverage gaps (requirements with no task)
+- **F218's first bullet for a refused truncation** (its Why: APFS, 8 of 46 runs) has no deterministic case. The ARCH15-8 hook cannot produce it, so only (i)'s growth path exercises the stopped clearing. That is acceptable if recorded as an engineering or dogfood check; today nothing records it.
+- **D72's chosen option has no case.** Writes are not stopped while a full volume stops the clearing, but no row starts a write in that window, so a build that implements the rejected "Also stop new writes" passes every row.
+- **No case has a read or a write running when room returns,** so R6.2a's room-return deadline is never tested against F215's first moment.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (R16-M1, R16-M2) |
+
+- **R8.8 is ALIGN.** Its text is unchanged. It hands the log copy to DF R6.2a, which now carries D72, so it carries F218 by reference. Its E15 clause matches (g). The cite gap is a Minor (R16-m2). As in rounds 13–15, DJ3's defects belong to R6.2a.
+- **DF-R6.2 (with R6.2a) is OBJECT** only because of DJ3 (g), its carrying case: its result under-asserts under the declared-full hook (R16-M1) and its write is unsized (R16-M2). R6.2a's own text matches F61, F62 and F218; the wording points are Minors (R16-m3, R16-m4).
+
+### database
+
+## Verdict
+Sound once one Major is fixed. Both of my round-15 Majors are resolved, and DJ3's nine rows can be delivered on SQLite. The new problem is that R6.2a's D72 clause, and the ADR-0003 input that copies it, turn "within 5 s of room returning" into a deadline of its own. That drops F218's rule that room is one more condition on the first moment. When a read is using the log at the moment room returns, SQLite cannot meet the row as written.
+
+## Schema & engine (brief)
+- **Subject and source.** Commit `74f058b`; scope is `git diff 17de231 74f058b -- docs ':!docs/agent-reviews'`. The worktree `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode` has uncommitted round-16 edits in 9 files beyond HEAD. I read the committed text with `git show 74f058b:` and did not review those edits.
+- **Engine.** There is no DDL yet; ADR-0003 owns the schema. The rows assume:
+  - WAL mode with secure_delete=ON;
+  - a PASSIVE checkpoint for the main-file wipe;
+  - a TRUNCATE checkpoint with no busy handler for clearing the log.
+
+  foreign_keys, busy_timeout and synchronous/fullfsync remain ADR-0003's choices.
+- **Probes.** SQLite 3.53.4, the app and each outside reader as separate OS processes, "full" meaning an 8 MB HFS+ or 16 MB APFS image filled until writes fail. Scripts are in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r16db/`: `probe_reader_at_room.py`, `probe_clone_wipe.py` and `actor.py`.
+
+## Findings
+
+**(1) My round-15 Majors**
+
+| Finding | Status | Where |
+|---|---|---|
+| DB15-MAJOR-1 ((g)'s deadline timed from the failure; fails on APFS) | RESOLVED | DF journeys:54; DF PRD:228; CM fences:1865–1872 (F218); DF fences:684 (F62); post-lock.md:46 |
+| DB15-MAJOR-2 ((g)'s held write can land on a full volume) | RESOLVED | DF journeys:51 ((d): "a run of (g) whose released write lands rather than failing") |
+
+- **Why DB15-MAJOR-1 is resolved.** (g) now:
+  - checks E35 one way from E15 until room is restored;
+  - times the log clearing from room being restored;
+  - accepts both an eager and a deferred clearing.
+
+  A correct build passes on HFS+ and APFS. One caveat is m1 below: under the declared-full hook as post-lock.md:169 now pins it, (g) never reaches the truncation failure D72 was decided for.
+- **Why DB15-MAJOR-2 is resolved.** The mandatory guard landed. My optional half, sizing (g)'s write so it cannot land, did not; see m4.
+- **My round-15 Minors and Nits all landed:** the (d) naming (:51), the landed-write readback in (h) (:55), the growth evidence at PL:169, the dogfood re-point to DJ3 (c) at PL:183, the crash-clause wording in the Clarified lines, and the UJ2.3-d scope.
+
+**(2) New Majors**
+
+**[MAJOR] DB16-MAJOR-1 — R6.2a's D72 clause and the ADR-0003 input set a hard 5 s deadline that SQLite cannot meet while a read uses the log (DF PRD:228; decisions/README.md:22).**
+- **The text.**
+  - R6.2a: "…that no read uses that journal or log and no write runs, or, where a full volume stops that clearing, within 5 s of room returning, its clearing then running…".
+  - The ADR input: "…and where a full volume stops that clearing within 5 s of room returning,…". It also lacks the commas, so it can be read as "stops that clearing within 5 s".
+  - Both make the 5 s an alternative deadline of its own.
+- **The fence says otherwise.** F218's Decision (CM fences:1871; DF fences:687) makes room a third condition on the first moment: F215's "first moment" reads "…and the volume has room to clear it". The row keeps the fence's 5 s bullet and drops this one.
+- **Where it bites: the growth case's natural sequel.** A sync client re-reads the file after it changes.
+- **Probe (`probe_reader_at_room.py`, HFS+).**
+  - Read 1 ends on the full volume. PASSIVE and TRUNCATE both return SQLITE_FULL; the main file is clean and the -wal holds the text.
+  - A new outside read (read 3) begins while the volume is full, and then room is restored.
+  - TRUNCATE copies every frame back, returning (1,308,308), but stays busy at every attempt from room's return through 6.1 s. The -wal still holds the text.
+  - Only after read 3 ends does it return (0,0,0) with the -wal clean. integrity_check is ok.
+- **What a correct build faces.** It waits for read 3 and misses the row's literal deadline. The only way to meet the text is to truncate the -wal outside SQLite's locks, which breaks read 3's snapshot. No DJ3 row has a read spanning room's return, so the builder has to guess which reading governs.
+- **Change that exposes it.** Add to (i) a read 3, begun after read 1 ends and before room is restored, and ended no sooner than 10 s after room returns. The literal R6.2a text then fails every correct build.
+- **Fix (+3 words; DF is at 8,445 of 8,450).**
+  - In R6.2a, replace "log and no write runs, or, where a full volume stops that clearing, within 5 s of room returning," with "log, no write runs and the volume has room to clear it (within 5 s of room returning, when room comes last),".
+  - Mirror it in the ADR-0003 input, which also fixes the garden path.
+
+**Minors and Nits (for post-lock, one line each)**
+- **[MINOR] m1 — the declared-full hook at post-lock.md:169 skips D72's own trigger.** It pins "truncation and in-place overwrites succeed", which ARCH15-8 wrote for the pre-D72 (g). Under D72, a correct build run on that hook clears at E15, so no DJ3 row exercises SQLITE_IOERR_TRUNCATE (or SQLITE_IOERR_FSYNC, see m2). A build that retries a clearing on SQLITE_FULL but treats SQLITE_IOERR_* as fatal passes both (g) and (i). Fix: give the hook a variant in which truncation and fsync fail while the volume is declared full, run (g) in it, and add to (d) "a run of (g) whose first look after E15 finds the removed text beside the file nowhere". The uncommitted (g) rewrite in the worktree pins the opposite; I have not reviewed it.
+- **[MINOR] m2 — new evidence on F218's "main file still wiped at its normal deadline" (`probe_clone_wipe.py`, APFS).** This records a storage limit; it does not re-open D72.
+  - The setup: the file shares its blocks with an APFS clone. Finder's Duplicate makes one, and so does `FileManager.copyItem`, which clones on APFS by default — including an R5.8 snapshot or Save a copy made that way.
+  - On a full volume, PASSIVE returns SQLITE_IOERR_FSYNC, and a byte read finds the main file clean because the pages sit only in the page cache.
+  - After a remount, the removed text is back in the main file. In the raw test, 256 of 256 pages reverted.
+  - When the text lived only in the main file, no log copy keeps E35 up.
+  - Integrity is ok. The log keeps the delete's frames, so the first checkpoint with room wipes the pages again, durably.
+  - For the owner and ADR-0003: have the app make its copies without cloning, and treat IOERR_FSYNC as a full-volume stop. Time Machine local snapshots share blocks the same way, though macOS purges them under space pressure.
+- **[MINOR] m3 — (i)'s fixture wording (DF journeys:56).** "Adds at least 1 MB of new rows" fits few R8.1f/g writes: set, clear and reorder update rows, a delete removes them, and only E10's Undo, a P1 feature, inserts. State the growth itself: "whose committed frames would grow the file at least 1 MB past its own end". Also add to (d) "a run of (i) whose first look after read 1's end finds the removed text beside the file nowhere", for a file whose free pages absorbed the write.
+- **[MINOR] m4 — (g) can go unexercised (DF journeys:51/54).** With a deferred clearing and a hold placed before the lock, (g)'s small write always lands, so (g) always reports not exercised. Give (g)'s held write (i)'s at-least-1 MB size, so every correct build fails the write and exercises (g).
+- **[MINOR] m5 — the pending-wipe marker needs an ordering (post-lock.md:169, ARCH14-4).** It must commit in the delete's own transaction and be cleared only after the log's truncation, and its F_FULLFSYNC, have returned. If it is cleared first, a crash in between leaves text beside the file with no marker, and (h)'s E35 check at the reopen fails.
+- **[MINOR] m6 — F218 presupposes E35 is already up.** "E35 stays up" does not cover a clearing that a full volume stops when no read ever deferred it. Example: the delete's own frames take the last free blocks, then APFS truncation fails. The text then sits beside the file with no state shown.
+- **[NIT] R8.8 (CM PRD:446)** still cites the Data Foundation's "F59–F61"; it should be F59–F62. This is word-neutral, and the uncommitted worktree already has it.
+- **[NIT] UJ2.3-d (CM journeys:241).** "Only the column stored State changed, among TT-001's and TT-002's stored values" fails a correct build if ADR-0003 keeps a per-item modified time. Scope it to "their imported and measurement values".
+
+## Biggest risks
+1. **The literal R6.2a deadline (DB16-MAJOR-1).** A builder chasing "within 5 s of room returning" while a sync client still reads the file has one way to "meet" it: truncating the -wal outside SQLite's locks. That corrupts the reader's snapshot.
+2. **Clone-shared blocks on a full APFS volume (m2).** The main-file wipe is then only in the page cache, and the text returns after a power loss. Swift's default copy API creates exactly this sharing.
+3. **The pinned hook tests only SQLITE_FULL (m1).** The clearing's retry also has to treat IOERR_TRUNCATE and IOERR_FSYNC as a full volume, and no case forces that today.
+
+## Genuinely sound
+- **(g) under D72 is deliverable.** It checks E35 one way while the volume is full and times the clearing from room's return; my round-15 APFS probe had TRUNCATE returning (0,0,0) once room was restored.
+- **(i)'s main-file clause is deliverable.** A checkpoint copies pages in ascending order, so pages within the file's current length land before the first page that needs the file to grow fails. Re-confirmed this round: the main file is clean while PASSIVE and TRUNCATE return SQLITE_FULL.
+- **Every full-volume failure path is integrity-safe.** SQLITE_FULL, IOERR_TRUNCATE and IOERR_FSYNC each leave integrity_check ok and lose no committed row. SQLite does not advance its count of copied frames, so the first checkpoint with room repairs the state.
+- **The DJ3 action fixes are right.**
+  - Gating read 2 on clean bytes in (b), (e), (f) and (h) removes F57's "read begun before the wipe" ambiguity.
+  - Gating (h)'s crash the same way removes the timing race.
+  - (h)'s readback of the landed write fails a build that discards the -wal.
+- **PL:169's "no write has committed since it began" is correct in SQLite's terms.** A reader on READ_LOCK(0) blocks copying later frames into the file.
+- **Correct choices a textbook DBA might wrongly flag:**
+  - E35 standing in during a full volume, and not stopping new writes (both D72);
+  - a (d) "not exercised" guard rather than dictating where the hold sits;
+  - nine self-contained rows.
+
+## Missing / over-engineered
+- **Missing:**
+  - F218's rule that room is a condition on the first moment, in R6.2a and the ADR-0003 input;
+  - a hook variant in which truncation and fsync fail;
+  - (i)'s not-exercised guard and its growth-based fixture wording;
+  - (g)'s write size;
+  - a copy-without-cloning note for ADR-0003;
+  - the marker's commit and clear ordering.
+- **Over-engineered:** nothing.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (DB16-MAJOR-1) |
+
+- **R8.8 is ALIGN.** It hands the log copy to R6.2a by reference, so fixing R6.2a fixes it, and its E15 clause is correct. The F59–F61 cite is a provenance Nit.
+- **DF-R6.2 (with R6.2a) is OBJECT** on R6.2a's D72 clause, which contradicts F218's own rule and cannot be met under a live read. R6.2's own text is sound.
+
+### Orchestrator verification
+
+- **Confirmed at `74f058b`:**
+  - (g)'s room-timed deadline passed a build that waits whenever the volume is full (IF16-1, R16-M1, SSE16-1, PRIV16-1); the orchestrator's own round-15 wording.
+  - (g)'s write was unsized (R16-M2).
+  - R6.2a's D72 clause read as a deadline of its own, and the database lens's probe_reader_at_room.py shows a read spanning room's return keeps the copy (DB16-MAJOR-1).
+  - The read-2 gate let a hold placed before SQLite's write lock clear or restart the log early, and the test lens's probe_h16*.py show it (TR16-1).
+- **No owner decision.** Every fix follows D72's own "while a full volume stops the clearing", F215, F212 and R8.10a's test seam.
+- Nothing was rejected.
+
+### Dispositions
+
+Per row: which lenses ALIGN, OBJECT or ABSTAIN, and the resulting status. Lens order: PM
+(product-manager), SSE (staff-software-engineer), TR (test), IF (interface), ARCH (architecture),
+PRIV (privacy), PMM (product-marketing), R16 (plan), DB (database).
+
+| Row | PM | SSE | TR | IF | ARCH | PRIV | PMM | R16 | DB | Resulting status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R8.8 | ALIGN | ALIGN | OBJECT | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | needs-discussion |
+| DF-R6.2 (with R6.2a) | ALIGN | OBJECT | OBJECT | OBJECT | ALIGN | ALIGN | ALIGN | OBJECT | OBJECT | ⌛️ Ready for Alignment |
+
+- **R8.8 stays needs-discussion.** The test lens objected on DJ3 only, and the row changed only editorially: its cite.
+- **DF R6.2 stays ⌛️ Ready for Alignment.** R6.2a's text changed this round, and the objections above (SSE16-1, TR16-1, IF16-1, R16-M1, R16-M2, DB16-MAJOR-1) are against DJ3 (g) and the D72 clause's wording, not against a fresh owner question; nothing here reopens D72 itself.
+
+This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-16-fixes.md`.

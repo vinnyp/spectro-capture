@@ -1846,6 +1846,8 @@ log's "## Round 12 — delta-verify of round 11 (2026-09-26)" section.
 
 **Clarified 2026-09-26 (owner decision D72; F218):** F218 qualifies the first moment for a full volume.
 
+**Clarified 2026-09-26 (round-16 orchestrator bookkeeping; no owner decision; D69 as stated, "covers … a read that spans a crash"):** "after a crash, at the first open at which that holds" means the first such moment after reopening, as the ADR-0003 input and the Data Foundation PRD's DJ3 (h) read it.
+
 ### F216 — Compare's slot carries no label (2026-09-26)
 
 - **Authority:** owner decision D70, round-12 adjudication 2026-09-26 (PMM12-1). Question: "Compare's distance slot currently inherits the history view's label 'From current', which is false when you compare two earlier readings (e.g. 'From current ΔE2000 0.00' on two old readings). What label should Compare's slot carry?" Chosen: **No label** — "The slot sits between the two chips and shows just the distance or the Not compared line, with no label. No new copy." Not chosen: **'Between these readings'** — "A neutral label for Compare's slot. New copy string."
@@ -1872,6 +1874,12 @@ Fence F218 was decided by the owner on 2026-09-26, over round 15's database-lens
   - Text in the main file is still wiped at its normal deadline.
 - **Why:** the database lens's APFS probe (SQLITE_IOERR_TRUNCATE in 8 of 46 runs), and the growth case the privacy, database and architecture lenses reproduced on HFS+ and APFS.
 - **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (g) and (i), and the Data Foundation PRD F62.
+
+**Clarified 2026-09-26 (owner decision D72, its not-chosen "Also stop new writes"; round-16 product-manager review's PM16-2):** a clearing a full volume stops gives way as F212's clearing does, holding no write of the app's own, and is retried once room returns; editing is never blocked on it.
+
+**Clarified 2026-09-26 (owner decision D72, its "While a full volume stops the clearing"; round-16 interface review's IF16-1):** the deferral applies only where a full volume actually stops the clearing; where the clearing can run on the full volume, F215's first moment governs, and "room to clear it" means room enough for that clearing to succeed (DJ3 (g) and (i)).
+
+**Clarified 2026-09-26 (owner decision D72 read with F211 and F215; round-16 privacy review's PRIV16-2 and PRIV16-3):** "E35 stays up" keeps an E35 already up and raises none where F211 shows none; the clearing once room returns still needs the file open and no read using the log, at the first such moment after room returns, and no marker of it is kept outside the file (DF F58 (1)).
 
 ## Fence → row map
 

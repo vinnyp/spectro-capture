@@ -681,9 +681,17 @@ Source: the owner's round-12 decisions in the Collection Mode PRD's adjudication
 
 Source: the owner's round-15 decision in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F218](../collection-mode/prd-collection-mode-fences.md) (owner decision D72, over round 15's database-lens DB15-MAJOR-1 and privacy-lens PRIV15-1). This fence carries only the Data Foundation half of that decision; peer review pending.
 
+**Clarified 2026-09-26 (round-16 orchestrator bookkeeping; no owner decision; the fence it points to governs):** F62 qualifies this fence's first moment for a full volume.
+
+**Clarified 2026-09-26 (round-16 orchestrator bookkeeping; no owner decision):** "after a crash, at the first open at which that holds" means the first such moment after reopening, as the ADR-0003 input and DJ3 (h) read it.
+
 ### F62 — A full volume defers the log copy until room returns (2026-09-26)
 
 - **Authority:** [the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) — owner decision D72, its round-15 adjudication, 2026-09-26.
 - **Decision:** Where a full volume stops the clearing of a journal or log, the copy stays and E35 stays up. Within 5 s of room being restored, the app clears it on its own, with no user action. F61's "first moment" reads "…and the volume has room to clear it". Text in the main file is still wiped at its normal deadline. DJ3 gains sub-runs (g)'s full-volume timing and (i)'s growth case, where committed frames not yet copied in would make the file bigger.
 - **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
 - **Rows:** R6.2, R6.2a, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F62.
+
+**Clarified 2026-09-26 ([the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) and its Clarified line, owner decision D72):** a clearing a full volume stops gives way, holding no write of the app's own, and is retried once room returns.
+
+**Clarified 2026-09-26 ([the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) and its Clarified lines, owner decision D72):** the deferral applies only where a full volume actually stops the clearing; where the clearing can run on the full volume, F61's first moment governs (DJ3 (g) and (i)).
