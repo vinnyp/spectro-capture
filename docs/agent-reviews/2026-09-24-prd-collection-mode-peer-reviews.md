@@ -29738,3 +29738,116 @@ Two post-lock Minors, one line each:
 - **R8.8 stays needs-discussion** and **DF R6.2 stays ⌛️ Ready for Alignment**: the staff-engineer lens objected on SSE20-1 alone; test and database aligned. The fix (all three lenses' wording) is landed; a nano round 21 re-checks it with the staff-engineer lens.
 
 Resume point: `docs/product/collection-mode/prd-collection-mode-round-20-fixes.md`; a nano round 21 (staff-engineer) follows.
+
+## Round 21 — nano re-check of the round-20 DJ3 (i) fix (2026-09-26)
+
+Subject `e3e5f1b`, scope `git diff 1aed29a e3e5f1b -- docs/product/data-foundation/prd-data-foundation-journeys.md`: the one-phrase SSE20-1 fix to DJ3 (i)'s When, re-checked by the staff-engineer lens alone, the only lens still objecting after round 20 (owner decision "Fix + micro re-check", 2026-09-26).
+
+### staff-software-engineer
+
+## Verdict
+Ready to proceed. SSE20-1 is resolved at DFJ:56, and the changed phrase adds no new Blocker or Major. R8.8 and DF-R6.2 now flip to ALIGN.
+
+## What I reviewed
+- **Artifact.** The one-phrase fix in DJ3 (i)'s When, subject commit `e3e5f1b`. I read `git diff 1aed29a e3e5f1b` in full; HEAD is `e3e5f1b`.
+- **Five files changed:**
+  - the DF journeys (one row);
+  - post-lock (one phrase);
+  - the round-19 and round-20 fixes files;
+  - the review log.
+- **No PRD body changed**, and neither did `docs/decisions/README.md`.
+- **Short names.** Root is `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/`.
+  - DFJ = `data-foundation/prd-data-foundation-journeys.md`. DJ3 (d) is at DFJ:51 and (i) at DFJ:56.
+  - CM = `collection-mode/prd-collection-mode.md`. BROWSE_RESPONSE_BUDGET is at CM:183, R8.1c at CM:432 and R8.8 at CM:446.
+  - CMF = `collection-mode/prd-collection-mode-fences.md`. F215 is at CMF:1838 and F218 at CMF:1867.
+  - DF = `data-foundation/prd-data-foundation.md`. R6.2 is at DF:216 and R6.2a at DF:228.
+  - PL = `post-lock.md`:34.
+- **Also read:**
+  - `collection-mode/prd-collection-mode-round-20-fixes.md`
+  - my round-20 review
+  - the review log's Round 20 section (`docs/agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md`:29470–29740)
+- **Could not verify.** I ran nothing. The SQLite behaviour in the traces is carried over from my round-20 code trace and the database lens's round-20 probe, which I have not reproduced.
+
+## Findings
+
+**(1) SSE20-1: RESOLVED | DFJ:56**
+
+(i)'s When now reads: "no sooner than 1 s after the edit and 10 s after read 1's end, take an SQL read … and end it; then, as the next step, restore room". I traced the three properties the fix has to keep.
+
+- **A broken fixture reports not exercised.** Take the case where the log pin fails, so the edit's frame fits.
+  1. A correct build lands the single-item edit well inside 1 s. R8.1c's budget is 100 ms at p95 (CM:183, CM:432).
+  2. The read, taken at least 1 s after the edit, now exists whether or not E15 renders, and it shows the edit's change.
+  3. (d)'s "or whose edit lands rather than failing, as that same SQL read shows" (DFJ:51) then fires.
+  4. Room is restored as the next step, so the procedure always ends. Both halves of SSE20-1 are closed.
+- **Wrong builds still fail.**
+  - Build U drops the log at the clearing that fails at read 1's end. That is at least 10 s before the read, so the read gets CANTOPEN or a short or empty read.
+  - The Assert's "opens the file and shows the landed write's change" fails.
+  - (d)'s early-clearing guard needs that same read to show the change, so it does not fire, and the run fails.
+  - A build that drops or zeroes the log when the edit hits SQLITE_FULL now also fails, because the read comes after the edit.
+- **A correct build still passes.**
+  - E15 renders within 1 s of the edit (the Assert), so it is already up by the time of the read.
+  - The read sees the landed write and ends before room returns.
+  - Room is still restored no sooner than 10 s after read 1's end. The dropped explicit clause is now carried by the read's own "10 s after read 1's end" bound.
+
+**My round-20 Minor, SSE20-m1: also RESOLVED | DFJ:56**
+
+- The read is now the last step before room is restored, so a drop between the read and the restore can happen only in the harness's own step latency.
+- A drop after the restore is failed by the existing clause "no sooner than 5 s after room is restored, the landed write's change reads back".
+
+**(2) New Blocker or Major from the changed phrase: none.**
+
+- **(i) failing a correct build:** none found. The read opens only while the app holds the file, as before. It ends before the restore, so it cannot hold F218's retry. Nothing in the Assert's timed windows overlaps the moved read.
+- **A wrong build passing:** none new. D72's not-chosen "refuse every edit" build is still carried by the positive case at PL:33. It is not re-raised here.
+- **Contradictions:** none with F215 (CMF:1838), F218 (CMF:1867), DF F61/F62 or D72.
+  - The harness's read uses the log only while the volume is full, when F218 already defers the first moment.
+  - It ends before room is restored, so F218's "within 5 s of room being restored" and F215's "no read uses the log" meet at the restore.
+  - A read-only connection blocks no edit, and the edit comes before it anyway (D72, and F218's PM16-2 clarification that the stopped clearing gives way).
+
+Post-lock: nothing new to add.
+
+## Clarifying questions for the author
+None. My two round-20 questions are answered by the new wording: the read is taken at least 1 s after the edit whether or not E15 renders, and room is restored as the next step after it.
+
+## Claimed properties
+- **"(i)'s When now reads '…no sooner than 1 s after the edit and 10 s after read 1's end, take an SQL read … and end it; then, as the next step, restore room'":** holds (DFJ:56).
+- **"The wording all three lenses proposed":** holds. It matches the merged wording I gave in round 20 in substance; "as the next step" stands in for my "at once once it has ended".
+- **"The read exists on both branches; it is the last step before room returns; the Assert and (d) stay keyed to it":** holds (DFJ:56 and DFJ:51). (d)'s "the SQL read (i) takes while the volume is full" still names that read correctly.
+- **"Neither body changed, nor the ADR-0003 input; budgets unchanged":** holds. `git diff --name-only` lists no PRD body and no `docs/decisions/README.md`.
+- **Post-lock now names "(i)'s SQL read while full and its read-back":** holds (PL:34). It stays consistent with that item's "taken and ended before room is restored".
+- **Review log entry (A1):** holds. The Round 20 section is at 29470, and the closing line names round 21.
+- **The test lens's mutation and the database lens's probe (the read returning (400, 'other2') while full; CANTOPEN, NOTADB or SHORT_READ for the drop builds):** unverified by me. They are consistent with my trace.
+
+## Genuinely sound
+- **Reads timed by the clock, not by E15.** Timing the read by two lower bounds instead of by an E15 event is the right fix. It works on both branches, and it adds no new observation to each look.
+- **Correctly not flagged:** "as the next step" orders the restore after the read but puts no time bound on it.
+  - A build that drops the log after room returns is caught by the read-back 5 s later.
+  - Only a contrived timer build that drops the log exactly inside the harness's step latency could slip through.
+  - That is not worth a word in a locked row.
+- **Correctly not re-raised:** these are all carried at PL:33 and PL:34:
+  - the early-vanish guards in the other rows (SSE19-m3);
+  - the map's declaration of reads with the app open (IF19-m2, TR19-m2);
+  - the refuse-every-edit positive case.
+
+## Deferred
+- **Test lens:** re-running its round-20 mutation at `e3e5f1b` (log restarted rather than truncated) to confirm the run now reports not exercised rather than failing. By trace it should.
+- **Database lens, architecture lens, product lens, privacy lens:** nothing new, since the only change is when (i)'s read is taken.
+
+| Row ID | disposition |
+|---|---|
+| R8.8 | ALIGN |
+| DF-R6.2 (with R6.2a) | ALIGN |
+
+- **R8.8 is ALIGN.** DJ3 (i), the only growth case for a clearing a full volume stops that F218 carries, now fails the drop builds and passes a correct build. It also reports a failed log pin as not exercised.
+- **DF-R6.2, with R6.2a, is ALIGN.** DJ3 is R6.2a's acceptance, and the same trace applies. Neither row's text changed.
+
+### Dispositions
+
+The final disposition of every lens on the two rows not yet aligned, each at the last round it reviewed them. No row text changed after round 16. Rounds 20 and 21 changed only DJ3 (i)'s When and Assert and (d)'s (i) clause, which the six lenses last seen in round 19 did not object to.
+
+| Row | PM (r19) | SSE (r21) | TR (r20) | IF (r19) | ARCH (r19) | PRIV (r19) | PMM (r19) | R19 plan (r19) | DB (r20) | Resulting status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R8.8 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | aligned |
+| DF-R6.2 (with R6.2a) | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | 🤝 Aligned |
+
+Every non-abstaining lens ALIGNs, so both rows flip: Collection Mode R8.8 to `aligned` and the Data Foundation PRD's R6.2 (its sub-row R6.2a carrying the lead's status) to `🤝 Aligned`. The status flips land in the bookkeeping close with the amendment's other status surfaces; the re-lock record follows below.
+

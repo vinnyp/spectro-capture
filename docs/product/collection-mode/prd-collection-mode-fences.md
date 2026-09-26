@@ -11,9 +11,9 @@ amendment preserves them and does not re-decide them.
 
 **Review log:** `docs/agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md` — created at round 1, 2026-09-24; every later round appends a `## Round N` section to it.
 
-**Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance. A second link, to this amendment's own lock record, is added at its bookkeeping close.
+**Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance.
 
-**Amendment pending:** F202–F218 (2026-09-26), peer review pending.
+**Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -1732,6 +1732,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 **Clarified 2026-09-26 (round-14 orchestrator bookkeeping; no owner decision; the fence it points to governs; IF14-m2, ARCH14-N1):** this fence's Decision and the Clarified line above are superseded by F215's principle — the copy goes at the first moment, with the file open, that no read uses the log and no write runs, after a crash at the first open at which that holds. F215 governs.
 
 **Clarified 2026-09-26 (round-15 orchestrator bookkeeping; no owner decision; IF15-m2, PRIV15-2, SSE15-m2, ARCH15-4):** the round-14 line above supersedes only this fence's journal-or-log deadline; the main-file clause and E35's end condition stand. "After a crash, at the first open at which that holds" means the first such moment after reopening, as the ADR-0003 input reads (IF15-m3, SSE15-m2, R15-m4).
+
+**Closed 2026-09-26 ([re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26)):** For F202–F218, peer review closed 2026-09-26 (PR #21); re-locked on merge.
 
 ### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
 
