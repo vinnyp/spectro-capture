@@ -16771,3 +16771,1369 @@ Every Major was checked against commit `a720dae`. Where another lens states the 
 
 
 **Per-row dispositions after round 7.** Flip-eligible (every non-abstaining lens ALIGNs): E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, M1, M2, M3, M4, R1.1, R1.2, R1.3, R1.4, R1.5, R1.6, R1.7, R1.8, R1.9, R1.10, R2.1, R2.2, R2.3, R2.4, R2.4a, R2.4b, R2.4c, R2.4d, R2.4e, R2.4f, R2.4g, R2.4h, R2.4i, R2.5, R2.6, R2.7, R2.8, R2.9, R2.10, R2.11, R3.1, R3.2, R3.3, R3.4, R3.5, R3.6, R3.7, R3.8, R3.9, R4.1, R4.2, R4.2a, R4.2b, R4.2c, R4.2d, R4.2e, R4.2f, R4.2g, R4.2h, R4.3, R4.4, R4.5, R4.6, R4.7, R4.8, R4.9, R5.1, R5.2, R5.2a, R5.2b, R5.2c, R5.2d, R5.2e, R5.3, R5.4, R5.5, R5.6, R5.7, R5.8, R6.1, R6.2, R6.3, R6.4, R8.1, R8.1a, R8.1b, R8.1c, R8.1d, R8.1e, R8.1f, R8.1g, R8.2, R8.3, R8.4, R8.5, R8.7, R8.9, R8.10, R8.10a, R8.10b, R8.10c, R8.10d, R8.10e, R8.10f, R8.11. A lettered sub-row flips only with its lead and all its siblings. The four rows still objected — R7.1, R7.2, R8.6 and R8.8 — are each held only by the companion-only fixes above; a targeted re-check by the objecting lenses flips them once those fixes land.
+
+## Round 8 (2026-09-25) — targeted re-check before lock
+
+**Lenses:** the six lenses that objected in round 7 (product-manager, staff-software-engineer, test, interface, architecture, plan). Each re-checked its own round-7 Blockers and Majors against the round-7 fixes and reported any new Blocker or Major. Each also returned a full per-row table; its round-7 dispositions stand for rows the diff did not touch. The three lenses with no round-7 objection (privacy, product-marketing-manager, performance) keep their round-7 tables.
+
+- **Subject commit:** `d248158`
+- **Cross-model pass:** none
+
+**Delta summary.** Every lens's round-7 Majors are resolved, with one exception: architecture's ARCH7-1 is partial.
+
+Three lenses — test (R8-M1), architecture (ARCH8-1) and plan (PLAN8-1) — raise the same new Major, which round 7's own fix A1 introduced. It holds R7.1, R7.2 and R8.6.
+
+The other lenses now align R7.2 and R8.8: product-manager, staff-software-engineer and interface all ALIGN every row they do not abstain on.
+
+### Per-lens reviews (verbatim)
+
+#### peer-product-manager-reviewer (Claude route)
+
+## Verdict
+**Builds the right thing for the user.** PM7-1, the only Major my lens raised in round 7, is resolved. The UJ10.1 cases now accept any size range F199 allows. The round-7 fixes add no Blocker or Major in my lens. R7.2 flips to ALIGN. One Minor is worth landing in the lock pass: a one-phrase fix in the journeys file, 0 body words, and it does not hold any row.
+
+## User & problem context (brief)
+- **User and job.** The primary user is the Cataloger; the secondary users are the Data consumer and the QC re-checker. After a capture session they want to browse honestly, fix a bad scan without losing its history (vision U5), and keep metadata tidy while other tools read the file.
+- **Validated vs assumed.** F1–F201 are owner decisions. Everything else is assumed, and dogfooding is the only feedback loop, which is the right size for a one-user open-source tool.
+- **What I read, at d248158.** The four targets; the round-7 fix file; my round-7 section and the round-7 verify table in the review log; F199 in the fences file; the Data Foundation (DF) PRD's R1.11, R2.9 and R6.2a, and its E35 copy; the capture PRD's R5.6, R8.3, R8.16, R9.9 and R11.11; post-lock.md; and the full `git diff a720dae HEAD -- docs ':!docs/agent-reviews'`, word-diffed.
+- **Paths.** Every path below is under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`. PRD, JRN = `product/collection-mode/prd-collection-mode{,-journeys}.md`; PL = `product/post-lock.md`.
+
+## Findings
+
+### (1) Round-7 re-check: my lens's round-7 findings
+
+| Finding | Result | Evidence |
+|---|---|---|
+| **PM7-1 (Major)**: UJ10.1-b, -d and -f assumed sizes that F199 leaves to the build | **RESOLVED** | JRN:576 (UJ10.1-b): the Assert reads "the smallest size the build offers, read through R8.10b, and none less than MIN_SWATCH_SIZE"; R8.10b lists "the swatch size" (PRD:595). JRN:578 (UJ10.1-d): now uses "another size S the build offers" and "S's number as text", with no 48 pt or 56 pt. JRN:580 (UJ10.1-f): "a size S the build offers other than the one shown". Each build I named in round 7 now passes: 32–96 pt, 24–44 pt, and discrete steps like 24/36/64. The cases need only two offered sizes, and R7.2's "range" already implies at least two. This matches F199's Authority ("the default and the range are the build's choice, at or above 24 pt"). |
+| PM7-2 (Nit): no single case walked the P0 correction loop | RESOLVED | JRN:378 (UJ4.7-d) now runs Flag, then the look-through re-scan (capture R8.3, P0), then asserts 2 readings: the new one current with reason initial, the flagged one with no never-true mark, and no correction question. This matches DF R2.9 ("A re-scan after that loss creates a reading with reason initial and no correction question") and R4.9. The case stays in the first phase; the Harness now names capture R8.3, R5.6 and R9.9 (JRN:66). |
+| PM7-3 (Nit): E35 says "Saved" at a reopen before the user acts | RESOLVED (routed) | PL:158, under § Dogfood. |
+
+### (2) New defects from the round-7 fixes
+
+No new Blocker or Major.
+
+**[MINOR] UJ10.1-d's "the recorded size" can mean two sizes** (JRN:578).
+- **Why it's ambiguous.** The Given records the default size ("recorded before the Given"). A1 then added "S recorded" to the When. Both halves of the Assert still say "its swatches show at the recorded size", which now has two candidates.
+- **Why it's only Minor.** The intended reading (the default) follows from R7.2 ("lasts while the file stays open") and R8.6 ("saved window state included"). It also follows from the Assert's own first clause ("Neither read holds S's number") and from "shows as the table" in the same sentence. A builder who read it as S would write a test that contradicts both rows, so nobody has to guess.
+- **Fix (journeys only, 0 body words).** Change both occurrences to "at the size recorded before the Given", which is the fix box's own wording (round-7 fixes:27).
+
+**[NIT] UJ10.1-d can't run if every size the build offers collides with a seeded number** (JRN:578).
+- An example is a build offering only 32 pt and 48 pt: Gouache ZX-001 has C* 32 and ZX-005 has L* 48.
+- The case has no "not exercised" clause for this. It's very unlikely at P2, and the Harness's exemption and baseline rules already cover the collision. Post-lock, or ignore.
+
+**Product views on the items round 7 left for my lens** (all Minor, all already routed to post-lock):
+- **7N1: quit waits for a re-read** (DF R1.11; now asserted by DF DJ3's close, switch and quit runs, DF journeys:45; C3 at PL:43).
+  - *Scenario.* The Cataloger fires "Read it again" on a large file, then quits. Quit blocks for a length of time nothing bounds, with no cancel, on an operation that writes nothing.
+  - *Recommendation.* Closing, switching and quitting should cancel the re-read. Nothing is lost, because writes are held during the re-read and the next open runs the open-file check anyway.
+  - *Why it doesn't block lock.* The case matches the row as it stands, and both change together if the owner flips it.
+- **E35 during a wipe held up by a write in progress** (C1, PL:144).
+  - *Scenario.* The other app's read has ended, but a long write is still running. Replaced text left in the file's write-ahead log waits for that write to finish, so E35 briefly says "another app is reading your file" when none is.
+  - *Recommendation.* The window lasts seconds, and it needs an outside reader, a removal and a long write all at once. Watch it in dogfooding; no change before lock.
+- **F201 (2)'s help line** (PL:172). I prefer one line covering both cases, in the user's words: "If another app, an export or Save a copy is reading your file when you remove or replace text, SpectroCapture wipes the old text once that read finishes, or when you next open the file." This is the owner's call at the help-docs pass.
+
+**False positives checked, not raised:**
+- **UJ4.7-d vs UJ4.5-b's later phase.** UJ4.7-d re-scans an unsettled set-aside row through capture R8.3, which is P0. UJ4.5-b depends on the capture PRD's later re-scan rows (P1). They are different rows, so there is no phase conflict.
+- **UJ10.1-d's reset at reopen.** It extends to the size the table reset that R7.1's half of the case has asserted for several rounds, and it reads R7.2's own "lasts while the file stays open".
+- **PRD body edits.** B12 (Rows cells) and B13 (word-neutral) change indexes only. The status flips match the round-7 flip record exactly: 118 aligned, with R7.1, R7.2, R8.6 and R8.8 held.
+- **The byte-check fixes.** UJ9.5-a, UJ9.5-d and A3's raw-file baseline are test, performance and privacy mechanics. None changes what the user gets.
+
+## Biggest risks   (what builds the wrong thing or fails the user)
+1. **Density vs smoothness in the grid is decided at the P2 tuning, not in the PRD.** F199 lets the build choose its range, and UJ9.5-a now times the grid at the smallest size the build offers. A build that drops frames at 24 pt can therefore pass by raising its minimum. That is F199 working as intended, because the owner tunes it on their own display, but the owner should know the trade is theirs to make at the P2 build.
+2. **The P0 correction loop still depends on the capture PRD shipping its set-aside list and look-through re-scan in its own first phase.** UJ4.7-d now proves the loop end to end. The remaining risk is sequencing only: JRN:66 names both.
+
+## Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **A1 is the minimal correct fix.** It changes only the cases, names no new constant, and needs two offered sizes rather than three, so it asks the build for nothing beyond R7.2.
+- **B9 closes the U5 story in one case.** The Cataloger can Flag a bad scan at P0, re-scan it, and see both readings kept, with no correction question.
+- **Round-7 items went to post-lock.** Items that need the owner (C3, C4) are marked "needs owner" there rather than decided in a fix pass, and no fence was edited.
+- **No new row, state, metric or constant entered the PRD.** The body is at 11,986 of 12,000, which leaves room for the lock line. No ceremony was added: no metric, persona or funnel. That is right for a one-user local tool.
+
+## Missing / over-specified
+- **Missing (lock pass, 0 body words):** UJ10.1-d's "the size recorded before the Given" (the Minor above).
+- **Missing (post-lock, pre-existing, one line):** nothing tests that each collection keeps its own swatch size. UJ10.1-f never shows Gouache Set as a grid, so a build with one global size passes.
+- **Over-specified:** nothing new to cut.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | ALIGN |
+| R8.3 | ALIGN |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ABSTAIN (platform floor; out of lens) |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ABSTAIN (test seam; test/interface lens) |
+| R8.10a | ABSTAIN (test seam; test/interface lens) |
+| R8.10b | ABSTAIN (test seam; test/interface lens) |
+| R8.10c | ABSTAIN (test seam; test/interface lens) |
+| R8.10d | ABSTAIN (test seam; test/interface lens) |
+| R8.10e | ABSTAIN (test seam; test/interface lens) |
+| R8.10f | ABSTAIN (test seam; test/interface lens) |
+| R8.11 | ALIGN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+**Notes on the table:**
+- It covers all 122 current IDs; the ID set is unchanged since round 7.
+- **R7.2 moves from OBJECT (PM7-1) to ALIGN.** The UJ10.1-d Minor above does not hold it, because the row itself settles the reading.
+- **R7.1, R8.6 and R8.8** keep my round-7 ALIGN; the round-7 fixes to their cases (UJ10.1-d and -f, UJ9.4-b, A3, UJ9.5-d) raise nothing in my lens.
+- **Every other row** keeps its round-7 disposition, as the round-7 diff changed only their status cells or indexes.
+
+#### peer-staff-software-engineer-reviewer (Claude route)
+
+## Verdict
+**Ready to proceed to lock.** My only round-7 Major, 7MJ1, is resolved at `d248158`, and the round-7 fix pass adds no Blocker or Major. What remains is three Minors and three Nits, all in the companions. They can go to post-lock, and none of them holds a row.
+
+## What I reviewed
+**Root:** `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`, HEAD `d248158`.
+
+**Short names:**
+- `prd`, `journeys`, `copy` and `fences` stand for `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode{,-journeys,-copy,-fences}.md`.
+- `DF prd` and `DF journeys` stand for `…/docs/product/data-foundation/prd-data-foundation{,-journeys}.md`.
+- `PL` stands for `…/docs/product/post-lock.md`, `ADRQ` for `…/docs/decisions/README.md`, and `R7F` for `…/docs/product/collection-mode/prd-collection-mode-round-7-fixes.md`.
+
+**What I read:**
+- My round-7 section of the review log, the round-7 verify-the-reviewer table and the flip record.
+- R7F in full: sections A, B and C, and the checks.
+- `git diff a720dae HEAD -- docs ':!docs/agent-reviews'`, word-diffed across `prd`, `copy`, `journeys`, `DF prd`, `DF journeys` and `PL`.
+
+**Traced against:**
+- `prd` R7.1, R7.2, R8.6, R8.8, R8.10b, R1.8, R1.10, R6.1, R6.2 and Build dependencies.
+- The journeys Harness (lines 21–159), UJ4.7-d, UJ9.4-b, UJ9.5-a, UJ9.5-c, UJ9.5-d, UJ9.8-c, UJ10.1-a to UJ10.1-f, and the UJ 4 and UJ 9 preambles.
+- `DF prd` R1.1, R1.11, R2.9 and R6.2a.
+- Capture R5.6, R8.3, R8.14, R8.16 and R9.9.
+- F199 and F200, and the ADRQ ADR-0003 cite.
+
+**Tally:** I re-tallied row statuses with a script over the 122 IDs. It wrote one intermediate list to the session scratchpad and nothing in the repo.
+
+**Could not verify** (nothing was run):
+- Rule 14 word counts. The 11,986 figure is taken from R7F. The +4 matches the four IDs B12 added.
+- The byte-layout of real macOS caches and SQLite files. 8MN1 and 8MN2 are reasoned from the Harness text, not observed.
+
+## Findings
+
+### (1) My round-7 Blocker/Major findings
+
+| Finding | Status | Evidence |
+|---|---|---|
+| 7MJ1 (Major) | RESOLVED | **UJ10.1-b** (journeys:576) now reads "Every swatch measures the smallest size the build offers, read through R8.10b, and none less than MIN_SWATCH_SIZE on a side".<br>**UJ10.1-d** (journeys:578):<br>• it records the size the first "Grid" of a fresh launch shows;<br>• it sets "another size S the build offers, S recorded";<br>• it asserts "Neither read holds S's number as text";<br>• after the reopen it fires "Grid" and asserts the recorded size.<br>**UJ10.1-f** (journeys:580) sets "a size S the build offers other than the one shown" and asserts "S on a side".<br>**No fixed size is left:** a grep finds no `NN pt` anywhere in `prd`, `journeys` or `copy`.<br>All three builds I named in round 7 now pass or can run: a 32–96 pt slider, steps of 24/32/48/64, and a 24–40 pt range. |
+
+My round-7 Minors and Nits:
+- **7MN1:** carried. It is an owner fork, filed as an ADR-0003 input at PL:144 ("the wipe is two mechanisms… at the latest when a held write lands… A move's copy tolerates a wipe beside it"). No case fails a correct build meanwhile: DJ3's fixture holds the text in the main file only.
+- **7MN2:** resolved at journeys:549 ("within 5 s of the later of the outside read's release and the end of the last export started").
+- **7MN3:** resolved at journeys:66 ("its Flag (its R5.6) with the collection-side entry its R9.9 makes P0 (F189)").
+- **7N1:** carried as an owner question at PL:43.
+- **7N2:** the cite is resolved at journeys:83 ("its R5.4 and F195 for the open-file check"). The help-docs wording is carried with a needs-owner note on PL's F201 (2) item.
+
+### (2) New defects from the round-7 fixes
+No Blocker or Major. The Minors and Nits, one line each:
+
+- **[MINOR] 8MN1 — UJ10.1-d's file read now carries real weight, and the Harness gives it no guard against chance matches** (journeys:578, :89, :106–108).
+  - Before this pass, 48 was held by a seeded value (ZX-005, L* 48), so the file read exempted it and the check was vacuous. A1's rule, "an S whose number no seeded value's text holds", removes that exemption.
+  - The file's raw scan (journeys:89) is a substring match in UTF-8 and UTF-16 with no whole-token bound. The number baseline (journeys:106–108) covers only "the same storage". A chance run of S's digits in the seeded file's binary content, such as compressed sample archives or page data, therefore fails a correct build.
+  - A build offering only sizes whose numbers are seeded, such as {32, 48} (Cerulean C* 32, Demo Red L* 48), cannot run the case at all.
+  - **Fix:** "choosing an S whose number the seeded file's bytes hold nowhere, the case reporting not exercised where no offered size qualifies".
+- **[MINOR] 8MN2 — A3's count baseline treats unrelated growth as a new write** (journeys:108).
+  - A raw-read binary file in the app's storage that grows during the When, for example an appended shader or URL cache, gains chance two- or three-digit tokens. A correct build can then fail a number check.
+  - A3 narrows R7-M2 but leaves this case. The test lens owns the rule.
+- **[MINOR] 8MN3 — UJ9.5-d's "All items" half** (journeys:549).
+  - Once "All items" is showing, the next set's "Export collection" is not offered there (R1.10: "no collection rename, delete or export"), and the When never returns to a collection. The gap is partly pre-existing.
+  - "showed its first rows before each set's last Demo sample" does not say whether one set that overlaps is enough to count the half as exercised.
+  - **Fix:**
+    - "…at each set's first Demo sample, choose that collection, start an export…";
+    - "…a run in which, in every set, 'All items' showed its first rows before that set's last Demo sample…".
+- **[NIT] 8N1 — DF DJ3's re-read line may inherit UJ9.5-b's gating** (DF journeys:45). "As its UJ9.5-b declares it" can be read as also inheriting UJ9.5-b's "R1.9, R3.7 and R8.2 built", which would push a P0 DF R1.11 check into P1. Write "the file UJ9.5-b declares, nothing else of its Given".
+- **[NIT] 8N2 — B8's added Rows cite the wrong rule.** B8 adds R8.6 to UJ1.3-c, UJ1.3-e, UJ1.3-f and UJ6.3-b. The rule their storage half actually enforces for a collection name or an item value is DF R1.1 ("Nothing about a collection or session is kept elsewhere"), which UJ9.7-i already cites. R8.6's list covers view state, not content. The effect is traceability only.
+- **[NIT] 8N3 — No case checks that swatch sizes are per collection** (journeys:580). No case sets a second collection's size, so a build with one global size passes R7.2's "each collection's swatch size". A faulty build passes, but no correct build fails. This is pre-existing.
+
+## Clarifying questions for the author
+1. In UJ10.1-d, must S also be a number the seeded file's bytes hold nowhere? Or does the number baseline extend to the file's raw scan?
+2. In UJ9.5-d's "All items" half, does one set whose "All items" load overlaps its last Demo sample count as exercised?
+3. In UJ9.5-d's second run, is the exported collection chosen again at each set's first sample, after "All items" has been shown?
+4. Does DF DJ3's re-read line take only UJ9.5-b's file, and not its "R1.9, R3.7 and R8.2 built" gating?
+5. Does the owner accept PL:144's two-mechanism wipe, where a log-frame copy goes at the latest when a held write lands, as the ADR-0003 input qualifying F200? This question is carried from round 7.
+
+## Claimed properties
+
+| Claim (R7F) | Verdict | Evidence |
+|---|---|---|
+| No box changes a requirement row's rule. | Holds | B12 changes an Inherited-obligations Rows cell only. B13 changes a Build dependencies label: "together" now binds R6.2 and R4.7, and leaves R6.1, whose P1 bulk rows need it anyway, free. That is harmless. |
+| Tally: 118 aligned, 2 pre-alignment, 2 needs-discussion. | Holds | Script over 122 IDs, sub-rows counted with their leads: R7.2 and R8.8 pre-alignment, R7.1 and R8.6 needs-discussion. |
+| A1: the cases now need only two offered sizes and the floor. | Holds, with 8MN1 | journeys:576–580. |
+| A2: the byte deadline is the later of the two reads' ends. | Holds | DF R6.2a (DF prd:228). The export goes to a folder outside the case's folder, so its legitimate pre-edit snapshot cannot fail the byte check. |
+| A3: a new write of the number into a raw-read file still counts. | Holds, with 8MN2 | journeys:108. |
+| B9: the P0 correction loop stays in the first phase. | Holds | Capture R8.3 and R8.16 are P0. DF R2.9 says "reason initial and no correction question". The UJ 4 preamble runs scenario 7 in the first phase. UJ4.7-d uses capture R8.3, not P1 R8.7. |
+| B10: the ADR-0003 row already pairs the cite. | Holds | ADRQ reads "(Data Foundation R1.11, R5.4)", with F195 in its inputs. |
+| B12: R2.4c, R2.4d, R2.6 and R2.7 need Capture R8.14 at P0. | Holds | They are the simulated mark, the non-spectral mark, E22 and Spread, which match R8.14's banner, spread and non-spectral mark (capture prd:308). |
+| Word count: 11,986 of 12,000. | Unverified | Not recounted. |
+
+## Genuinely sound
+- **A1 is the minimal correct fix.** The swatch-grid cases now ask of the build only what R7.2 grants: two offered sizes and the floor. The reopen assertion in UJ10.1-d reads "lasts while the file stays open" the same way the pre-existing R7.1 half of that case already read the identical phrase. So it is consistent, not a new rule. I checked the counter-case: a build whose default is "the last size used this launch, held in memory" does not conform, because its size would outlive the file.
+- **A2's export folder.** Declaring the export folder outside the case's folder is what keeps a correct build passing. The export legitimately holds the pre-edit value, and the byte check reads every file beside the file under test.
+- **B7's reordering is sound.** Reading E35 before the bytes is the only order a correct build can show. Dropping the not-exercised clause is right, because this fixture can never exercise it.
+- **B9 closes the P0 loop end to end with values the upstream actually states.** DF R2.9 gives a re-scan after a Flag "reason initial and no correction question". R4.9 and F77 give the flagged reading no never-true mark.
+- **B3's DJ3 line is now exercisable,** with a large file and a cold cache, and it asserts the close, switch and quit waits that DF R1.11 states, including for a re-read.
+- **False positives I checked and do not raise:**
+  - UJ4.7-d's "its history holds 2 readings" names no readback. The Harness's closed-file SQL read supplies one, as for UJ4.7-a.
+  - B13's word-neutral wording loosens nothing a builder needs.
+
+## Deferred
+- **peer-test-reviewer:** 8MN1 and 8MN2, which concern the rules of the byte-check oracle, and 8MN3's case wording.
+- **peer-architecture-reviewer:** the owner fork at PL:144, the log-frame wipe against a held write, at ADR-0003.
+- **peer-product-manager-reviewer:** PL:43, whether quit, close and switch should wait for a re-read (7N1 and ARCH7-3), and the F201 (2) help-docs wording.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | ALIGN |
+| R8.3 | ALIGN |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+
+The table covers all 122 current IDs.
+
+**The four held rows:**
+- **R7.2** moves from OBJECT (7MJ1) to ALIGN, because 7MJ1 is resolved.
+- **R7.1, R8.6 and R8.8** were ALIGN from my lens in round 7. I re-checked each against the round-7 changes that touch them:
+  - UJ10.1-d and UJ10.1-f for R7.1;
+  - A3, UJ9.4-b's qzxqvj, B8's Rows and UJ10.1-d for R8.6;
+  - UJ9.5-d, UJ9.8-c (vii) and DF DJ4 for R8.8.
+- All three stay ALIGN. 8MN1 to 8MN3 are case- and harness-text Minors, and none of them makes a row unbuildable or fails a correct build as a matter of course.
+
+Every other row keeps its round-7 disposition: the round-7 diff changed only their Status cells.
+
+#### peer-test-reviewer (Claude route)
+
+## Verdict
+**Trustworthy after one more companion-only fix. No Blocker, one new Major.** Both of my round-7 Majors are resolved at `d248158`. One round-7 fix brought in a new Major, R8-M1. Fix A1 now picks an S that no seeded value holds, and that switched on UJ10.1-d's file read. That read matches any substring and has no baseline, so it fails a correct build whenever the file stores any number-bearing text the case did not declare. The choice rule came from my own round-7 side note, so this defect is partly mine. The fix is 0 body words and holds only R7.2 and R8.6.
+
+## Coverage map (brief)
+- **Now covered:**
+  - The grid cases follow F199: two sizes the build offers, and no fixed pt value.
+  - The size is checked after a file reopen (R7-m1) and after a relaunch.
+  - A raw-read storage file is compared with its own baseline by count.
+  - UJ9.5-d's byte deadline waits for the app's own export.
+  - UJ9.4-b uses a nonce that random bytes will not match.
+  - DJ3's re-read line can now be exercised, with close, switch and quit runs.
+  - The Flag loop is closed end to end: UJ4.7-d re-scans after the Flag.
+- **Load-bearing gap:**
+  - UJ10.1-d's file-side check that the size is "written nowhere" is now an unsound oracle (R8-M1).
+- **Residuals, all Minor:**
+  - Raw-read storage files that the When creates or grows.
+  - Swatch size is read from the app's own report in UJ10.1-b.
+  - Nothing checks that each collection keeps its own size in UJ10.1-f.
+
+## Findings
+Paths are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`:
+- J = `product/collection-mode/prd-collection-mode-journeys.md`
+- PRD = `product/collection-mode/prd-collection-mode.md`
+- DFJ = `product/data-foundation/prd-data-foundation-journeys.md`
+- DF = `product/data-foundation/prd-data-foundation.md`
+
+**(1) Round-7 delta**
+
+| Round-7 ID | Status | Evidence |
+|---|---|---|
+| R7-M1 (Major) | RESOLVED | J:576 — UJ10.1-b asserts "the smallest size the build offers … none less than MIN_SWATCH_SIZE".<br>J:578 — UJ10.1-d uses the recorded fresh-launch size and "another size S the build offers".<br>J:580 — UJ10.1-f uses "a size S the build offers other than the one shown".<br>No fixed pt value remains, and only two offered sizes are needed. The new defect in J:578's S-choice clause is R8-M1. |
+| R7-M2 (Major) | RESOLVED | J:106–108 now reads "…in the same file; and, in a file read as its raw contents, where the baseline read of that file holds the text as many times or more."<br>A cache untouched since the baseline is exempt again.<br>A real write is still caught: a new file starts from a baseline count of 0, and an added occurrence raises the count. Residual: R8-m1. |
+
+Minors and Nits from round 7, one line each:
+- **R7-m1:** RESOLVED, J:578. The reopen now fires "Grid" and asserts the recorded size.
+- **R7-m2:** RESOLVED, J:549. The deadline is "the later of the outside read's release and the end of the last export started".
+- **R7-m3:** RESOLVED, J:542 (qzxqvj).
+- **R7-m4:** RESOLVED, DFJ:45. The checks run on the 100,000-item file with the OS file cache purged; each try is its own run; the close, switch and quit runs match DF R1.11 verbatim. There is still no injected hold, which is acceptable at Minor.
+- **R7-n1:** RESOLVED, J:66.
+- **R7-n2:** RESOLVED, J:566.
+- **R7-n3:** RESOLVED, J:548 and J:549.
+
+**(2) New defects from the round-7 fixes**
+
+**[MAJOR] R8-M1 — J:578, UJ10.1-d. The file half of "Neither read holds S's number as text" now fails a correct build.**
+- **Why it fails:**
+  - The file's reads match substrings. The raw scan (J:88–91) has no whole-token rule, and the SQL read "matches as the raw scan does" over every value, internal tables included (J:91–93).
+  - The only exemption is a *declared* value containing the text (J:93–96).
+  - The number baseline covers the app's storage only, not the file (J:106–108, "the same storage").
+  - A1's "choosing an S whose number no seeded value's text holds" removes the one exemption. The check is therefore live over bytes and values the file holds that no case declares.
+  - At `a720dae` this half was silently vacuous: "48" was exempt through ZX-005's L* 48, as my round-7 side note said. It now fails in the other direction.
+- **A correct build that fails:** the file stores anything undeclared that holds S's digits as a substring. A synthetic simulation (scratchpad, not a real build):
+  - 40 text-UUID keys contain "64" 98% of the time and "96" 99%.
+  - Spectral means stored as decimal text (18 readings × 31 values) contain "64" 100% of the time and "128" 67%.
+  - Pure binary compressed payloads (30 × 400 B) contain "64" about 11% of the time.
+  - ISO timestamps with fractional seconds, or schema text such as `base64`, also hit.
+- **This constrains an open decision:** the blob and derived-value schema is Open (AGENTS.md §3). No choice of S avoids the failure under a text representation. A build offering few sizes can also be left with no legal S at all (for example {32, 48}: C* 32 and L* 48 are both seeded).
+- **Fix (companion only, 0 body words), in UJ9.4-b's existing form:**
+  - **When:** drop ", choosing an S whose number no seeded value's text holds", and read "…close the file, read the app's own storage and read the file at SQLITE_READER_FLOOR, then reopen…".
+  - **Assert:** "The storage read holds S's number as text nowhere, and every table of the file holds the same rows as the seeded file read before launch, SQLite's own statistics tables aside; after reopening…"
+  - A size written into the file then changes a row and is caught. Random digits cannot fail the case. The storage read keeps its number baseline, and the reopen and relaunch assertions are unchanged.
+
+**[MINOR] R8-m1 — J:106–108: the count baseline does not cover a raw-read storage file the When creates or grows.** An example is a GPU shader or framework cache written as the file closes. By chance it holds a bounded two-digit S at about 9 per MB of new high-entropy bytes; this is analytic and depends on whether any cache grows during that When. Fix for post-lock: a match found only in a raw-read file counts only if a rerun with another offered size S′ matches S′ there too, since a real write follows the chosen size and chance does not. Or prefer a three-digit S where the build offers one.
+
+**[MINOR] R8-m2 — J:576, UJ10.1-b: "read through R8.10b" ties each swatch's measure to the app's own reported size.** R8.10b (PRD:595) lists one "swatch size" per surface, not the geometry of each swatch. A build that reports 24 pt but lays swatches out smaller passes. UJ10.1-a has the same unstated measuring route, so this predates the round. Fix for post-lock: state that each swatch's on-screen frame is what gets measured.
+
+**[MINOR] R8-m3 — J:580, UJ10.1-f: a single app-wide swatch size passes.** Gouache Set is never shown as a grid, so R7.2's "each collection's swatch size" is not told apart from one global size. This predates the round. Fix for post-lock: after choosing Gouache Set, fire "Grid" and assert its swatches are not S. Its fresh-launch size is recorded, and S is chosen to differ from it.
+
+**[NIT] R8-n1 — J:602:** the storage line in the Test-controls map still reads only "a number against a baseline at the same key path". Fix: add "…and, for a raw-read file, by count".
+
+**[NIT] R8-n2 — J:107–108:** "does not count only where …; and, in a file read as its raw contents, where …" can be read as requiring both conditions. Fix: "…in the same file, or, in a file read as its raw contents, where…".
+
+## Biggest risks   (what could ship broken behind a green suite)
+- **UJ10.1-d:** a correct build fails because of how it stores its data, not because of the swatch size. That pushes a builder to delete the file half, which leaves R7.2 and R8.6's "never written to the file" for the size unchecked (R8-M1).
+- **UJ10.1-d's storage read:** it could fail now and then through cache growth, and a waved-away flake hides a real write (R8-m1).
+- **Per-collection size and swatch geometry:** both are unproven at P2 (R8-m2, R8-m3).
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **UJ10.1-d's "recorded size" oracle** is taken from the build, but that is not a fixture copied from the code. F199 leaves the default to the build, and the case uses it as a before-and-after oracle across a close and a relaunch. Where the spec defers the value, that is the right design.
+- **The reopen check (R7-m1's fix)** fails the in-memory-map mutation: after reopening, "Grid" must show the recorded size, not S.
+- **B9's "reason initial … no correction question"** matches DF R2.9 word for word, so it fails both of the plausible wrong builds. UJ4.7-d's run from the state UJ4.7-a left is allowed by the UJ 4 preamble.
+- **B7 is correct.** In WAL mode, a reader begun after the delete commits does not pin the pages from before the delete. The dropped not-exercised clause could therefore never be exercised on that fixture. Reading E35 before the bytes removes the only order that could fail a correct build.
+- **A2's deadline composes correctly** as the later of two deferring reads. The export goes to a folder outside the case's folder, so the old values in it cannot leak into "every file beside it".
+- **B3's close, switch and quit runs** match DF R1.11. Leaving the "should they wait at all" question to C3 is the right split.
+
+## Missing / over-tested
+- **Missing:**
+  - Row equality in place of the number scan for UJ10.1-d's file read (R8-M1).
+  - A way to tell chance from a real write in raw-read files that grow (R8-m1).
+  - Per-swatch geometry (R8-m2).
+  - A per-collection size check (R8-m3).
+- **Over-tested:** nothing.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | OBJECT (R8-M1) |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | ALIGN |
+| R8.3 | ALIGN |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | OBJECT (R8-M1) |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | ALIGN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+Notes on the table:
+- **122 IDs:** 120 ALIGN, 2 OBJECT.
+- **Flips since round 7:**
+  - R7.1 flips to ALIGN. R7-M1 is resolved, and R7.1's own checks in UJ10.1-a, -d (grid choice), -e and -f do not depend on the file read.
+  - R8.8 ALIGNs from my lens, as in round 7. A2 removed the byte-deadline defect in UJ9.5-d.
+- **Still held:** R7.2 and R8.6, by R8-M1 only. UJ10.1-d is the one case where the swatch size is checked as a number against the file. Its fix is companion-only at 0 body words, and a targeted re-check flips both rows once it lands.
+- **No repository file was changed.** The probabilities in R8-M1 come from a synthetic Python simulation in the session scratchpad. They are not from a real build.
+
+#### peer-interface-reviewer (Claude route)
+
+## Verdict
+**Contract sound.** Both of my round-7 Majors are fixed at d248158: IF7-1 in UJ9.5-d and IF7-2 in UJ10.1-b, -d and -f. The round-7 fix pass adds no Blocker or Major. It changes no label, variant name, E-ID, R8.10 readback or seam pairing in a way that breaks a consumer, and R7.2 and R8.8 now move to ALIGN.
+
+## Surface & consumers (brief)
+- **Subject:** d248158, under repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`.
+- **Read:**
+  - the round-7 fix file in full;
+  - my round-7 section of the review log (lines 15227–15484) and its verify table (16762–16773);
+  - every hunk of `git diff a720dae HEAD -- docs ':!docs/agent-reviews'`;
+  - the Harness (JRN:21–135), UJ 4, UJ 9, UJ 10, the Test-controls map, and the PRD rows R6.2, R7.1, R7.2, R8.6, R8.8 and R8.10a–f;
+  - the Outbound and Inbound tables, the Build dependencies, the copy's Phase marks and E8, and the OQ results;
+  - DF R1.1, R1.11, R2.3a–i, R2.4, R2.9 and R7.6q, with DJ3 and DJ4;
+  - Capture R5.6, R8.3, R8.14, R8.16, R9.9 and R11.11; Export R1.1.
+- **Consumers:**
+  - agent builders;
+  - harnesses that key on E-IDs, the 53 quoted labels, the R8.10b readbacks (swatch size included), the Harness byte-check rules and the Rows cells;
+  - the DF, Capture and Export PRDs through their obligation lines.
+- **What changed vs. round 7:**
+  - companion text only, plus B12's four Rows IDs (+4 body words), B13's word-neutral Build-dependencies rename and B11's word-neutral DF R7.6q change;
+  - status flips on R3.6, R4.7, R4.9, R8.1, R8.10, R8.11 and E6.
+
+Paths used below: JRN = `docs/product/collection-mode/prd-collection-mode-journeys.md`, PRD = `docs/product/collection-mode/prd-collection-mode.md`, DF = `docs/product/data-foundation/prd-data-foundation.md`, all under the repo root.
+
+## Findings
+
+**(1) My round-7 findings**
+
+| Finding | Status | Evidence |
+|---|---|---|
+| IF7-1 (Major): UJ9.5-d's byte read ignored the app's own export deferring the wipe | RESOLVED | JRN:549. The Assert now reads "within 5 s of the later of the outside read's release and the end of the last export started". Exports start only "where none runs", so they run one after another, and the last one started is the last to end. The export writes "to a declared folder outside the case's folder", so the snapshot that holds the pre-edit value is no longer "a file beside it" under R8.10d. B5 edits the first imported column, which the exported collection has (Scale's "Family" does not exist there). |
+| IF7-2 (Major): F199 made R7.2's size range the build's choice, but three cases fixed it | RESOLVED | JRN:576: UJ10.1-b asserts "the smallest size the build offers, read through R8.10b, and none less than MIN_SWATCH_SIZE" (R8.10b lists "the swatch size", PRD:595). JRN:578: UJ10.1-d records the first "Grid" size on Studio Markers, sets an offered S, and after reopening asserts the recorded size, which is R7.2's own "lasts while the file stays open". JRN:580: UJ10.1-f uses "a size S the build offers other than the one shown". A 32–96 pt build or a stepped control can now run all three. |
+| IF7-3 (Minor): the Harness's first-phase list lacked the capture PRD's Flag | RESOLVED | JRN:66: "its Flag (its R5.6) with the collection-side entry its R9.9 makes P0 (F189)", plus "its one-row re-scan (its R8.3)", which UJ4.7-d now drives. Capture R8.3 is P0 (CAP:291). |
+| IF7-4 (Minor): the F201 help-docs line contradicts F195 | RESOLVED (carried, needs owner) | `docs/product/post-lock.md:172` |
+| IF7-N1 | RESOLVED | JRN:83: "(its R1.11 for a re-read; its R5.4 and F195 for the open-file check)" |
+| IF7-N2 | RESOLVED | DF:85 reads "That the changes are saved" |
+| IF7-N3 | RESOLVED | PRD:626: the Rows cell adds R2.4c, R2.4d, R2.6 and R2.7. It now pairs with the inbound R8.14 line (PRD:642). |
+| IF7-N4 | UNRESOLVED (Nit, not carried) | DF:280 still lists no R7.6b, and post-lock.md has no item for it. Carry it. |
+| IF-16 (carried) | UNRESOLVED (deferred by design) | `docs/product/README.md:18` still reads "queued"; it is due at the bookkeeping close. |
+
+**(2) New defects from the round-7 fixes**
+
+There is no new Blocker or Major. I checked the pass's claims that a shallow read might doubt, and each holds:
+- **UJ4.7-d's "reason initial, no correction question" is correct.** DF R2.9 (DF:113) reads: "A re-scan after that loss creates a reading with reason initial and no correction question." DF R2.3a says the same.
+- **UJ9.5-d's second run can run in the first phase.** R1.8 "Export collection" is P0 (PRD:407), and Export R1.1 is P0.
+- **"Multi-item selection" is R1.10's own term** (PRD:409). No other document references the old Build-dependencies work name.
+- **"Apply to ⟨n⟩ swatches" is E8's label verbatim** (COPY:177; R6.2).
+- **DF DJ3's new wait assertions match DF R1.11 as written:** "closing the file, switching and quitting wait for it" (DF:105).
+
+Minors and Nits go to post-lock, one line each:
+- **[MINOR] IF8-m1: the Test-controls map's summary of storage reads (JRN:602) is out of date.** It still describes number matching only "against a baseline at the same key path", and raw reads only "for a text that is not a number". It omits A3's per-file count for raw-read files (JRN:108). The Harness governs, but the map should add "or, in a file read as its raw contents, by count".
+- **[MINOR] IF8-m2: UJ10.1-d's rule for choosing S, "no seeded value's text holds" (JRN:578), does not cover the file's raw scan.** That scan has no number baseline, so an S token that appears in the closed file's binary pages by coincidence fails a correct build. This predates round 7 (48 pt had the same exposure) and is unlikely. Fix: "…nor the seeded file's raw bytes hold as a whole token".
+- **[NIT] IF8-n1: UJ4.7-d says "no correction question appears" (JRN:378) but names no copy state.** A harness that keys on state IDs needs "the Data Foundation PRD's E11 (and E26) does not render".
+- **[NIT] IF8-n2: B8 put R8.6 on UJ1.3-c/e/f and UJ6.3-b (JRN:235, 440), but the rule their storage halves check is DF R1.1's**, "Nothing about a collection … is kept elsewhere". It is not in R8.6's list of classes. Cite "(the Data Foundation PRD's R1.1)" in the Assert, as UJ9.7-i does.
+- **[NIT] IF8-n3: the UJ 9 preamble lists the later-phase inputs of UJ9.5-a and UJ9.5-c, but not UJ9.5-d's "All items" half.** The case scopes that half itself, so no one has to guess.
+- **[NIT] IF8-n4: UJ10.1-b says "Every swatch measures … read through R8.10b", but R8.10b reports one swatch-size setting, not each swatch's rendered side.** The MIN_SWATCH_SIZE floor clause is what makes the assertion meaningful.
+
+## Biggest risks   (what existing consumers/scripts/agents break)
+- **None at Blocker or Major.** The remaining risk is diagnostic, not a contract break:
+  - IF8-m2 can produce a rare false failure on UJ10.1-d's file read.
+  - IF8-n2 points a storage-leak failure at R8.6, whose text does not state the promise that was broken.
+
+## Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **The "later of" deadline in UJ9.5-d matches DFJ:73's Save-a-copy line.** It reconciles the Harness's two read-moment rules (an export's end, and the moments a held outside read names) with no new Harness rule.
+- **UJ10.1-d's reopen assertion checks R7.2's scoping.** It uses the row's own words, "lasts while the file stays open", and the recorded default is scoped per collection ("on Studio Markers"), which matches R7.2's "each collection's swatch size".
+- **The "All items" half fails loudly when it cannot be exercised.** A run where the load finished before the sample arrived reports "not exercised, never passed" rather than a quiet pass, which is the error model this surface wants.
+- **B10 correctly left the ADR-0003 row alone.** Its cite already pairs the re-read with R1.11 and the open-file check with R5.4, so the change would not have been the same fix.
+- **B13 chose word-neutral wording over a +3 literal fix, to stay inside the body cap.** "Multi-item selection" reuses R1.10's term rather than coining one.
+
+## Missing / over-engineered
+- **Missing:** IF7-N4 in post-lock, IF8-m1 and IF8-m2, and IF-16's README status at close.
+- **For the owner at lock:** C1 records, as a post-lock ADR-0003 input, a qualification of settled F200 (log-frame text goes "at the latest when a held write lands"). No fence is edited. I traced UJ9.7-h, UJ9.5-d and DJ4 against it. None has a held write, or each seeds text in the main file only, so no target case depends on it. It is still an owner confirmation, not an editorial item.
+- **Over-engineered:** UJ9.5-d still carries four concerns in one cell. It is now correct; splitting it stays optional.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | ALIGN |
+| R8.1 | ABSTAIN |
+| R8.1a | ABSTAIN |
+| R8.1b | ABSTAIN |
+| R8.1c | ABSTAIN |
+| R8.1d | ABSTAIN |
+| R8.1e | ABSTAIN |
+| R8.1f | ALIGN |
+| R8.1g | ABSTAIN |
+| R8.2 | ABSTAIN |
+| R8.3 | ALIGN |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | ALIGN |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | ABSTAIN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ABSTAIN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+Notes on the table:
+- **Coverage:** all 122 IDs are listed, checked by script against the PRD: 112 ALIGN, 10 ABSTAIN, 0 OBJECT.
+- **Abstentions** are unchanged from rounds 4–7: R8.1, R8.1a–e, R8.1g, R8.2, R8.11 and M1 are performance-lens rows. B6's grid-workload change to UJ9.5-a is performance-owned.
+- **Flipped from round 7:**
+  - R7.2 moves from OBJECT (IF7-2) to ALIGN.
+  - R8.8 moves from OBJECT (IF7-1) to ALIGN.
+- **Rows the round-7 diff touched, re-checked and still ALIGN:**
+  - R7.1 (UJ10.1-d, -f)
+  - R8.6 (UJ10.1-d, UJ9.4-b, B8's Rows, A3). IF8-m1, IF8-m2 and IF8-n2 are Minors and Nits and hold no row.
+  - R4.9 (UJ4.7-d)
+  - R8.10 and M3 (UJ9.8-b, -c)
+  - R1.4, R1.7 and R6.3 (B8)
+  - R2.4c, R2.4d, R2.6 and R2.7 (B12)
+  - R6.1, R6.2 and R4.7 (B13)
+  - R1.8 and R5.1 (UJ9.5-c, -d)
+  - E6 (status flip only)
+- **Sibling rows the diff touched:** DF R7.6q (B11) ALIGN; DF DJ3's and DJ4's lines match DF R1.11 and R6.2a as written.
+- **Read-only:** no repository file was changed.
+
+#### peer-architecture-reviewer (Claude route)
+
+## Verdict
+**Sound: build it, after one more companion-only Major fix (ARCH8-1) before lock.** The round-7 pass resolves ARCH7-4 and every one of my Minors and Nits. It resolves ARCH7-1 only in part: the new rule for choosing S in UJ10.1-d makes the file-byte half of that case fail a correct build, and on some conforming builds makes the case impossible to run. There is no Blocker.
+
+## Architecture in brief
+- **The shape is unchanged.** Collection Mode browses and edits over Data Foundation's single SQLite file.
+  - DF R1.11 holds writes while a write, commit, move or re-read runs.
+  - A deferred wipe removes replaced text once every read begun before it has ended, this app's own export included.
+  - F200 runs the wipe beside a held write. C1 now records the second mechanism (the log reset) for ADR-0003.
+- **The round-7 diff is all companion-side, with no row rule changed.** It touches journey cases, Rows cells, one inherited-obligation Rows cell (B12), a Build-dependencies label (B13), DF journeys DJ3 and DJ4, DF R7.6q (word-neutral), post-lock items and Status cells.
+- **The tradeoff is unchanged.** WAL on a local volume means capture never stalls, and the byte rule lands only once earlier reads end.
+
+## Findings
+Paths are relative to `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/`:
+
+| Short name | File |
+|---|---|
+| J | `docs/product/collection-mode/prd-collection-mode-journeys.md` |
+| PRD | `docs/product/collection-mode/prd-collection-mode.md` |
+| DF | `docs/product/data-foundation/prd-data-foundation.md` |
+| DFJ | the Data Foundation journeys |
+| PL | `docs/product/post-lock.md` |
+
+I read the targets, the round-7 fix file, my round-7 section, the verify table, and the full output of `git diff a720dae HEAD -- docs ':!docs/agent-reviews'`.
+
+### (1) My round-7 findings
+
+| Round-7 ID | Status | Evidence |
+|---|---|---|
+| **ARCH7-1 (Major)** | **PARTIAL** | UJ10.1-b (J:576) and UJ10.1-f (J:580) are resolved: they now use "the smallest size the build offers" and "a size S the build offers". UJ10.1-d (J:578) no longer names 48 or 56 pt, and my {32, 64, 96} mutation now runs. But the clause A1 added, "choosing an S whose number no seeded value's text holds", brings the failure back in a new form. See ARCH8-1. |
+| ARCH7-2 (Minor) | RESOLVED, as a post-lock item | PL:144 holds the two-mechanism ADR-0003 item, flagged for owner confirmation, and no fence was edited. That is enough, because ADR-0003 is a stop on every row. Wording residual: ARCH8-4. |
+| ARCH7-3 (Minor) | RESOLVED, as a post-lock item | PL:43, needs owner. DFJ:45 tests R1.11 as written (close, switch and quit wait). This matches the row and does not pre-empt the owner's answer. |
+| ARCH7-4 (Minor) | RESOLVED | J:549 now reads "within 5 s of the later of the outside read's release and the end of the last export started". |
+| ARCH7-5 (Minor) | RESOLVED | PL:142 adds "no journal or log the app kept beside the file under its old name is left holding its text". |
+| ARCH7-N1 | RESOLVED | DFJ:45: the re-read line moved below DFJ:43–44, which again follow the writes line directly. |
+| ARCH7-N2 | RESOLVED | J:83 reads "its R1.11 for a re-read; its R5.4 and F195 for the open-file check". The help-docs line is handled at PL:172. |
+| ARCH7-N3 | RESOLVED | DFJ:72 reads "E35 read before the bytes at each look". The unexercisable clause is gone, and the end-state assertion carries the line. |
+
+### (2) New defects from the round-7 fixes
+
+**[MAJOR] ARCH8-1 — UJ10.1-d's file-byte check on S is now live, but the Harness gives the file no number baseline. A correct build fails it, and some conforming builds cannot run it (J:578, introduced by A1).**
+
+*Why the check is now live.* Three things combine:
+- The exemption for the file's bytes and the SQL read is keyed to values the case declares (J:94–96).
+- The number baseline applies only to "the same storage", meaning the app's own storage, which R8.10e defines as "never the file's bytes" (J:106–108).
+- Before A1, the size's text 48 was exempt because ZX-005 declares L* 48 (J:139). So the file half of the check was empty, but it could never fail. A1's S-choice clause removes that exemption on purpose.
+
+*How a correct build fails (the mutation).*
+- A build offers {32, 64, 96} pt with a default of 64. The case chooses S = 96, which no declared value holds.
+- The build writes no size anywhere.
+- To catch the real defect (a size stored as `96.0` in a REAL column), the SQL read must render numeric columns as decimal text (J:91–93). It checks "every word of the text whatever its length" in every table.
+- DF R1.2 (DF:98) requires derived sets and decoded samples to be stored as plain SQLite types. That is hundreds of REALs across 18 readings that the case does not declare.
+- Their text holds almost every two-digit string, and epoch-encoded time axes add more (2026-09-01T10:00Z is `1788256800`, which holds "88" and "56").
+- So the file half fails almost deterministically.
+
+*How a conforming build cannot run the case (the second mutation).*
+- A build offers {24, 32, 48} pt with a default of 24. R7.2 and F199 allow this.
+- S must then be 32 or 48. The seeded values hold 32 (Gouache ZX-001's C* 32 at J:149; ZX-001's u* −32.0 at J:135) and 48 (ZX-005's L* 48 at J:139). So no S qualifies.
+- R7.1's "the choice does not survive a close or relaunch" and R7.2's "written nowhere" then lose their only case. This is ARCH7-1's failure again.
+
+*Fix (companion only, 0 body words).*
+- Drop the S-choice clause. S becomes any size the build offers other than the recorded one.
+- The file half of the Assert becomes UJ9.4-b's form (J:542): "the app's own storage holds S's number nowhere, and the file read with the app closed at SQLITE_READER_FLOOR holds the same rows, table for table, as a read of it taken before the When, SQLite's own statistics tables aside".
+- This is exact for an action that writes nothing. It catches a size written in any type and never trips on values the case does not declare.
+- *Alternative:* extend the number baseline to the file's reads, by row and column for the SQL read and by count across the file and every file beside it for the raw scan. A per-file count fails, because a checkpoint at close copies pages from the -wal into the main file.
+
+**[MINOR] ARCH8-2** — UJ10.1-d's reopen and relaunch assertions ("its swatches show at the recorded size", J:578) assume the default is one fixed size. F199 would allow a default that tracks window width, and a restored window can differ from a fresh launch's. Fix: record the size at the same window frame, or state that the default is per build. Post-lock.
+
+**[MINOR] ARCH8-3** — A3's count baseline (J:108) covers a raw-read file that was present at the baseline. It does not cover one created or grown during the When: every bounded S in a new binary cache still counts. This is R7-M2's residual, and it is low-likelihood for this When (set a size, close the file). Post-lock, for the test lens.
+
+**[MINOR] ARCH8-4** — C1's "the log's reset" (PL:144) should say truncation.
+- A reset that does not truncate lets the next writer reuse the log from its start, leaving older frames past its end, replaced text included, until they are overwritten.
+- Only a truncating reset (or a size limit that truncates) meets R6.2a's rule for "files it keeps beside it".
+- This is ADR-0003 input wording. Post-lock.
+
+**[NIT] ARCH8-N1** — The Harness's first-phase sibling list (J:63–67) names only the Data Export PRD's E1. UJ9.5-d's second run is now first-phase and completes exports whose rows it reads (Export R1.1, P0 there). The phase rule already allows this, so the gap is in the index only: add "and its R1.1".
+
+## Biggest risks
+- **ARCH8-1** is the only item that fails a correct build. It is companion-only, and it holds R7.1, R7.2 and R8.6 until it lands.
+- **Byte checks on a number** are the one area the Harness cannot yet oracle cleanly. UJ10.1-d is the only case that needs one (J:578). For an action that writes nothing, checking that the rows are unchanged beats text-matching a number.
+- **WAL mechanics** now live correctly in ADR-0003 inputs (PL:142, PL:144), not in fence wording. The remaining trap is the reset-versus-truncate wording (ARCH8-4).
+
+## Genuinely sound
+- **A2's "later of" deadline** (J:549) is correct. The export's own read defers the wipe (DF R6.2a, "this app's own included"), and the deadline now has the same shape as DFJ:73. Writing the export outside the case folder keeps it out of "every file beside it".
+- **B9 (UJ4.7-d, J:378)** is data-correct:
+  - "the new one current with reason initial" matches DF R2.9 and R2.3a, since a re-scan after the value is lost is initial with no correction question;
+  - capture R8.3's look-through re-scan is P0;
+  - the Harness list now names it (B1).
+
+  The P0 loop from Flag to set aside to re-scan is now tested end to end.
+- **B3 (DFJ:45)** tests R1.11 as written and leaves the owner question open (PL:43). A later change of rule is a two-way door that edits one line.
+- **B7 (DFJ:72)** is the right resolution: reading E35 before the bytes makes the assertion race-free, and the end-state clause carries the line.
+- **A3** is correct for files present at the baseline.
+- **B12's Rows** pair with the inbound R8.14 line (PRD:642).
+- **B13** keeps R6.1 in the contract cell without binding it to a phase.
+- **B8's R8.6** on delete cases is a Rows-only change and is correct.
+- **No round-7 edit pre-decides ADR-0003, 0005, 0006 or 0007.** C1 and C2 sit behind ADR-0003's stop, the right weight for WAL mechanics. A dogmatic reviewer would want them in fences; that is unnecessary, because no row can be built before the ADR.
+
+## Missing / over-engineered
+- **Missing, before lock:** ARCH8-1's case fix, 0 body words.
+- **Missing, post-lock:** ARCH8-2, ARCH8-3, ARCH8-4 and ARCH8-N1.
+- **Over-engineered:** nothing new. The phase split in UJ9.5-d, with its "All items" half in R1.9's phase and a not-exercised guard, is the minimum needed to keep the second run's other checks in the first phase.
+
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | OBJECT (ARCH8-1) |
+| R7.2 | OBJECT (ARCH8-1) |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | ALIGN |
+| R8.3 | ALIGN |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | OBJECT (ARCH8-1) |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | ALIGN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+#### peer-plan-reviewer (Claude route)
+
+## Verdict
+Ready to execute once one companion-only fix lands. PLAN7-1, my only round-7 Major, is resolved, and every round-7 Minor, Nit and coverage gap from this lens landed as ruled. But A1's fix adds one new Major, PLAN8-1: UJ10.1-d now makes the file half of its byte read live, and a correct build can fail it. There is no Blocker.
+
+All paths are relative to `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`:
+- prd = `docs/product/collection-mode/prd-collection-mode.md`
+- jny = `…/prd-collection-mode-journeys.md`
+- fences = `…/prd-collection-mode-fences.md`
+- fix7 = `…/prd-collection-mode-round-7-fixes.md`
+- post-lock = `docs/product/post-lock.md`
+- DF = `docs/product/data-foundation/prd-data-foundation.md`
+
+I read every file I cite at d248158, plus `git diff a720dae HEAD -- docs ':!docs/agent-reviews'`. I did not re-count words; fix7:120 reports 11,986 of 12,000.
+
+## Findings
+
+### (1) Round-7 delta: my Blocker/Major findings
+
+| Finding | Result | Evidence |
+|---|---|---|
+| PLAN7-1 (Major) | RESOLVED | See below. |
+
+PLAN7-1's evidence:
+- **jny:576 (UJ10.1-b):** asserts "the smallest size the build offers, read through R8.10b, and none less than MIN_SWATCH_SIZE".
+- **jny:578 (UJ10.1-d):** records the default on Studio Markers and sets "another size S the build offers".
+- **jny:580 (UJ10.1-f):** "a size S the build offers other than the one shown".
+- **jny:546 (UJ9.5-a):** alternates between the smallest and largest sizes the build offers.
+- **Rows and fences:** prd:543 (R7.2) is unchanged, and F199 (fences:1694–1698) stands.
+- **No point sizes left:** no case names a point size or assumes the floor is exactly 24 pt.
+- **Mutations:** both mutations I gave in round 7 now pass all three cases (a continuous 32–96 pt range, and stepped sizes of 24/32/64 pt).
+- **Fallout:** the fix introduced PLAN8-1 below.
+
+The round-7 Minors, Nits and gap, one line each:
+- **PLAN7-2 — RESOLVED.** jny:66 now names the capture PRD's Flag (R5.6), with R9.9's P0 entry and the R8.3 one-row re-scan.
+- **PLAN7-3 — RESOLVED.** jny:549: the second run is P0, the "All items" half runs in R1.9's phase, and the export starts from the collection surface.
+- **PLAN7-4 — RESOLVED.** post-lock:128.
+- **PLAN7-5 — RESOLVED.** prd:300. The word-neutral form makes "together" bind only R6.2 and R4.7.
+- **PLAN7-6 — RESOLVED.** jny:565.
+- **Coverage gap (ROW_CONFIRM_BUDGET had no trigger) — RESOLVED.** post-lock:129.
+
+### (2) New defects from the round-7 fixes
+
+**[MAJOR] PLAN8-1 — UJ10.1-d (jny:578): A1 took away the exemption that kept the file read from matching S's digits in undeclared bytes, and put nothing in its place**
+
+- **Where:**
+  - jny:578. The When says "choosing an S whose number no seeded value's text holds". The Assert says "Neither read holds S's number as text".
+  - The Harness's file reads:
+    - The raw scan is a plain match with no whole-token rule (jny:89–91). The test lens said so itself at round 7 (R7-m3), which is why qqq became qzxqvj.
+    - The SQL read "matches as the raw scan does" across every table, internal tables included (jny:91–93).
+    - The exemption covers only a word contained in a value "as the case declares that value" (jny:94–95).
+  - The number baseline covers "the same storage", meaning the app's own storage (jny:106–108). The Test-controls map's line for the file (jny:601) gives it no baseline.
+- **Before round 7:** ZX-005's declared L* 48 (jny:139) made "48" exempt, so the file half of this read was vacuous. The test lens's side note (R7-M2) offered two options: pick an S no seeded value holds, or leave the file read as it was. A1 took the first, which makes the check live.
+- **Why a correct build fails:** S is a 2- or 3-digit number, and a continuous range makes 2 digits the natural pick. The seeded file holds many values no case declares:
+  - the spectral samples behind each declared L*/C*/h°;
+  - record times and archived payloads;
+  - snapshot fields other than serial and firmware;
+  - schema text, and any sqlite_stat1 rows.
+
+  Neither way of reading those values rescues the case:
+  - **If the SQL read renders numbers as text:** a value like 0.3712… contains "37", and a 400–700 nm band grid contains "40" to "70". Across roughly 2,000 band values a collision is close to certain.
+  - **If they are BLOBs:** the raw scan sees high-entropy bytes, about one hit per 64 KB for a given 2-byte sequence, before the UTF-16 forms are counted.
+
+  None of these values is exempt, and the harness text doesn't say which reading applies.
+- **Mutation that fails wrongly:** take a build that keeps S only in memory, as R7.2 and R8.6 require. Give it a fixture whose spectra are stored as REALs, and let the builder pick S = 40. The SQL read finds "40" inside "400" or "0.4012", and UJ10.1-d fails. The builder then has to guess whether the build leaked S or the case matched noise.
+- **Fix (companion only, 0 body words, testability):**
+  - **(a) Case-local, preferred.** In UJ10.1-d's When, replace "whose number no seeded value's text holds" with "whose number the Harness's raw scan and SQL read of the seeded file, taken before the Given, find nowhere". This case makes no write to the file, so any later match is the build's.
+  - **(b) Harness-level alternative.** Extend jny:106–108 to the file: "where the text is a number, the file's raw scan and SQL read are also compared with the same reads taken before the case's When, a match counting only where the text occurs more times than there."
+- **Rows:** R7.2 and R8.6, the rows carrying the written-nowhere clause that the S read checks. R7.1's assertions in this case are unaffected, because since round 6 its grid choice is checked by the relaunch, not by a byte read.
+
+**Minors and Nits** (one line each; post-lock or a companion edit):
+- **[MINOR] PLAN8-2 — jny:578.** After the close and reopen, "its swatches show at the recorded size" assumes a fixed default. F199 lets the build tie the default to window width, and a reopened window can differ in width. Fix: pin the window's size in the Given.
+- **[MINOR] PLAN8-3 — jny:549.** Two gaps in UJ9.5-d:
+  - "showed its first rows before each set's last Demo sample" can be read as every set or as any one set. Fix: say "of every set".
+  - Scale's samples per row are never declared. At 1 sample, the first and last Demo sample are the same sample, and the "All items" half's order can't be followed. Fix: declare 3, as Studio Markers has.
+- **[MINOR] PLAN8-4 — post-lock:144 (C1).** The item qualifies F200's "the deadline stays exact" for text in a log frame (fix7:93 says so), but unlike post-lock:43 it carries no "needs owner" mark. An ADR-0003 author could read an owner fence as amended. Fix: prefix "needs owner (qualifies F200):".
+- **[MINOR] PLAN8-5 — prd:283 and prd:756.** OQ 6's closer has the owner judge 24 pt at the P2 build. Under F199 the build's floor may sit above 24 pt, so the owner can't see 24 pt swatches in it. This is the owner alternative from round 7, left open. Fix (post-lock, OQ 6): the P2 build offers MIN_SWATCH_SIZE for that check.
+- **[NIT] PLAN8-6 — jny:602.** The map's storage line still reads "a baseline at the same key path" and omits A3's raw-file count. Fix: add "or, read raw, by count".
+
+## Biggest risks (if executed as-is)
+1. **PLAN8-1.** The first P2 run of UJ10.1-d will likely report a leak that isn't there, and an unattended builder may "fix" a correct build to chase it.
+2. **Transitive gating is unchanged.** The first phase waits on capture's P0, which includes ADR-0004's prototype. The DF amendment rows it builds against are now scheduled (post-lock:128) but still ⌛️ in DF.
+3. **Budget.** The body has 2 words of headroom under the 11,988 cap. Every fix above is sized for the companions.
+
+## Plan strengths
+- Every round-7 Major landed companion-only, with a meaning check against its fence, and no row text changed except B12's +4-word Rows cell.
+- **Correct as written, though easily misread:**
+  - **B9 (jny:378).** UJ4.7-d expects reason initial and no correction question. That matches DF R2.9 exactly (DF:113), even though a shallow read would expect re-measurement. The case also stays in the first phase, through capture R8.3 and R8.16, both P0.
+  - **UJ10.1-b is not circular.** R8.10b reads the swatch size (prd:595), and the control's end position is the reference.
+  - **A2's "later of" deadline** is the right reading of DF R6.2a: the app's own export is also a read begun before the wipe.
+  - **Word-neutral B13** keeps R6.1 in the contract cell and binds "together" to R6.2 and R4.7 only.
+- The status bookkeeping reconciles: 118 aligned, 2 pre-alignment, 2 needs-discussion over the 122 IDs, and the copy file's E6 matches the index.
+
+## Spec coverage gaps (requirements with no task)
+None new. The round-7 gap (ROW_CONFIRM_BUDGET had no declaration trigger) is closed by post-lock:129.
+
+## Per-row dispositions
+| Row ID | disposition |
+|---|---|
+| R1.1 | ALIGN |
+| R1.2 | ALIGN |
+| R1.3 | ALIGN |
+| R1.4 | ALIGN |
+| R1.5 | ALIGN |
+| R1.6 | ALIGN |
+| R1.7 | ALIGN |
+| R1.8 | ALIGN |
+| R1.9 | ALIGN |
+| R1.10 | ALIGN |
+| R2.1 | ALIGN |
+| R2.2 | ALIGN |
+| R2.3 | ALIGN |
+| R2.4 | ALIGN |
+| R2.4a | ALIGN |
+| R2.4b | ALIGN |
+| R2.4c | ALIGN |
+| R2.4d | ALIGN |
+| R2.4e | ALIGN |
+| R2.4f | ALIGN |
+| R2.4g | ALIGN |
+| R2.4h | ALIGN |
+| R2.4i | ALIGN |
+| R2.5 | ALIGN |
+| R2.6 | ALIGN |
+| R2.7 | ALIGN |
+| R2.8 | ALIGN |
+| R2.9 | ALIGN |
+| R2.10 | ALIGN |
+| R2.11 | ALIGN |
+| R3.1 | ALIGN |
+| R3.2 | ALIGN |
+| R3.3 | ALIGN |
+| R3.4 | ALIGN |
+| R3.5 | ALIGN |
+| R3.6 | ALIGN |
+| R3.7 | ALIGN |
+| R3.8 | ALIGN |
+| R3.9 | ALIGN |
+| R4.1 | ALIGN |
+| R4.2 | ALIGN |
+| R4.2a | ALIGN |
+| R4.2b | ALIGN |
+| R4.2c | ALIGN |
+| R4.2d | ALIGN |
+| R4.2e | ALIGN |
+| R4.2f | ALIGN |
+| R4.2g | ALIGN |
+| R4.2h | ALIGN |
+| R4.3 | ALIGN |
+| R4.4 | ALIGN |
+| R4.5 | ALIGN |
+| R4.6 | ALIGN |
+| R4.7 | ALIGN |
+| R4.8 | ALIGN |
+| R4.9 | ALIGN |
+| R5.1 | ALIGN |
+| R5.2 | ALIGN |
+| R5.2a | ALIGN |
+| R5.2b | ALIGN |
+| R5.2c | ALIGN |
+| R5.2d | ALIGN |
+| R5.2e | ALIGN |
+| R5.3 | ALIGN |
+| R5.4 | ALIGN |
+| R5.5 | ALIGN |
+| R5.6 | ALIGN |
+| R5.7 | ALIGN |
+| R5.8 | ALIGN |
+| R6.1 | ALIGN |
+| R6.2 | ALIGN |
+| R6.3 | ALIGN |
+| R6.4 | ALIGN |
+| R7.1 | ALIGN |
+| R7.2 | OBJECT (PLAN8-1) |
+| R8.1 | ALIGN |
+| R8.1a | ALIGN |
+| R8.1b | ALIGN |
+| R8.1c | ALIGN |
+| R8.1d | ALIGN |
+| R8.1e | ALIGN |
+| R8.1f | ALIGN |
+| R8.1g | ALIGN |
+| R8.2 | ALIGN |
+| R8.3 | ALIGN |
+| R8.4 | ALIGN |
+| R8.5 | ALIGN |
+| R8.6 | OBJECT (PLAN8-1) |
+| R8.7 | ALIGN |
+| R8.8 | ALIGN |
+| R8.9 | ALIGN |
+| R8.10 | ALIGN |
+| R8.10a | ALIGN |
+| R8.10b | ALIGN |
+| R8.10c | ALIGN |
+| R8.10d | ALIGN |
+| R8.10e | ALIGN |
+| R8.10f | ALIGN |
+| R8.11 | ALIGN |
+| E1 | ALIGN |
+| E2 | ALIGN |
+| E3 | ALIGN |
+| E4 | ALIGN |
+| E5 | ALIGN |
+| E6 | ALIGN |
+| E7 | ALIGN |
+| E8 | ALIGN |
+| E9 | ALIGN |
+| E10 | ALIGN |
+| E11 | ALIGN |
+| E12 | ALIGN |
+| E13 | ALIGN |
+| E14 | ALIGN |
+| E15 | ALIGN |
+| E16 | ALIGN |
+| E17 | ALIGN |
+| E18 | ALIGN |
+| E19 | ALIGN |
+| M1 | ALIGN |
+| M2 | ALIGN |
+| M3 | ALIGN |
+| M4 | ALIGN |
+
+Notes on the table:
+- **R7.2** moves from OBJECT (PLAN7-1), which is resolved, to OBJECT (PLAN8-1).
+- **R8.6** moves from ALIGN to OBJECT (PLAN8-1), because the round-7 diff made UJ10.1-d's file read of R8.6's grid-choice clause live. Both flip once PLAN8-1's one-clause companion fix lands.
+- **R7.1 and R8.8 are ALIGN** from this lens:
+  - A2 is correct for R8.8: the later-of deadline, the export written outside the case's folder, and the second run in P0.
+  - R7.1's own assertions in UJ10.1-d and UJ10.1-f hold under A1.
+- **R8.10 stays ALIGN.** A3 is correct for the app's own storage, and PLAN8-1's preferred fix is case-local.
+- **Rows the diff didn't touch** keep their round-7 dispositions.
+
+### Round 8 — verify-the-reviewer dispositions (Blocker/Major)
+
+| # | finding | raised-by | verify | disposition |
+|---|---|---|---|---|
+| 1 | UJ10.1-d's round-7 rule for choosing S removed the only exemption on the file's substring reads. They now match undeclared REALs and bytes, so a correct build fails, and a conforming build that offers only seeded sizes cannot run the case. A byte-count baseline also fails, because a checkpoint at close moves pages from the log into the main file. | test R8-M1; architecture ARCH8-1; plan PLAN8-1 | reproduced — journeys:578 against the Harness's file reads (:88–96) and the storage-only number baseline (:106–108) | accept — testability fix: the file check becomes row equality against a read taken before the When (UJ9.4-b's form) |
+
+**Per-row dispositions after round 8.** Every row is ALIGN from every non-abstaining lens except R7.1, R7.2 and R8.6, which the one Major above holds. The companion-only fix lands in the round-8 fix pass, and the three lenses that raised it then re-check it.
