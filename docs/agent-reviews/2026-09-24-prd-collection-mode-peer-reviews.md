@@ -18876,3 +18876,77 @@ Notes on the table:
 ### Round 9 — verify-the-reviewer dispositions
 
 No Blocker or Major was raised, so there is nothing to verify. **Flip record:** all 122 rows are flip-eligible.
+
+## Lock (2026-09-25; record written 2026-09-26)
+
+The Collection Mode PRD is locked: `Status: locked (2026-09-25)`, commit `2dc7f72`, shipped in [PR #21](https://github.com/vinnyp/spectro-capture/pull/21) for an attended merge. Every row was unanimously aligned by round 9. The pre-lock round was round 6, with the plan lens and the Phase 5 priority pass. The mechanical preconditions below ran against the state that locks.
+
+### Lock record — mechanical checks at the state that locks (2026-09-26)
+
+**What was run.**
+
+- **Subject:** `docs/product/collection-mode/prd-collection-mode.md` (`Format: agent-prd v1`, `Status: locked (2026-09-25)`) and its four companions.
+- **Commit:** `04dfb97` on `docs/collection-mode-prd`, PR #21. Every script guards that `docs/product` equals `04dfb97`.
+- **Roster:** checks 1–20 of `writing-agent-prds/references/mechanical-checks.md` (operator-agents 1.7.0).
+- **Engines:** bash with `set -euo pipefail` and BSD grep, awk and perl; Python 3 `re`. Check 10's lookahead ran under Python `re`.
+- **Baselines:** first lock, so there is no preservation baseline. The change baseline is `dc1b747`, the merge-base with `origin/main`.
+- **Scripts and outputs:** the orchestrator's scratchpad, `mech-final/`.
+
+| # | Check | Verdict | Result / disposition |
+|---|---|---|---|
+| 1 | Cross-PRD consistency | PASS (1a disposed) | 1a's 5 script lines are standing dispositions, and all still apply: PRD:482, 483, 485 and 486 under **F188** (Capture and Import carry no inbound table), and PRD:503 because capture R6.9 arrives through DF (DF:289 names it). 1b: every phase claim and conditional agrees on both sides. 1c: 34 candidates, all chained; collide lines ours (F168). 1d and 1e pass. |
+| 2 | Index sync | PASS | Map = Carried-by (201/201). Legend bullets derive both ways. Surfaces and copy index agree; phase marks agree both ways. |
+| 3 | Latent-decision inventory | PASS | Classes 1–2: 0 hits. Class 3: splits fenced (F5, F8, F9, F20/F21, F23, F189). Class 4: quoted labels only. |
+| 4 | Row-transition index | PASS | A = B (4 states). 16 lines, no duplicate pair. R1.6 and 18 swept rows disposed. |
+| 5 | Variant set | PASS | 12 of 12 enumerated verbatim; 7 `none`. |
+| 6 | Case refs and copy coverage | PASS | 434 Rows IDs live; E1–E19 each in at least one case. |
+| 7 | Constants in owning rows | PASS | 12 of 12, both directions. |
+| 8 | Fence map against content | Dir. 1 PASS; dir. 2 **NOT-RUN** | Direction 1: 786 items resolve, and the control rejects 7 of 7 bogus items. Direction 2: first lock, no prior locked revision (reference exemption). |
+| 9 | ID, Pri and status diff | **NOT-RUN** | First lock, no prior locked revision (reference exemption). HEAD side: 0 PARSE-MISS; 87 of 87 triples aligned; E-status 19 of 19 agree. |
+| 10 | Two-sentence scan | PASS | 147 cells, 0 over 2. |
+| 11 | Companion paths and links | PASS (11b disposed) | Part 1: 4 of 4. Part 2: 2,255 links; the only misses are 5 in `prd-collection-mode-round-6-fixes.md` (:496, :522), a history file whose quoted edit snippets resolve in their landed form. Disposition recorded at round-7-fixes:124 and round-8-fixes:75; it still applies. |
+| 12 | Word count | PASS | 11,987 of 12,000. 12 rule-migration hits disposed (displayed copy, fence Authority/Decision, Clarified lines). |
+| 13 | Label check | PASS | Direction 2: 53 of 53. Direction 1: 6 action hits, read and disposed (work-item, state and fixture names, a verb, the view); 0 variant hits. |
+| 14 | Post-lock ticks | PASS | Pair `(dc1b747, 04dfb97)`, change baseline. 2 ticks in `post-lock.md` (the DF E34 state; the column-rename item), both true and both attributed to PR #21. |
+| 15 | Unresolved fill | PASS | 0 `{{`, 0 `_(…)_`, 0 `<prd-slug>`. |
+| 16 | Guidance comments deleted | PASS | 0 `<!-- guidance` (five files and all of `$docs`); 0 HTML comments. |
+| 17 | Banned adjectives in asserts | PASS | 294 asserts; 0 word-bounded hits. |
+| 18 | Test controls and asserted values | PASS | 13 of 13 surfaces driven; 6 residual When cells disposed. 447 data points traced, 0 unsourced (mutation control fires). 44 quantity cases read and traced. |
+| 19 | One priority semantic | PASS | 1 (PRD:147, build order). |
+| 20 | Metrics read a stated observable | PASS | M1–M4 resolve, and each source row states what its metric reads. |
+
+**Totals.** MISS 0. NOT-RUN 2: check 8 direction 2 and check 9, both first-lock exemptions that need no fence.
+
+**Lock conditions (SKILL.md Phase 6)**
+
+- [x] **Status line locked.** PRD:3 reads `Status: locked (2026-09-25)`.
+- [x] **Guidance comments deleted.** Check 16.
+- [x] **No placeholders**, in both fill families and `<prd-slug>`. Check 15.
+- [x] **No "peer review pending" on a current status surface.** 0 hits over the derived inventory:
+  - PRD:3;
+  - `docs/product/README.md:18` (row 6);
+  - this PRD's fence preamble (fences:1–48);
+  - the status lines (line 3) of capture, DF, device, export and import;
+  - those five siblings' fence preambles;
+  - the 15 sibling OQ rows this change touched;
+  - the 2 ADR-queue lines naming Collection Mode.
+
+  The 129 other hits are all classified: fence history 89 (capture 43, DF 31, import 7, device 4, export 4) and round records 40 (fix files 33, review log 7). None is unclassified; the file:line list is `mech-final/out/lock_surfaces_hits.txt`.
+- [x] **Every row aligned.**
+  - 64 R lead rows, 19 E (index and companion) and 4 M are `aligned`, and the 35 sub-rows carry their lead's status.
+  - Round 9 (log:18152, :18878) records all 122 rows unanimously ALIGN.
+  - The OQ Status column tracks the question's lifecycle: OQ 8 and 9 answered (`aligned`), 10 open (`pre-alignment`), as the format's example locks.
+- [x] **Exactly one priority semantic.** Check 19.
+- [x] **OQ contract.**
+  - OQ 1–12 are contiguous.
+  - Answered OQ 8 and 9 each have a `## OQ` section in the results file.
+  - The 10 open OQs each carry an interim rule, and the no-interim bullet reads "None".
+  - No stray results section.
+- [x] **Mechanical preconditions clean.** 0 MISS; the only NOT-RUNs are the first-lock exemptions.
+- [x] **Pre-lock round ran.** Round 6 (log:11798), with the plan reviewer and the Phase 5 pass; delta-verified in rounds 7–9.
+
+**No lock condition fails.**
+
+**Observation, outside this PRD's lock conditions.** No sibling fence file carries a dated Closed line for its PR #21 fence range: DF F50–F58, capture F70–F76, import F65–F68, export F31–F34 and device F32. Capture fences:434 set that precedent for PR #20, and conversion-flow step 7 part 3 asks for one at each sibling's bookkeeping close.
+
+**Orchestrator disposition of the observation.** The dated Closed lines in the five sibling fence files (DF F50–F58, Capture F70–F76, Import F65–F68, Export F31–F34, Device F32) are written at the attended merge. They link the owner's approval review of PR #21, as the PR #20 precedent (Capture fences:434) links its final review. The sibling status lines already record the peer-review gate as closed (PR #21).
