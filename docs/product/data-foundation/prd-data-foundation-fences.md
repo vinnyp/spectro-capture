@@ -259,6 +259,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F59 | R6.2, R6.2a, E35; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F59. |
 | F60 | R6.2, R6.2a, R1.11; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F60. |
 | F61 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F61. |
+| F62 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F62. |
 
 ## Rejected findings
 
@@ -648,6 +649,8 @@ Source: the owner's round-10 decisions in the Collection Mode PRD's adjudication
 
 **Clarified 2026-09-26 (round-14 orchestrator bookkeeping; no owner decision; the fence it points to governs; IF14-m2):** this fence's Decision is superseded by F61's principle — the copy of removed text in a journal or log beside the file goes at the first moment, with the file open, that no read uses that journal or log and no write runs; after a crash, at the first open at which that holds. F61 governs.
 
+**Clarified 2026-09-26 (round-15 orchestrator bookkeeping; no owner decision; IF15-m2, PRIV15-2, SSE15-m2, ARCH15-4):** the round-14 line above supersedes only this fence's journal-or-log deadline; the main-file clause and E35's end condition stand. "After a crash, at the first open at which that holds" means the first such moment after reopening, as the ADR-0003 input reads (IF15-m3, SSE15-m2, R15-m4).
+
 ## Collection Mode round-11 amendment (2026-09-26)
 
 Source: the owner's round-11 decisions in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F211 and F212](../collection-mode/prd-collection-mode-fences.md) (owner decisions D65 and D66, over round 11's database-lens MAJOR-1 and MAJOR-2). This fence carries only the Data Foundation half of those decisions; peer review pending.
@@ -673,3 +676,14 @@ Source: the owner's round-12 decisions in the Collection Mode PRD's adjudication
 - **Decision:** R6.2a's journal-or-log deadline is restated as a principle, replacing F60's case-by-case list: the copy of removed text in a journal or log beside the file goes at the first moment, with the file open, that no read uses that journal or log and no write runs; after a crash, at the first open at which that holds. Clearing it holds the next write only for its own copy and truncation, never while it waits on a read, running before the next write starts (F60). DJ3 gains sub-runs for a second write started while a clearing waits on a read, a write made while a clearing is blocked, and the held write failing instead of landing.
 - **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
 - **Rows:** R6.2, R6.2a, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F61.
+
+## Collection Mode round-15 amendment (2026-09-26)
+
+Source: the owner's round-15 decision in the Collection Mode PRD's adjudication of 2026-09-26, recorded there as [its F218](../collection-mode/prd-collection-mode-fences.md) (owner decision D72, over round 15's database-lens DB15-MAJOR-1 and privacy-lens PRIV15-1). This fence carries only the Data Foundation half of that decision; peer review pending.
+
+### F62 — A full volume defers the log copy until room returns (2026-09-26)
+
+- **Authority:** [the Collection Mode PRD's F218](../collection-mode/prd-collection-mode-fences.md) — owner decision D72, its round-15 adjudication, 2026-09-26.
+- **Decision:** Where a full volume stops the clearing of a journal or log, the copy stays and E35 stays up. Within 5 s of room being restored, the app clears it on its own, with no user action. F61's "first moment" reads "…and the volume has room to clear it". Text in the main file is still wiped at its normal deadline. DJ3 gains sub-runs (g)'s full-volume timing and (i)'s growth case, where committed frames not yet copied in would make the file bigger.
+- **Why:** the Data Foundation half of a Collection Mode decision about what the file's bytes guarantee; this PRD owns the file and its deletion lifecycle.
+- **Rows:** R6.2, R6.2a, DJ3, and the inbound Collection Mode line's fence range, which becomes F52–F62.

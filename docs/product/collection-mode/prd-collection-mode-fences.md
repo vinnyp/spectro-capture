@@ -13,7 +13,7 @@ amendment preserves them and does not re-decide them.
 
 **Lock record:** [the review log's first lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26) — validated revision `04dfb97`, checks 1–20, 0 MISS, two first-lock NOT-RUNs (check 8 direction 2 and check 9) the mechanical-checks reference exempts in advance. A second link, to this amendment's own lock record, is added at its bookkeeping close.
 
-**Amendment pending:** F202–F217 (2026-09-26), peer review pending.
+**Amendment pending:** F202–F218 (2026-09-26), peer review pending.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -61,6 +61,7 @@ file, in every round below.
 | OQ 11's closer, run 2026-09-26 (not an owner decision) | Engineering's check; recorded in | [the results file's OQ 11 section](prd-collection-mode-oq-results.md#oq-11) |
 | owner decision D65–D68 (round-11 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 11 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-11--the-amendments-delta-and-pre-lock-round-2026-09-26) |
 | owner decision D69–D71 (round-12 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 12 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-12--delta-verify-of-round-11-2026-09-26) |
+| owner decision D72 (round-15 adjudication, 2026-09-26) | The fence's own quote, pasted again in full under "### Owner adjudication (2026-09-26)" | [the review log's Round 15 section](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#round-15--delta-verify-of-round-14-2026-09-26) |
 
 This is editorial: it adds navigation only, over the settled preamble and fences above.
 
@@ -1730,6 +1731,8 @@ Fences F202–F210 were decided by the owner on 2026-09-26, over the PR #21 revi
 
 **Clarified 2026-09-26 (round-14 orchestrator bookkeeping; no owner decision; the fence it points to governs; IF14-m2, ARCH14-N1):** this fence's Decision and the Clarified line above are superseded by F215's principle — the copy goes at the first moment, with the file open, that no read uses the log and no write runs, after a crash at the first open at which that holds. F215 governs.
 
+**Clarified 2026-09-26 (round-15 orchestrator bookkeeping; no owner decision; IF15-m2, PRIV15-2, SSE15-m2, ARCH15-4):** the round-14 line above supersedes only this fence's journal-or-log deadline; the main-file clause and E35's end condition stand. "After a crash, at the first open at which that holds" means the first such moment after reopening, as the ADR-0003 input reads (IF15-m3, SSE15-m2, R15-m4).
+
 ### F203 — The simulated banner's action replaces the narrowing (2026-09-26)
 
 - **Authority:** owner decision D56, round-10 adjudication 2026-09-26. Question: "Finding 6: the 'Show simulated readings' banner action promises to list exactly the simulated swatches. But if a search or another filter is already active, the result can be empty or include other swatches. What should the action do?" Chosen: **Replace narrowing** — "Clears the search and the row-state filter and sets the mark filter to Simulated alone, so exactly the simulated swatches are listed. 'Clear filters' brings the full table back." Not chosen: **Narrow within current view** — "Keeps the search and row-state filter and replaces only the mark filter with Simulated. The promise changes to 'the simulated swatches among what you're looking at', which can be none."
@@ -1841,6 +1844,8 @@ log's "## Round 12 — delta-verify of round 11 (2026-09-26)" section.
   - **Scope.** This replaces F211's list of what can hold the copy. F211's E35 and own-reads clauses stand.
 - **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F61
 
+**Clarified 2026-09-26 (owner decision D72; F218):** F218 qualifies the first moment for a full volume.
+
 ### F216 — Compare's slot carries no label (2026-09-26)
 
 - **Authority:** owner decision D70, round-12 adjudication 2026-09-26 (PMM12-1). Question: "Compare's distance slot currently inherits the history view's label 'From current', which is false when you compare two earlier readings (e.g. 'From current ΔE2000 0.00' on two old readings). What label should Compare's slot carry?" Chosen: **No label** — "The slot sits between the two chips and shows just the distance or the Not compared line, with no label. No new copy." Not chosen: **'Between these readings'** — "A neutral label for Compare's slot. New copy string."
@@ -1854,6 +1859,19 @@ log's "## Round 12 — delta-verify of round 11 (2026-09-26)" section.
   - **The rule.** Where the current reading has a value in the collection's measurement condition but worked out under another illuminant or observer, each earlier reading follows R5.4's order: can't-be-read, then no-value, then not-compared.
   - **What "no current value" means.** In the history view's no-lines rule, it now means no value in the collection's measurement condition.
 - **Carried by:** R5.4, UJ5.3-r
+
+Fence F218 was decided by the owner on 2026-09-26, over round 15's database-lens DB15-MAJOR-1 and the privacy lens's PRIV15-1, recorded in the review log's "## Round 15 — delta-verify of round 14 (2026-09-26)" section.
+
+### F218 — A full volume defers the log copy until room returns (2026-09-26)
+
+- **Authority:** owner decision D72, round-15 adjudication 2026-09-26 (database DB15-MAJOR-1; privacy PRIV15-1). Question: "When the disk is completely full, SQLite sometimes can't clear the log (about 1 run in 6 on APFS, and always if the log must grow the main file). Removed text then stays in the log beside your file until space frees up. E35 ('Saved — another app is reading your file…') is what the user sees meanwhile. What should the erase promise say for this case?" Chosen: **Clears when room returns** — "While a full volume stops the clearing, the log copy stays and E35 stays up. Within 5 s of room being restored the app clears it on its own, no user action needed. The rule's 'first moment' then reads '…and the volume has room to clear it'. Text in the main file itself is still wiped at its normal deadline." Not chosen: **Also stop new writes** — "Same, but while a clearing is stuck on a full disk the app starts no new write of its own, so nothing grows the log further. Stricter, but editing is blocked until you free space (on top of E15 already refusing writes that need room)."
+- **Decision:**
+  - Where a full volume stops the clearing of a journal or log, the copy stays and E35 stays up.
+  - Within 5 s of room being restored, the app clears it on its own, with no user action.
+  - F215's "first moment" reads "…and the volume has room to clear it".
+  - Text in the main file is still wiped at its normal deadline.
+- **Why:** the database lens's APFS probe (SQLITE_IOERR_TRUNCATE in 8 of 46 runs), and the growth case the privacy, database and architecture lenses reproduced on HFS+ and APFS.
+- **Carried by:** R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (g) and (i), and the Data Foundation PRD F62.
 
 ## Fence → row map
 
@@ -2078,6 +2096,7 @@ than deciding a WHAT.
 - **F215** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F61
 - **F216** — R5.8, UJ5.4-f
 - **F217** — R5.4, UJ5.3-r
+- **F218** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (g) and (i), and the Data Foundation PRD F62
 
 ## Rejected findings
 

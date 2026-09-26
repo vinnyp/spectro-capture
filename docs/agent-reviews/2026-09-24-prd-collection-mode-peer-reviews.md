@@ -24171,3 +24171,966 @@ PRIV (privacy), PMM (product-marketing), R14 (plan), DB (database).
 | DF-R6.2 (with R6.2a) | OBJECT | OBJECT | OBJECT | OBJECT | OBJECT | OBJECT | ALIGN | OBJECT | OBJECT | ✋ Needs Discussion |
 
 This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-14-fixes.md`.
+
+## Round 15 — delta-verify of round 14 (2026-09-26)
+
+Subject: `17de231`. Eight lenses read the amendment `7328002..17de231`: product-manager,
+staff-software-engineer, test, interface, architecture, privacy, plan and database — the same
+eight of round 14's nine lenses, product-marketing left out because it aligned every row in
+round 14.
+
+### product-manager
+
+## Verdict
+Builds the right thing for the user. My one round-14 Major (PM14-1) is resolved: DJ3 (g) is now timed from the requirement row's own trigger rather than from a behaviour no row states. The round-14 fix pass adds no new Blocker or Major.
+
+## User & problem context (brief)
+- **User and job.** The Cataloger browses, trusts and fixes a digitized collection. In this delta the jobs are:
+  - tell an imported "State" from the built-in one;
+  - read an honest reason whenever two readings can't be compared;
+  - trust that removed text is really gone, without a notice that contradicts another notice.
+- **Evidence.** D55–D71 are owner judgment for a single-owner dogfood product. Three lenses reproduced the full-volume erase behaviour on SQLite 3.53.4, on HFS+ and APFS images (round-14 fix file :15–16). That is the right evidence bar for this scale.
+- **Scope.** I ran `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'`, then read all 7 targets and 7 sources, plus Round 14 in the review log (lines 23118–24173), under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`.
+- **Abbreviations** (all under that root):
+  - PRD = `docs/product/collection-mode/prd-collection-mode.md`
+  - journeys = `docs/product/collection-mode/prd-collection-mode-journeys.md`
+  - copy = `docs/product/collection-mode/prd-collection-mode-copy.md`
+  - CM fences = `docs/product/collection-mode/prd-collection-mode-fences.md`
+  - DF PRD = `docs/product/data-foundation/prd-data-foundation.md`
+  - DF journeys = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+  - DF fences = `docs/product/data-foundation/prd-data-foundation-fences.md`
+  - post-lock = `docs/product/post-lock.md`
+
+## Findings
+
+**(1) Round-14 Blockers and Majors from this lens**
+
+| Finding | Status | Where |
+|---|---|---|
+| PM14-1 (DJ3 (g) required clearing when disk space came back, which no row states) | RESOLVED | DF journeys:54. See the notes below the table. |
+
+How PM14-1 was resolved:
+- **The new timing.** (g) now asserts "within 5 s of the failure, a functional timeout, the volume still full, no file the app keeps beside the file holds the removed text, and E35 is not up". Room is restored "no sooner than 10 s after the failure".
+- **It matches the row.** DF PRD:228 (R6.2a) says the copy goes "at the first moment, the file open, that no read uses that journal or log and no write runs". The failure is that moment: read 1 has ended, the write has failed and nothing else is running. F61 (DF fences:673) and F211's "ended, landed or failed" (CM fences:1798) say the same.
+- **Both wrong builds now fail, and a correct build passes:**
+  - A build that holds clearing until room returns fails, because the 10 s gap puts room's return after the 5 s deadline.
+  - A build that clears only just before the next write fails, because no write follows.
+  - A correct build passes. My round-14 worry was that the clearing itself might fail on a full volume. The probes refute that: TRUNCATE returned (0,0,0) with the volume still full.
+- **The user no longer sees two contradictory notices for long.** E15 says the last change wasn't saved and E35 says it was. They now overlap for at most 5 s.
+
+**My round-14 Minors and Nits:**
+- PM14-2 is deferred to post-lock:115, correctly.
+- PM14-3 is RESOLVED at copy:312. The not-compared trigger is now disjoint from the no-value and unreadable triggers.
+- PM14-4 is on post-lock:183, but its cite is now stale; see N3.
+- PM14-5 is RESOLVED as I asked, at journeys:398, :400 and :403. The remaining gap, a "From current" label drawn as a separate element, belongs to the test lens (TR m6).
+- The journeys:591 Nit is RESOLVED.
+- The journeys:241 Nit (the baseline SQL read sits only in the Assert) was neither fixed nor carried to post-lock. It is still a Nit and belongs on post-lock.
+
+**(2) New in the round-14 fix pass.** No new Blocker or Major. I checked every changed line against its fence's Decision: F202 and F215–F217 in CM fences, and F58, F59 and F61 in DF fences. None makes a builder guess, fails a correct build or passes a wrong one. Minors and Nits for post-lock, one line each:
+
+[MINOR] N1 — post-lock:46: the new annotation says only the E34 half stays open, which quietly closes the main-file wipe that falls due while E15 is up. (g) fills the volume only after the file's own bytes are already clean, and the probes measured a log truncation only, so nothing has exercised that wipe on a full volume. Keep "a main-file wipe falling due while E15 is up" open, alongside the E34 half.
+
+[MINOR] N3 — post-lock:183 cites DJ3 (h) for "a crash that discards a held write". (h) now crashes only after the write has landed (DF journeys:55), so no case shows that window. Keep the dogfood watch and drop the cite.
+
+[NIT] N2 — DF journeys:51: (d)'s "this row or the rows around it" should name the rows "(a)–(c) and (e)–(h)". Its read-1 qualifier already keeps out the checkpointed line at :47, but a harness author shouldn't have to work that out.
+
+[NIT] N4 — journeys:241: UJ2.3-d now reads "Columns"' entries and the detail's Identity labels through the accessibility row. That row's inputs (journeys:591) list header names and the Compare slot, but neither of those. Cite the collection-surface and item-detail rows instead, or add the two readings to the accessibility row. The test lens owns this.
+
+[NIT] N5 — decisions/README.md:22 now reads "after a crash at the first such moment after reopening". The fences say "at the first open at which that holds": F215 (CM fences:1839), F61 (DF fences:673), and the two pointer lines added this round (CM fences:1731, DF fences:649). R6.2a and DJ3 (h) follow the README's reading, so no builder guesses, but the two new pointer lines could have used it.
+
+## Biggest risks   (what builds the wrong thing or fails the user)
+- **N1: a gap tracked as closed.** A Cataloger whose disk fills while another app still holds removed text could be left with that text on disk. The case that exercises this is not written, and the open-items list no longer lists it.
+- **E35's stale headline windows.** These are the other-app-reading, failed-write and post-crash windows. They are correctly on the dogfood list (post-lock:183). They are wording risks, not flow dead ends.
+
+## Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **DJ3 is now eight rows that each stand alone** (DF journeys:48–55). Each states its own actions, how often to check and what result to expect. That ends the inherited-clause Majors of rounds 12–14 at their source. The two 10 s gaps, in (g) and (h), are what tell a correct build from a lazy one.
+- **(h) rebased on a write that lands before the crash.** E35 at the reopen ("Your changes are saved") is therefore true in this case. The E35-at-reopen check is tied to F58 (1), and (d) guards the case where nothing is beside the file.
+- **The six new behaviours the brief asked about** (Clear sort, the imported-column tag, the history distance lines, the simulated banner's reset, E9's return, the erase timing):
+  - The history-distance lines are now one unambiguous ladder. The copy's trigger (copy:312) and UJ5.3-r's spectral CX1 at D50/2° (journeys:394) trace to R5.4 and F217 with no overlap. Every "Not compared" state a user sees traces back to a row.
+  - The erase timing leaves no dead end. After a failed write the user sees E15 alone, with its "Try again" path, within 5 s.
+  - The imported-column tag changed only in wording.
+  - Clear sort, the banner's reset and E9's return are untouched.
+- **False positives, not findings:**
+  - (e) and (f) still say "As in (b) until the held write lands". That prefix is bounded and unambiguous, so it is fine.
+  - (g) doesn't check E35 before the failure. That is fine, because (a) carries that check.
+  - The not-compared line's "or measurement condition" can no longer be the reason shown, but D59 freezes that wording and round 14 already noted it.
+- **The pass is right-sized.** It adds no fence, no copy and no owner question, and PRD body word counts are unchanged apart from status cells.
+
+## Missing / over-specified
+- **Missing:**
+  - "a main-file wipe falling due while E15 is up" on the open-items list (N1);
+  - UJ2.3-d's baseline SQL read moved into its When;
+  - an exact row list in (d) (N2).
+- **Over-specified:** nothing in this delta.
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### staff-software-engineer
+
+## Verdict
+Proceed after addressing Blockers. There are no Blockers. My one round-14 Major (SSE14-1) is resolved. The round-14 rewrite of DJ3 adds one new Major, SSE15-1: the rebased (h) no longer waits for the file's own bytes to be clean before it crashes the app, so a correct build can fail (h) depending on how fast the harness runs. It is a one-clause fix in the journeys file and costs no PRD words.
+
+## What I reviewed
+- **Artifacts.** A requirements-mode delta-verify of subject `17de231`, taken from `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'`. Repo root is `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`; the worktree is clean at HEAD `17de231`. Abbreviations used below:
+  - PRD = `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md`
+  - J = `.../collection-mode/prd-collection-mode-journeys.md`
+  - copy = `.../collection-mode/prd-collection-mode-copy.md`
+  - CMF = `.../collection-mode/prd-collection-mode-fences.md`
+  - DF = `.../docs/product/data-foundation/prd-data-foundation.md`
+  - DFJ = `.../data-foundation/prd-data-foundation-journeys.md`
+  - DFF = `.../data-foundation/prd-data-foundation-fences.md`
+  - PL = `.../docs/product/post-lock.md`
+  - ADRQ = `.../docs/decisions/README.md`
+- **Read in full.**
+  - DJ3's eight journal-or-log rows (DFJ:48–55), DFJ:44 and :47, and DJ4:76–81.
+  - DF R1.10, R1.11, R2.3, R6.2 (DF:216), R6.2a (DF:228), R7.2 and the OQ table.
+  - DF copy E15, E34 and E35.
+  - DFF F57–F61, with every Clarified line.
+  - CMF F200, F202, F207 and F211–F217.
+  - PRD R2.1, R5.4 (:385), R5.8 (:389), R8.8 (:446), R8.10a–f and R8.11; the constants table, Build dependencies and Interim stated (:178–232).
+  - J UJ5.3-l/o/p/q/r (:388–394), UJ5.4-a…i (:395–403), UJ9.7-* and the Test-controls map (:578–592).
+  - copy:309–314.
+  - `prd-collection-mode-round-14-fixes.md`, and the review log's Round 14, including my own review (:23242–23366) and the architecture lens's probes ARCH14-1/3/6.
+  - The round-13 text of DJ3 (`git show 7328002:…`), for a before/after check of every sub-run.
+- **Word counts.** Measured with rule 14's perl method: CM 12,397 of 12,400 and DF 8,430 of 8,450.
+- **Could not verify, since I do not run code.**
+  - The probes the fix file cites. Those are the full-volume TRUNCATE returning (0,0,0) on HFS+ and APFS, and the architecture lens's variant C, where a landed write keeps the log copy across the crash until read 2 ends.
+  - Whether a clearing that must copy a landed write's pages back can finish on a full APFS volume, especially one holding local snapshots.
+
+## Findings
+
+**(1) My round-14 Blockers and Majors**
+
+| Finding | Status | Where |
+|---|---|---|
+| SSE14-1: (h) inherited (c)'s "within 5 s of reopening" clause and set no floor on read 2 after the reopen | RESOLVED | DFJ:55. (h) is now self-contained: no "As (c)", and no reopen-deadline clause. Read 2 ends "no sooner than 10 s after the reopen", and the copy must be gone "within 5 s of read 2's end". A build that clears only at open now fails: read 2 still holds the log at the reopen, and if the build never retries, the copy outlives read 2's end + 5 s. A build that follows F215 passes, subject to SSE15-1. |
+
+My round-14 Minor m1 is RESOLVED at DFJ:54: (g) counts from the failure, the volume still full, and room returns no sooner than 10 s later. Minor m2 went to post-lock's ADR-0003 no-busy-handler note. My Nits are resolved or have post-lock items.
+
+**(2) New Blocker or Major introduced by the round-14 fixes**
+
+[MAJOR] **SSE15-1 — DFJ:55 (h) dropped the clean-bytes gate its round-13 form inherited from (c). The crash can therefore come before a correct build has wiped the main file.**
+- **Before.** Round-13 (h) read "As (c), …". (c) crashes only "once a look after read 1's end finds the file's own bytes clean, the write still held".
+- **Now.** The When reads "end read 1; while the write is still held, begin read 2 …; release the write; once it has landed, read 2 still running, crash the app; read the file's own bytes; reopen".
+  - Nothing ties the crash to the main-file wipe.
+  - The Result still asserts "within 5 s of read 1's end … the file's own bytes hold the removed text nowhere, and before the reopen they still hold it nowhere".
+  - (c) at DFJ:50 and (g) at DFJ:54 both keep the gate.
+- **A correct build fails.**
+  - The app cannot be told when another process's read ends, so it retries the wipe on a poll. Say it polls every 1 s, well inside the 5 s functional timeout every DJ3/DJ4 row allows.
+  - The harness ends read 1 at t0, begins read 2 at about t0+50 ms, releases the write, sees it land and crashes at about t0+200 ms.
+  - The main file still holds the text, since the delete's frames were never copied back. The byte read before the reopen finds it, and "before the reopen they still hold it nowhere" fails.
+  - Under R6.2a and F57 (1), a crash before the wipe is legal: the wipe then runs "at the first open after".
+- **The case also stops discriminating.** A wrong build that holds the main-file wipe until every outside read ends, read 2 included, fails in exactly the same way. The case then no longer separates F202/F58 (7)'s "wiped once every read begun before its wipe has ended" from waiting on later reads.
+- **Fix, journeys only.** When: "…release the write; once it has landed and a look finds the file's own bytes clean, read 2 still running, crash the app; …". The Result's "within 5 s of read 1's end" already bounds that gate.
+
+**Minors and Nits (post-lock, one line each)**
+- [MINOR] **SSE15-m1 — DFJ:48–55.** The rewrite dropped (a)'s "while the write still runs" from the main-file deadline in every row. DFJ:47 still pins F200 and F58 (7)'s wipe beside a held write for the checkpointed fixture, so no build diverges. For the log-frame fixture, though, no row now asserts it. Restore the clause in (a).
+- [MINOR] **SSE15-m2 — CMF:1731 and DFF:649.** Each new bookkeeping line says the fence's whole "Decision … superseded by F215's/F61's principle". Those Decisions also carry the main-file "whether or not a write is held" clause and E35's "until the text is in none of those bytes", which F215 and F61 do not restate.
+  - Scope both lines to "the journal-or-log deadline", as the round-13 lines at CMF:1711 and DFF:634 do.
+  - The new lines also say "at the first open at which that holds", while ADRQ:22 now says "at the first such moment after reopening" (ARCH14-6). Add a dated Clarified line under F215 and F61 so all four sources say the same thing.
+- [MINOR] **SSE15-m3 — PL:46.** The annotation says "clearing needs no room". That holds only when nothing is left to copy back, which (g)'s gate guarantees.
+  - A clearing that must first copy a landed write's pages into the main file can itself hit ENOSPC. An example is (e)'s first write landing under read 2, then the second write failing for want of room.
+  - R6.2a names no retry trigger for that case.
+  - Narrow the annotation to "a clearing with nothing left to copy", and keep the rest of the E15 half open.
+- [MINOR] **SSE15-m4 — PL:183.** The Dogfood item cites DJ3 (h) for "a crash that discards a held write". The rebased (h) crashes after the write lands, so no case now exercises E35 saying "Your changes are saved" at a reopen after a lost held write with a read spanning the crash. Re-point the item to "dogfood only".
+- [MINOR] **SSE15-m5 — DFJ:55.** "After the reopen … E35 is up at each look whose byte read finds the removed text beside the file" gives no grace after the open. A correct build that learns of read 2 from a busy clearing attempt shows E35 a beat after the first look. Anchor the check at "once the file's opening state is up".
+- [MINOR] **SSE15-m6 — J:397–403 "with no label".** The accessibility row reads "the Compare slot's accessible text". A build that renders "From current" as a sibling element outside the slot's accessible element passes. Define the slot's text as everything rendered between the two chips. The test and product-marketing lenses own this.
+- [NIT] **DFJ:51 (d).** "This row or the rows around it" should name (a)–(c) and (e)–(h).
+- [NIT] **DFJ:54 (g).** It has no not-exercised guard for a run whose held write lands anyway, for example when a one-frame commit fits in slack at the end of the log's last block. Today that run would fail a correct build on "E15 renders". Add the case to (d).
+- [NIT] **DFJ:50 and :54.** The (c) and (g) gates have no bound of their own, so a build that never wipes hangs the run instead of failing it. (a)'s deadline catches that build.
+- [NIT] **DFJ:52–53.** (e) and (f) still say "As in (b) until the held write lands", despite the fix file's "removes the 'As (x)' inheritance". The reference covers When steps only, so it does no harm.
+- [NIT] **Fix-file D4.** It says PL:148 "was left unedited", but `17de231` edits it (now PL:151) to "not yet aligned". The edit is correct; only the record is wrong.
+
+## Clarifying questions for the author
+1. In DJ3 (h), must the crash wait until a look finds the file's own bytes clean, as it must in (c) and (g)?
+2. Was dropping "while the write still runs" from (a)'s main-file deadline intended?
+3. Do the new Clarified lines under CM F202 and DF F59 retire only the journal-or-log deadline, or also the main-file "whether or not a write is held" clause and E35's end condition?
+4. Should F215 and F61's "after a crash, at the first open at which that holds" get a Clarified line reading "at the first such moment after reopening", to match ADRQ:22 and DJ3 (h)?
+5. When a clearing must copy pages back and the volume is full, what retries it: room being restored, Try again, or the next open?
+6. After the reopen in (h), must E35 be up at the first look after the opening state shows, or within a stated timeout?
+7. Does (d)'s "the rows around it" mean exactly (a)–(c) and (e)–(h)?
+
+## Claimed properties
+- **"DJ3 is eight self-contained rows."** Holds for every Result. (e) and (f) keep a bounded When-prefix reference to (b), which is harmless.
+- **"(g) times the copy from the failure, volume still full; room restored ≥ 10 s later."** Holds (DFJ:54).
+  - It matches F211 ("ended, landed or failed") and F215.
+  - A build that holds the clearing until room returns now fails.
+  - The probe evidence is unverified by me.
+- **"(h) begins read 2 while the write is held, crashes once the write has landed, ends read 2 ≥ 10 s after the reopen."** Holds as described, but the clean-bytes gate is missing (SSE15-1).
+- **"(d) guards every row and a post-reopen empty (h)."** Holds. The only issue is the loose wording (Nit).
+- **UJ5.3-r's four spectral readings and CX1 "at D50/2°" (J:394).** Hold. The fixture now pins every branch of R5.4's order: CX3 shows the unreadable line ahead of the no-value line, and CX4 shows the unreadable line ahead of the not-compared line.
+- **UJ5.4-d's current reading "M1 value at D50/2°" (J:398).** Holds.
+- **UJ5.4-d/f/i "no label, read through the accessibility row"; the accessibility row's Observable column and Rows cell (J:591).** Hold as text. The observability gap is SSE15-m6.
+- **copy:312's not-compared trigger.** Holds. It is now disjoint from the no-value trigger and matches R5.4's "both having values", F207 and F217.
+- **The ADRQ:22 crash clause.** Holds as a change. It matches R6.2a and DJ3 (h), but its wording now differs from F215/F61 and from the two new Clarified lines (SSE15-m2).
+- **B1: "the fence it points to governs".** Does not hold as scoped: the lines supersede too much (SSE15-m2).
+- **D4 statuses.** Hold: R2.1 aligned (PRD:284), R5.8 aligned (:389), R5.4 needs-discussion (:385), R8.8 needs-discussion (:446), and DF R6.2 ✋ Needs Discussion (DF:216). R6.2a has no Status cell.
+- **E1 word counts: CM 12,397 ≤ 12,400 and DF 8,430 ≤ 8,450.** Hold; I measured both.
+- **"Nothing points at an interim that no longer exists" (this round's question).** Holds.
+  - The diff touched no constant, build dependency or OQ, and every constant carries its F209-ratified value (PRD:181–194).
+  - R8.11 and Build-dependencies row 1 cite the capture PRD's OQ 5 and ROW_CONFIRM_BUDGET under F120. The Reordering row cites the capture PRD's OQ 7 and REORDER_SCOPE. R1.7 cites OQ 10, which rests on DF OQ 20, whose interim "As R6.2a–c and R6.3 state" still resolves because R6.2a is unchanged.
+  - Every new cite resolves: F58 (1), F61, F211, F215, R7.2, E15, E35 and the accessibility row.
+
+## Genuinely sound
+- **Making each DJ3 row self-contained is the right structural fix.** It ends three rounds of "As (x)" inheritance Majors, and each Result can now be read without reconstructing clauses from another row.
+- **(g)'s re-anchor is correct and well-evidenced.** It is keyed to the only moment F215 names. The gate guarantees the clearing has nothing to copy, and the ≥ 10 s room floor separates clearing at the first moment from clearing when room returns.
+- **(h)'s rebase on a landed write is the exercisable variant.** The ≥ 10 s floor after the reopen, plus the 5-s-after-read-2 deadline, is exactly the discriminator SSE14-1 asked for. E35's "Your changes are saved" is also now true in (h).
+- **UJ5.3-r now tests the order, not only the lines.**
+- **The pass is right-sized.** The only PRD body edits are status cells, there is no new owner fence, D55–D71 are untouched, and both word budgets hold.
+- **Not flagged:**
+  - R6.2a lacking a Status column;
+  - R5.4's pronoun, already on PL:115 and pinned by F207 and UJ5.3-p;
+  - "1 s", "5 s" and "10 s" not being named constants, since they are functional timeouts, not budgets.
+
+## Deferred
+- **Test lens:** the exact placement of SSE15-1's gate and the other timeouts (m5), and the no-label observability (m6).
+- **Database lens:** whether a clearing with pages to copy completes on a full APFS volume, with and without local snapshots (m3).
+- **Architecture lens:** the supersession scope of the bookkeeping lines and the crash-clause wording across F215, F61 and ADRQ:22 (m2).
+- **Product-manager and product-marketing lenses:** the E35-at-reopen window after a lost held write (m4).
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (SSE15-1) |
+
+### test
+
+## Verdict
+Trustworthy after fixing one new Major. There are no Blockers, and both of my round-14 Majors are resolved at `17de231`. The round-14 rewrite of DJ3 (h) dropped (c)'s "once a look finds the file's own bytes clean" gate before the crash. As a result, a correct build fails (h) whenever the harness crashes the app before the app's own main-file wipe has run. A probe confirmed this.
+
+## Coverage map (brief)
+- **Scope.** This is a requirements-only round, so there is no suite to run. A "mutation" here means a named wrong build that passes a case, or a correct build that fails one.
+- **What I read.** Repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`.
+  - `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'`.
+  - The seven targets and seven sources. The oq-results, the DF copy and `docs/product/README.md` are unchanged in this diff.
+  - My round-14 review (review log :23368–23480) and the round-14 fix file.
+- **Probes, SQLite 3.53.4.**
+  - `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r15tr/probe_h4.py` runs (h)'s Action cell exactly as written.
+  - `.../r15tr/probe_h5.py` runs the same with a clean-bytes gate added before the crash.
+- **Worktree state.** The worktree now carries an uncommitted edit to DF journeys :48 and :55. I did not create it, and I did not review it as the subject. On a read, it appears to add exactly TR15-1's gate and the fixes for m1 and m2 below. Every finding here is against `17de231`.
+- **Now covered at `17de231`:**
+  - CX1's basis in UJ5.3-r. With UJ5.3-q, both halves of "never across two bases" are covered.
+  - (h) is self-contained. It has read 2 begun before the crash, a 10 s floor after the reopen, and a required post-reopen E35 check.
+  - (g) is timed from the failure, with the volume still full.
+  - "No label" is asserted on Compare's d, f and i cases.
+- **Load-bearing gap:** DJ3 (h) — the only crash-spanning read case, and the only post-crash check of F58 (1) — fails correct builds on a harness-timing race (TR15-1).
+
+## Findings
+Short paths are under the repo root:
+- CM journeys = `docs/product/collection-mode/prd-collection-mode-journeys.md`
+- DF journeys = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+- CM fences = `docs/product/collection-mode/prd-collection-mode-fences.md`
+- DF fences = `docs/product/data-foundation/prd-data-foundation-fences.md`
+
+**(1) My round-14 Majors**
+
+| Finding | Status | Where |
+|---|---|---|
+| TR14-1 (UJ5.3-r lost CX1's basis) | RESOLVED | CM journeys:394 now reads "four earlier spectral readings: CX1, with an M1 value L* 52, C* 22, h° 62 at D50/2°". Build W (checks basis on the earlier reading only) computes ΔE against the D65/10° current value and fails. The mirror build (checks basis on the current reading only) still fails UJ5.3-q (:393), whose current value is now declared "at D50/2°" (:398). CX4 still pins can't-be-read ahead of not-compared. |
+| TR14-2 (DJ3 (h) inherited (c)'s reopen clause and had no floor and no required look) | RESOLVED | DF journeys:55. The row is self-contained, so no clause is inherited. Read 2 now begins "while the write is still held", which is before the crash. "End read 2 no sooner than 10 s after the reopen", with looks at least once a second, gives at least 10 looks after the reopen. The E35 check after the reopen is required, and (d) (:51) reports a run with no copy after the reopen as not exercised. SSE14-1's build (clears only at open, never retries) fails "within 5 s of read 2's end". A build that drops E35 after a crash fails the post-reopen check. Probe_h5 confirms the gated scenario is physical. See TR15-1 for the regression this rewrite introduced. |
+
+**(2) New Major from the round-14 fixes**
+
+**[MAJOR] TR15-1 — DF journeys:55 (h): the crash is not gated on the main file being clean, yet the Result asserts the file's own bytes were clean before the reopen. A correct build fails whenever the harness is faster than the app's detection of read 1's end. (DJ3, R6.2a, R8.8's inherited half.)**
+- **Where it came from.**
+  - At `7328002`, (h) read "As (c), …", so it inherited (c)'s gate: "crash the app once a look after read 1's end finds the file's own bytes clean".
+  - The rewrite moved the crash to "release the write; once it has landed, read 2 still running, crash the app" and did not carry the gate over. (c) (:50) and (g) (:54) both keep it.
+  - (h)'s Result still asserts: "within 5 s of read 1's end, a functional timeout, the file's own bytes hold the removed text nowhere, and before the reopen they still hold it nowhere".
+- **Why a correct build fails.**
+  - R6.2a (DF PRD:228) wipes the main-file text "once that read has ended and the file is open". Its only bound in DJ3 is the 5 s functional timeout.
+  - SQLite gives the app no signal when an outside read ends, so a correct build detects it by polling.
+  - A harness that runs (h)'s Action at machine speed kills the app before its first poll. The pre-reopen byte read then finds the text in the main file.
+  - R6.2a is not breached: the file is not open, and the reopened app would wipe the text.
+- **Probe (probe_h4.py).**
+  - Setup: the text is seeded in the main file and in a committed log frame, and the seeding byte read finds it beside the file. The app wipes by PASSIVE checkpoint on each poll.
+  - Harness: end read 1, begin read 2, land the held write, SIGKILL the app at +0.05 s.
+  - Poll every 1.0 s or 0.5 s: "main file holds text before reopen: True". Both polling rates are well inside the 5 s timeout, and both builds fail (h).
+  - Poll every 0.05 s: the build passes. Pass or fail therefore depends on the build's polling rate against the harness's speed, not on correctness.
+- **With the gate, (h) is buildable (probe_h5.py).**
+  - The main file is clean at the crash (+0.84 s).
+  - The log copy survives the crash and the reopen.
+  - With no busy handler, TRUNCATE returns (1,3,2) while read 2 runs, and the copy stays.
+  - After read 2 ends it returns (0,0,0) and the WAL is 0 bytes.
+- **Mutation.** A correct 1 s-poll build fails (h) as written. No wrong build is caught by the missing gate, so this is a pure false-red on the case that verifies F58 (1) after a crash.
+- **Fix (journeys only, no PRD words).** "(h) … release the write; once it has landed and a look finds the file's own bytes clean, read 2 still running, crash the app; …". This mirrors (c) and (g). The uncommitted worktree edit reads exactly this; re-verify it next round.
+
+**Minors (post-lock, one line each)**
+- [MINOR] m1 — DF journeys:48 (a): the main-file clause lost round 13's "while the write still runs". The fix file does not list this change. :47 still pins F200's wipe beside a held write, so no wrong build escapes DJ3. Restore it for parity; the uncommitted edit does.
+- [MINOR] m2 — DF journeys:55 (h): the post-reopen E35 check has no start point. Suppose a look lists state while the app is still opening, before E35 is raised, and its byte read finds the copy. A correct build then fails. Anchor the check at "once the file's opening state is up"; the uncommitted edit does. DJ4:77's "At the reopen … E35 is up" has the same race.
+- [MINOR] m3 — DF journeys:48–55: "looks run at least once a second" never says when looks start. The Given puts the delete's landing in the fixture, which mostly anchors it. But a look loop started before the delete is fired finds the seeded log frame's text beside the file with E35 not yet up, and fails a correct build under the one-way check. Add "from the delete's landing".
+- [MINOR] m4 — DF journeys:51 (d): "this row or the rows around it" is loose. (d) has no run of its own, and "around it" could take in :47, whose fixture has no text beside the file by design. Write "(a)–(c) and (e)–(h)".
+- [MINOR] m5 — DF journeys:54 (g): "the volume still full" sits in the Result as if it were asserted, but the clearing's truncation frees the log's bytes. A literal free-space check would fail a correct build. Write "before room is restored", and name "the failure" by its observable, E15's render.
+- [MINOR] m6 (my round-14 m6, PARTIAL) — CM journeys:398, :400, :403 and :591: "no label" is read through "the Compare slot's accessible text". A "From current" label drawn as a separate sibling element still passes; the copy's History lines table models the label as its own column. Read the region between the two chips, or the slot's container.
+- [NIT] CM journeys:241 (my round-14 Nit, PARTIAL): UJ2.3-d now cites the accessibility row. That row (:591) lists header names and the Compare slot, not "Columns"' entries or the detail's Identity labels. Add those two reads to its Controlled input.
+- [NIT] DF journeys:55 (h): it cites F58, F61 and F215, but not F212, whose "retried once that read ends" (CM fences:1809) is what makes the clearing after the reopen mandatory.
+  - The corpus now carries two phrasings of the crash clause: "the first open at which that holds" (CM fences:1731, :1839; DF fences:649, :673), and the ADR-0003 input's "first such moment after reopening" (`docs/decisions/README.md:22`).
+  - They agree under D69's chosen text, and (h) together with F212 pins the behaviour, so no builder has to guess.
+- [NIT] DF journeys:52–53: (e) and (f) say "As in (b) until the held write lands", which goes against the fix file's "each row states its own actions". The reference covers actions only and cuts cleanly, so no Result is inherited.
+
+## Biggest risks   (what could ship broken behind a green suite)
+- **TR15-1.** D69's own named case (a read spanning a crash) goes red on correct builds depending on harness speed. That either blocks phase one's R6.2a gate on something that is not a defect, or invites "fixing" the case by weakening its post-crash oracle.
+- **m6.** Compare could ship with a sibling "From current" label on two earlier readings while every "no label" case stays green.
+- **Sub-second busy-wait clearing** (my round-14 m3). F212 forbids it, but it still passes (f)'s 1 s bound. It is correctly routed to ADR-0003 on post-lock (:169).
+
+## Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **UJ5.3-r plus UJ5.3-q** now fail both one-sided basis builds. CX4 still fails a build that checks basis before readability.
+- **The "As (x)" inheritance class is gone.** It produced a Major in each of rounds 12–14. Each of (a)–(h) now carries its own full Result.
+- **(h), with the gate aside, kills the right builds:** open-only clearing, and dropping E35 after a crash. Probe_h5 shows the copy is physically pinned across the crash until read 2 ends.
+- **(g) kills three wrong builds:** holding the clearing while E15 is up, clearing only before the next write, and clearing only when a write lands. It no longer settles post-lock:46 through a test case.
+- **(b)'s 10 s floor after the landing** kills a build that drops E35 once read 1 ends.
+- **The copy's narrowed not-compared trigger (copy:312)** needs no case change. Every not-compared case (UJ5.3-q, UJ5.3-r CX1, UJ5.4-d, UJ5.4-i) has both values in M1.
+- **UJ5.4-d** is stronger: its current value is now "at D50/2°", and it runs in both selection orders.
+- **Untouched cases.** UJ2.1-g, UJ2.3-a/b, UJ3.3-n/o, UJ3.4-m/n, UJ5.3-b/o/p, UJ5.4-c and UJ7.1-u are untouched by this diff and stand as round 14 found them.
+- **Correctly not flagged:**
+  - (d)'s new (h) clause is not a false-green escape. No plausible build can clear the log under read 2's pin (TRUNCATE returns busy (1,3,2)), so a run with no copy is honestly not exercised.
+  - The 5 s and 10 s functional timeouts.
+  - The ADR-0003 input's rewording, which matches D69's chosen text.
+
+## Missing / over-tested
+- **Missing:**
+  - (h)'s clean-bytes gate before the crash (TR15-1).
+  - A start point for the looks (m3) and for the post-reopen E35 check (m2).
+  - A readout of the slot region for "no label" (m6).
+- **Over-tested:** nothing. Each of DJ3's eight sub-runs kills a named wrong build.
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | OBJECT (TR15-1) |
+| DF-R6.2 | OBJECT (TR15-1) |
+
+### interface
+
+## Verdict
+Contract sound. Both of my round-14 Majors (IF14-1, IF14-2) are resolved, and the round-14 fix pass introduced no new Blocker or Major. What remains is five Minors and some Nits, all for post-lock.
+
+## Surface & consumers (brief)
+- **What I read.** Repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`, HEAD `17de231`. I read `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'` in full, plus every target and source file.
+- **Short names** (all under the root):
+  - DFJ = `docs/product/data-foundation/prd-data-foundation-journeys.md`
+  - DFf = `…/prd-data-foundation-fences.md`
+  - DF = `…/prd-data-foundation.md`
+  - CMf = `docs/product/collection-mode/prd-collection-mode-fences.md`
+  - J = `…/prd-collection-mode-journeys.md`
+  - copy = `…/prd-collection-mode-copy.md`
+  - PL = `docs/product/post-lock.md`
+  - ADRQ = `docs/decisions/README.md`
+- **What changed:**
+  - DJ3's journal-or-log line is now eight rows: (a) at DFJ:48, then (b) to (h) at DFJ:49–55.
+  - The copy's R5.4 not-compared trigger (copy:312).
+  - UJ2.3-d, UJ5.3-r and UJ5.4-d/f/i.
+  - The Test-controls map's accessibility row (J:591).
+  - New pointer lines under F202 (CMf:1731) and DF F59 (DFf:649).
+  - The ADR-0003 input's crash clause (ADRQ:22).
+  - Four status cells, and PL items.
+- **Consumers:** build agents for both PRDs, harness authors, the Import/Export/device PRDs and the ADR-0003 author.
+- **Compatibility:** no label, identifier, stored name or copy string was renamed or removed. The label checks the brief names all still resolve character for character:
+  - "Clear sort" at copy:78 and :183, PRD:321 and F204.
+  - The " (imported)" tag and its collision form "⟨base⟩ (⟨suffix⟩)" at copy:268–272, R2.1 (PRD:284) and F206.
+  - The two new Not compared lines (copy:310–311 match F207 word for word).
+  - The device PRD's E22 action ("Show simulated readings", device copy:31; R2.6, PRD:306; UJ2.1-g, J:225).
+
+## Findings
+
+**(1) My round-14 Majors**
+
+| Finding | Status | Where |
+|---|---|---|
+| IF14-1: DJ3 (h) inherited (c)'s reopen clause | RESOLVED | DFJ:55. "As (c)" is gone. (h) crashes after the held write lands with read 2 still running, and ends read 2 no sooner than 10 s after the reopen. It asserts E35 up at every look whose byte read finds the text beside the file (F58 (1)), then the file clean with E35 down within 5 s of read 2's end. A build that fails to re-show E35 at the reopen now fails. |
+| IF14-2: DJ3 (g) anchored to "room being restored" | RESOLVED | DFJ:54. The deadline is now "within 5 s of the failure … the volume still full", with room restored no sooner than 10 s later. That is the moment F211 ("ended, landed or failed") and F215/F61 define. A build that waits for free space now fails. (g) checks the main file is clean before the volume fills, so the only clearing left at the failure is truncation, which the fix log's probes show needs no room. |
+
+**Where my round-14 Minors stand**
+- **IF14-m1:** deferred to PL:115.
+- **IF14-m3:** resolved at J:591. The Observable column adds "each header's accessible name and the Compare slot's text", and the Rows cell adds R2.1 and R5.8.
+- **IF14-m2:** landed, but the new pointers go too far; see IF15-m2.
+- **Nits:** UJ2.3-d's "type Nova and press Return" is resolved (J:241). The DJ3 handles are resolved by making each row self-contained.
+
+**(2) New Blockers or Majors from the round-14 fixes:** none. I checked every changed line against its fence's Decision (F58 (1), F61, CM F211/F212/F215/F216/F217). Where a changed line claims more than its fence (IF15-m2, IF15-m3), R6.2a and R8.8 carry the correct rule and the DJ3 rows test it, so no build differs.
+
+**Minors and Nits (one line each, post-lock)**
+- [MINOR] **IF15-m1, DFJ:51, row (d).** A guard is written as a table row, which causes three problems:
+  - Its scope, "this row or the rows around it", is vague; "(a)–(c) and (e)–(h)" is what is meant.
+  - It states no outcome when its condition is false, so a harness that runs each row as a case gets a row with no oracle.
+  - Each sibling row's Result asserts the seeding find as a pass condition, so a failed seed reads both as FAIL (by that row) and as not exercised (by (d)). This conflict existed before round 14.
+  - Fix: move (d) into a sentence under the table, and state the seeding find as each row's precondition.
+- [MINOR] **IF15-m2, CMf:1731 (F202) and DFf:649 (DF F59).** Each new pointer declares "this fence's Decision" superseded. But F215 replaces only F211's list and keeps F211's E35 clause, and F61 replaces only F60's list. That leaves out:
+  - F202's file's-own-bytes sentence and its "E35 stays up until the text is in none of those bytes";
+  - F59's own E35 sentence.
+
+  The sibling pointers under F200 (CMf:1711), DF F58 (DFf:634) and DF F60 (DFf:664) correctly narrow to the journal-or-log deadline. This is not a Major: R6.2a and R8.8 are authoritative, and F200/F58 (7) and F211 still carry each sentence. Fix: "this fence's journal-or-log deadline is superseded…".
+- [MINOR] **IF15-m3, ADRQ:22 against CMf:1731 and DFf:649.** The crash clause is now worded two ways within this one diff:
+  - The ADR input now reads "after a crash at the first such moment after reopening", which matches R6.2a (DF:228) and DJ3 (h).
+  - The two new pointers repeat F215/F61's "at the first open at which that holds". Read literally ("a later open"), that would fail (h)'s "within 5 s of read 2's end".
+
+  R6.2a governs, so this is Minor. Fix: give the pointers the ADR input's wording.
+- [MINOR] **IF15-m4, PL:46.** The annotation settles only the journal-or-log copy under E15, but its "what stays open" narrows the rest to E34. That silently drops a main-file wipe falling due while E15 is up. No case or probe covers that, because (g) wipes the main file before the volume fills. Also: a missing "." before "The journal-or-log copy", and a bare "F215" in a DF item (should be "Collection Mode F215").
+- [MINOR] **IF15-m5, DFJ:48 (a) and DFJ:55 (h).** "E35 is up at each look" starts at the delete landing in (a) and at "the reopen" in (h), with no settling time. A once-a-second look taken while the file is still opening can find the text beside the file and no E35, which fails a correct build. This was carried over unchanged into the rewrite. Fix: start the check at the file's first render after the reopen, or give a 5-s functional timeout.
+- [NIT] **DFJ:54 (g)** cites "(R7.2)" for declaring the volume full. R7.2's declared states list no full volume; R7.3 ("snapshot/store full") is the row that induces one.
+- [NIT] **DFJ:54 (g):** "within 5 s of the failure" should name what the harness observes: "of E15 rendering".
+- [NIT] **DFJ:52–53 (e) and (f)** still say "As in (b) until the held write lands". This bounded reuse of actions is fine (the defects came from inherited Results), but the fix log's claim that "each row states its own actions" overstates it.
+- [NIT] **DFJ:53 (f)** is the only sibling whose Result omits the seeding clause.
+- [NIT] **PL:49** has a bare "F215" in a DF item.
+- [NIT] **Carried, untouched:**
+  - copy:314 "whichever of these lines" should read "of the R5.4 lines".
+  - DFf:634 "(7) and the Clarified line above state is superseded" is ungrammatical.
+  - PL:113 cites PRD:103, but the term is at PRD:104.
+  - UJ5.4-a/b/g (J:395–396, J:401) lack "with no label". F216 is still pinned by UJ5.4-f.
+
+## Biggest risks   (what existing consumers/scripts/agents break)
+- **Nothing a sibling PRD, script or agent depends on breaks.** Every cross-document cite in the changed lines names its owning document ("the Collection Mode PRD's F211 and F215", "[Collection Mode R8.1f/g](…)"). CM:478 and DF:280 still read F52–F61 in both directions, and R8.8's "its R1.10 and F59–F61" is unchanged.
+- **The residual risk is how a harness author reads the new structure.** Row (d) as a runnable case (IF15-m1), a look taken during the reopen (IF15-m5), and the ADR-0003 author meeting two crash-clause wordings (IF15-m3). Each is resolvable from R6.2a and the rows, which is why none is a Major.
+- **E35's "stays until the log copy is gone" has lost its DF-side fence anchor.** The F59 pointer declares F59's E35 sentence superseded (IF15-m2). It survives only through CM F211 and the DJ3 rows. R6.2a's "the bytes this row names" still covers the log through its closing clause.
+
+## Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **The eight self-contained rows end the inheritance bug that produced a Major in each of rounds 12–14.** Every Result now states its own deadlines. (e) and (f) still reuse (b)'s actions only up to "the held write lands", and that bounded reuse is correct; flagging it would be a false positive.
+- **(g)'s ordering is careful.** The main file is clean before the volume fills, so the failure leaves only truncation. The deadline is anchored to F211's "failed", and holding room back for at least 10 s tells a correct build from one that waits for free space.
+- **(h)'s not-exercised branch in (d) means a run where nothing is left beside the file can never count as a pass.** The 10-s hold after the reopen makes the E35 re-show testable.
+- **copy:312's trigger now mirrors R5.4 and R5.8's "both having values".** The label text is unchanged, so no consumer's string moved.
+- **The ADR-0003 input now matches R6.2a and DJ3 (h) on the crash clause.**
+- **The accessibility row now declares every observable its cases read** (UJ2.3-a/d, UJ5.4-c/d/e/f/h/i).
+
+## Missing / over-engineered
+- **Missing:**
+  - a case or probe for a main-file wipe due while E15 is up (IF15-m4);
+  - (d) as a note rather than a row (IF15-m1);
+  - narrow wording for the F202 and F59 pointers (IF15-m2).
+- **Over-engineered (acceptable):** rows (b)–(h) each repeat the fixture summary and the look definition, about 60 words × 7. Moving the look definition into one sentence under the table would shorten them without bringing inheritance back.
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### architecture
+
+## Verdict
+**Sound: build it once two things are fixed.** The round-14 fixes resolve both of my round-14 Majors. The fix pass also brings in two new Majors, and neither needs a word of PRD body text:
+- **DJ3 (h)** now crashes the app without first waiting for the main-file wipe, so a correct build can fail it (ARCH15-1).
+- **PL:46's new note** says full-volume clearing is settled. The storage cannot deliver that when committed frames not yet copied in would make the main file bigger (ARCH15-2). I proposed that note myself in round 14.
+
+## Architecture in brief
+- **Ownership has not changed.**
+  - Data Foundation owns the file, the erase lifecycle, E35 and the one-writer rule (R1.11).
+  - CM R8.8 hands the journal/log copy to DF R6.2a.
+  - ADR-0003 owns the mechanism. ADRQ:22's crash clause now reads "the first such moment after reopening".
+- **There are two deadlines.**
+  - Text in the main file is wiped at the read-based deadline, alongside a held write (F200).
+  - The log copy goes at the first moment, with the file open, that no read uses the log and no write runs. Clearing holds the next write only for its own copy and truncation (F212, F215, DF F61).
+- **The tradeoff is unchanged.** Writes never wait on reads, the log copy trails behind them, and E35 tells the user.
+  - WAL is forced by the ADR input's non-waiting save, not by these rows.
+  - R5.4 is read-only logic over stored derived values.
+- **What I reviewed.**
+  - The subject is `17de231`, read with `git show` and `git diff 7328002 17de231`.
+  - The working tree now has uncommitted edits beyond the subject (DFJ:48, DFJ:55, DF:228, ADRQ:22, citing F218/F62). I did not review them as the subject. They appear to address ARCH15-1, ARCH15-2, ARCH15-5 and ARCH15-10.
+- **Probes.** Scratch files only, in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/round15/arch15-probe/` (`probe15_growth.py`, `probe15_h.py`, `app.py`).
+  - Setup: SQLite 3.53.4, WAL, `secure_delete=ON`, `wal_autocheckpoint=0`, busy timeout 0, outside reads as read-only connections in another process, the crash as SIGKILL.
+  - The full volume used 8 MB HFS+ and APFS images mounted in the scratchpad, detached afterwards.
+
+| Short | File |
+|---|---|
+| CM / CMJ / CMF | `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/collection-mode/prd-collection-mode.md` / `-journeys.md` / `-fences.md` |
+| DF / DFJ / DFF | `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/product/data-foundation/prd-data-foundation.md` / `-journeys.md` / `-fences.md` |
+| ADRQ / PL | `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/decisions/README.md` / `.../docs/product/post-lock.md` |
+
+## Findings
+
+### (1) My round-14 Majors
+
+| Finding | Status | file:line |
+|---|---|---|
+| ARCH14-1 (MAJOR): (h) took over (c)'s reopen clause | RESOLVED. (h) is self-contained and clears within 5 s of read 2's end. PROBE: a correct build keeps the copy until read 2 ends in both read-2 sub-cases. | DFJ:55 |
+| ARCH14-2 (MAJOR): (g) timed from room being restored | RESOLVED. (g) is timed from the failure, with the volume still full and room restored no sooner than 10 s later. The build that waits for free space now fails. PROBE control: TRUNCATE returns (0,0,0) on a full HFS+ and APFS volume in (g)'s state. | DFJ:54 |
+
+My round-14 Minors and Nits, for the record:
+- **ARCH14-3:** RESOLVED (DFJ:55).
+- **ARCH14-4 and ARCH14-5:** carried (PL:169); see ARCH15-6.
+- **ARCH14-6:** RESOLVED (ADRQ:22).
+- **ARCH14-N1:** RESOLVED (CMF:1731); the leftover is ARCH15-4.
+- **The PL:166 wording Nit:** applied at PL:169, but still incomplete (ARCH15-3).
+- **The R5.4 pronoun:** moved to PL:115.
+- **F61's "(F60)" credit:** moved to PL:52.
+- **ADRQ:22's capture-save attribution:** not recorded anywhere (Nit below).
+
+### (2) New Majors from the round-14 fixes
+
+**[MAJOR] ARCH15-1 — DF DJ3 (h) (DFJ:55): the crash is not gated on the main-file wipe, yet the Result asserts the file is clean before the reopen.**
+- **What the row says.** The When crashes the app "once it has landed, read 2 still running". The Result asserts "within 5 s of read 1's end … the file's own bytes hold the removed text nowhere, and before the reopen they still hold it nowhere".
+- **What went missing.** (c) (DFJ:50) and (g) (DFJ:54) each wait for "a look finds the file's own bytes clean" before the next step. The old (h) got that wait through "As (c)". The self-contained rewrite dropped it. My own ARCH14-1 fix text had the same gap.
+- **Why a correct build fails.**
+  - R6.2a's deadline is "once that read has ended and the file is open", and F57 (1) lets the app wipe "on its own or at the first open after".
+  - Take a correct build that retries its wipe every 2 s, inside the 5 s functional timeout.
+  - A harness that ends read 1, begins read 2, releases the write and crashes within about a second kills the app before the wipe runs. Nothing wipes a closed file.
+  - So the byte read before the reopen finds the text. In one probe run the app's wipe had not run before the SIGKILL, and main page 4 still held the text before the reopen.
+- **Change that exposes it.** Crash 0.5 s after read 1's end against a build that wipes at 2 s. That build meets R6.2a and F57 and fails (h).
+- **Fix (journeys only).** "…once it has landed and a look finds the file's own bytes clean, read 2 still running, crash the app…".
+  - PROBE: with that gate, the log still holds the text across the crash in both sub-cases, read 2 begun before and after the copy-in. TRUNCATE returns (1,3,2) at the landing, before the reopen and after it, and (0,0,0) only once read 2 ends. So (h) is still exercised.
+
+**[MAJOR] ARCH15-2 — PL:46's new note closes a live storage failure case on a premise that is not generally true.**
+- **The note.** "The journal-or-log copy under E15 is settled by F215 / DF F61, since clearing needs no room (DJ3 (g)); what stays open is a wipe or clearing that falls due while E34 is up."
+- **When that premise fails.**
+  - Clearing needs no room only when every committed frame is already in the main file, which is DJ3 (g)'s state.
+  - It fails when committed frames not yet copied in would make the main file bigger. That is the normal state after captures or an import land while another app's read holds back the copy-in.
+  - It is also how a long outside read fills a disk: the WAL keeps growing. A sync client reading the file is the obvious real case.
+- **PROBE, growth case.**
+  - Setup: read 1 held; a committed insert of about 1.2 MB; the delete lands; the volume is filled; read 1 ends. No read and no write remain, so this is F215's moment.
+  - On both HFS+ and APFS, PASSIVE and TRUNCATE fail with "database or disk is full", and the `-wal` keeps the removed text.
+  - Once room is restored, TRUNCATE returns (0,0,0).
+  - Control without the growth: TRUNCATE returns (0,0,0) with the volume still full.
+  - The main file's own bytes did come out clean, because pages are copied in ascending order and in place, even though the checkpoint reported failure.
+- **Consequences.**
+  - R6.2a's log clause, and R8.8 through it, name a moment the storage cannot meet here, and say nothing about what happens instead.
+  - E15 need not be up, because no write of the app's failed. E35 stays up with a false "another app is reading" headline.
+  - That was exactly PL:46's open question, and the record now calls it settled. I proposed this note in ARCH14-2, generalising from (g)'s state.
+- **Where a builder has to guess.** The ADR-0003 author reads the case as closed, and the implementation hits SQLITE_FULL at F215's moment with no outcome and no state to show.
+- **Change that exposes it.** Run DJ3 (g)'s fixture with committed growth pending before the volume fills: no build can meet "within 5 s of the failure".
+- **Fix (no PRD words).** Re-scope PL:46 so the growth case stays open next to the E34 half:
+  - "settled by F215/F61 where every committed frame is already in the file, the clearing then only a truncation (DJ3 (g)). Where frames not yet copied in would make the file bigger, a full volume stops the clearing until room returns, with or without E15 up (round-15 architecture probe). Settle when it then runs and which state shows."
+  - Alternatively, take an owner line on R6.2a. The uncommitted working-tree text "within 5 s of room returning" reads like that; it is not reviewed here.
+  - Then add a DJ3 (g) twin with growth pending.
+
+### Minors and Nits (post-lock, one line each)
+- **[MINOR] ARCH15-3 — PL:169's definition of "uses the log".**
+  - The definition reads "a read uses the journal or log unless it began after the file had taken in every committed frame". Read with "every committed frame" fixed at the read's start, it lets a read escape that SQLite still counts.
+  - PROBE `r2_after_copy`: read 2 began after the copy-in returned (0,2,2), yet it held the text in the log once the held write committed. Backfilling then needs an exclusive READ_LOCK(0).
+  - Fix: add "and no write has committed since it began".
+- **[MINOR] ARCH15-4 — the new Clarified lines at CMF:1731 and DFF:649 say "this fence's Decision" is superseded.**
+  - F215 and F61 replace only the journal-or-log deadline (F215's Scope bullet).
+  - The "whether or not a write is held" main-file half stands through F200 and DF F58 (7).
+  - Fix: read "this fence's journal-or-log deadline".
+- **[MINOR] ARCH15-5 — (a) (DFJ:48) dropped "while the write still runs" from its main-file clause, which the old (a) had.** DFJ:47 still pins F200, so no wrong build gets through the set.
+- **[MINOR] ARCH15-6 — ARCH14-4 is now load-bearing.**
+  - With the write landed, every correct run of (h) keeps the text beside the file across the reopen, so E35 at the reopen is tested in every run.
+  - A rule of "blocked truncation means E35" passes (h) but breaks F211's "only when another app's read defers a wipe". That leaves ADR-0003 with an in-file marker for a pending wipe, which is a schema decision.
+  - Decide it before the first build PR that runs (h) (PL:151).
+- **[MINOR] ARCH15-7 — (h) (DFJ:55) never asserts that the landed held write is in the file after the reopen (R8.8).** A build that throws away the `-wal` at the reopen reports "not exercised" through (d) (DFJ:51) instead of failing. Add that assert.
+- **[MINOR] ARCH15-8 — (g) now depends on truncation working on a full volume.**
+  - R7.2's declared-full test hook has to behave like a real full volume: writes that allocate fail, while truncation and in-place overwrites succeed.
+  - A shim that fails every write would fail a correct build. Record this in the engineering plan's test matrix.
+- **[MINOR] ARCH15-9 — (b), (e), (f) and (h) (DFJ:49, 52, 53, 55) can begin read 2 before the main-file wipe.**
+  - F57's Corrected line (DFF:616) permits such a read to defer the wipe, yet these rows require the file clean within 5 s of read 1's end.
+  - SQLite never defers there, so no real build diverges.
+  - Fix: gate read 2 on the clean look. This predates round 14.
+- **[MINOR] ARCH15-10 — (h)'s "after the reopen" E35 check has no gate on the opening state (DFJ:55).**
+  - Every run now reaches it, so a look taken while the file is still opening finds the text and no E35.
+  - DJ4:77 uses the same "at the reopen" convention.
+  - Fix: "once the file's opening state is up".
+- **[NIT]** CMF:1731 and DFF:649 copy "after a crash at the first open at which that holds", while ADRQ:22 now reads "the first such moment after reopening". "F215 governs" makes this harmless.
+- **[NIT]** PL:183's fourth dogfood window cites DJ3 (h) for "a crash that discards a held write". (h) now lands the write first, so no DJ3 run shows that window.
+- **[NIT]** (d)'s "this row or the rows around it" (DFJ:51) should name (a)–(h).
+- **[NIT]** (e) and (f) still begin "As in (b) until the held write lands" (DFJ:52–53). Only actions carry over and the Results are self-contained, so this is harmless, but it contradicts the fix file's claim that nothing is inherited.
+- **[NIT] Carried.** ADRQ:22's "so capture saves never wait on another app's read" follows from the non-waiting save and F212, not from the short reads. It is not recorded in post-lock.
+
+## Biggest risks
+- **DJ3 gates R6.2a, and the first build phase builds against R6.2a (PL:151).** As committed, (h) can fail a correct build depending on the harness's timing (ARCH15-1).
+- **The full-volume case is realistic and now recorded as settled (ARCH15-2).** A long outside read makes the WAL grow until the disk is full. The rows state no outcome for it, and no state is true to show.
+- **How a pending wipe survives a crash is a schema-level one-way door in ADR-0003 (ARCH15-6).** Durability ordering, with F_FULLFSYNC before truncation, is still at PL:169.
+
+## Genuinely sound
+- **Writing DJ3 as eight self-contained rows removes the "As (x)" inheritance** that produced a Major in each of rounds 12–14. (b), (c), (e), (f) and (g) each check out against F215, F61 and WAL semantics.
+- **(g) is right.** In its state the clearing is only a truncation, and truncation needs no room (probe control).
+- **(h), rebased on a landed write, is exercised in every correct run, including read 2 begun after the copy-in.** A dogmatic review might ask for read 2 to be pinned before the copy-in. That is unnecessary: once a write commits, a reader on READ_LOCK(0) blocks backfill, so the log keeps the text either way.
+- **ADRQ:22's crash clause now matches R6.2a's "the file open" and DJ3 (h).**
+- **The rows stay storage-neutral.**
+  - A rollback journal in DELETE or TRUNCATE mode meets the log clause trivially, and PERSIST is ADR-0003's to exclude.
+  - In rollback mode DJ3 cannot even be set up, because the delete waits on read 1's SHARED lock. That is consistent with WAL being forced by the non-waiting save, not by these rows.
+- **F200's exact main-file deadline survives a full volume.** The probe shows the page copy happens in place.
+- **R5.4's copy trigger now matches the row and F207/F217, and UJ5.3-r's "spectral" and D50/2° fix is right.** Nothing there touches storage.
+- **The rows stay at the right altitude.** They state behaviour, not checkpoint modes or reader slots.
+
+## Missing / over-engineered
+- **Missing:**
+  - (h)'s wait for the main file to be clean (ARCH15-1);
+  - PL:46 re-scoped, then an owner outcome and a DJ3 (g) twin with growth pending (ARCH15-2);
+  - (h)'s durability assert (ARCH15-7);
+  - ADR-0003's decision on how a pending wipe persists (ARCH15-6).
+- **Over-engineered:** nothing new. Eight rows sharing one fixture is a presentation choice.
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (ARCH15-1, ARCH15-2) |
+
+### privacy
+
+## Verdict
+**Privacy-sound to ship. This is the round-15 delta, `7328002..17de231`.**
+- PRIV14-1, the one High from round 14, is resolved exactly as proposed.
+- The round-14 fixes bring in no new Critical or High.
+- Three Lows go to post-lock. One of them corrects my own round-14 wording at PL:46, which a new probe shows overstated what clearing the log can do on a full volume.
+
+## Data-flow & PII map (brief)
+- **Data subjects:** the Cataloger, and anyone named in notes, swatch names, collection names or imported free text. None of it is special-category. The delta adds no personal field, no store and no egress.
+- **Removed or replaced text survives in:**
+  - **The main file:** until reads begun before the wipe have ended (R8.8, R6.2a).
+  - **The log beside the file:** until the first moment, with the file open, that no read uses it and no write runs. After a crash, that is the first such moment after reopening (F215, DF F61, ADR input).
+  - **Outside the promise:** R5.8's pre-upgrade copies, Save a copy, exports and backups.
+- **Disclosure:** E35 shows for another app's read and stays up until the bytes are clean. The app's own reads hold the text silently (F211), so the help docs are the only disclosure there.
+- **Readers of a log copy:** anything that reads raw bytes, such as a sync client, a snapshot or a copy of the folder.
+
+## Findings
+Root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/docs/`, HEAD `17de231`.
+- Short names: DFJ = `product/data-foundation/prd-data-foundation-journeys.md`, CMF = `product/collection-mode/prd-collection-mode-fences.md`, DFF = `product/data-foundation/prd-data-foundation-fences.md`, PL = `product/post-lock.md`.
+- I read all 7 targets and 7 sources, and ran `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'`.
+
+**(1) My round-14 findings**
+
+| Finding | Status | file:line |
+|---|---|---|
+| PRIV14-1 (High): (g) timed the deadline from room being restored | RESOLVED | DFJ:54 (see below) |
+| PRIV14-2 (Low): Finder-move help line | RESOLVED (carried) | PL:197, "…and move the files beside it with it" |
+| PRIV14-3 (Info): another app's write also holds the log copy | RESOLVED (carried) | PL:49, extends ARCH13-6 |
+
+PRIV14-1 in detail, at DFJ:54:
+- **Action:** "…so that it fails and rolls back; restore room no sooner than 10 s after the failure".
+- **Result:** "within 5 s of the failure, a functional timeout, the volume still full, no file the app keeps beside the file holds the removed text, and E35 is not up (F61, … F211 and F215)".
+- **Against the fences:** this matches F211's "ended, landed or failed" (CMF:1798), F215 (CMF:1839) and F61 (DFF:673).
+- **The round-14 mutation now fails.** A build that holds its clearing until the volume has room misses the 5 s deadline, because room comes back at least 10 s later.
+- **PL:46** is annotated as I proposed. See PRIV15-1: that wording was too broad.
+
+**(2) New Critical or High from the round-14 fixes:** none.
+- (h) at DFJ:55 now rests on a write that lands before the crash, so it can be exercised. It requires E35 at the reopen (F58 (1)), and requires the copy to go within 5 s of read 2's end, so a build that waits for yet another open fails.
+- (d)'s new (h) escape only fires when no text is left beside the file, so it cannot hide a failure to erase.
+- I checked every changed DJ3 row against F215 and F61, and every new post-lock item against the fence it cites.
+
+**Lows and Info for post-lock**
+
+[LOW] **PRIV15-1 — PL:46, "since clearing needs no room": my own round-14 wording, and it overgeneralizes from (g).**
+- **Why (g) is a special case.** In (g) the copy back into the main file has already finished before the volume fills, so only the truncation is left, and truncation needs no room.
+- **The probe.** SQLite 3.53.4, 8 MB HFS+ and APFS images, run inline with no script file; the images were deleted afterwards. The sequence:
+  - Read 1 begins.
+  - A committed 150 KB insert grows the database beyond the main file's end.
+  - The delete lands, then the volume is filled.
+  - Read 1 ends, with no write running.
+- **Result, identical on both images:**
+  - `wal_checkpoint(PASSIVE)` and `(TRUNCATE)` both return "database or disk is full".
+  - The marker is in the main file nowhere: the main-file wipe landed, because that page lies inside the file's end.
+  - The marker is still in the log.
+  - After freeing room, TRUNCATE returns (0,0,0) and the log is clean.
+- **Harm.** Removed text stays in the log for as long as the disk is full.
+  - E35 does stay up, so the user is told the text remains. But its "another app is reading" is stale by then.
+  - Its promise "then wipes it on its own" has no stated trigger once room returns.
+  - Low likelihood; the data is not sensitive.
+- **Fix.**
+  - Keep PL:46's E15 half open for a clearing whose copy back must still grow the file.
+  - Add to the ADR-0003 notes at PL:169 that the clearing is retried when room returns.
+  - (GDPR Art. 5(1)(e), storage limitation.)
+
+[LOW] **PRIV15-2 — CMF:1731 and DFF:649 (new pointer lines).**
+- **The problem.** Both say the whole of F202's and F59's Decision is superseded. But F215 and F61 replace only the deadline for the log copy (F215 Scope: "This replaces F211's list").
+- **What they sweep in.** F202's and F59's main-file clause ("whether or not a write is held") and E35's "until the text is in none of those bytes" are not superseded. R8.8 cites F59 for that guarantee.
+- **Why only Low.** The harm is latent: the rows still carry both guarantees, and DFJ:47 tests the main-file half.
+- **Fix.** Scope both lines to "this fence's journal-or-log deadline", as the round-13 lines at CMF:1711, DFF:634 and DFF:664 are.
+
+[LOW] **PRIV15-3 — PL:169, the ARCH14-4 note ("how a pending wipe survives a close or crash").**
+- **The problem.** The note does not carry the settled constraint that nothing about E35's state is kept outside the file (DF F58 (1), R1.1).
+- **Why it matters.**
+  - The storage check for that constraint (PL:44) is still open, and no DJ3 crash row reads the app's own storage.
+  - A pending-wipe flag kept in Preferences or Application Support would record, outside the user's file, that a removal happened and where the file is.
+- **Fix.** Add "kept in the file itself (DF F58 (1))" to the note.
+
+[INFO] **PL:183 (PM14-4 dogfood item).** It cites DJ3 (h), but (h) now lands the write before the crash, so no case produces "Your changes are saved" after a lost write. That is a claim about saving, not erasing, so it is out of my lens. Fix: re-point the cite.
+
+[INFO] **README:22 against F215/F61 wording.** The ADR input now reads "after a crash at the first such moment after reopening". F215, F61 and the two new pointer lines keep "at the first open at which that holds". The meaning is the same under F215's first sentence, and DFJ:55 pins the strict reading. Fix: align the wording at the next pass.
+
+[INFO] **PL:46** is missing a full stop before "The journal-or-log copy…".
+
+[INFO] **Not a gap: the one-way E35 check.** (c), (g) and (h) no longer carry (a)'s one-way E35 check for the window before the failure or crash. (a) and (b) assert that same state, so no wrong build gets through.
+
+## Biggest privacy risks
+1. **The app's own export or Save a copy holds the log copy silently (F211).** The only disclosure is the help-docs line at PL:198, which still needs the owner. PL:50's sub-run for it is not built yet.
+2. **PRIV15-1.** A full volume can stall clearing the log with no stated retry, while E35's reason is stale.
+3. **An orphaned log after a Finder move (PL:197, carried),** and the window between a crash and the reopen, when the log holds text and no notice shows.
+
+## Genuinely privacy-respecting
+- **(g) is anchored at the failure,** with a 10 s floor on room returning, so a build that waits for room now fails.
+- **(h) requires E35 at the reopen** and a strict clearing deadline after it.
+- **Each look reads the state before the bytes.** This keeps the one-way E35 check biased toward telling the user.
+- **Rows and ADR input are honest about where removed text can survive.** R8.8, R6.2a and E35 are unchanged. The ADR input's crash clause takes the strict reading.
+- **The main-file wipe succeeded on a full volume in my probe,** on both HFS+ and APFS images. I did not verify this with an APFS local snapshot; there the snapshot keeps the text regardless, and PL:195 discloses that.
+- **No personal data in the Compare delta.** UJ5.3-r, UJ5.4-d, -f and -i, the accessibility row and the R5.4 copy trigger carry none.
+- **"Your file won't keep what was there" (E8) is not an overstatement.** The delay is disclosed through E35 and the help docs.
+
+## Missing controls / over-collection
+- **Missing:**
+  - An outcome for a clearing that fails for want of room: a retry when room returns, and what E35 says meanwhile (PRIV15-1).
+  - Scoping of the two pointer lines (PRIV15-2).
+  - The F58 (1) constraint in the ARCH14-4 note (PRIV15-3).
+- **No over-collection.**
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ABSTAIN |
+| R8.8 | ALIGN |
+| DF-R6.2 | ALIGN |
+
+### plan
+
+## Verdict
+Execute after fixing Blockers. There are no Blockers, and both of my round-14 Majors are resolved. The rewrite into eight self-contained DJ3 rows introduced one new Major: the look cadence has no start point, so (a) can fail a correct build. It is a one-clause fix on DF R6.2a's erase check, so land it before the re-lock.
+
+## Findings
+
+All paths are under /Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode/:
+- PRD = docs/product/collection-mode/prd-collection-mode.md
+- J = …/prd-collection-mode-journeys.md
+- FN = …/prd-collection-mode-fences.md
+- DF = docs/product/data-foundation/prd-data-foundation.md
+- DFJ = …/prd-data-foundation-journeys.md
+- DFF = …/prd-data-foundation-fences.md
+- PL = docs/product/post-lock.md
+- IDX = docs/product/README.md
+- ADR = docs/decisions/README.md
+
+I read everything at 17de231 (HEAD), together with `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'`. I also ran two probes of my own on SQLite 3.53.4, in the scratchpad at r15probe/.
+
+**(1) My round-14 Majors**
+
+| Finding | Status | file:line |
+|---|---|---|
+| R14-M1 | RESOLVED | DFJ:54 (g) |
+| R14-M2 | RESOLVED | DFJ:55 (h) |
+
+- **R14-M1 is resolved.**
+  - (g) now times the log copy "within 5 s of the failure … the volume still full", and room comes back no sooner than 10 s later.
+  - That matches F61's "first moment … no read … and no write runs" (DFF:673) and F211's "ended, landed or failed" (FN:1798).
+  - PL:46 now records the E15 half as settled, so the case no longer settles an open item by accident.
+  - A build that pauses clearing while E15 is up now fails (g).
+- **R14-M2 is resolved, by a sturdier fix than the one I suggested.**
+  - (h) is self-contained and inherits no post-reopen clause. Read 2 ends no sooner than 10 s after the reopen, and the crash now comes after the write has landed.
+  - My probe (probe.py) backs the rebase. A read 2 begun after a full copy-back (PASSIVE returned (0,2,2)) still holds the log once the held write lands: TRUNCATE returned (1,3,2) with read 2 open, and (0,0,0) after it ended.
+  - The old crash-while-held shape did not behave that way (probe2.py): with the same read 2 open, TRUNCATE returned (0,0,0) once the held write was discarded.
+  - So the old (h) depended on whether read 2 happened to take read-lock 0. The rebase removes that dependence.
+
+**Round-14 Minors and Nits:**
+- Resolved: R14-m1 (J:398), R14-m2 (J:400), the J:394 Nit (UJ5.3-r declares "spectral" and "at D50/2°") and the J:591 Nit (the Read column now covers header names and the Compare slot).
+- R14-m4 stays carried at PL:169, but the round-14 edit there changed its meaning (R15-m2 below).
+- R14-m3 is UNRESOLVED at IDX:18 (R15-m1 below). This is the third round running.
+
+**(2) New Majors introduced by the round-14 fixes**
+
+[MAJOR] R15-M1 — DJ3 (a), and on the plain reading (b) and (f): DFJ:48, DFJ:49, DFJ:53 — the new look cadence has no start point, so looks taken before the delete lands fail a correct build
+- **The change.** Round 13's (a) placed its first look "once the delete lands" (the diff's removed line). The rewrite replaced the fixed looks with "A look lists the state up and then takes a byte read…; looks run at least once a second" and says nowhere when looks begin.
+- **What goes wrong.** Every row's When opens with "Let the delete land while read 1 runs", so looks that run with the When can come before the delete lands. (a)'s Result even qualifies its seeding read as "taken after the delete lands", which implies earlier looks exist.
+  - Before the delete lands, the seeded committed log frame already holds the text beside the file (the fixture seeds it "before the delete"), and E35 is not up because nothing is pending.
+  - (a)'s "while read 1 runs, E35 is up at each look" and its unconditional "at each look, a byte read finding the removed text beside the file finds E35 up" both fail on those looks.
+  - (b)'s and (f)'s "until read 2 ends, at each look…" fail the same way, unless "removed text" is read as text already removed.
+- **Mutation.** A harness that starts its once-a-second poller when the When begins marks a correct build red on the first look, before any wipe is pending. The fix for that red is a guess about when looks start.
+- **Fix.** In each row's look sentence, write "looks run at least once a second from once the delete shows done". Starting at "shows done" also absorbs E35's render lag (R15-m6). In (a)'s Result, write "while read 1 runs after the delete lands, E35 is up at each look".
+
+**Minors and Nits (one line each, for post-lock)**
+- [MINOR] R15-m1 — IDX:18. README row 6 still says "ready to build once ADR-0003, ADR-0005 and ADR-0006 are accepted". It does not say that R5.4 and R8.8, or DF R6.2/R6.2a, are not aligned, and R8.8 sits in the first phase's Available contract (PRD:205). PL:151 names only the DF rows. Add a clause to row 6 or a post-lock item (R13-m7 and R14-m3, never fixed or carried).
+- [MINOR] R15-m2 — PL:169. Round 14 changed "everything that journal or log now holds" to "every committed frame" and dropped "now". Under the new wording, a read 2 begun after a full copy-back does not "use" the log, yet my probe shows it blocks the clearing once a later write lands. F61 would then demand a clearing SQLite cannot run, against DJ3 (b) and (h). Write "every frame committed to it so far".
+- [MINOR] R15-m3 — FN:1731 and DFF:649. The new pointer lines supersede "this fence's Decision" whole, which sweeps in the main-file deadline and E35 lifetime of F202 and F59, and F215 does not replace those. Scope both lines to "the journal-or-log clause", as DFF:634 and DFF:664 already are.
+- [MINOR] R15-m4 — the crash clause is worded two ways.
+  - F215, F61 and the two new pointer lines say "after a crash, at the first open at which that holds". Read literally, that means a later open.
+  - The ADR input (ADR:22, ARCH14-6) and DJ3 (h) mean the first such moment after reopening.
+  - Add a gloss so an ADR author does not have to choose.
+- [MINOR] R15-m5 — DFJ:49, 52, 53 and 55. (b), (e), (f) and (h) begin read 2 "while the write is still held" without waiting for a clean look, so read 2 can start before the wipe runs. R6.2a then lets the main-file deadline move to read 2's end, which makes the "within 5 s of read 1's end" clause stricter than the row. Gate read 2 on "once a look finds the file's own bytes clean", as (c) and (g) already do.
+- [MINOR] R15-m6 — DFJ:48 and DFJ:55. There is no functional timeout for E35 to render after the delete lands, or after (h)'s reopen (F58 (1)), so a look inside that lag fails. DJ4 has the same gap (DFJ:74–75), so it predates this round.
+- [MINOR] R15-m7 — PL:46. The annotation narrows the open item to E34, but no case covers a main-file wipe falling due while E15 is up; (g) fills the volume only after the main file is clean. Say so, or keep the E15 main-file half open.
+- [MINOR] R15-m8 — DFJ:51. "(d) Any run of this row or the rows around it" should name (a)–(c) and (e)–(h).
+- [NIT] DFJ:54. (g) cites R7.2 for "declare the volume full", but R7.2's list does not name a full volume. Cite the CM Test-controls map's "the file" row ("a full or vanished volume"; J:588).
+- [NIT] DFJ:50 and DFJ:54. The trigger "once a look finds the file's own bytes clean" in (c) and (g) has no bound. If the bytes never clean, the run gets no verdict; (a) catches that build anyway.
+- [NIT] DFJ:53. (f)'s When says "As in (b) until the held write lands", but its Result leaves out (b)'s seeding and main-file clauses. State them or say they are not asserted.
+- [NIT] J:241. UJ2.3-d reads "Columns"' entries and the detail's Identity labels through the accessibility row, but that row's inputs (J:591) name only header accessible names and the Compare slot.
+
+## Biggest risks (if executed as-is)
+1. **R15-M1: (a) goes red on a correct build.** The first build phase against R6.2a fails for a harness that starts looking when the When begins, and a coding agent would then have to guess when looks start.
+2. **R15-m2: the ADR-0003 "use" definition would contradict DJ3.** If ADR-0003 adopts the edited PL:169 wording literally, it demands a clearing that SQLite cannot perform, and DJ3 (b) and (h) contradict the ADR.
+3. **R15-m1: an index-only reader would start R8.8.** The Status vocabulary still keeps a needs-discussion row out of in-progress, so the damage is limited.
+
+## Plan strengths
+- **DJ3 is now eight self-contained rows,** so the "As (x)" inheritance that produced a Major in each of rounds 12–14 is gone. Each row states its own actions and full Result, and (d) guards the seeding and (h)'s reopen.
+- **(g) matches F61 and F211 exactly,** and three lenses' full-volume probes back it.
+- **(h) is now deterministic,** as the probes above show. The 10 s floors in (b), (e), (f) and (h) keep builds apart.
+- **Checked against their fences, all consistent:**
+  - the copy's R5.4 not-compared trigger (PRD copy:312) against F207, F213's Clarified line and F217;
+  - UJ5.3-r against F217;
+  - UJ5.4-d, -f and -i against F213 and F216;
+  - UJ2.3-d against F205.
+- **The status bookkeeping is right.**
+  - R5.4 and R8.8 are needs-discussion (PRD:385, PRD:446) and DF R6.2 is Needs Discussion (DF:216).
+  - PL:151 now reads "not yet aligned".
+  - Only status cells changed in either PRD body, so neither word budget can have grown.
+- **The gates still agree.** The Build dependencies (PRD:201–220), the Interim stated list (PRD:229–232), the constants table (all "ratified (F209)"), the Open questions table (OQ 1–7, 11 and 12 closed) and the results file's sections were not touched, and they still agree with each other. Each new post-lock item names its trigger and finding.
+
+## Spec coverage gaps (requirements with no task)
+- **None at the fence-to-row level.**
+  - F61's three sub-runs are (e) (DFJ:52), (f) (DFJ:53) and (g) (DFJ:54).
+  - F60's read 2 during the held write is (b) (DFJ:49), and its crash in that window is (h) (DFJ:55), with read 2 spanning the crash as F215's authority names.
+  - F216 is carried by UJ5.4-c/-d/-e/-f/-h/-i, and F217 by R5.4 and UJ5.3-r.
+- **The crash with the write still held and read 2 running is no longer a case.** Under SQLite's read-lock-0 path it cannot be made deterministic (probe2.py), so leaving it out is right.
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (R15-M1) |
+
+- **R5.4 is ALIGN.** The row text matches F207, F213 and F217. The test lens's round-14 objection (TR14-1, UJ5.3-r's fixture) is fixed at J:394, and the pronoun Minor is carried at PL:115.
+- **R8.8 is ALIGN.** It hands the log copy to DF R6.2a, and DJ3's defects belong to R6.2a, as I held in rounds 13 and 14.
+- **DF-R6.2 (with R6.2a) is OBJECT** only because of DJ3's unanchored look cadence (R15-M1). R6.2a's text matches F61.
+
+### database
+
+## Verdict
+Needs rework in DJ3 (g) only; there are no Blockers. My round-14 Major, DB14-MAJOR-1, is resolved, and the rewritten (h) behaves correctly in every configuration I probed. The problem is (g), which now fails correct builds in two ways on a real full volume. One is new this round: timing the log clearing from the failure is not reliably deliverable on APFS. The other was carried into the rewritten row: the held write does not always fail.
+
+## Schema & engine (brief)
+- **Repo and scope.** Repo root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-collection-mode`, at `17de231`. Scope: `git diff 7328002 17de231 -- docs ':!docs/agent-reviews'`. File:line references below are relative to that root.
+- **Engine.** There is no DDL yet; ADR-0003 owns the schema. The rows assume:
+  - WAL mode with secure_delete=ON;
+  - the main-file wipe done by a PASSIVE checkpoint;
+  - the log clearing done by a TRUNCATE checkpoint with no busy handler.
+
+  foreign_keys, busy_timeout and synchronous/fullfsync stay ADR-0003's.
+- **The ADR input changed** (`docs/decisions/README.md:22`). Its crash clause now reads "after a crash at the first such moment after reopening".
+- **How I checked it.** I re-ran every claim below on SQLite 3.53.4, with wal_autocheckpoint=0:
+  - the app, the outside reads and the clearing each ran as a separate OS process;
+  - "crash" means a SIGKILL of the app;
+  - "full volume" means an 8 MB APFS or HFS+ disk image filled until writes fail.
+
+  The scripts are in `/private/tmp/claude-501/-Users-vinnypasceri-Projects-spectro-capture/d4b2a2e5-4696-48c6-9516-d4cbad888739/scratchpad/r15db/`: `probe_h15.py`, `probe_g15.py`, `probe_apfs.py`, `probe_apfs_keep.py` and `probe_room.py`, with the shared helper `actor.py`.
+
+## Findings
+
+**(1) My round-14 Majors**
+
+| Finding | Result | Where |
+|---|---|---|
+| DB14-MAJOR-1 (DJ3 (h) inherited (c)'s reopen clause) | RESOLVED | DF journeys:55 (the (h) row); DF journeys:51 (the (d) guard) |
+
+- **Why it is resolved.** (h) is now a self-contained row and inherits nothing:
+  - it crashes after the held write has landed;
+  - it ends read 2 no sooner than 10 s after the reopen;
+  - it times the deadline from read 2's end;
+  - it checks E35 one-way after the reopen.
+- **Probe (`probe_h15.py`).** I ran all eight configurations: hold before or after SQLite's write lock, read 2 begun before or after the main-file copy, and an eager or a deferred clearing.
+  - In every configuration, the main file was clean within read 1's end and still clean before the reopen.
+  - Wherever the log still held the text at the reopen, TRUNCATE was busy while read 2 ran and returned (0,0,0), clean, once read 2 ended. A correct build passes.
+  - The one configuration whose log was already clean before the crash (hold before the lock, read 2 at read-mark 0, eager clearing) is caught by (d)'s new guard as "not exercised".
+- **My round-14 Minors.**
+  - (h)'s not-exercised guard: done (:51).
+  - The (f) no-busy-handler note: done (post-lock.md:169).
+  - UJ5.4-d's M1 value: done (CM journeys:398).
+  - DF R2.3's list of bytes: done (post-lock.md:51).
+  - The (e) and (a) Nits no longer apply, since the rows are self-contained.
+  - The UJ2.3-d scope Nit was not carried (see Nits).
+  - Anchoring (g) at the failure, which I proposed in round 14, turns out to be premature; see DB15-MAJOR-1.
+
+**(2) New Majors**
+
+**[MAJOR] DB15-MAJOR-1: DJ3 (g)'s deadline, timed from the failure with the volume still full, fails a correct build on APFS about one run in six (DF journeys:54; post-lock.md:46; round-14 fixes file:16).**
+- **Where.** (g)'s result: "within 5 s of the failure, a functional timeout, the volume still full, no file the app keeps beside the file holds the removed text, and E35 is not up".
+- **The false premise.** post-lock.md:46 now calls the log copy under E15 "settled by F215 / DF F61, since clearing needs no room". The fixes file (:16) says TRUNCATE returned (0,0,0) with the volume still full "on HFS+ and APFS images". My round-14 probe said the same, but it used too few runs.
+- **Reproduced on APFS (`probe_g15.py`, `probe_apfs_keep.py`).**
+  - In 8 of 46 runs with the hold after SQLite's write lock, the held write failed with SQLITE_FULL, as it should.
+  - The clearing then failed with SQLITE_IOERR_TRUNCATE on every one of its once-a-second retries for 5 s, and the WAL still held the marker.
+  - Once room was restored, TRUNCATE returned (0,0,0).
+  - HFS+ never failed (8 runs), and a raw `ftruncate` passed in one try.
+  - This matches APFS's known behaviour on a 100%-full volume: freeing blocks needs copy-on-write metadata space.
+- **A second counter-example to "needs no room" (`probe_room.py`).** It uses a fixture other than (g)'s:
+  - a read begun before a delete holds the log;
+  - committed writes grow the database past the main file;
+  - the volume fills, then the read ends.
+
+  PASSIVE and TRUNCATE both return SQLITE_FULL. The main file's wipe still lands, because pages are written in ascending order and the in-range pages come first, but the log keeps the removed text until room returns.
+- **Integrity is unaffected.** integrity_check returned ok and no committed data was lost. Only the deadline is at stake.
+- **Change that exposes it.** Run (g) on a real full APFS image, hold after the lock, about 20 times. Some runs fail although the build retries the clearing correctly.
+- **Fix, without choosing a mechanism.** Change (g)'s result to: "E15 renders for the failed write; from the failure until room is restored, the volume still full, at each look a byte read finding the removed text beside the file finds E35 up at that look; within 5 s, a functional timeout, of room being restored, no file the app keeps beside the file holds it, and E35 is not up".
+  - This still accepts a build that clears at the failure.
+  - Reopen post-lock.md:46's E15 half as an owner item. F215/F61's "first moment" cannot be met through SQLite's truncation on a full APFS volume, or when frames not yet copied into the main file (not backfilled) must grow it. What should happen then: E35 stays up, and the log clears once room returns?
+  - If the owner instead keeps the deadline at the failure, the case must declare "full" as fault injection on the app's writes only. That is a guess a builder cannot make today.
+
+**[MAJOR] DB15-MAJOR-2: (g)'s "release the write, so that it fails and rolls back" is not guaranteed. A correct build with a small held write lands it on the full volume, so "E15 renders for the failed write" fails (DF journeys:54).**
+- **Provenance.** This clause was carried into the rewritten row from round 13's (g), not introduced by it. My round-14 probe missed this path because it cleared eagerly.
+- **The configuration.**
+  - The hold sits before SQLite's write lock, a placement round 13 and 14 accepted.
+  - The build defers its clearing until "no write runs", which F215 allows.
+  - The held R8.1f/g write is a two-item bulk set.
+- **Reproduced (`probe_g15.py`).** SQLite restarts the WAL at the write's start and overwrites its existing bytes in place. The COMMIT succeeds on the full volume in 5 of 5 runs across APFS and HFS+, with 2 rows set to Nova.
+- **Change that exposes it.** Pair a deferred clearing with a hold placed before the lock and a held write smaller than the existing log.
+- **Fix.** Add to (d)'s guard: "or a run of (g) whose released write lands rather than failing". Optionally, declare (g)'s held write large enough that it cannot fit in the log's existing length.
+
+**Minors and Nits (for post-lock, one line each)**
+- **[MINOR]** (d) (DF journeys:51): "this row or the rows around it" is vague now that each sub-run is its own row. It could sweep in the checkpointed row at :47, whose log is empty by design. Name "(a)–(c) and (e)–(h)".
+- **[MINOR]** (h) (DF journeys:55): assert that the landed write is still in the file after the reopen. Its frames live only in the log while read 2 runs, so a build that "clears" by discarding the log would lose it; today that build only gets "not exercised".
+- **[MINOR]** post-lock.md:46: whatever the owner decides, record `probe_room.py`'s growth case beside the APFS evidence in the ADR-0003 note at post-lock.md:169.
+- **[NIT]** post-lock.md:183 cites "DJ3 (h)" for "a crash that discards a held write". After the rebase, that window is DJ3 (c).
+- **[NIT]** The new Clarified lines under CM F202 (CM fences:1731) and DF F59 (DF fences:649) say "after a crash at the first open at which that holds". The ADR input (decisions/README:22) now says "the first such moment after reopening". That is two wordings of one rule from one pass. (h) pins the ADR input's reading; note that in the next pass.
+- **[NIT]** UJ2.3-d (CM journeys:241): my round-14 scope Nit was not carried. "shows only the column stored State changed" should be scoped "among TT-001's and TT-002's stored values".
+
+## Biggest risks
+1. **(g) is a flaky gate on APFS, macOS's default filesystem.** It fails about 17% of correct runs, and in a deferred-clearing build with a small held write it fails every time. A team chasing the red will drift toward hacks such as zeroing the -wal file outside SQLite's locks, or toward a busy-wait.
+2. **F215/F61's log deadline has a physical limit that no row states.** On a full APFS volume, or when frames not yet backfilled must grow the main file, the removed text stays in the log until room returns. E35 staying up is then the only honest outcome, and no row says so.
+3. **Carried over from earlier rounds.** An outside reader left open keeps the log copy. The copied pages must reach stable storage (F_FULLFSYNC) before truncation, which is already an ADR-0003 note.
+
+## Genuinely sound
+- **The split into eight self-contained rows works.** No result clause is inherited. (e) and (f) still say "As in (b) until the held write lands", but that reuses only the action sequence, and each states its own result. That is correct, not a regression.
+- **(h) is now the right test of F215's crash clause.** It fails a build that loses the pending wipe in the crash, which then never clears or drops E35 while the bytes remain. It also fails a build that treats a WAL restart as a clearing: in the "hold before the lock, read 2 at read-mark 0, deferred" configuration, the restart leaves the marker in the log's tail beyond the new frames.
+- **The ADR input's "first such moment after reopening"** is the reading D69's "a read that spans a crash" intends. It removes the misreading "wait for a later open".
+- **The full-volume failure is integrity-safe.** A failed TRUNCATE or checkpoint leaves integrity_check ok, with no committed row lost; only the wipe deadline slips.
+- **UJ5.3-r and UJ5.4-d now declare decidable operands.** CX1 is spectral at D50/2°, and MR-001's current reading has an M1 value. So R5.4's order (can't-be-read, then no-value, then not-compared) is decidable from the file at SQLITE_READER_FLOOR. UJ5.3-q, which reuses UJ5.4-d's fixture, is now consistent.
+- **The copy's R5.4 not-compared trigger** (CM copy:312) matches R5.4's "both having values" clause.
+
+## Missing / over-engineered
+- **Missing:**
+  - (g)'s deadline timed from room being restored, with a one-way E35 check while the volume is full;
+  - (d)'s guard for a (g) write that lands;
+  - an owner post-lock item for F215's full-volume limit;
+  - (h)'s check that the landed write survives.
+- **Over-engineered:** nothing. Eight self-contained rows is the right shape.
+
+| Row ID | disposition |
+|---|---|
+| R5.4 | ALIGN |
+| R8.8 | ALIGN |
+| DF-R6.2 | OBJECT (DB15-MAJOR-1, DB15-MAJOR-2) |
+
+- **R5.4 is ALIGN.** Its text is unchanged and matches F207, F213 and F217, and UJ5.3-r's fixture is fixed.
+- **R8.8 is ALIGN.** It hands the log copy to R6.2a, and it states E15 only for a write that is refused, which DB15-MAJOR-2's landed write is not.
+- **DF-R6.2 (with R6.2a) is OBJECT** because of DJ3 (g), not because of R6.2a's text.
+
+### Orchestrator verification
+
+- **Confirmed at `17de231`:**
+  - DJ3 (h) crashed without waiting for clean main-file bytes (SSE15-1, TR15-1, ARCH15-1). This was the orchestrator's own round-14 rewrite. The test lens's probe_h4 reproduced it, and probe_h5 showed the gated version works.
+  - DJ3's looks had no start point (R15-M1).
+  - (g)'s "from the failure" was not reliably deliverable on APFS (DB15-MAJOR-1), and (g)'s write could land (DB15-MAJOR-2).
+  - PL:46's note overstated that clearing needs no room (ARCH15-2, PRIV15-1).
+- **Owner decision.** The full-volume case went to the owner as D72. The rest are case fixes settled by F58 (1), F211, F212 and F215.
+- Nothing was rejected.
+
+### Owner adjudication (2026-09-26)
+
+
+The owner answered D72 on 2026-09-26, over round 15's database-lens DB15-MAJOR-1 (a full APFS volume stopping the log's truncation in 8 of 46 runs with SQLITE_IOERR_TRUNCATE; and, in both HFS+ and APFS, a clearing whose un-backfilled frames must grow the main file returning SQLITE_FULL) and the privacy lens's PRIV15-1 (the same growth case, reproduced independently). The record quotes the question, the option chosen with its description, and the option not chosen, verbatim.
+
+**D72 (DB15-MAJOR-1, PRIV15-1).** Question: "When the disk is completely full, SQLite sometimes can't clear the log (about 1 run in 6 on APFS, and always if the log must grow the main file). Removed text then stays in the log beside your file until space frees up. E35 ('Saved — another app is reading your file…') is what the user sees meanwhile. What should the erase promise say for this case?" Chosen: **Clears when room returns** — "While a full volume stops the clearing, the log copy stays and E35 stays up. Within 5 s of room being restored the app clears it on its own, no user action needed. The rule's 'first moment' then reads '…and the volume has room to clear it'. Text in the main file itself is still wiped at its normal deadline." Not chosen: **Also stop new writes** — "Same, but while a clearing is stuck on a full disk the app starts no new write of its own, so nothing grows the log further. Stricter, but editing is blocked until you free space (on top of E15 already refusing writes that need room)."
+
+### Dispositions
+
+Per row: which lenses ALIGN, OBJECT or ABSTAIN, and the resulting status. Lens order: PM
+(product-manager), SSE (staff-software-engineer), TR (test), IF (interface), ARCH (architecture),
+PRIV (privacy), R15 (plan), DB (database).
+
+| Row | PM | SSE | TR | IF | ARCH | PRIV | R15 | DB | Resulting status |
+|---|---|---|---|---|---|---|---|---|---|
+| R5.4 | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | ABSTAIN | ALIGN | ALIGN | aligned |
+| R8.8 | ALIGN | ALIGN | OBJECT | ALIGN | ALIGN | ALIGN | ALIGN | ALIGN | needs-discussion |
+| DF-R6.2 (with R6.2a) | ALIGN | OBJECT | OBJECT | ALIGN | OBJECT | ALIGN | OBJECT | OBJECT | ⌛️ Ready for Alignment |
+
+DF-R6.2 (with R6.2a) moves to ⌛️ Ready for Alignment rather than staying at ✋ Needs Discussion: D72
+changed R6.2a's text this round (the full-volume clause), and the case-level objections above
+(SSE15-1, TR15-1, ARCH15-1, ARCH15-2, R15-M1, DB15-MAJOR-2) are against DJ3 as it stood before the
+orchestrator's already-landed rewrite of rows (a)-(i); only DB15-MAJOR-1 and PRIV15-1 bore on
+R6.2a's own text, and D72 settles them.
+
+This round's resume point is `docs/product/collection-mode/prd-collection-mode-round-15-fixes.md`.
