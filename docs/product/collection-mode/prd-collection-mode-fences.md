@@ -1879,7 +1879,7 @@ Fence F218 was decided by the owner on 2026-09-26, over round 15's database-lens
 
 **Clarified 2026-09-26 (owner decision D72, its "While a full volume stops the clearing"; round-16 interface review's IF16-1):** the deferral applies only where a full volume actually stops the clearing; where the clearing can run on the full volume, F215's first moment governs, and "room to clear it" means room enough for that clearing to succeed (DJ3 (g) and (i)).
 
-**Clarified 2026-09-26 (round-17 orchestrator bookkeeping; no owner decision):** DJ3 (j), a full volume that refuses a truncation or a sync until room returns, also carries this fence, beside (g) and (i); (g) is now the full volume that lets the clearing run, and (i) and (j) the clearings a full volume stops.
+**Clarified 2026-09-26 (round-17 orchestrator bookkeeping; no owner decision):** DJ3 (j), a full volume that refuses a truncation or a sync until room returns, also carries this fence, beside (g) and (i); (g) is now the full volume that lets the clearing run, and (i) and (j) the clearings a full volume stops; (d)'s guards for (g), (i) and (j) carry it with them.
 
 **Clarified 2026-09-26 (owner decision D72 read with F211 and F215; round-16 privacy review's PRIV16-2 and PRIV16-3):** "E35 stays up" keeps an E35 already up and raises none where F211 shows none; the clearing once room returns still needs the file open and no read using the log, at the first such moment after room returns, and no marker of it is kept outside the file (DF F58 (1)).
 
@@ -2106,7 +2106,7 @@ than deciding a WHAT.
 - **F215** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3, the Data Foundation PRD F61
 - **F216** — R5.8, UJ5.4-f
 - **F217** — R5.4, UJ5.3-r
-- **F218** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (g), (i) and (j), and the Data Foundation PRD F62
+- **F218** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (g), (i) and (j), and the Data Foundation PRD F62
 
 ## Rejected findings
 
