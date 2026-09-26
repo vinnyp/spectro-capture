@@ -153,7 +153,7 @@ read-only file states; and the Data Export PRD's E1.
 - Actions: "Go to the session", "Cancel"
 - Variant: "interrupted" — the collection holds an interrupted session, the action is deleting the collection, and no session is in flight. A session in ⟨collection⟩ was interrupted and hasn't been resumed or ended. Resume it or end it before deleting the collection. Nothing has been changed.
 - Variant: "full" — every P1 action that variant names — Use this reading among them — is built, and the session is on the collection the action is on. Scanning in ⟨collection⟩ is active, paused or halted. Deleting swatches or the collection, changing a field on many swatches, changing a swatch's code or undoing that change, flagging a swatch and bringing back an earlier reading aren't available until you end that session, so nothing it's working on moves under it. Nothing has been changed — do it again once the session has ended. [phase: variant-absent]
-- Variant: "elsewhere" — the session is on a collection other than the one the action is on, ⟨collection⟩ naming the collection with the session. Scanning in ⟨collection⟩ is active, paused or halted. Until that session ends, changes that touch many swatches at once aren't available in any collection, so the session's saves aren't held up. Nothing has been changed — do it again once the session has ended.
+- Variant: "elsewhere" — the session is on a collection other than the one the action is on, ⟨collection⟩ naming the collection with the session. Scanning in ⟨collection⟩ is active, paused or halted. Until that session ends, changes to a whole collection or to many swatches at once aren't available in any collection, so the session's saves aren't held up. Nothing has been changed — do it again once the session has ended.
 
 ### E7 — Collection name needed
 
@@ -170,9 +170,9 @@ read-only file states; and the Data Export PRD's E1.
 - Phase: none
 - Variants enumerated by: R6.2
 - Headline: Change ⟨column⟩ on ⟨n⟩ swatches?
-- Body: Every selected swatch in ⟨collection⟩ gets ⟨value⟩ in ⟨column⟩, replacing what each has there now. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file. Undo change puts it back until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — including importing, or hiding or showing a column; scanning doesn't count.
+- Body: Every selected swatch in ⟨collection⟩ gets ⟨value⟩ in ⟨column⟩, replacing what each has there now. Nothing else changes, and their readings stay as they are. Your file won't keep what was there. Undo change puts it back until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — including importing, or hiding or showing a column; scanning doesn't count.
 - Actions: "Apply to ⟨n⟩ swatches", "Cancel"
-- Variant: "clear" — the change empties the field. Every selected swatch in ⟨collection⟩ has ⟨column⟩ emptied. Nothing else changes, and their readings stay as they are. What was there isn't kept in your file. Undo change puts it back until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — including importing, or hiding or showing a column; scanning doesn't count.
+- Variant: "clear" — the change empties the field. Every selected swatch in ⟨collection⟩ has ⟨column⟩ emptied. Nothing else changes, and their readings stay as they are. Your file won't keep what was there. Undo change puts it back until the file closes or is read again, or you do anything but edit swatches' details, codes or names or rename a column or collection — including importing, or hiding or showing a column; scanning doesn't count.
 
 ### E9 — Colours close to a swatch
 
@@ -186,7 +186,7 @@ read-only file states; and the Data Export PRD's E1.
 
 ### E10 — Deleted, undo available
 
-E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carries no phase mark of its own.
+E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carries no phase mark of its own. When the deleted collection held no swatch, the "collection" variant renders ⟨collection⟩ is deleted. as its first sentence, in place of the one the zero rule leaves out (F181).
 
 - Status: pre-alignment
 - Phase: none

@@ -1,6 +1,6 @@
 # PRD: Inventory Import
 
-Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review pending); Collection Mode one-writer mirror under F66 dated 2026-09-25 (R3.2 amended with alignment kept; E40 gains an another-collection variant; peer review pending); Collection Mode round-4 mirror under F67 dated 2026-09-25 (R3.2 and R3.8i amended with alignment kept; E40 reworded, ready for alignment; peer review pending).
+Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review pending); Collection Mode one-writer mirror under F66 dated 2026-09-25 (R3.2 amended with alignment kept; E40 gains an another-collection variant; peer review pending); Collection Mode round-4 mirror under F67 dated 2026-09-25 (R3.2 and R3.8i amended with alignment kept; E40 reworded, ready for alignment; peer review pending); Collection Mode round-5 mirror under F68 dated 2026-09-25 (R4.1 amended with alignment kept; the Collection Mode obligation line names R2.3; peer review pending).
 
 Import a CSV inventory into one collection without entering metadata between scans. Import never starts capture; only new items become pending.
 
@@ -31,7 +31,7 @@ All requirements are **v1 / P0**. Status and Commit PR track implementation: ⌛
 
 ### Traceability
 
-R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420); F65 mirrors the Collection Mode PRD's F9 (2026-09-24); F66 mirrors its F149 (2026-09-25); F67 mirrors its F155, F156 and F169 (2026-09-25).
+R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420); F65 mirrors the Collection Mode PRD's F9 (2026-09-24); F66 mirrors its F149 (2026-09-25); F67 mirrors its F155, F156 and F169 (2026-09-25); F68 mirrors its F188 (2026-09-25).
 
 ### Surfaces
 
@@ -133,7 +133,7 @@ Import flow: file selection and read settings → target collection → column m
 
 | ID | Requirement | Status | Commit PR |
 | :--- | :--- | :--- | :--- |
-| R4.1 | Tests enumerate R1.5a–e’s read contract, R2.3’s equality cases, preview counts, exclusions, column additions, choices, and the actions offered in every import state, including all three E40 routes. Assert transitions and store effects against the acceptance journeys, including rollback and idempotent re-import. | 🤝 Aligned | |
+| R4.1 | Tests enumerate R1.5a–e’s read contract, R2.3’s equality cases, preview counts, exclusions, column additions, choices, and the actions offered in every import state, including all three E40 routes, and a commit's progress. Assert transitions and store effects against the acceptance journeys, including rollback and idempotent re-import. | 🤝 Aligned | |
 | R4.2 | Tests observe named copy-state identity and cause variant independently of wording. Keep shipping-string checks separate from behavior assertions. | 🤝 Aligned | |
 
 ### Inherited obligations
@@ -143,7 +143,7 @@ Each line is a requirement on the document named, not a suggestion; the Rows col
 | Target PRD | Obligation | Rows |
 | :--- | :--- | :--- |
 | Data Foundation | The one matching rule; field preservation and column identity; atomic imports within R3.2’s cited storage scope; measurement preservation on re-import; decoded values stay directly queryable ([DF inbound mirror](../data-foundation/prd-data-foundation.md#inherited-obligations)). | R2.2, R2.3, R2.5, R2.6, R3.2, R3.3 |
-| Collection Mode | Renaming imported columns: a rename changes the column's stored name, keeping its position and values, and a later import matches the new name ([Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing), F65). | R2.2, R2.6 |
+| Collection Mode | Renaming imported columns: a rename changes the column's stored name, keeping its position and values, and a later import matches the new name ([Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing), F65). The one matching rule for codes and collection names, which Collection Mode's rename, search and code change apply ([Collection Mode R1.3](../collection-mode/prd-collection-mode.md#1-collections-and-the-collection-list), [R3.1](../collection-mode/prd-collection-mode.md#3-search-filter-and-sort), [R4.4](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing), F68). | R2.2, R2.3, R2.6 |
 | Data Export | Every column an import brought in is carried through, and a column mapped to identity is emitted once rather than twice; order and export-name collisions follow [Export R2.3/R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version). | R2.2, R2.6 |
 | Capture Mode | New items append pending and matched items retain state/position; E40’s "Go to the session" and "End that session" use Capture’s current/resume and §7 ending paths. Design scale and import timing remain [Capture R3.12/OQ 13](../capture-mode/prd-capture-mode.md#3-the-capture-session). | R3.2, R3.3, R3.8h–i |
 

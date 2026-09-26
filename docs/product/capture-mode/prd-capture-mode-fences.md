@@ -671,6 +671,14 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5, R9.3, T7, Collection Mode obligation line, Traceability; the dated F73 clarification.
 
+### F75 — Mirror Collection Mode's round-5 decisions: R8.14 moves to P0, and the Collection Mode obligation line names every row that PRD's inbound lines cite (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F186 and F188](../collection-mode/prd-collection-mode-fences.md) — its approved round-5 recommendations 9 and 11, round-5 adjudication 2026-09-25; peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F186, R8.14 moves from P1 to P0, since Collection Mode builds the simulated, spread and non-spectral marks at P0 under its F1; R8.14 keeps its alignment. (2) Under its F188, the Collection Mode obligation line names every row Collection Mode's inbound lines cite — R1.2 beside R1.8, R4.8 beside R4.13, and the shared collection surface's R6.7, R7.8, R7.15, R7.19, R8.7, R8.16 and R10.3 — with their obligations; and, as F188 accepts, this document, whose format has no inbound-obligations table, carries what Collection Mode imposes on it by its rows' cites and the dated fences F70–F75, no table added. Traceability's range reads F1–F75.
+
+**Carried by:** R8.14, Collection Mode obligation line, Traceability.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -697,6 +705,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F72** Collection Mode bulk-write refusal mirror, as clarified twice — Collection Mode obligation line, Traceability.
 - **F73** Collection Mode round-3 mirror, as clarified twice — R1.1, R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability and the dated F71 and F72 clarifications.
 - **F74** Collection Mode round-4 mirror — R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5, R9.3, T7, Collection Mode obligation line, Traceability and the dated F73 clarification.
+- **F75** Collection Mode round-5 mirror — R8.14, Collection Mode obligation line, Traceability.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

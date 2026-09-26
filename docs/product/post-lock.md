@@ -39,6 +39,7 @@ Document amendments still open. Each waits for the next editing pass over the PR
 
 - [ ] **DF** — the reading a Flag moves to history (Collection Mode R4.9, Capture R5.6) is not marked never true, so it re-enters over-time views once the item is re-scanned; accepted for v1 under Collection Mode F77 (a Flag means scan again, not never true) and logged here for the Data Foundation owner.
 - [x] **DF** — owes Collection Mode a named state for a write refused because permission to the file was lost (Collection Mode R8.8 and F73; DF F52); its wording and actions, and whether it is a new state or a variant of an existing one, go back to the owner. — closed by the Collection Mode round-2 amendment: DF E34, owned by DF R1.10 and tested by DF R7.6p (Collection Mode F101, DF F53), in this change's PR, number pending.
+- [ ] **DF** — Collection Mode R8.10a's held-write input (a write R1.11 names, held running until released) moves into R7.2 as a declared state once this PRD's budget has room, R8.10a then citing it (Collection Mode F185, its round-5 architecture review's ARCH5-N2; added in this change's PR, number pending).
 
 ### Device Management
 
@@ -126,6 +127,8 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **DF** — the per-invariant salvage rules, including equal record-time conflicts; the general salvage promise is unchanged (PR #17, F36).
 - [ ] **DF** — OQ 18–20: read-only extras and future mid-capture move/re-read policy remain open beyond PR #17’s defined floors (F38/F39); settle P1 undo visibility/identity conflicts before implementation.
 
+- [ ] **Device** — when ADR-0003 puts saved devices in the file, the device PRD's R1.9/R1.17 writes cite Data Foundation R1.11 (Collection Mode round-5 product-manager and interface reviews; its orchestrator's round-5 ruling; added in this change's PR, number pending).
+
 ## Documentation
 
 - [ ] **DF** — the help-docs column dictionary carries a formula-injection note for spreadsheet consumers, and nothing yet gates a release on that dictionary existing.
@@ -135,6 +138,7 @@ Build-review items and the engineering plan's test matrix.
 - [ ] **DF** — the serial on the device authorization path.
 - [ ] **DF** — the README's gamut gloss ("which most screens can't show accurately").
 - [ ] **DF** — the help docs (R1.5's) say that backups, Time Machine or APFS local snapshots, and a sync provider's version history made before a delete or clear keep what they held (Collection Mode F131, its privacy review's PRIV-15).
+- [ ] **DF** — the help docs (R1.5's) say that on a network volume reading the file elsewhere may delay saves as well as the wipe of removed text, the non-waiting save holding only within R1.10's local-volume scope (Collection Mode F183, its round-5 architecture review's ARCH5-4; added in this change's PR, number pending).
 
 ## v2 candidates
 

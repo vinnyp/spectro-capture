@@ -563,7 +563,7 @@ run by **R7.13**.
   closing, switching (R1.3) and quitting wait for it, its progress showing") — tighten if the DF ledger binds, the
   meaning unchanged.
       Result: landed at its tightest: "While a [Collection Mode R8.1f/g] write, an [Import R3.2] commit or an R1.9 move runs, no capture starts or resumes and no re-read or other write to the file starts, each shown disabled; closing the file, switching (R1.3) and quitting wait for it, its progress showing." (+52 DF words with its cells; "to the file" kept for ARCH4-N2; "R8.1f/g" in DF's slash style; "capture" for "capture session" as DF R1.3 and R7.3c write it). P0, ⌛️ Ready for Alignment.
-- [x] **F155-2 — DF R1.3 cites R1.11** (DF R1.3): its closing parenthetical "([R7.3b](#file-actions); [Capture R3.5 …])"
+- [x] **F155-2 — DF R1.3 cites R1.11** (DF R1.3): its closing parenthetical "`([R7.3b](#file-actions); [Capture R3.5 …])`"
       adds R1.11 first (+1), so a switch during an R1.11 write waits (F156). Alignment kept.
       Result: landed: "([R1.11], [R7.3b]; [Capture R3.5 …])" (+1); alignment kept, recorded in the DF status line.
 - [x] **F155-3 — DF R1.5 cites R1.11 in place of Collection Mode R8.1f** (DF R1.5): "…and while a [Collection Mode

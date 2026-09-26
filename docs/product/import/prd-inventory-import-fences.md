@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F67 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F68 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -136,6 +136,12 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** the file has one writer, and the owner moved that rule's home to Data Foundation so each writer cites it rather than restating it. Source: the Collection Mode PRD's F155, F156 and F169; peer review pending.
 
+### F68 — The Collection Mode line names the matching rule, a commit's progress is listed, and UJ 2.1 holds a P0 write (2026-09-25)
+
+**Decision:** Mirroring [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11, round-5 adjudication 2026-09-25), with the testability halves its round-5 fix pass carries under its F155, F156 and F164: the outbound Collection Mode line names R2.3's one matching rule, which Collection Mode's rename, search and code change apply, beside R2.6; this document, whose format has no inbound-obligations table, carries what Collection Mode imposes on it by its rows' cites and the dated fences F65–F68, no table added. R4.1 lists a commit's progress, which Data Foundation R1.11 makes show while a close, switch or quit waits on it. UJ 2.1 holds Collection Mode's Rename collection, a P0 write, behind this import's commit in place of its P1 Set a field, and asserts R3.8i's End that session shown disabled while a Data Foundation R1.11 write runs. R4.1 keeps its alignment.
+
+**Why:** the lock checks pair each seam both ways, and a first-phase build offers no Set a field. Source: the Collection Mode PRD's F188; peer review pending.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -160,6 +166,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
 - **F66** Collection Mode one-writer mirror, as clarified twice — R3.2; E40; UJ 2.1.
 - **F67** Collection Mode round-4 mirror — R3.2, R3.8i; E40; UJ 2.1.
+- **F68** Collection Mode round-5 mirror — R4.1; Collection Mode inherited-obligation line; UJ 2.1.
 
 ## Historical ID map
 

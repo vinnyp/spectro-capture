@@ -202,6 +202,12 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** The Collection Mode PRD's owner decision D39 chose one snapshot over reading the file in short slices, which this PRD had never agreed to. Source: [the Collection Mode PRD's F158](../collection-mode/prd-collection-mode-fences.md), round-4 adjudication 2026-09-25; mirrored by [the Data Foundation PRD's F56](../data-foundation/prd-data-foundation-fences.md); peer review pending.
 
+### F33 — The Collection Mode lines both ways, and R1.1's no-change clause (2026-09-25)
+
+**Decision:** "What this PRD imposes on others" gains a Collection Mode line: its entries open an export at collection scope and at single-item scope ([its R1.8](../collection-mode/prd-collection-mode.md#1-collections-and-the-collection-list)), carried by R1.1. The inbound Collection Mode line cites that PRD's row, ([its R8.8](../collection-mode/prd-collection-mode.md#8-operating-envelope-and-quality-attributes), F158). R1.1's clause reads "itself changes no source value, mark or note, as read at SQLITE_READER_FLOOR after success or failure", so an edit made during an export (F32) no longer contradicts it; R1.1 keeps its alignment. EJ1's mid-export line asserts that Data Foundation E35 does not render for this app's own export. R4.3 gains a test-build input holding an export running until released, which EJ1's mid-export line declares; R4.3 keeps its alignment.
+
+**Why:** the lock checks pair each seam both ways, and F32's clause made R1.1 contradict itself. Source: [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11), with the editorial and testability halves its round-5 fix pass carries under its F158; peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
@@ -273,6 +279,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F30 | R1.1d/R4.1a; DF outbound Data Export obligation; EJ1 payload assertion. |
 | F31 | §5's delete-confirmation sentence and the copy header, both naming DF E33 and R1.1a's collection scope; no requirement row. DF R6.2/R7.6o and DJ4 carry the Data Foundation half under DF F50 as clarified. |
 | F32 | R1.1; EJ1; the Collection Mode inbound line |
+| F33 | R1.1, R4.3; EJ1; the Collection Mode inbound and outbound lines |
 
 ## Rejected findings
 
