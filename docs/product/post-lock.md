@@ -42,6 +42,7 @@ Document amendments still open. Each waits for the next editing pass over the PR
 - [ ] **DF** — Collection Mode R8.10a's held-write input (a write R1.11 names, held running until released) moves into R7.2 as a declared state once this PRD's budget has room, R8.10a then citing it (Collection Mode F185, its round-5 architecture review's ARCH5-N2; added in this change's PR, number pending).
 - [ ] **DF** — needs owner: should closing, switching and quitting end a running re-read rather than wait for it? And what is a re-read "failure" (the re-read could not read the file)? (Collection Mode F191, its round-7 architecture and engineering reviews' ARCH7-3 and 7N1; added in this change's PR, number pending).
 - [ ] **DF** — a storage check that nothing about E35's state is kept outside the file (Collection Mode F190, its round-7 privacy review's PRIV7-4; added in this change's PR, number pending).
+- [ ] **DF** — its inbound Collection Mode line's Rows cell names R7.6b, whose re-read progress Collection Mode's F191 changed, beside R1.11, whose one-writer rule already carries it; one body word, putting the DF body at 8,400, its cap (F177) (Collection Mode F191, its round-7 interface review's IF7-N4, carried by its round-8 re-check; added in this change's PR, number pending).
 
 ### Device Management
 
@@ -92,6 +93,9 @@ Cross-document:
 ### Collection Mode
 
 - [ ] **Collection Mode** — R8.11's timing is promised on a local volume only, Data Foundation R1.10's scope, as ADR-0003's non-waiting save is (Collection Mode F183 and F197, its round-6 architecture review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — at the next Collection Mode pass or the P2 build, a per-collection swatch-size case: no case shows Gouache Set as a grid, so a build keeping one app-wide size passes R7.2's "each collection's swatch size"; for example, after UJ10.1-f sets S on Studio Markers, choose Gouache Set, fire "Grid" and assert its swatches are not S, S chosen to differ from Gouache Set's recorded fresh-launch size (Collection Mode R7.2, its round-8 test and engineering reviews' R8-m3 and 8N3; added in this change's PR, number pending).
+- [ ] **Collection Mode** — at the next Collection Mode pass or the P2 build, UJ10.1-b measures each swatch's on-screen frame rather than the swatch size R8.10b reports: as written, a build that reports the smallest size but lays swatches out smaller passes, and UJ10.1-a measures by the same route (Collection Mode R7.1 and R7.2, its round-8 test and interface reviews' R8-m2 and IF8-n4; added in this change's PR, number pending).
+- [ ] **Collection Mode** — at the next Collection Mode pass or the P2 build, a number's match in a raw-read storage file that the When creates or grows, where the Harness's count baseline for a raw-read file does not reach, is told apart from a real write by a rerun with another offered size S′: a real write follows the size chosen and chance does not (Collection Mode, its round-8 test, architecture and engineering reviews' R8-m1, ARCH8-3 and 8MN2; added in this change's PR, number pending).
 
 ### Cross-document
 
@@ -141,7 +145,7 @@ Build-review items and the engineering plan's test matrix.
 
 - [ ] **DF** — a file renamed or moved outside the app while open keeps every committed write and survives a crash, R1.10's promise holding for the file under its new name, and no journal or log the app kept beside the file under its old name is left holding its text (Collection Mode F174 and F197, its round-6 engineering and architecture reviews' 6MN3 and ARCH6-3 and its round-7 architecture review's ARCH7-5; added in this change's PR, number pending).
 
-- [ ] **DF** — the wipe is two mechanisms. Copying into the main file waits only on reads begun before it (F200's exact deadline covers main-file text). A copy of replaced text in a log frame goes once no read begun before the wipe and no write in progress needs that log — at the latest when a held write lands — and the log's reset may briefly hold a write. E35 follows the bytes, not the copy-back. Log frames are never overwritten in place. A move's copy tolerates a wipe beside it (Collection Mode F200 and DF F58 (7), its round-7 architecture, engineering and performance reviews' ARCH7-2, 7MN1 and PERF7-4; added in this change's PR, number pending).
+- [ ] **DF** — needs owner (qualifies F200): the wipe is two mechanisms. Copying into the main file waits only on reads begun before it (F200's exact deadline covers main-file text). A copy of replaced text in a log frame goes once no read begun before the wipe and no write in progress needs that log — at the latest when a held write lands — and the log's truncation (a reset that does not truncate leaves older frames, replaced text included, past the next writer's end) may briefly hold a write. E35 follows the bytes, not the copy-back. Log frames are never overwritten in place. A move's copy tolerates a wipe beside it (Collection Mode F200 and DF F58 (7), its round-7 architecture, engineering and performance reviews' ARCH7-2, 7MN1 and PERF7-4; added in this change's PR, number pending).
 
 ## Dogfood
 
@@ -151,7 +155,7 @@ Readings the owner takes while dogfooding a build.
 - [ ] **Collection Mode** — OQ 3: a "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — OQ 4: dogfood bulk edits, then the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — OQ 5: a hue sort of a collection holding a grey series; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
-- [ ] **Collection Mode** — OQ 6: the owner at the P2 build, on the owner's display at working distance (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
+- [ ] **Collection Mode** — OQ 6: the owner at the P2 build, on the owner's display at working distance (Collection Mode, its round-6 plan review; added in this change's PR, number pending). The owner's 24 pt check needs MIN_SWATCH_SIZE among the sizes the build offers: the P2 build offers it for that check, or the owner judges at the smallest size it offers (Collection Mode F199, its round-8 plan review's PLAN8-5; added in this change's PR, number pending).
 - [ ] **Collection Mode** — OQ 12: the widest inventory the owner dogfoods; the owner (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — M4: each dogfood session's re-scans still awaiting an answer, read a week later through "Answer re-scans" (Collection Mode, its round-6 plan review; added in this change's PR, number pending).
 - [ ] **Collection Mode** — the E12 reading beside M4: on a Display P3 display with an outside-sRGB swatch listed, the owner reads E12 once and says what each mark tells them they can and cannot trust (Collection Mode F82 and F134, its round-6 plan review; added in this change's PR, number pending).
