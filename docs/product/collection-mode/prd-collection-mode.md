@@ -1,6 +1,6 @@
 # PRD: Collection Mode
 
-Status: locked (2026-09-25); amendment F202–F220 (2026-09-26), peer review closed; Nix Toolkit mirror F221–F222 (2026-09-26), peer review pending
+Status: locked (2026-09-25); amendment F202–F220 (2026-09-26), peer review closed; Nix Toolkit mirror F221–F223 (2026-09-26), peer review pending
 
 Companions: `docs/product/collection-mode/prd-collection-mode-journeys.md` (acceptance scenarios) ·
 `docs/product/collection-mode/prd-collection-mode-copy.md` (copy) ·
@@ -571,7 +571,7 @@ requirement row that enumerates its variant set, and that row lists the variant 
 | ID | Metric | Definition (start event, end event, statistic, population) | Candidate target | Method | Status |
 |---|---|---|---|---|---|
 | M1 | Browse response time | Start: an R8.1a–c input or R2.5 gamut change, a capture save timed from when it lands; end: the first frame showing its result; statistic: the nearest-rank 95th percentile per input kind; population: each kind as UJ9.5-a delivers it, in a Release build on the Mac OQ 1's answer names, warm. | ≤ BROWSE_RESPONSE_BUDGET | R8.10f's timing readback; UJ9.5-a is its worked oracle. | aligned |
-| M2 | Honesty-mark agreement | Start: a seeded file whose every item's R2.4 conditions are declared, and a declared display gamut; end: the marks R8.10 lists for each chip; statistic: the share of item-and-mark pairs where the listed mark agrees with the declared condition; population: every item of the harness's seeded file — 15, Gouache Set's two included — under each of sRGB, Display P3 and no reported gamut, every PR. | 100% | R8.10c's listing of each chip's marks against R2.4's conditions; UJ9.8-a is its worked oracle. | aligned |
+| M2 | Honesty-mark agreement | Start: a seeded file whose every item's R2.4 conditions are declared, and a declared display gamut; end: the marks R8.10 lists for each chip; statistic: the share of item-and-mark pairs where the listed mark agrees with the declared condition; population: every item of the harness's seeded file — 15, Gouache Set's two included — and UJ2.1-r's imported ZX-022, under each of sRGB, Display P3 and no reported gamut, every PR. | 100% | R8.10c's listing of each chip's marks against R2.4's conditions; UJ9.8-a is its worked oracle. | pre-alignment |
 | M3 | Readings lost to a Collection Mode action | Start: the file before a field edit, a code change, a column rename, a bulk set or clear, a reorder, a restore, a re-scan answer or a Flag; end: the file read with the app closed at SQLITE_READER_FLOOR after it; statistic: the count of readings present before that are not readable after; population: every such action the journeys run, every PR. | 0 | R8.10's read of the file at SQLITE_READER_FLOOR; UJ9.8-b is its worked oracle. | aligned |
 | M4 | Re-scans left unanswered | Start: the end of a dogfood session on a real collection; end: the same file a week later; statistic: the count of re-scans still awaiting an answer; population: each dogfood session ending with at least one re-scan awaiting an answer, that count recorded at the start; a session with none reads not measured, never 0. | 0 | The Data Foundation PRD's E26 count, read through R5.7's "Answer re-scans" a week on. | aligned |
 

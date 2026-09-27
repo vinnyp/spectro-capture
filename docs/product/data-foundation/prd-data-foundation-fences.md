@@ -128,6 +128,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Clarified 2026-09-26 ([the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md), owner decision N12):** the budget is 8,600 words; see F55.
 
+**Clarified 2026-09-26 ([the Inventory Import PRD's F91](../import/prd-inventory-import-fences.md), owner decision N23):** the budget is 8,900 words; see F55.
+
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
 **Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8, now the export PRD's R2.4). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
@@ -265,8 +267,13 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F61 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F61. |
 | F62 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F62. |
 | F63 | R6.2, R6.2a; DJ3 (d), (k), (l) and (m); the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F63. |
-| F64 | R1.6, R2.2, R2.3, R2.3j; DJ6; the out-of-scope line, the journeys index and the Inventory Import line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
+| F64 | Vocabulary; R1.2, R1.6, R2.1, R2.2, R2.3, R2.3h, R2.3j, R5.5d, R7.1, R7.2, R7.7, R7.7o; DJ6; the out-of-scope line, the journeys index and the Inventory Import and Device Management lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
 | F65 | Governs no rows. |
+| F66 | R2.1; DJ6. |
+| F67 | R2.3j, R2.4; DJ6. |
+| F68 | R2.3j; DJ6. |
+| F69 | R2.3j; DJ6. |
+| F70 | Governs no rows. |
 
 ## Rejected findings
 
@@ -597,6 +604,8 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 
 **Clarified 2026-09-26 ([the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md), owner decision N12):** the budget is 8,600 words — a sixth owner override of the agent-PRD format's never-raise rule, recorded here, so the Nix Toolkit mirror (F64) lands in plain words.
 
+**Clarified 2026-09-26 ([the Inventory Import PRD's F91](../import/prd-inventory-import-fences.md), owner decision N23):** the budget is 8,900 words — a seventh owner override of the agent-PRD format's never-raise rule, recorded here, so round 1's fixes to the Nix Toolkit mirror (F66–F69) land in plain words.
+
 ## Collection Mode round-4 amendment (2026-09-25)
 
 Source: the owner's round-4 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F155, F156, F157 and F158](../collection-mode/prd-collection-mode-fences.md), and its approved round-4 recommendations 6, 10 and 11, recorded as [its F166, F170 and F171](../collection-mode/prd-collection-mode-fences.md). Its F159 (R7.3j, R7.6p, DJ3) and F165 (R3.4, R6.2a) land as dated lines under F54 here, and its F160 under F55 and F21. This fence carries only the Data Foundation halves of those decisions; peer review pending.
@@ -736,7 +745,7 @@ Source: the owner's decision D73 in the Collection Mode PRD's PR #21 follow-up a
 
 ## Nix Toolkit export amendment (2026-09-26)
 
-Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), recorded as [the Inventory Import PRD's F69–F83](../import/prd-inventory-import-fences.md). These fences carry only the Data Foundation half; peer review pending.
+Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26) and N16–N23 in its Round 1, recorded as [the Inventory Import PRD's F69–F91](../import/prd-inventory-import-fences.md). These fences carry only the Data Foundation half; peer review pending.
 
 ### F64 — A Nix Toolkit export's reading can be an item's canonical value (2026-09-26)
 
@@ -745,8 +754,40 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 - **Why:** the Data Foundation half of the Inventory Import PRD's decision to bring Toolkit readings in; this PRD owns the canonical value and version history.
 - **Rows:** R1.6, R2.2, R2.3, R2.3j, the out-of-scope line, the journeys index, DJ6, and the Inventory Import obligation line.
 
+**Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); owner decision N16, F66):** "which history and over-time views place by its measurement time" means the over-time views, the history's measured order among them; the recorded order keeps the imported reading at its record time (R2.1). Round 1 also carries this decision into the Vocabulary, R1.2, R2.1, R2.3's lead, R2.3h, R7.1, R7.2, R7.7 and R7.7o: a reading with no samples, basis, verdict or spread; unknowns read back empty; a same reading creating none; the predecessor fixed as the reading current when B landed; restoring an imported reading; and its fixture.
+
 ### F65 — Word budget 8,600 (2026-09-26)
 
 - **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12, 2026-09-26.
 - **Decision:** This PRD's word budget is 8,600 words, counted by rule 14's method, recorded by the dated lines under F55 and beside F214's.
+- **Rows:** governs no rows.
+
+### F66 — History order for an imported reading (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F84](../import/prd-inventory-import-fences.md) — owner decision N16 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.
+- **Decision:** R2.1's history orders by record time and its over-time views, the history's measured order among them, by measurement time; an imported reading kept behind the current one takes its place in each by those rules. No other order is introduced. Peer review pending.
+- **Rows:** R2.1; DJ6.
+
+### F67 — The reasons R2.3j records (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F85](../import/prd-inventory-import-fences.md) — owner decision N17 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.
+- **Decision:** A Toolkit reading current over an imported or simulated A is recorded as a re-measurement, one current over none or kept behind A as initial, without asking; R2.4 names the exception. Peer review pending.
+- **Rows:** R2.3j, R2.4; DJ6.
+
+### F68 — A Toolkit reading replaces a simulated current one (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F86](../import/prd-inventory-import-fences.md) — owner decision N18 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.
+- **Decision:** B is current over a simulated A, which stays in history; only a live A stays current over B. Peer review pending.
+- **Rows:** R2.3j; DJ6.
+
+### F69 — A same-dated, different reading is kept behind (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F87](../import/prd-inventory-import-fences.md) — owner decision N19 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.
+- **Decision:** B with the same measurement time as an imported current A but a different spectrum is kept behind A; only an earlier-measured imported A yields. Peer review pending.
+- **Rows:** R2.3j; DJ6.
+
+### F70 — Word budget 8,900 (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F91](../import/prd-inventory-import-fences.md) — owner decision N23 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.
+- **Decision:** This PRD's word budget is 8,900 words, counted by rule 14's method, recorded by the dated lines under F55. Peer review pending.
 - **Rows:** governs no rows.

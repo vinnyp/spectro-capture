@@ -298,6 +298,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** R1.21, R1.22, UJ3-c, and the Device → Inventory Import obligation line.
 
+**Clarified 2026-09-26 ([round 1 of the Nix Toolkit import review](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); editorial, no change of meaning):** the Data Foundation and Data Export obligation lines name the imported kind too — an imported snapshot is never a device record, and `sc_imported` is written from it as `sc_simulated` is from the simulated kind. Carried by those two lines as well. Peer review pending.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.

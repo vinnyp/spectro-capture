@@ -9,6 +9,8 @@ Every PRD that locks records follow-on work at its lock: wording accepted as pos
 The spike runs from [`hardware-spike-brief.md`](../briefs/hardware-spike-brief.md) and its results file lands beside it. That brief's "Before the session" prerequisites are the gate — the throwaway probe harness, both instrument models, the two license variants, the vendor confirmation path for a per-serial refusal, a network-capture tool and a second SDK client, the calibration tile, and the time-box — and each is confirmed before the instrument is booked.
 
 - [ ] **All five PRDs** — the spike runs and its results file lands beside the brief; each PRD's spike-scoped open questions close from that evidence.
+- [ ] **Import / Export** — whether the Spectro 2's reported grid (Export OQ 4) is the Toolkit's 400–700 nm every 10 nm; if not, a Toolkit spectrum and a scanned one share a collection on two grids, and Export's out-of-grid branch becomes reachable.
+- [ ] **Import** — whether the Toolkit's Nix Device column can hold a name the user gave the device rather than its model; if it can, R6.5 records the model only when it is a v1-family model name.
 - [x] **Device** — the spike-scope amendment lands before the spike is dispatched: the Legend's hardware-spike scope gains the reported wavelength grid, the raw-payload round-trip and the toolkit's spaces, the vendor analytics recipient, and the published reference set (plan PL7-4). — done, PR #13
 
 ## Landed sibling amendments
@@ -96,6 +98,9 @@ Cross-document:
 
 ### Inventory Import
 
+- [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
+- [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
+- [ ] **Import / Collection Mode** — in the first build phase an imported reading is replaced only through Flag and set-aside review, re-scan being P1; revisit if dogfood shows the imported mark lingering.
 - [x] **Import** — non-preview actions, including all three E40 routes, are enumerated by R4.1 and exercised in UJ 2.1; R3.8 owns transitions. Owner explicitly ratified the rule change in the [2026-09-17 PR #16 decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); transitions and action coverage completed in PR #16.
 - [x] **Import** — §4 now links to its own UJ 2–2.2 acceptance scenarios — PR #16 (commit `cf9974f`).
 - [x] **Import** — Vocabulary defines Swatch Name and both alternates, including their search-only role versus the re-import match key — PR #16 (commit `cf9974f`).
@@ -161,6 +166,7 @@ Build-review items and the engineering plan's test matrix.
 
 ## ADR-0003
 
+- [ ] **Import / DF** — the Nix Toolkit import's schema inputs, recorded in [the ADR-0003 row](../decisions/README.md#decision-queue): a reading with no samples, basis, verdict or spread; the imported snapshot kind with serial and firmware stored empty; explicit current selection and predecessor, never inferred from sequence; the same-reading key excluding restores; and whether a reading's origin sits apart from its device kind (Import F70, F77, F82; DF R2.3h, R2.3j).
 - [ ] **Import** — choose comparison-data version governance; re-check existing identifiers on table upgrades and verify the R2.3 comparator against the eventual ADR-0006 macOS floor (F57; [decision queue](../decisions/README.md#decision-queue)).
 
 - [ ] **DF** — the generated ROWS_CEILING corpus's determinism contract; M6, M8 and DE R4.1 read from it.
@@ -193,6 +199,7 @@ Inputs for ADR-0005's executor and runtime ownership when it is drafted.
 
 Readings the owner takes while dogfooding a build.
 
+- [ ] **Import** — [its OQ 3 and M2](import/prd-inventory-import.md#open-questions): import the owner's own Nix Toolkit exports across devices, modes, illuminants and app versions, recording outcomes and format facts only, never the files (F71); include a ROWS_TARGET-sized Toolkit file in the import budget run.
 - [ ] **Collection Mode** — OQ 2: the owner's estimate of collections per file, checked by UJ9.5-b; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 3: a "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 4: dogfood bulk edits, then the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
@@ -207,6 +214,7 @@ Readings the owner takes while dogfooding a build.
 
 ## Documentation
 
+- [ ] **Import** — help docs on getting a collection out of the Nix Toolkit app and what an imported reading does and doesn't record; the root README's "How it will work" gains the Toolkit import, and its claim that the raw instrument payload is kept is scoped to scanned readings.
 - [ ] **DF** — the help-docs column dictionary carries a formula-injection note for spreadsheet consumers, and nothing yet gates a release on that dictionary existing.
 - [ ] **DF** — the dogfood build's participant-facing onboarding says the interaction record is kept and a delete does not reach it.
 - [ ] **DF** — a redacted bug-report artifact.

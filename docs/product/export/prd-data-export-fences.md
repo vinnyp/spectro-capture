@@ -222,6 +222,8 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** the Data Export half of the Inventory Import PRD's decision to bring Toolkit readings in. Source: [the Inventory Import PRD's F79 and F77](../import/prd-inventory-import-fences.md) — owner decisions N11 and N9 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
 
+**Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); the Inventory Import PRD's F71 and F73):** R1.1h, R1.1i and R1.1s name `sc_imported` beside `sc_simulated`; R1.2 says the two are never both true; R1.1t names the model and measured-at; R4.2 asserts all three values of both columns against a golden cut from the Data Foundation PRD's R7.7o; E1's imported line names the empty cells; OQ 4 records that a Toolkit spectrum is fixed at 400–700 nm every 10 nm; the Device line names `sc_imported`. Peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
@@ -295,7 +297,7 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F32 | R1.1; EJ1; the Collection Mode inbound line |
 | F33 | R1.1, R4.3; EJ1; the Collection Mode inbound and outbound lines |
 | F34 | R4.3; EJ1 |
-| F35 | R1.1, R1.1p, R1.1t, R1.2, OQ 3; E1; EJ1; the out-of-scope line and the Inventory Import inbound line |
+| F35 | R1.1, R1.1h, R1.1i, R1.1p, R1.1s, R1.1t, R1.2, R4.2, OQ 3, OQ 4; E1; EJ1; the out-of-scope line and the Inventory Import and Device Management inbound lines |
 
 ## Rejected findings
 
