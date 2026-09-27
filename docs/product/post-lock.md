@@ -98,7 +98,7 @@ Cross-document:
 
 ### Inventory Import
 
-- [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a matched item added, deleted or edited between preview and commit rests on R3.3 and the preview's classification alone; decide whether R3.8k's re-match extends to every import (predates the Nix Toolkit amendment).
+- [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a matched item added, deleted or edited, or a stored column renamed, between preview and commit rests on R3.3 and the preview's classification alone; decide whether R3.8k's recheck of what the commit would write, a Toolkit export's alone since that amendment, extends to every import, and what any commit does when its target collection was deleted mid-preview (predates the Nix Toolkit amendment).
 - [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
 - [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
 - [ ] **Capture / DF** — switching a collection's scan mode away from its imported readings' mode blanks their chips (DF R3.3d) with no warning; decide whether Capture R1.10's change warns.
