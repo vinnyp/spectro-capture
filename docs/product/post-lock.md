@@ -84,6 +84,8 @@ Cross-document:
 - [x] **Device** — the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0, and ride that PRD's OQ 16 amendment. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 - [x] **Device** — OQ 5's and OQ 28's closers name dogfood data no row records. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 
+- [ ] **Device** — an inbound line in the obligations table for the Data Export PRD's outbound obligation on its R1.1 and R1.2 provenance columns (lock check 1), accepted as a pre-existing MISS at the Nix Toolkit lock (Import F92).
+
 ### Capture Mode
 
 - [x] **Capture** — R11.8 now names spread below, equal to, or above SAMPLE_TOLERANCE (F62), resolving the ambiguous “set … against” wording. — Capture agent-build amendment F51–F55, ratified by F62 (PR #20).
@@ -100,6 +102,7 @@ Cross-document:
 
 - [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a matched item added, deleted or edited, or a stored column renamed, between preview and commit rests on R3.3 and the preview's classification alone; decide whether R3.8k's recheck of what the commit would write, a Toolkit export's alone since that amendment, extends to every import, and what any commit does when its target collection was deleted mid-preview (predates the Nix Toolkit amendment).
 - [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
+- [ ] **Import** — the Legend's priority semantic (lock check 19) and M1's Method row cites (lock check 20), accepted as pre-existing MISSes at the Nix Toolkit lock (F92).
 - [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
 - [ ] **Import** — needs owner, a copy choice over E13's collection body: "each swatch keeps its choice…" also shows where no E14 choice was offered (a pending-only target), true but empty there; a candidate is "any choice you made between taking the new details and keeping what you have is kept" (round 8, PM-R8-n1).
 - [ ] **Import** — build review: UJ 3's column-rename case could also assert that ZZ-1, which the file lacks, keeps its own value in the renamed `Density C` column, as R6.8e's absent-item cases already assert for absent items (round 8).
@@ -131,6 +134,7 @@ Cross-document:
 
 ### Cross-document
 
+- [ ] **Import / DF / Device / Export / Capture** — bring each PRD to the current template's constructs (Carried by fields; the Legend's defer bullets; build-dependencies, Surfaces, constants and row-transition tables; copy states as sections with variant fields; journeys with case IDs and a named-defaults table), so that lock checks 2–7, 17 and 18 run on it; accepted as NOT-RUN at the Nix Toolkit lock (Import F92).
 - [x] **Import / Capture** — round-2 owner fence F63: Capture §12’s token index includes Import’s preview counts/settings and generated-name placeholders; E43 follows its existing zero-count rule. — PR #16
 
 - [x] **Import / DF / DE** — 2026-09-17 owner fence F59: DF’s inbound Import line gains field preservation, decoded values directly queryable, and measurement preservation; both obligation tables carry Rows. DF R1.2 and Export’s inbound mirror use Import R2.5/R2.6’s first-seen resolved column names; Capture’s import line mirrors both E40 session routes. — PR #16

@@ -15,7 +15,7 @@ amendment preserves them and does not re-decide them.
 
 **Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`. The follow-up review's reopening re-locked with [its own record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26-after-the-follow-up-review), amendment F202–F220, checks 1–20 at the validated revision it names.
 
-**Nix Toolkit mirror lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-26) — F221–F223, peer review closed 2026-09-26; checks 1–20 at the validated revision it names.
+**Nix Toolkit mirror lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27) — F221–F223, peer review closed 2026-09-26; checks 1–20 at the validated revision it names.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence

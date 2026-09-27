@@ -1,10 +1,10 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F91 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F92 explicitly amend them; F50 records structural authorization.
 
 **Nix Toolkit amendment review log:** [`docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md) — its Round 0 records the owner decisions N1–N15 that F69–F83 carry, and its Round 1 the decisions N16–N23 that F84–F91 carry.
 
-**Amendment lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-26) — amendment F69–F91, peer review closed 2026-09-26 after eight rounds; checks 1–20 at the validated revision it names.
+**Amendment lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27) — amendment F69–F91, peer review closed 2026-09-26 after eight rounds; checks 1–20 at the validated revision it names, with F92 accepting by name the results the older PRDs could not meet.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -344,6 +344,28 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Closed 2026-09-26 ([the Nix Toolkit import review's round 8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-8--confirmation-2026-09-26)):** For F69–F91, peer review closed 2026-09-26 after eight rounds, every amendment row aligned by all nine lenses; re-locked on merge.
 
+### F92 — Lock checks the older PRDs cannot run, and drift that predates the Nix Toolkit amendment (2026-09-27)
+
+**Decision:** The Nix Toolkit amendment locks with these mechanical-check results accepted by name; none was introduced by it.
+- **NOT-RUN, because the PRD predates the construct the check reads.** In this PRD:
+  - check 2 (no Carried by field, Legend defer bullets, build-dependencies table or Surfaces table);
+  - check 3's constants and copy-index classes (no constants table, no copy index carrying a Surface);
+  - check 4 (no row-transition table);
+  - check 5 (copy states in a flat table, not sections with variant fields);
+  - checks 6 and 17 (journeys without case IDs);
+  - check 7 (no constants table);
+  - check 18 (no named-defaults table or case IDs).
+
+  In the Data Foundation, Device, Data Export and Capture PRDs, check 2 (no second source to diff a fence map against).
+- **MISS, predating the amendment:**
+  - check 19 here: the Legend states "All requirements are v1 / P0", with no priority-semantic bullet;
+  - check 20 on M1: its Method cites no row;
+  - check 1 between the Data Export and Device PRDs: Export's outbound line to Device has no inbound line in the device PRD's table.
+
+Bringing these PRDs to the current template, and closing the three MISSes, is post-lock work for the next pass over each PRD. It governs no row here.
+
+**Why:** the checks came with a later template than these PRDs were locked under. Converting them is a pass of its own, and none of these results comes from this amendment. Source: owner decisions N24 and N25 in [the lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27).
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -392,6 +414,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F89** One Toolkit collection per file — R6.3, R6.11; E49; UJ 3.
 - **F90** Unchecked records import — R6.6, R6.9; E43; UJ 3.
 - **F91** Round-1 word budgets — governs no row here.
+- **F92** Lock checks accepted at the Nix Toolkit lock — governs no row here; post-lock carries the follow-up.
 - Round-1 fixes under the fences above also reach R3.5 and E14 (F70, F74), R3.8b and R3.8q (F73, F89), M2 and OQ 3 (F71, F73), Build dependencies (F72), and the Data Export, Collection Mode and Capture Mode inherited-obligation lines (F72).
 
 ## Historical ID map
