@@ -13227,3 +13227,94 @@ Path legend (… = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-i
 | Export-E1 | ALIGN |
 | Capture-R1.10 | ALIGN |
 | Capture-M8 | ABSTAIN |
+
+
+## Lock record (2026-09-27)
+
+Peer review closed at round 8 (2026-09-26): all nine lenses aligned on every amendment row, with no standing objection. Commit `287e1dc` flipped every amendment row to aligned and closed the status surfaces. The mechanical checks then ran against that state. Their results were adjudicated by the owner (N24–N27 below). The fixes they called for landed in `adad784` and `c9af537`.
+
+**The validated revision is `c9af5376a0353dc57a92a70ad8ba5696e14d4c83`**: `docs/product` and `docs/decisions` equal it at the commit that adds this record. This PR carries the lock to an attended merge; it does not merge itself.
+
+### Owner decisions at the lock (2026-09-27)
+
+- **N24 — Fence the NOT-RUNs; convert later.** The lock checks cannot run on the Import, Data Foundation, Device, Data Export and Capture PRDs where those PRDs predate the construct a check reads. That is checks 2–7, 17 and 18 on Import, and check 2 on the other four. A new owner fence names each by name, and bringing those PRDs to the current template goes on the post-lock list as a separate pass. No row reopens. Carried by Import F92.
+- **N25 — Fence and post-lock the pre-existing misses.** Three results predate the amendment:
+  - check 19 on Import's Legend;
+  - check 20 on M1;
+  - check 1(a) between the Data Export and Device PRDs.
+
+  The same fence accepts them, and post-lock records each for the next pass over its PRD. M2, this amendment's own metric, is fixed editorially. Carried by Import F92.
+- **N26 — Push as-is.** The branch keeps its per-round commits, which this log cites by ID. Round 6's earlier wording stays in `3ae25c1`'s diff, and the current files name categories only.
+- **N27 — Extend F92.** It also accepts two more results:
+  - check 13 as NOT-RUN on the five flat-table PRDs;
+  - check 1(c)'s hits on those PRDs' pre-amendment text.
+
+  The amendment's own lines were swept and fixed. Carried by F92's Clarified line.
+
+### Mechanical checks at the state that locks
+
+**What was run.**
+- **Subject.** The Inventory Import PRD and its four companions are the primary subject. The five PRDs the amendment mirrored into were checked on every check whose scope reaches them: Data Foundation, Device, Collection Mode, Data Export and Capture.
+- **Commits.** The full run was at `287e1dc`. After `adad784` and `c9af537`, the checks their edits could touch were re-run at the validated revision: 1(c), 8, 11, 12, 13, 15, 16 and 20. Every script guards that `docs/product` and `docs/decisions` equal its commit.
+- **Roster.** Checks 1–20 of `writing-agent-prds/references/mechanical-checks.md` (operator-agents 1.7.0).
+- **Engines.** Bash with `set -euo pipefail`; BSD grep, awk and perl; Python 3 `re`.
+- **Baselines.** Preservation and change baseline `6374538`, `main` before this branch and the parent of its first commit. Checks 8 (direction 2) and 9 diff `6374538...c9af537`, and check 14 reads the pair `(6374538, c9af537)`.
+- **Scripts.** Some reference scripts are hard-coded to Collection Mode's table shapes, so they were adapted for the older PRDs' table shapes. Each row below says which method ran. The scripts and outputs are in the orchestrator's scratchpad, `mech-nix/` and `mech-nix/scoped/`.
+- **Where each check was run.** Checks 1(c) and 13 ran over every line the amendment added or changed in each subject file (`git diff -U0 6374538 c9af537`), and every hit on those lines was read and dispositioned. Their hits on text predating the amendment in the five older PRDs are accepted by F92 (N27). Collection Mode's pre-amendment text passed check 13 at its own re-lock.
+
+**Inventory Import (primary subject)**
+
+| # | Check | Verdict | Result / disposition |
+|---|---|---|---|
+| 1 | Cross-PRD consistency | PASS | (a) Every outbound line has its counterpart; Import and Capture carry outbound-only tables, as each always has. One read item was disposed: the Data Foundation line cites R2.3j under a Rows-here list naming R2.3, and R2.3j is R2.3's lettered sub-row. (c) 120 hits on amendment lines: 116 PASS and 4 MISS, all fixed in `c9af537` (Import:36's F24, F45 and F49 now "the capture PRD's"; F71's round-3 line names the Data Foundation PRD's R7.7o). (e) Fence cites are qualified. |
+| 2 | Index sync | NOT-RUN | No Carried-by field, Legend defer bullets, build-dependencies table or Surfaces table. Accepted by F92 (N24). |
+| 3 | Latent-decision inventory | Classes 1–2 NOT-RUN; 3–4 PASS | There is no constants table and no copy index carrying a Surface; accepted by F92 (N24). Class 3 is clean. Class 4: 21 hits, all copy action labels quoted in rows, disposed as check 13's domain. |
+| 4 | Row-transition index | NOT-RUN | No row-transition table. F92 (N24). |
+| 5 | Variant set | NOT-RUN | Copy states sit in a flat table, with no sections or variant fields. F92 (N24). |
+| 6 | Case refs and copy coverage | NOT-RUN | The journeys carry no case IDs. F92 (N24). |
+| 7 | Constants in owning rows | NOT-RUN | No `\| Constant \|` table. F92 (N24). |
+| 8 | Fence map against content | PASS | Direction 1: every F69–F92 map item resolves, and F92 governs no row. Direction 2: every changed or added line from `6374538` to `c9af537` falls within F69–F92 or their Clarified lines. |
+| 9 | ID, Pri and status diff | PASS | Read by ID pairing on `git diff -U0`, because the reference script assumes six columns and this PRD has four. New IDs are only the fenced additions (R3.8p/q, R6.1–R6.11, R6.8a–g, E46–E49). Every edited existing row keeps its status. No renumbering. |
+| 10 | Two-sentence scan | PASS | 50 cells, none over two sentences; M2's edited Method is one sentence. |
+| 11 | Companions and links | PASS | The four companions resolve. Tree-wide, the four forward references to this section resolve with it. Five pre-existing matches in Collection Mode's round-6 fix file are quoted text, not links, and are disposed. |
+| 12 | Word count | PASS | 5,493 words; this PRD has no budget. Rule-migration scan: every hit carries its fence or decision citation. |
+| 13 | Standing label check | NOT-RUN | Flat copy table, with no `- Actions:` or `- Variant:` fields. Accepted by F92 (N27). The adapted sweep's findings (single-word labels left unquoted, curly quotes) join the post-lock conversion item. |
+| 14 | Post-lock ticks | PASS | Ticks were added only inside the round fix files. The new `post-lock.md` items are open boxes attributed to this amendment. None was taken back. |
+| 15 | Unresolved fill | PASS | 0 hits across the PRD and its four companions. |
+| 16 | Guidance comments | PASS | 0 hits. |
+| 17 | Banned adjectives in asserts | NOT-RUN | No case IDs to extract. F92 (N24). |
+| 18 | Test controls and asserted values | NOT-RUN | No named-defaults table and no case IDs. F92 (N24). |
+| 19 | One priority semantic | MISS, accepted | The Legend states "All requirements are v1 / P0", with no priority-semantic bullet. The line predates the amendment. F92 (N25); post-lock. |
+| 20 | Metrics read a stated observable | M2 PASS; M1 MISS, accepted | M2's Method now cites R6.1, R6.4, R6.6, R6.7 and R6.11, each an existing row (`adad784`). M1's Method cites no row and predates the amendment: F92 (N25); post-lock. |
+
+**The mirrored PRDs**
+
+| # | Check | Data Foundation | Device | Collection Mode | Data Export | Capture |
+|---|---|---|---|---|---|---|
+| 1 | Cross-PRD | PASS; 1(c) 63 amendment-line hits, 1 fixed (F70's line names the Collection Mode PRD's F214) | (a) MISS, accepted: the Device PRD has no inbound line for Export's outbound obligation (F6, predates the amendment); F92 (N25). 1(c): 14/14 PASS | PASS; 1(c) 20/20 | (a) the same pair's other end, accepted under F92; 1(c) 53 hits, 1 fixed ("DF R7.7m") | PASS; 1(c) 23 hits, 1 fixed (F77's line names Data Foundation R1.11) |
+| 2 | Index sync | NOT-RUN, F92 | NOT-RUN, F92 (its Carried-by lists are the map by design) | PASS: F221–F223 map lines equal their Carried-by lists | NOT-RUN, F92 | NOT-RUN, F92 |
+| 8 | Fence map vs content | PASS (F64–F70) | PASS (F33) | PASS (F221–F223) | PASS (F35) | PASS (F77) |
+| 9 | ID, Pri, status diff | PASS: R2.3j and R7.7o added; edited rows keep their status | PASS | PASS: R2.4j added | PASS: R1.1t added | PASS |
+| 11 | Links | PASS | PASS (a dogfood-results path the PRD says lands later is disposed) | PASS | PASS | PASS |
+| 12 | Word count | 8,877 of 8,900 (F70) | 11,206, no budget | 12,545 of 12,550 (F223) | 3,990 of 4,000 | 18,476, no budget |
+| 13 | Label check | NOT-RUN, F92 (N27) | NOT-RUN, F92 (N27) | PASS: 18 amendment-line hits, 7 fixed (E17's "measured" and "restore" variant names quoted); direction 2 clean | NOT-RUN, F92 (N27) | NOT-RUN, F92 (N27) |
+| 15 | Unresolved fill | PASS | PASS | PASS | PASS | PASS |
+| 16 | Guidance comments | PASS | PASS | PASS | PASS | PASS |
+
+**Totals.** Every MISS on the amendment's own lines is fixed (12 across checks 1(c) and 13), and none is unaccepted. Three MISSes predating the amendment are accepted by F92, each by name. There are 17 NOT-RUNs, each accepted by F92 by name:
+- Import: checks 2, 3 (classes 1–2), 4, 5, 6, 7, 13, 17 and 18;
+- Data Foundation, Device, Data Export and Capture: checks 2 and 13.
+
+Check 1(c) on those five PRDs' pre-amendment text is also accepted by F92.
+
+### Lock conditions
+
+- [x] **Every row is aligned.** Round 8's unanimous ALIGN flipped every amendment row at `287e1dc`, 56 rows across the six PRDs. Each file's pending count equals its count at `6374538`.
+- [x] **The pre-lock round has run.** Round 7 ran all nine lenses, the plan lens included, as the pre-lock round. Round 8 confirmed its fixes unanimously.
+- [x] **The mechanical preconditions ran,** recorded above, and every remaining result is fenced by name (F92).
+- [x] **No NOT-RUN is unaccepted.** F92 names all 17.
+- [x] **The OQ contract holds.** OQ 3 is open, with its interim rule (R6.1–R6.7's studied-export format) and its closer (the owner's dogfood exports, bounded by M2 and F71). No answered OQ lacks its results section.
+- [x] **No unresolved placeholders or guidance comments** (checks 15 and 16).
+- [x] **No "peer review pending" is left on a current status surface.** The six status lines, the README rows and the two fence preambles read closed. Earlier Clarified lines that say "Peer review pending" are closed by their fences' dated Closed lines.
+
+Re-locked on merge.
