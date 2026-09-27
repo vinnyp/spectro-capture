@@ -177,6 +177,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** Fixture T's own values come from an independent implementation of CIE 15's calculation with ASTM E308's 10 nm tables, named in its provenance, and the Data Foundation PRD's R7.5 holds Fixture T's spectra so its bound covers them; R6.6's offset cases set the file's Lab from the build's; DJ6 is R7.7o's journey and runs the importer; from a single real file only format facts and whether it imported cleanly are recorded. R6.10, M2 and OQ 3 carry it.
 
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** Fixture T's own values use the CIE 15 tabulation the build's derivation uses — its ASTM E308 table and its 400–700 nm handling, named in the engineering plan — and the Data Foundation PRD's R7.5 reference, once named, governs, Fixture T regenerated to agree with it and the build never loosened. R6.10 and UJ 3 carry it.
+
 ### F72 — The Toolkit import lives in this PRD (2026-09-26)
 
 **Decision:** The Toolkit import extends this PRD's flow — pick the file, map, preview, commit — as its §6, and each sibling PRD it touches (Data Foundation, Device Management, Collection Mode, Data Export, Capture Mode, the vision) carries a dated mirror.
@@ -195,6 +197,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** A recognised Toolkit export whose records fail R1.5c's quoting reaches E5's Toolkit variant, which offers no read control; E5, E7, E9, E10 and E42 carry written-out Toolkit variants; a time is an RFC 3339 date-time truncated to the millisecond; §1–§3's exclusions and R6.7's run before R6.4's and R6.11's checks; E48 says only the Lab is checked. R6.1, R6.4, R6.7, R6.11; E5, E7, E9, E10, E42 and E48 carry it.
 
 **Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** Recognition reads the first record under whatever encoding the file is read with, and a Toolkit export not decoded as UTF-8 throughout reaches E5's Toolkit encoding variant; E5's quoting variant names the record and asks for the quote mark to be removed in the Toolkit; the mixed-mode and one-collection checks run at read after E7, E9, E10 and E47, with E11 applying once a target is chosen. R6.1, R6.4 and E5 carry it.
+
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** E5's two Toolkit variants are named the encoding and the quotes variant, the encoding one checked first, the quotes one naming the row by ⟨record⟩; E46's mixed-modes variant lists the colours under each mode. R6.1, R6.4, E5 and E46 carry it.
 
 ### F74 — A SpectroCapture scan stays current over a Toolkit reading (2026-09-26)
 
@@ -220,6 +224,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); F76's "E43 names it"):** At commit, a target whose mode or matched outcomes changed since the preview returns to a fresh preview through E13's collection variant, nothing written, and one that no longer fits refuses with E46. A Toolkit-created target's form labels its mode as set by the export. R3.8k, R6.3 and E13 carry it.
 
 **Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** The commit recheck runs within the commit's write hold, covers every eligible record's match and outcome and every count and list E43's Toolkit lines showed, and routes in order: E13 for a changed source, E40, E46, then E13's collection variant. R3.8k carries it; the Capture Mode obligation line names the creation form's label.
+
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k reads the source before the write hold and routes any changed match or R6.8 outcome, as well as a changed mode, count or list, to E13's collection variant, which keeps each still-offered row's E14 choice (R3.8f). R3.8f and R3.8k carry it.
 
 ### F77 — What a Toolkit export lacks is recorded as unknown (2026-09-26)
 
@@ -262,11 +268,15 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** A quarantined reading is never the same reading, so re-importing recovers an item whose imported current reading is quarantined (R6.8b); an R6.8f record still updates metadata under R3.5/R3.6. R6.8f carries it.
 
+**Clarified 2026-09-26 ([rounds 3 and 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** R6.8 routes R6.8f first, then R6.8b for a match with no readable current value, then by the current reading's snapshot kind. R6.8 carries it.
+
 ### F83 — A new target's name is pre-filled from the file (2026-09-26)
 
 **Decision:** Creating a target for a Toolkit export pre-fills its name from the file's collection name, editable; an existing target ignores that name. R6.3 carries it.
 
 **Why:** the Cataloger's Toolkit collection name is the natural default. Source: [owner decision N15](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+**Clarified 2026-09-26 ([rounds 3 and 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** The pre-fill takes the Custom Collection Name of the first record left after R6.4's exclusions. R6.3 carries it.
 
 ### F84 — An imported reading's history order is the measured view's (2026-09-26)
 
@@ -297,6 +307,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 **Decision:** A matched item with no current value — pending, set aside for any cause, or its current reading quarantined — takes the Toolkit reading as its current value and becomes captured, and E43 lists each set-aside item it captures. R6.8b and R6.9 carry it.
 
 **Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N20](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+**Clarified 2026-09-26 ([rounds 3 and 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** A set-aside item E43 lists includes one set aside as unreadable, its current reading quarantined, whatever its kind. R6.8b carries it.
 
 ### F89 — One Toolkit collection per file (2026-09-26)
 

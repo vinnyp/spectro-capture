@@ -267,7 +267,7 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F61 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F61. |
 | F62 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F62. |
 | F63 | R6.2, R6.2a; DJ3 (d), (k), (l) and (m); the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F63. |
-| F64 | Vocabulary; R1.2, R1.6, R2.1, R2.2, R2.3, R2.3h, R2.3j, R5.5d, R7.1, R7.2, R7.7, R7.7o; DJ6; the out-of-scope line, the journeys index and the Inventory Import and Device Management lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
+| F64 | Vocabulary; R1.2, R1.6, R2.1, R2.2, R2.3, R2.3h, R2.3j, R5.5d, R7.1, R7.2, R7.5, R7.7, R7.7o, M2; DJ6; the out-of-scope line, the journeys index and the Inventory Import and Device Management lines in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
 | F65 | Governs no rows. |
 | F66 | R2.1; DJ6. |
 | F67 | R2.3j, R2.4; DJ6. |
@@ -759,6 +759,8 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); F66–F69):** R5.5d's salvage of two current readings keeps the one R2.3j would leave current, the other kept behind with no question, and otherwise the later-recorded; an imported snapshot's unknowns are absent (NULL), never a placeholder; the Data Export line names R7.7o. R5.5d, R2.3j, DJ6 and that line carry it.
 
 **Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** R5.5d replays two current readings in record order, ending a pair whose later-recorded reading is imported as R2.3j leaves it with that reading as B, reasons included; R7.5 checks the build over Import UJ 3's Fixture T spectra too; R7.7o adds a quarantined imported current. R5.5d, R7.5, R7.7o and DJ6 carry it.
+
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** R5.5d replays by per-item sequence and never drops a reading, a same reading kept behind, and otherwise gives the later reading correction-unconfirmed with the other as its predecessor; R7.5's Fixture T check lands with Import §6 under the tabulation the build uses, OQ 6's reference governing once named; M2's population names Fixture T's spectra; R2.3j stores a blank reference absent (NULL) and speaks of a readable A; R7.7o adds a reading with no model. R2.3j, R5.5d, R7.5, R7.7o, M2 and DJ6 carry it.
 
 ### F65 — Word budget 8,600 (2026-09-26)
 

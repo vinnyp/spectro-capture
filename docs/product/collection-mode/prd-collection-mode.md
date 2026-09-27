@@ -208,7 +208,7 @@ left there.
 | Multi-item selection, bulk set or clear, undo; R6.2 and R4.7 landing together | R6.1, R6.2, R4.7; copy E8 | Stop: ADR-0003 |
 | Bulk delete | R6.1, R6.3; the Data Foundation PRD's R6.2 and E33 | Stop: ADR-0003 |
 | Undo of a delete | R1.7; copy E10 | Stop: ADR-0003 or a later undo-representation ADR; Stop: OQ 10 — the Data Foundation PRD's OQ 20 |
-| Imported mark, detail and history | R2.4j; R2.7, R4.2d, R5.2b, R5.2e, R8.9's imported halves; M2's ZX-022; UJ2.1-r–t, seeded directly ([import R6.10](../import/prd-inventory-import.md#6-nix-toolkit-exports)) | Stop: device R1.21's imported kind; Data Foundation R2.3j; governs overlaps |
+| Imported mark, detail and history | R2.4j; R2.7, R4.2d, R5.2b, R5.2e, R8.9's imported halves; M2's ZX-022; UJ2.1-r–t, seeded directly ([import R6.10](../import/prd-inventory-import.md#6-nix-toolkit-exports)) | Stop: device R1.21's imported kind; Data Foundation R2.3j; adds to the first row's stops |
 | Code change and column rename | R4.4, R4.8; copy E6, E11, E15, E16, E19; the Data Foundation PRD's R1.2 and the import PRD's R2.6 | Stop: ADR-0003 |
 | Reordering from the collection | R2.9; the capture PRD's R6.8–R6.12, E33 and E34 | Stop: ADR-0003; Interim: the capture PRD's OQ 7 — its REORDER_SCOPE interim |
 | Restore and distance from current | R5.4, R5.5; the Data Foundation PRD's R2.3f and R2.9 and the capture PRD's R5.6 and R8.18 | Stop: ADR-0003 |

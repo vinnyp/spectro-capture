@@ -98,6 +98,7 @@ Cross-document:
 
 ### Inventory Import
 
+- [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a swatch added with a matching code between preview and commit rests on R3.3 alone; decide whether R3.8k's re-match extends to every import (predates the Nix Toolkit amendment).
 - [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
 - [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
 - [ ] **Capture / DF** — switching a collection's scan mode away from its imported readings' mode blanks their chips (DF R3.3d) with no warning; decide whether Capture R1.10's change warns.
@@ -202,7 +203,7 @@ Inputs for ADR-0005's executor and runtime ownership when it is drafted.
 
 Readings the owner takes while dogfooding a build.
 
-- [ ] **Import** — [its OQ 3 and M2](import/prd-inventory-import.md#open-questions): import the owner's own Nix Toolkit exports across devices, modes, illuminants and app versions, recording only format facts and tallies by state across files, as Import M2 bounds them — never a name, code, note, date, measured value, file name or per-file count (F71); include a ROWS_TARGET-sized Toolkit file in the import budget run.
+- [ ] **Import** — [its OQ 3 and M2](import/prd-inventory-import.md#open-questions): import the owner's own Nix Toolkit exports across devices, modes, illuminants and app versions, recording only format facts and tallies by state summed over two or more files — from a single file, only format facts and whether it imported cleanly — as Import M2 bounds them, never a name, code, note, date, measured value, file name or per-file count (F71); include a ROWS_TARGET-sized Toolkit file in the import budget run.
 - [ ] **Collection Mode** — OQ 2: the owner's estimate of collections per file, checked by UJ9.5-b; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 3: a "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 4: dogfood bulk edits, then the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
