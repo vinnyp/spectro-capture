@@ -770,6 +770,8 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 
 **Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26)):** R7.7o's re-scan is live, as Export's EJ1 needs; DJ6's restore pairings hold each restore's source in history; DJ6's index row names R5.5d and R7.2, its R2.3j within R2.1–R2.5. R7.7o, DJ6 and the journeys index carry it.
 
+**Clarified 2026-09-27 (the Inventory Import PRD's F82 as clarified under owner decision N28; [round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27)):** R2.3j's same reading is the same Date Saved, measurement mode and spectrum, so a reading in another mode is never taken as one the item already holds.
+
 ### F65 — Word budget 8,600 (2026-09-26)
 
 - **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12, 2026-09-26.

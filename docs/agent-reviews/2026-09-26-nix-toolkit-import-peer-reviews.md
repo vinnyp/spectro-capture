@@ -13318,3 +13318,83 @@ Check 1(c) on those five PRDs' pre-amendment text is also accepted by F92.
 - [x] **No "peer review pending" is left on a current status surface.** The six status lines, the README rows and the two fence preambles read closed. Earlier Clarified lines that say "Peer review pending" are closed by their fences' dated Closed lines.
 
 Re-locked on merge.
+
+
+## Round 9 — PR #22 review (2026-09-27)
+
+Subject: commit `60d9625`, PR #22's head at lock. The owner posted a peer review on PR #22 with two findings and asked for them to be addressed. The review follows verbatim.
+
+### The PR #22 review
+
+Reviewed `60d9625d0df0b7341e2d686c89a02cef041a8fe3` against `6374538`, using the same agent-build lens as PR #21: deterministic behavior, storage and provenance correctness, cross-PRD consistency, executable acceptance cases, and the agreed document shape.
+
+Two findings need addressing; both are inline:
+1. The same-reading key omits measurement mode, allowing a distinct condition's reading to be silently discarded as already held.
+2. New Import §6 rows violate the binding two-sentence rule, while lock check 10 incorrectly reports a clean result.
+
+The amendment otherwise provides substantial build detail: fixed mapping and parser behavior, preview/commit revalidation, explicit current-versus-history outcomes, unknown provenance, salvage handling, imported marks, and export flags. I checked the owner decisions and accepted F92's named legacy-format exceptions; this review does not ask for a wholesale conversion of the older PRDs.
+
+Validation: read the amendment and its five PRD mirrors, the relevant acceptance cases, fences, post-lock items and lock record; checked all 374 local links/anchors appearing on changed lines with no failures; verified that the only change after the recorded validated revision `c9af537` is the appended lock record. This is a documentation review, not execution of an importer or hardware test, and I did not independently rerun every recorded mechanical check.
+
+The existing ADR/provisional-constant gates and the explicitly deferred deleted-target-during-preview decision remain open. Resolving these two findings would close this review's findings, not establish that all those implementation decisions are already answered.
+
+#### Inline comment on `docs/product/import/prd-inventory-import.md`, line 23
+
+[P2] Include measurement condition in the same-reading identity
+
+Date Saved plus reflectances can conflate readings from different modes. A concrete accepted-input case: import an M1 reading with time T and spectrum S; Flag that item, keeping the reading in history; change the collection to M2 between sessions (Capture R1.10); then import an M2 record for the same code with the same T and S. R6.4 accepts it because the collection now uses M2, but R6.8f runs first and calls the historical M1 reading identical. It discards the M2 reading and leaves the item set aside, rather than recording the distinct condition under R6.8b. Equal numbers do not make the stored measurement conditions interchangeable (F76 / DF R3.3d).
+
+Please obtain/record the refinement to F82's identity rule so a reading in another measurement condition cannot satisfy it, and mirror it into DF R2.3j / the ADR-0003 dedup input. Also define the corresponding same-date tie outcome in R6.8d. Add an acceptance case for the M1-history → M2-import sequence, alongside the existing same-mode numeric-spelling/idempotency case.
+
+#### Inline comment on `docs/product/import/prd-inventory-import.md`, line 167
+
+[P2] Split the new multi-rule rows and correct lock check 10
+
+The Import fence preamble says F45's two-sentence rule binds every requirement row, and F92 does not waive check 10. This new R6.2 cell has five sentences, combining fixed mapping, column disposition, Note's `undefined` behavior, extra-column handling, and duplicate-L handling. R6.1, R6.4, R6.7 and R6.9 each have three sentences, and R6.10 has four. Nevertheless, the lock record reports “50 cells, none over two sentences.” These are amendment additions, so the accepted pre-existing-format exceptions do not cover them.
+
+Please compact or split the independently buildable rules into stable lettered sub-rows (preserving the parent IDs and all behavior), update their fence/case references, and rerun a check that actually scans these cells. A small mapping/validation table would give the agent clearer contracts than joining the same prose with semicolons. Correct the lock record to report the verified result.
+
+### Orchestrator verification
+
+Both findings reproduced.
+
+**The same-reading identity.** The Vocabulary defined a same reading as the same Date Saved and reflectances, with no measurement mode, and R6.8f runs first. Capture R1.10 lets a collection's scan mode change between sessions. So the review's sequence is reachable: import an M1 reading, flag it, switch the collection to M2, and a later M2 record carrying the same numbers was discarded as already held.
+
+**The two-sentence rule.** Check 10's exact pattern, run over every cell of every ID row, found six amendment rows over two sentences:
+- R6.1, R6.4, R6.7 and R6.9, at three each;
+- R6.10, at four;
+- R6.2, at five.
+
+The lock record's "50 cells, none over two sentences" was wrong: the first lock-check run's cell extraction missed §6's main-table rows. Export R1.2 also went from two sentences to three with this amendment. The Data Foundation PRD's R2.4 and M2 and the capture PRD's M8 are over two, but were already over before this branch at the same counts, and the Data Foundation PRD binds no two-sentence rule.
+
+### Owner decision N28 (2026-09-27)
+
+A reading's measurement mode is part of the same-reading identity. Two readings with the same Date Saved and spectrum in different modes are different readings, and R6.8d's same-date tie covers a different mode as it covers a different spectrum. Authority: the owner's PR #22 review, which asked for this refinement, and the owner's instruction to address it. It is recorded under Import F82 and mirrored under Data Foundation F64.
+
+### What landed (reopening rows for this round)
+
+**N28** landed in:
+- the Vocabulary's same reading;
+- R6.8d's tie;
+- the Data Foundation PRD's R2.3j;
+- the ADR-0003 row's dedup input;
+- two new UJ 3 cases, beside the numeric-spelling idempotency case: an M1 reading in history followed by an M2 import (R6.8b), and a same-date M1 current reading (R6.8d).
+
+**The two-sentence split:**
+- R6.1 is split into R6.1a–d, and R6.2 into the R6.2a–g mapping table.
+- R6.4 is split into R6.4a–c, R6.9 into R6.9a–b and R6.10 into R6.10a–d. Each is a lead row with lettered sub-rows, every clause carried over unchanged.
+- R6.7 is two sentences: "E47 names every failing column" is merged into its first.
+- Export R1.2's two flag sentences are merged into one.
+
+**Check 10 rerun** over all 238 Import cells, sub-rows included: none over two sentences. Export is back to its pre-branch count.
+
+**Rows reopened to ready-for-alignment for this round:**
+- Import R6.1, R6.2, R6.4, R6.7, R6.8, R6.9 and R6.10;
+- Data Foundation R2.3;
+- Data Export R1.2.
+
+**Clarified lines:** under Import F71, F73, F76 and F82, Data Foundation F64 and Data Export F35.
+
+**Word budgets:** Data Foundation 8,887 of 8,900, Data Export 3,993 of 4,000.
+
+**Real-value check:** no hits.
