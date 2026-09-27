@@ -4,7 +4,7 @@ Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain b
 
 **Nix Toolkit amendment review log:** [`docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md) — its Round 0 records the owner decisions N1–N15 that F69–F83 carry, and its Round 1 the decisions N16–N23 that F84–F91 carry.
 
-**Amendment lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27) — amendment F69–F91, peer review closed 2026-09-26 after eight rounds; checks 1–20 at the validated revision it names, with F92 accepting by name the results the older PRDs could not meet.
+**Amendment lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27) — amendment F69–F91, peer review closed 2026-09-26 after eight rounds; checks 1–20 at the validated revision it names, with F92 accepting by name the results the older PRDs could not meet. PR #22's review reopened nine rows for round 9 (N28 and the two-sentence split); they re-locked with [the re-lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#re-lock-2026-09-27-after-pr-22s-review), which names the validated revision now in force.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
