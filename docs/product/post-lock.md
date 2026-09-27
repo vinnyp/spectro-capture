@@ -98,7 +98,7 @@ Cross-document:
 
 ### Inventory Import
 
-- [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a swatch added with a matching code between preview and commit rests on R3.3 alone; decide whether R3.8k's re-match extends to every import (predates the Nix Toolkit amendment).
+- [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a matched item added, deleted or edited between preview and commit rests on R3.3 and the preview's classification alone; decide whether R3.8k's re-match extends to every import (predates the Nix Toolkit amendment).
 - [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
 - [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
 - [ ] **Capture / DF** — switching a collection's scan mode away from its imported readings' mode blanks their chips (DF R3.3d) with no warning; decide whether Capture R1.10's change warns.
@@ -253,7 +253,7 @@ Deliberate omissions from v1, recorded so no one re-raises them as gaps. Not wor
 
 The owner may overrule any of these. Not work.
 
-- **DF** — the salvage conflict resolution: the later-recorded reading stays current.
+- **DF** — the salvage conflict resolution: the later reading in per-item sequence stays current, except where R2.3j keeps an imported reading behind (F36's 2026-09-26 Clarified line).
 - **DF** — reflectance as a fraction of 1.
 - **DF** — times in UTC with `Z`.
 - **DF** — a path in both volume classes shows the network state.

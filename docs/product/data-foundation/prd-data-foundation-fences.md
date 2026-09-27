@@ -344,6 +344,8 @@ Source: [the owner’s eleven decisions](https://github.com/vinnyp/spectro-captu
 
 **Rows:** R5.5d, R7.3; post-lock ADR-0003 item.
 
+**Clarified 2026-09-26 ([the Nix Toolkit import review's round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26); F64 and R5.5d):** The worked example's two current readings are ordered by R2.1's per-item sequence, so equal record times no longer decide it; the later stays current with reason correction-unconfirmed and the other as its predecessor, and a pair whose later reading is imported, and not a restore, ends as R2.3j leaves it. Other invariants, a repeated per-item sequence among them, stay ADR-0003's.
+
 ### F37 — Export unavailable archives and quarantined readings (2026-09-17)
 
 **Decision:** The canonical export runs with an empty payload cell for each unavailable sample archive, with no new CSV column or state token. Any quarantined reading emits `quarantined`, including superseded history; OQ 21 stays open only for a distinct archive mark with an Export R2.5 version bump.
@@ -761,6 +763,8 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 **Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** R5.5d replays two current readings in record order, ending a pair whose later-recorded reading is imported as R2.3j leaves it with that reading as B, reasons included; R7.5 checks the build over Import UJ 3's Fixture T spectra too; R7.7o adds a quarantined imported current. R5.5d, R7.5, R7.7o and DJ6 carry it.
 
 **Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** R5.5d replays by per-item sequence and never drops a reading, a same reading kept behind, and otherwise gives the later reading correction-unconfirmed with the other as its predecessor; R7.5's Fixture T check lands with Import §6 under the tabulation the build uses, OQ 6's reference governing once named; M2's population names Fixture T's spectra; R2.3j stores a blank reference absent (NULL) and speaks of a readable A; R7.7o adds a reading with no model. R2.3j, R5.5d, R7.5, R7.7o, M2 and DJ6 carry it.
+
+**Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26)):** DJ3's salvage case follows R5.5d; R5.5d's R2.3j branch excludes a restore; R2.3j's reason column gives re-measurement only when B is current over a readable A, matching Import R6.8b and R6.8d; M2's Fixture T population waits for Import §6; R7.7o no longer names Collection Mode, whose cases seed directly; the Import line names its R6.10. DJ3 and F36's Clarified line carry it too.
 
 ### F65 — Word budget 8,600 (2026-09-26)
 

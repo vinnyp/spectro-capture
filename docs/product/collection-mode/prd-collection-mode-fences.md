@@ -1933,6 +1933,8 @@ Fences F219 and F220 were decided by the owner on 2026-09-26, over the PR #21 fo
 
 **Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26); editorial within F221):** UJ2.1-r's imported filter lists ZX-022 and ZX-026, and its action opens ZX-026 and reads its history; the imported rows' Build-dependencies row adds to the first row's stops. Peer review pending.
 
+**Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26); editorial within F221):** M2's population and the imported rows' Build-dependencies row name ZX-026 beside ZX-022. Peer review pending.
+
 ### F222 — This PRD's word budget is 12,500 (2026-09-26)
 
 - **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), 2026-09-26. Question: "Two locked PRDs are out of word budget: Data Foundation (8,473 of 8,480) and Collection Mode (12,399 of 12,400). The amendment needs roughly 100 words in DF (provenance, R2.2's exception, scope) and about 60 in Collection Mode (the imported mark and its history line). How should they fit?" Chosen: **Raise DF to 8,600, CM to 12,500** — "Dated fences like F214/F220; the new rules land in plain words and no aligned row reopens for compaction." Not chosen: **Compact to fit**. Peer review pending.

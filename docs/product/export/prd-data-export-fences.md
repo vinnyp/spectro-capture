@@ -230,6 +230,8 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** EJ1's Toolkit case declares R7.7o's items in one collection, counts a quarantined imported current among both imported readings and quarantined swatches, and asserts the no-model row's empty model cell; its link is repaired. Peer review pending.
 
+**Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26); editorial within this fence):** EJ1 names the Nix Spectro 2 row, gives each imported row's measured-at and empty cells, and lists R7.7o's item whose imported reading a re-scan superseded; its count of 3 imported readings is unchanged. Peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
