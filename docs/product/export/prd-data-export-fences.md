@@ -224,6 +224,8 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); the Inventory Import PRD's F71 and F73):** R1.1h, R1.1i and R1.1s name `sc_imported` beside `sc_simulated`; R1.2 says the two are never both true; R1.1t names the model and measured-at; R4.2 asserts all three values of both columns against a golden cut from the Data Foundation PRD's R7.7o; E1's imported line names the empty cells; OQ 4 records that a Toolkit spectrum is fixed at 400–700 nm every 10 nm; the Device line names `sc_imported`. Peer review pending.
 
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** R4.2, the Data Foundation line and the journeys' header enumerate R7.7a–o; R1.1t labels a reading kept behind a current one `superseded`; the Device outbound line and EJ1's quarantined-current row name `sc_imported`; E1's imported line names the empty basis and archive cells. Peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).

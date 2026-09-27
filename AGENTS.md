@@ -68,6 +68,7 @@ The v1 instrument family is the Nix Spectro 2 / Spectro L (Nix Sensor), connecte
 - CI can build this project. CI **cannot** exercise any device code path — there is no hardware or license key available to it.
 - Every PR that touches device-facing code needs a human with real hardware to verify it before merge.
 - All device access must go through the `SpectroDevice` seam so that everything above it is testable against the mock implementation without hardware. If you're writing code that talks to the instrument directly instead of through that seam, stop and reconsider.
+- A real vendor-app export — anyone's collection — and any value from it (names, codes, notes, collection names, dates, counts, measured values, screenshots) never enter the repo; fixtures are synthetic ([Inventory Import R6.10](docs/product/import/prd-inventory-import.md#6-nix-toolkit-exports)).
 - Never bypass the pre-commit secret scan (`--no-verify`) to get past a gitleaks finding. If it's a false positive, add a narrow allowlist entry and say why in the PR.
 
 ## 6. How work lands

@@ -100,6 +100,7 @@ Cross-document:
 
 - [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
 - [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
+- [ ] **Capture / DF** — switching a collection's scan mode away from its imported readings' mode blanks their chips (DF R3.3d) with no warning; decide whether Capture R1.10's change warns.
 - [ ] **Import / Collection Mode** — in the first build phase an imported reading is replaced only through Flag and set-aside review, re-scan being P1; revisit if dogfood shows the imported mark lingering.
 - [x] **Import** — non-preview actions, including all three E40 routes, are enumerated by R4.1 and exercised in UJ 2.1; R3.8 owns transitions. Owner explicitly ratified the rule change in the [2026-09-17 PR #16 decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); transitions and action coverage completed in PR #16.
 - [x] **Import** — §4 now links to its own UJ 2–2.2 acceptance scenarios — PR #16 (commit `cf9974f`).
@@ -141,6 +142,8 @@ Cross-document:
 ## First build PR
 
 Build-review items and the engineering plan's test matrix.
+
+- [ ] **Import / DF / Device / Collection Mode / Export** — the Nix Toolkit build order: the device PRD's R1.21 imported kind and the Data Foundation PRD's R2.3j first; then Import §6, Collection Mode's imported mark (its Build dependencies row) and Export's `sc_imported` goldens on R7.7o. Collection Mode, Device and Export cases may seed an imported reading directly (Import R6.10).
 
 - [ ] **DF** — the first build PR that runs DJ3 waits on the two DJ3 items under Data Foundation in the next pass above: the positive case, without which (i) alone passes a build that refuses every write while a clearing is stuck, and the added DJ3 runs and harness fixes (its round-19 interface review's IF19-m4; added in PR #21).
 - [ ] **DF** — implement the CSV → store → CSV passthrough-value case now specified by R7.7b; contract clarified in PR #17, build evidence pending.
@@ -199,7 +202,7 @@ Inputs for ADR-0005's executor and runtime ownership when it is drafted.
 
 Readings the owner takes while dogfooding a build.
 
-- [ ] **Import** — [its OQ 3 and M2](import/prd-inventory-import.md#open-questions): import the owner's own Nix Toolkit exports across devices, modes, illuminants and app versions, recording outcomes and format facts only, never the files (F71); include a ROWS_TARGET-sized Toolkit file in the import budget run.
+- [ ] **Import** — [its OQ 3 and M2](import/prd-inventory-import.md#open-questions): import the owner's own Nix Toolkit exports across devices, modes, illuminants and app versions, recording only format facts and tallies by state across files, as Import M2 bounds them — never a name, code, note, date, measured value, file name or per-file count (F71); include a ROWS_TARGET-sized Toolkit file in the import budget run.
 - [ ] **Collection Mode** — OQ 2: the owner's estimate of collections per file, checked by UJ9.5-b; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 3: a "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 4: dogfood bulk edits, then the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).

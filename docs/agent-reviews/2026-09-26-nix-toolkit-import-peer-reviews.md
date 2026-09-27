@@ -2075,3 +2075,1937 @@ Sound after fixing the Blocker and the seven Majors. The data model underneath i
 | Export-R1.2 | ALIGN |
 | Export-E1 | ALIGN |
 | Capture-R1.10 | ALIGN |
+
+
+## Round 2 — delta verification (2026-09-26)
+
+Subject: commit f7cbde5 (round 1's fixes over 2a54fce). The same nine lenses, each given its own round-1 section above, the round-1 fix file and the fences as sources, and asked to mark every round-1 finding RESOLVED, PARTIAL or UNRESOLVED, report new defects the fixes introduced, and give a disposition over every row and state at pre-alignment. No brief cited the research report; no cross-model pass ran.
+
+### Orchestrator verification
+
+No lens reported an open Blocker, and every round-1 Blocker was marked RESOLVED by the lens that raised it. Every new Major was checked against the branch by grep and reproduced:
+- the commit-recheck case contradicting R6.4, since a pending-only target switched to M1 still fits;
+- DF R5.5d's tie-break reversing R2.3j for simulated and imported pairs;
+- R7.7a–n left at four sites;
+- E48 claiming checks R6.2 ignores;
+- the E7/E9/E10/E42 splice rule;
+- UJ2.1-s naming a P1 variant and not telling the orders apart;
+- R6.6's undefined "cannot work under";
+- R6.10 against the Collection Mode harness's declared fixtures;
+- the fixed 0.05 offset;
+- M2 and OQ 3 leaving what may be recorded unbounded.
+
+None failed to reproduce. The lens reviews below passed the same local-only real-value check; the one hit, a fence ID, was a false positive. No owner decision was needed: each fix sits inside a recorded fence and is recorded by a dated round-2 Clarified line.
+
+### What landed
+
+The fix file [`prd-inventory-import-round-2-fixes.md`](../product/import/prd-inventory-import-round-2-fixes.md) lists every finding by ID. It covers:
+- the commit recheck, with E13's new collection variant;
+- the salvage rule;
+- the fixture range;
+- E48, and written-out Toolkit variants for E5, E7, E9, E10 and E42;
+- E43 and E14 wording;
+- the history-order cases (UJ2.1-s, UJ2.1-t);
+- offered pairs;
+- direct seeding of imported fixtures, with a Collection Mode build row and a post-lock build-order item;
+- tolerance-relative offsets;
+- the bound on dogfood records;
+- the quarantined-reading exemption;
+- the time and number grammar;
+- the new UJ 3 cases;
+- the ADR-0003 inputs;
+- AGENTS.md §5.
+
+### product-manager
+
+#### Verdict
+Builds the right thing for the user. Round 1's Blocker and seven of its eight Majors are fully resolved; PM9 is partly resolved, and what remains of it is only a missing sentence of copy. The fixes add no new Blocker or Major. What remains is copy precision and cross-references: one preview line calls a newer Toolkit reading "earlier", E46's mixed-modes refusal is now a dead end, and a salvage tie-break contradicts F86.
+
+#### User & problem context (brief)
+- **User and job:** the Cataloger (also the owner and first user) has already measured part or all of a physical collection in the Nix Toolkit mobile app. They want those readings in a SpectroCapture collection without re-scanning, with honest provenance. They then want to keep importing, scanning and correcting on top of them (vision J7, pulled into v1).
+- **What is validated:** one real export (Spectro 2, M2, D50/2°, one collection, codes filled).
+- **What is assumed:** every other Toolkit export has the same shape. That assumption is now named and tracked by Import OQ 3, M2 and a post-lock dogfood item, which is the right size for a one-user tool.
+
+Path abbreviations below. Every path is absolute under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/`:
+- **IMP** `docs/product/import/prd-inventory-import.md`
+- **IJ** `docs/product/import/prd-inventory-import-journeys.md`
+- **IC** `docs/product/import/prd-inventory-import-copy.md`
+- **FIX** `docs/product/import/prd-inventory-import-round-1-fixes.md`
+- **DF** `docs/product/data-foundation/prd-data-foundation.md`
+- **DJ** `docs/product/data-foundation/prd-data-foundation-journeys.md`
+- **CM** `docs/product/collection-mode/prd-collection-mode.md`
+- **CMC** `docs/product/collection-mode/prd-collection-mode-copy.md`
+- **CMJ** `docs/product/collection-mode/prd-collection-mode-journeys.md`
+- **EX** `docs/product/export/prd-data-export.md`
+- **CAP** `docs/product/capture-mode/prd-capture-mode.md`
+- **VIS** `docs/product/vision.md`
+- **PL** `docs/product/post-lock.md`
+- **AG** `AGENTS.md`
+
+#### Findings
+
+##### Round-1 findings: status
+
+**Blocker and Majors**
+- **PM1: RESOLVED.** New R6.8f runs first and matches against every reading the item holds, current or in history (IMP:182, Vocabulary IMP:23). DF R2.3j adds "none when the item already holds the same reading" (DF:137). The cases I asked for are all there: repeat over a scan-current state (IJ:134), newer-then-older (IJ:136–137), Flag then re-import (IJ:139), and DJ6's no-new-reading row (DJ:120).
+- **PM2: RESOLVED.** R6.8 keys on the current reading's snapshot kind (IMP:173). R6.8g makes a Toolkit reading current over a simulated one (IMP:186), mirrored in DF R2.3j (DF:137), with cases at IJ:140 and DJ:118.
+- **PM3: RESOLVED.**
+  - R6.4 says the commit writes the mode adoption, the commit's rollback undoes it, and E43 names it (IMP:169).
+  - R3.8k re-checks the fit at commit (IMP:126).
+  - E43 has the mode-change sentence (IC:29).
+  - Cases cover Cancel, E44, and a mode change between preview and commit (IJ:130–132).
+- **PM4: RESOLVED.** E12 has a "From Nix Toolkit" meaning sentence (CMC:173).
+- **PM5: RESOLVED.** R6.1 looks for the signature under semicolon, comma and tab (IMP:166), with a comma re-save case (IJ:111). The near-miss state is deferred at PL:101 with a sound reason: OQ 3's corpus will show which near-misses actually occur.
+- **PM6: RESOLVED.**
+  - Scenario B (several Toolkit collections in one file) is now R6.11 and E49 (IMP:176, IC:35, IJ:128).
+  - Scenario A (blank codes) gets the Toolkit remedy rule (IC:39). Whether a code can be blank goes to OQ 3 (IMP:205). That deferral is sound: the remedy can be followed, and nobody yet knows if the Toolkit allows blank codes.
+- **PM7: RESOLVED.** OQ 3 at IMP:205, M2 at IMP:195, dogfood item at PL:202. M2's scope has its own new Minor, PM-R2-m5.
+- **PM8: RESOLVED.** UJ 3's paragraph states the format facts (IJ:104), and TK-3 is written in scientific notation (IJ:106). Nit: IJ:106/118 write `1.04700000e+0`, which matches IJ:104's one-digit exponent, but FIX:26 says `e+00`. The fix file is the stale one.
+- **PM9: PARTIAL.**
+  - Resolved:
+    - R6.6 lists as not checked any record whose file L, a, b can't be read or whose illuminant/observer the app can't work under yet (IMP:171).
+    - A blank Nix Device leaves the model unknown (IMP:170).
+    - The D65/10° case at IJ:123 would catch a build that checks under the collection's reference.
+  - Still open: E43's not-checked line (IC:29) gives no reason. A D65/10° Toolkit user sees every record listed as unchecked, and Lab values that differ from the Toolkit's, with no explanation. This is Minor now.
+
+**Minors and Nits**
+- **PM-m1: RESOLVED.** Custom Collection Name is read for R6.3 and R6.11 and never stored (IMP:167). The stored column list is asserted (IJ:119).
+- **PM-m2: RESOLVED.** Only the first L, a, b are read, and every other colour column is ignored (IMP:167); unreadable L, a, b means not checked (IMP:171). E48's copy now overclaims this; see PM-R2-m4.
+- **PM-m3: RESOLVED.** IMP:85 now says R3.8a–q, and the every-state row covers E40–E49 (IJ:36).
+- **PM-m4: RESOLVED.** E43 offers neither read control for a Toolkit export (IMP:166, IC:29), with carve-outs at IMP:50 and IMP:58. E5 still has an unspecified corner; see PM-R2-m3.
+- **PM-m5: RESOLVED.**
+  - A quarantined current reading falls under R6.8b (IMP:184).
+  - A same-dated reading with a different spectrum goes to history and is listed (IMP:187).
+  - A set-aside item is captured and listed (IMP:184, IC:29).
+- **PM-m6: RESOLVED.** "Hold no reading" is defined as current or in history, QC records aside (IMP:169).
+- **PM-m7: RESOLVED.** A Toolkit-created target's mode can't be changed in that creation (IMP:168, IJ:114).
+- **PM-m8: RESOLVED.** E14 has a Toolkit variant (IC:24). Its new sentence has a precision issue; see PM-R2-m1.
+- **PM-m9: RESOLVED.** Reading and canonical value are defined for an imported reading (DF:37, DF:112, AG:108–109).
+- **PM-m10: RESOLVED.** R2.1 names the history's measured order as one of the over-time views (DF:112). DJ6 asserts both orders (DJ:115–116), and CMJ:237 (UJ2.1-s) tells them apart.
+- **PM-m11: RESOLVED.** The R4.2d copy line lists samples, averaging, spread and agreement as not recorded (CMC:295).
+- **PM-m13: PARTIAL.**
+  - IC:32 dropped the unverified "export each mode" remedy, but put nothing in its place (see PM-R2-m2).
+  - The second half was not answered and is not recorded in FIX:39: switching the collection's scan mode away later (CAP:147, DF R3.3d) blanks every imported chip with no warning.
+- **PM-m12: RESOLVED.** "Measurement condition" is linked to the Toolkit's "Measurement Mode" (IC:29, IC:32).
+- **PM-m14: RESOLVED (deferred).** PL:103 records it with a revisit trigger (FIX:62). The deferral is sound because re-scan is an owner-set P1 and the Flag path exists at P0.
+- **PM-m15: RESOLVED.** ADR-0003 inputs at PL:169, help docs at PL:217, dogfood at PL:202.
+- **PM-m16: RESOLVED.** M8 leaves out imports whose items arrive captured (CAP:420).
+- **PM-m17: RESOLVED.** Fixed at IMP:5 and IMP:21.
+- **PM-n1: PARTIAL.** The heading at VIS:138 still reads "(cataloger; v2 candidate)"; only the risk bullet at VIS:144 is marked superseded. If the old heading is kept for F69's anchor, record that. Otherwise rename it and update the anchor.
+- **PM-n2: RESOLVED.** The reading counts now have their own labels (IC:29).
+
+##### New findings (round 2)
+
+**[MINOR] PM-R2-m1: two E43 and E14 lines mislead on exactly the outcomes users find counterintuitive.**
+- **Where:** IC:29 (E43 Toolkit variant: "Kept as earlier readings: ⟨history⟩ — a swatch you scanned here keeps that scan"; "…are kept as earlier readings") and IC:24 (E14 Toolkit variant: "a swatch you scanned here keeps that scan as its colour").
+- **Defect 1, "earlier":** F84 changed R6.8c (IMP:185) to say "not current" instead of "earlier", because a reading kept behind a scan can have a *later* Date Saved than the scan (DJ:116). The copy still says "earlier".
+- **Defect 2, "a swatch you scanned here":** this is false for a Demo Device scan, which F86/N18 lets a Toolkit reading replace (IMP:186).
+- **Scenario:** a Cataloger scanned 10 swatches in February, re-measured them in the Toolkit in March, and re-imports. The preview tells them their March readings were kept as "earlier readings". History's measured view then lists them *after* the scan. The owner's N6 choice (a scan stays current) is fine, but the copy misstates it.
+- **Fix:**
+  - Rewrite the E43 line as "Kept in history, not used as the colour: ⟨history⟩ — a swatch you scanned here with an instrument keeps that scan, even where the Toolkit reading is newer."
+  - Use "kept in history, not used as the colour" in the clashes line.
+  - Rewrite E14's clause as "…a swatch scanned here with an instrument keeps that scan as its colour."
+
+**[MINOR] PM-R2-m2: E46's mixed-modes variant is now a dead end.**
+- **Where:** IC:32. After the unverified remedy was dropped, the variant explains why the file is refused but offers only "Pick the file again" and "Cancel".
+- **Scenario:** a user who changed the Toolkit's Measurement Mode partway through a collection can't import any of it, and the app gives no path forward. They can't fall back to importing the file as an inventory without readings either, because recognition is automatic (R6.1).
+- **Fix:** keep N8/F76's refusal as it is. Add one honest pointer, for example "Keep each measurement condition's colours in their own Nix Toolkit collection and export each." Mark it provisional under OQ 3 until the corpus shows whether the Toolkit can do this.
+- **Also open:** the missing warning when a collection's mode is later switched away from its imported readings (PM-m13, second half).
+
+**[MINOR] PM-R2-m3: E5 on a recognised Toolkit export is unspecified.**
+- **Where:** IMP:166 says the encoding and separator are "both shown fixed". E5 (IC:15) still offers "Choose an encoding" and "Choose a separator" and says "save the file again from your spreadsheet". R3.8a (IMP:116) says "where offered". The copy's Toolkit remedy rule (IC:39) covers E7, E9, E10 and E42 but not E5.
+- **Scenario:** OQ 3 itself asks how the Toolkit writes a quote inside a name. A colour named with an unescaped `"` sends a recognised Toolkit export to E5's syntax variant. If the build offers "Choose a separator" and the user picks comma, the file drops to §1–§3. The result is pending items plus about 50 junk metadata columns: the lossy fallback PM5 was meant to close.
+- **Fix:** say whether E5 offers the read controls for a Toolkit export (recommend withholding both), and add E5 to IC:39's rule: "Correct it in the Nix Toolkit and export it again".
+
+**[MINOR] PM-R2-m4: E48 claims values are checked that R6.2 ignores.**
+- **Where:** E48 (IC:34) says "The file's own Lab, LCh, XYZ, sRGB and HEX are checked, not kept". R6.2 (IMP:167) ignores LCh, XYZ, sRGB and HEX, and R6.6 (IMP:171) compares Lab only.
+- **Fix:** "The file's own Lab is checked against SpectroCapture's; its Lab, LCh, XYZ, sRGB and HEX aren't kept — SpectroCapture works every colour out again from the spectrum."
+
+**[MINOR] PM-R2-m5: M2 counts some lossy imports as clean and some clean ones as failures.**
+- **Where:** M2 (IMP:195) counts an import as clean if it had no E46, E47, E49 or R6.6 flag.
+- **Not counted but should be:** E5, E7, E9 and E10. These are exactly the variances OQ 3 asks about (IMP:205): blank or repeated codes, and a quote or delimiter inside a name. A Toolkit export that loses rows to E9 or E10 and then commits counts as "clean".
+- **Counted but shouldn't be:**
+  - D65/10° records that are "not checked" by design (N22, an interim scope limit, not format variance);
+  - E46's collection variant, which is the owner's choice of target, not a fault in the file.
+- **Fix:** define clean as "no record excluded for any reason (E5, E7, E9–E11, E47), no E46 mixed-modes or E49 refusal, and no R6.6 differing record". Report not-checked records separately under OQ 21.
+
+**[MINOR] PM-R2-m6: DF R5.5d's salvage tie-break contradicts F86 and R2.3j.**
+- **Where:** DF:187: "the later-recorded stays current unless it is imported and the other is not".
+- **Defect:**
+  - When the other current reading is simulated, this rule makes the Demo reading current over the real imported one. F86 and R2.3j (DF:137) say the opposite.
+  - When the imported reading loses to a live one, it is "retained as correction-unconfirmed". That puts a correction question on a reading R2.3j keeps behind the scan with reason initial and "no correction question".
+- **Scenario:** rare. It needs a damaged file carrying two current readings, and the user would see and could answer the question. It is still a one-line contradiction of a settled fence.
+- **Fix:** "…unless it is imported and the other is of the live kind, or it is simulated and the other imported; an imported reading so retained keeps reason initial."
+
+**[MINOR] PM-R2-m7: stale fixture range.**
+- **Where:** EX:145 (Export R4.2), EX:180 (Export's Data Foundation obligation line) and DF:281 (DF's Data Export obligation line) still say "R7.7a–n". R4.2 now asserts "all three … `sc_imported` values", and only R7.7o (DF:268) holds a true one.
+- **Why only Minor:** EX journey line 14 names R7.7o, so a journey-driven build still catches it. This belongs to the test and interface lenses.
+- **Fix:** change all three to "R7.7a–o".
+
+**[NIT] PM-R2-n1: "Unchanged" reads as "nothing happened".** In the Toolkit variant of E43 (IC:29), the rows "Unchanged: ⟨unchanged⟩" line counts pending items that just became captured with colours (IJ:130 inventory-first flow). Label it "Details unchanged" in the Toolkit variant.
+
+#### Biggest risks   (what builds the wrong thing or fails the user)
+1. **Copy that misstates the two counterintuitive outcomes (PM-R2-m1).** A newer Toolkit reading doesn't replace a scan, and a Demo reading doesn't count as a scan. These are exactly the moments a Cataloger reads the preview closely, and today it tells them the wrong story.
+2. **Format variance is still one export deep.** It is now tracked honestly by OQ 3, M2 and the dogfood item. But M2's definition misses the very row losses OQ 3 asks about (PM-R2-m5), and E5 on a recognised export can still drop a user into the lossy generic path (PM-R2-m3).
+3. **Refusals without a path.** E46's mixed-modes variant (PM-R2-m2) blocks an entire collection with no stated way out. Frequency is unknown until OQ 3's corpus exists.
+
+#### Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **Re-import is now safe.** R6.8f checks against every reading the item holds, which makes re-import idempotent. The cases that matter are covered: a repeat over a scan, newer-then-older, Flag then re-import, and a restore carrying its source's kind. This was the Blocker, and it is closed properly, not patched.
+- **The reading counts partition cleanly** (current, kept, already here) and sum to the reading total. E43 lists every decision the user might not expect: a mode change, set-aside items captured, same-dated readings that differ, differing and unchecked records.
+- **Mode adoption is honest.** It happens inside the commit, is undone by Cancel or E44, is re-checked at commit, and is named in the preview.
+- **The format facts are in the repo with no data values**, the synthetic definition is strict, and the fixture's own values come from an independent reference. This protects the owner's data and gives the builder a falsifiable contract.
+- **Right-sized for a one-user tool.** OQ 3 and M2 track format variance with a small owner corpus and no instrumentation or funnel. Deferring the near-miss state until the corpus shows which near-misses happen is the right call; designing it now would be speculative.
+- **The history-order resolution (N16) changed no locked row** and gave DJ6 and UJ2.1-s cases that tell the two orders apart.
+- **The mirrors are consistent across siblings:**
+  - DF's reading and canonical-value definitions and its predecessor rule (R2.3h);
+  - Collection Mode's E12, detail and history lines;
+  - Export's `sc_imported` in R1.1h, i, s and t, with EJ asserting model and measured-at;
+  - Capture M8's exclusion.
+
+#### Missing / over-specified
+**Missing:**
+- An honest remedy on E46 mixed-modes (PM-R2-m2).
+- Why E43 shows readings as not checked (PM9 residual).
+- A warning when a collection's mode is switched away from its imported readings (PM-m13 residual).
+- E5's behaviour for a Toolkit export (PM-R2-m3).
+- A corrected salvage tie-break (PM-R2-m6).
+- The R7.7a–o range at three sites (PM-R2-m7).
+
+**Over-specified:** nothing material. R6.7's value grammar and R6.1's delimiter order look mechanism-heavy, but both are the build contract for a single-source format, so they earn their place. E43's Toolkit variant is long in full, but Capture §12's zero-count rule means the common first import shows only two or three lines.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | ALIGN |
+| Import-R6.1 | OBJECT (PM-R2-m3) |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.5 | ALIGN |
+| Import-R6.6 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| Import-R6.11 | ALIGN |
+| Import-M2 | OBJECT (PM-R2-m5) |
+| Import-E7 | ALIGN |
+| Import-E9 | ALIGN |
+| Import-E10 | ALIGN |
+| Import-E14 | OBJECT (PM-R2-m1) |
+| Import-E42 | ALIGN |
+| Import-E43 (Toolkit variant) | OBJECT (PM-R2-m1, PM9 residual, PM-R2-n1) |
+| Import-E46 | OBJECT (PM-R2-m2, PM-m13) |
+| Import-E47 | ALIGN |
+| Import-E48 | OBJECT (PM-R2-m4) |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (PM-R2-m6) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | ALIGN |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ALIGN |
+| CM-M2 | ALIGN |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (PM-R2-m7) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ALIGN |
+
+### staff-software-engineer
+
+#### Verdict
+Ready to proceed once the one new Major is fixed. The Major is UJ 3 :132, which contradicts R6.4 and R3.8k. Every round-1 Blocker and Major is resolved except M8, which is partly resolved and leaves a Minor-sized residual. The fix pass added one Major and twelve Minors. Most of the Minors are one-clause edits.
+
+#### What I reviewed
+- **Artifact:** a requirements-mode delta. Round 2 of the Nix Toolkit import amendment: subject f7cbde5, round 1 at 2a54fce, base 6374538. I read `git diff 2a54fce f7cbde5 -- docs AGENTS.md` and then the changed rows in full.
+- **Files.** All paths are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/`.
+  - Abbreviations: `IMP` = `docs/product/import/prd-inventory-import.md`, `IMP-J` = its `-journeys.md`, `IMP-C` = its `-copy.md`, `IMP-F` = its `-fences.md`; `DF` = `docs/product/data-foundation/prd-data-foundation.md`, `DF-J` = its `-journeys.md`, `DF-F` = its `-fences.md`; `CM` = `docs/product/collection-mode/prd-collection-mode.md`, `CM-C` = its `-copy.md`; `EXP` = `docs/product/export/prd-data-export.md`.
+  - Read in full: IMP, IMP-C, IMP-J UJ 3, IMP-F F69–F91, DF, DF-J DJ6, DF-F F64–F70, and the round-1 fix file `docs/product/import/prd-inventory-import-round-1-fixes.md`.
+  - Also read: my round-1 section and the owner decisions N16–N23 in `docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`.
+  - Read the changed rows and copy lines in CM (R2.4, R2.7, R4.2, R5.2, R5.3, R8.9, M2, the copy lines, UJ2.1-r/s, F221–F223), EXP (R1.1h–t, R1.2, R4.2, OQ 4, E1, EJ1), Capture R1.10, M8 and §12, and Device R1.21/R1.22.
+  - Read the diffs to AGENTS.md, docs/decisions/README.md, post-lock, the PRD index and the vision.
+- **Count-only leak check (B3), no value printed.**
+  - Every Fixture T timestamp and name, and the DJ6 and variant timestamps, returned 0 hits against the local export the format report names (outside the repo).
+  - No distinct Custom Collection Name, Color Name, Color Code or Date Saved value from that export (six characters or longer) appears in any added line of `git diff 6374538 f7cbde5 -- docs AGENTS.md`.
+- **Could not verify:**
+  - the rule-14 word counts
+  - how the Toolkit escapes an embedded `"`, `;` or newline (OQ 3)
+  - whether other Toolkit versions or settings change the column set, the grid or the number forms
+  - the Spectro 2 grid (Export OQ 4)
+  - how far the app's derivation sits from any independent colour library, which R2-m7 turns on
+
+#### Findings
+
+##### Round-1 findings: status
+- **B1 re-import duplicates: RESOLVED.** IMP:182 (R6.8f, "current or in history … A Flag, a restore or a set-aside decision stands"), IMP:23, DF:137 ("none when the item already holds the same reading"). My three scenarios are IMP-J:134, :137 and :139, plus DF-J:120. R3.3 (IMP:80) and R6.9 (IMP:174) now agree.
+- **B2 number format not in repo: RESOLVED.** IMP-J:104 states the format: bare `;`, the 59-column unquoted header (28 named columns plus 31 bands, which checks out), the four quoted columns, the `d.dddddddde±d` form, XYZ 0–1, sRGB integers, lowercase HEX, two-place densities, and the Date Saved form. R6.10 (IMP:175) cites it. TK-3 is `1.04700000e+0` (IMP-J:106), and IMP:172 accepts exponents.
+- **B3 real values in the fixture: RESOLVED.** Fixture T's values are invented (IMP-J:106); synthetic is defined at IMP:175 and IMP-F:174; the count-only check above found no hits.
+- **M1 E43 count contradiction: RESOLVED.** IMP:174 partitions the counts; IMP-J:117 and IMP-J:133 now read "2 used as colour (TK-2, TK-3)".
+- **M2 equality and ordering: RESOLVED.** IMP:23; IMP:187 (same date, different spectrum → history); DF:137 ("imported A measured earlier"); IMP-J:138, :141.
+- **M3 value grammar: RESOLVED.** IMP:172; IMP:170 ("above 1.0 or below 0 included"); IMP:171 (unreadable file L, a, b → not checked); IMP-J:125. The residual precision gap is R2-m6.
+- **M4 mode/pair sets and check order: RESOLVED.** IMP:172 (exactly M0, M1 or M2); IMP:169 ("R6.7's exclusions run first"); IMP:171 (a pair the app can't work under → not checked, N22); IMP-J:123, :126. Residuals are R2-m3 and R2-m11.
+- **M5 when the mode is adopted: RESOLVED.** IMP:169 (written by the commit, undone with it); IMP:168 (mode fixed in creation); Capture R1.10; IMP-J:131. The commit-time recheck case added alongside it created R2-M1.
+- **M6 history order: RESOLVED.** DF:112; DF F66; IMP:185 ("not current"); DF-J:115–116 now tell the two orders apart; CM UJ2.1-s.
+- **M7 DF reading model: RESOLVED.** DF:37, :99, :112, :137, :239. AGENTS.md §8. The ADR-0003 row input and its post-lock item.
+- **M8 no imported fixture: PARTIAL.** DF:268 (R7.7o), DF:245 ("R7.7a–o"), DF:240 ("R2.3a–j") and EXP:145 (`sc_imported` values) all landed. But EXP:145 still enumerates "DF R7.7a–n" and DF:281 still says "goldens on R7.7a–n". See R2-m9.
+- **m1 Custom Collection Name: RESOLVED.** IMP:167, IMP:176, IMP-J:119.
+- **m2 read controls on E43: RESOLVED.** IMP:166; IMP-C:29 lists the Toolkit actions as "Import; Cancel". E5 is a separate gap, R2-m2.
+- **m3 tolerance cite: RESOLVED.** IMP:171, IMP:32.
+- **m4 vocabulary: RESOLVED.** IMP:21–22.
+- **m5 R2.4 carve-out: RESOLVED.** DF:116.
+- **m6 CM rule vs copy: RESOLVED.** CM-C:295 and :310 against CM:348.
+- **m7 placeholders: RESOLVED.** IMP-C:37 and Capture §12.
+- **m8 wavelength grid: RESOLVED, deferral sound.** EXP:205; the post-lock spike item; OQ 3 (IMP:205) covers Toolkit grid variance; extra bands are listed as added columns (IMP:167), not silent.
+- **m9 R6.8 edge cases: RESOLVED.** IMP:173 keys on the snapshot kind, with a restore carrying its source's; IMP:184 and IMP:186; IMP-J:140.
+- **m10 illuminant/observer as provenance: RESOLVED.** IMP:170. The creation form's pair is Capture §1's, by IMP:162's "every rule … not replace[d] still applies".
+- **m11 performance: RESOLVED, deferral sound.** The post-lock dogfood item puts a ROWS_TARGET Toolkit file in the budget run; IMP:32 routes budgets to Capture OQ 13.
+- **m12 ignored columns: RESOLVED.** IMP:167.
+- **m13 quoting and `undefined`: PARTIAL.** Quoting is deferred to OQ 3 (IMP:205), which is sound. The question of `undefined` in Color Name, Color Code or Custom Collection Name is recorded nowhere. R6.2's Note-only wording makes the build deterministic (stored literally), so it only needs adding to OQ 3's closer list.
+- **n1 Data Export obligation line: RESOLVED.** IMP:151.
+- **n2 double "Unchanged": RESOLVED.** IMP-C:29, "Already here".
+- **n3 R2.3 lead sentence: RESOLVED.** DF:115.
+- **n4 bare `;`: RESOLVED.** IMP-J:104.
+
+##### New in f7cbde5
+
+**[MAJOR] R2-M1 — Import R3.8k / R6.4 against UJ 3 :132: changing an empty target's mode between preview and Import.**
+- **Where:** IMP-J:132, new in this commit; R6.4 at IMP:169; R3.8k at IMP:126; F76 Clarified at IMP-F:208.
+- **The contradiction.**
+  - :132 starts from "an existing M2 target holding only pending items", sets the target to M1 after the preview, then expects E46 at Import.
+  - At commit that target uses M1 and holds no reading. That is exactly IMP-J:130's state, which adopts M2.
+  - Under R6.4 the target still fits, so R3.8k's "a target that no longer fits → E46" never fires, and a literal build adopts M2.
+  - That adoption was never named in E43, which R6.4 ("named in E43") and F76 Clarified ("E43 names it") require.
+  - E46's own body would then tell the user to import into "one with no readings yet", which this target already is.
+- **Mutation.** A build that implements R6.4 and R3.8k as written fails :132. A build that refuses on any mode change since the preview passes :132, but it:
+  - fires an E46 whose remedy the target already meets;
+  - has no row to justify it.
+- **Fix:**
+  - In R3.8k: "a target whose scan mode differs from the one E43 showed returns to a fresh preview with nothing written: E46 if it now holds a reading, else E43 naming the adoption."
+  - Change :132's expected result to that fresh preview naming M1 → M2.
+  - Add a sibling case whose target holds a captured item, where the same change produces E46.
+
+**New Minors**
+- **R2-m1 — E48 overclaims (IMP-C:34).** It says the file's "Lab, LCh, XYZ, sRGB and HEX are checked, not kept". But R6.2 (IMP:167) ignores all of these except L, a and b, and R6.6 (IMP:171) compares only Lab. Rewrite as "its Lab is checked against the spectrum and its other colour values set aside".
+- **R2-m2 — E5 on a recognised Toolkit export.**
+  - R6.1 (IMP:166) fixes UTF-8 and the delimiter, but removes the read controls from E43 only.
+  - E5's text and syntax variants (IMP-C:15) still offer "Choose an encoding / Choose a separator" and advise saving again from a spreadsheet. The Toolkit remedy rule (IMP-C:39) warns against that, but it covers only E7, E9, E10 and E42.
+  - The likeliest trigger is OQ 3's unverified embedded quote.
+  - Fix: state E5's Toolkit behaviour (controls not offered, the Toolkit remedy), and that recognition runs on the decoded header before any data record is parsed.
+- **R2-m3 — Exclusion order before the sameness checks.**
+  - R6.4 (IMP:169) runs only R6.7's exclusions before the mixed-mode check, and R6.11 (IMP:176) says "every record".
+  - Whether records excluded by E7, E9 or E10 count toward E46's mixed modes or E49 is unstated.
+  - So one build refuses a file whose only M1 record has a blank code, while another imports the rest.
+  - Fix: "R6.4's and R6.11's checks run over the records left after E7, E9, E10 and E47."
+- **R2-m4 — DF R5.5d (DF:187) ranks salvaged readings against R2.3j.**
+  - The rule reads "the later-recorded stays current unless it is imported and the other is not". That keeps a simulated reading current over an imported one, the reverse of R2.3j (DF:137) and DF F68 (DF-F:777, "only a live A stays current over B").
+  - Between two imported readings it picks by record time, where R2.3j picks by measurement time.
+  - Fix: "unless it is imported and the other is live, or both are imported and the other was measured later". Only salvage is affected.
+- **R2-m5 — No rendering for an unknown model.** R6.5 (IMP:170) now leaves the model unknown when the Nix Device cell is blank. CM R4.2d (CM:348) lists every other unknown but not the model, and CM-C:295 and :307 render "model" with no unknown form. Add "model unknown where the file gave none" to R4.2d and both copy lines.
+- **R2-m6 — Time and number grammar (IMP:172).**
+  - "ISO 8601" includes basic and week/ordinal forms that parsers disagree on.
+  - How more than three fraction digits are reduced to R6.5's millisecond (truncate or round) is unstated, and that reduction feeds R6.8f's same-instant test.
+  - Fix: pin "RFC 3339 date-time, as EXP R2.2 writes, extra fraction digits truncated to the millisecond", and say the exponent takes an optional sign, which IMP-J:104's form needs.
+- **R2-m7 — IMP-J:122's "0.05 ΔE2000" is hard-coded against a provisional DERIVATION_TOLERANCE** (candidate 0.1, DF OQ 6).
+  - A build whose derivation is within DF M2's bound of the independent reference can still land TK-1 above 0.1 and fail the case.
+  - If OQ 6 closes at or below 0.05, the case inverts.
+  - Fix: state :121's and :122's offsets as multiples of DERIVATION_TOLERANCE, and tie UJ 3's reference to the one DF R7.5 checks the build against.
+- **R2-m8 — E14's Toolkit variant (IMP-C:24) overpromises.** It says "a swatch you scanned here keeps that scan as its colour", but R6.8g (IMP:186) replaces a Demo Device reading, which was also scanned here. Say "scanned here with an instrument"; E43's kept-readings clause (IMP-C:29) can take the same wording.
+- **R2-m9 — M8 residual.** EXP:145 enumerates "DF R7.7a–n" while requiring all three `sc_imported` values, but the true value exists only in R7.7o. DF:281 also says "R7.7a–n". Change both to a–o.
+- **R2-m10 — Where E48 sits in the flow.** R2.1 (IMP:67) puts the target before mapping, and R3.8q (IMP:132) sends E48 straight to preview. Yet IMP-J:110, :111 and :113 reach E48 from "Pick the file" with no target, and :114 creates the target after the pick. Either add the target step to those actions, or say that E48 precedes target selection and fix R3.8q.
+- **R2-m11 — The file's Illuminant and Observer.**
+  - R6.5 (IMP:170) stores them, R6.7 never validates them, and R6.6 routes a pair the app "cannot yet work under" to not checked.
+  - Two things are unstated:
+    - what is stored for a blank or unrecognised cell;
+    - which file strings map to the app's D50/2° (`2` versus `2°`). Only UJ 3's fixture pins `D50` and `2`.
+  - Fix: "stored as the text given, empty where blank; workable when it names a pair Capture OQ 21 offers".
+- **R2-m12 — Quarantined readings and the same-reading check.** R6.8f (IMP:182) and DF R2.3j (DF:137) compare against every reading the item holds, but a quarantined reading's spectrum can't be read. Whether a re-import matches it (the item stays set aside as unreadable) or recovers the item through R6.8b is unstated. Fix: "a quarantined reading is never the same reading".
+
+**Nits**
+- **R6.3 (IMP:168):** when R6.11's names differ only in case or spacing, say which record's text pre-fills the name (the first eligible record's).
+- **E47 (IMP:172):** a record that fails two columns should list each failing column.
+- **IMP-J:133:** TK-2's pending item's Swatch Name is unstated, so "Updated 1" rests on an unpinned value.
+- **Fix file line 26:** it writes `1.04700000e+00`, but the PRD's `e+0` (IMP-J:106) is the form that matches the stated one-digit exponent.
+
+#### Clarifying questions for the author
+1. At Import, when the target's mode changed after the preview and the target holds no reading, should the app adopt the file's mode, refuse with E46, or return to a fresh preview that names the adoption?
+2. Do records excluded by E7, E9 or E10 count toward the mixed-mode check (R6.4) and the one-collection check (R6.11)?
+3. When a recognised Toolkit export hits E5, does E5 offer the encoding and separator controls, and does it end with the Toolkit remedy?
+4. Is a Date Saved with more than three fraction digits truncated or rounded, and is ISO 8601's basic form readable?
+5. In salvage, should an imported current reading outrank a simulated one, as R2.3j does?
+6. Can a quarantined reading ever count as the same reading under R6.8f?
+7. What is stored for a blank or unrecognised Illuminant or Observer cell?
+8. How do the item detail and history show an imported reading whose Nix Device cell was blank?
+9. Should a literal `undefined` in Color Name, Color Code or Custom Collection Name be treated like the Note's (add to OQ 3)?
+10. Does E48 appear before target selection or after it?
+
+#### Claimed properties
+- **"Repeating a committed export changes nothing"** (R3.3, R6.9): **holds.** R6.8f checks every reading the item holds; UJ 3 :134, :135, :137, :139 and :141 cover it.
+- **"Fixture T is synthetic"** (R6.10, F71): **holds.** The count-only check found zero hits.
+- **"The number format is in the repo"**: **holds** (IMP-J:104).
+- **"R6.9's counts partition the eligible readings"**: **holds.** Outcomes a, b, c, d (later, earlier or same-dated), f and g cover every eligible record, and excluded records and absent items stay outside the counts.
+- **"R6.7's exclusions run before R6.4"**: **holds for E47.** It is unstated for E7, E9 and E10 (R2-m3).
+- **"Adoption is written by the commit and undone with it"**: **holds for Cancel and E44** (IMP-J:131). The commit-time recheck contradicts R6.4 at IMP-J:132 (R2-M1).
+- **"`sc_imported` lands in v1's golden"**: **holds in substance** through R7.7o. The enumeration ranges at EXP:145 and DF:281 lag (R2-m9).
+- **"Salvage keeps a scan current"** (fix file): **holds for a live reading. It does not hold for a simulated one:** R5.5d keeps the simulated reading current over an imported one (R2-m4).
+- **"No aligned row reopens for compaction"**: **unverified.** The rule-14 counting method can't be reproduced here.
+
+#### Genuinely sound
+- **R6.8f leads the table and checks "current or in history".** Re-import can't duplicate a reading, and it can't undo a Flag, a restore or a set-aside decision.
+- **R6.8 keys on the current reading's snapshot kind, and a restore carries its source's kind.** That gives one source of truth, shared with the imported mark, `sc_imported` and Device R1.21.
+- **R6.1's signature leaves out Index and L, a and b.** Index is the column a spreadsheet re-save would prefix with a byte-order mark, and L is the duplicated header, so neither affects recognition. Recognising under `;`, then `,`, then tab is correctly conservative.
+- **R6.10's independent-reference rule** removes the circular oracle.
+- **DF R2.3h** fixes the predecessor as "the reading current when B landed". The ADR-0003 input correctly names explicit current selection as the schema's one-way door.
+- **No operating envelope is needed for §6.** Derivation from 31 bands is trivial next to IMPORT_BUDGET, and the post-lock budget run covers it. A process-zealot asking for a separate §6 envelope would be over-specifying.
+- **The deferrals are sound:** the near-miss state, the grid, a user label in Nix Device, performance, and quoting (OQ 3).
+
+#### Deferred
+- **peer-product-marketing-manager-reviewer:** the wording for R2-m1 (E48), R2-m2 (E5's Toolkit remedy) and R2-m8 (E14 and E43 for Demo readings).
+- **peer-test-reviewer lens:** R2-m7's tolerance-relative offsets, and the unpinned TK-2 name at IMP-J:133.
+- **peer-database-reviewer:** how the provenance pair in R2-m11 is typed, and whether "the same number" stays exact in REAL storage.
+- **peer-architecture-reviewer (ADR-0003):** the same-reading key "excluding restores", and whether quarantine enters that key (R2-m12).
+- **peer-product-manager-reviewer:** whether `undefined` in names and codes should count as absent (m13 residual).
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | OBJECT (R2-M1) |
+| Import-R6.1 | OBJECT (R2-m2) |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | OBJECT (R2-M1, R2-m3) |
+| Import-R6.5 | OBJECT (R2-m11) |
+| Import-R6.6 | OBJECT (R2-m7) |
+| Import-R6.7 | OBJECT (R2-m6) |
+| Import-R6.8 | OBJECT (R2-m12) |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| Import-R6.11 | OBJECT (R2-m3) |
+| Import-M2 | ALIGN |
+| Import-E7 | ALIGN |
+| Import-E9 | ALIGN |
+| Import-E10 | ALIGN |
+| Import-E14 | OBJECT (R2-m8) |
+| Import-E42 | ALIGN |
+| Import-E43 (Toolkit variant) | ALIGN |
+| Import-E46 | ALIGN |
+| Import-E47 | ALIGN |
+| Import-E48 | OBJECT (R2-m1, R2-m10) |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | OBJECT (R2-m12) |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (R2-m4) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | ALIGN |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | OBJECT (R2-m5) |
+| CM-R5.2 (with R5.2b/e) | OBJECT (R2-m5) |
+| CM-R8.9 | ALIGN |
+| CM-M2 | ALIGN |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (R2-m9) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ALIGN |
+
+### test
+
+#### Verdict
+Trustworthy once four Majors are fixed. No Blocker remains. All three round-1 Blockers are resolved, and the R6.8a–g cases (R6.8f included) now reject the wrong builds they target. Four oracles are still weak: a commit-recheck case whose expected result contradicts R6.4, an unchecked-record case that depends on how Capture OQ 21 closes, an Export golden range that leaves out R7.7o, and a Collection Mode history case whose data cannot tell the two sort orders apart.
+
+#### Coverage map (brief)
+Paths below are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/`. IMP = `product/import/prd-inventory-import.md`, IJ = `…-journeys.md`, IC = `…-copy.md`, IF = `…-fences.md`; DF, DJ = `product/data-foundation/prd-data-foundation{,-journeys}.md`; DMJ = `product/device-management/prd-device-management-journeys.md`; CM, CMJ, CMC = `product/collection-mode/prd-collection-mode{,-journeys,-copy}.md`; EX, EXJ, EXF = `product/export/prd-data-export{,-journeys,-fences}.md`; CAP = `product/capture-mode/prd-capture-mode.md`; FIX = `product/import/prd-inventory-import-round-1-fixes.md`.
+
+The fixture format in IJ:104 was checked against the format section of the local research report only, plus my round-1 probe for the bare `;`. No data value was read into this review or quoted in it.
+
+Covered, with cases that fail a wrong build:
+- **R6.1:** `;` (IJ:110), comma re-save (IJ:111), missing signature column (IJ:112), extra column (IJ:113).
+- **R6.2:** every column's fate (IJ:119); `undefined` treated as omitted, plus a real Note (IJ:120).
+- **R6.3:** IJ:114–116.
+- **R6.4:** mixed modes (IJ:127), E47 before E46 (IJ:126), refuse (IJ:129), adopt (IJ:130), Cancel and E44 (IJ:131).
+- **R6.5:** IJ:118, including both gamut flags.
+- **R6.6:** over tolerance (IJ:121), under tolerance (IJ:122), not checked (IJ:123).
+- **R6.7:** `abc`, NaN, a time with no zone, an empty mode; plain decimals and a `+00:00` offset read correctly (IJ:124–126, IJ:141).
+- **R6.8a–g:** a (IJ:117, :133), b (:133, :140), c (:133, with the Toolkit reading newer than the scan), d later, earlier and tie (:136, :138), e (:142), f (:134, :135, :137, :139, :141), g (:140).
+- **R6.9:** counts at IJ:117, :133, :134, :136. **R6.11:** IJ:128.
+- **DJ6:** 11 rows, DJ:113–123. Also DMJ:80, CMJ:236–237, EXJ:14.
+
+Load-bearing gaps:
+- The commit recheck (IJ:132 asserts the wrong outcome).
+- The unchecked-pair oracle (IJ:123 depends on OQ 21).
+- `sc_imported` in the golden range (EX:145 still says a–n).
+- History order as Collection Mode renders it (CMJ:237 cannot tell the orders apart).
+- No case for: a target holding a reading only in history; R6.8b's quarantined arm; a negative reflectance, an empty reflectance cell, or a blank Nix Device; the file's own illuminant and observer kept as provenance; R5.5d's imported exception.
+
+#### Findings
+
+**Round-1 findings — status**
+
+Blockers:
+1. B1, E43 count contradiction — RESOLVED. IMP:174 partitions the eligible records; IC:37 defines the counts so they sum to ⟨readings⟩; IJ:117 ("3 used as colour") and IJ:133 ("2 … and 1 kept") agree.
+2. B2, re-import onto scanned items — RESOLVED. R6.8f runs first, "current or in history" (IMP:182, IMP:23, IF:246). Cases: IJ:134 (TK-1 still holds exactly two readings), IJ:137, IJ:139, DJ:120.
+3. B3, fixture not pinned to the real format — RESOLVED. IJ:104 pins the format and IJ:106 writes TK-3 as `1.04700000e+0`; IMP:175 cites UJ 3's format. IJ:125 and IJ:141 also make plain decimals readable, so neither a scientific-only nor a decimal-only reader passes.
+
+Majors:
+4. History-order oracle — PARTIAL. The Data Foundation side is fixed: DF:112, and DJ:115–116 test both directions. The Collection Mode case CMJ:237 cannot tell the orders apart (TR2-M4).
+5. Scan stays current when the Toolkit reading is newer (N6) — RESOLVED at IJ:133 (scan 2026-02-01, TK-1 later) and DJ:116. FIX does not cite this finding by ID.
+6. R6.8d's tie and the reason it records — RESOLVED: IMP:187, DF:137, IJ:136, IJ:138, DJ:121.
+7. Gamut-flag oracle — RESOLVED: IJ:106 declares TK-1 inside sRGB and TK-2 outside; IJ:118 and DJ:113 assert the flags. Margin caveat in TR2-m2.
+8. R6.7 only one-third tested — RESOLVED: IMP:172's value grammar, IMP:169's ordering, IJ:125, IJ:126; unreadable file Lab and pair go to R6.6 and IJ:123 (see TR2-M2). Remaining gaps in TR2-m5.
+9. `sc_imported` missing from the golden — PARTIAL. DF:268 adds R7.7o, EX:145 names the values and EXJ:14 asserts them, but EX:145 still enumerates only R7.7a–n (TR2-M3).
+10. `undefined` Note clearing a typed Note — RESOLVED: IMP:167, IF:188, IJ:120.
+
+Minors:
+11. R6.1 negative and superset cases — RESOLVED: IJ:112, IJ:113.
+12. Custom Collection Name's fate — RESOLVED: IMP:167, IJ:119.
+13. No real Note tested — RESOLVED: IJ:120 (`Glossy`).
+14. No E41 or E12 for the two L headers — RESOLVED: IJ:110. FIX does not cite it by ID.
+15. Existing target keeps its name; pre-filled name collides — RESOLVED: IJ:115, IJ:116.
+16. Gaps around R6.4's mode switch — PARTIAL. E43's mode line (IC:29, IJ:130), Cancel and E44 (IJ:131), the "hold no reading" definition (IMP:169) and R3.8k's recheck (IMP:126) all landed, but the recheck case IJ:132 asserts the wrong outcome (TR2-M1).
+17. Below-tolerance case — RESOLVED: IJ:122 (see TR2-m1).
+18. What ⟨history⟩ and ⟨readings⟩ count — RESOLVED: IMP:174, IC:37, IJ:136.
+19. R3.8a–q and E46/E47 actions — RESOLVED: IMP:85, IJ:36.
+20. Whether the read controls override detection — RESOLVED for E43 (IMP:166). E5 remains open (TR2-m10).
+21. R6.8b and R6.8c variants — PARTIAL. Set aside (IJ:140), flagged (IJ:139) and simulated (IJ:140) are covered; a quarantined current reading is not (TR2-m7).
+22. DF:37 vocabulary — RESOLVED: DF:37, IJ:118, DJ:113.
+23. DF R1.2 and R7.1 lists — RESOLVED: DF:99, DF:239, DJ:114.
+24. Illuminant and observer placement vs Capture R4.6 — PARTIAL. IMP:170 reconciles the placement, but no oracle tells the file's pair apart from the collection's (TR2-m3).
+25. CMC:295 copy line — RESOLVED: CMC:295.
+26. CMJ:236 mode — RESOLVED: "measured in M1".
+27. Collection Mode M2's population — RESOLVED: CM:574.
+28. Export R1.1h/i/s and EJ1's thin assertions — RESOLVED: EX:88–90, EX:94, EXJ:14.
+29. Wavelength-grid assumption — RESOLVED: EX:205 (OQ 4) and the post-lock item.
+30. Creation-time mode — RESOLVED: CAP:147, IMP:168, IJ:114. FIX does not cite it by ID.
+
+Nits:
+31. Zero-count phrasing — RESOLVED: IJ:117.
+32. §4 naming UJ 3 — RESOLVED: IMP:136.
+33. DJ6 index listing R3.3 — RESOLVED: DF:27.
+
+**New findings**
+
+[MAJOR] TR2-M1, IJ:132 vs IMP:169 (R6.4) and IMP:126 (R3.8k) — the commit-recheck case expects a refusal that R6.4 forbids.
+- Given: an M2 target holding only pending items; after preview its mode is set to M1; then Import. The case expects E46.
+- Under R6.4, a target that "hold[s] no reading" fits by adopting the file's mode. So at commit the target still fits, and R3.8k's "a target that no longer fits → E46" does not fire.
+- A build that follows R6.4 adopts M2 and commits. It fails the case, and it also commits an adoption E43 never named, which R6.4 requires.
+- A build that checks against the previewed mode passes the case but breaks R6.4. The builder has to guess.
+- Fix: change the Given to "an existing M2 target holding a captured item". A target with a reading that is switched to M1 no longer fits, so E46 is unambiguous. Separately, say in R3.8k that a target needing an adoption E43 did not name returns to a fresh preview (E13).
+
+[MAJOR] TR2-M2, IMP:171 (R6.6 "cannot yet work under") and IJ:123 — the not-checked case depends on a state nobody declares, and on how an open question closes.
+- Only Capture OQ 21's interim list of one offered pair makes D65/10 unworkable (CAP:446).
+- CAP:142 requires derivation to be reference-parameterised "even while OQ 21's offered list is one pair". R6.6 does not say whether "can't work under" means "not an offered pair" or "no derivation tables for it".
+- A build that ships D65/10 tables checks TK-2, finds a match, and lists it as neither differing nor not checked, so it fails IJ:123. When OQ 21 closes with the toolkit's reference whites, every build fails IJ:123.
+- An injection path already exists: Capture R11.6 (CAP:352) lets a test declare the offered pair set.
+- Fix: R6.6 should read "…whose illuminant and observer are not a pair the app offers (Capture R1.5, OQ 21)…". IJ:123's Given should add "offered pair set declared as D50/2° alone (Capture R11.6)". Optionally add a twin case with D65/10 offered, where TK-2 is checked and not listed.
+
+[MAJOR] TR2-M3, EX:145 (R4.2 "Enumerate DF R7.7a–n plus generated corpus") vs EXF:225 (F35 Clarified: "a golden cut from … R7.7o") and DF:245 ("R7.7a–o own the inventory") — the amended R4.2 contradicts its own fence.
+- EX:180, EXJ:3 ("R7.7a–n is the sole fixture inventory") and DF:281 (Data Foundation's Data Export obligation line) still say a–n.
+- R7.7o is the only fixture holding an imported reading. A harness that enumerates R4.2's range cuts no golden with `sc_imported` true.
+- Mutation: a build that always writes `sc_imported` false or empty stays byte-identical to every a–n golden. Only EXJ:14 would catch it, and EXJ:3 tells that case's author it may compose only a–n fixtures.
+- Fix: change a–n to a–o at EX:145, EX:180, EXJ:3 and DF:281.
+
+[MAJOR] TR2-M4, CMJ:237 (UJ2.1-s) — the case that FIX:11 says carries N16 into Collection Mode cannot fail the build N16 rules out.
+- L1 is measured 2026-02-01; I2 is measured 2026-03-14 and recorded after L1. Record order and measurement order therefore agree.
+- Build W1 sorts the default (restore-variant) list newest-measured first, the misreading F78's "Why" line still invites (IF:219). It lists I2 then L1, the expected result.
+- Build W2 sorts the measured variant by record time, oldest first. It lists L1 then I2, also the expected result. Both pass.
+- DJ:115–116 do discriminate, but only in SQL; nothing checks the rendered E17 view. The case binds Collection Mode R5.3, which is aligned and outside the table below.
+- Fix: add a mirror row with L1 measured 2026-09-20 and I2 measured 2026-03-14, recorded after L1. Both variants must then list I2 then L1, which fails W1 and W2, as the DJ:115/116 pair does.
+
+New Minors:
+- **TR2-m1** — IJ:122's 0.05 ΔE2000 offset uses half the candidate DERIVATION_TOLERANCE, while DF M2 lets the app sit a full tolerance from the reference, so a conforming build can list TK-1. State the offset as a fraction of the tolerance.
+- **TR2-m2** — IJ:106 says TK-1 is inside sRGB and TK-2 outside, with no margin, so the flags asserted at IJ:118 and DJ:113 can flip on derivation noise. State a margin, as UJ2.1-q's harness does.
+- **TR2-m3** — IMP:170 keeps the file's illuminant and observer as provenance, but no case shows them apart from the collection's (Fixture T's D50/2° equals it). At IJ:123, assert that TK-2's reading records D65/10.
+- **TR2-m4** — IMP:170: a negative reflectance "kept as given" and a blank Nix Device ("model unknown") have no case, so clamp-at-zero and default-model builds pass. Give one record a negative reflectance, and add a variant with Nix Device blank.
+- **TR2-m5** — IMP:172: an empty reflectance cell, `Infinity` and a comma decimal have no case. A reader that treats empty as 0 passes every current R6.7 case.
+- **TR2-m6** — IMP:169's "current or in history" is untested. A target whose only item is flagged with a reading in history must refuse, but a check on current readings only passes IJ:129–130.
+- **TR2-m7** — IMP:184: R6.8b's quarantined-current arm has no case. A build that treats "has a current row" as having a current value routes it by snapshot kind instead.
+- **TR2-m8** — IJ:133 asserts Updated 1 but never declares TK-2's pending Swatch Name or the target's columns. Declare them (e.g. `Deep Coral`, no imported columns).
+- **TR2-m9** — IMP:169 and IMP:176 order only R6.7's exclusions before the mixed-mode check. Whether E7/E9/E10-excluded records count toward E46, and whether E47-excluded records count toward E49 ("every record's"), is unstated.
+- **TR2-m10** — E5 (IC:15) still offers "Choose an encoding" and "Choose a separator" for a Toolkit export whose settings R6.1 fixes (IMP:166). State whether they apply, and which E5 variant a failed UTF-8 decode shows.
+- **TR2-m11** — the Toolkit endings for E7, E9, E10 and E42 (IC:39) have no case that renders them. Add a Fixture T variant where TK-2's code equals TK-1's, giving E10 on records 2 and 3.
+- **TR2-m12** — DF:187: R5.5d's imported exception has no case (DJ:34 is unchanged, so "always the later-recorded" passes). Its "the other retained as correction-unconfirmed" also raises a correction question over an imported reading, which DF:137 says never gets one.
+- **TR2-m14** — R6.1's tab branch and a header that is only R2.3-equal (e.g. `color code`) are untested.
+
+Nits:
+- **TR2-n1** — DMJ:80 says "serial and firmware unknown", while DF:137 and IJ:118 say "empty". A build that stores the string "unknown" passes UJ3-c alone; say "empty".
+- **TR2-n2** — IJ:126's "E46 … then" names no action. State that "Continue without them" leads to E46.
+- **TR2-n3** — FIX:26 says TK-3 is written `1.04700000e+00`, which is off-format. The landed IJ:106 value `1.04700000e+0` is correct; fix FIX.
+- **TR2-n4** — FIX does not cite round-1 items 5, 14 and 30 by ID, though all three landed.
+
+#### Biggest risks   (what could ship broken behind a green suite)
+- Collection Mode's default history list ordering imported readings by Date Saved, against N16, with UJ2.1-s still green (TR2-M4).
+- `sc_imported` never reaching the release golden, because R4.2's range excludes R7.7o (TR2-M3).
+- The commit recheck either committing a mode adoption the user was never shown, or refusing a target that fits — whichever way the builder guesses (TR2-M1).
+- R6.6's not-checked list being wrong on any build with full derivation tables, and on every build once OQ 21 closes (TR2-M2).
+- An empty reflectance stored as 0, or a negative clamped, as a canonical value with no mark (TR2-m4, TR2-m5).
+
+#### Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **R6.8f runs first against current or history,** and IJ:134/137/139/141 kill four wrong builds:
+  - one that appends a reading on every re-import;
+  - one that compares against the current reading only (newer-then-older, IJ:137);
+  - one that runs R6.8b before R6.8f (the Flag stands, IJ:139);
+  - one that compares Date Saved as a string (the `+00:00` and plain-decimal rewrite, IJ:141).
+- **IJ:133** makes the Toolkit reading newer than the scan, so "newest measurement wins" fails.
+- **DJ:117** makes a "predecessor = previous sequence" build mark B never-true.
+- **DJ:115/116** pin both history keys against each other.
+- **IJ:120** tests `undefined` as omitted and a real Note in one run.
+- **IJ:126** tests the ordering of E47 before E46.
+- **EXJ:14** asserts all four `sc_simulated`/`sc_imported` combinations, including empty on a never-scanned row.
+- **UJ2.1-r's ZX-023** proves the imported mark follows the current reading.
+- **The IJ:104 format** now matches the studied export's format facts.
+- **Correctly minimal:**
+  - R6.8e rests on IJ:142 plus R3.3d.
+  - Capture M8 needs no case.
+  - DJ6's re-scan rows follow Data Foundation's existing unmarked re-scan convention, so this amendment adds no phase debt.
+  - E12's new sentence and E14's Toolkit sentence need only R4.2's shipping-string checks.
+  - E13, E38 and E40 need no Toolkit-specific case.
+
+#### Missing / over-tested
+Missing:
+- A corrected IJ:132 Given.
+- The offered-pair declaration at IJ:123.
+- a–o at EX:145, EX:180, EXJ:3 and DF:281.
+- UJ2.1-s's mirror row.
+- A target holding a reading only in history.
+- R6.8b with a quarantined current reading.
+- A negative reflectance, an empty cell and a blank Nix Device.
+- The file's own pair asserted at IJ:123.
+- An E10 case on a Toolkit file.
+- R5.5d's imported salvage case.
+- The tab and R2.3-variant detection cases.
+
+Over-tested: none. The 33 UJ 3 rows each fail a distinct wrong build.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | OBJECT (TR2-M1) |
+| Import-R6.1 | OBJECT (TR2-m10, TR2-m14) |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | OBJECT (TR2-M1, TR2-m6, TR2-m9) |
+| Import-R6.5 | OBJECT (TR2-m3, TR2-m4) |
+| Import-R6.6 | OBJECT (TR2-M2, TR2-m1) |
+| Import-R6.7 | OBJECT (TR2-m5) |
+| Import-R6.8 | OBJECT (TR2-m7, TR2-m8) |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | OBJECT (TR2-m2) |
+| Import-R6.11 | OBJECT (TR2-m9) |
+| Import-M2 | ALIGN |
+| Import-E7 | OBJECT (TR2-m11) |
+| Import-E9 | OBJECT (TR2-m11) |
+| Import-E10 | OBJECT (TR2-m11) |
+| Import-E14 | ALIGN |
+| Import-E42 | OBJECT (TR2-m11) |
+| Import-E43 (Toolkit variant) | ALIGN |
+| Import-E46 | OBJECT (TR2-M1) |
+| Import-E47 | ALIGN |
+| Import-E48 | ALIGN |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (TR2-m12) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | OBJECT (TR2-M3, at DF:281) |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ALIGN |
+| CM-M2 | ALIGN |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (TR2-M3) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ALIGN |
+
+TR2-M4 binds Collection Mode R5.3 through UJ2.1-s; R5.3 is aligned and outside this table. DF-R2.1 is ALIGN because its SQL oracle (DJ:115–116) is real.
+
+### interface
+
+#### Verdict
+Contract sound. No Blocker remains, and every round-1 Blocker is fixed. The fixes add two Majors: Export's fixture range is out of date on both sides of the Export and Data Foundation link, and Data Foundation R5.5d's new salvage exception reverses N18. There are also seven copy and journey Minors to fix before alignment.
+
+#### Surface & consumers (brief)
+- **Surface:** the published contract across the six PRDs: row IDs and R3.8 transitions, E-state copy and its placeholders, the inherited-obligation lines, and the export's `sc_` app columns.
+- **Consumers:** build agents, who build and test by row and state ID; the sibling PRDs, through the obligation lines; the Cataloger, through the copy; scripts that read `sc_imported` by name.
+- **What changed** (`git diff 2a54fce f7cbde5 -- docs AGENTS.md`):
+  - Import: R6.8f/R6.8g, R6.11, E48 and E49, and Toolkit variants of E14 and E43.
+  - Data Foundation: its reading model, R2.3h, R2.3j, R5.5d and R7.7o.
+  - Collection Mode: E12, the copy lines and UJ2.1-s.
+  - Export: `sc_imported` in R1.1h/i/s, R1.2 and R4.2.
+  - Capture: R1.10, M8 and the §12 placeholders.
+  - The obligation lines, in both directions.
+- **No consumer-facing break:** `sc_imported` still lands before any export format version ships.
+
+File aliases used below: IMP = `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/import/prd-inventory-import.md`; IMPC = `…/import/prd-inventory-import-copy.md`; IMPJ = `…/import/prd-inventory-import-journeys.md`; IMPF = `…/import/prd-inventory-import-fences.md`; DF = `…/data-foundation/prd-data-foundation.md`; EXP = `…/export/prd-data-export.md`; EXPJ = `…/export/prd-data-export-journeys.md`; EXPF = `…/export/prd-data-export-fences.md`; CM = `…/collection-mode/prd-collection-mode.md`; CMC = `…/collection-mode/prd-collection-mode-copy.md`; CMJ = `…/collection-mode/prd-collection-mode-journeys.md`; DEV = `…/device-management/prd-device-management.md` (all under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/`).
+
+#### Findings
+
+##### Round-1 verification (IF1-*)
+
+**Blockers**
+- **IF1-B1 — RESOLVED.**
+  - R6.8f runs first and checks against any reading the item holds, current or in history (IMP:182).
+  - "Same reading" is defined at IMP:23, and DF R2.3j says a same reading "creates none" (DF:137).
+  - Covered by cases: repeat over a scan-current item (IMPJ:134), v1→v2→v1 (IMPJ:137), the tie (IMPJ:138), a Flag then re-import (IMPJ:139), and plain-decimal numbers with a `+00:00` offset (IMPJ:141).
+- **IF1-B2 — RESOLVED.** IMPJ:133 now reads "2 used as colour (TK-2, TK-3)", and R6.9 partitions the eligible records (IMP:174).
+
+**Majors**
+- **IF1-M1 — PARTIAL.** E43's Toolkit variant now offers neither control (IMPC:29; IMP:166). E5 still offers both controls for a source with the Toolkit signature (IMPC:15); see IF2-m1.
+- **IF1-M2 — RESOLVED.**
+  - Mode adoption is now part of the atomic commit (R3.2, IMP:79), and R3.8k rechecks the mode fit, routing to E46 (IMP:126).
+  - The creation form's mode is fixed (R6.3, IMP:168), and R6.4 is written into the commit (IMP:169).
+  - Capture R1.10 is updated to match.
+  - Cases: IMPJ:131 and IMPJ:132.
+- **IF1-M3 — RESOLVED.** E14 has a Toolkit variant (IMPC:24) and R3.5 has the carve-out (IMP:82). A wording residue remains; see IF2-m3.
+- **IF1-M4 — RESOLVED.** E12 gains the "From Nix Toolkit" meaning (CMC:173), and F221 is carried by E12 and R2.8.
+- **IF1-M5 — RESOLVED.** CMC:295 and CMC:310 now show every unrecorded field, and CMC:307 gives R5.2b a form for an unknown serial.
+- **IF1-M6 — RESOLVED.**
+  - The Toolkit tokens are registered in Capture §12's placeholder list.
+  - IMPC:37 defines each token, and says ⟨current⟩, ⟨history⟩ and ⟨same⟩ sum to ⟨readings⟩.
+  - R6.9 (IMP:174) defines ⟨readings⟩ as the eligible records.
+- **IF1-M7 — RESOLVED.**
+  - Each E46 variant has its own headline (IMPC:32).
+  - The "no readings yet" option is named.
+  - The unverified export-by-mode claim is gone.
+- **IF1-M8 — PARTIAL.** Import's Data Export line now carries `sc_imported`, with R6.5 in its Rows (IMP:151). But F79's map still says "governs no row here" (IMPF:336), and the line is credited to F72 (IMPF:349); see IF2-n3.
+- **IF1-M9 — RESOLVED.** Import's Capture line has the carve-out, R6.8 in its Rows, and states that set-aside items become captured (IMP:153).
+- **IF1-M10 — PARTIAL.**
+  - Landed: R1.1h/s/i name `sc_imported` (EXP:88–90), R4.2 asserts all three `sc_imported` values (EXP:145), R7.7o exists (DF:268), and EJ1 checks the never-scanned empty (EXPJ:14).
+  - Still missing: R4.2 still lists "R7.7a–n"; see IF2-M1.
+- **IF1-M11 — RESOLVED by N16.**
+  - DF R2.1 names the measured order as an over-time view (DF:112).
+  - DJ6 asserts both orders.
+  - CMJ:237 (UJ2.1-s) checks both orders.
+- **IF1-M12 — RESOLVED.** R6.2 states every column's fate (IMP:167). IMPJ:119 asserts the exact stored column list, and IMPJ:113 covers an extra column.
+- **IF1-M13 — RESOLVED.**
+  - R6.7 now defines readable times, modes (M0–M2) and numbers (IMP:172).
+  - R6.5 records a blank Nix Device as an unknown model.
+  - Under N22, R6.6 lists an unsupported illuminant/observer pair as not checked.
+  - Cases: IMPJ:123 and IMPJ:125–126.
+
+**Minors**
+- **IF1-m1 — RESOLVED.** R3.8 now reads "R3.8a–q" (IMP:85), and the every-state case covers E40–E49 (IMPJ:36).
+- **IF1-m2 — RESOLVED.** DF R2.1 (DF:112) and R2.3's opening clause (DF:115) have the carve-outs, and AGENTS.md §8's Canonical value and Raw payload entries are amended.
+- **IF1-m3 — RESOLVED.** R6.8 keys on the current reading's snapshot kind, and a restore carries its source's kind (IMP:173, 185–187).
+- **IF1-m4 — RESOLVED.** R6.1 tries semicolon, comma, then tab (IMP:166); IMPJ:111 covers a comma re-save.
+- **IF1-m5 — RESOLVED (deferred).** The post-lock Capture "scanned" item is recorded; the reason is sound.
+- **IF1-m6 — RESOLVED.** E43's Toolkit variant uses distinct labels (IMPC:29).
+- **IF1-m7 — RESOLVED.** The lines are now two-sided: DEV:263 and DEV:265, DF:279 and DF:282, EXP:172, and IMP:150. A residue remains; see IF2-n4.
+- **IF1-m8 — RESOLVED.** CMC:307.
+- **IF1-m9 — RESOLVED (deferred to ADR-0003).** The decisions README's ADR-0003 row records a reading's origin sitting apart from its device kind.
+- **IF1-m10 — RESOLVED.** IMPJ:135 asserts rows Unchanged 3 and no E14.
+- **IF1-m11 — RESOLVED.** Two "First reading" lines are the owner's N17 outcome, recorded at fix-file line 12.
+- **IF1-m12 — PARTIAL.** E48 names the Toolkit export at mapping (IMPC:34), but the target step still has no string; see IF2-m5.
+- **IF1-m13 — RESOLVED.** The Vocabulary's Ready to capture (IMP:21), line 5, and the PRD index README (line 39) are amended.
+- **IF1-m14 — RESOLVED.** The ADR-0003 row in `docs/decisions/README.md` and a post-lock Import/DF item now carry the schema inputs.
+
+**Nits**
+- **IF1-n1 — RESOLVED.** R6.11 compares under R2.3 (IMP:176).
+- **IF1-n2 — RESOLVED.** R1.5 carves out §6's reading columns (IMP:50).
+- **IF1-n3 — RESOLVED.** Export R1.2 says the two columns are never both true (EXP:66).
+- **IF1-n4 — RESOLVED.** R6.2 now ignores Index (IMP:167).
+
+##### New in round 2
+
+[MAJOR] IF2-M1 — Export R4.2 and both sides of the Export/Data Foundation link still say the fixture matrix is R7.7a–n, which leaves out the imported fixture
+- **Location:**
+  - EXP:145 — R4.2: "Enumerate DF R7.7a–n plus generated corpus … including all three `sc_simulated` and `sc_imported` values".
+  - EXP:180 — Export's outbound Data Foundation line: "Its R7.7a–n fixture matrix … is the sole inventory".
+  - DF:281 — Data Foundation's inbound Data Export line: "assert goldens on R7.7a–n".
+- **What it contradicts:**
+  - DF R7.7 at DF:245 ("R7.7a–o own the inventory").
+  - DF R7.7o at DF:268, which names Export R4.2.
+  - Export's own Clarified line at EXPF:225 ("R4.2 asserts … against a golden cut from … R7.7o").
+- **Why it matters:** R7.7a–n contain no imported-kind reading, so R4.2's "all three `sc_imported` values" cannot be met from the range R4.2 itself lists. R4.2 was amended in this commit and now contradicts its own fence line.
+- **Mutation:**
+  - Build the golden suite from R4.2's a–n list and emit `sc_imported=false` for imported readings.
+  - Every R4.2 golden stays green; only EJ1 (EXPJ:14) fails.
+  - A build that also skips EJ1's R7.7o fixture ships the wrong value.
+- **Fix:** read "R7.7a–o" at EXP:145, EXP:180 and DF:281. DF:281 should read "including empty R7.7n and imported R7.7o".
+
+[MAJOR] IF2-M2 — DF R5.5d's new imported exception picks the wrong current reading in two of three imported pairings
+- **Location:** DF:187 — "the later-recorded stays current unless it is imported and the other is not (R2.3j)".
+- **What it contradicts:**
+  - DF R2.3j at DF:137.
+  - Import R6.8g and R6.8d at IMP:186–187.
+  - Import F86 and F87.
+  - DF F68 and F69.
+- **Scenario A:**
+  - A simulated A is current. A Toolkit B is imported, becomes current under R6.8g, and is recorded later.
+  - Damage then leaves both current, and salvage runs.
+  - B is imported and A is not, so the exception fires: A, the simulated reading, stays current.
+  - B is kept as correction-unconfirmed. That reverses N18 and gives an imported reading the correction question F85 says it never gets.
+- **Scenario B:**
+  - An imported A (Date Saved in March) is current. An imported B (Date Saved in February) is kept behind it under R6.8d and recorded later.
+  - Both end up current. The exception doesn't fire because both are imported, so B, the later-recorded one, stays current.
+  - R2.3j would keep A.
+- **Mutation:** implement R5.5d as written, then salvage R7.2's declared two-current state for scenario A. The simulated reading ends up current. No DJ or R7.7 case exercises this pairing, so the build ships.
+- **Fix:** "the later-recorded stays current unless R2.3j keeps it behind the other". Add an R7.2-declared two-current case with an imported reading.
+- **Scope:** the path is rare, and every resolution is named to the user, but the rule is a published product rule.
+
+**New Minors**
+- [MINOR] IF2-m1 — IMP:166 / IMPC:15 / IMP:116: for a source with the Toolkit signature that reaches E5, E5 still offers "Choose an encoding" / "Choose a separator".
+  - E5 can come from bytes that are invalid as UTF-8, or from a quote the Toolkit wrote unescaped, which OQ 3 leaves open.
+  - A chosen separator is ignored by R6.1's fixed probe order (semicolon, comma, tab).
+  - A chosen non-UTF-8 encoding contradicts "read as UTF-8".
+  - This is IF1-M1's silent no-op moved to E5. Fix: state E5's Toolkit behaviour (offer only "Pick the file again" / "Cancel", ending with the re-export remedy, or keep recognition under a manual encoding), and add a UJ 3 case.
+- [MINOR] IF2-m2 — IMPC:39: the Toolkit ending rule for E7, E9, E10 and E42 replaces "their fix-the-file or fill-the-codes sentence".
+  - E7's sentence also carries "You can bring in the rest", and E42's also carries "nothing has been imported", so two builds ship different strings.
+  - "Correct it" is singular for plural rows.
+  - Fix: write each Toolkit ending out in full as E14's variant does, for example "Bring in the rest, or correct them in the Nix Toolkit and export it again."
+- [MINOR] IF2-m3 — IMPC:29 and IMPC:24: "Kept as earlier readings: ⟨history⟩ — a swatch you scanned here keeps that scan" has three problems.
+  - The count includes R6.8d's earlier and same-dated readings, where no scan is involved.
+  - It calls a Toolkit reading measured after the scan "earlier": at IMPJ:133, TK-1 was measured 2026-03-14 and sits behind a 2026-02-01 scan. F84 removed exactly that word from R6.8c.
+  - In E14 and E43, "keeps that scan" is false for a Demo Device reading, which R6.8g replaces.
+  - Fix: "Kept in history, not used as the colour: ⟨history⟩", and scope the clause to readings scanned with the instrument.
+- [MINOR] IF2-m4 — IMPC:34: E48 says "The file's own Lab, LCh, XYZ, sRGB and HEX are checked, not kept".
+  - R6.6 checks only the first L, a and b. R6.2 ignores LCh, XYZ, sRGB and HEX, and N13 compares only Lab.
+  - This breaks the copy header's promise that every sentence is backed by a row.
+  - Fix: "The file's own Lab is checked against the spectrum; none of its colour values is kept."
+- [MINOR] IF2-m5 — IMPJ:110–111 reach E48 from "Pick the file" with "no target yet".
+  - The Surfaces flow (IMP:40) and R2.1 (IMP:67) put the target step before mapping, and R3.8q (IMP:132) sends E48 straight to preview.
+  - A test harness that asserts state order either fails a correct build or has to add a target step the case doesn't state.
+  - R6.1's "every later step names it a Toolkit export" still has no string at the target step.
+  - Fix: add creating the target to those cases' Action, and either give the target step a Toolkit line or narrow R6.1 to mapping and preview.
+- [MINOR] IF2-m6 — IMPC:37 says E43 shows "encoding/delimiter controls always visible (R3.8n)", with no Toolkit carve-out. R6.1 and E43's Toolkit variant offer neither control. Fix: "shown fixed, without controls, for a Toolkit export (R6.1)".
+- [MINOR] IF2-m7 — CMJ:237 (UJ2.1-s) and F221's Clarified line read E17's "restore" variant.
+  - That variant is `[phase: variant-absent]` until R5.5 lands (CMC:223; R5.5 is P1, CM:387).
+  - In the first build phase the case names a variant the build must not render.
+  - Fix: "E17 in recorded order (its restore variant once R5.5 lands)".
+
+**Nits**
+- [NIT] IF2-n1 — IMP:182: R6.8f's "Changes nothing" reads as the whole record, yet IMPJ:120 updates TK-2's Note on an R6.8f record. Say "adds no reading and changes no reading or state; metadata follows R3.5/R3.6".
+- [NIT] IF2-n2 — DEV:120: R1.21's "naming the model its file gives" doesn't carry R6.5's "unknown where the cell is blank".
+- [NIT] IF2-n3 — IMPF:336: F79 still "governs no row here", but its `sc_imported` now sits on the Data Export line (IMP:151). List that line under F79.
+- [NIT] IF2-n4 — EXP:181: Export's outbound Device line still names only `sc_simulated`. EXPJ:13's quarantined-current row also asserts only `sc_simulated`, though R1.1s now names `sc_imported`.
+- [NIT] IF2-n5 — `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/export/prd-data-export-copy.md:16`: E1 says "how many samples they averaged weren't recorded, so those cells stay empty", but the export has no sample-count column. The empty cells are the basis and payload columns (R1.1t).
+- [NIT] IF2-n6 — Capture M8 and IMP:153 exclude "an import whose items arrive captured". A Toolkit import that captures no item (every match current on a live scan, no new record) is neither excluded nor clearly in scope. Say "a Toolkit export's import".
+- [NIT] IF2-n7 — R6.7 (IMP:172): a Date Saved with sub-millisecond digits has no rule for truncating or rounding, though R6.5 and "same reading" compare to the millisecond.
+
+#### Biggest risks   (what existing consumers/scripts/agents break)
+- **Export goldens miss the imported fixture (IF2-M1).** A golden suite built from R4.2's own list never includes R7.7o. Only EJ1 then guards `sc_imported=true`, which is the one value scripts rely on to separate Toolkit readings.
+- **Salvage keeps the wrong reading (IF2-M2).** Salvage of a damaged file can leave a Demo reading current over a real Toolkit reading, and put a correction question on an imported reading.
+- **Toolkit exports that need a re-read (IF2-m1).** A Toolkit export that needs an encoding or separator choice is stuck: the offered actions have no defined effect.
+- **Copy that says more than the rows (IF2-m3, IF2-m4).** The preview calls a later-measured reading "earlier", and E48 claims four checks the build doesn't run.
+
+#### Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **R6.8f and the reading counts.** R6.8f checks against any reading held, and restores and Flags stand. Together with R6.9's partition, whose three counts sum to ⟨readings⟩, the idempotency promise is testable.
+- **Keying R6.8 on snapshot kind.** A restore carries its source's kind, which removes all the prose guessing from round 1.
+- **The E14 and E46 fixes.** E14's Toolkit variant, E46's split headlines and the registered placeholders close every round-1 copy/contract gap in my lens.
+- **The chip label differs from the filter label, on purpose.** The chip label "From Nix Toolkit" differs from its filter label "Imported from Nix Toolkit" deliberately: it keeps the chip clear of the " (imported)" column tag. A style checker would wrongly flag this as inconsistent.
+- **`sc_imported` needs no version bump, correctly.** It lands in the first golden, R2.5 says to parse by name, and R1.2 now says the two provenance columns are never both true.
+- **The predecessor rule in R2.3h.** "The reading current when B landed, never the previous sequence number" is the right contract, and it aligns Data Foundation, Collection Mode UJ2.1-s and Export's sequence order.
+- **The obligation lines.** They are now two-sided across all six PRDs, apart from the residues noted in IF2-n3 and IF2-n4.
+
+#### Missing / over-engineered
+- **Missing:**
+  - an R7.7o golden in R4.2's list (IF2-M1);
+  - a two-current salvage case with an imported reading (IF2-M2);
+  - E5's Toolkit behaviour (IF2-m1);
+  - a target step in UJ 3 before E48 (IF2-m5).
+- **Not over-engineered:** E43's Toolkit variant is dense, but every sentence traces to R6.4, R6.6, R6.8 or R6.9, and zero-count sentences drop out under Capture §12.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | ALIGN |
+| Import-R6.1 | OBJECT (IF2-m1, IF2-m5) |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.5 | ALIGN |
+| Import-R6.6 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| Import-R6.11 | ALIGN |
+| Import-M2 | ALIGN |
+| Import-E7 | OBJECT (IF2-m2) |
+| Import-E9 | OBJECT (IF2-m2) |
+| Import-E10 | OBJECT (IF2-m2) |
+| Import-E14 | OBJECT (IF2-m3) |
+| Import-E42 | OBJECT (IF2-m2) |
+| Import-E43 (Toolkit variant) | OBJECT (IF2-m3, IF2-m6) |
+| Import-E46 | ALIGN |
+| Import-E47 | ALIGN |
+| Import-E48 | OBJECT (IF2-m4, IF2-m5) |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (IF2-M2) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | OBJECT (IF2-M1) |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ALIGN |
+| CM-M2 | ALIGN |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (IF2-M1) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ALIGN |
+
+### architecture
+
+#### Verdict
+Sound. Build it once two new Majors are fixed; each needs about one clause. Round 1's Blocker and five of its seven Majors are resolved, and the imported snapshot kind, the never-supplied payload state and R2.3j's current-reading rule now hold together. No row decides ADR-0003's schema or the blob schema, and nothing contradicts ADR-0001. Two fixes introduced contradictions that split builds: a UJ 3 case refuses an import that R6.4 allows, and the salvage tie-break in R5.5d now contradicts R2.3j.
+
+#### Architecture in brief
+- **Import §6** checks each record, applies the same-reading check first (R6.8f), then chooses the record's outcome by the snapshot kind of the matched item's current reading (R6.8a–g).
+- **Data Foundation** owns the stored reading and its rules. An imported reading has no samples, basis, verdict or spread. The current reading is stored explicitly, not taken as the latest. The predecessor is the reading that was current when the new one landed (R2.3h).
+- **Device** owns the three snapshot kinds. Collection Mode's mark and Export's `sc_imported`/`sc_simulated` columns are all worked out from that one field.
+- **Mode adoption** is part of the import's commit.
+- **The key tradeoff:** a reading can be current without being the latest one recorded. The fixes now state that in DF's own rows and pass it to ADR-0003 as an input.
+
+#### Findings
+
+Path legend (all absolute):
+- IMP = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/import/prd-inventory-import.md
+- IJ = …/docs/product/import/prd-inventory-import-journeys.md
+- IC = …/docs/product/import/prd-inventory-import-copy.md
+- DF = …/docs/product/data-foundation/prd-data-foundation.md
+- DFJ = …/docs/product/data-foundation/prd-data-foundation-journeys.md
+- DFF = …/docs/product/data-foundation/prd-data-foundation-fences.md
+- EX = …/docs/product/export/prd-data-export.md
+- EXJ = …/docs/product/export/prd-data-export-journeys.md
+- CMC = …/docs/product/collection-mode/prd-collection-mode-copy.md
+- CMJ = …/docs/product/collection-mode/prd-collection-mode-journeys.md
+- CAP = …/docs/product/capture-mode/prd-capture-mode.md
+- ADR = …/docs/decisions/README.md
+- PL = …/docs/product/post-lock.md
+
+Every `…` stands for `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import`.
+
+##### Round-1 findings: resolution
+
+- **B1: RESOLVED.** The same-reading check now runs before every other outcome: IMP:173 (R6.8f first), IMP:182 (R6.8f), IMP:23 (Vocabulary). DF:137 (R2.3j) says "none when the item already holds the same reading". The cases are IJ:134, :135, :137, :139 (a Flag stands) and :141 (other written forms), plus DFJ:120.
+- **M1: RESOLVED.** The time axis is named: DF:137 says "over an imported A measured earlier". R2.3's lead gains its exception (DF:115). A same-dated reading with a different spectrum has an outcome (IMP:187, DFF:783 F69).
+- **M2: RESOLVED.** DF:112 (R2.1) keeps history in record order and puts the measured order among the over-time views. F66 (DFF:765) and F64's Clarified line (DFF:757) record it. DFJ:115–116 and CMJ:237 (UJ2.1-s) test it.
+- **M3: RESOLVED.** Owner decision N17 is carried by the R2.4 exception (DF:116), the reasons column (DF:137) and the predecessor rule (DF:135, R2.3h). DFJ:117 proves a kept-behind reading gets no never-true mark.
+- **M4: RESOLVED.** DF:37 (Vocabulary) and DF:112 (R2.1) define a reading with no samples. DF:137 says a restore copies that state. DFJ:123 tests it.
+- **M5: PARTIAL.** The adoption now lands with the commit (IMP:169, IMP:79, IMP:126, CAP:147), E43 names it (IC:29), and IJ:130–131 test it. But the new case IJ:132 contradicts R6.4 (AR2-M1). Through that path the chosen mode can still change without the preview saying so, which was the hazard in M5(c).
+- **M6: RESOLVED.** R6.9 splits the reading counts into three sets with no overlap (IMP:174). IJ:117, :133 and :136 agree with it.
+- **M7: PARTIAL.** R7.7o was added (DF:268) and R7.7 now covers a–o (DF:245). EX:145 (R4.2) names `sc_imported`, but it still enumerates "DF R7.7a–n", and so do EX:180, EXJ:3 and DF:281 (AR2-m1).
+- **m1: PARTIAL, now a Major.** DF:187 (R5.5d) covers live against imported, but it inverts decision N18 for simulated against imported and misorders two imported readings (AR2-M2).
+- **m2: RESOLVED.** R1.2 (DF:99) and R7.1 (DF:239) now list snapshot kinds and readings with no samples. DFJ:114 says what a reader must be able to tell. A wording residue remains at DFJ:113 (AR2-n2).
+- **m3: RESOLVED, deferred soundly** as an ADR-0003 input: ADR:22 (last clause) and PL:169.
+- **m4: RESOLVED.** The file's illuminant and observer are stored as provenance only, and a blank Nix Device leaves the model unknown (IMP:170). R6.6 lists unsupported pairs as not checked (IMP:171). IJ:123 tests it.
+- **m5: RESOLVED.** The mode grammar is M0, M1 or M2 (IMP:172). "Hold no reading" is defined as current or in history, QC records aside (IMP:169).
+- **m6: RESOLVED.** R6.8 keys on the current reading's snapshot kind, and a restore carries its source's kind (IMP:173, :185–187).
+- **m7: RESOLVED, deferred.** Export OQ 4 records the Toolkit's grid (EX:205), and the hardware spike checks it (PL:12).
+- **m8: RESOLVED.** A Note of `undefined` supplies no value (IMP:167); IJ:120 tests it.
+- **m9: RESOLVED.** R6.1 tries the semicolon, the comma and the tab, and shows encoding and separator fixed (IMP:166). IJ:110–112 test it, and E43 offers neither control (IC:29).
+- **m10: RESOLVED.** Custom Collection Name is read for R6.3 and R6.11 and not stored (IMP:167).
+- **m11: RESOLVED.** The ADR-0003 inputs are at ADR:22 and PL:169 (wording nit: AR2-n1).
+- **m12: RESOLVED, deferred.** OQ 3 asks whether a code can repeat (IMP:205). Meanwhile R2.4 excludes every record in a duplicate-code group, which fails safe.
+- **n1: RESOLVED, deferred** to Capture's next pass (PL:102).
+- **n2: RESOLVED.** E43's Toolkit labels are now "Already here" and "Kept as earlier readings", distinct from "Unchanged:" (IC:29).
+- **n3: RESOLVED.** The chip label is now "From Nix Toolkit" (CMC:260).
+
+##### New findings
+
+**[MAJOR] AR2-M1: Import R3.8k and UJ 3: a case refuses an import that R6.4 allows**
+
+- **Where:**
+  - IJ:132 expects E46 when the target's mode is changed from M2 to M1 between the preview and Import, on a target holding only pending items.
+  - R6.4 (IMP:169) says that such a target "hold[s] no reading … and then adopt[s]" the file's mode. IJ:130 is exactly that valid case.
+  - E46's own copy (IC:32) tells the user to "Import into … one with no readings yet". That is what they chose.
+  - R3.8k (IMP:126) rechecks only whether the target still fits. It does not check whether the target's mode changed since the preview.
+- **Scenario and mutation:**
+  - A build that follows R6.4 and R3.8k literally sees that the target still fits, commits and switches the collection from M1 to M2. It fails IJ:132. Worse, the E43 the user confirmed never said the mode would change, which is round 1's M5(c) hazard.
+  - A build that refuses on any mode change passes IJ:132, but shows E46 copy that contradicts itself.
+- **Fix:**
+  - R3.8k: "a target whose scan mode changed since the preview but still fits → E43 again with fresh counts and its mode line, Import required again (as R3.8f); one that no longer fits → E46".
+  - Rewrite IJ:132 to expect that fresh E43, naming the change from M1 to M2, with nothing written.
+  - Add a case where the target gains a reading in M1 between the preview and Import; that one gets E46.
+
+**[MAJOR] AR2-M2: DF R5.5d: the tie-break for two current readings now contradicts R2.3j and fence F68**
+
+- **Where:**
+  - DF:187: "the later-recorded stays current unless it is imported and the other is not (R2.3j), the other retained as correction-unconfirmed".
+  - This contradicts DF:137 (R2.3j) and F68 (DFF:777) on "over a simulated A". The two-current case in DFJ:34 (DJ3) exercises only the default rule.
+- **Mutation:** declare an item with two current readings and salvage it (R7.2 already lets tests declare that state).
+  - (a) A simulated reading recorded first and an imported one recorded later: the literal rule keeps the simulated reading current. R2.3j and N18 make the imported one current.
+  - (b) Two imported readings, where the later-recorded one was measured earlier: the literal rule keeps the later-recorded one. R2.3j keeps the one measured later.
+  - (c) A live reading and a later-recorded imported one: the live reading stays current, which is right. But the imported reading is "retained as correction-unconfirmed", which puts a question into E11/E26 that R2.3j (reason initial) and R2.3h ("no reading's predecessor") say a kept-behind reading never carries.
+  - No case catches any of the three.
+- **Fix:**
+  - Reword R5.5d: "the later-recorded stays current unless R2.3j would have kept it behind the other; a reading so kept behind is retained with reason initial, otherwise the other is retained as correction-unconfirmed".
+  - Add one salvage case with an imported reading to DJ3 or DJ6.
+- **Reach:** low. Only a corrupted file gets here, and the salvage output keeps every reading. It still meets the brief's test: a line changed in this pass contradicts its own fence.
+
+**Minors**
+
+- **[MINOR] AR2-m1: stale fixture range.** Export R4.2 (EX:145) asserts all three `sc_imported` values but enumerates "DF R7.7a–n". The only imported fixture is R7.7o, so the row contradicts itself. EX:180, EXJ:3 and DF:281 carry the same stale range. Change a–n to a–o in all four.
+- **[MINOR] AR2-m2: a quarantined reading and the same-reading check.** R6.8b (IMP:184) handles an item whose current reading is quarantined. But R6.8f (IMP:182, :23) checks "same reading" before R6.8b, and a quarantined reading's spectrum cannot be read. Builds would split: one lets R6.8b recover the item, the other reports "already held" and leaves it without a value. State "a quarantined reading is never the same reading" in R6.8f.
+- **[MINOR] AR2-m3: ADR-0003 input on spectral precision.** R6.5 stores reflectances "neither clamped nor rounded" (IMP:170), and R6.8f compares them exactly. STORE_SIZE_BUDGET pushes towards a compact spectral encoding, and a single-precision or quantized one would break re-import idempotency. IJ:135 and :141 would catch it, but only after the file format has shipped. Add to ADR:22's Toolkit input: "an imported spectrum reads back as the numbers given, compared exactly by Import R6.8f".
+- **[MINOR] AR2-m4: export state label.** Missed in round 1, and it predates this pass. Export's closed State column (EX:32, R1.1j at EX:91, R1.1t at EX:94) labels a reading R2.3j kept behind as `superseded`, though it was never current. Either define `superseded` as "not current, including a reading kept behind", or add a value before v1's format ships. After that, adding one is a format change under Export R2.5.
+
+**Nits**
+
+- **[NIT] AR2-n1: ADR-0003 input wording (ADR:22).**
+  - A sentence break is missing: "…the cold open Input from the Nix Toolkit import".
+  - "Stored explicitly" and "a check whose key must exclude restores" assume how the store will do it. Prefer "determinable by plain SQL at the floor (R1.2), never inferred from sequence" and "if enforced as a uniqueness constraint, restores are exempt".
+- **[NIT] AR2-n2: DJ6 row 1 wording (DFJ:113).** It still says "recorded as never supplied", which implies a stored state that R1.2 and R7.1 don't list. "Never supplied" already follows from a reading having no samples. Say "no payload, and no archive-unavailable mark".
+- **[NIT] AR2-n3: E14 Toolkit variant (IC:24).** "A swatch you scanned here keeps that scan as its colour" is false where the current reading came from the Demo Device (R6.8g, N18). This is for the copy lenses.
+
+#### Biggest risks
+1. **Two contradictions that split builds, both from this fix pass.** One is IJ:132 against R6.4 (AR2-M1). The other is DF R5.5d against R2.3j (AR2-M2). Each lets a wrong build pass or makes a correct build fail.
+2. **The file format.** Idempotent re-import now rests on exact spectral equality, and the ADR-0003 inputs don't yet say so (AR2-m3). A space-driven encoding choice could break it after the format has shipped.
+3. **Fixture coverage.** The Export golden range excludes R7.7o (AR2-m1), so `sc_imported` coverage exists only in the fence text, not in the row that enumerates the fixtures.
+
+#### Genuinely sound
+- **The same-reading check runs first (R6.8f).** This is what keeps DF R2.9 intact: without it, re-importing after a Flag would bring back the flagged value. IJ:139 proves it.
+- **One field decides everything.** The snapshot kind drives R6.8, Collection Mode's R2.4j mark and both export columns, and a restore copies it. There is no second store to drift out of step.
+- **The predecessor is decoupled from sequence (R2.3h).** Together with "a kept-behind reading is no reading's predecessor", this keeps E11/E26 free of questions that would name the wrong reading. A dogmatic reviewer might call explicit predecessors over-engineering; they are required once the current reading need not be the latest.
+- **No mixed-key history sort was introduced (N16).** R2.1 and Collection Mode R5.3 keep their settled orders, and the measured view already delivers N10.
+- **No new stored "never supplied" state is needed.** The state follows from a reading having no samples, and export reuses its existing unused-slot semantics.
+- **Mode adoption is atomic with the commit and rolls back with it.** A Toolkit-created target's mode persisting after Cancel is consistent with R3.7, not a bug.
+- **The ADR boundaries hold.** No row decides ADR-0003's schema or the blob layout; the new material is framed as inputs. ADR-0001 is untouched: the import stays off the device seam and runs in CI on synthetic fixtures.
+
+#### Missing / over-engineered
+**Missing:**
+- R3.8k's path for a target whose mode changed since the preview (AR2-M1).
+- An R5.5d rule and case that follow R2.3j (AR2-M2).
+- The quarantined-reading exclusion from the same-reading check (AR2-m2).
+- The spectral-precision ADR input (AR2-m3).
+- A ‹P1› UJ 3 case for re-importing after a restore of an imported reading. R6.8f promises that "a restore stands", but only DFJ:123 covers restore, and not followed by a re-import.
+
+**Over-engineered:** nothing material.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | OBJECT (AR2-M1) |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | OBJECT (AR2-M1) |
+| Import-R6.5 | ALIGN |
+| Import-R6.6 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | OBJECT (AR2-m2) |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| Import-R6.11 | ALIGN |
+| Import-M2 | ABSTAIN (out of lens) |
+| Import-E7 | ABSTAIN (out of lens) |
+| Import-E9 | ABSTAIN (out of lens) |
+| Import-E10 | ABSTAIN (out of lens) |
+| Import-E14 | OBJECT (AR2-n3) |
+| Import-E42 | ABSTAIN (out of lens) |
+| Import-E43 (Toolkit variant) | ALIGN |
+| Import-E46 | ALIGN |
+| Import-E47 | ABSTAIN (out of lens) |
+| Import-E48 | ALIGN |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (AR2-M2) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | ALIGN |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ALIGN |
+| CM-M2 | ABSTAIN (out of lens) |
+| CM-E12 | ABSTAIN (out of lens) |
+| Export-R1.1 (with R1.1h/i/p/s/t) | OBJECT (AR2-m4) |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (AR2-m1) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ABSTAIN (out of lens) |
+
+### privacy
+
+#### Verdict
+Privacy-sound to ship. All nine round-1 privacy findings are resolved or soundly deferred. My own count-only check against the real export found none of its values anywhere in the branch. One new Medium remains, and it is worth fixing before lock: the rows never say what the owner may write into the repo when M2 and OQ 3's dogfood runs are recorded.
+
+#### Data-flow & PII map (brief)
+- **Data subject.** The Cataloger (the owner). The only outside recipient is anyone reading the public repository.
+- **Personal fields in a Toolkit record.** Date Saved (a millisecond activity timestamp), Note (free text), Custom Collection Name (a user label), Nix Device (a model name; whether a user can rename it is unverified), and any column R6.2 does not name.
+- **What an import stores.**
+  - The reading, with Date Saved as its measurement time and the model in an imported-kind snapshot (serial and firmware empty).
+  - Metadata: Note (a Note of `undefined` supplies nothing), the five Density columns, and any other column, which E43 lists before commit.
+  - Custom Collection Name is read to pre-fill a new target's name and for R6.11's one-collection check. It is never stored as a column (R6.2 at `prd-inventory-import.md:167`, asserted by UJ 3 at `prd-inventory-import-journeys.md:119`).
+- **What an export carries.** Only on the user's own export: the model, measured-at (Date Saved), `sc_imported`, and the imported columns. Serial, firmware, basis and payload cells stay empty (Export R1.1t and E1). Nothing goes to the network, telemetry or system search (DF R1.4, CM R8.6).
+- **Repository boundary.**
+  - UJ 3 records format facts only. Fixture T and DJ6 values are invented.
+  - The review log and fixtures hold no real-export value (checked below).
+  - Recording OQ 3's future results in the repo is the one open path (PRIV2-1).
+
+#### Findings
+
+**Round-1 findings, re-checked against f7cbde5** (paths are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/`)
+
+- **PRIV-1 (HIGH) — RESOLVED.**
+  - Fixture T now uses invented dates, names and codes (`docs/product/import/prd-inventory-import-journeys.md:106`, oracle `:118`), and DJ6 inherits them (`docs/product/data-foundation/prd-data-foundation-journeys.md:109`, `:113`, `:115`, `:119`).
+  - I re-checked by reading the real export locally and printing only booleans and masked counts. No Date Saved value (full, to the minute, or time of day), collection name, colour name, code, note, or written or rounded numeric value appears in the added lines of 6374538..f7cbde5 or in their commit messages.
+  - The only raw matches were coincidences: line-number citations, one ordinary English word used in derivation prose, and the documents' own September fence dates.
+  - None of Fixture T's or DJ6's days is a real session day.
+  - 417fdac is reachable from no ref, and the branch is not on the remote.
+- **PRIV-2 (MEDIUM) — RESOLVED.** Round 0 is redacted at `docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md:18` and `:32`, and `:7` explains the redaction under N3.
+- **PRIV-3 (MEDIUM) — RESOLVED.**
+  - `docs/product/import/prd-inventory-import.md:167` (R6.2): Custom Collection Name is "read for R6.3 and R6.11 … none of these is stored as a column", and a column R6.2 does not name is listed in E43.
+  - `prd-inventory-import-journeys.md:119` asserts it; `:116` covers an existing target ignoring the name.
+- **PRIV-4 (MEDIUM) — RESOLVED.**
+  - R6.10 at `prd-inventory-import.md:175` defines synthetic and covers derived fixtures and goldens; the F71 Clarified line is at `prd-inventory-import-fences.md:174`.
+  - The format is stated in the repo at `prd-inventory-import-journeys.md:104`.
+  - DF R7.7 (`prd-data-foundation.md:245`) and R7.7o (`:268`) source imported fixtures from a synthetic export.
+- **PRIV-5 (LOW) — RESOLVED.** R6.2 (`prd-inventory-import.md:167`): a Note of `undefined` supplies no value, so a stored Note is kept. Covered by F73 Clarified (`prd-inventory-import-fences.md:188`) and UJ 3 `:120`, where a typed note survives re-import.
+- **PRIV-6 (LOW) — RESOLVED.** E43's Toolkit variant (`prd-inventory-import-copy.md:29`) now ends "Imported readings stay in each swatch's history; only deleting the swatch removes them."
+- **PRIV-7 (LOW) — RESOLVED.**
+  - The rule is recorded at review log `:41` and fix file `:65`.
+  - No round-2 brief in the dispatch folder cites the research report, and the review log it now carries holds no real value.
+  - Nit: the fix file files it under "Deferred to post-lock", but `docs/product/post-lock.md` has no such line. The review log is an adequate home for a review-process rule.
+- **PRIV-8 (INFO) — RESOLVED as a deferral.** `docs/product/post-lock.md:13` (spike group) says to record the model only when it is a v1-family name, if the Nix Device column can hold a user label.
+- **PRIV-9a (INFO) — RESOLVED.** DF R2.1 (`prd-data-foundation.md:112`), F66 (`prd-data-foundation-fences.md:765`), and DJ6 `:115`–`:116` now assert both orders.
+- **PRIV-9b (INFO) — RESOLVED.** DF R7.7o at `prd-data-foundation.md:268`.
+- **PRIV-9 nit — RESOLVED.** `docs/product/README.md:146` says an imported snapshot is never a device record.
+
+**New findings**
+
+**[MEDIUM] PRIV2-1 — `prd-inventory-import.md:195` (M2) and `:205` (OQ 3), against `:175` (R6.10), `prd-inventory-import-fences.md:174` (F71 Clarified) and `docs/product/post-lock.md:202` — the repo is told to record real-export "outcomes" without a bound on what they may contain**
+
+The conflict:
+- R6.10 and F71 say "neither a real export nor a report on one enters the repository".
+- M2 and OQ 3 require the owner's real exports to be run and their "outcomes and format facts recorded … never the files". `prd-inventory-import-oq-results.md:3` says an OQ closes only when its section "records the evidence".
+- UJ 3 `:104` already holds format facts from a real export. So "report" in R6.10 cannot mean every record, and nothing says where the line sits.
+
+Scenario:
+1. After dogfood, the owner or an agent closes OQ 3 or measures M2.
+2. They paste each file's preview outcomes: E49's ⟨collections⟩ (Toolkit collection names), E43's per-file counts, R6.6's differing and unchecked lists and E47's rows (swatch names, codes, record numbers).
+3. These are the same classes of value PRIV-1 and PRIV-2 leaked (collection name, reading count, names), now in a public file.
+4. M2's wording ("never the files") permits it, and R6.10's "report" does not clearly forbid it. A strict reader cannot close OQ 3 in the repo at all; a loose reader leaks.
+
+Harm: low-sensitivity personal data about the owner (collection names, set sizes, item names, and dates if a clash is described), against N3's intent. It is irreversible once pushed.
+
+Fix (one clause, no fence re-opened):
+- M2's Method and OQ 3's Closer say what may be recorded: format facts (separator, quoting, number and time forms, grid, header set, which modes and illuminants occurred) and outcome tallies by state across files. Never a collection name, code, name, note, date, measured value, file name or path, or a per-file reading count.
+- R6.10's "a report on one" reads "any data value from one", so the two rows agree.
+- Mirror the bound on `post-lock.md:202`.
+
+(GDPR Art. 5(1)(c) minimisation, Art. 25 privacy by design; the owner's N3.)
+
+**[LOW] PRIV2-2 — `AGENTS.md:63`–`67` (§5, the public-repo boundary) — no standing repo rule keeps real vendor-app exports and their values out of commits**
+- R6.10 binds Toolkit tests only.
+- Round 1's value check was one-off and must stay uncommitted, because it reads the real file.
+- Future work that reads AGENTS.md rather than R6.10 has no guard against the PRIV-1 path. That work includes OQ 3's "revise R6.1–R6.7 and UJ 3 from them", the help docs on exporting from the Toolkit (`post-lock.md:217`), and examples in bug reports or ADRs.
+- Fix: one §5 line beside the SDK and license rule: "A real vendor-app export — anyone's collection — and any value from it (names, codes, notes, collection names, dates, counts, measured values, screenshots) never enter the repo; fixtures are synthetic (Import R6.10)."
+
+**[INFO] PRIV2-3 — `prd-inventory-import-copy.md:34` (E48)** lists what comes in as details (Note and the Density columns) but not R6.2's "any other column". A column added by a later Toolkit version, possibly personal, is disclosed only by E43's Added columns line. That is adequate, but E48 could add "and any other column, listed in the preview."
+
+#### Biggest privacy risks
+1. **PRIV2-1:** the dogfood record for M2 and OQ 3 is the next likely place a real collection name, codes or counts land in the public repo. The rows license "outcomes" without bounding them.
+2. **PRIV2-2:** the rule that kept this amendment clean lives in one Import row and a one-off local check, not in the rules every agent reads first.
+3. **Residual (settled, disclosed):** imported readings are permanent short of deleting the swatch. That is N6, N14 and DF R2.3, and E43 now says so.
+
+#### Genuinely privacy-respecting
+- **Nothing from the real export is in the branch.** Checked with count-only matching against the real file: fixtures, DJ6, the Collection Mode cases, the review log (the verbatim round-1 reviews included) and commit messages hold no real value. The rewritten 417fdac is on no ref and the branch is unpushed.
+- **Absolute `/Users/...` paths in the review log are not a new disclosure.** The same form is in four earlier merged review logs, and the author name is already public in every commit. The one scratchpad path cited names only a session folder and the report's filename, not the collection.
+- **Minimisation of Custom Collection Name.** It is read, never stored as a column, and ignored for an existing target. The file's own Lab, LCh, XYZ, sRGB, HEX and Index values are checked and discarded (R6.2).
+- **Accuracy over fabrication.** Unknown serial, firmware, samples, basis, verdict and spread read back empty, never as a sentinel (DF R2.3j). There is no invented payload. A shallow checklist would flag "model kept, serial empty"; it is the honest, minimal choice.
+- **User control over their own notes.** A Note of `undefined` never overwrites a typed note (R6.2, UJ 3 `:120`).
+- **No false linkage.** An imported snapshot never occupies a device record (Device R1.22, UJ3-c at `prd-device-management-journeys.md:80`), so imported readings are never tied to the user's paired serial.
+- **No data pile-up.** A same reading, current or in history, creates nothing (R6.8f, DF R2.3j), so a repeated import cannot accumulate duplicates.
+- **Transparency at every surface.** The imported mark shows on the chip, in the E12 legend, to VoiceOver, in the detail and in history (CM R2.4j, R4.2d, R5.2b and e). E43 lists added columns and states what the file lacks and that imported readings are permanent. Export carries `sc_imported` and E1's empty-cell line.
+- **Exports are not disclosures.** Date Saved, Note, densities and any extra column leave only in an export the user starts, to a place the user chooses. No network, telemetry or system-search flow is added.
+
+#### Missing controls / over-collection
+- No bound on what the owner's real-export dogfood results (OQ 3, M2, post-lock `:202`) may record in the repo (PRIV2-1).
+- No AGENTS.md-level rule, nor any repeatable local check, keeping real vendor-app export values out of commits (PRIV2-2).
+- There is no over-collection. Densities are not personal data, and unnamed extra columns are shown in E43 before commit, the same treatment the base CSV import gives any unmapped column.
+
+| Row ID | disposition |
+|---|---|
+| Import-R1.5 | ABSTAIN |
+| Import-R3.2 | ABSTAIN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ABSTAIN |
+| Import-R3.8 | ABSTAIN |
+| Import-R6.1 | ABSTAIN |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | ABSTAIN |
+| Import-R6.5 | ALIGN |
+| Import-R6.6 | ABSTAIN |
+| Import-R6.7 | ABSTAIN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| Import-R6.11 | ALIGN |
+| Import-M2 | OBJECT (PRIV2-1) |
+| Import-E7 | ABSTAIN |
+| Import-E9 | ABSTAIN |
+| Import-E10 | ABSTAIN |
+| Import-E14 | ABSTAIN |
+| Import-E42 | ABSTAIN |
+| Import-E43 (Toolkit variant) | ALIGN |
+| Import-E46 | ABSTAIN |
+| Import-E47 | ABSTAIN |
+| Import-E48 | ALIGN |
+| Import-E49 | ABSTAIN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ABSTAIN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ABSTAIN |
+| DF-R5.5 (with R5.5d) | ABSTAIN |
+| DF-R7.1 | ABSTAIN |
+| DF-R7.2 | ABSTAIN |
+| DF-R7.7 (with R7.7o) | ALIGN |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ABSTAIN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ABSTAIN |
+| CM-M2 | ABSTAIN |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | ALIGN |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ABSTAIN |
+| Capture-M8 | ABSTAIN |
+
+### product-marketing
+
+#### Verdict
+Lands after two Major fixes (there are no Blockers). Every round-1 Blocker and Major landed well. Two things still stand between this copy and shipping. First, E48 now claims the app checks values it actually ignores; that sentence was my own round-1 rewrite, adopted word for word. Second, the Toolkit remedy for E7, E9, E10 and E42 is an unwritten splice rule, so a builder has to guess four shipping strings.
+
+#### Audience & message context (brief)
+- **Reader:** the Cataloger, usually a Nix Toolkit phone-app user moving a collection over. Export E1 is read by the Data consumer, and the vision by contributors and future README or launch copy.
+- **Intended takeaway:** "My Toolkit colours arrive already measured, marked as imported, and nothing about them is invented."
+- **Surfaces:** Import E14/E43 Toolkit variants, E46–E49 and the Toolkit remedy rule; Collection Mode E12, the Mark labels row, and the R4.2d, R5.2b and R5.2e lines; Export E1's imported line; the vision's Problems bullet, J7 and feature note; the PRD index's v2 line.
+- **Checked against:** `git diff 2a54fce f7cbde5 -- docs AGENTS.md`, the fix file, fences F84–F91, DF F66–F70 and CM F223, owner decisions N16–N23, and the rows each string relies on. No value from the research report or a real export is quoted here.
+
+#### Findings
+
+##### Round-1 findings — status
+- **PMM1-B1 — RESOLVED.** E14 now has a Toolkit variant (`prd-inventory-import-copy.md:24`), R3.5 carves it out (`prd-inventory-import.md:82`), R6.8 names it (`:173`), and UJ 3 exercises it (`prd-inventory-import-journeys.md:133`). A residual Demo Device edge case is PMM2-m2.
+- **PMM1-M1 — RESOLVED.** E12 explains "From Nix Toolkit" (`prd-collection-mode-copy.md:173`) and frames it as measurement-grade, not as a warning.
+- **PMM1-M2 — RESOLVED.** The copy now shows every unrecorded field:
+  - R4.2d imported (`prd-collection-mode-copy.md:295`): "samples, averaging, spread and agreement not recorded".
+  - R5.2e (`:310`): "Samples and spread not recorded".
+  - UJ2.1-r matches.
+- **PMM1-M3 — RESOLVED.** Each variant has its own headline stating the problem (`prd-inventory-import-copy.md:32`).
+- **PMM1-M4 — RESOLVED.** The Toolkit lines come first after Target, the labels are distinct ("Used as…", "Kept as earlier…", "Already here"), and the order against the above-ceiling append is stated (`copy:29`).
+- **PMM1-M5 — RESOLVED.** The mode-change sentence is at `copy:29` and `copy:37`. R6.4 writes the change with the commit (`prd-inventory-import.md:169`), R6.9 names it (`:174`), and UJ 3 covers it (`journeys:130–131`).
+- **PMM1-M6 — RESOLVED.** E48 is added (`copy:34`), R6.2 names it (`:167`), R3.8q adds its Continue action (`:132`), and UJ 3 reaches it (`journeys:110`). E48's wording carries a new problem (PMM2-M1).
+- **PMM1-M7 — RESOLVED.** R6.9 splits the eligible readings into three counts (`:174`); UJ 3 reads "2 used as colour (TK-2, TK-3)" (`journeys:133`); and the note at `copy:37` says the three counts add up to the reading total.
+- **PMM1-M8 — RESOLVED.** The Problems bullet now states only what is true, scoped "as studied" (`vision.md:13`).
+- **PMM1-m1 — RESOLVED.** The chip label is "From Nix Toolkit", no longer confusable with the " (imported)" column tag (`prd-collection-mode-copy.md:260`).
+- **PMM1-m2 — RESOLVED.** "Measurement condition" is bridged to the Toolkit's "Measurement Mode", and the text says "aren't directly comparable" (`copy:29`, `copy:32`).
+- **PMM1-m3 — RESOLVED.** The unverified "export each mode" claim is gone (`copy:32`). The mixed-modes variant now offers no next step (PMM2-n4).
+- **PMM1-m4 — RESOLVED.** E47 now says to "export the file again from the Nix Toolkit" (`copy:33`).
+- **PMM1-m5 — PARTIAL.** E1 (`prd-data-export-copy.md:16`) now names "how many samples they averaged". The export has no sample-count cell. The averaging-basis cell, which R1.1t empties (`prd-data-export.md:94`), is still not named, so a consumer seeing an empty basis cell still gets no explanation. Rewrite: "⟨imported⟩ readings came from a Nix Toolkit export, which records no instrument serial, firmware, averaging basis or archived instrument readings, so those cells stay empty."
+- **PMM1-m6 — RESOLVED.** J7 is marked "(In part superseded — see the update.)" (`vision.md:144`), and the index's v2 line is scoped (`docs/product/README.md:174`).
+- **PMM1-m7 — RESOLVED.** The feature note leads with the benefit (`vision.md:160`), and the update is scoped to "the Nix Toolkit export studied" (`:145`).
+- **PMM1-m8 — RESOLVED.** Deferred with a sound record: the post-lock documentation item (`post-lock.md:217`) and the fix file (`prd-inventory-import-round-1-fixes.md:63`).
+- **PMM1-m9 — RESOLVED.** The Toolkit tokens are registered in Capture §12 (`prd-capture-mode.md:406`) and in the import copy note (`copy:37`); ⟨unchanged readings⟩ became ⟨same⟩.
+- **PMM1-m10 — RESOLVED.** The fixture values are invented (`journeys:106`) and the unpushed commit was rewritten (fix file `:7`).
+- **PMM1-n1 — RESOLVED.** "except" now replaces "save" at `prd-inventory-import.md:5`, `:50`, `:58` and `:80`, in Export's out-of-scope line (`prd-data-export.md:13`) and in Capture's obligation line (`prd-capture-mode.md:388`). No leftover remains in the amendment.
+- **PMM1-n2 — RESOLVED.** "readings' colour values differ from the ones the Toolkit saved" (`copy:29`).
+- **PMM1-n3 — RESOLVED (rejected, and the rejection is sound).** E40's reason still explains why the import waits (fix file `:70`).
+- **PMM1-n4 — RESOLVED.** "Becoming current" is replaced by "Used as the swatch's colour" (`copy:29`).
+- **Round-1 Missing list — RESOLVED:**
+  - What the file doesn't carry is now a sentence in E43 (`copy:29`).
+  - The separator control is gone from the Toolkit variant, whose actions are "Import; Cancel" (`copy:29`).
+  - The near-miss state is deferred with a reason (`post-lock.md:101`).
+
+##### New findings
+
+**[MAJOR] PMM2-M1 — E48's body claims a check the app does not make (`prd-inventory-import-copy.md:34`).**
+- **The claim:** "The file's own Lab, LCh, XYZ, sRGB and HEX are checked, not kept."
+- **What the rows say:**
+  - R6.6 compares only the file's first L, a and b (`prd-inventory-import.md:171`).
+  - R6.2 says the file's other L, c, h, X, Y, Z, sRGB R/G/B and HEX are **ignored** (`:167`).
+- **Why it matters:** the copy file's own rule (`copy:8`) is "Every promise below is backed by a requirement row", and this one isn't.
+- **Reader reaction:** a migrator who used the Toolkit's HEX or sRGB in design work sees their values reported as verified. If SpectroCapture's recomputed sRGB differs from the Toolkit's, E43 flags nothing, because only Lab is compared, and the user concludes the values matched.
+- **Mutation:** a build that follows R6.2 and R6.6 exactly ships a screen that is false. A build that makes the copy true would have to check HEX and sRGB, which contradicts R6.2's "ignored".
+- **Severity:** Major, not Blocker. The false part concerns values that are neither stored nor shown, and the Lab check that does run covers the colour itself, so no measurement is misrepresented.
+- **Origin:** this was my own round-1 PMM1-M6 rewrite, adopted verbatim.
+- **Rewrite:** "The file's own Lab is checked against its spectrum. Its Lab, LCh, XYZ, sRGB and HEX aren't kept — SpectroCapture works every colour out again from the spectrum."
+
+**[MAJOR] PMM2-M2 — The Toolkit remedy for E7, E9, E10 and E42 is a splice rule, not written strings (`prd-inventory-import-copy.md:39`, applied to `:17`, `:19`, `:20`, `:28`).**
+- **The rule:** these states end "Correct it in the Nix Toolkit and export it again" "in place of their fix-the-file or fill-the-codes sentence".
+- **Two readings are possible:**
+  - Replace the whole sentence. Then E7 loses "You can bring in the rest", and E42 loses "nothing has been imported", the only reassurance in a state where every row was refused.
+  - Replace only the clause. That keeps both.
+- **"it" has no clear antecedent:** E7, E9 and E10 talk about plural rows.
+- **Why nothing catches it:** R4.2 keeps shipping-string checks separate from behaviour checks, so two builders ship two different strings and no test notices. Every other variant in this file (E14 included) is written out in full.
+- **Fix file mismatch:** `prd-inventory-import-round-1-fixes.md:36` says E47 carries the same sentence, but E47 (`copy:33`) reads differently.
+- **Rewrite:** write each as a "Toolkit variant replaces …" clause in its own row:
+  - E7: "You can bring in the rest, or export the collection again from the Nix Toolkit and try again."
+  - E9: "Bring in the rest, or give these colours a code in the Nix Toolkit and export the collection again."
+  - E10: "Bring in the rest, or give each of these colours its own code in the Nix Toolkit and export the collection again."
+  - E42: "Correct them in the Nix Toolkit and export the collection again; nothing has been imported."
+  - Then delete line 39, or reduce it to a one-line pointer.
+
+**[MINOR] PMM2-m1 — E43's history line gives the wrong reason in two cases (`copy:29`).**
+- The line reads "Kept as earlier readings: ⟨history⟩ — a swatch you scanned here keeps that scan."
+- R6.9 (`:174`) also counts R6.8d's earlier-dated and same-dated imported readings under ⟨history⟩. Re-importing an older export (UJ 3 `journeys:136`, TK-1) shows this reason although nothing was scanned.
+- Rewrite: "Kept as earlier readings: ⟨history⟩ — each of those swatches keeps its current colour: your scan, or a later Toolkit reading."
+
+**[MINOR] PMM2-m2 — "a swatch you scanned here keeps that scan" is false for a Demo Device scan (E14 `copy:24`, E43 `copy:29`).**
+- R6.8g (`:186`, N18) replaces a simulated current reading with the Toolkit reading (UJ 3 `journeys:140`).
+- The Capture copy tells users the Demo Device works "as it does with a real instrument", so a trial user reads their demo scans as "scanned here".
+- Rewrite: "a swatch you scanned here with your instrument keeps that scan."
+
+**[MINOR] PMM2-m3 — E43's permanence sentence is narrower than the rest of the product's copy (`copy:29`).**
+- E43 says "only deleting the swatch removes them".
+- Collection Mode E17 (`prd-collection-mode-copy.md:221`) says "deleting the swatch or its collection is the only thing that throws a reading away", and Data Foundation's E14 agrees.
+- Use E17's wording.
+
+**[MINOR] PMM2-m4 — "Toolkit exports don't record the instrument's serial or firmware…" (`copy:29`) is a universal claim about the vendor's product, based on one export.**
+- OQ 3 is still open (`prd-inventory-import.md:205`).
+- Under R6.2, "any other column imports as metadata", so a later export that carried a serial column would contradict this copy.
+- Rewrite: "SpectroCapture doesn't take the instrument's serial, firmware or sample count from a Toolkit export, so they show as unknown."
+
+**[MINOR] PMM2-m5 — E43's row counts are unqualified next to reading counts.**
+- A re-import where TK-3's newer reading becomes its colour but its details are unchanged (UJ 3 `journeys:136`; compare `:135`, "rows Unchanged 3") shows "Unchanged: 3" beside "Used as the swatch's colour: 1".
+- Rewrite: in the Toolkit variant, prefix the row counts with "Swatch details —".
+
+**[MINOR] PMM2-m6 — E14's headline, "swatches you've already scanned", is wrong on a Toolkit re-import (`copy:24`).**
+- It shows when a user renames colours in the Toolkit and re-exports, and those swatches were imported, not scanned.
+- The post-lock "scanned" item (`post-lock.md:102`) covers only Capture's counts.
+- Fix: give the Toolkit variant its own headline — "⟨n⟩ swatches that already have a colour have different details in this file" — or extend that post-lock item to E14.
+
+**[MINOR] PMM2-m7 — The copy note at `copy:37` says E43 shows encoding and delimiter controls "always visible (R3.8n)", with no Toolkit carve-out.**
+- R6.1 (`:166`) and E43's own Toolkit actions offer neither control.
+- Add: "(shown fixed for a Toolkit export, R6.1)". UJ 3 `:117` catches a wrong build, hence Minor.
+
+**[MINOR] PMM2-m8 — The new collection's scan mode is locked with no reason given.**
+- R6.3 (`:168`) makes the mode not editable when a Toolkit import creates the collection, and R6.1 says every later step names the Toolkit export. No string tells the user why the control is locked.
+- Add to the creation form: "Measurement condition: ⟨mode⟩, set by this Nix Toolkit export."
+
+**[NIT] PMM2-n1** — "Used as the swatch's colour: ⟨current⟩" puts a count after a singular noun. Use "Now a swatch's colour: ⟨current⟩".
+
+**[NIT] PMM2-n2** — "share a date with a different reading" can be read as the same day. These readings were saved at the same instant: "were saved at the same moment as a different reading already here".
+
+**[NIT] PMM2-n3** — Two bridge phrasings: E43's "the measurement condition the Toolkit calls Measurement Mode" and E46's "— the Toolkit's Measurement Mode —". Pick one.
+
+**[NIT] PMM2-n4** — E46's mixed-modes variant (`copy:32`) is now honest but names no next step. Acceptable while the case stays unverified; revisit under OQ 3.
+
+**[NIT] PMM2-n5** — The set-aside line doesn't say those swatches leave set-aside, which N20's "see the set-aside decision being resolved" intends. Rewrite: "…give a colour, so they're no longer set aside: ⟨resolved⟩".
+
+**[NIT] PMM2-n6** — The R4.2d imported line (`prd-collection-mode-copy.md:295`) has no wording for a blank Nix Device, which R6.5 records as unknown. Use "model unknown".
+
+**[NIT] PMM2-n7** — `vision.md:13` is the vision's first use of "Toolkit"; the Nix Toolkit is only introduced at `:37`. "As studied" reads as an internal aside. The headline "stranded" is now stronger than the body supports; consider "The instrument's data has no home the owner controls."
+
+#### Biggest risks
+- **E48 overclaims (PMM2-M1).** The screen built to reassure a migrator that nothing is lost says their HEX, sRGB, LCh and XYZ were checked. They were ignored. It is the one remaining place where the copy states something untrue about what the app did with the user's data.
+- **Four shipping strings are left to the builder (PMM2-M2).** The literal splice drops "nothing has been imported" from E42 and "bring in the rest" from E7, and leaves "Correct it" pointing at nothing.
+- **"Scanned here" explanations fail at the edges (PMM2-m1, m2, m6).** A re-import of an older export, a trial user's Demo Device scans, and a re-import of renamed colours each show a reason or headline that doesn't match what happened.
+
+#### Genuinely strong
+- **E43's Toolkit variant now tells a story.** It says what arrived, what becomes each swatch's colour, what's kept and why, what changes about the collection, what couldn't be checked, what the file doesn't carry, and that nothing is thrown away. That is the confirmation owner decision N5 intended.
+- **E12's "From Nix Toolkit" sentence is the right framing.** "Its colour is worked out from the spectrum in that export, as a scan's is" treats the imported reading as measurement-grade, names the unknowns plainly, and tells the user how to replace it. It avoids warning-label tone, which would have undersold a good reading.
+- **E46 per variant.** Each headline states the problem, the bridge to the Toolkit's term is present, "one with no readings yet" gives a real third route, and every variant ends "Nothing has been imported".
+- **The vision is honest.** The founding problem no longer contradicts the vision's own evidence, the claim is scoped to the one export studied, J7's superseded status is visible, and the feature note leads with the benefit ("without re-scanning").
+- **Neutral and plain throughout.** "Nix Toolkit" and "Nix Spectro 2" are used only to identify the source. Nothing disparages the vendor app, and no hype was added. For a migration feature, calm, specific copy is the right register, and it was kept.
+- **E49 gives a reason the user can accept:** "so codes from different ones can't collide".
+
+#### Missing / over-hyped
+- **Missing:**
+  - Written-out Toolkit strings for E7, E9, E10 and E42 (PMM2-M2).
+  - A reason line for the locked scan mode on the creation form (PMM2-m8).
+  - A Toolkit headline for E14 (PMM2-m6).
+  - E1 naming the empty averaging basis (PMM1-m5, partial).
+  - A next step for the mixed-modes variant, once OQ 3 shows whether the case occurs.
+- **Over-hyped:** nothing in tone. The two overclaims are both about scope:
+  - E48's "checked" covers four value sets the app ignores (PMM2-M1).
+  - E43's "Toolkit exports don't record…" states a vendor-wide fact from one file (PMM2-m4).
+
+| Row ID | disposition |
+|---|---|
+| Import-R1.5 | ABSTAIN (out of lens) |
+| Import-R3.2 | ABSTAIN (out of lens) |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | ALIGN |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.5 | ABSTAIN (out of lens) |
+| Import-R6.6 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ABSTAIN (out of lens) |
+| Import-R6.11 | ALIGN |
+| Import-M2 | ABSTAIN (out of lens) |
+| Import-E7 | OBJECT (PMM2-M2) |
+| Import-E9 | OBJECT (PMM2-M2) |
+| Import-E10 | OBJECT (PMM2-M2) |
+| Import-E14 | ALIGN |
+| Import-E42 | OBJECT (PMM2-M2) |
+| Import-E43 (Toolkit variant) | ALIGN |
+| Import-E46 | ALIGN |
+| Import-E47 | ALIGN |
+| Import-E48 | OBJECT (PMM2-M1) |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ABSTAIN (out of lens) |
+| DF-R1.6 | ABSTAIN (out of lens) |
+| DF-R2.1 | ABSTAIN (out of lens) |
+| DF-R2.2 | ABSTAIN (out of lens) |
+| DF-R2.3 (with R2.3h, R2.3j) | ABSTAIN (out of lens) |
+| DF-R2.4 | ABSTAIN (out of lens) |
+| DF-R5.5 (with R5.5d) | ABSTAIN (out of lens) |
+| DF-R7.1 | ABSTAIN (out of lens) |
+| DF-R7.2 | ABSTAIN (out of lens) |
+| DF-R7.7 (with R7.7o) | ABSTAIN (out of lens) |
+| Device-R1.21 | ABSTAIN (out of lens) |
+| Device-R1.22 | ABSTAIN (out of lens) |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ALIGN |
+| CM-M2 | ABSTAIN (out of lens) |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | ABSTAIN (out of lens) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ABSTAIN (out of lens) |
+
+As in round 1, Minors and Nits are listed but not raised as objections: PMM2-m1, m2, m4, m5, m7, n1, n2, n3 and n5 (Import-E43; m2 also Import-E14); m3 (Import-E43); m6 (Import-E14); m8 (Import-R6.3); PMM1-m5 PARTIAL (Export-E1); n4 (Import-E46); n6 (CM-R4.2). n7 falls on the vision, which has no rows.
+
+### plan
+
+#### Verdict
+Execute after fixing Blockers. No Blockers remain: B1 is resolved, and eight of the nine round-1 Majors are too. The fixes did add five Majors, each of which either makes a correct build fail a new case or forces the builder to guess, and the downstream half of the build order is still unnamed. All of it is small and belongs in one fix pass before the build.
+
+#### Findings
+
+Paths are relative to /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import.
+- IMP / IJ / IC = docs/product/import/prd-inventory-import{,-journeys,-copy}.md
+- IFX = docs/product/import/prd-inventory-import-round-1-fixes.md
+- DF / DFJ / DFF = docs/product/data-foundation/prd-data-foundation{,-journeys,-fences}.md
+- CM / CMJ / CMC = docs/product/collection-mode/prd-collection-mode{,-journeys,-copy}.md
+- EX = docs/product/export/prd-data-export.md
+- DVJ = docs/product/device-management/prd-device-management-journeys.md
+- CAP = docs/product/capture-mode/prd-capture-mode.md
+- PL = docs/product/post-lock.md
+- LOG = docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md
+
+##### Round-1 findings: status
+- **B1 RESOLVED**:
+  - R6.9 now partitions the counts, and R6.8a counts as becoming current (IMP:174).
+  - IJ:133 reads "2 used as colour (TK-2, TK-3)"; IJ:117 reads "3 used".
+- **M1 RESOLVED**:
+  - R6.8f runs first and checks current and history (IMP:173, :182). The Vocabulary defines "same reading" (IMP:23), and DF R2.3j "creates none" (DF:137).
+  - Cases: re-import after R6.8c (IJ:134); A/B/A (IJ:136–137); same date with a different spectrum under N19 (IJ:138); Flag (IJ:139); form independence (IJ:141).
+- **M2 RESOLVED**:
+  - The grammar is stated (IMP:172), and R6.7 runs before the mode check (IMP:169).
+  - The fixture uses scientific notation (IJ:104; TK-3 `1.04700000e+0` at IJ:106).
+  - "exactly M0, M1 or M2" excludes M3.
+  - Cases at IJ:125–126.
+- **M3 RESOLVED**: the file's values come from an independent reference (IJ:104; IMP:175). The new tolerance margin is a separate problem, R2-M3.
+- **M4 RESOLVED**:
+  - The fixture values are now invented (IJ:106), and Round 0 is redacted (LOG:18, :32).
+  - Declining a new owner question is recorded and sound under N3 (IFX:71).
+  - I did not re-run the local-only value check (LOG:46).
+- **M5 RESOLVED**: IMP:167 (read for R6.3/R6.11, not stored); IJ:119.
+- **M6 PARTIAL**:
+  - The rows are fixed: the adoption is written by the commit (IMP:169), R3.8k rechecks the fit (IMP:126), the mode is fixed at creation (IMP:168; IJ:114), and there is a Cancel/E44 case (IJ:131).
+  - But IJ:132, the case added for M6(b), contradicts R6.4 (R2-M4).
+- **M7 RESOLVED**: IMP:170 (the file's pair kept as provenance); IMP:171 (unchecked records import, N22); IJ:123 (D65/10° case). A residual definition gap is R2-m2.
+- **M8 RESOLVED**:
+  - DF R2.1 (DF:112); DF F66 (DFF:765).
+  - DJ6 asserts both orders (DFJ:115–116).
+  - R6.8c now says "not current" (IMP:185).
+- **M9 RESOLVED**: AGENTS.md:50 (§3); AGENTS.md:108–109 (§8).
+- **m1 RESOLVED**: IMP:173 (keyed on snapshot kind; a restore takes its source's); IMP:186 (R6.8g).
+- **m2 RESOLVED**: DF:137 (reasons and the unrecorded fields); DF:116 (R2.4 exception); DFJ:113.
+- **m3 RESOLVED**: CMC:295, :307, :310; CMJ:236.
+- **m4 RESOLVED**: IC:29 uses "Already here: ⟨same⟩"; the token is registered in Capture §12.
+- **m5 RESOLVED**: IMP:166; IC:29 ("Toolkit variant: Import; Cancel"). A residual E5 edge is R2-m4.
+- **m6 RESOLVED**: IMP:171 (unreadable file Lab is listed as not checked); IMP:170 (blank Nix Device); IMP:167 (any other column becomes metadata).
+- **m7 RESOLVED**: IJ:104 ("bare `;` with no padding"); IJ:106 (codes, Index 1–3, densities, Density Status).
+- **m8 RESOLVED**: IJ:142 (R6.8e); IJ:116 (name ignored); IJ:134 (re-import after R6.8c).
+- **m9 RESOLVED**: CM:574 (ZX-022 is in M2's population).
+- **m10 RESOLVED**: EX:205 (OQ 4); PL:12.
+- **m11 RESOLVED (deferred)**: PL:102 and IFX:61. The deferral is sound: it is a copy question for Capture, and the tallies stay correct.
+- **m12 RESOLVED**: IMP:205 (OQ 3); IMP:195 (M2); PL:202.
+- **n1 RESOLVED**: IMP:167 (Index ignored).
+- **n2 RESOLVED**: IC:32 gives actions per variant and adds "one with no readings yet".
+- **n3 RESOLVED**: IMP:21; IMP:136.
+- **n4 RESOLVED**: IMP:176 ("the same under R2.3").
+- **G1 PARTIAL**: IMP:32 now names §6's upstream order (Device R1.21, DF R2.3j, derivation without an instrument, and DF OQ 6's tolerance gating release). The downstream half is still unnamed; see Spec coverage gaps.
+- **G2 PARTIAL**: DF R7.7o (DF:268) and DF R7.7 (DF:245) now declare the imported fixture. But Export R4.2 still enumerates "R7.7a–n" (R2-M5).
+
+##### New in round 2
+
+[MAJOR] R2-M1 — Import R6.10 and DF R7.7 against Collection Mode's seeded file — how an imported-reading fixture is produced
+- **What the rows say:**
+  - IMP:175: "Every checked-in fixture or golden holding an imported reading derives from" a synthetic export.
+  - DF:245: "imported readings come from Import R6.5 on a synthetic export". This parallels "simulated snapshots use Device R6.9", so it reads as: generated by running the importer.
+  - CMJ:236 (UJ2.1-r) seeds ZX-022 "at ZX-001's working-set value", a declared derived value. CM's harness says "Fixture values are declared, never copied from the implementation" (CMJ:28).
+  - Other consumers seed the same way: CM M2, every PR (CM:574); UJ2.1-s (CMJ:237); Device UJ3-c (DVJ:80).
+- **Scenario:** the Collection Mode builder has two options, and each breaks a rule.
+  - Run the importer on a synthetic export. The derived values then come from the app, against CMJ:28, and hitting a declared working-set Lab would need a spectral inversion.
+  - Declare the imported reading directly. That goes against IMP:175 and DF:245.
+  - Under the first reading, every one of these harnesses also waits on Import §6, which no build-dependency line says (see Spec coverage gaps).
+- **Fix:** state which is meant in both IMP:175 and DF:245.
+  - Recommended: another PRD's fixture may declare an imported reading directly, with an imported-kind snapshot and a spectrum invented under R6.10, its derived values declared (or taken from the independent reference where a case compares them). Only Import's own cases and DF R7.7o run the importer.
+
+[MAJOR] R2-M2 — CM UJ2.1-s (CMJ:237) asserts a variant a first-phase build does not produce
+- **Problem:**
+  - The case reads "E17 in its restore variant".
+  - That variant is marked `[phase: variant-absent]` until R5.5, which is P1, lands (CMC:223; R5.3 at CM:385).
+  - The harness runs a case "in every build from the phase that lands its rows" (CMJ:36), and UJ2.1-s cites R2.4 and R5.3, both P0.
+- **Scenario:** a correct first-phase build renders E17's base body and fails the variant assertion.
+- **Fix:** either of these.
+  - Read E17 in Recorded order, then Measured order, without naming a variant; CMJ:36's rule then asserts the restore variant only once R5.5 has landed.
+  - Add "R5.5 built" to the Given, as UJ4.7-f does (CMJ:360).
+
+[MAJOR] R2-M3 — Import UJ 3's below-tolerance case depends on a derivation method nothing states (IJ:122, IJ:118, IJ:104; R6.6 at IMP:171; DERIVATION_TOLERANCE candidate 0.1 at DF:328)
+- **Problem:**
+  - IJ:122 sets TK-1's file Lab 0.05 ΔE2000 from "its spectrum's" Lab, which is the independent reference's (IJ:104), and expects TK-1 not to be listed.
+  - That leaves 0.05 ΔE2000 for any disagreement between the app's spectrum-to-XYZ method and the reference's.
+  - Neither method is stated in any PRD: no weighting or tabulation, no interpolation, and no treatment of the 400–700 nm truncation.
+- **Scenario:** the app and the reference differ in how they weight or fold the truncated ends. TK-1's result then turns on the author's choice of library method, not on the code, and a correct build can fail IJ:122 or IJ:118. The case that was added to answer round 1's "only as strong as the author's method" comment makes this dependence sharper.
+- **Fix:** either of these.
+  - UJ 3's preamble names the one tabulation that both the reference and the app's derivation of a 400–700 nm, 10 nm spectrum use, at D50/2° and D65/10°.
+  - Or it states the maximum disagreement the case assumes and sizes the offset to fit.
+
+[MAJOR] R2-M4 — Import UJ 3:132 contradicts R6.4 (IMP:169) and UJ 3:130
+- **Problem:**
+  - IJ:132's Given is an M2 target holding only pending items; the user previews, switches the target to M1, then imports. The case expects E46.
+  - R6.4 says a target holding no reading fits and adopts the file's mode at commit. R3.8k (IMP:126) refuses only "a target that no longer fits".
+  - At commit, the target is exactly IJ:130's Given, where the commit adopts M2.
+- **Scenario:**
+  - A build that follows the rows adopts M2 and fails IJ:132.
+  - Passing IJ:132 means inventing a rule no row states: "mode changed since the preview → E46".
+- **Fix:** either of these.
+  - Change IJ:132's Given to an M2 target holding a captured item with an M2 reading. Switching it to M1 then really no longer fits, which is the recheck M6(b) asked for.
+  - Or add to R3.8k: "a target whose scan mode changed since the preview → E46 (or a fresh preview, as E13)".
+
+[MAJOR] R2-M5 — Export R4.2 (EX:145) contradicts its fence
+- **Problem:**
+  - This round changed R4.2 to assert "all three `sc_simulated` and `sc_imported` values".
+  - It still enumerates only "DF R7.7a–n", none of which holds an imported reading.
+  - Export's Data Foundation line (EX:180) and DF's Data Export line (DF:281) still call R7.7a–n the sole inventory.
+  - DF R7.7 (DF:245) says a–o, and Export F35's Clarified line says R4.2 asserts against R7.7o.
+- **Scenario:** goldens generated from R4.2's own list include none for R7.7o, so `sc_imported` true is never asserted.
+- **Fix:** mechanical. Change "R7.7a–n" to "R7.7a–o" in all three places.
+
+[MINOR] R2-m1 — DF R5.5d (DF:187)
+- Its salvage rule keeps "the later-recorded [current reading] … unless it is imported and the other is not". That keeps a simulated reading over an imported one, against R2.3j and DF F68 (DFF:777, "only a live A stays current").
+- Between two imported readings it keeps the later-recorded rather than the later-measured, against F69 (DFF:783).
+- Fix: keep the one R2.3j would make current — live over imported, imported over simulated, later Date Saved between two imported; otherwise the later-recorded.
+
+[MINOR] R2-m2 — Import R6.6 (IMP:171)
+- "whose illuminant and observer the app cannot yet work under" is not defined.
+- Capture R1.5 (CAP:142) requires the derivation to be reference-parameterised. A build that ships D65/10° tables could therefore check TK-2 and fail IJ:123.
+- Fix: tie the phrase to the offered reference set (Capture OQ 21 at CAP:446, interim D50/2°, test-declarable under Capture R11.6).
+
+[MINOR] R2-m3 — Import R6.4 and R6.11 (IMP:169, :176)
+- Only R6.7's exclusions are ordered before the mode check. R6.11's place relative to E7, E9, E10 and R6.7 exclusions and to R6.4 is unstated, as is which of E46 and E49 wins when both apply.
+- IJ:126 expects E46 "then" after E47, but its only Action is "Read the file", while E47 waits on "Continue without them" (IMP:118).
+- Fix: state the order in one sentence, and add "Continue without them" to IJ:126's Action.
+
+[MINOR] R2-m4 — Import R6.1 (IMP:166) against E5 (IC:15) and R3.8a (IMP:116)
+- A recognised Toolkit export whose later records fail UTF-8 decoding reaches E5, which offers "Choose an encoding".
+- Nothing says whether choosing Windows-1252 keeps the file a Toolkit export, which R6.1 says is "read as UTF-8, shown fixed".
+- Fix: say one or the other; OQ 3 can revisit later.
+
+[MINOR] R2-m5 — Import R6.7 (IMP:172), R6.5 (IMP:170) and the Vocabulary (IMP:23)
+- R6.7 allows any number of fractional-second digits. The measurement time is stored, and the same-reading check compares, "to the millisecond".
+- Whether extra digits are truncated or rounded is unstated, and it changes both the stored time and R6.8f's equality.
+- Fix: state truncation or rounding.
+
+[MINOR] R2-m6 — Import E14 and E43 copy (IC:24, IC:29)
+- E14's Toolkit variant says "a swatch you scanned here keeps that scan as its colour". E43's "Kept as earlier readings" line repeats the scan clause.
+- For an item captured with the Demo Device, R6.8g (IMP:186, F86) makes the Toolkit reading current, so the promise is false.
+- ⟨history⟩ also counts R6.8d's kept imported readings, which have no scan behind them.
+- Copy checks are kept separate from behaviour tests (R4.2), so no case catches this. The product-marketing lens owns the wording.
+
+[NIT] R2-n1 — IJ:110 goes from "no target yet" straight to E48, skipping the target step that R2.1 and R6.3 place before mapping. Add "create a target" to the Action.
+
+[NIT] R2-n2 — IJ:133 does not declare TK-2's pending item's Swatch Name or other fields, yet "Updated 1 (TK-1)" needs them to match Fixture T. Declare them.
+
+[NIT] R2-n3 — IFX:26 records TK-3 as `1.04700000e+00`. IJ:106 and IJ:118 write `1.04700000e+0`, which follows the stated one-digit-exponent form (IJ:104). The journeys are right; the fix record is off.
+
+#### Biggest risks (if executed as-is)
+1. **Harness stall, or quiet rule-bending.** Collection Mode, Device and Export each have to guess how to seed an imported reading (R2-M1). With the downstream order unnamed, one of them may be built before the thing it needs.
+2. **A first-phase Collection Mode build goes red on UJ2.1-s (R2-M2).** An agent may "fix" it by producing the P1 restore variant early.
+3. **A flaky oracle.** Whether the import's below-tolerance case passes depends on which weighting method the fixture author picks, not on the code (R2-M3). The same unstated method decides whether real exports flag every record, which M2 would only reveal at dogfood.
+4. **An invented stale-preview rule.** To pass IJ:132, the builder has to add a rule that contradicts R6.4 (R2-M4).
+5. **`sc_imported` true is never asserted** if the goldens follow R4.2's a–n list (R2-M5).
+
+#### Plan strengths
+- **Round-1 fixes landed as rows with cases that tell right from wrong.**
+  - The E43 counts are consistent.
+  - The same-reading rule checks current and history, with A/B/A, Flag and form-independence cases.
+  - The value grammar and fixture format are stated, and the oracle is independent.
+  - Every Toolkit column's fate is stated.
+  - The mode adoption happens inside the commit, with Cancel and E44 cases.
+  - The illuminant and observer are kept as provenance.
+  - History order is asserted both ways, in DJ6 and in UJ2.1-s.
+  - AGENTS.md, the ADR-0003 inputs and the upstream build order are all in place.
+- **Owner decisions N16–N23 are carried cleanly.** Each has a fence, the older fences carry dated Clarified lines, and the fence→row maps list them (IMP fences :341–349; DF F66–F70; CM F223).
+- **R6.8's dispatch on the current reading's snapshot kind matches DF exactly.** R2.3j's reasons, R2.3h's predecessor rule (a reading kept behind is never a predecessor) and R2.4's exception all agree with it, and DJ6 exercises every branch.
+- **Suspected problems I checked and ruled out:**
+  - `e+0` in the journeys is the correct form; the fix file is the one that is off.
+  - DJ6's measured order (DFJ:115–116) is oldest first, which matches CM R5.3.
+  - IJ:120's TK-2 Note was previously absent, so R3.6d applies and no E14 is correct.
+  - DJ6's re-scan rows use states DF declares under R7.2, so there is no phase conflict.
+  - The E47 record numbers count the header as record 1, per R1.4.
+  - R6.9's three counts add up to ⟨readings⟩ in IJ:117, :133, :134, :136 and :137.
+
+#### Spec coverage gaps (requirements with no task)
+- **The downstream half of G1 is still unnamed.** The brief requires "Collection Mode R2.4j after both" Device R1.21's imported kind and DF R2.3j, and nothing states it.
+  - CM's Build dependencies row 1 (CM:205) lists R2.1–R2.8 with only ADR-0003 as a stop; row 2 (CM:206) does the same for R4.2 and R5.2.
+  - CM's "Phases and builds" sibling-row list (CMJ:36–47) names neither Device R1.21's imported kind nor DF R2.3j.
+  - DF R7.7o (DF:268), Export R4.2's `sc_imported` goldens (EX:145) and Device UJ3-c (DVJ:80) name no predecessor.
+  - Post-lock's First build PR section (PL:141–166) has no Toolkit item.
+  - If R2-M1 is settled as "generated by the importer", all of these also wait on Import §6.
+  - **Fix:** add one CM Build-dependencies row covering R2.4j, the imported halves of R2.7, R4.2d and R5.2b/e, UJ2.1-r/s and M2's imported item: "after the device PRD's R1.21 imported kind and the Data Foundation PRD's R2.3j [and the import PRD's §6]". Add one post-lock First-build-PR item naming the chain.
+
+| Row ID | disposition |
+|---|---|
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | OBJECT (R2-M4, R2-m4) |
+| Import-R6.1 | OBJECT (R2-m4) |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | OBJECT (R2-M4, R2-m3) |
+| Import-R6.5 | OBJECT (R2-m5) |
+| Import-R6.6 | OBJECT (R2-M3, R2-m2) |
+| Import-R6.7 | OBJECT (R2-m5) |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | OBJECT (R2-M1, R2-M3) |
+| Import-R6.11 | OBJECT (R2-m3) |
+| Import-M2 | ALIGN |
+| Import-E7 | ALIGN |
+| Import-E9 | ALIGN |
+| Import-E10 | ALIGN |
+| Import-E14 | OBJECT (R2-m6) |
+| Import-E42 | ALIGN |
+| Import-E43 (Toolkit variant) | OBJECT (R2-m6) |
+| Import-E46 | ALIGN |
+| Import-E47 | ALIGN |
+| Import-E48 | ALIGN |
+| Import-E49 | ALIGN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (R2-m1) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | OBJECT (R2-M1, G1) |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | OBJECT (R2-M1, R2-M2, G1) |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ALIGN |
+| CM-M2 | OBJECT (R2-M1) |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (R2-M5, G1) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ALIGN |
+
+### database
+
+#### Verdict
+Sound once one new Major is fixed. The round-1 Blocker and all seven round-1 Majors are resolved in the rows, the cases and the ADR-0003 inputs. The fix pass introduced one Major: DF R5.5d's salvage exception contradicts DF F67–F69 on three pairs of readings. It also introduced four Minors. Each is a one-line fix.
+
+#### Schema & engine (brief)
+- **No DDL exists.** There is no code yet, and ADR-0003 (the storage schema) is still queued (ADR:22). The requirement rows remain the data contract. I traced them against the logical entities they imply:
+  - **Item:** its code is unique per collection under Import R2.3.
+  - **Reading:** a per-item sequence, measurement and record times, a supersession reason, an explicit current selection, an explicit predecessor (new this round), and a copied snapshot of kind live, simulated or imported. An imported reading also carries the file's illuminant/observer pair as provenance.
+  - **Samples:** an imported reading has zero.
+  - **Derived sets:** one per reading × condition.
+  - **Collection:** its chosen scan mode.
+- **Engine.** SQLite; GRDB is recommended. Outside reads run at SQLITE_READER_FLOOR (DF OQ 2, still open). `PRAGMA foreign_keys`, the journal mode and `busy_timeout` are still decided nowhere; they are ADR-0003's.
+- **What I read.** `git diff 2a54fce f7cbde5 -- docs AGENTS.md`; all 14 targets and the contract sources, in full or at every changed row; my round-1 section; N16–N23; and the fix file.
+
+Path legend (all absolute; "X:n" means line n of that file):
+- IMP = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/import/prd-inventory-import.md
+- IMPJ = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/import/prd-inventory-import-journeys.md
+- IMPC = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/import/prd-inventory-import-copy.md
+- IMPF = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/import/prd-inventory-import-fences.md
+- DF = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/data-foundation/prd-data-foundation.md
+- DFJ = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/data-foundation/prd-data-foundation-journeys.md
+- DFF = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/data-foundation/prd-data-foundation-fences.md
+- EX = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/export/prd-data-export.md
+- EXJ = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/export/prd-data-export-journeys.md
+- CMJ = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/collection-mode/prd-collection-mode-journeys.md
+- CAP = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/capture-mode/prd-capture-mode.md
+- ADR = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/decisions/README.md
+- PL = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/product/post-lock.md
+
+#### Findings
+
+##### Round-1 findings — status
+
+**Blocker**
+- **DB1-B1 (imported readings deduplicated only against the current reading) — RESOLVED.**
+  - R6.8f now runs first, against every reading the item holds, and "a Flag, a restore or a set-aside decision stands" (IMP:173, IMP:182; Vocabulary IMP:23; F82 Clarified IMPF:246; DF R2.3j DF:137).
+  - Cases: IMPJ:134, :137, :139, :141 and DFJ:120.
+  - The ADR-0003 input says the same-reading key excludes restores (ADR:22).
+  - One corner remains: DB2-m1.
+
+**Majors**
+- **DB1-M1 ("equal" and "as given" undefined) — RESOLVED.** Each part landed:
+  - (a) Sameness is judged on parsed values: IMP:23 and IMPJ:141.
+  - (b) Numbers are stored as numbers: IMP:170, with IMPJ:118's "stored as 1.047 … equal as numbers".
+  - (c) The equal-date tie is assigned (N19): IMP:187.
+  - (d) Millisecond precision: IMP:170.
+  - A Nit remains: DB2-n2.
+- **DB1-M2 (history order) — RESOLVED.**
+  - N16 is recorded as F66 (DFF:765), and DF R2.1 is reworded (DF:112).
+  - DFJ:115–116 and CMJ:237 (UJ2.1-s) discriminate the two orders.
+  - CM R5.3 is unchanged and agrees: the measured order runs oldest first, with ties broken by record time.
+- **DB1-M3 (predecessor not recoverable from sequence) — RESOLVED.**
+  - DF R2.3h (DF:135) fixes the predecessor as the reading current when B landed.
+  - The reason cell (DF:137, "else initial") also covers a reading kept behind an imported A.
+  - DFJ:117 is the discriminating case; ADR:22 stores the predecessor explicitly.
+- **DB1-M4 (mode fit not rechecked at commit) — RESOLVED.**
+  - R3.8k (IMP:126) rechecks the fit at commit; R6.4 (IMP:169) says the adoption is "written by the commit and undone with it"; R3.2 (IMP:79).
+  - Cases IMPJ:131 and :132; Capture R1.10 (CAP:147).
+  - A related gap remains: DB2-m2.
+- **DB1-M5 (NaN/Infinity readable; unreadable Lab and pair unruled) — RESOLVED.** R6.7 (IMP:172) requires finite numbers; R6.6 (IMP:171) lists such records "never as matching"; cases IMPJ:123, :125, :126.
+- **DB1-M6 (`undefined` Note stored as an empty string) — RESOLVED.** R6.2 (IMP:167); cases IMPJ:119 and :120.
+- **DB1-M7 (reading counts undefined, oracles contradictory) — RESOLVED.**
+  - R6.9 (IMP:174) partitions the eligible readings, and IMPC:37 says the three counts sum to ⟨readings⟩.
+  - IMPJ:133 now counts 2 used as colour (TK-2, TK-3), and IMPJ:136 asserts its counts.
+
+**Minors**
+- **Illuminant/observer stored as a set's reference — RESOLVED.** IMP:170 ("never a derived set's reference"), DF:137, IMPJ:123.
+- **"Hold no reading" undefined — RESOLVED.** IMP:169 and IMPF:208.
+- **How R6.8c/d tell a scan from an import — RESOLVED.** IMP:173 (the current reading's kind, a restore carrying its source's) and R6.8g (IMP:186).
+- **DF vocabulary and floor-readable lists — RESOLVED.** DF:37, :99, :112, :239; DFJ:114. A restore copies the imported state (DF:137, DFJ:123).
+- **Salvage can promote an imported reading over a scan — PARTIAL.** The exception landed (DF:187) but over-reaches on three pairs → DB2-M1.
+- **DF R2.4 not carved out for R2.3j — RESOLVED.** DF:116.
+- **R3.2 names only R3.3a–d — RESOLVED.** IMP:79.
+- **R6.2 silent on unlisted columns — RESOLVED.** IMP:167; IMPJ:113 and :119.
+- **No fixture yields `sc_imported` true — PARTIAL.**
+  - Landed: DF R7.7o (DF:268), R7.7 (DF:245), EX:88–94 and EXJ:14.
+  - Missing: Export R4.2 (EX:145) still enumerates only R7.7a–n → DB2-m3.
+- **Out-of-grid branch depends on Export OQ 4 — RESOLVED.** EX:205 and PL:12.
+
+**Nits**
+- **Index "read for R6.6" — RESOLVED.** IMP:167.
+- **Unknown serial/firmware should read back as NULL — PARTIAL.** The placeholder is barred (DF:137, ADR:22), but the rows say "empty", not NULL → DB2-n1.
+- **Capture R1.10 vs R1.11 — RESOLVED.** CAP:147 ("other than that commit").
+
+##### New findings
+
+**[MAJOR] DB2-M1 — DF R5.5d (salvage of two current readings), DF:187**
+- **What landed.** My round-1 fix text, "prefer the non-imported reading", landed as "the later-recorded stays current unless it is imported and the other is not (R2.3j)". N17–N19, decided afterwards, make that wrong on three pairs. Each contradicts a DF fence and the R2.3j it cites:
+  - **Imported (later-recorded) against simulated (earlier).** This is the state R6.8g leaves if the old current flag failed to clear. R5.5d keeps the simulated reading current. F68 (DFF:777) and R2.3j say only a live A stays current over B.
+  - **Two imported readings.** The later-recorded one stays current, but it can be a reading R2.3j kept behind (earlier or same Date Saved; F69, DFF:783). R2.3j keeps the later-measured one.
+  - **Imported against live.** The right reading (the live one) stays current. But "the other retained as correction-unconfirmed" attaches a correction question to a pair that R2.3j and F67 (DFF:771) resolve as kept behind, reason initial, no question. Answering "the old reading was wrong" then marks the Toolkit reading never true.
+- **Where it bites.** DF R7.2 declares two current readings and R7.3 induces them. A test that declares imported I (later) over simulated S (earlier) asserts S current per R5.5d, so a build that follows F68 fails it; a build that follows R5.5d contradicts F68. Swapping which reading is kept in that pair passes one reading and fails the other, and no case pins it. The damage is confined to salvage output, and nothing is lost: both readings are retained.
+- **Fix.** Reword R5.5d's clause to: "of two current readings, the one R2.3j would leave current stays current — a live reading over an imported one, an imported over a simulated one, the later-measured of two imported — the other kept behind as R2.3j keeps it, reason initial, no question; any other pair, the later-recorded stays current, the other retained as correction-unconfirmed (R2.2, R2.4)". Alternatively, name the imported pairs as ADR-0003's (the row already defers per-invariant rules there). Either way, add one R7.2/R7.3 case per pair.
+
+**[MINOR] DB2-m1 — Import R6.8f against R6.8b for a quarantined imported reading (IMP:182, IMP:184; F88 at IMPF:277; ADR:22)**
+- **The conflict.** R6.8b and F88 name "its current reading quarantined" as a case where the Toolkit reading becomes current, so re-importing the same export is the natural recovery. But R6.8f runs first, and "the same reading" cannot be judged against a reading whose decoded spectrum is unreadable (DF R5.5b).
+- **How it bites.** A build that keys sameness on stored columns — the ADR-0003 input's "same-reading key" — matches the quarantined reading and changes nothing. With a UNIQUE index the commit fails to E44 instead. Either way F88's recovery never happens, and no case covers it.
+- **Fix.**
+  - R6.8f: add "a quarantined reading is never the same reading".
+  - The ADR-0003 input: the key excludes quarantined readings as well as restores.
+  - Case 1: TK-2's imported current reading declared quarantined (DF R7.2); re-import Fixture T → TK-2 captured with a new current reading, reason initial, the quarantined one retained.
+  - Case 2: a quarantined history reading gains one readable copy; a second re-import changes nothing.
+
+**[MINOR] DB2-m2 — Import R3.8k (IMP:126) and the R6.8 table (IMP:178–188): the R6.8 outcomes and counts are not re-evaluated at commit**
+- **The gap.** R3.8k now rechecks mode fit at commit, but not the matched items' reading state that each R6.8 outcome rests on.
+- **Why it's reachable.** With a preview open, CM UJ9.5-g (CMJ:544) shows Add a swatch, settings changes and a session start and end are all possible. A Flag, a restore, or a session scan on a matched item changes its outcome (R6.8b→R6.8c, or R6.8f↔R6.8b).
+- **How it bites.** A build that commits the previewed plan either makes a Toolkit reading current over a fresh live scan (against F74), or writes a second current reading. The second case trips DF R2.2, and the whole file then opens read-only (E5).
+- **Why a builder would guess.** The table's "Effect at commit" implies evaluation at commit, but R3.2's "the previewed import" and E43's counts point the other way. The gap predates this round; R3.8k's new explicit recheck list makes the omission visible.
+- **Fix.**
+  - R3.8k: "recheck source, session gate, R6.4's mode fit and each matched item's R6.8 outcome inside the commit's transaction; a changed outcome returns to a fresh preview".
+  - Case: preview Fixture T into a target where TK-2 is pending; scan TK-2 in a session and end it; Import → a fresh preview counting TK-2 as kept in history.
+
+**[MINOR] DB2-m3 — Export R4.2 (EX:145) enumerates a fixture range that omits R7.7o**
+- **The gap.** R4.2 still enumerates "DF R7.7a–n plus generated corpus" while requiring "all three `sc_simulated` and `sc_imported` values". An `sc_imported` of true exists only in R7.7o (DF:268), which DF R7.7 (DF:245) now adds to the inventory.
+- **Same stale range elsewhere.** EX:180 and DF's Data Export inbound line (DF:281).
+- **Effect.** A build that enumerates R7.7a–n has no golden with `sc_imported` true.
+- **Fix.** "R7.7a–o" in all three places.
+
+**Nits**
+- **[NIT] DB2-n1 — "empty" should be NULL.** Unknown serial and firmware "read back empty" (DF:137, IMPJ:118, DFJ:113; ADR:22 "stored empty"). In this document family "empty" means a present empty string, distinct from absent (IMP:25), and SQL's unknown is NULL. Say "NULL (absent), never '' or a placeholder", as IMPJ:119's "no item holds a Note" already treats an absent field.
+- **[NIT] DB2-n2 — sub-millisecond Date Saved.** R6.7 (IMP:172) allows any fractional seconds, while R6.5 (IMP:170) keeps milliseconds and sameness (IMP:23) compares at milliseconds. Say truncate, not round.
+- **[NIT] DB2-n3 — E48 overstates the check.** E48 (IMPC:34) says the file's LCh, XYZ, sRGB and HEX are "checked". R6.2 (IMP:167) ignores them, and R6.6 checks only L, a and b.
+- **[NIT] DB2-n4 — ADR-0003 row editorial.** At ADR:22 the Toolkit input runs into the previous sentence ("…the cold open Input from…"), and the row still says "Takes eight inputs from Collection Mode" before it.
+- **[NIT] DB2-n5 — Toolkit copy misstates what is kept.**
+  - E43's "Kept as earlier readings: ⟨history⟩ — a swatch you scanned here keeps that scan" and E14's variant (IMPC:24, IMPC:29) don't match what ⟨history⟩ counts:
+    - It includes R6.8c readings measured after the scan; F84 dropped "earlier" from R6.8c for exactly this reason.
+    - It includes R6.8d readings where no scan is involved.
+    - A Demo Device reading is not kept current (R6.8g).
+  - This is for the copy lenses.
+
+#### Biggest risks
+1. **DB2-M1.** Salvage of a two-current file picks the wrong reading for imported/simulated and imported/imported pairs, and puts a spurious correction question on imported/live pairs. The first answer of "the old reading was wrong" then permanently marks a real Toolkit reading never true.
+2. **DB2-m2.** A plan-at-preview build writes a second current reading when the store changes under an open preview, and the whole file then opens read-only (E5). Schema enforcement (see Missing) turns this into a clean E44 instead.
+3. **DB2-m1.** Recovering a damaged imported reading by re-import silently does nothing, or fails the commit.
+4. **Toolkit format drift.** A different time precision or digit count in a later app version turns one measurement into a same-dated "different" reading kept in history. It is visible through E43's same-date list (N19), so not silent; OQ 3 tracks it.
+
+#### Genuinely sound
+- **R6.8f checks the whole held set, restores included.** The ADR input's uniqueness key excludes restores, because R2.3f copies the measurement time and spectrum. The "a Flag, restore or set-aside stands" clause is what stops a re-import from quietly re-promoting history, against DF R2.9.
+- **Sameness is judged on parsed values,** the instant to the millisecond and each reflectance as a number, independent of written form. IMPJ:141 proves it.
+- **IMPJ:118 pins numeric storage.** Under SQLite affinity, a TEXT-stored `'1.04700000e+0'` fails "equal … as numbers" and `typeof`. An f32-packed BLOB also fails, because it rounds, which agrees with DF R1.2's plain types. A bad store cannot pass the case.
+- **Current selection and predecessor are explicit.** After R6.8c no heuristic works — highest sequence, latest record time or latest measurement time can each pick the wrong reading. The PRDs say so, and ADR-0003 carries it.
+- **N16 is resolved without a mixed sort key.** The recorded order stays pure record time. The measured order is oldest first with a record-time tiebreak, so it is deterministic and a restore follows its source. DFJ:116 and UJ2.1-s tell the two orders apart.
+- **Mode adoption sits inside the commit.** It is rechecked at commit and rolled back on Cancel or E44 (IMPJ:131–132).
+- **R6.9's partition is total.** Duplicate codes are excluded wholesale (R2.4/E10) and a code matching several items is excluded (R3.4), so each item gets at most one reading per commit and there is no ordering question inside a commit.
+- **Two SQLite/IEEE traps are closed.** R6.7's finiteness rule stops NaN being stored as NULL; R6.6's "never as matching" stops a NaN ΔE from reading as a match.
+- **`undefined` becomes absent, not an empty string,** so the null-versus-empty distinction is handled correctly.
+- **Right calls a textbook DBA would wrongly flag:**
+  - the device snapshot is copied into each reading rather than foreign-keyed to a devices table;
+  - the file's reference pair is kept as provenance only;
+  - Density and Note stay decoded TEXT;
+  - `sc_imported` is a separate boolean rather than a three-valued `sc_simulated`;
+  - Toolkit readings are not forced unique across items.
+
+#### Missing / over-engineered
+- **One round-1 ADR-0003 input was not carried.** The inputs at ADR:22 and PL:169 cover the rest of the round-1 list, but not "at most one current reading per item, enforced by the schema" — for example a partial unique index `ON reading(item_id) WHERE is_current`, which SQLite has supported for a long time. With it, DB2-m2 and any salvage bug fail closed at E44 instead of writing the E5 state. R2.2's read-only path still covers a file damaged by an outside writer.
+- **The same-reading key should also exclude quarantined readings** (DB2-m1).
+- **One missing case:** restore an older imported reading, then re-import the export holding the newer one → nothing changes and the restore stays current. R6.8f's "a restore stands" has no case; the Flag half has IMPJ:139.
+- **Nothing is over-engineered.**
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R1.5 | ALIGN |
+| Import-R3.2 | ALIGN |
+| Import-R3.3 | ALIGN |
+| Import-R3.5 | ALIGN |
+| Import-R3.8 | OBJECT (DB2-m2) |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.3 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.5 | ALIGN |
+| Import-R6.6 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | OBJECT (DB2-m1) |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| Import-R6.11 | ALIGN |
+| Import-M2 | ABSTAIN |
+| Import-E7 | ABSTAIN |
+| Import-E9 | ABSTAIN |
+| Import-E10 | ABSTAIN |
+| Import-E14 | ALIGN |
+| Import-E42 | ABSTAIN |
+| Import-E43 (Toolkit variant) | ALIGN |
+| Import-E46 | ALIGN |
+| Import-E47 | ALIGN |
+| Import-E48 | ALIGN |
+| Import-E49 | ABSTAIN |
+| DF-R1.2 | ALIGN |
+| DF-R1.6 | ALIGN |
+| DF-R2.1 | ALIGN |
+| DF-R2.2 | ALIGN |
+| DF-R2.3 (with R2.3h, R2.3j) | ALIGN |
+| DF-R2.4 | ALIGN |
+| DF-R5.5 (with R5.5d) | OBJECT (DB2-M1) |
+| DF-R7.1 | ALIGN |
+| DF-R7.2 | ALIGN |
+| DF-R7.7 (with R7.7o) | ALIGN |
+| Device-R1.21 | ALIGN |
+| Device-R1.22 | ALIGN |
+| CM-R2.4 (with R2.4j) | ALIGN |
+| CM-R2.7 | ALIGN |
+| CM-R4.2 (with R4.2d) | ALIGN |
+| CM-R5.2 (with R5.2b/e) | ALIGN |
+| CM-R8.9 | ABSTAIN |
+| CM-M2 | ABSTAIN |
+| CM-E12 | ALIGN |
+| Export-R1.1 (with R1.1h/i/p/s/t) | ALIGN |
+| Export-R1.2 | ALIGN |
+| Export-R4.2 | OBJECT (DB2-m3) |
+| Export-E1 | ALIGN |
+| Capture-R1.10 | ALIGN |
+| Capture-M8 | ABSTAIN |

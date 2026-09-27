@@ -756,6 +756,8 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 
 **Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); owner decision N16, F66):** "which history and over-time views place by its measurement time" means the over-time views, the history's measured order among them; the recorded order keeps the imported reading at its record time (R2.1). Round 1 also carries this decision into the Vocabulary, R1.2, R2.1, R2.3's lead, R2.3h, R7.1, R7.2, R7.7 and R7.7o: a reading with no samples, basis, verdict or spread; unknowns read back empty; a same reading creating none; the predecessor fixed as the reading current when B landed; restoring an imported reading; and its fixture.
 
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); F66–F69):** R5.5d's salvage of two current readings keeps the one R2.3j would leave current, the other kept behind with no question, and otherwise the later-recorded; an imported snapshot's unknowns are absent (NULL), never a placeholder; the Data Export line names R7.7o. R5.5d, R2.3j, DJ6 and that line carry it.
+
 ### F65 — Word budget 8,600 (2026-09-26)
 
 - **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12, 2026-09-26.

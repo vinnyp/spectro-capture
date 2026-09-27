@@ -10,7 +10,7 @@ SpectroCapture answers the question none of them ask: *Can I get my whole collec
 
 - **Digitizing a color collection with existing  software means per-scan metadata entry.** The workflow is inverted for bulk work, so a 200-item collection will focus on scanning those items, not data entry + scanning.
 - **Buying software doesn't fix it, at any price.** Every desktop tool that speaks to  hardware (Print Pro, SpotOn at $299–499/yr, etc) is *verification* software, built to answer "does this sample match the standard?" No product on the market answers "*can I get my whole collection scanned in efficiently*?"
-- **The instrument's data is stranded.** A $1k+ spectrophotometer's measurements live inside vendor and account-bound apps, and the open color tools people already trust (Argyll CMS, SpectraShop) can't even connect to the device. The mobile Toolkit's CSV export, as studied, carries each color's spectrum but not the instrument's serial, firmware or sample count. Owners have no queryable, portable home for a whole collection and its history.
+- **The instrument's data has no home the owner controls.** A $1k+ spectrophotometer's measurements live inside vendor and account-bound apps, and the open color tools people already trust (Argyll CMS, SpectraShop) can't even connect to the device. The mobile Nix Toolkit app's CSV export, in the one export studied, carries each color's spectrum but not the instrument's serial, firmware or sample count. Owners have no queryable, portable home for a whole collection and its history.
 - **Out-of-gamut reality is hidden.** Monitors silently render "closest color," so users can't tell which collection colors are faithfully renderable and which aren't.
 
 ## Competitive position

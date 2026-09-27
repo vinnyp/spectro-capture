@@ -292,7 +292,7 @@ set-aside cause the label its copy file's Set-aside cause labels table gives it.
 | R4.2b State | State | The row state; for a set-aside swatch, its cause and then set aside for good, or set aside, still to deal with |
 | R4.2c Current value | Colour | The chip, then each space's values with its light, observer, condition and version; Not in this condition where the collection's condition has no value; or No current value |
 | R4.2d The current reading | Reading | Measured, then the date · instrument, model, serial and firmware · samples kept · averaged over spectral curves or colour values · spread · samples agreed, or samples disagreed, average accepted |
-| R4.2d imported | Reading | for an imported reading: Measured, then the date · Nix Toolkit export, model, serial unknown, firmware unknown · samples, averaging, spread and agreement not recorded |
+| R4.2d imported | Reading | for an imported reading: Measured, then the date · Nix Toolkit export, the model or model unknown, serial unknown, firmware unknown · samples, averaging, spread and agreement not recorded |
 | R4.2e Marks | Marks | Each mark's chip label; where a non-spectral reading's reference differs from the collection's: Worked out under a different light from this collection's, because this reading has no spectral data |
 | R4.2f History | History | The number of readings, as 1 reading or 2 readings and so on |
 | R4.2h Re-scans awaiting an answer | Waiting on you | The Data Foundation PRD's E11 |
@@ -304,7 +304,7 @@ awaiting your answer; restore — Earlier reading used again.
 | Line | Label | What follows it |
 |---|---|---|
 | R5.2a Times | Measured, Recorded | The date after each |
-| R5.2b Device | Device | The device — an imported reading's as its model and "serial unknown" — with the simulated or From Nix Toolkit chip label where it applies |
+| R5.2b Device | Device | The device — an imported reading's as its model, or "model unknown", and "serial unknown" — with the simulated or From Nix Toolkit chip label where it applies |
 | R5.2c Reason | Why | The reason's words above, and Current on the current reading |
 | R5.2d Standing | Marks | The chip labels of never-true, awaiting-answer and unreadable where they apply |
 | R5.2e Value | Colour | The chip, samples kept and spread; for an imported reading, the chip and Samples and spread not recorded |

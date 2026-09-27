@@ -23,7 +23,7 @@ Resume point for round 1 of the Nix Toolkit export amendment (review log: `docs/
 - [x] **Equality defined** — DB1-M1a/b/d, SSE1-M2, TR1-M4. Same Date Saved instant to the millisecond and every reflectance the same number; UJ 3 case re-importing Fixture T rewritten with plain decimals and a +00:00 offset.
 - [x] **Reading counts** — TR1-B1, PL1-B1, AR1-M6, IF1-B2, PMM1-M7, DB1-M7, SSE1-M1, SSE1-m7, IF1-M6. R6.9 partitions the eligible readings; UJ 3 :118 reads 2 becoming current; :120 asserts its counts.
 - [x] **Placeholders registered** — IF1-M6, PMM1-m9. Single-word tokens in Capture §12's placeholder list and Import copy's note; ⟨unchanged readings⟩ becomes ⟨same⟩.
-- [x] **Fixture format in the repo** — TR1-B3, SSE1-B2, PM8, PL1-M2 (fixture half), PL1-m7, SSE1-n4. UJ 3's paragraph states the format facts (bare `;`, unquoted header, the four quoted columns, scientific notation, XYZ 0–1, sRGB integers, lowercase HEX, two-place densities, Date Saved form); TK-3 written `1.04700000e+00`; codes, Index and densities declared.
+- [x] **Fixture format in the repo** — TR1-B3, SSE1-B2, PM8, PL1-M2 (fixture half), PL1-m7, SSE1-n4. UJ 3's paragraph states the format facts (bare `;`, unquoted header, the four quoted columns, scientific notation, XYZ 0–1, sRGB integers, lowercase HEX, two-place densities, Date Saved form); TK-3 written `1.04700000e+0`; codes, Index and densities declared.
 - [x] **Synthetic defined; independent oracle** — PRIV-4, PL1-M3, TR1-m (IJ:110 derivation). R6.10 defines synthetic, cites UJ 3's format, covers derived fixtures and goldens, bars reports; the file's own values come from an independent reference.
 - [x] **Gamut flag oracle** — TR1-M5. Fixture T declares TK-2 outside sRGB and TK-1 inside; UJ 3 asserts the flag.
 - [x] **Value grammar** — PL1-M2, SSE1-M3, DB1-M5, TR1-M6, IF1-M13 (mode/device half), AR1-m5, SSE1-M4 (mode, order). R6.7 states readable times, modes (M0–M2), numbers (finite; NaN, Infinity, empty and comma decimals unreadable) and runs before R6.4; negative reflectances are kept as given like values above 1.0 (N9, "nothing invented"); a blank Nix Device leaves the model unknown; UJ 3 cases for NaN, a time with no zone and an empty mode.
@@ -54,6 +54,8 @@ Resume point for round 1 of the Nix Toolkit export amendment (review log: `docs/
 - [x] **Export surface** — PMM1-m5, IF1-n3, TR1-m (EX:88–90/EXJ:14). E1's line names the empty cells; R1.2 says the two columns are never both true; R1.1h/s/i; EJ1 asserts model, measured-at, never-scanned empty and the P1 history half.
 - [x] **Vision and index** — PMM1-M8, PMM1-m6, PMM1-m7, PM-n1. Problems bullet; J7 risk marked superseded in part; feature note; the index's v2 line.
 - [x] **Import editorial** — PM-m3, TR1-m (IMP:83/IJ:36), TR1-n (IMP:133), SSE1-m4, PMM1-n1, IF1-n1, IF1-n2, PL1-n4, PL1-m8, TR1-m (IJ:109/121, IJ:120, IJ:110 below tolerance), TR1-n (IJ:110), TR1-n (DF:27). R3.8a–p; every-state row covers E46–E49; §4 names UJ 3; Nix Toolkit vocabulary; "except" in amended lines; R1.5 carve-out; R6.11 compares under R2.3; cases for an existing target ignoring the name, a pre-filled name that collides, an absent item and a below-tolerance record; DJ6's index.
+
+- [x] **Also landed, uncited above** (round 2's TR2-n4) — TR1-M2 (a Toolkit reading newer than the scan: UJ 3's scan-current case), TR1-m (no E41 or E12 for the two L headers: UJ 3's first case), TR1-m (the creation-time mode: R6.3, Capture R1.10).
 
 ## Deferred to post-lock, each with its reason
 

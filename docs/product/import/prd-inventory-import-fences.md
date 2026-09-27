@@ -172,6 +172,9 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 
 **Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); PRIV-1, PRIV-4):** Synthetic means every collection name, code, name, note, date and value is invented, none taken from a real export, as the Collection Mode harness uses the word. The format a fixture follows is UJ 3's stated one, the file's own values come from an independent reference, and every checked-in fixture or golden holding an imported reading derives from such a fixture; no report on a real export enters the repository either. R6.10 carries it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); PRIV2-1, plan R2-M1, test TR2-m1):** "A report on one" means any data value from a real export; M2 and OQ 3 record only format facts and tallies by state across files. Another PRD's case may declare an imported reading directly, only Import's cases and the Data Foundation PRD's R7.7o running the importer. The file's own values come from the reference the Data Foundation PRD's R7.5 checks the build against, and UJ 3's offsets are multiples of DERIVATION_TOLERANCE. R6.10, M2 and OQ 3 carry it.
+
 ### F72 — The Toolkit import lives in this PRD (2026-09-26)
 
 **Decision:** The Toolkit import extends this PRD's flow — pick the file, map, preview, commit — as its §6, and each sibling PRD it touches (Data Foundation, Device Management, Collection Mode, Data Export, Capture Mode, the vision) carries a dated mirror.
@@ -186,6 +189,9 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 
 **Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); N5's "the header signature identifies it" and "'undefined' notes handled automatically"):** The signature is sought under the semicolon, then the comma, then the tab, so a Toolkit export re-saved with another separator is still recognised; its encoding and separator are shown fixed. A Note of `undefined` supplies no value, so it never clears a note the user typed. Every Toolkit column's fate is stated, Custom Collection Name read and not stored; a time, a mode and a number have stated forms, and a value that is not a finite number cannot be read. R6.1, R6.2, R6.7 and E48 carry it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** A recognised Toolkit export whose records fail R1.5c's quoting reaches E5's Toolkit variant, which offers no read control; E5, E7, E9, E10 and E42 carry written-out Toolkit variants; a time is an RFC 3339 date-time truncated to the millisecond; §1–§3's exclusions and R6.7's run before R6.4's and R6.11's checks; E48 says only the Lab is checked. R6.1, R6.4, R6.7, R6.11; E5, E7, E9, E10, E42 and E48 carry it.
+
 ### F74 — A SpectroCapture scan stays current over a Toolkit reading (2026-09-26)
 
 **Decision:** Where the matched item's current value was scanned in SpectroCapture, the scan stays current and the Toolkit reading is kept in version history as an earlier reading; metadata updates as a normal re-import. R6.8c carries it.
@@ -206,6 +212,9 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 
 **Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); N8's "A new collection adopts the file's mode; an existing collection must already use it (or have no readings yet, and then switches)"):** The switch is written by the import's commit and undone with it, so Cancel or a failed commit leaves the target's mode unchanged; E43 names it; the fit is checked again at commit; "no readings" means no item holds any reading, current or in history, QC records aside; a Toolkit-created target's mode is fixed in that creation; R6.7's exclusions run before the mixed-mode check. R3.2, R3.8k, R6.3, R6.4 and the Capture Mode obligation line carry it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); F76's "E43 names it"):** At commit, a target whose mode or matched outcomes changed since the preview returns to a fresh preview through E13's collection variant, nothing written, and one that no longer fits refuses with E46. A Toolkit-created target's form labels its mode as set by the export. R3.8k, R6.3 and E13 carry it.
+
 ### F77 — What a Toolkit export lacks is recorded as unknown (2026-09-26)
 
 **Decision:** An imported reading's sample count is not recorded, its device snapshot names the model with serial and firmware unknown, and it has no raw payload, one never supplied, a state distinct from a damaged archive; nothing is invented. The spectrum is kept and every derived value worked out from it. R6.5 carries it.
@@ -244,6 +253,9 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 
 **Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); N14's own words, "An identical reading (same date and spectrum) changes nothing"):** Identical is judged against every reading the item holds, current or in history, not the current one alone, so a re-import never adds a reading the item already has and never undoes a Flag, a restore or a set-aside decision. The same reading is the same Date Saved instant to the millisecond with every reflectance the same number. R6.8f and the Vocabulary carry it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** A quarantined reading is never the same reading, so re-importing recovers an item whose imported current reading is quarantined (R6.8b); an R6.8f record still updates metadata under R3.5/R3.6. R6.8f carries it.
+
 ### F83 — A new target's name is pre-filled from the file (2026-09-26)
 
 **Decision:** Creating a target for a Toolkit export pre-fills its name from the file's collection name, editable; an existing target ignores that name. R6.3 carries it.
@@ -325,15 +337,15 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F68** Collection Mode round-5 mirror — R4.1; Collection Mode inherited-obligation line; UJ 2.1.
 - **F69** Nix Toolkit scope — §6; line 5; R1.5b; UJ 3.
 - **F70** Toolkit reading made canonical — R6.5, R6.8; Data Foundation and Device inherited-obligation lines; UJ 3.
-- **F71** Synthetic Toolkit fixtures, as clarified — R6.10; UJ 3.
+- **F71** Synthetic Toolkit fixtures, as clarified twice — R6.10, M2, OQ 3; UJ 3.
 - **F72** Toolkit import home — §6; the inherited-obligation lines.
-- **F73** Toolkit recognition, as clarified — R1.5, R1.5b, R6.1, R6.2, R6.7, R6.9; E7, E9, E10, E42, E43, E47, E48; UJ 3.
+- **F73** Toolkit recognition, as clarified twice — R1.5, R1.5b, R6.1, R6.2, R6.4, R6.7, R6.9, R6.11; E5, E7, E9, E10, E42, E43, E47, E48; UJ 3.
 - **F74** Scan stays current — R6.8c; UJ 3.
 - **F75** Imported mark — R6.5; Collection Mode inherited-obligation line.
-- **F76** Measurement-mode fit, as clarified — R3.2, R3.8k, R3.8p, R6.3, R6.4; E43, E46; Capture inherited-obligation line; UJ 3.
+- **F76** Measurement-mode fit, as clarified twice — R3.2, R3.8k, R3.8p, R6.3, R6.4; E13, E43, E46; Capture inherited-obligation line; UJ 3.
 - **F77** Unknown provenance recorded — R6.5; UJ 3.
 - **F78** Date Saved as measurement time — R6.5; UJ 3.
-- **F79** Export and QC — governs no row here.
+- **F79** Export and QC — the Data Export inherited-obligation line.
 - **F80** Mirror word budgets — governs no row here.
 - **F81** Worked-out values and the check — R6.2, R6.6; E43; UJ 3.
 - **F82** Newest imported reading current, as clarified — Vocabulary; R3.3, R6.8, R6.8d, R6.8f, R6.9; UJ 3.
