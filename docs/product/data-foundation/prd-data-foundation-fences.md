@@ -126,6 +126,8 @@ Ingested before any round: every brief under `docs/briefs/` on `main` at `dd43c1
 
 **Clarified 2026-09-26 ([the Collection Mode PRD's F220](../collection-mode/prd-collection-mode-fences.md), owner decision D74):** the budget is 8,480 words; see F55.
 
+**Clarified 2026-09-26 ([the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md), owner decision N12):** the budget is 8,600 words; see F55.
+
 ### F22 — Export column names, the second-file outcome, and two tokens (2026-09-09, after the round-1 fix pass)
 
 **Decision:** (a) Every column the app emits in the CSV carries the prefix `sc_`; an imported column that would collide is emitted as `import_<name>` and the export surface says so (R4.8, now the export PRD's R2.4). (b) Opening a second file is refused while a capture session is running; otherwise the file in hand closes first (R1.3). (c) An absent derived value exports as an empty field, never a zero (R3.5); no COMPATIBILITY_FLOOR constant exists until a release raises the floor above the first file version (R5.7).
@@ -263,6 +265,8 @@ Filled by the Phase 3 fix pass and extended by the round-1 and round-2 fix passe
 | F61 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F61. |
 | F62 | R6.2, R6.2a; DJ3; the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F62. |
 | F63 | R6.2, R6.2a; DJ3 (d), (k), (l) and (m); the Collection Mode inbound line in [Inherited obligations](prd-data-foundation.md#inherited-obligations), its fence range now F52–F63. |
+| F64 | R1.6, R2.2, R2.3, R2.3j; DJ6; the out-of-scope line, the journeys index and the Inventory Import line in [Inherited obligations](prd-data-foundation.md#inherited-obligations). |
+| F65 | Governs no rows. |
 
 ## Rejected findings
 
@@ -591,6 +595,8 @@ Source: the owner's round-3 decisions in the Collection Mode PRD's adjudication 
 
 **Clarified 2026-09-26 ([the Collection Mode PRD's F220](../collection-mode/prd-collection-mode-fences.md), owner decision D74):** the budget is 8,480 words — a fifth owner override of the agent-PRD format's never-raise rule, recorded here, so R6.2a states the main-file wipe's full-volume retry (the Collection Mode PRD's F219).
 
+**Clarified 2026-09-26 ([the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md), owner decision N12):** the budget is 8,600 words — a sixth owner override of the agent-PRD format's never-raise rule, recorded here, so the Nix Toolkit mirror (F64) lands in plain words.
+
 ## Collection Mode round-4 amendment (2026-09-25)
 
 Source: the owner's round-4 decisions in the Collection Mode PRD's adjudication of 2026-09-25, recorded there as [its F155, F156, F157 and F158](../collection-mode/prd-collection-mode-fences.md), and its approved round-4 recommendations 6, 10 and 11, recorded as [its F166, F170 and F171](../collection-mode/prd-collection-mode-fences.md). Its F159 (R7.3j, R7.6p, DJ3) and F165 (R3.4, R6.2a) land as dated lines under F54 here, and its F160 under F55 and F21. This fence carries only the Data Foundation halves of those decisions; peer review pending.
@@ -727,3 +733,20 @@ Source: the owner's decision D73 in the Collection Mode PRD's PR #21 follow-up a
 **Clarified 2026-09-26 (round-22 orchestrator bookkeeping; no owner decision; interface review's IF22-m1 and IF22-n5):** "raised nowhere F60 shows none" reads "raised nowhere [the Collection Mode PRD's F211](../collection-mode/prd-collection-mode-fences.md) shows none", F60 carrying no E35 rule; the Rows are R6.2, R6.2a, DJ3 (d), (k), (l) and (m), (m) being a delete with no outside read on a volume that refuses only the file's own sync.
 
 **Clarified 2026-09-26 (round-23 orchestrator bookkeeping; no owner decision; product-marketing review's PMM23-1 and PMM23-4):** "refusal state" in the round-22 Clarified line above means any of the Collection Mode PRD's R8.8's four: E15, E10 and E34, and the capture PRD's E26; and, as the Collection Mode line reads, durability is what DJ3's induced-loss reads assert.
+
+## Nix Toolkit export amendment (2026-09-26)
+
+Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), recorded as [the Inventory Import PRD's F69–F83](../import/prd-inventory-import-fences.md). These fences carry only the Data Foundation half; peer review pending.
+
+### F64 — A Nix Toolkit export's reading can be an item's canonical value (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F70, F74, F77, F78, F81 and F82](../import/prd-inventory-import-fences.md) — owner decisions N2, N6, N9, N10, N13 and N14, 2026-09-26.
+- **Decision:** A reading imported from a Nix Toolkit export is stored as R2.3j states and can be an item's canonical value, which R2.2's "an imported row has none until scanned" now excepts. Its spectrum is kept as given and every derived value worked out from it; its samples are not recorded; its snapshot is of the imported kind with serial and firmware unknown; it has no raw payload, one never supplied, distinct from R5.5a's archive-unavailable mark; its measurement time is the file's Date Saved and its record time the commit. It is current with no current value or over an older imported one; behind a reading scanned in SpectroCapture it is kept as an earlier reading, which history and over-time views place by its measurement time. The out-of-scope line names these exports as v1.
+- **Why:** the Data Foundation half of the Inventory Import PRD's decision to bring Toolkit readings in; this PRD owns the canonical value and version history.
+- **Rows:** R1.6, R2.2, R2.3, R2.3j, the out-of-scope line, the journeys index, DJ6, and the Inventory Import obligation line.
+
+### F65 — Word budget 8,600 (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12, 2026-09-26.
+- **Decision:** This PRD's word budget is 8,600 words, counted by rule 14's method, recorded by the dated lines under F55 and beside F214's.
+- **Rows:** governs no rows.

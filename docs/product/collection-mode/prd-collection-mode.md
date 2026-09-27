@@ -1,6 +1,6 @@
 # PRD: Collection Mode
 
-Status: locked (2026-09-25); amendment F202–F220 (2026-09-26), peer review closed
+Status: locked (2026-09-25); amendment F202–F220 (2026-09-26), peer review closed; Nix Toolkit mirror F221–F222 (2026-09-26), peer review pending
 
 Companions: `docs/product/collection-mode/prd-collection-mode-journeys.md` (acceptance scenarios) ·
 `docs/product/collection-mode/prd-collection-mode-copy.md` (copy) ·
@@ -284,7 +284,7 @@ Traces UJ 2, UJ 8; serves the vision use case *see the collection honestly* (U7)
 | R2.1 | v1 | P0 | The collection surface renders E3 and lists the collection's items in a table, one row per item, in queue order until a view sort is applied. Its columns are the colour chip, Swatch Code, Swatch Name, row state, L*, C*, h°, Spread, Swatch Alternate Code, Swatch Alternate Name, and every imported column in its stored position; an imported column whose stored name equals, under the import PRD's R2.3 rule, a Swatch field's name or a header the copy file's Column headers table shows is labelled — in its header, "Columns", a view sort, "Set a field", the item detail and VoiceOver — with that stored name followed by the copy file's imported-column tag, or, where the tagged label still clashes with another column's, the later of the clashing columns by stored position takes that PRD's collision form; every action on it targets that column alone. | aligned | |
 | R2.2 | v1 | P0 | Row states and the collection's counts use the capture PRD's words and numbers, identical to its capture surface's (its R10.3), and every entry point and state that PRD places on the collection surface stays reachable and unhidden beside this PRD's (its R7.19). A collection holding no item renders the capture PRD's E2 empty variant in place of the table. | aligned | |
 | R2.3 | v1 | P0 | A chip renders the item's current value in the collection's working set colour-managed to the display showing it, never the Data Foundation PRD's stored sRGB value, and outside that display's gamut renders the display's clipped colour with the cannot-show mark. An item with no current value, or whose working-set value is absent, shows an empty chip, never a stand-in colour, and a chip carries every R2.4 mark that applies to its item, each observable on its own. | aligned | |
-| R2.4 | v1 | P0 | The honesty marks are the nine below, each labelled on the chip, in "Filters" and to VoiceOver as the copy file's Mark labels table words it; each shows wherever this PRD renders the value it describes, and no colour this PRD renders is presented as faithful where a mark says otherwise. | aligned | |
+| R2.4 | v1 | P0 | The honesty marks are the ten below, each labelled on the chip, in "Filters" and to VoiceOver as the copy file's Mark labels table words it; each shows wherever this PRD renders the value it describes, and no colour this PRD renders is presented as faithful where a mark says otherwise. | pre-alignment | |
 
 **The honesty marks.** One lettered row per mark; every cell is a rule ([R2.4](#2-the-collection-table-and-colour-honesty)).
 
@@ -299,12 +299,13 @@ Traces UJ 2, UJ 8; serves the vision use case *see the collection honestly* (U7)
 | R2.4g | no-value | The item has no current value and no quarantined current reading: it was never scanned, or it is set aside for a cause other than unreadable. |
 | R2.4h | unreadable | The item's current reading is quarantined (the Data Foundation PRD's R5.5b), the item being set aside with the cause unreadable (the capture PRD's R8.18). |
 | R2.4i | re-scan-unanswered | A reading on the item carries the awaiting-answer mark, its successor waiting for the answer the Data Foundation PRD's R2.4 and R2.8 ask for. |
+| R2.4j | imported | The current reading's acquiring-device snapshot is of the imported kind (the device PRD's R1.21; the import PRD's [R6.5](../import/prd-inventory-import.md#6-nix-toolkit-exports)). |
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
 | R2.5 | v1 | P0 | The cannot-show mark is worked out, as OQ 7's answer states, against the gamut of the display showing the window — for a window across two displays, the one macOS reports it is on — and on a display reporting sRGB or none it is set exactly when R2.4b's flag is; no cannot-show mark is stored (inherited obligation for the Data Foundation doc). It is worked out again within BROWSE_RESPONSE_BUDGET at the 95th percentile whenever that gamut changes — the window moving to another display, or the display's profile or reference mode changing (R8.10a). | aligned | |
 | R2.6 | v1 | P0 | The collection surface renders the device PRD's E22 while any item in the collection has a simulated current reading, and that PRD's E22 action clears the search and the row-state filter and sets the mark filter to simulated alone, leaving exactly those items listed. A reading's simulated mark stays on it in the version history view whatever the item's current reading is (the device PRD's R6.5). | aligned | |
-| R2.7 | v1 | P0 | The Spread column shows the current reading's recorded sample spread (the capture PRD's R4.9 and R4.11), and shows none for a reading of one sample. | aligned | |
+| R2.7 | v1 | P0 | The Spread column shows the current reading's recorded sample spread (the capture PRD's R4.9 and R4.11), and shows none for a reading of one sample or an imported one. | pre-alignment | |
 | R2.8 | v1 | P0 | "Colour marks", offered on every surface E12's index row names, renders E12, showing each mark R2.4 and R5.2d list with its shape (R8.9), its chip label and what it means, grouped as E12 groups them, and what Spread shows. E12's "Close" closes it. | aligned | |
 | R2.9 | v1 | P1 | With no session in flight on the collection and no search or filter active, the user drags a pending row to a new queue position while the table is in queue order, and fires "Use as scan order" while the table is view-sorted on Swatch Code, Swatch Name, an alternate or an imported column, both under the capture PRD's R6.9–R6.12 with its E33 and E34. While a session on the collection is in flight, or a search or filter is active, neither is offered, reordering in flight being the capture PRD's queue list's (its R6.8). | aligned | |
 | R2.10 | v1 | P2 | "Columns" hides or shows any table column except the chip and Swatch Code, and the choice is kept per collection, with that collection, in the user's file (the Data Foundation PRD's R1.1), nothing about it being kept elsewhere (inherited obligation for the Data Foundation doc). | aligned | |
@@ -335,7 +336,7 @@ J3's closing step.
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
 | R4.1 | v1 | P0 | Opening an item renders E14 with R4.2's lines, and closing it returns to E9, worked out again, when opened from E9 while E9's item remains and has a working-set value, otherwise to the table with its search, filters, view sort, selection and scroll position as they were before it opened, R3.9 governing what is listed. If the item is deleted, or a re-read finds it gone, while its detail or history view is open, both close as closing does, with E10 over it where R1.7 is built. | aligned | |
-| R4.2 | v1 | P0 | The item detail shows the lines below, the Data Foundation PRD's R7.6g among them, each labelled as the copy file's Detail lines table words it. | aligned | |
+| R4.2 | v1 | P0 | The item detail shows the lines below, the Data Foundation PRD's R7.6g among them, each labelled as the copy file's Detail lines table words it. | pre-alignment | |
 
 **What the item detail shows.** One lettered row per line; every cell is a rule ([R4.2](#4-item-detail-and-editing)).
 
@@ -344,7 +345,7 @@ J3's closing step.
 | R4.2a | Identity | Swatch Code, Swatch Name, both alternates, the collection's name, and every imported column with its value. |
 | R4.2b | State | The row state, and for a set-aside item its cause as the capture PRD's copy file labels it — unreadable where its current reading is quarantined — and whether it has been deliberately left or is still to deal with (that PRD's R8.2, R8.5 and R8.18). |
 | R4.2c | Current value | The chip with its marks and the current value in each of the six derived spaces, each with its illuminant, observer, measurement condition and derivation version (the Data Foundation PRD's R3.1 and R3.2); the value-absent mark where its working-set value is absent; or, for an item with none, that it has no current value. |
-| R4.2d | The current reading | Its measurement time; its acquiring device's kind, model, serial and firmware version (the device PRD's R1.21); its samples kept, averaging basis, recorded spread and agreement verdict. |
+| R4.2d | The current reading | Its measurement time; its acquiring device's kind, model, serial and firmware version (the device PRD's R1.21); its samples kept, averaging basis, recorded spread and agreement verdict, or, for an imported reading, serial, firmware, samples, basis, spread and verdict as unknown or not recorded. |
 | R4.2e | Marks | Every R2.4 mark that applies, and the non-spectral reference mismatch where the Data Foundation PRD's R3.3e sets one. |
 | R4.2f | History | How many readings the item holds, and "Show history", which is not offered on an item holding none. |
 | R4.2g | Damage | The Data Foundation PRD's E4 in its current or history variant, or its E31, wherever that PRD's R5.5a–c applies. |
@@ -367,17 +368,17 @@ Traces UJ 5; serves the vision use case *fix a bad scan without losing history* 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
 | R5.1 | v1 | P0 | "Show history" in the item detail renders E17, listing every reading the item holds — current, superseded, never true, awaiting an answer or quarantined — each with R5.2's lines, without closing the item detail or changing what the table lists. | aligned | |
-| R5.2 | v1 | P0 | Each reading in the version history view shows the lines below, each labelled as the copy file's History lines table words it. | aligned | |
+| R5.2 | v1 | P0 | Each reading in the version history view shows the lines below, each labelled as the copy file's History lines table words it. | pre-alignment | |
 
 **What each reading shows.** One lettered row per line; every cell is a rule ([R5.2](#5-version-history-and-corrections)).
 
 | ID | Line | What it shows |
 |---|---|---|
 | R5.2a | Times | Its measurement time and its record time. |
-| R5.2b | Device | Its acquiring device, with the simulated mark where that snapshot is of the simulated kind. |
+| R5.2b | Device | Its acquiring device, with the simulated or imported mark where that snapshot is of that kind. |
 | R5.2c | Reason | Its supersession reason (the Data Foundation PRD's R2.4), and whether it is the current reading. |
 | R5.2d | Standing | The never-true mark, the awaiting-answer mark, and the unreadable mark where it is quarantined (the Data Foundation PRD's R2.5 and R5.5c). |
-| R5.2e | Value | Its chip, rendered as R2.3 renders a chip, with the R2.4 marks that apply to its own value, its samples kept and its recorded spread. |
+| R5.2e | Value | Its chip, rendered as R2.3 renders a chip, with the R2.4 marks that apply to its own value, its samples kept and its recorded spread, or that neither was recorded for an imported reading. |
 
 | ID | Release | Pri | Requirement | Status | Commit PR |
 |---|---|---|---|---|---|
@@ -444,7 +445,7 @@ decision.
 | R8.6 | v1 | P0 | Every row here works with no network connection, no action this PRD adds makes a network request, nothing it reads or writes leaves the machine (the Data Foundation PRD's R1.4), and no event about its actions carries typed text, a code, a name or a value (inherited obligation for the Telemetry doc). Search text, filters, view sorts, the grid choices and the undo history are never written to the file or anywhere outside it, preferences and saved window state included, column visibility (R2.10) being the one view choice the file keeps, and the file gets no system-kept versions and no collection content goes to system search or Handoff. | aligned | |
 | R8.7 | v1 | P0 | No row here sets a minimum macOS version or a display requirement: ADR-0006 selects the floor, and a row the selected floor cannot deliver goes back to the owner rather than being dropped. R2.5's mark is worked out on every display the window can be on, built-in or external. | aligned | |
 | R8.8 | v1 | P0 | Each committed edit, rename, reorder, restore, column-visibility change and bulk operation lands in the file whole or not at all before any surface shows it done, so a crash or power loss leaves it complete or absent, and text it removes is nowhere in the file's bytes from the moment it lands, open or after a crash, save as the Data Foundation PRD's R6.2a states for a read begun before its wipe, a full volume and a copy in a journal or log beside the file (its R1.10 and F59–F63; inherited obligation for the Data Foundation doc). A write refused because the volume is full renders that PRD's E15, because another copy of the app holds the file its E10, because permission to the file was lost its E34, and because the volume is gone the capture PRD's E26, each changing nothing. | aligned | |
-| R8.9 | v1 | P0 | Every mark the copy file's Mark labels table lists — R2.4's nine and R5.2d's never-true and awaiting-answer — has a shape, distinct from every other mark's, that does not depend on seeing colour, and the VoiceOver name that table gives it, read with the row's Swatch Code, Swatch Name and row state. Every action this PRD offers, the drag reorder and choosing two readings for "Compare" included, can be reached and fired from the keyboard by a route the build chooses. | aligned | |
+| R8.9 | v1 | P0 | Every mark the copy file's Mark labels table lists — R2.4's ten and R5.2d's never-true and awaiting-answer — has a shape, distinct from every other mark's, that does not depend on seeing colour, and the VoiceOver name that table gives it, read with the row's Swatch Code, Swatch Name and row state. Every action this PRD offers, the drag reorder and choosing two readings for "Compare" included, can be reached and fired from the keyboard by a route the build chooses. | pre-alignment | |
 | R8.10 | v1 | P0 | A test can declare the inputs and read the results below without matching wording, and can read the file with the app closed at SQLITE_READER_FLOOR (the Data Foundation PRD's R7.1). R8.10b and R8.10c exist only in test builds, and no build opens a listening socket or cross-process service for one. | aligned | |
 
 **The verification seam.** One lettered row per kind of input or readback; every cell is a rule ([R8.10](#8-operating-envelope-and-quality-attributes)).
@@ -515,6 +516,7 @@ included, repeat across PRDs; an ID written bare is this document's own.
 | Inventory Import | Its R2.6 and obligations line: renaming imported columns, a rename changing the name the file stores and a later import matches | the import PRD's R2.6 → R4.8 |
 | Inventory Import | Its R2.3: the one matching rule for codes and collection names | the import PRD's R2.3 → R1.3, R3.1, R4.4 |
 | Inventory Import | Its R2.5 order and its copy file's Collision template: the tagged-label collision suffix | the import PRD's R2.5 → R2.1 |
+| Inventory Import | Its [R6.5](../import/prd-inventory-import.md#6-nix-toolkit-exports) and F75: a Toolkit reading's imported mark, following the current reading and kept in history, and what the file does not record shown as unknown | the import PRD's R6.5 → R2.4j, R2.7, R4.2d, R5.2b, R5.2e |
 | Data Export | Its R1.1: export of a collection or a single item | the export PRD's R1.1 → R1.8 |
 
 ## Error and state copy index

@@ -1,14 +1,14 @@
 # PRD: Inventory Import
 
-Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review closed 2026-09-25 (PR #21)); Collection Mode one-writer mirror under F66 dated 2026-09-25 (R3.2 amended with alignment kept; E40 gains an another-collection variant; peer review closed 2026-09-25 (PR #21)); Collection Mode round-4 mirror under F67 dated 2026-09-25 (R3.2 and R3.8i amended with alignment kept; E40 reworded, ready for alignment; peer review closed 2026-09-25 (PR #21)); Collection Mode round-5 mirror under F68 dated 2026-09-25 (R4.1 amended with alignment kept; the Collection Mode obligation line names R2.3; peer review closed 2026-09-25 (PR #21)).
+Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review closed 2026-09-25 (PR #21)); Collection Mode one-writer mirror under F66 dated 2026-09-25 (R3.2 amended with alignment kept; E40 gains an another-collection variant; peer review closed 2026-09-25 (PR #21)); Collection Mode round-4 mirror under F67 dated 2026-09-25 (R3.2 and R3.8i amended with alignment kept; E40 reworded, ready for alignment; peer review closed 2026-09-25 (PR #21)); Collection Mode round-5 mirror under F68 dated 2026-09-25 (R4.1 amended with alignment kept; the Collection Mode obligation line names R2.3; peer review closed 2026-09-25 (PR #21)); Nix Toolkit export amendment under F69–F83 dated 2026-09-26 (§6 added; line 5, R1.5b, R3.3, R3.8 and the obligation lines amended; E43 gains a Toolkit variant, E46 and E47 new; peer review pending).
 
-Import a CSV inventory into one collection without entering metadata between scans. Import never starts capture; only new items become pending.
+Import a CSV inventory into one collection without entering metadata between scans. Import never starts capture; only new items become pending, save a Nix Toolkit export's, which arrive captured with their readings (§6).
 
 Companions: [acceptance journeys](prd-inventory-import-journeys.md), [shipping copy](prd-inventory-import-copy.md), [decisions and provenance](prd-inventory-import-fences.md), [open-question results](prd-inventory-import-oq-results.md).
 
 ## User Journeys
 
-[UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-via-csv-import): new collection; [UJ 2.1](prd-inventory-import-journeys.md#uj-21-import-additional-rows-into-an-existing-collection): re-import; [UJ 2.2](prd-inventory-import-journeys.md#uj-22-mapping-metadata-fields): mapping. Their initial-state/action/result tables are acceptance cases for the requirements below.
+[UJ 2](prd-inventory-import-journeys.md#uj-2-full-collection-bootstrap-via-csv-import): new collection; [UJ 2.1](prd-inventory-import-journeys.md#uj-21-import-additional-rows-into-an-existing-collection): re-import; [UJ 2.2](prd-inventory-import-journeys.md#uj-22-mapping-metadata-fields): mapping; [UJ 3](prd-inventory-import-journeys.md#uj-3-import-a-nix-toolkit-export-with-its-readings): a Nix Toolkit export. Their initial-state/action/result tables are acceptance cases for the requirements below.
 
 ## Requirements
 
@@ -45,7 +45,7 @@ Import flow: file selection and read settings → target collection → column m
 | R1.2 | Show the proposed header and data-row count, and always show the active encoding and delimiter in the preview. Remember mappings by header signature and pre-fill by resolved column name, never by position, after R2.5 resolves headers and R1.6’s one-column guard is satisfied. | 🤝 Aligned | |
 | R1.3 | Route missing headers to E4, unreadable text or invalid CSV syntax to E5, zero data records to E6, and a source moved, renamed or removed before commit to E38. These states write no imported data and resume only through R3.8's actions. | 🤝 Aligned | |
 | R1.4 | List wrong-width records by one-based parsed record number from the source start, counting header and preamble records and each quoted multiline record once, and exclude them (E7). Validate codes only on structurally valid records; never guess field alignment. | 🤝 Aligned | |
-| R1.5 | Until OQ 1 closes, use R1.5a–e; the listed encodings, delimiters and defaults are provisional under that question. Re-read, reset overwrite choices, and rebuild the preview after any read-setting change; keep all decoded field text, including leading zeros and whitespace, without numeric or date coercion. | 🤝 Aligned | |
+| R1.5 | Until OQ 1 closes, use R1.5a–e; the listed encodings, delimiters and defaults are provisional under that question. Re-read, reset overwrite choices, and rebuild the preview after any read-setting change; keep all decoded field text, including leading zeros and whitespace, without numeric or date coercion. | ⌛️ Ready for Alignment | |
 | R1.6 | A read yielding exactly one column requires explicit confirmation (E45), with the delimiter control beside it, before a mapping can be saved or reused or the import committed. Clear that confirmation on any re-read; this guard remains until OQ 1 closes. | 🤝 Aligned | |
 
 **R1.5 — initial read contract**
@@ -53,7 +53,7 @@ Import flow: file selection and read settings → target collection → column m
 | ID | Input | Behavior |
 | :--- | :--- | :--- |
 | R1.5a | Encoding | Default UTF-8, accepting and stripping a leading UTF-8 BOM; manual choices UTF-8, UTF-16LE, UTF-16BE, Windows-1252; strip a matching leading BOM and reject a contradictory one. Decoding errors stop at E5; never replace invalid bytes silently; show the all-encodings-failed variant only after the default attempt and manual choices have attempted every listed encoding and failed for the current source and delimiter, offering re-saving as UTF-8 CSV, "Pick the file again", and "Cancel". |
-| R1.5b | Delimiter | Default comma; manual comma, semicolon or tab. No heuristic delimiter detection yet. |
+| R1.5b | Delimiter | Default comma; manual comma, semicolon or tab. No heuristic delimiter detection yet, save R6.1's Toolkit signature. |
 | R1.5c | Records and quoting | Accept LF and CRLF record endings; double quotes delimit quoted fields, doubled quotes escape a quote, and quoted fields may contain delimiters and newlines. A terminal record ending adds no empty record; invalid quoting is E5, never an attempt to salvage shifted columns. |
 | R1.5d | Header | Propose record 1 and allow the user to pick another record (earlier records ignored), or supply names with no header record (all records are data). A source with no records goes directly to E6; a proposed header with all fields blank goes to E4; generated names are for individual blank headers beside named ones. |
 | R1.5e | Empty fields | Preserve empty strings, including trailing empty fields; a blank record is processed by the width and blank-code rules, not silently discarded. |
@@ -75,12 +75,12 @@ Import flow: file selection and read settings → target collection → column m
 | :--- | :--- | :--- | :--- |
 | R3.1 | Before every commit, E43 names the target collection and existing item count, encoding/delimiter, new / updated / unchanged counts, added columns, the count of matched rows gaining absent fields (R3.6j), exclusions and absent-item count, applying [Capture §12’s zero-count rule](../capture-mode/prd-capture-mode.md#12-error--state-copy); warn with resulting size and ROWS_CEILING when exceeded, but allow import. If the source changes, re-read, revalidate headers/mapping, reset overwrite choices, and require a new preview (E13). | 🤝 Aligned | |
 | R3.2 | Commit the previewed import whole or not at all under R3.3a–d within [DF R1.7/R1.10’s local-volume scope](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns), never starting a session; a failed commit rolls back within that scope and shows E44 with its cause, using [Data Foundation E15](../data-foundation/prd-data-foundation-copy.md#error--state-copy) for no room. Refuse import while the target has an active, paused or interrupted session (E40), checking on target selection and again before commit, and refuse the commit while any other collection's session is active, paused or halted, E40 naming that collection (F66); the commit follows [DF R1.11](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns)'s one-writer rule, shown disabled while another write it names runs and holding every other write and a session's start or resume while it commits (F66, F67). | 🤝 Aligned | |
-| R3.3 | Swatch Codes must be unique within the target collection under R2.3; import never creates a second item with an equal code, and R3.4 handles pre-existing duplicates defensively. Apply R3.3a–d without deleting or reordering existing items or changing their capture state or measurements; repeating a committed file with the same mapping/choices and no intervening edits is idempotent. | 🤝 Aligned | |
+| R3.3 | Swatch Codes must be unique within the target collection under R2.3; import never creates a second item with an equal code, and R3.4 handles pre-existing duplicates defensively. Apply R3.3a–d without deleting or reordering existing items or changing their capture state or measurements, save a Toolkit export's readings under R6.8; repeating a committed file with the same mapping/choices and no intervening edits is idempotent, readings included. | ⌛️ Ready for Alignment | |
 | R3.4 | If a source code matches multiple existing items, exclude that source record (E11); change none of the matches and allow the other eligible records through preview. | 🤝 Aligned | |
 | R3.5 | For each captured item with proposed changes to existing field values, offer "Take the new details" / "Keep what I have" as actions scoped to that row or all rows, defaulting to "Take the new details" (E14). "Keep what I have" preserves conflicts in existing fields but fills previously absent fields; other matched items take supplied changes without this choice, and neither path touches measurements/history. | 🤝 Aligned | |
 | R3.6 | Apply R3.6a–j to identity fields and passthrough metadata, comparing values as exact decoded text rather than R2.3 match equivalence. New columns persist in the collection’s column list even when every captured match selects "Keep what I have"; list additions separately from row counts. | 🤝 Aligned | |
 | R3.7 | Creating a new target is the separate Capture §1 action and persists its empty collection (F64). Canceling or failing the import preserves that collection and an existing target under R3.2’s rollback scope; R3.9 owns commit eligibility. | 🤝 Aligned | |
-| R3.8 | Offer the copy table’s actions and apply R3.8a–o; only E43’s explicit "Import" commits. "Cancel" before commit exits without imported changes; an in-progress commit succeeds or rolls back under R3.2. | 🤝 Aligned | |
+| R3.8 | Offer the copy table’s actions and apply R3.8a–o; only E43’s explicit "Import" commits. "Cancel" before commit exits without imported changes; an in-progress commit succeeds or rolls back under R3.2. | ⌛️ Ready for Alignment | |
 | R3.9 | If no source records remain eligible, show E42 with the issue list and disable commit. An all-unchanged import remains eligible, with only the column additions and absent-field fills separately previewed by E43’s added-columns list and rows-gaining-details line written (F62). | 🤝 Aligned | |
 
 **Commit outcomes — R3.2/R3.3**
@@ -112,8 +112,8 @@ Import flow: file selection and read settings → target collection → column m
 | ID | State / action | Next state or effect |
 | :--- | :--- | :--- |
 | R3.8a | E4: "Pick the header row" / "Name columns"; E5/E45: "Choose an encoding" / "Choose a separator" where offered | Re-read, revalidate headers and the one-column guard, then mapping/preview; another decoding or syntax failure returns to E5. |
-| R3.8b | E5/E7/E9/E10/E12/E38/E41/E42: "Pick the file again"; E6: "Pick a different file" | Read fresh, then header resolution, guard, mapping and preview. |
-| R3.8c | E7/E9/E10: "Continue without them"; E11: "Continue without it" | Keep all exclusions; return to remaining mapping/preview steps, or E42 if none eligible. |
+| R3.8b | E5/E7/E9/E10/E12/E38/E41/E42/E46/E47: "Pick the file again"; E6: "Pick a different file" | Read fresh, then header resolution, guard, mapping and preview. |
+| R3.8c | E7/E9/E10/E47: "Continue without them"; E11: "Continue without it" | Keep all exclusions; return to remaining mapping/preview steps, or E42 if none eligible. |
 | R3.8d | E8: "Choose the code column" | Return to mapping; continue only when valid. |
 | R3.8e | E12/E41: "Continue with the listed names" | Accept the listed resolved headers; continue through the guard and mapping to preview. |
 | R3.8f | E13: "Review again" | Review fresh counts and reset choices; re-map first if the signature changed. |
@@ -126,6 +126,7 @@ Import flow: file selection and read settings → target collection → column m
 | R3.8m | E45: "Use this one column" | Confirm the current parse; enable valid mapping save/reuse, then preview. |
 | R3.8n | E43: "Choose an encoding" / "Choose a separator" | Re-read, reset overwrite choices, and invalidate previous preview and one-column confirmation; revalidate through R3.8a before returning to preview. |
 | R3.8o | Multiple header notices | "Continue with the listed names" accepts all listed E12/E41 resolutions together; no notice skips mapping or preview. |
+| R3.8p | E46: "Choose another collection" | Return to target selection with the read kept; the mode check runs again on the new target (R6.4). |
 
 ### 4. Demo Device and verifiability
 
@@ -142,14 +143,43 @@ Each line is a requirement on the document named, not a suggestion; the Rows col
 
 | Target PRD | Obligation | Rows |
 | :--- | :--- | :--- |
-| Data Foundation | The one matching rule; field preservation and column identity; atomic imports within R3.2’s cited storage scope; measurement preservation on re-import; decoded values stay directly queryable ([DF inbound mirror](../data-foundation/prd-data-foundation.md#inherited-obligations)). | R2.2, R2.3, R2.5, R2.6, R3.2, R3.3 |
-| Collection Mode | Renaming imported columns: a rename changes the column's stored name, keeping its position and values, and a later import matches the new name ([Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing), F65). The one matching rule for codes and collection names, which Collection Mode's rename, search and code change apply ([Collection Mode R1.3, R3.1 and R4.4](../collection-mode/prd-collection-mode.md#1-collections-and-the-collection-list), F68). Its R2.5 collision order and its copy file's Collision template, which Collection Mode's tagged-label collision form takes ([Collection Mode R2.1](../collection-mode/prd-collection-mode.md#2-the-collection-table-and-colour-honesty), the Collection Mode PRD's F206). | R2.2, R2.3, R2.5, R2.6 |
+| Data Foundation | The one matching rule; field preservation and column identity; atomic imports within R3.2’s cited storage scope; measurement preservation on re-import; decoded values stay directly queryable ([DF inbound mirror](../data-foundation/prd-data-foundation.md#inherited-obligations)). A Toolkit export's reading is stored and made current or kept in history as [its R2.3j](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history) states. | R2.2, R2.3, R2.5, R2.6, R3.2, R3.3, R6.5, R6.8 |
+| Collection Mode | Renaming imported columns: a rename changes the column's stored name, keeping its position and values, and a later import matches the new name ([Collection Mode R4.8](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing), F65). The one matching rule for codes and collection names, which Collection Mode's rename, search and code change apply ([Collection Mode R1.3, R3.1 and R4.4](../collection-mode/prd-collection-mode.md#1-collections-and-the-collection-list), F68). Its R2.5 collision order and its copy file's Collision template, which Collection Mode's tagged-label collision form takes ([Collection Mode R2.1](../collection-mode/prd-collection-mode.md#2-the-collection-table-and-colour-honesty), the Collection Mode PRD's F206). A Toolkit reading carries the imported mark ([Collection Mode R2.4j](../collection-mode/prd-collection-mode.md#2-the-collection-table-and-colour-honesty)). | R2.2, R2.3, R2.5, R2.6, R6.5 |
 | Data Export | Every column an import brought in is carried through, and a column mapped to identity is emitted once rather than twice; order and export-name collisions follow [Export R2.3/R2.4](../export/prd-data-export.md#2-columns-names-dialect-and-the-version). | R2.2, R2.6 |
-| Capture Mode | New items append pending and matched items retain state/position; E40’s "Go to the session" and "End that session" use Capture’s current/resume and §7 ending paths. Design scale and import timing remain [Capture R3.12/OQ 13](../capture-mode/prd-capture-mode.md#3-the-capture-session). | R3.2, R3.3, R3.8h–i |
+| Device Management | A Toolkit reading's acquiring-device snapshot is of the imported kind, naming the model its file gives, serial and firmware unknown ([Device R1.21](../device-management/prd-device-management.md#1-device-pairing)). | R6.5 |
+| Capture Mode | New items append pending and matched items retain state/position; E40’s "Go to the session" and "End that session" use Capture’s current/resume and §7 ending paths. Design scale and import timing remain [Capture R3.12/OQ 13](../capture-mode/prd-capture-mode.md#3-the-capture-session). A new target created by a Toolkit import takes the file's measurement mode as its chosen scan mode, and an existing one must use it or hold no reading ([Capture R1.10](../capture-mode/prd-capture-mode.md#1-collections)). | R3.2, R3.3, R3.8h–i, R6.4 |
 
 ### 5. Error & State Copy
 
 [Shipping copy](prd-inventory-import-copy.md#error--state-copy) uses [Capture §12's label and placeholder rules](../capture-mode/prd-capture-mode.md#12-error--state-copy). E IDs identify states independently of strings; R3.8 owns action transitions.
+
+
+### 6. Nix Toolkit exports
+
+A Nix Toolkit export — the vendor mobile app's collection CSV — imports through this same flow with its readings (F69–F83). §6 states only where it differs from §1–§3; every rule there that §6 does not replace still applies.
+
+| ID | Requirement | Status | Commit PR |
+| :--- | :--- | :--- | :--- |
+| R6.1 | A source whose first record, split on semicolons, holds under R2.3 the headers Custom Collection Name, Color Name, Color Code, Nix Device, Date Saved, Illuminant, Observer, Measurement Mode and R400 nm through R700 nm at every 10 nm is a Toolkit export: it is read as UTF-8 with the semicolon delimiter, overriding R1.5b's comma default, and every later step names it a Toolkit export. Any other source follows §1–§3 unchanged (F73). | ⌛️ Ready for Alignment | |
+| R6.2 | A Toolkit export's mapping is fixed and shown, never chosen: Color Code is Swatch Code and Color Name is Swatch Name; Nix Device, Date Saved, Illuminant, Observer, Measurement Mode and the reflectances form each record's reading (R6.5); Index and the file's own L, a, b, L, c, h, X, Y, Z, sRGB R, G, B and HEX are read for R6.6's check and not stored; Note and the Density columns import as metadata under R2.2/R2.6, a Note holding exactly `undefined` being stored as empty. Its two L headers raise no E41 notice (F73, F81). | ⌛️ Ready for Alignment | |
+| R6.3 | Choosing or creating the target follows R2.1. Creating one pre-fills its name from the file's Custom Collection Name when every record carries the same one, the user free to change it; an existing target ignores that column (F83). | ⌛️ Ready for Alignment | |
+| R6.4 | Every record's Measurement Mode is the same, or E46's mixed-modes variant refuses the file. A new target takes that mode as its chosen scan mode ([Capture R1.10](../capture-mode/prd-capture-mode.md#1-collections)); an existing target must already use it, or hold no reading and then adopt it; otherwise E46 refuses the import before mapping, naming both modes (F76). | ⌛️ Ready for Alignment | |
+| R6.5 | Each eligible record's reading is stored as [Data Foundation R2.3j](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history) states: its reflectances as given, values above 1.0 included; its illuminant, observer and measurement mode; Date Saved as its measurement time and the commit as its record time; its samples not recorded; an acquiring-device snapshot of the imported kind naming the Nix Device model, serial and firmware unknown ([Device R1.21](../device-management/prd-device-management.md#1-device-pairing)); no raw payload, one never supplied; and every derived value worked out from its spectrum at the current derivation version, the gamut-clipped flag included (F70, F77, F78). | ⌛️ Ready for Alignment | |
+| R6.6 | Each record's Lab is worked out from its spectrum under the file's own illuminant and observer and compared with the file's first L, a and b; a record whose ΔE2000 exceeds [Data Foundation DERIVATION_TOLERANCE](../data-foundation/prd-data-foundation.md#legend) is listed in E43's issue list and still imports with the worked-out values (F81). | ⌛️ Ready for Alignment | |
+| R6.7 | A record whose Date Saved, Measurement Mode or any reflectance cannot be read as a time, a mode or a number is excluded and listed with the failing column (E47); the rest continue through R3.8c (F73). | ⌛️ Ready for Alignment | |
+| R6.8 | A Toolkit record's reading lands as R6.8a–e state; its metadata follows R3.5/R3.6 unchanged (F70, F74, F82). | ⌛️ Ready for Alignment | |
+| R6.9 | E43 names a Toolkit export as one and adds its reading counts: readings becoming current, readings going to history, unchanged readings, the file's measurement mode, and R6.6's flagged records. Repeating a committed export with no intervening edits changes nothing (R3.3, F82). | ⌛️ Ready for Alignment | |
+| R6.10 | Tests exercise R6.1–R6.9 and each R6.8 outcome on synthetic Toolkit exports built to the format the research records, never a real user's export (F71). | ⌛️ Ready for Alignment | |
+
+**Toolkit commit outcomes — R6.8**
+
+| ID | Source disposition | Effect at commit |
+| :--- | :--- | :--- |
+| R6.8a | Eligible, no matching item | Create a captured item whose canonical value is the record's reading; append after existing rows, in source order. |
+| R6.8b | One match, no current value | The reading becomes its canonical value; the item is captured and keeps its queue position. |
+| R6.8c | One match whose current value was scanned in SpectroCapture | The scan stays current; the reading is kept in version history as an earlier reading (F74). |
+| R6.8d | One match whose current value was imported | The same reading — Date Saved and every reflectance equal — changes nothing; a later Date Saved becomes current, the older reading going to history; an earlier one goes to history (F82). |
+| R6.8e | Excluded record or absent item | As R3.3c–d. |
 
 ## Success Metrics
 

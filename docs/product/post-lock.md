@@ -131,6 +131,7 @@ Cross-document:
 - [x] **DF** — R7.7a–m is the sole fixture inventory; Data Export links to it instead of mirroring the list. — PR #17 agent-build amendment.
 - [x] **DF** — whether a Collection Mode rename moves an imported column's stored name. — settled by the Collection Mode PRD's F9 / DF F50 in PR #21
 - [x] **DF** — OQ 2 distinguishes ADR-0003's required SQLite features from ADR-0006's macOS floor; owner ratifies the reader floor after both. — PR #17 agent-build amendment.
+- [ ] **QC & Comparison** — when that PRD is written, a QC ΔE comparison against an imported canonical value works as against any other, the imported mark showing ([Import F79](import/prd-inventory-import-fences.md), owner decision N11 of the [Nix Toolkit import review log](../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26)).
 
 ## First build PR
 
@@ -234,6 +235,7 @@ Deliberate omissions from v1, recorded so no one re-raises them as gaps. Not wor
 - **DE** — no collection-identifier column.
 - **DE** — no rule about an export mid-session.
 - **DE** — no destination-overwrite rule.
+- **Import** — CxF import, and exports from vendor apps other than the Nix Toolkit, whose CSV v1 imports under Import §6 ([vision J7](vision.md#j7-migrating-in-from-the-vendor-apps-cataloger-v2-candidate)).
 
 ## Judgment calls that stood at lock
 

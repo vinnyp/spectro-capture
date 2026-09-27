@@ -15,6 +15,8 @@ amendment preserves them and does not re-decide them.
 
 **Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`. The follow-up review's reopening re-locked with [its own record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26-after-the-follow-up-review), amendment F202–F220, checks 1–20 at the validated revision it names.
 
+**Amendment pending:** Nix Toolkit mirror F221–F222 (2026-09-26), peer review pending.
+
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
 range that authorises that amendment. Its presence says that the fences in that range are not yet
@@ -26,7 +28,7 @@ diff checks compare against, each resolved once at round 1 and written here as a
 **preservation baseline**, the commit at which this document was most recently locked, and the
 **change baseline**, the merge-base of this amendment's branch with the trunk it targets. A check
 that asks what has been preserved since the lock reads the first; a check that asks what this
-amendment changed reads the second. Preservation baseline: `94970c6da22f9cbda824887eb7822b2f9b053380` (the re-lock; `04dfb97` for F202–F218). Change baseline: `dc1b747f399bc94a29392c69bcfe8bd72bf94412`.
+amendment changed reads the second. For F221–F222, preservation baseline `6374538a0372121a531e674ab35d511d1b366c28` (PR #21's merge, the re-lock) and change baseline `6374538a0372121a531e674ab35d511d1b366c28`. For F202–F220: preservation baseline `94970c6da22f9cbda824887eb7822b2f9b053380` (the re-lock; `04dfb97` for F202–F218), change baseline `dc1b747f399bc94a29392c69bcfe8bd72bf94412`.
 
 ## Fences
 
@@ -1917,6 +1919,18 @@ Fences F219 and F220 were decided by the owner on 2026-09-26, over the PR #21 fo
 - **Decision:** The Data Foundation PRD's word budget is 8,480 words, counted by rule 14's method. It is recorded there by a dated line under its F55, following F214's precedent.
 - **Carried by:** governs no rows
 
+### F221 — A Toolkit reading carries the imported mark (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F75 and F77](../import/prd-inventory-import-fences.md) — owner decisions N7 and N9 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), 2026-09-26. Question (N7): "What does 'marked imported' look like to the user?" Chosen: **A table mark, like simulated** — "A tenth honesty mark on the row/chip ('imported from Nix Toolkit'), with the device and date in the item detail and history; it clears when the item is re-scanned, the imported reading staying in history with its mark." Not chosen: **Detail and history only**. Peer review pending.
+- **Decision:** A current reading whose acquiring-device snapshot is of the imported kind carries a tenth honesty mark, imported, in the chip, "Filters", E12 and VoiceOver as the Mark labels table words it; it follows the current reading, so a re-scan clears it, and the imported reading keeps it in its history line. No banner accompanies it. The item detail and history show what the file does not record — serial, firmware, samples, averaging basis, spread and verdict — as unknown or not recorded, and the Spread column shows none.
+- **Carried by:** R2.4, R2.4j, R2.7, R4.2d, R5.2b, R5.2e, R8.9, the Mark labels table, the copy file's R4.2d imported, R5.2b and R5.2e lines, UJ2.1-k, UJ2.1-r, UJ9.6-a, and the Inventory Import obligation line for the import PRD's R6.5
+
+### F222 — This PRD's word budget is 12,500 (2026-09-26)
+
+- **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), 2026-09-26. Question: "Two locked PRDs are out of word budget: Data Foundation (8,473 of 8,480) and Collection Mode (12,399 of 12,400). The amendment needs roughly 100 words in DF (provenance, R2.2's exception, scope) and about 60 in Collection Mode (the imported mark and its history line). How should they fit?" Chosen: **Raise DF to 8,600, CM to 12,500** — "Dated fences like F214/F220; the new rules land in plain words and no aligned row reopens for compaction." Not chosen: **Compact to fit**. Peer review pending.
+- **Decision:** This PRD's word budget is 12,500 words, counted by rule 14's method, following F210's precedent.
+- **Carried by:** governs no rows
+
 ## Fence → row map
 
 Each line of this map names the IDs one fence governs, by the **Carried by** grammar above — or
@@ -2143,6 +2157,8 @@ than deciding a WHAT.
 - **F218** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (g), (i) and (j), and the Data Foundation PRD F62
 - **F219** — R8.8, the Data Foundation PRD R6.2a, the Data Foundation PRD DJ3 (d), (k), (l) and (m), and the Data Foundation PRD F63
 - **F220** — governs no rows
+- **F221** — R2.4, R2.4j, R2.7, R4.2d, R5.2b, R5.2e, R8.9, the Mark labels table, the copy file's R4.2d imported, R5.2b and R5.2e lines, UJ2.1-k, UJ2.1-r, UJ9.6-a, and the Inventory Import obligation line for the import PRD's R6.5
+- **F222** — governs no rows
 
 ## Rejected findings
 

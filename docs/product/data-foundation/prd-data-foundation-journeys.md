@@ -103,3 +103,15 @@ No action deletes one reading out of history. Whole-file deletion remains a Find
 | Reopen app and explicitly re-read externally changed data | Refresh through R7.3c; no claim of automatic detection or safe concurrent editing |
 
 Help states the required reader floor and warns against editing while SpectroCapture has the file open. SQLite can detect external commits; automatic detection and its response remain OQ 14, and this journey does not select a library or notification mechanism.
+
+## DJ6. Hold an imported Toolkit reading
+
+Fixtures are [Import UJ 3](../import/prd-inventory-import-journeys.md#uj-3-import-a-nix-toolkit-export-with-its-readings)'s synthetic Toolkit fixture T, never a real export; stores are read by SQL at SQLITE_READER_FLOOR with the app closed (R7.1).
+
+| Initial state | Action | Stored/result oracle | State |
+| :--- | :--- | :--- | :--- |
+| Collection at M2, D50/2°, item TK-2 with no current value | Import fixture T and commit | TK-2's reading B is current, reason initial: its reflectances as given; D50, 2° and M2; samples not recorded; a snapshot of the imported kind naming Nix Spectro 2, serial and firmware unknown; no raw payload, recorded as never supplied rather than as the archive-unavailable mark; measurement time `2026-05-02T16:40:10.250Z`, record time the commit; derived sets at the current derivation version with R3.4's gamut-clipped flag | — |
+| Item TK-1 whose current reading A was scanned in SpectroCapture, measured `2026-09-20T12:00:00.000Z` | Import fixture T and commit | A stays current; TK-1's imported reading B is kept, not current, reason initial, no correction question; over-time views and history place B before A by its measurement time `2026-03-14T09:15:00.000Z` | — |
+| Item TK-3 whose current reading A was imported with Date Saved `2026-05-02T16:41:05.500Z` | Import a fixture-T variant with TK-3 dated `2026-06-01T10:00:00.000Z` and commit | The new reading B is current, reason re-measurement; A is retained in history, unchanged | — |
+| TK-2's imported reading current | Save a full re-scan C during capture | As R2.3b: C current and correction-unconfirmed, B retained, the correction question asked once outside the loop ([Capture R8.9](../capture-mode/prd-capture-mode.md#8-deferred-row-review-and-corrections)) | E11 |
+| The state the first row leaves | Query the file with the app closed | Snapshot kind, samples not recorded, the never-supplied payload, measurement and record times, derived sets and the current-reading selection are readable without the app | — |

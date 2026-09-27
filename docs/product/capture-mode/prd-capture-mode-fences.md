@@ -1,6 +1,6 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge. F70 mirrors the Collection Mode PRD's F10, F11 and F19, and is clarified by its F22 and F23 (2026-09-24); peer review closed 2026-09-25 (PR #21). F71 mirrors its F30, F55, F56, F80, F84 and F90 (2026-09-25); peer review closed 2026-09-25 (PR #21).
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge. F70 mirrors the Collection Mode PRD's F10, F11 and F19, and is clarified by its F22 and F23 (2026-09-24); peer review closed 2026-09-25 (PR #21). F71 mirrors its F30, F55, F56, F80, F84 and F90 (2026-09-25); peer review closed 2026-09-25 (PR #21). F77 mirrors the Inventory Import PRD's F76 and F70 (2026-09-26); peer review pending.
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
 Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed. For F51–F69, peer review closed 2026-09-18 (PR #20); re-locked on merge (closure recorded under F51).
@@ -689,6 +689,14 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R9.9, Collection Mode obligation line, Traceability.
 
+### F77 — Mirror the Nix Toolkit import: a Toolkit import sets the scan mode (2026-09-26)
+
+**Authority:** [the Inventory Import PRD's F76 and F70](../import/prd-inventory-import-fences.md) — owner decisions N8 and N2 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), 2026-09-26; peer review pending.
+
+**Decision:** (1) R1.10: a collection a Nix Toolkit import creates takes the file's measurement mode as its chosen scan mode rather than arriving at M1, and one holding no reading that such an import targets adopts it (the import PRD's R6.4); every other R1.10 rule stands. (2) The Inventory import obligation line records that a Toolkit export's records arrive captured with their readings rather than pending, and names R1.10. Traceability's range reads F1–F77.
+
+**Carried by:** R1.10, Inventory import obligation line, Traceability.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -717,6 +725,7 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F74** Collection Mode round-4 mirror — R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5, R9.3, T7, Collection Mode obligation line, Traceability and the dated F73 clarification.
 - **F75** Collection Mode round-5 mirror — R8.14, Collection Mode obligation line, Traceability.
 - **F76** Collection Mode round-6 mirror — R9.9, Collection Mode obligation line, Traceability.
+- **F77** Nix Toolkit import mirror — R1.10, Inventory import obligation line, Traceability.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings
