@@ -10,7 +10,7 @@ SpectroCapture answers the question none of them ask: *Can I get my whole collec
 
 - **Digitizing a color collection with existing  software means per-scan metadata entry.** The workflow is inverted for bulk work, so a 200-item collection will focus on scanning those items, not data entry + scanning.
 - **Buying software doesn't fix it, at any price.** Every desktop tool that speaks to  hardware (Print Pro, SpotOn at $299–499/yr, etc) is *verification* software, built to answer "does this sample match the standard?" No product on the market answers "*can I get my whole collection scanned in efficiently*?"
-- **The instrument's data is stranded.** A $1k+ spectrophotometer's measurements live inside vendor and account-bound apps with partial, lossy export, and the open color tools people already trust (Argyll CMS, SpectraShop) can't even connect to the device.. Owners can't get full-fidelity spectral data into their own hands as a queryable, portable dataset.
+- **The instrument's data has no home the owner controls.** A $1k+ spectrophotometer's measurements live inside vendor and account-bound apps, and the open color tools people already trust (Argyll CMS, SpectraShop) can't even connect to the device. The mobile Nix Toolkit app's CSV export, in the one export studied, carries each color's spectrum but not the instrument's serial, firmware or sample count. Owners have no queryable, portable home for a whole collection and its history.
 - **Out-of-gamut reality is hidden.** Monitors silently render "closest color," so users can't tell which collection colors are faithfully renderable and which aren't.
 
 ## Competitive position
@@ -141,7 +141,8 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 2. Import into SpectroCapture as a collection (CxF is the industry interchange format)
 3. Existing colors become canonical values; future scans layer QC and history on top
 
-- **Risk point:** whether the mobile Toolkit app can export at all is an open research gap; migration may only be possible from the desktop vendor app or by re-scanning. This journey ships with CxF support (v2), not v1.
+- **Risk point:** whether the mobile Toolkit app can export at all is an open research gap; migration may only be possible from the desktop vendor app or by re-scanning. This journey ships with CxF support (v2), not v1. *(In part superseded — see the update.)*
+- **Update 2026-09-26:** the gap is answered for the mobile app. The Nix Toolkit export studied holds a collection as a semicolon-delimited CSV with each color's spectrum, and v1 imports that one format with its readings, so a Toolkit collection comes over without re-scanning: each record arrives captured, its reading the item's canonical value, marked imported ([Inventory Import §6](import/prd-inventory-import.md#6-nix-toolkit-exports)). CxF, and migration from any other vendor app, stay v2.
 
 ## Feature list
 
@@ -156,6 +157,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 | P0  | Known-device management                                                   | U3     | Serial number is the durable device identity                                        |
 | P0  | Tile calibration with due-prompts                                         | U3     | Prompted before a session, not mid-queue                                            |
 | P0  | CSV inventory import with column mapping                                  | U1     | The inventory-first wedge                                                           |
+| P0  | Nix Toolkit export import, readings included                              | U1, J7 | Bring a Toolkit collection over without re-scanning; each color arrives measured and marked imported (2026-09-26) |
 | P0  | Queued bulk scan, 1–5 samples averaged                                    | U1     | Heads-down; haptic confirm where available; row auto-advance                        |
 | P0  | Inline scan-failure handling                                              | U1     | Retry / skip / flag-row for light, battery, temperature errors                      |
 | P0  | Collections + version history                                             | U5     | Corrections never destroy data                                                      |
@@ -178,7 +180,7 @@ This section outlines the primary user journeys for SpectroCapture. Additional j
 | Sheets/Excel direct import            | U1                          | CSV covers v1                                                                                                                                   |
 | Density data for print workflows      | New persona: print operator | A license feature; also nearer the QC turf we avoid                                                                                             |
 | Multi-collection compare              | U7                          |                                                                                                                                                 |
-| CxF import/export                     | U6, J7                      | Industry interchange; migration path in from vendor apps                                                                                        |
+| CxF import/export                     | U6, J7                      | Industry interchange; migration path in from vendor apps (the Nix Toolkit's CSV imports in v1)                                                 |
 | Multi-instrument support (core team)  | J2 on more hardware         | One expansion step brings ~30 instruments across X-Rite, Klein, JETI, Datacolor into scope; also unties the product's fate from a single vendor. v2 sequences the *core team's* investment only — per STRATEGY.md, the device seam is open to community instrument contributions at any time, merged when a hardware owner verifies them; the core team builds and validates Nix Spectro 2/L only through v1 |
 
 

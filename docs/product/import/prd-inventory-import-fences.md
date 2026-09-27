@@ -1,6 +1,10 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F68 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F92 explicitly amend them; F50 records structural authorization.
+
+**Nix Toolkit amendment review log:** [`docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md) — its Round 0 records the owner decisions N1–N15 that F69–F83 carry, and its Round 1 the decisions N16–N23 that F84–F91 carry.
+
+**Amendment lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27) — amendment F69–F91, peer review closed 2026-09-26 after eight rounds; checks 1–20 at the validated revision it names, with F92 accepting by name the results the older PRDs could not meet. PR #22's review reopened nine rows for round 9 (N28 and the two-sentence split); they re-locked with [the re-lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#re-lock-2026-09-27-after-pr-22s-review), which names the validated revision now in force.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -138,6 +142,10 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** the file has one writer, and the owner moved that rule's home to Data Foundation so each writer cites it rather than restating it. Source: the Collection Mode PRD's F155, F156 and F169; peer review pending.
 
+**Clarified 2026-09-26 ([the Nix Toolkit import review's round 6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-6--delta-verification-2026-09-26); Import F76's round-5 line):** R3.8i's and R3.8l's kept E14 choices apply to every import, plain CSV included; UJ 2.1's E40 and E44 cases assert them, and a source changed before "Try again" resets them through E13.
+
+**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); editorial within this fence):** UJ 2.1's E40 and E44 kept-choice cases declare a captured match whose name the file changes and meet E40 at commit, and the source-change case reaches the fresh preview through "Review again".
+
 ### F68 — The Collection Mode line names the matching rule, a commit's progress is listed, and UJ 2.1 holds a P0 write (2026-09-25)
 
 **Decision:** Mirroring [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11, round-5 adjudication 2026-09-25), with the testability halves its round-5 fix pass carries under its F155, F156 and F164: the outbound Collection Mode line names R2.3's one matching rule, which Collection Mode's rename, search and code change apply, beside R2.6; this document, whose format has no inbound-obligations table, carries what Collection Mode imposes on it by its rows' cites and the dated fences F65–F68, no table added. R4.1 lists a commit's progress, which Data Foundation R1.11 makes show while a close, switch or quit waits on it. UJ 2.1 holds Collection Mode's Rename collection, a P0 write, behind this import's commit in place of its P1 Set a field, and asserts R3.8i's End that session shown disabled while a Data Foundation R1.11 write runs. R4.1 keeps its alignment.
@@ -148,12 +156,238 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-26 ([the Collection Mode PRD's F206](../collection-mode/prd-collection-mode-fences.md), owner decision D63, its re-lock checks, editorial):** the Collection Mode obligation line also names R2.5's collision order and the copy file's Collision template, which Collection Mode's R2.1 tagged-label collision form takes, so the seam its inbound line names (Collection Mode PRD, Inherited obligations) is stated on both sides. No rule of this document changes.
 
+### F69 — v1 imports a Nix Toolkit export with its readings (2026-09-26)
+
+**Decision:** A Nix Toolkit collection export — the vendor mobile app's CSV — imports in v1 with its readings, pulling [vision J7](../vision.md#j7-migrating-in-from-the-vendor-apps-cataloger-v2-candidate) forward for this one format. CxF import, and migration from any other vendor app, stay v2. §6 carries it; line 5 names the exception to "only new items become pending".
+
+**Why:** the research on a real export showed the mobile app does export, with a full spectrum that reproduces its own Lab to well under the derivation tolerance. Source: [owner decision N1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F70 — A Toolkit reading becomes the item's canonical value, marked imported (2026-09-26)
+
+**Decision:** Each Toolkit record's reading becomes its item's canonical value, marked imported, with its provenance — the Toolkit, the device model, its date, its illuminant and observer, its measurement mode — and every derived value worked out from its spectrum. A later SpectroCapture scan supersedes it into version history as any re-scan does. R6.5 and R6.8 carry it.
+
+**Why:** an imported collection is only worth importing if its colours arrive usable. Source: [owner decision N2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F71 — Toolkit test fixtures are synthetic (2026-09-26)
+
+**Decision:** The real export the research used stays out of the repository; every Toolkit test runs on a synthetic export built to the format the research records. R6.10 and UJ 3's fixture carry it.
+
+**Why:** the owner's own collection is private research input, not a public fixture. Source: [owner decision N3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+
+**Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); PRIV-1, PRIV-4):** Synthetic means every collection name, code, name, note, date and value is invented, none taken from a real export, as the Collection Mode harness uses the word. The format a fixture follows is UJ 3's stated one, the file's own values come from an independent reference, and every checked-in fixture or golden holding an imported reading derives from such a fixture; no report on a real export enters the repository either. R6.10 carries it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); PRIV2-1, plan R2-M1, test TR2-m1):** "A report on one" means any data value from a real export; M2 and OQ 3 record only format facts and tallies by state across files. Another PRD's case may declare an imported reading directly, only Import's cases and the Data Foundation PRD's R7.7o running the importer. The file's own values come from the reference the Data Foundation PRD's R7.5 checks the build against, and UJ 3's offsets are multiples of DERIVATION_TOLERANCE. R6.10, M2 and OQ 3 carry it.
+
+**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** Fixture T's own values come from an independent implementation of CIE 15's calculation with ASTM E308's 10 nm tables, named in its provenance, and the Data Foundation PRD's R7.5 holds Fixture T's spectra so its bound covers them; R6.6's offset cases set the file's Lab from the build's; DJ6 is the Data Foundation PRD's R7.7o's journey and runs the importer; from a single real file only format facts and whether it imported cleanly are recorded. R6.10, M2 and OQ 3 carry it.
+
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** Fixture T's own values use the CIE 15 tabulation the build's derivation uses — its ASTM E308 table and its 400–700 nm handling, named in the engineering plan — and the Data Foundation PRD's R7.5 reference, once named, governs, Fixture T regenerated to agree with it and the build never loosened. R6.10 and UJ 3 carry it.
+
+**Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26)):** R6.10 names the ASTM E308 weighting table, as UJ 3 does; Fixture T is regenerated by an independent implementation of the named reference's method, never from the build; UJ 3's sRGB and HEX sentence stands alone. OQ 3's revise list adds the device PRD's R1.21 and its Feeds column matches that list. R6.10, OQ 3 and UJ 3 carry it.
+
+**Clarified 2026-09-27 ([the PR #22 review](https://github.com/vinnyp/spectro-capture/pull/22#discussion_r4116885730); [round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27)):** Under the binding two-sentence rule (the capture fence file's F45), R6.10 is split into R6.10a–d, each a lead row pointing to lettered sub-rows, every clause carried over unchanged.
+
+### F72 — The Toolkit import lives in this PRD (2026-09-26)
+
+**Decision:** The Toolkit import extends this PRD's flow — pick the file, map, preview, commit — as its §6, and each sibling PRD it touches (Data Foundation, Device Management, Collection Mode, Data Export, Capture Mode, the vision) carries a dated mirror.
+
+**Why:** the user meets it as the import they already know. Source: [owner decision N4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F73 — A Toolkit export is recognised by its headers and confirmed in the preview (2026-09-26)
+
+**Decision:** A Toolkit export is recognised by its header signature, read with its semicolon delimiter, its duplicate L header and `undefined` notes handled without prompts, and the preview names it and its reading count before the user commits. R6.1, R6.2, R6.7, R6.9 and R1.5b carry it.
+
+**Why:** the Cataloger should not have to know the format's quirks. Source: [owner decision N5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+
+**Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); N5's "the header signature identifies it" and "'undefined' notes handled automatically"):** The signature is sought under the semicolon, then the comma, then the tab, so a Toolkit export re-saved with another separator is still recognised; its encoding and separator are shown fixed. A Note of `undefined` supplies no value, so it never clears a note the user typed. Every Toolkit column's fate is stated, Custom Collection Name read and not stored; a time, a mode and a number have stated forms, and a value that is not a finite number cannot be read. R6.1, R6.2, R6.7 and E48 carry it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** A recognised Toolkit export whose records fail R1.5c's quoting reaches E5's Toolkit variant, which offers no read control; E5, E7, E9, E10 and E42 carry written-out Toolkit variants; a time is an RFC 3339 date-time truncated to the millisecond; §1–§3's exclusions and R6.7's run before R6.4's and R6.11's checks; E48 says only the Lab is checked. R6.1, R6.4, R6.7, R6.11; E5, E7, E9, E10, E42 and E48 carry it.
+
+**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** Recognition reads the first record under whatever encoding the file is read with, and a Toolkit export not decoded as UTF-8 throughout reaches E5's Toolkit encoding variant; E5's quoting variant names the record and asks for the quote mark to be removed in the Toolkit; the mixed-mode and one-collection checks run at read after E7, E9, E10 and E47, with E11 applying once a target is chosen. R6.1, R6.4 and E5 carry it.
+
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** E5's two Toolkit variants are named the encoding and the quotes variant, the encoding one checked first, the quotes one naming the row by ⟨record⟩; E46's mixed-modes variant lists the colours under each mode. R6.1, R6.4, E5 and E46 carry it.
+
+**Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26)):** E5's Toolkit encoding variant states the rule, that SpectroCapture reads a Nix Toolkit export only as UTF-8 text, so it holds after a manual encoding choice too; UJ 3 pins the quotes variant's stray quote mid-value and adds a case where the encoding variant wins over the quotes one. E5 and UJ 3 carry it.
+
+**Clarified 2026-09-27 ([the PR #22 review](https://github.com/vinnyp/spectro-capture/pull/22#discussion_r4116885730); [round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27)):** Under the binding two-sentence rule (the capture fence file's F45), R6.1 is split into R6.1a–d and R6.2 into the R6.2a–g mapping table, R6.7 is brought to two sentences with E47's every failing column merged into its first, and R6.9 is split into R6.9a–b, each a lead row pointing to lettered sub-rows, every clause carried over unchanged.
+
+### F74 — A SpectroCapture scan stays current over a Toolkit reading (2026-09-26)
+
+**Decision:** Where the matched item's current value was scanned in SpectroCapture, the scan stays current and the Toolkit reading is kept in version history as an earlier reading; metadata updates as a normal re-import. R6.8c carries it.
+
+**Why:** a measurement taken in this app, under its own agreement check, is the better canonical value. Source: [owner decision N6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F75 — A Toolkit reading carries an imported mark (2026-09-26)
+
+**Decision:** A Toolkit reading carries an imported honesty mark in the collection table, like the simulated one, with the device and date in the item detail and history; it clears when the item is re-scanned, the imported reading keeping its mark in history. The Collection Mode PRD's R2.4j carries the mark; this PRD's obligation line names it.
+
+**Why:** the user should always see which colours came from somewhere else. Source: [owner decision N7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F76 — The file's measurement mode must fit the target (2026-09-26)
+
+**Decision:** A new target adopts the file's measurement mode as its chosen scan mode; an existing target must already use it, or hold no reading and then switch; otherwise the import is refused with the reason. A file mixing modes is refused. R6.4, E46 and R3.8p carry it.
+
+**Why:** readings taken in different measurement modes are not comparable. Source: [owner decision N8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+
+**Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); N8's "A new collection adopts the file's mode; an existing collection must already use it (or have no readings yet, and then switches)"):** The switch is written by the import's commit and undone with it, so Cancel or a failed commit leaves the target's mode unchanged; E43 names it; the fit is checked again at commit; "no readings" means no item holds any reading, current or in history, QC records aside; a Toolkit-created target's mode is fixed in that creation; R6.7's exclusions run before the mixed-mode check. R3.2, R3.8k, R6.3, R6.4 and the Capture Mode obligation line carry it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); F76's "E43 names it"):** At commit, a target whose mode or matched outcomes changed since the preview returns to a fresh preview through E13's collection variant, nothing written, and one that no longer fits refuses with E46. A Toolkit-created target's form labels its mode as set by the export. R3.8k, R6.3 and E13 carry it.
+
+**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** The commit recheck runs within the commit's write hold, covers every eligible record's match and outcome and every count and list E43's Toolkit lines showed, and routes in order: E13 for a changed source, E40, E46, then E13's collection variant. R3.8k carries it; the Capture Mode obligation line names the creation form's label.
+
+**Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k reads the source before the write hold and routes any changed match or R6.8 outcome, as well as a changed mode, count or list, to E13's collection variant, which keeps each still-offered row's E14 choice (R3.8f). R3.8f and R3.8k carry it.
+
+**Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k's collection-variant route applies to a Toolkit export only, as F76 does and as the post-lock plain-CSV item leaves open; its recheck names what it compares — the mode fit, every eligible record's match and R6.8 outcome, and E43's Toolkit lines and Swatch details counts. A newly offered row takes E14's default (R3.8f), and R3.8i and R3.8l keep each still-offered row's choice as R3.8f does, R3.8l unless the source changed; E13's collection variant reads "keeping any choices you made". UJ 3 adds P0 cases deleting an unmatched and a matched swatch mid-preview. R3.8f, R3.8i, R3.8k, R3.8l, E13 and UJ 3 carry it.
+
+**Clarified 2026-09-26 ([round 6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-6--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k's Toolkit recheck compares what the commit would write — every eligible record's match, R6.8 outcome and R3.6 field changes, and E43's Toolkit lines, Swatch details counts, added columns and rows gaining details — against what E43 and E14 show, so a choice changed in E14 alone raises no E13. E13's collection body names the collection's columns and says a swatch newly listed with different details starts at taking the new details. UJ 3 adds cases for a choice change alone, a mid-preview rename that changes the counts, one that leaves them equal, and a column rename. R3.8k, E13 and UJ 3 carry it.
+
+**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k's recheck names each record's matched item and the stored value each R3.6 field change replaces, compares against the preview E43 and E14 last showed, its per-record plan and current choices included, and has a Toolkit commit write what that recheck worked out. E13's collection body is reworded to say each swatch keeps its choice. UJ 3's choice-only case asserts the commit, and its column-rename case changes only the added columns. R3.8k, E13 and UJ 3 carry it.
+
+**Clarified 2026-09-27 ([the PR #22 review](https://github.com/vinnyp/spectro-capture/pull/22#discussion_r4116885730); [round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27)):** Under the binding two-sentence rule (the capture fence file's F45), R6.4 is split into R6.4a–c, each a lead row pointing to lettered sub-rows, every clause carried over unchanged.
+
+### F77 — What a Toolkit export lacks is recorded as unknown (2026-09-26)
+
+**Decision:** An imported reading's sample count is not recorded, its device snapshot names the model with serial and firmware unknown, and it has no raw payload, one never supplied, a state distinct from a damaged archive; nothing is invented. The spectrum is kept and every derived value worked out from it. R6.5 carries it.
+
+**Why:** a value the file never gave must not appear to have been measured. Source: [owner decision N9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F78 — Date Saved is the reading's measurement time (2026-09-26)
+
+**Decision:** An imported reading's measurement time is the file's Date Saved and its record time the import commit. R6.5 carries it.
+
+**Why:** history and over-time views should place it when it was measured. Source: [owner decision N10](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F79 — Export marks an imported reading; QC treats it as any other (2026-09-26)
+
+**Decision:** The CSV export gains an imported-provenance column beside the simulated one, and a QC ΔE comparison against an imported canonical value works as against any other, the imported mark showing. The Data Export PRD's mirror carries the column; the QC & Comparison PRD, not yet written, inherits the rest through post-lock.
+
+**Why:** provenance should survive export, and an imported value is a legitimate baseline. Source: [owner decision N11](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F80 — Word budgets for the mirrors (2026-09-26)
+
+**Decision:** The Data Foundation PRD's word budget rises to 8,600 and the Collection Mode PRD's to 12,500, so the mirrors land in plain words. It governs no row here; those PRDs' own fences carry it.
+
+**Why:** no aligned row should reopen for compaction. Source: [owner decision N12](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F81 — Toolkit values are worked out from the spectrum and checked (2026-09-26)
+
+**Decision:** SpectroCapture works out every stored value from a record's spectrum; the file's own Lab is compared, and a record differing by more than the derivation tolerance is flagged in the preview and imports with the worked-out values. The file's densities, with no v1 feature to use them, import as metadata columns. R6.2 and R6.6 carry it.
+
+**Why:** one derivation, this app's, stands behind every stored colour. Source: [owner decision N13](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+### F82 — Among imported readings, the newest is current (2026-09-26)
+
+**Decision:** Re-importing an identical Toolkit reading changes nothing; a newer one becomes current, the older imported reading going to history; an earlier one goes to history. A SpectroCapture scan still always stays current (F74). R6.8d and R6.9 carry it.
+
+**Why:** a later Toolkit measurement is the better imported value, and re-importing must be safe. Source: [owner decision N14](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+
+**Clarified 2026-09-26 ([round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); N14's own words, "An identical reading (same date and spectrum) changes nothing"):** Identical is judged against every reading the item holds, current or in history, not the current one alone, so a re-import never adds a reading the item already has and never undoes a Flag, a restore or a set-aside decision. The same reading is the same Date Saved instant to the millisecond with every reflectance the same number. R6.8f and the Vocabulary carry it.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26)):** A quarantined reading is never the same reading, so re-importing recovers an item whose imported current reading is quarantined (R6.8b); an R6.8f record still updates metadata under R3.5/R3.6. R6.8f carries it.
+
+**Clarified 2026-09-26 ([rounds 3 and 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** R6.8 routes R6.8f first, then R6.8b for a match with no readable current value, then by the current reading's snapshot kind. R6.8 carries it.
+
+**Clarified 2026-09-27 (owner decision N28: [the PR #22 review](https://github.com/vinnyp/spectro-capture/pull/22#discussion_r4116885724), adopted by the owner's instruction to address it; [round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27)):** A reading's measurement mode is part of the same-reading identity: two readings with the same Date Saved and spectrum in different modes are different readings, so R6.8f never discards one. R6.8d's same-date tie covers a different mode as it covers a different spectrum. The Vocabulary, R6.8d, the Data Foundation PRD's R2.3j, the ADR-0003 row and UJ 3's two mode-change cases carry it; R6.9 is split into R6.9a–b, as F73's round-9 line records.
+
+### F83 — A new target's name is pre-filled from the file (2026-09-26)
+
+**Decision:** Creating a target for a Toolkit export pre-fills its name from the file's collection name, editable; an existing target ignores that name. R6.3 carries it.
+
+**Why:** the Cataloger's Toolkit collection name is the natural default. Source: [owner decision N15](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26); peer review pending.
+
+**Clarified 2026-09-26 ([rounds 3 and 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** The pre-fill takes the Custom Collection Name of the first record left after R6.4's exclusions. R6.3 carries it.
+
+### F84 — An imported reading's history order is the measured view's (2026-09-26)
+
+**Decision:** N10's "history sorts it by when it was actually measured" means the over-time views, the history's measured order among them: they place an imported reading by its Date Saved. The default history list keeps every reading by record time, an imported one where its import recorded it. The Data Foundation PRD's F66 and R2.1 carry it; R6.8c says "not current" rather than "earlier".
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N16](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+### F85 — The reason each Toolkit outcome records (2026-09-26)
+
+**Decision:** A Toolkit reading that becomes current over an imported or simulated reading is recorded as a re-measurement without asking; one kept behind the current reading, or becoming current over none, is recorded as initial. The Data Foundation PRD's R2.3j and R2.4 carry it, R2.4 naming the exception; R6.8b, R6.8c, R6.8d and R6.8g state it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N17](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+### F86 — A real Toolkit reading replaces a simulated current one (2026-09-26)
+
+**Decision:** Where the matched item's current reading is of the simulated kind, the Toolkit reading becomes current and the simulated one goes to history; only a live scan stays current over a Toolkit reading (F74). R6.8 tells the cases apart by the current reading's snapshot kind. R6.8 and R6.8g carry it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N18](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+### F87 — A same-dated, different reading is kept in history (2026-09-26)
+
+**Decision:** A Toolkit record whose Date Saved equals the imported current reading's but whose spectrum differs is kept in history, not current, and E43 lists it. R6.8d and R6.9 carry it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N19](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+**Clarified 2026-09-27 ([round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27); a pointer):** The same-date tie also covers a reading in a different measurement mode, under owner decision N28 (F82's round-9 line).
+
+### F88 — A set-aside item takes its Toolkit reading (2026-09-26)
+
+**Decision:** A matched item with no current value — pending, set aside for any cause, or its current reading quarantined — takes the Toolkit reading as its current value and becomes captured, and E43 lists each set-aside item it captures. R6.8b and R6.9 carry it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N20](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+**Clarified 2026-09-26 ([rounds 3 and 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** A set-aside item E43 lists includes one set aside as unreadable, its current reading quarantined, whatever its kind. R6.8b carries it.
+
+### F89 — One Toolkit collection per file (2026-09-26)
+
+**Decision:** A file whose records name more than one Custom Collection Name is refused with the reason (E49); each Toolkit collection is exported and imported on its own. R6.11, R6.3 and E49 carry it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N21](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+### F90 — A record that can't be checked still imports (2026-09-26)
+
+**Decision:** A record whose file L, a and b can't be read, or whose illuminant and observer the app can't yet work under, imports with its values worked out from its spectrum under the collection's reference, and E43 lists it as not checked. R6.6 and R6.9 carry it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N22](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+### F91 — Round-1 word budgets (2026-09-26)
+
+**Decision:** The Data Foundation PRD's word budget rises to 8,900 and the Collection Mode PRD's to 12,550, so round 1's fixes land in plain words. It governs no row here; the Data Foundation PRD's F70 and the Collection Mode PRD's F223 carry it.
+
+**Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N23](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+**Closed 2026-09-26 ([the Nix Toolkit import review's round 8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-8--confirmation-2026-09-26)):** For F69–F91, peer review closed 2026-09-26 after eight rounds, every amendment row aligned by all nine lenses; re-locked on merge.
+
+### F92 — Lock checks the older PRDs cannot run, and drift that predates the Nix Toolkit amendment (2026-09-27)
+
+**Decision:** The Nix Toolkit amendment locks with these mechanical-check results accepted by name; none was introduced by it.
+- **NOT-RUN, because the PRD predates the construct the check reads.** In this PRD:
+  - check 2 (no Carried by field, Legend defer bullets, build-dependencies table or Surfaces table);
+  - check 3's constants and copy-index classes (no constants table, no copy index carrying a Surface);
+  - check 4 (no row-transition table);
+  - check 5 (copy states in a flat table, not sections with variant fields);
+  - checks 6 and 17 (journeys without case IDs);
+  - check 7 (no constants table);
+  - check 18 (no named-defaults table or case IDs).
+
+  In the Data Foundation, Device, Data Export and Capture PRDs, check 2 (no second source to diff a fence map against).
+- **MISS, predating the amendment:**
+  - check 19 here: the Legend states "All requirements are v1 / P0", with no priority-semantic bullet;
+  - check 20 on M1: its Method cites no row;
+  - check 1 between the Data Export and Device PRDs: Export's outbound line to Device has no inbound line in the device PRD's table.
+
+Bringing these PRDs to the current template, and closing the three MISSes, is post-lock work for the next pass over each PRD. It governs no row here.
+
+**Why:** the checks came with a later template than these PRDs were locked under. Converting them is a pass of its own, and none of these results comes from this amendment. Source: owner decisions N24 and N25 in [the lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27).
+
+**Clarified 2026-09-27 (owner decision N27, in [the lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27)):** F92 also accepts two more results by name:
+- check 13 as NOT-RUN on this PRD and on the Data Foundation, Device, Data Export and Capture PRDs, whose copy companions are flat tables with no `- Actions:` or `- Variant:` fields;
+- check 1(c)'s hits on text in those five PRDs that predates this amendment, which locked under an earlier roster.
+
+The amendment's own lines were swept, and their seven cites that named no owning document were qualified. The post-lock conversion item gains a full check 1(c) and 13 sweep.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
 
 - **F4** the import target is chosen in the app — [R2.1](prd-inventory-import.md#2-target-mapping-and-the-matching-rule). **F11** Swatch Code normalisation — [R2.3](prd-inventory-import.md#2-target-mapping-and-the-matching-rule), [R2.4](prd-inventory-import.md#2-target-mapping-and-the-matching-rule). F11 also carries the capture PRD's R1.2, R6.1, and R9.2, which cite [R2.3](prd-inventory-import.md#2-target-mapping-and-the-matching-rule) across.
-- In the [capture fence file](../capture-mode/prd-capture-mode-fences.md): **F24** the priority split — the [Legend](prd-inventory-import.md#legend). **F45** every requirement row is at most two sentences — every row in [§1](prd-inventory-import.md#1-reading-the-file) through [§4](prd-inventory-import.md#4-demo-device-and-verifiability). **F49** the split — this document, its four companions, and the historical ID map below.
+- In the [capture fence file](../capture-mode/prd-capture-mode-fences.md): **F24** the priority split — the [Legend](prd-inventory-import.md#legend). **F45** every requirement row is at most two sentences — every row in [§1](prd-inventory-import.md#1-reading-the-file) through [§4](prd-inventory-import.md#4-demo-device-and-verifiability) and [§6](prd-inventory-import.md#6-nix-toolkit-exports), lettered sub-rows included. **F49** the split — this document, its four companions, and the historical ID map below.
 - **F50** structural amendment — Legend, Traceability, acceptance-table shape and stable IDs. New base requirement IDs: R1.5, R1.6, R2.5, R2.6, R3.7, R3.8, R3.9; new copy IDs: E41–E45; existing IDs retained.
 - **F51** blank-to-blank is unchanged — R3.6b/g.
 - **F52** preview confirms the target — R2.1, R3.1; E43.
@@ -171,8 +405,33 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
 - **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
 - **F66** Collection Mode one-writer mirror, as clarified twice — R3.2; E40; UJ 2.1.
-- **F67** Collection Mode round-4 mirror — R3.2, R3.8i; E40; UJ 2.1.
+- **F67** Collection Mode round-4 mirror, as clarified twice — R3.2, R3.8i, R3.8l; E40, E44; UJ 2.1.
 - **F68** Collection Mode round-5 mirror — R4.1; Collection Mode inherited-obligation line; UJ 2.1.
+- **F69** Nix Toolkit scope — §6; line 5; R1.5b; UJ 3.
+- **F70** Toolkit reading made canonical — R6.5, R6.8; Data Foundation and Device inherited-obligation lines; UJ 3.
+- **F71** Synthetic Toolkit fixtures, as clarified six times — R6.10, M2, OQ 3; UJ 3.
+- **F72** Toolkit import home — §6; the inherited-obligation lines.
+- **F73** Toolkit recognition, as clarified six times — R1.5, R1.5b, R6.1, R6.2, R6.4, R6.7, R6.9, R6.11; E5, E7, E9, E10, E42, E43, E47, E48; UJ 3.
+- **F74** Scan stays current — R6.8c; UJ 3.
+- **F75** Imported mark — R6.5; Collection Mode inherited-obligation line.
+- **F76** Measurement-mode fit, as clarified eight times — R3.2, R3.8f, R3.8i, R3.8k, R3.8l, R3.8p, R6.3, R6.4; E13, E43, E46; Capture inherited-obligation line; UJ 3.
+- **F77** Unknown provenance recorded — R6.5; UJ 3.
+- **F78** Date Saved as measurement time — R6.5; UJ 3.
+- **F79** Export and QC — the Data Export inherited-obligation line.
+- **F80** Mirror word budgets — governs no row here.
+- **F81** Worked-out values and the check — R6.2, R6.6; E43; UJ 3.
+- **F82** Newest imported reading current, as clarified four times — Vocabulary; R3.3, R6.8, R6.8d, R6.8f, R6.9; UJ 3.
+- **F83** Name pre-fill, as clarified — R6.3; UJ 3.
+- **F84** History order — R6.8c; Data Foundation inherited-obligation line.
+- **F85** Reasons — R6.8b, R6.8c, R6.8d, R6.8g; UJ 3.
+- **F86** Simulated current replaced — R6.8, R6.8g; UJ 3.
+- **F87** Same-dated reading kept, as clarified — R6.8d, R6.9; E43; UJ 3.
+- **F88** Set-aside items captured, as clarified — R6.8b, R6.9; E43; UJ 3.
+- **F89** One Toolkit collection per file — R6.3, R6.11; E49; UJ 3.
+- **F90** Unchecked records import — R6.6, R6.9; E43; UJ 3.
+- **F91** Round-1 word budgets — governs no row here.
+- **F92** Lock checks accepted at the Nix Toolkit lock, as clarified — governs no row here; post-lock carries the follow-up.
+- Round-1 fixes under the fences above also reach R3.5 and E14 (F70, F74), R3.8b and R3.8q (F73, F89), M2 and OQ 3 (F71, F73), Build dependencies (F72), and the Data Export, Collection Mode and Capture Mode inherited-obligation lines (F72).
 
 ## Historical ID map
 

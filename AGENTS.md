@@ -47,7 +47,7 @@ Source of truth, in this order:
 - Sandboxed vs. unsandboxed. The architecture research is explicit that this is "a deliberate decision, not an assumed requirement" — don't default to either.
 - Minimum macOS version. Cited APIs across the research span macOS 13.0–15.0; nothing pins a floor.
 - The capture → collection "seam" — the two capture-mode research passes disagree on this. The first pass recommended capture as a full-window modal takeover that hands off to the collection when the session ends; the v2 pass reverses that, recommends writing directly into the live collection, and says explicitly it should be re-opened before the ADR is written. Do not implement either version's proposal as if it were settled.
-- Mobile-app data export / CxF migration path — called out in the vision as an open research gap.
+- CxF import/export and migration from vendor apps other than the Nix Toolkit — the Toolkit's CSV export imports in v1 with its readings ([Inventory Import §6](docs/product/import/prd-inventory-import.md#6-nix-toolkit-exports)); the rest stays an open research gap.
 - The blob and derived-value schema for stored measurements.
 
 ## 4. Non-negotiables
@@ -68,6 +68,7 @@ The v1 instrument family is the Nix Spectro 2 / Spectro L (Nix Sensor), connecte
 - CI can build this project. CI **cannot** exercise any device code path — there is no hardware or license key available to it.
 - Every PR that touches device-facing code needs a human with real hardware to verify it before merge.
 - All device access must go through the `SpectroDevice` seam so that everything above it is testable against the mock implementation without hardware. If you're writing code that talks to the instrument directly instead of through that seam, stop and reconsider.
+- A real vendor-app export — anyone's collection — and any value from it (names, codes, notes, collection names, dates, record counts — format facts and Import M2's cross-file tallies aside — measured values, screenshots) never enter the repo; fixtures are synthetic ([Inventory Import R6.10](docs/product/import/prd-inventory-import.md#6-nix-toolkit-exports)).
 - Never bypass the pre-commit secret scan (`--no-verify`) to get past a gitleaks finding. If it's a false positive, add a narrow allowlist entry and say why in the PR.
 
 ## 6. How work lands
@@ -105,8 +106,8 @@ Where source code lands, and how it's modularized, is not yet decided beyond the
 - **Collection mode** — browsing, searching, and editing after capture.
 - **The seam** — the boundary between capture mode and collection mode (see §3, open).
 - **Cataloger** — the primary persona: someone digitizing their whole collection in one sitting.
-- **Canonical value** — an item's current authoritative measurement: the stored mean of a saved set of samples, not a vendor raw payload and not a derived value, carrying the measurement conditions, the device snapshot, the basis the mean was taken on, and the derivation version. A re-scan supersedes it into version history, never overwrites it, and QC scans compare against it. (Data Foundation fence F10.)
-- **Raw payload** — the instrument's raw measurement bytes. It is an archived artifact kept beside the canonical value rather than being it, one per sample where the instrument supplies one, and may be compressed; Lab/XYZ/LCh/Luv/sRGB/HSL are derived from the stored mean, not from it. (Data Foundation fences F10, F11, F25.)
+- **Canonical value** — an item's current authoritative measurement: the stored mean of a saved set of samples, not a vendor raw payload and not a derived value, carrying the measurement conditions, the device snapshot, the basis the mean was taken on, and the derivation version — or, for a reading imported from a Nix Toolkit export, the file's spectrum as given, with no samples or basis recorded (Inventory Import §6, Data Foundation R2.3j). A re-scan supersedes it into version history, never overwrites it, and QC scans compare against it. (Data Foundation fence F10.)
+- **Raw payload** — the instrument's raw measurement bytes. It is an archived artifact kept beside the canonical value rather than being it, one per sample where the instrument supplies one — an imported Toolkit reading has none, one never supplied — and may be compressed; Lab/XYZ/LCh/Luv/sRGB/HSL are derived from the stored mean, not from it. (Data Foundation fences F10, F11, F25.)
 - **Multi-sample averaging** — 1–5 readings of one item averaged into a single value.
 - **ΔE / ΔE2000** — the color-difference metric used for QC comparisons.
 - **Gamut-clipped** — the flag on a derived sRGB value that fell outside the display gamut.

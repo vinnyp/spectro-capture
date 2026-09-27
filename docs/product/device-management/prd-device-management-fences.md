@@ -1,6 +1,6 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. F32 records the Collection Mode mirror of 2026-09-24, clarified the same day under that PRD's F25; peer review closed 2026-09-25 (PR #21). Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. F32 records the Collection Mode mirror of 2026-09-24, clarified the same day under that PRD's F25; peer review closed 2026-09-25 (PR #21). F33 records the Nix Toolkit mirror of 2026-09-26, whose Authority is the Inventory Import PRD's F70, F75 and F77; peer review pending. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
@@ -290,6 +290,22 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F32, peer review closed 2026-09-25 (PR #21); re-locked on merge.
 
+### F33 — An imported snapshot kind for Nix Toolkit readings (2026-09-26)
+
+**Authority:** [the Inventory Import PRD's F70, F75 and F77](../import/prd-inventory-import-fences.md) — owner decisions N2, N7 and N9 in [the Nix Toolkit import review log's Round 0](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26), 2026-09-26.
+
+**Decision:** A reading imported from a Nix Toolkit export carries an acquiring-device snapshot of a third kind, imported, naming the model its file gives with serial and firmware unknown; it is never a device record and occupies none. Peer review pending.
+
+**Carried by:** R1.21, R1.22, UJ3-c, and the Device → Inventory Import obligation line.
+
+**Clarified 2026-09-26 ([round 1 of the Nix Toolkit import review](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); editorial, no change of meaning):** the Data Foundation and Data Export obligation lines name the imported kind too — an imported snapshot is never a device record, and `sc_imported` is written from it as `sc_simulated` is from the simulated kind. Carried by those two lines as well. Peer review pending.
+
+**Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); editorial):** R1.21's imported snapshot names the model its file gives, if any; UJ3-c reads serial and firmware as absent. Peer review pending.
+
+**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26); editorial):** UJ3-c declares its imported reading directly under the Inventory Import PRD's R6.10; the importer's own side of R1.22 is that PRD's UJ 3 saved-device case.
+
+**Closed 2026-09-26 ([the Nix Toolkit import review's round 8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-8--confirmation-2026-09-26)):** For F33, peer review closed 2026-09-26 after eight rounds, every amendment row aligned by all nine lenses; re-locked on merge.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.
@@ -306,7 +322,7 @@ Where a fence is named in the PRD, for provenance only. A row not listed here ci
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
 | F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
-F10–F32 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
+F10–F33 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
 
 ## Rejected findings
 

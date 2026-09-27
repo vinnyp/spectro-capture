@@ -77,6 +77,7 @@ This transition index replaces the narrative diagrams. The scenarios below suppl
 | :--- | :--- | :--- | :--- | :--- |
 | UJ3-a | Known device with canonical measurements and history | Confirm Remove in P1, then re-add the same kind/model/serial with changed firmware | E32 names device; only saved connection record removed; immutable kind/model/serial/firmware snapshots remain; re-add uses normal pairing and the same identity key despite changed firmware | R1.18–R1.22 |
 | UJ3-b | R6.20 seeds simulated and live-kind saved records with the same model/serial; DF F41 seeds the live measurement snapshot | Read both identities and snapshots; acquire a reading from R6.30 | Separate records by kind; R6.30 never occupies the live record and saves only simulated snapshots | R1.21–R1.22, R6.20/R6.30; DF F41 |
+| UJ3-c | A saved live-kind Nix Spectro 2 record; an item whose current reading is [Import UJ 3](../import/prd-inventory-import-journeys.md#uj-3-import-a-nix-toolkit-export-with-its-readings)'s fixture T reading, declared directly ([Import R6.10](../import/prd-inventory-import.md#6-nix-toolkit-exports)); the importer's own side of R1.22 is Import UJ 3's saved-device case | Read the saved records and the reading's snapshot by SQL; confirm Remove on the saved device; read again | The snapshot is of the imported kind, model Nix Spectro 2, serial and firmware absent (NULL); no device record was created for it and none is occupied; after the removal the snapshot and reading are unchanged | R1.21, R1.22 |
 
 ### UJ 4. Calibrate a connected device
 

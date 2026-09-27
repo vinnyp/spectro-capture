@@ -9,6 +9,8 @@ Every PRD that locks records follow-on work at its lock: wording accepted as pos
 The spike runs from [`hardware-spike-brief.md`](../briefs/hardware-spike-brief.md) and its results file lands beside it. That brief's "Before the session" prerequisites are the gate — the throwaway probe harness, both instrument models, the two license variants, the vendor confirmation path for a per-serial refusal, a network-capture tool and a second SDK client, the calibration tile, and the time-box — and each is confirmed before the instrument is booked.
 
 - [ ] **All five PRDs** — the spike runs and its results file lands beside the brief; each PRD's spike-scoped open questions close from that evidence.
+- [ ] **Import / Export** — whether the Spectro 2's reported grid (Export OQ 4) is the Toolkit's 400–700 nm every 10 nm; if not, a Toolkit spectrum and a scanned one share a collection on two grids, and Export's out-of-grid branch becomes reachable.
+- [ ] **Import** — whether the Toolkit's Nix Device column can hold a name the user gave the device rather than its model; if it can, R6.5 records the model only when it is a v1-family model name.
 - [x] **Device** — the spike-scope amendment lands before the spike is dispatched: the Legend's hardware-spike scope gains the reported wavelength grid, the raw-payload round-trip and the toolkit's spaces, the vendor analytics recipient, and the published reference set (plan PL7-4). — done, PR #13
 
 ## Landed sibling amendments
@@ -82,6 +84,8 @@ Cross-document:
 - [x] **Device** — the capture PRD's two "moves from P1 into the first build phase" sentences (R11.3 and its obligations table) are stale now that R6.27 is P0, and ride that PRD's OQ 16 amendment. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 - [x] **Device** — OQ 5's and OQ 28's closers name dogfood data no row records. — [PR #19](https://github.com/vinnyp/spectro-capture/pull/19), including review fixes under F15–F31.
 
+- [ ] **Device** — an inbound line in the obligations table for the Data Export PRD's outbound obligation on its R1.1 and R1.2 provenance columns (lock check 1), accepted as a pre-existing MISS at the Nix Toolkit lock (Import F92).
+
 ### Capture Mode
 
 - [x] **Capture** — R11.8 now names spread below, equal to, or above SAMPLE_TOLERANCE (F62), resolving the ambiguous “set … against” wording. — Capture agent-build amendment F51–F55, ratified by F62 (PR #20).
@@ -96,6 +100,15 @@ Cross-document:
 
 ### Inventory Import
 
+- [ ] **Import** — a plain CSV import rechecks only the source and the session gate at commit, so a matched item added, deleted or edited, or a stored column renamed, between preview and commit rests on R3.3 and the preview's classification alone; decide whether R3.8k's recheck of what the commit would write, a Toolkit export's alone since that amendment, extends to every import, and what any commit does when its target collection was deleted mid-preview (predates the Nix Toolkit amendment).
+- [ ] **Import** — a near-miss state for a file carrying some but not all of R6.1's Toolkit headers, which today imports as a plain CSV with no readings; shaped by OQ 3's corpus.
+- [ ] **Import** — the Legend's priority semantic (lock check 19) and M1's Method row cites (lock check 20), accepted as pre-existing MISSes at the Nix Toolkit lock (F92).
+- [ ] **Capture** — its counts say "scanned" for captured items, which now include readings imported from a Toolkit export; decide whether the word changes (Import §6).
+- [ ] **Import** — needs owner, a copy choice over E13's collection body: "each swatch keeps its choice…" also shows where no E14 choice was offered (a pending-only target), true but empty there; a candidate is "any choice you made between taking the new details and keeping what you have is kept" (round 8, PM-R8-n1).
+- [ ] **Import** — build review: UJ 3's column-rename case could also assert that ZZ-1, which the file lacks, keeps its own value in the renamed `Density C` column, as R6.8e's absent-item cases already assert for absent items (round 8).
+- [ ] **Import** — build review, from round 9 of the Nix Toolkit review: a UJ 3 case showing that a re-export differing only in Illuminant or Observer is still the same reading (N28 keeps the reference out of the key), UJ 3's cites of lettered sub-rows (R6.1a–d, R6.2a–g, R6.9a–b) where a case pins one, and the same-date mode case asserting that the swatch's working-set colour is absent (Data Foundation R3.3d).
+- [ ] **Capture / DF** — switching a collection's scan mode away from its imported readings' mode blanks their chips (DF R3.3d) with no warning; decide whether Capture R1.10's change warns.
+- [ ] **Import / Collection Mode** — in the first build phase an imported reading is replaced only through Flag and set-aside review, re-scan being P1; revisit if dogfood shows the imported mark lingering.
 - [x] **Import** — non-preview actions, including all three E40 routes, are enumerated by R4.1 and exercised in UJ 2.1; R3.8 owns transitions. Owner explicitly ratified the rule change in the [2026-09-17 PR #16 decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); transitions and action coverage completed in PR #16.
 - [x] **Import** — §4 now links to its own UJ 2–2.2 acceptance scenarios — PR #16 (commit `cf9974f`).
 - [x] **Import** — Vocabulary defines Swatch Name and both alternates, including their search-only role versus the re-import match key — PR #16 (commit `cf9974f`).
@@ -122,6 +135,7 @@ Cross-document:
 
 ### Cross-document
 
+- [ ] **Import / DF / Device / Export / Capture** — bring each PRD to the current template's constructs (Carried by fields; the Legend's defer bullets; build-dependencies, Surfaces, constants and row-transition tables; copy states as sections with variant fields; journeys with case IDs and a named-defaults table), so that lock checks 2–7, 13, 17 and 18 run on it, then a full check 1(c) and 13 sweep of each. The Nix Toolkit lock's adapted sweep already found single-word labels ("Import", "Cancel") left unquoted and curly quotes in Import's journeys. Accepted as NOT-RUN at that lock (Import F92).
 - [x] **Import / Capture** — round-2 owner fence F63: Capture §12’s token index includes Import’s preview counts/settings and generated-name placeholders; E43 follows its existing zero-count rule. — PR #16
 
 - [x] **Import / DF / DE** — 2026-09-17 owner fence F59: DF’s inbound Import line gains field preservation, decoded values directly queryable, and measurement preservation; both obligation tables carry Rows. DF R1.2 and Export’s inbound mirror use Import R2.5/R2.6’s first-seen resolved column names; Capture’s import line mirrors both E40 session routes. — PR #16
@@ -131,10 +145,13 @@ Cross-document:
 - [x] **DF** — R7.7a–m is the sole fixture inventory; Data Export links to it instead of mirroring the list. — PR #17 agent-build amendment.
 - [x] **DF** — whether a Collection Mode rename moves an imported column's stored name. — settled by the Collection Mode PRD's F9 / DF F50 in PR #21
 - [x] **DF** — OQ 2 distinguishes ADR-0003's required SQLite features from ADR-0006's macOS floor; owner ratifies the reader floor after both. — PR #17 agent-build amendment.
+- [ ] **QC & Comparison** — when that PRD is written, a QC ΔE comparison against an imported canonical value works as against any other, the imported mark showing ([Import F79](import/prd-inventory-import-fences.md), owner decision N11 of the [Nix Toolkit import review log](../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-0--owner-adjudication-2026-09-26)).
 
 ## First build PR
 
 Build-review items and the engineering plan's test matrix.
+
+- [ ] **Import / DF / Device / Collection Mode / Export** — the Nix Toolkit build order: the device PRD's R1.21 imported kind and the Data Foundation PRD's R2.3j first; then Import §6 and Collection Mode's imported rows (its Build dependencies row), whose cases, and Device's UJ3-c, seed an imported reading directly (Import R6.10); after Import §6, the Data Foundation PRD's R7.7o with its DJ6, and Export's `sc_imported` goldens cut from R7.7o. Import UJ 3's clauses that read Collection Mode's surfaces wait for those rows.
 
 - [ ] **DF** — the first build PR that runs DJ3 waits on the two DJ3 items under Data Foundation in the next pass above: the positive case, without which (i) alone passes a build that refuses every write while a clearing is stuck, and the added DJ3 runs and harness fixes (its round-19 interface review's IF19-m4; added in PR #21).
 - [ ] **DF** — implement the CSV → store → CSV passthrough-value case now specified by R7.7b; contract clarified in PR #17, build evidence pending.
@@ -160,6 +177,7 @@ Build-review items and the engineering plan's test matrix.
 
 ## ADR-0003
 
+- [ ] **Import / DF** — the Nix Toolkit import's schema inputs, as [the ADR-0003 row](../decisions/README.md#decision-queue) records them (Import F70, F77, F82; DF R2.3h, R2.3j).
 - [ ] **Import** — choose comparison-data version governance; re-check existing identifiers on table upgrades and verify the R2.3 comparator against the eventual ADR-0006 macOS floor (F57; [decision queue](../decisions/README.md#decision-queue)).
 
 - [ ] **DF** — the generated ROWS_CEILING corpus's determinism contract; M6, M8 and DE R4.1 read from it.
@@ -192,6 +210,7 @@ Inputs for ADR-0005's executor and runtime ownership when it is drafted.
 
 Readings the owner takes while dogfooding a build.
 
+- [ ] **Import** — [its OQ 3 and M2](import/prd-inventory-import.md#open-questions): import the owner's own Nix Toolkit exports across devices, modes, illuminants and app versions, recording only format facts and tallies by state summed over two or more files — from a single file, only format facts and whether it imported cleanly — as Import M2 bounds them, never a name, code, note, date, measured value, file name or per-file count (F71); include a ROWS_TARGET-sized Toolkit file in the import budget run.
 - [ ] **Collection Mode** — OQ 2: the owner's estimate of collections per file, checked by UJ9.5-b; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 3: a "Find similar" pass over a real collection of at least 200 items, recording how many items each query lists; the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
 - [ ] **Collection Mode** — OQ 4: dogfood bulk edits, then the owner; now a check of F209's ratified value (D61), a failed check returning as an amendment (Collection Mode, its round-6 plan review; added in PR #21).
@@ -206,6 +225,7 @@ Readings the owner takes while dogfooding a build.
 
 ## Documentation
 
+- [ ] **Import** — help docs on getting a collection out of the Nix Toolkit app and what an imported reading does and doesn't record; the root README's "How it will work" gains the Toolkit import, and its claim that the raw instrument payload is kept is scoped to scanned readings.
 - [ ] **DF** — the help-docs column dictionary carries a formula-injection note for spreadsheet consumers, and nothing yet gates a release on that dictionary existing.
 - [ ] **DF** — the dogfood build's participant-facing onboarding says the interaction record is kept and a delete does not reach it.
 - [ ] **DF** — a redacted bug-report artifact.
@@ -234,12 +254,13 @@ Deliberate omissions from v1, recorded so no one re-raises them as gaps. Not wor
 - **DE** — no collection-identifier column.
 - **DE** — no rule about an export mid-session.
 - **DE** — no destination-overwrite rule.
+- **Import** — CxF import, and exports from vendor apps other than the Nix Toolkit, whose CSV v1 imports under Import §6 ([vision J7](vision.md#j7-migrating-in-from-the-vendor-apps-cataloger-v2-candidate)).
 
 ## Judgment calls that stood at lock
 
 The owner may overrule any of these. Not work.
 
-- **DF** — the salvage conflict resolution: the later-recorded reading stays current.
+- **DF** — the salvage conflict resolution: the later reading in per-item sequence stays current, except where R2.3j keeps an imported reading behind (F36's 2026-09-26 Clarified line).
 - **DF** — reflectance as a fraction of 1.
 - **DF** — times in UTC with `Z`.
 - **DF** — a path in both volume classes shows the network state.
