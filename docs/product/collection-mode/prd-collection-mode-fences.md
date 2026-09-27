@@ -15,7 +15,7 @@ amendment preserves them and does not re-decide them.
 
 **Amendment lock record:** [the review log's re-lock record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26) — amendment F202–F218, checks 1–20 at the validated revision it names, against preservation baseline `04dfb97` and change baseline `dc1b747`. The follow-up review's reopening re-locked with [its own record](../../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26-after-the-follow-up-review), amendment F202–F220, checks 1–20 at the validated revision it names.
 
-**Amendment pending:** Nix Toolkit mirror F221–F223 (2026-09-26), peer review pending.
+**Nix Toolkit mirror lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-26) — F221–F223, peer review closed 2026-09-26; checks 1–20 at the validated revision it names.
 
 **Amendment pending mark.** While an amendment's review rounds run, and only then, this preamble
 carries a fourth item: the same amendment clause the PRD's status line carries, naming the fence
@@ -1946,6 +1946,8 @@ Fences F219 and F220 were decided by the owner on 2026-09-26, over the PR #21 fo
 - **Authority:** [the Inventory Import PRD's F91](../import/prd-inventory-import-fences.md) — owner decision N23 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26. Question: "The fixes land mostly in Data Foundation … It is at 8,592 of 8,600 words; Collection Mode is at 12,497 of 12,500. How should they fit?" Chosen: **Raise DF to 8,900, CM to 12,550** — "Dated budget fences like F65/F222; the fixes land in plain words and no aligned row reopens for compaction." Not chosen: **Compact to fit**. Peer review pending.
 - **Decision:** This PRD's word budget is 12,550 words, counted by rule 14's method, following F222.
 - **Carried by:** governs no rows
+
+**Closed 2026-09-26 ([the Nix Toolkit import review's round 8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-8--confirmation-2026-09-26)):** For F221–F223, peer review closed 2026-09-26 after eight rounds, every amendment row aligned by all nine lenses; re-locked on merge.
 
 ## Fence → row map
 

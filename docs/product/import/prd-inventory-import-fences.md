@@ -4,7 +4,7 @@ Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain b
 
 **Nix Toolkit amendment review log:** [`docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md) — its Round 0 records the owner decisions N1–N15 that F69–F83 carry, and its Round 1 the decisions N16–N23 that F84–F91 carry.
 
-**Amendment pending:** F69–F91 (2026-09-26), peer review pending.
+**Amendment lock record:** [the Nix Toolkit import review log's lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-26) — amendment F69–F91, peer review closed 2026-09-26 after eight rounds; checks 1–20 at the validated revision it names.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -144,7 +144,7 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-26 ([the Nix Toolkit import review's round 6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-6--delta-verification-2026-09-26); Import F76's round-5 line):** R3.8i's and R3.8l's kept E14 choices apply to every import, plain CSV included; UJ 2.1's E40 and E44 cases assert them, and a source changed before "Try again" resets them through E13.
 
-**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); editorial within this fence):** UJ 2.1's E40 and E44 kept-choice cases declare a captured match whose name the file changes, meet E40 at commit, and reach the fresh preview through "Review again".
+**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); editorial within this fence):** UJ 2.1's E40 and E44 kept-choice cases declare a captured match whose name the file changes and meet E40 at commit, and the source-change case reaches the fresh preview through "Review again".
 
 ### F68 — The Collection Mode line names the matching rule, a commit's progress is listed, and UJ 2.1 holds a P0 write (2026-09-25)
 
@@ -341,6 +341,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 **Decision:** The Data Foundation PRD's word budget rises to 8,900 and the Collection Mode PRD's to 12,550, so round 1's fixes land in plain words. It governs no row here; the Data Foundation PRD's F70 and the Collection Mode PRD's F223 carry it.
 
 **Why:** round 1's lenses found the drafted rows left this open or contradicted a settled row. Source: [owner decision N23](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26); peer review pending.
+
+**Closed 2026-09-26 ([the Nix Toolkit import review's round 8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-8--confirmation-2026-09-26)):** For F69–F91, peer review closed 2026-09-26 after eight rounds, every amendment row aligned by all nine lenses; re-locked on merge.
 
 ## Fence → row map
 

@@ -805,3 +805,6 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 - **Authority:** [the Inventory Import PRD's F91](../import/prd-inventory-import-fences.md) — owner decision N23 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.
 - **Decision:** This PRD's word budget is 8,900 words, counted by rule 14's method, recorded by the dated lines under F55. Peer review pending.
 - **Rows:** governs no rows.
+
+**Closed 2026-09-26 ([the Nix Toolkit import review's round 8](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-8--confirmation-2026-09-26)):** For F64–F70, peer review closed 2026-09-26 after eight rounds, every amendment row aligned by all nine lenses; re-locked on merge.
+

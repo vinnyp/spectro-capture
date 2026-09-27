@@ -166,7 +166,7 @@ E10 does not render until R1.7 is built, which OQ 10 holds back (F57); it carrie
 Spread's definition comes first; then each mark shows its shape (R8.9) before its name, and the marks
 are grouped under the Mark labels table's group headings, in that table's order.
 
-- Status: pre-alignment
+- Status: aligned
 - Phase: none
 - Variants enumerated by: none
 - Headline: What the marks mean
