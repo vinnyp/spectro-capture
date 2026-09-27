@@ -24,7 +24,7 @@ The [journeys](prd-data-foundation-journeys.md) exercise requirements without ad
 | DJ3 | Open a file made by an older or a newer app | R1.3/R1.5/R1.9–R1.11, R2.9, R5.1–R5.8, R6.2a, R7.3/R7.7, E35 | [DJ3](prd-data-foundation-journeys.md#dj3-open-a-file-made-by-an-older-or-a-newer-app) |
 | DJ4 | Delete a swatch | R6.1–R6.5, R7.2, R7.6k/l/o/q | [DJ4](prd-data-foundation-journeys.md#dj4-delete-a-swatch) |
 | DJ5 | Query the file without the app | R1.1–R1.6, R2.1–R2.9, R3.1–R3.5, R5.5/R5.6, R7.1 | [DJ5](prd-data-foundation-journeys.md#dj5-query-the-file-without-the-app) |
-| DJ6 | Hold an imported Toolkit reading | R1.6, R2.1–R2.5, R2.3j, R3.1, R3.2, R3.4, R7.1 | [DJ6](prd-data-foundation-journeys.md#dj6-hold-an-imported-toolkit-reading) |
+| DJ6 | Hold an imported Toolkit reading | R1.6, R2.1–R2.5, R3.1, R3.2, R3.4, R5.5d, R7.1, R7.2 | [DJ6](prd-data-foundation-journeys.md#dj6-hold-an-imported-toolkit-reading) |
 
 ## Requirements
 
@@ -265,7 +265,7 @@ Sole R7.7/Data Export inventory; cases may share fixture files. Tests may mutate
 | R7.7l | Queue order different from insertion order | Read-back and Export R1.1g/R2.3 follow queue order |
 | R7.7m | Fabricated version below current; test-only supported reader/migration, not a production compatibility-floor change | From v1, exercise R5.1/R5.2, E2/E3/E23/E24 and M5: snapshot, success, failure, lossy refusal and no snapshot space |
 | R7.7n | Newly created empty collection with no imported columns | Export R4.1h header-only golden and R1.1r preview |
-| R7.7o | Imported Toolkit readings: one current; one with no model; one kept behind a live scan; one superseded by a re-scan; one current and quarantined | R2.3j; DJ6; Export R1.1t/R4.2's `sc_imported` |
+| R7.7o | Imported Toolkit readings: one current; one with no model; one kept behind a live scan; one a live re-scan superseded; one current and quarantined | R2.3j; DJ6; Export R1.1t/R4.2's `sc_imported` |
 
 ### Inherited obligations
 

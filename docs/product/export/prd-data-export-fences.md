@@ -234,6 +234,8 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Clarified 2026-09-26 ([round 6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-6--delta-verification-2026-09-26); within this fence):** EJ1 declares the re-scan live and asserts both flags false on every row whose current reading is live; its ‹P1› clause exports the reading a re-scan superseded as `superseded` with `sc_imported` true, the re-scan's row current with `sc_imported` false, and E1 stating 5 imported readings. Peer review pending.
 
+**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); editorial within this fence):** EJ1 asserts `sc_imported` true on each imported row, the no-model row included. Peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).

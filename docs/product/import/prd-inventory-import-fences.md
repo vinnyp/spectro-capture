@@ -144,6 +144,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-26 ([the Nix Toolkit import review's round 6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-6--delta-verification-2026-09-26); Import F76's round-5 line):** R3.8i's and R3.8l's kept E14 choices apply to every import, plain CSV included; UJ 2.1's E40 and E44 cases assert them, and a source changed before "Try again" resets them through E13.
 
+**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); editorial within this fence):** UJ 2.1's E40 and E44 kept-choice cases declare a captured match whose name the file changes, meet E40 at commit, and reach the fresh preview through "Review again".
+
 ### F68 — The Collection Mode line names the matching rule, a commit's progress is listed, and UJ 2.1 holds a P0 write (2026-09-25)
 
 **Decision:** Mirroring [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11, round-5 adjudication 2026-09-25), with the testability halves its round-5 fix pass carries under its F155, F156 and F164: the outbound Collection Mode line names R2.3's one matching rule, which Collection Mode's rename, search and code change apply, beside R2.6; this document, whose format has no inbound-obligations table, carries what Collection Mode imposes on it by its rows' cites and the dated fences F65–F68, no table added. R4.1 lists a commit's progress, which Data Foundation R1.11 makes show while a close, switch or quit waits on it. UJ 2.1 holds Collection Mode's Rename collection, a P0 write, behind this import's commit in place of its P1 Set a field, and asserts R3.8i's End that session shown disabled while a Data Foundation R1.11 write runs. R4.1 keeps its alignment.
@@ -236,6 +238,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 **Clarified 2026-09-26 ([round 5](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-5--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k's collection-variant route applies to a Toolkit export only, as F76 does and as the post-lock plain-CSV item leaves open; its recheck names what it compares — the mode fit, every eligible record's match and R6.8 outcome, and E43's Toolkit lines and Swatch details counts. A newly offered row takes E14's default (R3.8f), and R3.8i and R3.8l keep each still-offered row's choice as R3.8f does, R3.8l unless the source changed; E13's collection variant reads "keeping any choices you made". UJ 3 adds P0 cases deleting an unmatched and a matched swatch mid-preview. R3.8f, R3.8i, R3.8k, R3.8l, E13 and UJ 3 carry it.
 
 **Clarified 2026-09-26 ([round 6](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-6--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k's Toolkit recheck compares what the commit would write — every eligible record's match, R6.8 outcome and R3.6 field changes, and E43's Toolkit lines, Swatch details counts, added columns and rows gaining details — against what E43 and E14 show, so a choice changed in E14 alone raises no E13. E13's collection body names the collection's columns and says a swatch newly listed with different details starts at taking the new details. UJ 3 adds cases for a choice change alone, a mid-preview rename that changes the counts, one that leaves them equal, and a column rename. R3.8k, E13 and UJ 3 carry it.
+
+**Clarified 2026-09-26 ([round 7](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-7--delta-verification-2026-09-26); this fence's round-2 line):** R3.8k's recheck names each record's matched item and the stored value each R3.6 field change replaces, compares against the preview E43 and E14 last showed, its per-record plan and current choices included, and has a Toolkit commit write what that recheck worked out. E13's collection body is reworded to say each swatch keeps its choice. UJ 3's choice-only case asserts the commit, and its column-rename case changes only the added columns. R3.8k, E13 and UJ 3 carry it.
 
 ### F77 — What a Toolkit export lacks is recorded as unknown (2026-09-26)
 
@@ -361,7 +365,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
 - **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
 - **F66** Collection Mode one-writer mirror, as clarified twice — R3.2; E40; UJ 2.1.
-- **F67** Collection Mode round-4 mirror, as clarified — R3.2, R3.8i, R3.8l; E40, E44; UJ 2.1.
+- **F67** Collection Mode round-4 mirror, as clarified twice — R3.2, R3.8i, R3.8l; E40, E44; UJ 2.1.
 - **F68** Collection Mode round-5 mirror — R4.1; Collection Mode inherited-obligation line; UJ 2.1.
 - **F69** Nix Toolkit scope — §6; line 5; R1.5b; UJ 3.
 - **F70** Toolkit reading made canonical — R6.5, R6.8; Data Foundation and Device inherited-obligation lines; UJ 3.
@@ -370,7 +374,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F73** Toolkit recognition, as clarified five times — R1.5, R1.5b, R6.1, R6.2, R6.4, R6.7, R6.9, R6.11; E5, E7, E9, E10, E42, E43, E47, E48; UJ 3.
 - **F74** Scan stays current — R6.8c; UJ 3.
 - **F75** Imported mark — R6.5; Collection Mode inherited-obligation line.
-- **F76** Measurement-mode fit, as clarified six times — R3.2, R3.8f, R3.8i, R3.8k, R3.8l, R3.8p, R6.3, R6.4; E13, E43, E46; Capture inherited-obligation line; UJ 3.
+- **F76** Measurement-mode fit, as clarified seven times — R3.2, R3.8f, R3.8i, R3.8k, R3.8l, R3.8p, R6.3, R6.4; E13, E43, E46; Capture inherited-obligation line; UJ 3.
 - **F77** Unknown provenance recorded — R6.5; UJ 3.
 - **F78** Date Saved as measurement time — R6.5; UJ 3.
 - **F79** Export and QC — the Data Export inherited-obligation line.
