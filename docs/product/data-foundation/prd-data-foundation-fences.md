@@ -802,6 +802,8 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 - **Decision:** B with the same measurement time as an imported current A but a different spectrum is kept behind A; only an earlier-measured imported A yields. Peer review pending.
 - **Rows:** R2.3j; DJ6.
 
+**Clarified 2026-09-27 ([round 9](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-9--pr-22-review-2026-09-27); a pointer):** A same-dated B that differs in measurement mode is also not the same reading and is kept behind as this fence states, under the Inventory Import PRD's owner decision N28 (F64's round-9 line).
+
 ### F70 — Word budget 8,900 (2026-09-26)
 
 - **Authority:** [the Inventory Import PRD's F91](../import/prd-inventory-import-fences.md) — owner decision N23 in [the Nix Toolkit import review log's Round 1](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#owner-adjudication-2026-09-26), 2026-09-26.

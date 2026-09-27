@@ -13398,3 +13398,1021 @@ A reading's measurement mode is part of the same-reading identity. Two readings 
 **Word budgets:** Data Foundation 8,887 of 8,900, Data Export 3,993 of 4,000.
 
 **Real-value check:** no hits.
+
+### Round 9 results (2026-09-27)
+
+All nine lenses reviewed commit `73f9fbe`. Every lens aligned, or abstained out of lens, on each of the nine reopened rows, with no Blocker, no Major and no standing objection. So the rows flip back to aligned:
+- Import R6.1, R6.2, R6.4, R6.7, R6.8, R6.9 and R6.10;
+- Data Foundation R2.3;
+- Data Export R1.2.
+
+Every lens confirmed three things:
+- N28 is carried everywhere the same-reading rule appears.
+- Both new UJ 3 cases fail a build that keys identity without mode.
+- The split carries every clause over with no behaviour change.
+
+The plan lens raised one Minor that holds no row, and it reproduced: the fence map's F45 entry still scoped the two-sentence rule to §1–§4.
+
+The Nits converged, and each is fixed editorially, verified word by word, with no row's meaning changed:
+- **F45 map entry:** now names §6, lettered sub-rows included.
+- **R6.1:** the lead reads "when R6.1a's signature holds, and is then read as R6.1b–d state", and R6.1b and R6.1c name their subject.
+- **R6.2a:** gives its pairing in words.
+- **R6.4c:** reads "the file's mode", and its When cell reads "A target is chosen, and again at commit".
+- **R6.9b:** its label is "Also named".
+- **The two new cases:** they start "Fixture T;", the first names the Flag that sets the item aside, and both cite R6.9.
+- **Pointer lines:** under Import F87 and Data Foundation F69.
+- **Round-9 Clarified lines:** now carry a verb.
+- **ADR-0003 row:** restores "copy a reading's measurement time, mode and spectrum".
+- **Traceability line and status surfaces:** they name N28 and this round.
+
+Three optional test suggestions join the post-lock list for build review:
+- a case for a re-export differing only in illuminant or observer;
+- sub-row cites in UJ 3;
+- the same-date mode case asserting an absent working-set colour.
+
+Check 10 was re-run with the reference pattern over every cell of every ID row in the six PRDs.
+- **Import:** none over two sentences, out of 238 cells.
+- **Data Foundation:** R2.4 and M2 and 10 other cells are over two, at the same counts as before this branch. The Data Foundation PRD binds no two-sentence rule.
+- **Data Export and Device:** only their pre-branch cells, unchanged.
+- **Capture:** M8 and 27 other metric-definition cells, unchanged in count.
+
+Word budgets: Data Foundation 8,890 of 8,900, Data Export 3,994 of 4,000. Links resolve, and the local-only real-value check found no hits. The round-9 reviews follow verbatim.
+
+#### product-manager
+
+##### Verdict
+**Builds the right thing for the user.** N28 (measurement mode is part of what makes two readings the same) now appears on every surface that defines or uses that identity. The two new UJ 3 cases are real oracles, and the two-sentence split keeps every clause. The round-9 diff adds no Blocker, Major or Minor, so all nine reopened rows align.
+
+##### User & problem context (brief)
+- **User and job:** the Cataloger, who is the owner and the first user. They want readings already taken in the Nix Toolkit app to land in a SpectroCapture collection without scanning them again. Provenance has to stay honest, re-import has to be safe, and they keep scanning and correcting afterwards.
+- **Validated vs assumed:** the format is validated on one studied export (OQ 3, bounded by M2). The N28 scenario is reachable rather than contrived: Capture R1.10 lets a collection's mode change between sessions, which is the PR #22 review's own sequence.
+- **Scope:** `git diff 60d9625 73f9fbe -- docs`, which covers N28 and the two-sentence split.
+- **Paths:** all are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/`.
+  - IMP = `docs/product/import/prd-inventory-import.md`
+  - IJ = `docs/product/import/prd-inventory-import-journeys.md`
+  - IC = `docs/product/import/prd-inventory-import-copy.md`
+  - IF = `docs/product/import/prd-inventory-import-fences.md`
+  - DF = `docs/product/data-foundation/prd-data-foundation.md`
+  - EX = `docs/product/export/prd-data-export.md`
+  - LOG = `docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`
+
+##### Findings
+
+**Status of my earlier findings**
+- **PM-R8-n2 (R3.8k's "each"): RESOLVED.** IMP:126 now reads "each field change with the stored value it replaces".
+- **PM-R8-n1 (E13's collection body): DEFERRED as intended.** It is an owner copy choice, recorded at `docs/product/post-lock.md:107`, and holds no row.
+- **PM-R7-n1:** stays resolved, as round 8 confirmed. Nothing older is open.
+
+**Check (1): N28 is complete and consistent**
+- **Where the rule is stated:**
+  - IMP:23, the Vocabulary: same Date Saved to the millisecond, same mode, every reflectance the same number.
+  - IMP:211, R6.8f: uses the term.
+  - IMP:216, R6.8d: its same-date tie now covers "a different spectrum or measurement mode", and E43 lists it.
+  - DF:137, R2.3j: "same Date Saved, measurement mode and spectrum".
+  - `docs/decisions/README.md:22`, the ADR-0003 row: the dedup input names all three.
+  - IF:293 (F82) and `docs/product/data-foundation/prd-data-foundation-fences.md:773` (F64): each carries a round-9 line.
+- **Where the rule is inherited without an edit:**
+  - IMP:223–224, R6.9a–b: "same-dated" is mode-neutral, so a tie with a different mode counts as kept in history and is listed. The three counts still add up to all eligible records.
+  - IC:29, E43: "Already here" and "saved at the same moment as a different reading already here" stay true without an edit. Leaving the copy alone was the right call.
+  - DF R5.5d ("a same reading kept behind") and DJ6's "the same reading imported again": both use the term, so they inherit it.
+- **The two new cases are real oracles.** Take a build that matches readings on date and spectrum only:
+  - IJ:147 would route TK-2 to R6.8f, count it "already here" and leave it set aside. The case asserts TK-2 counted as now a swatch's colour, captured, with reason initial.
+  - IJ:148 would count TK-1 "already here" and add no reading. The case asserts it kept in history, listed as a same-moment reading, with the M2 reading stored and reason initial.
+  - A build that includes mode but treats the tie as "later" fails IJ:148's "the M1 reading stays current".
+- **Both cases are reachable:** each target moved from M1 to M2 under Capture R1.10, Fixture T is M2 (IJ:107), and R6.4c admits the import.
+
+**Check (2): the split loses, adds and changes nothing**
+- **R6.1 → R6.1a–d** carries all of it:
+  - the signature;
+  - the fixed UTF-8 encoding and delimiter, with no read controls;
+  - E5's encoding and quotes variants, the encoding variant checked first;
+  - E5, E7, E9, E10 and E42's Toolkit variants;
+  - "any other source follows §1–§3" in the lead row.
+- **R6.2 → R6.2a–g:**
+  - Every column group keeps its treatment.
+  - The old "none of these is stored as a column" is now stated on each of b–e, the same scope as before.
+  - The E48 and no-E41 clauses stay in the lead row.
+- **R6.4 → R6.4a–c:** the text is unchanged. "Once a target is chosen" moved into R6.4b's When column.
+- **R6.7:** "listed with every failing column (E47)" is the old third sentence merged in.
+- **R6.9 → lead, R6.9a and R6.9b:**
+  - the lead row keeps "names the export first" and "repeating changes nothing";
+  - R6.9a holds the counts;
+  - R6.9b holds the named items.
+- **R6.10 → R6.10a–d:**
+  - "Neither a real export…" moved into R6.10a.
+  - "Derives from one" became "derives from a synthetic export", the same referent.
+- **EX:66, R1.2:** "consumers treat empty as unknown" now follows both flags. It already reached `sc_imported` through "follows the same rule", so the behaviour is unchanged.
+- **Sentence count:** I counted mechanically. Every §6 cell has at most two sentences (R6.3, R6.6 and R6.7 have two), and EX R1.2 has two. DF R2.3j has three, but that count predates this diff and the Data Foundation PRD binds no two-sentence rule.
+- **Cites:** every cite of R6.1, R6.2, R6.4, R6.7, R6.9 or R6.10 names a parent ID that still exists and still carries the cited clause through its sub-rows. I checked:
+  - IMP:58, 168, 176, 240 and 250;
+  - IC:37 and the IJ cases;
+  - Capture R1.10, EX:205, DF:245;
+  - the device journeys (line 80) and the Collection Mode fences (line 1930).
+
+**New findings (the round-9 diff):** no new Blocker, Major or Minor.
+- [NIT] **PM-R9-n1, IMP:166.** "A source is a Nix Toolkit export as R6.1a–d state" makes b–d read as recognition conditions, but only R6.1a is one: R6.1c's undecodable file is still a Toolkit export. Fix: "A source whose first record meets R6.1a is a Nix Toolkit export, read as R6.1b–d state; …".
+- [NIT] **PM-R9-n2, IMP:191.** R6.2a's "Color Code; Color Name | Swatch Code; Swatch Name." drops the explicit pairing that the old sentence and IJ:111 state. Fix: write "Color Code → Swatch Code; Color Name → Swatch Name".
+- [NIT] **PM-R9-n3, IJ:147.** The setup says "an item with no current value", but the assert lists the item among set-aside swatches. Capture's vocabulary makes set aside the only consistent state, and IJ:144 names it. Fix: "an item set aside with no current value that holds…".
+- [NIT] **PM-R9-n4, IF:323.** F87's Decision still reads "whose spectrum differs" and has no round-9 line. The extension to mode lives only in F82's line (IF:293), though R6.8d cites both. Fix: add a one-line F87 Clarified pointing to F82's N28 line.
+- [NIT] **PM-R9-n5, IMP:205.** R6.4c's "that mode" now refers back to a different row (R6.4a). Fix: "the file's mode".
+- [NIT, outside my lens] **PM-R9-n6, LOG:13278.** The lock record's check-10 row still reads "PASS | 50 cells, none over two sentences", which the round-9 section says was wrong, and the owner asked for it to be corrected. Annotate the row, or make sure the re-lock record replaces it.
+
+**False positives considered and rejected**
+- **IJ:147 takes an item out of set-aside that the user Flagged, using a reading from the same instant in another mode.** This is the outcome the owner's PR #22 review asked for (R6.8b rather than R6.8f), and N28 adopts it. E43 names the item under "no longer set aside" before commit, so the user can Cancel.
+- **E43's copy was not edited.** That is correct: its wording is mode-neutral, as shown above.
+- **DJ6 has no pairing of same date and different mode.** R2.3j's "else kept behind A" already covers it, because a same-dated reading is not "measured earlier".
+- **DF-R2.3's own cell is unchanged.** It reopened only because of R2.3j.
+
+##### Biggest risks   (what builds the wrong thing or fails the user)
+1. **One studied export.** This is unchanged, and it is tracked honestly by OQ 3 and M2.
+2. **A settled consequence the owner should see (not a finding, and not re-litigated).** A Cataloger may switch an imported collection's mode and then import readings from the same instants in the new mode.
+   - **What happens:** every swatch is a same-moment clash. The old-mode reading stays current and the new one goes to history.
+   - **How to get the new mode current:** restore each swatch one at a time, or import into a fresh collection.
+   - **Whether it is new:** before N28 this already happened wherever the spectra differed. F87 and N28 now make it uniform, and E43 states it plainly, so nothing is silent.
+   - **If the owner wants that re-import to be a supported job,** it is a post-lock question, not a fix to these rows.
+
+##### Genuinely solid   (incl. where simplicity is right that a product-zealot would over-spec)
+- **N28 landed as a change to one defined term, not as a new rule.**
+  - The Vocabulary carries it.
+  - R6.8f, R2.3j, R5.5d, DJ6 and the ADR-0003 input all inherit it.
+  - One identity is stated once, so no restatement can drift.
+- **The new cases sit beside the idempotency cases, and together they pin all three parts of "same reading":**
+  - how a number is written doesn't matter (IJ:146);
+  - the mode does (IJ:147–148);
+  - the date counts to the millisecond (IJ:161).
+- **Lead rows kept every sibling cite resolving.** The R6.2 table is a real improvement for a builder: one row per column group.
+- **Right-sized:** N28 needed no new copy state, E-row or metric, because E43's existing lines already say the true thing.
+
+##### Missing / over-specified
+- **Missing:** nothing load-bearing. There are five editorial Nits and one bookkeeping Nit.
+- **Over-specified:** nothing new.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### staff-software-engineer
+
+##### Verdict
+**Ready to proceed.** N28 now reaches every place that states the same-reading identity. Both new UJ 3 cases are real oracles. The two-sentence split carries every clause over with no change in behaviour. The round-9 diff adds no Blocker, Major or Minor, so every reopened row aligns.
+
+##### What I reviewed
+- **Artifact:** a requirements-mode delta review of round 9 (PR #22 follow-up).
+  - Subject `73f9fbe`, PR head `60d9625`, base `6374538`.
+  - Root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import`, HEAD `73f9fbe`, tree clean.
+  - I read `git diff 60d9625 73f9fbe -- docs` for every file, then each changed row in full.
+- **Abbreviations:**
+  - IMP = `docs/product/import/prd-inventory-import.md`; IJ, IC and IF are its `-journeys`, `-copy` and `-fences` files.
+  - DF = `docs/product/data-foundation/prd-data-foundation.md`, with DF-J (journeys) and DF-F (fences).
+  - EX = `docs/product/export/prd-data-export.md`, EXF its fences.
+  - ADR = `docs/decisions/README.md`.
+  - CAP = `docs/product/capture-mode/prd-capture-mode.md`.
+- **Read in full:**
+  - IMP in full, including the Vocabulary (IMP:23), §3, all of §6 (IMP:160–233), M2 and OQ 3.
+  - IJ's UJ 3 cases (IJ:108–157).
+  - IC's E5, E13, E14, E43 with its token notes, E46, E47 and E48.
+  - IF: the preamble, F71–F92, and the provenance map (IF:386–426).
+  - DF: R2.3, R2.3a–j, §3 with the regeneration matrix, R5.5d, and the Import obligation line (DF:282).
+  - DF-J:124 (DJ6), and DF-F:752–812 (F64–F70).
+  - ADR:22 (the ADR-0003 row).
+  - EX:66 (R1.2), EX:205 (OQ 4 row) and EXF:238–242.
+  - CAP's Vocabulary, R1.10 and R5.6.
+  - The status rows in `docs/product/README.md` and the cites in `docs/product/post-lock.md`.
+  - In the review log: my Round 8 section, the Lock record and Round 9.
+- **Grep-only this round:** Collection Mode and Device, for any other statement of the dedup identity (none found). I did not re-read the vision or the round-1–6 fix files; this diff does not touch them.
+- **Brief note:** the brief's closing paragraph ("final confirmation before lock: the round-7 diff…", "confirm each of your round-7 findings") is left over from round 8. I took the round-9 scope as binding: I confirm my round-8 finding and the round-7 findings still hold.
+- **Could not verify:**
+  - Runtime behaviour: there is no code.
+  - The PR #22 discussion URLs: not fetched.
+  - The rule-14 word counts: I ran none.
+  - The orchestrator's full 238-cell check-10 rerun: I counted only §6's 38 cells and Export R1.2.
+  - I read no research report or real export, and I quote no data value from either.
+
+##### Findings
+
+**Status of my earlier findings**
+- **SSE8-n1: resolved.**
+  - IJ:175 now reads "TK-1–TK-3, all pending with `Finish` absent".
+  - IJ:173 now reads "the target having no imported columns".
+- **SSE7-m1, SSE7-n1 and SSE7-n2: still resolved at HEAD** (DF:268 "a live re-scan"; IMP:126 R3.8k; IJ:53; IJ:59).
+
+**New in 73f9fbe: no Blocker, Major or Minor.**
+
+- [NIT] **SSE9-n1 — IJ:147's setup.**
+  - It names neither Fixture T nor the item's set-aside state.
+  - Its assertion ("lists it among set-aside swatches no longer set aside") holds only if the item is set aside (R6.8b; CAP:43, where "pending" means no reading).
+  - Fix: write "Fixture T; … TK-2 matches an item set aside by a Flag, its one readable reading an imported M1 reading … in history", as IJ:137 does. Also add "Fixture T;" to IJ:148.
+- [NIT] **SSE9-n2 — IF:321–323 (F87) and DF-F:799–802 (DF F69).**
+  - Both still state the same-date tie as "spectrum differs"; N28's widening is recorded only under F82 (IF:293) and DF F64 (DF-F:773).
+  - Fix: add a one-line pointer under each: "widened to a different mode by N28 (F82's round-9 line)".
+- [NIT] **SSE9-n3 — ADR:22.** "restores, which copy a reading's measurement time and spectrum (DF R2.3f)" should read "measurement time, mode and spectrum". A restore is "B equal to H" (DF:133), so it copies the mode too, which is why it collides with a key that now includes mode.
+- [NIT] **SSE9-n4 — IMP:166, and the sub-row references.**
+  - "A source is a Nix Toolkit export as R6.1a–d state" makes all four rows sound like tests, but only R6.1a is the test. R6.1b–d say how the export is then read.
+  - Three sub-rows lean on a neighbouring row for their subject: R6.1b's "It … that delimiter", R6.1c's "One" and R6.4c's "that mode".
+  - Fix: write "a Nix Toolkit export when R6.1a's signature holds, then read as R6.1b–d state", and "the file's mode" in R6.4c.
+- [NIT] **SSE9-n5 — IF:388.** F45's map entry still scopes the two-sentence rule to "every row in §1 through §4". IF:11 and the round-9 lines apply it to §6. Fix: add §6.
+- [NIT] **SSE9-n6 — status surfaces.** IMP:3 and README rows 15–17 still say "peer review closed 2026-09-26", while nine rows sit at Ready for Alignment. The bookkeeping close should name N28 and round 9 (2026-09-27) on IMP:3, the README rows and the DF/Export status lines.
+
+##### Clarifying questions for the author
+1. In IJ:147, is TK-2's item set aside by a Flag, with its M1 reading readable, and is the imported file Fixture T?
+2. Should F87 and DF F69 each carry a pointer to N28's mode widening, or is F82's round-9 line meant to be the only record?
+3. May ADR:22's restore clause read "which copy a reading's measurement time, mode and spectrum"?
+
+##### Claimed properties
+
+| Claim (round-9 record) | Verdict | Evidence |
+| :--- | :--- | :--- |
+| N28 is carried everywhere the rule appears | Holds | See the N28 table below |
+| The two new UJ 3 cases fail a build that keys identity without mode | Holds | See the oracle table below |
+| The split carries every clause over, with no behaviour lost, added or changed | Holds | See the split table below |
+| Each cell is at most two sentences | Holds for §6 and Export R1.2 | See the split table below; the rest of the 238-cell rerun is unverified |
+| Every cite still resolves | Holds | See the split table below |
+| Provenance map counts: F71 six, F73 six, F76 eight, F82 four | Holds | Counted the Clarified lines under each fence |
+| Word budgets: DF 8,887 of 8,900, Export 3,993 of 4,000 | Unverified by rule 14; consistent | Raw `wc -w` deltas this round are +10 and +3, which match the lock record's 8,877 and 3,990 plus the claimed rises |
+
+**Where N28 landed**
+
+| Place | How it carries the mode | Evidence |
+| :--- | :--- | :--- |
+| Import Vocabulary | Adds "whose measurement mode is the same" | IMP:23 |
+| R6.8f | Reads the Vocabulary's definition, so needs no edit | IMP:211 |
+| R6.8d | Its tie adds "or measurement mode" | IMP:216 |
+| R6.9a–b | "same-dated" covers a mode-only difference | IMP:223–224 |
+| E43's copy | "saved at the same moment as a different reading" stays true for a mode-only difference | IC:29 |
+| DF R2.3j | Names "same Date Saved, measurement mode and spectrum" | DF:137 |
+| DJ6 | Needs no change; see "Genuinely sound" | DF-J:124 |
+| ADR-0003 row | Names the mode | ADR:22 |
+| Fences | Clarified lines added | IF:293, DF-F:773 |
+| Other PRDs | No other statement of the identity found by grep | Collection Mode, Device, Export, Capture |
+
+**Why the two new cases catch a build that ignores mode**
+
+| Case | A build keying identity without mode | Assertion it fails |
+| :--- | :--- | :--- |
+| IJ:147 | R6.8f fires on the M1 history reading: "already here", no reading added, item stays set aside | "not already here … M2 reading is current" |
+| IJ:148 | R6.8f fires on the M1 current reading | "kept in history, not already here … listed among same-moment readings" |
+
+Both cases also fail two related wrong builds:
+- one that compares the incoming mode against the collection's mode (M2 = M2) instead of the held reading's;
+- one that adds mode to R6.8f but leaves R6.8d's tie spectrum-only (IJ:148's same-moment listing).
+
+**The two-sentence split**
+
+| Check | Result | Evidence |
+| :--- | :--- | :--- |
+| Every clause carried over | Holds | A word-level diff of old against new R6.1, R6.2, R6.4, R6.7, R6.9 and R6.10 differs only in connecting words |
+| R6.2's "none of these is stored as a column" | Carried | Becomes "never stored as columns" in R6.2b–e |
+| R6.7's separate E47 sentence | Carried | Now "listed with every failing column" |
+| Export R1.2 | No behaviour change | "Consumers treat empty as unknown" now spans both flags, which "follows the same rule" already implied |
+| Two sentences per cell | Holds | Each of §6's 38 cells is one or two sentences; Export R1.2 is two, its count before the branch (`6374538`) |
+| Cites resolve | Holds | The lead IDs are kept. Sibling cites point at them: EX:205 (Import R6.1's grid), Device UJ3-c and `post-lock.md:153` (Import R6.10), CAP:147 (R6.4) and DF:282. The round-9 anchor matches the log heading |
+| No new ID clash | Holds | The unqualified `R6.2a` in `post-lock.md` is the Data Foundation PRD's own |
+
+##### Genuinely sound
+- **One definition drives the rule.** N28 lives in the Vocabulary line that R6.8f reads, so R6.8f, R6.9a–b and E43 correctly needed no edit.
+- **DJ6 rightly gets no new pairing.** Salvaging a same-date pair in different modes ends exactly as a same-reading pair does: first current, second kept behind, reason initial, via R2.3j's "else kept behind" (DF:137, DF:187). Such a pairing could not tell a mode-blind build apart.
+- **Mode mismatch is reachable only through a settled path.** R6.4c admits only files in the target's own mode. So a mismatch against a held reading arises through CAP:147's between-sessions mode change (or through a restore or salvage), which is exactly what IJ:147–148 set up.
+- **IJ:148's end state is deterministic and honest, and it is N28 as settled.**
+  - The M1 reading stays current, and its working value in the collection's M2 condition is absent, never substituted (DF:158, R3.3d).
+  - The M2 reading can be restored from history (R2.3f).
+- **Nothing in the key needs interpreting.** Modes are compared as exact tokens (R6.7). Illuminant and Observer are explicitly outside the identity, so a re-export under another Toolkit display reference is deterministically "already here".
+- **Declaring the M1 reading directly is allowed.** IJ:147–148 declare it under DF R7.2, and that sits within R6.10d: its Date Saved and reflectances are Fixture T's, so it derives from a synthetic export. IJ:155–157 already use the same seam.
+- **The split improves the build contract.** R6.2a–g is a clearer mapping table than the old semicolon chain. The sub-rows keep R6.4a's ordering (exclusions, then the mixed-mode check, then R6.11). R6.8's order is unchanged.
+
+##### Deferred
+- **peer-test-reviewer:** IJ:147's seed (set aside, M1 reading readable) is the test lens's to confirm (SSE9-n1).
+- **peer-product-manager-reviewer:** IJ:148's user-visible result is settled by N28. The swatch shows no colour in M2, while an M2 reading of the same instant sits in history, explained by E43 as a same-moment clash. The product lens may confirm the copy reads right when only the mode differs.
+- **peer-database-reviewer / peer-architecture-reviewer:** whether ADR-0003 enforces the identity (item, Date Saved, mode, spectrum) as a uniqueness key, and how restores and salvage keep-behinds are exempted, is ADR-0003's design.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### test
+
+##### Verdict
+**Tests trustworthy.** N28 now appears consistently everywhere the same-reading rule is stated. The two new UJ 3 cases are real oracles: each fails a build that leaves mode out of the identity. The two-sentence split carries every clause over, with nothing lost, added or changed. The round-9 diff introduces no Blocker, Major or Minor.
+
+##### Coverage map (brief)
+**Paths.** The root is `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/docs/`:
+- IMP / IJ / IC / IF: `product/import/prd-inventory-import{,-journeys,-copy,-fences}.md`
+- DF / DFJ / DFF: `product/data-foundation/prd-data-foundation{,-journeys,-fences}.md`
+- EXP / EXJ: `product/export/prd-data-export{,-journeys}.md`
+- ADR: `decisions/README.md`
+
+**What I checked.**
+- HEAD is 73f9fbe and the tree is clean. I ran `git diff 60d9625 73f9fbe -- docs` and read every changed row in full.
+- Beyond the diff I read R6.8f, E43's copy and token notes, DJ6, Import F82 and F87, DF F64 and F69, the ADR-0003 row, Device UJ3-c, CM UJ2.1-r and EJ1.
+- There is no code, so every mutation below is checked on paper. I edited nothing.
+
+**N28, place by place:**
+
+| Where | Line | Status |
+| :--- | :--- | :--- |
+| Vocabulary | IMP:23 | Updated |
+| R6.8f | IMP:211 | Uses the defined term, so it inherits mode |
+| R6.8d | IMP:216 | Updated |
+| R6.9a–b | IMP:223–224 | "Same-dated" covers the mode tie |
+| E43 copy and `⟨clashes⟩` token | IC:29, IC:37 | Hold unchanged ("a different reading") |
+| DF R2.3j | DF:137 | Updated |
+| DJ6 same-reading rows | DFJ:120, :124 | Inherit the defined term |
+| ADR-0003 row | ADR:22 | Updated |
+| Clarified lines | IF:293, DFF:773 | Added |
+
+**R6.8 branches (IJ lines at 73f9fbe).** Every branch has a case:
+
+| Branch | Cases |
+| :--- | :--- |
+| a | 118, 138, 171, 172 |
+| b | 131, 138, 145, **147**, 155, 156 |
+| c | 138, 172; 156 is its negative |
+| d | 141, 143, **148** |
+| e | 149, 169 |
+| f | 139, 140, 142, 144, 146, 157, 161; 147, 148 and 155 are its negatives |
+| g | 135, 145 |
+
+The routing order is pinned by IJ:144, IJ:147 and IJ:155–157.
+
+**New sub-rows.** Each one has a case:
+- R6.1a: IJ:111–113, :150
+- R6.1b: :111, :118
+- R6.1c: :151, :158, :165, :168
+- R6.1d: :152, :159, :167
+- R6.2a: :111, :138
+- R6.2b–e: :119–120
+- R6.2f: :120–121
+- R6.2g: :114
+- R6.4a: :127–128
+- R6.4c: :115, :130–134, :137
+- R6.9a: :118, :138–143
+- R6.9b: :118, :122, :124, :131, :143, :145, :147–148, :154–155
+- R6.10a–d: the fixture provenance rules, IJ:105–107
+
+**Load-bearing gaps:** none.
+
+##### Findings
+**Round-8 findings:** none open. Round 8 recorded no Blocker, Major or Minor.
+
+**New in 73f9fbe:** no Blocker, no Major, no Minor.
+
+**Mutations (on paper)**
+- **Identity keyed on Date Saved and spectrum only.** This is the pre-N28 rule.
+  - IJ:147 fails: TK-2 is counted already here, nothing is added, and the item stays set aside.
+  - IJ:148 fails: TK-1 is counted already here, and no M2 reading is stored.
+- **Mode in the identity, but R6.8d's tie still compares spectrum only.** A same-instant, same-spectrum, different-mode record then falls between branches.
+  - A build that makes it current fails IJ:148's "the M1 reading stays current".
+  - A build that keeps it but does not list it fails IJ:148's E43 same-moment listing.
+- **The stored reading's mode read from the collection's current scan mode.** The collection is now M2, the same as the file, so the build matches and both cases fail. The M1→M2 change in the Givens (Capture R1.10) is what catches this.
+- **ADR-0003's uniqueness backstop keyed without mode.** IJ:147's commit collides with the history reading and ends in E44, so the case fails.
+- **Over-correction.** Both sides of the rule are pinned.
+  - Never matching history readings fails IJ:144.
+  - Never matching a same-mode current reading fails IJ:139, :140, :146 and :161.
+
+**Nits (one line each; none holds a row)**
+- **TR9-n1, IJ:147–148 Givens.**
+  - IJ:147 says only "an item with no current value", yet its E43 set-aside listing holds only for a set-aside item. Say "set aside by a Flag, as IJ:144's".
+  - Name Fixture T in the Given or Action of IJ:147 and IJ:148, as every other UJ 3 case does.
+- **TR9-n2, IF:323 (F87) and DFF:802 (DF F69).** Both decisions still say "a different spectrum" and carry no round-9 pointer; the mode tie is recorded only in F82's line (IF:293). Add a one-line Clarified pointer under each.
+- **TR9-n3, UJ 3 cites.** They stay at parent level (R6.1, R6.2, R6.4, R6.9). All of them resolve. Citing the sub-rows would give a sub-row→case trace, for example:
+  - IJ:120 → R6.2b–f
+  - IJ:114 → R6.1a, R6.2g
+  - IJ:147–148 → add R6.9a–b
+- **TR9-n4, IMP:166 and IMP:205.** R6.1's lead says a source "is a Nix Toolkit export as R6.1a–d state", but recognition is R6.1a alone and R6.1b–d are handling. Suggested wording: "when R6.1a holds, and is read as R6.1b–d state". Separately, R6.4c's "that mode" now refers across the row boundary to R6.4a.
+- **TR9-n5, what the key leaves out.** This predates this diff.
+  - **Gap:** no case shows that a re-import differing only in Illuminant/Observer is still the same reading. A build that adds the stored reference to the key therefore passes.
+  - **Why it matters:** readings are never deleted, so any duplicates that build creates are permanent. Whether real exports vary this way is OQ 3's question.
+  - **Optional case:** start from the state the first Import case leaves, with TK-2 at D65/10 and its file values worked out under that. Expect E43 to count 3 already here, and TK-2 to still record D50/2°.
+
+**Considered and rejected**
+- **A mode-differing pairing in DJ6 is not needed.** In salvage, a same reading and a same-instant reading in another mode both end kept behind with reason initial (R5.5d at DF:187, R2.3j at DF:137). No oracle can tell the two apart.
+- **A DF-side N28 case is not needed.** IJ:147 and IJ:148 read the store by SQL (IJ:107), and R6.10d (IMP:233) limits importer runs to UJ 3 and DJ6.
+- **Declaring the M1 reading costs nothing.** IJ:147 and IJ:148 declare it rather than import it, but it is built from Fixture T's own Date Saved and reflectances, so it still derives from a synthetic export (R6.10d). No mutation escapes, because the importer never writes an M1 reading into an M2 collection.
+- **Export R1.2's merge (EXP:66).** "Consumers treat empty as unknown" now plainly covers both flags; before, it reached `sc_imported` only through "the same rule". That is consumer behaviour, not the app's. EJ1 (EXJ:14) is unchanged and still fails a build that derives the flag from the model.
+- **R6.4b needs no case of its own.** IJ:128 pins the mixed-mode check at read, and an E11 exclusion can only remove records, so every build that passes IJ:128 satisfies R6.4b.
+
+##### Biggest risks   (what could ship broken behind a green suite)
+1. **Nothing load-bearing.** The remaining risk is OQ 3's single studied export, including whether Illuminant/Observer vary between exports (TR9-n5).
+2. **Phase gating is unchanged from round 8.** IJ:136 and IJ:170–175 wait on Capture R9.3 and CM R4.3, R4.5 and R4.8.
+
+##### Genuinely solid   (incl. where minimal scoping is correct that a coverage-zealot would wrongly flag)
+- **The two new cases bracket N28.** They sit beside IJ:146, the numeric-spelling idempotency case:
+  - IJ:147 covers the history arm and the R6.8b route.
+  - IJ:148 covers the current arm and R6.8d's tie.
+  - Each asserts both E43's counts and its list, and the store by SQL.
+- **The M1→M2 scan-mode change in their Givens is the best part.** It separates "the reading's own mode" from "the collection's mode", which a naive fix would conflate.
+- **The split is faithful.** A clause-by-clause and word-count comparison of 60d9625 against 73f9fbe shows only changes to connecting words and the new aspect labels.
+  - R6.7's merge keeps E47's per-record listing of every failing column, which IJ:160 asserts.
+  - Parent IDs are kept, so every UJ 3 cite, fence cite and sibling cite still resolves: Capture :147 and :388, CM :211, DF :282, Device UJ3-c, Export :205 and post-lock :153.
+  - My scan of 253 Import cells finds none over two sentences.
+- **Correct minimal scoping:** E43's copy needed no change, and DJ6 needs no new pairing (see above).
+
+##### Missing / over-tested
+- **Missing:** nothing load-bearing. TR9-n5 is an optional case.
+- **Over-tested:** none.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### interface
+
+##### Verdict
+**Contract sound.** N28 lands consistently in every row and oracle that states the same-reading rule, and the two-sentence split keeps every clause with no behavior lost, added or changed. Every cite still resolves. The round-9 diff adds no Blocker, Major or Minor, only five Nits, and none of them holds a row.
+
+##### Surface & consumers (brief)
+- **Subject:** `git diff 60d9625 73f9fbe -- docs`, read in full at the repo root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import`. HEAD is `73f9fbe`.
+- **What changed:**
+  - N28, which puts measurement mode into the same-reading identity. It touches the Import Vocabulary (IMP:23), R6.8d (IMP:216), DF R2.3j (DF:137), the ADR-0003 row, Import F82 and DF F64's round-9 lines, and two new UJ 3 cases (IMPJ:147–148).
+  - The split: R6.1a–d, R6.2a–g, R6.4a–c, R6.9a–b and R6.10a–d (IMP:166–233), R6.7 at two sentences, and Export R1.2 merged.
+- **Consumers:** build agents and test authors (who work by row, state and case ID), sibling PRDs (through cites and obligation lines), and export parsers (through `sc_imported`).
+- **Unchanged:** no obligation line, E-state label, copy string or export column or value changed.
+- **Brief note:** the brief's "confirm your round-7 findings" text is stale. My latest findings are round 8's IF8-n1 and IF8-n2, and I confirm those below.
+
+##### Findings
+Abbreviations: IMP, IMPJ and IMPF are `docs/product/import/prd-inventory-import.md` and its `-journeys` and `-fences` files. DF and DFF are `docs/product/data-foundation/prd-data-foundation.md` and its `-fences` file.
+
+**Round-8 findings**
+- **IF8-n1 — RESOLVED** (in `287e1dc`). IMPJ:59 now says "Go to the session", and no "Go to session" remains in Import.
+- **IF8-n2 — RESOLVED.** IMPF:147 now credits "Review again" only to the source-change case.
+
+**New in round 9: no Blocker, Major or Minor**
+- **[NIT] IF9-n1 — IMPJ:147–148, the two N28 cases: they are less precise than the cases beside them.**
+  - Neither Given starts "Fixture T;", as every sibling case does.
+  - Case 1 doesn't say the item is set aside, but its Expected asserts the E43 set-aside list. The only reachable no-current-value states (a Flag, or a quarantined current reading) both list it, so the oracle holds.
+  - Neither case cites R6.9, although both assert E43 counts and lists (R6.9a–b).
+  - **Fix:** start both Givens "Fixture T;", write "an item set aside by a Flag ([Capture R5.6])", and add R6.9 to both Rules cells.
+- **[NIT] IF9-n2 — IMPF:323 (F87 Decision): it still states the same-date tie by spectrum only.**
+  - F87's Decision says "whose spectrum differs". N28's extension to a different mode sits only in F82's round-9 line (IMPF:293).
+  - R6.8d cites F82, so no row misleads a builder.
+  - DFF:802 (F69) is already covered by its own clause "only an earlier-measured imported A yields".
+  - **Fix:** add a one-line Clarified line under F87 pointing to F82's round-9 line.
+- **[NIT] IF9-n3 — IMP:166/182 and IMP:205: the split lost some explicitness.**
+  - The R6.1 lead "is a Nix Toolkit export as R6.1a–d state" reads as though R6.1b–d were recognition conditions. The old text had an explicit conditional: "A source whose first record … holds … is a Toolkit export". UJ 3's Windows-1252 case still pins the right routing.
+  - R6.4c says "that mode", whose antecedent is now in another row.
+  - R6.4c's "When" cell reads "Target fit", which is not a when.
+  - **Fix:**
+    - end R6.1a's rule with "… is a Toolkit export.";
+    - change R6.4c's "that mode" to "the file's mode";
+    - change R6.4c's "When" cell to "A target is chosen, and again at commit".
+- **[NIT] IF9-n4 — `docs/decisions/README.md`:22, the ADR-0003 row: the restore exemption's reason names only time and spectrum.**
+  - It says restores "copy a reading's measurement time and spectrum".
+  - With mode now in the key, a restore collides only because it also copies the mode, which DF R2.3f's "B equal to H" guarantees.
+  - **Fix:** "measurement time, mode and spectrum".
+- **[NIT] IF9-n5 — review log `docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`:13278: the lock record still reports the wrong check-10 result.**
+  - Row 10 still reads "50 cells, none over two sentences".
+  - PR #22 asked for this to be corrected. Round 9 records the rerun (238 cells, none over two sentences) but doesn't annotate the lock record.
+  - The lock record's validated revision (`c9af537`) no longer equals `docs/product`.
+  - The status surfaces don't mention round 9 or N28:
+    - IMP:3's status line;
+    - IMP:36's Traceability sentence ("from owner decisions N1–N23");
+    - the `docs/product/README.md` rows.
+  - None of this is a requirement row.
+  - **Fix:** the re-lock record should state the corrected check-10 result and the new validated revision. Add "N28 (F82)" to the Traceability sentence and the round-9 closure to the status lines.
+
+##### Biggest risks   (what existing consumers/scripts/agents break)
+- **None material.** No export column, value or empty-means-unknown rule changed. No E-state action label changed, and no sibling cite broke.
+- **Checked and clean — sibling cites of the split families:**
+  - Capture R1.10 and its F-line cite R6.4.
+  - Export OQ's grid line cites R6.1.
+  - DF R7.x, the DF obligation line, Device UJ3-c, its fence and post-lock cite R6.10.
+  - All cite the family ID, which still resolves through its lead row, as Import R3.2's "R6.8a–g" already did.
+  - The new Import IDs R6.2a etc. collide with no cite: Collection Mode's "its R6.2a" cites point to its own rows and DF's, not Import's.
+- **Checked and clean — clause-level cites inside Import** all resolve to the right sub-row:
+  - "R6.4's exclusions" (R6.3, R6.11, F83) → R6.4a;
+  - "R6.4's mode fit" (R3.8k) → R6.4c;
+  - "R6.4's mode adoption" (R3.2) → R6.4c;
+  - "R6.1's Toolkit signature" (R1.5b) → R6.1a;
+  - "R6.2 ignores" (UJ 3) → R6.2e.
+- **Residual (IF9-n5):** the owner's second ask on PR #22, correcting the lock record, is recorded in Round 9 but not in the lock record.
+
+##### Genuinely well-designed   (incl. where a deliberate inconsistency is correct that a style-checker would wrongly flag)
+- **Each N28 case is a real oracle with a same-mode twin.**
+  - Case 1 (IMPJ:147) pairs with IMPJ:144, a flagged same reading that is counted as already here. A build keying identity without mode counts TK-2 as already here and adds no reading, so it fails case 1.
+  - Case 2 (IMPJ:148) pairs with IMPJ:143, a same-date reading with a different spectrum, which E43 lists as a clash.
+  - A build keying without mode fails case 2 as well.
+  - A build that adds mode to the key but leaves R6.8d's tie at spectrum only drops the record into no branch, so it fails case 2's E43 clash listing.
+- **E43's clash copy correctly needed no edit.** "saved at the same moment as a different reading" already fits, because N28 defines a different mode as a different reading. A checker grepping for "spectrum" would wrongly demand a copy change.
+- **DJ6 correctly needs no new pairing.** Under R5.5d, a same-date different-mode pair ends as R2.3j's "else kept behind A", reason initial. That is exactly how a same reading ends, so salvage outcomes don't depend on mode.
+- **Export R1.2's merge is safe and slightly tighter.** "consumers treat empty as unknown" now follows both flags, so the consumer rule explicitly covers `sc_imported`. There is no shape or value change, and no format has shipped.
+- **The split is faithful:**
+  - R6.2's table makes explicit that "never stored as a column" covers all four groups, which UJ 3's SQL case (IMPJ:120) already asserted. That is a disambiguation, not a change.
+  - R6.7's "every failing column" still matches E47's copy.
+  - R6.9a–b map one-to-one onto E43's `⟨current⟩`, `⟨history⟩` and `⟨same⟩` counts and the named lists.
+  - The lead-plus-lettered-sub-rows shape, with status only on the lead, follows R6.8's precedent.
+- **Every cell is at most two sentences:**
+  - Import §6 cells, sub-rows included.
+  - Export R1.2.
+  - The Vocabulary line.
+  - DF R2.3j is at three, unchanged by this diff, and the DF PRD binds no two-sentence rule.
+
+##### Missing / over-engineered
+- **Missing:** only the Nits above. The most useful are the re-lock record's corrected check 10 and validated revision (IF9-n5), and naming "set aside" in case 1 (IF9-n1).
+- **Not over-engineered:** round 9 adds only lettered sub-rows under existing IDs and two cases. It adds no state, label or constant.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### architecture
+
+##### Verdict
+**Sound, build it.** N28 is carried into every row and input that states the same-reading rule, and the two new UJ 3 cases are real oracles. The two-sentence split changes no behavior. The round-9 diff (60d9625..73f9fbe) introduces no Blocker, Major or Minor in my lens.
+
+##### Architecture in brief
+- **Data Foundation owns the reading and which reading is current.**
+  - R2.3j now states the dedup key inline: the same Date Saved, measurement mode and spectrum.
+  - R5.5d's salvage relies on that key.
+- **Import owns the routing.** R6.8f runs first, then R6.8b, then the R6.8d tie. After N28, a reading in a different mode is never "already held".
+- **Device R1.21's single field** still drives the imported kind, `sc_imported` and R6.8's routing. The never-supplied payload state is unchanged.
+- **ADR-0003 receives a conditional input.** The key now includes mode, and the uniqueness backstop stays optional, with its exemptions named.
+
+Paths (root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import`):
+
+| Short | Path under the root |
+| :--- | :--- |
+| IMP | docs/product/import/prd-inventory-import.md |
+| IJ | docs/product/import/prd-inventory-import-journeys.md |
+| IFN | docs/product/import/prd-inventory-import-fences.md |
+| DF | docs/product/data-foundation/prd-data-foundation.md |
+| DFJ | docs/product/data-foundation/prd-data-foundation-journeys.md |
+| DFF | docs/product/data-foundation/prd-data-foundation-fences.md |
+| EX | docs/product/export/prd-data-export.md |
+| ADR | docs/decisions/README.md |
+
+##### Findings
+
+**My earlier findings: still resolved.**
+- **AR7-n1 is still resolved.** ADR:22 keeps "must stay told apart even where DF R5.5d's salvage re-records a restore's reason", and DFJ:124 keeps "each restore's source held in TK-2's history".
+- **AR7-n2 is still resolved.** DF:268 still reads "one a live re-scan superseded".
+- My round 8 left no finding open.
+
+**(1) N28 is complete and consistent.** I checked every place the rule appears:
+- **The rows:**
+  - The Vocabulary (IMP:23).
+  - R6.8f (IMP:211), which inherits the Vocabulary's key.
+  - R6.8d (IMP:216): "a different spectrum or measurement mode".
+  - R6.9a–b (IMP:223–224): "same-dated" now covers a different mode.
+  - E43's `⟨clashes⟩` copy: "a different reading" is true under N28.
+  - DF R2.3j (DF:137).
+- **The ADR-0003 input (ADR:22)** now says "the same Date Saved, measurement mode and spectrum".
+- **The fences:** IFN:293 and DFF:773.
+- **Salvage and DJ6 are consistent without a new pairing.** A same-dated pair in different modes ends exactly as a same-reading pair does. R2.3j keeps B behind unless A was measured earlier, so the later reading is kept behind with reason initial. Salvage cannot tell the two apart, by construction.
+- **Both new cases are real oracles:**
+  - IJ:147 fails a build that keys identity without mode: R6.8f would discard the record and leave TK-2 set aside, but the case asserts it becomes current.
+  - IJ:148 fails the same build: the record would be counted as already here, but the case asserts it is kept in history and listed with the same-moment readings.
+  - Both also fail a subtler build that reads a held reading's mode from the collection's current setting instead of from the reading. The mode switch between sessions is exactly what exposes that.
+  - IJ:148 also fails a build whose tie or clash check compares only spectra.
+
+**(2) The split carries every clause over.** I compared each clause of R6.1a–d, R6.2a–g, R6.4a–c, R6.7, R6.9a–b, R6.10a–d and Export R1.2 against 60d9625:
+- Nothing is lost, added or changed. Export R1.2's "consumers treat empty as unknown" now covers both flags, which "follows the same rule" already implied.
+- No cell exceeds two sentences.
+- Parent IDs and the `#6-nix-toolkit-exports` anchor are kept. The sub-tables follow the existing R6.8a–g pattern, with status on the lead row.
+- Every cite from another PRD still resolves: Capture R1.10's "R6.4", EX:205's "R6.1", and the "R6.10" cites in DF, Device and post-lock. The Collection Mode cites of "its R6.x" are to that PRD's own rows.
+
+**(3) New findings, all Nits:**
+- [NIT] **Fences: the tie's own fences show half the rule.** F87 (IFN:321–323) and DF F69 (DFF:799–802) still say only "a different spectrum". N28's extension to mode is recorded only under F82 and F64. The rows are not contradicted. Fix: add "or measurement mode (N28; F82's round-9 line)" to each fence.
+- [NIT] **IJ:147's Given is loose.** It says "an item with no current value", but the Assert lists the item among set-aside swatches. Fix: say "set aside by a Flag", as IJ:144 does. Also neither new row (IJ:147–148) names Fixture T as the file imported.
+- [NIT] **IJ:148 could assert what the item shows.** At the end, TK-1's current M1 reading has no measurement in the collection's M2, so DF R3.3d leaves its working value absent while the M2 reading with the same numbers sits in history. The case could assert that absence, which pins the displayed colour to the current reading (DF R2.2) rather than to "the latest reading in the chosen mode". This is N28's settled outcome, not a request to change it.
+- [NIT] **R6.1's lead row (IMP:166) is ambiguous.** "A source is a Nix Toolkit export as R6.1a–d state" reads as if all four sub-rows are recognition tests, but only R6.1a is. Suggested wording: "recognised by R6.1a, read as R6.1b–d state".
+
+##### Biggest risks
+1. **ADR-0003 must put mode in any uniqueness backstop.** A constraint over item, time and spectrum alone would reject the writes in IJ:147–148 and fail the commit. ADR:22 now states this input, so the remaining risk is only in how the ADR is written.
+2. **N28 makes a new state reachable,** and nothing structural is missing for it: two imported readings on one item with the same time and spectrum, differing only in mode.
+   - History and over-time views already had to order same-time pairs (F87).
+   - The history export tells the two apart, because under EX R1.1j the reading without the chosen condition's measurement has empty cells.
+
+##### Genuinely sound
+- **Mode joins the key, and illuminant/observer do not. That is correct.**
+  - The reference only says how the Toolkit worked out its own Lab. The reflectances do not depend on it, so a re-export under another reference is rightly deduplicated.
+  - The reference can be NULL where the file leaves it blank, and SQL UNIQUE treats NULLs as distinct. Adding it to the key would silently break idempotency.
+  - Mode is never NULL on an imported reading: R6.7 excludes any record whose mode is not M0, M1 or M2. The key is therefore NULL-free.
+- **Restores stay inside the key.** R2.3f/R2.3j copy the mode, so a restore still counts against an incoming record.
+- **R6.9a still partitions the eligible records under N28.** A same-dated reading in a different mode lands in R6.8c, R6.8g or R6.8d's history bucket, depending on the current reading's kind.
+- **A mode-shifted twin can now lift a Flag's set-aside.** This is what the owner's review asked for, and it matches how R6.8b treats any new reading on a set-aside item.
+
+##### Missing / over-engineered
+- **Missing:** nothing in my lens.
+- **Over-engineered:** nothing. N28 adds one attribute to an existing key, plus two cases. The split adds only structure.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### privacy
+
+##### Verdict
+**Privacy-sound to ship.** The round-9 delta (`git diff 60d9625 73f9fbe -- docs`, HEAD `73f9fbe`) adds no stored field, no egress and no linkable identifier. The split keeps every privacy clause, including the real-export exclusion. N28 fixes a transparency defect: a different-mode reading was being silently discarded while E43 called it "Already here". A count-only check against the real export found nothing from it in the delta, in the lock commits now on the public remote, or in any commit message.
+
+##### Data-flow & PII map (brief)
+Repo root: `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import/`. Aliases below are relative to it: IMP `docs/product/import/prd-inventory-import.md`, IJ `…-journeys.md`, IC `…-copy.md`, IF `…-fences.md`; DF `docs/product/data-foundation/prd-data-foundation.md`; EX `docs/product/export/prd-data-export.md`; ADR `docs/decisions/README.md`; PL `docs/product/post-lock.md`; AG `AGENTS.md`; LOG `docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`.
+
+- **Data subject.** The Cataloger (the owner). The only outside recipients are readers of the public repo: `gh` reports the repo PUBLIC, and `origin/docs/nix-toolkit-import` is at `60d9625`, so `73f9fbe` is not yet pushed.
+- **What an import stores is unchanged by the split.**
+  - Note and the five densities are stored as metadata; a Note of exactly `undefined` supplies no value (IMP:196, R6.2f).
+  - The collection name is read only, never stored as a column (IMP:194, R6.2d).
+  - The device model goes into the imported snapshot, never a column (IMP:192, R6.2b; IMP:170, R6.5). Serial and firmware are absent.
+  - The derived L/c/h/XYZ/sRGB/HEX values are ignored (IMP:195, R6.2e).
+  - Any other column is stored as metadata and shown in E43's added-columns line before commit (IMP:197, R6.2g).
+- **What an export carries is unchanged.** Export R1.2 (EX:66) was merged editorially: `sc_imported` is accurate provenance, and empty now explicitly means unknown for both flags.
+- **What N28 adds.** One more stored reading where the mode differs. It carries the same Date Saved the item already holds, so it adds no new personal attribute.
+
+##### Findings
+
+**My round-8 findings.** None was open. The standing items still hold:
+- PRIV-8's deferral, the Nix Device column holding a user-given name, is at PL:13.
+- The export-data bound holds at:
+  - IMP:230 (now R6.10a);
+  - IMP:240 (M2);
+  - PL:212;
+  - AG:71;
+  - IF:171–175 (F71).
+- AG:71 and four sibling cites point at "Import R6.10" (DF:245, Device journeys:80, PL:153, Device fences:305). Each still resolves through the lead row IMP:175 to R6.10a–d.
+- Export OQ 4 (EX:205) and PL:104 cite R6.1 for the header set, now R6.1a. Both resolve.
+
+**Check (1) — N28, from the privacy lens.**
+- **[INFO] PRIV9-i1 — IMP:23, IMP:211, IMP:216, IMP:223–224, DF:137, ADR:22, IF:293, DF fences:773.** The same-reading key is now Date Saved, mode and spectrum everywhere the rule is stated.
+  - The old key let R6.8f drop a distinct-mode record while E43 counted it "Already here" (IC:29). That told the user something false about what their file holds.
+  - Both new cases are real oracles:
+    - IJ:147 fails a mode-less build, which would count TK-2 "already here" and leave it set aside.
+    - IJ:148 fails one that counts TK-1 "already here" and stores no M2 reading.
+  - Neither case carries a literal value. Each names Fixture T's values by reference ("TK-2's Date Saved and reflectances").
+  - E43's clash copy, "saved at the same moment as a different reading already here" (IC:29), stays accurate for a reading that differs only in mode.
+
+**Check (2) — the split, privacy clauses only.**
+- **[INFO] PRIV9-i2 — IMP:191–197, IMP:230–233.** The "never stored as a column" scope is now stated per row (R6.2b–e) instead of by one trailing "none of these". R6.10a keeps both parts of the real-data bound:
+  - every collection name, code, name, note, date and value is invented;
+  - neither a real export nor any data value from one enters the repository.
+
+  R6.10d replaces the old ambiguous "derives from one" with "derives from a synthetic export". That tightens the rule without changing it. I found no clause lost, added or changed.
+
+**Real-value check (count-only; no value quoted).**
+- **Method.** I read the real export in memory through stdin and created no file. The categories were:
+  - the collection name, colour names and codes, and Notes other than `undefined`;
+  - Date Saved in full, to the minute, by day, by month and by time of day;
+  - HEX values, sRGB triplets, numeric cells and densities, and Lab to two places;
+  - the file name, its tokens and its folder;
+  - count phrases and the bare count.
+- **Targets.**
+  - the 156 added lines of `60d9625..73f9fbe` and its commit message;
+  - the 1,697 added lines of `f6860b5..73f9fbe`, which cover the lock commits now public, with all 49 commit-message lines in that range.
+- **Results.** Every match is a coincidence of a kind the log already names:
+  - the documents' own dated lines, headings and log anchors;
+  - line-number citations (`line …`, `PL:…`) and one lock-record hit count;
+  - two dictionary words in prose that predates the branch or is generic.
+
+  There were no hits in any commit message and no local path to the export's folder or to a scratchpad. The tree holds no `.csv`, `.tsv`, `.xlsx`, `.numbers` or `.json` file. The orchestrator's "no hits" (LOG:13400) agrees.
+
+**Settled, no action.**
+- **[INFO] PRIV9-i3.** The branch through `60d9625` is now public, so PRIV7-1's old wording in `3ae25c1` is in public history. N26 ("Push as-is") settled this knowingly, and the wording is category-level. No action.
+
+**New Critical/High/Medium/Low from the round-9 delta:** none.
+
+**Nits (outside my lens; they hold no row)**
+- **PRIV9-n1** — IF:323 (F87) and DF fences:801 (F69) still say "spectrum differs" only. N28's mode extension is recorded under F82 (IF:293). A one-clause pointer from F87's map line (IF:426) would stop a reader of F87 alone from missing it.
+- **PRIV9-n2** — IJ:147's setup says "an item with no current value", but its expected result lists TK-2 among "set-aside swatches no longer set aside". Say "set aside (flagged)" in the setup, since a declared pending state would break the oracle.
+- **PRIV9-n3** — IMP:3's status line still reads "peer review closed … after eight rounds" while nine rows are Ready for Alignment. Update it when round 9 closes.
+
+##### Biggest privacy risks
+1. **The real-value rule rests on prose plus one local pre-commit check.** It has now held for nine rounds and across a public push. That is acceptable for a one-owner repo.
+2. **The next point where real-export facts can enter the repo is closing OQ 3 or M2.** That path stays bounded at IMP:240, IF:171, PL:212 and AG:71. A serial column would go to the Device R1.21 revision, and until then E43 shows it before commit (R6.2g).
+3. **Residual, settled and disclosed.** Imported readings are permanent short of deleting the swatch or its collection. N28 can add one more reading per mode clash, and it is disclosed in E43's clash line (IC:29).
+
+##### Genuinely privacy-respecting
+- **N28 is transparency, not over-collection.** The extra reading carries no new personal attribute. The change stops E43 from telling the user "Already here" about a record that was silently dropped, which serves Art. 5(1)(a) and (d).
+- **R6.2's table is data minimization.** The recomputable Toolkit values (R6.2e) and the collection name (R6.2d) are explicitly never stored as columns. A checklist might flag this as "discarding user data"; it is the minimal choice, and the collection name still pre-fills an editable target name (R6.3).
+- **The new UJ 3 cases declare readings by reference to synthetic Fixture T.** No literal value is written in them, so they cannot carry real data.
+- **Export R1.2's merge makes the rule explicit for both flags.** Empty `sc_imported` means unknown, never false, so the only egress does not misstate provenance.
+
+##### Missing controls / over-collection
+- **Over-collection.** None. Round 9 adds no field, egress or identifier.
+- **Missing controls.** None new. PRIV-8 (a user-given name in the Nix Device column) stays deferred at PL:13, as recorded.
+
+| Row ID | disposition |
+|---|---|
+| Import-R6.1 | ABSTAIN (out of lens) |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ABSTAIN (out of lens) |
+| Import-R6.7 | ABSTAIN (out of lens) |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### product-marketing
+
+##### Verdict
+**Lands & honest.** The round-9 diff (`60d9625..73f9fbe`) changes no user-facing copy. The one copy surface N28 touches, E43's Toolkit variant, is still true word for word under the new same-reading identity. The two-sentence split moves every copy-bearing clause across unchanged. It adds no Blocker, Major or Minor in this lens.
+
+##### Audience & message context (brief)
+- **Reader:** the Cataloger bringing a Nix Toolkit collection over. The Data consumer reads Export E1, and contributors read J7.
+- **Takeaway:** "My Toolkit colours arrive measured and marked as imported, nothing is made up, and the preview tells me honestly what becomes the colour, what goes to history and what is already here."
+- **What I checked:** `git diff 60d9625 73f9fbe -- docs` (HEAD is `73f9fbe`), the round-9 section of the review log and the round-9 Clarified lines (Import F71, F73, F76 and F82, DF F64, Export F35). No copy file changed. IC, the Collection Mode PRD and copy, EXC, vision.md and AGENTS.md are out of the diff stat, so the From Nix Toolkit chip, filter and VoiceOver labels, CM R4.2d, Export E1, J7, E43 and E46–E49 are the copy I aligned in round 8. I quote no data value from the research report or any real export.
+- **Path keys** (root `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import`):
+  - IMP = `docs/product/import/prd-inventory-import.md`
+  - IC = `docs/product/import/prd-inventory-import-copy.md`
+  - IJ = `docs/product/import/prd-inventory-import-journeys.md`
+  - DF = `docs/product/data-foundation/prd-data-foundation.md`
+  - EXP = `docs/product/export/prd-data-export.md`
+
+##### Findings
+
+**Earlier findings: status**
+- **PMM7-n1 (E13's collection body):** still resolved. IC:23 is not in the round-9 diff.
+- **Round 8:** I raised no findings, so none are open.
+
+**N28 against the copy: checked, no finding**
+- **"Already here: ⟨same⟩" (IC:29) now claims less, and is still true.** An M2 record whose Date Saved and spectrum match an M1 reading in history is no longer counted as already here. It now lands under "Now a swatch's colour" and "Set-aside swatches these readings give a colour…". That is what IJ:147 asserts, and a reader is not told a new reading was "already here" when it was not.
+- **The clash line (IC:29) is true under N28.** It reads "⟨clashes⟩ readings were saved at the same moment as a different reading already here and are kept in history, not used as the colour". Under N28, a same-dated reading in another mode is a different reading, so the sentence holds. R6.8d (IMP:216) and IJ:148 route it there, and IC:37's `⟨clashes⟩` token ("R6.8d's same-dated records") covers the mode case unedited.
+- **The rule reads the same everywhere it is stated:** the Vocabulary (IMP:23), R6.8d (IMP:216), DF R2.3j (DF:137), the ADR-0003 row, and the F82 and DF F64 Clarified lines all say "same Date Saved, measurement mode and spectrum".
+- **Both new UJ 3 cases are real oracles in the copy's terms.** A build that ignores mode would count TK-2 and TK-1 "already here" and store nothing. IJ:147 then fails on "not already here" and "M2 reading is current". IJ:148 fails on "kept in history, not already here" and its listing among the same-moment readings.
+
+**The split against the copy: checked, no finding**
+- **R6.1a–d (IMP:182–185).** "Choose an encoding" and "Choose a separator" are withheld, E48 and E43 still name it a Toolkit export, the encoding-first order of E5's two variants holds, and E5, E7, E9, E10 and E42 still show their Toolkit variants.
+- **R6.2a–g (IMP:190–196).** The table matches E48 (IC:34) row for row: code and name, spectrum, date and settings as the reading, and Note, Density and other columns as details listed in the preview. R6.2e and R6.2c together give the same result as E48's "its Lab, LCh, XYZ, sRGB and HEX aren't kept".
+- **R6.4a–c (IMP:201–205).** These still back E46's two variants (IC:32): the mixed-modes variant lists colours under each mode, and the collection variant names both modes and offers the "no readings yet" way out.
+- **R6.7 (IMP:172).** "listed with every failing column (E47)" is exactly E47's "with each column that couldn't be read" (IC:33).
+- **R6.9a–b (IMP:223–224).** The three counts and the named lists correspond one to one with E43's Toolkit lines and IC:37's tokens.
+- **Export R1.2 (EXP:66).** "consumers treat empty as unknown" now follows both flags. The old "follows the same rule" already covered `sc_imported`, so no behaviour changed, and E1's imported line stays true.
+- **Two-sentence rule.** Every reopened cell in my scope is at most two sentences. The sibling cites of Import R6.1 (the Export PRD's OQ 4 on the 400–700 nm grid) and R6.10 (Device UJ3-c, DF R7.7) resolve through their parent rows.
+
+**New findings:** no Blocker, Major or Minor.
+
+[NIT] IJ:147 setup — it says "an item with no current value" but asserts E43 lists TK-2 "among set-aside swatches no longer set aside". State the status the assertion depends on, as IJ:144 does: "an item set aside with no current value ([Capture R5.6])…".
+[NIT] IMP:224, R6.9b's aspect label "Named items" — the file's mode and a target mode change are not items in this PRD's vocabulary. Suggested label: "Also named".
+[NIT] IMP:205, R6.4c "A new target takes that mode" — after the split, the antecedent is in R6.4a. Suggested rewrite: "takes the file's mode".
+[NIT] IMP:166, R6.1 lead "is a Nix Toolkit export as R6.1a–d state" — only R6.1a decides recognition. Suggested rewrite: "is a Nix Toolkit export when R6.1a holds, and is then read as R6.1b–d state".
+
+##### Biggest risks   (what misleads, confuses, or loses the reader)
+- None in this lens.
+- **Checked and not flagged:** in the rare case N28 now routes (same instant, same spectrum, different mode), a reader who opens the swatch listed under "…a different reading already here" sees two readings with equal numbers. The copy is still true, because they differ in condition and Collection Mode's history and distance lines are condition-aware (CM R5.4, R5.8). The case is physically improbable outside a synthetic fixture, so a variant for it would add a state for almost no reader.
+
+##### Genuinely strong   (incl. where plain-and-honest is right that a marketing-zealot would over-hype)
+- **N28 needed no copy change.** E43 was written in outcome terms ("already here", "a different reading", "kept in history, not used as the colour") rather than in the identity rule's mechanics. So the rule could tighten without the user-facing words becoming false.
+- **The R6.2 mapping table and E48 now read as the same contract in two registers:** one for the builder, one for the Cataloger.
+- **Correcting the lock record is honest.** Round 9 says plainly that the lock record's check 10 result was wrong and why, instead of quietly rewriting it.
+
+##### Missing / over-hyped
+- **Missing:** nothing in this lens.
+- **Over-hyped:** nothing. No copy claim goes beyond R6.1a–R6.11, R6.8a–g, DF R2.3j or Export R1.2.
+
+| Row ID | disposition |
+|---|---|
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ABSTAIN (out of lens) |
+| DF-R2.3 (with R2.3j) | ABSTAIN (out of lens) |
+| Export-R1.2 | ALIGN |
+
+Every reopened row in my lens aligns. The four Nits hold no row.
+
+#### plan
+
+##### Verdict
+**Ready to execute.** N28 is carried consistently everywhere the same-reading rule appears. Both new UJ 3 cases fail a build that leaves mode out of the same-reading key. The two-sentence split carries every clause over, with no behavior lost, added or changed. Every cell is at most two sentences, and every cite resolves. The round-9 changes add one Minor, on a fence-map line that is not a reopened row, and six Nits. **Every row I review aligns.**
+
+##### Findings
+
+All paths are under `/Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import`, read at `73f9fbe` with a clean worktree. I read the whole of `git diff 60d9625 73f9fbe -- docs` and each changed row in full with its sub-rows. Abbreviations:
+- IMP / IJ / IC / IFN = `docs/product/import/prd-inventory-import{,-journeys,-copy,-fences}.md`
+- DF / DFJ / DFF = `docs/product/data-foundation/prd-data-foundation{,-journeys,-fences}.md`
+- EX / EF = `docs/product/export/prd-data-export{,-fences}.md`
+- DR = `docs/decisions/README.md`
+- LOG = `docs/agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md`
+
+**Status of my round-8 findings**
+- **R8-n1: RESOLVED** at `287e1dc`. IJ:175 now reads "all pending with `Finish` absent".
+- **R8-n2: RESOLVED.** The dated Closed line at EF:239 closes the "Peer review pending" text on the round-2 to round-7 lines.
+- **R7-n1 to R7-n6** were confirmed resolved in round 8 and have not regressed. The round-9 diff touches IJ only to add IJ:147–148. It leaves IMP:126 (R3.8k), DFJ, IC, post-lock and the Collection Mode, Device and Capture files unchanged.
+
+**New in round 9**
+
+[MINOR] IFN:388 — the fence map scopes F45 to §1–§4.
+- **The gap:** the map calls itself "the link" (IFN:384), but its F45 entry still reads "every row in §1 through §4". That is the extent before the amendment, unchanged since `6374538`.
+- **The contradiction:** round 9's three new Clarified lines (IFN:188, IFN:213, IFN:248) split §6 rows "under the binding two-sentence rule (the capture fence file's F45)". The preamble (IFN:11) says F45 binds every row in this PRD.
+- **What goes wrong:** say the next amendment adds a three-sentence §6 row. A reviewer or a check-10 run that takes its scope from the map passes it, and PR #22's finding 2 happens again.
+- **Fix:** write "every row in §1 through §4 and §6, lettered sub-rows included".
+- **Why it holds no row:** none of the nine reopened rows is wrong. Land the fix before re-lock with a re-check of this one line.
+
+[NIT] IMP:166 and IMP:184 — R6.1's lead says a source "is a Nix Toolkit export as R6.1a–d state", which makes R6.1b–d read as recognition criteria. R6.1c's "One not decoded…" has nothing in its own cell to refer back to; the old text said "A Toolkit export not decoded…". Fix: "…is a Nix Toolkit export when R6.1a's signature holds, read as R6.1b–d state", and "A Toolkit export not decoded…".
+
+[NIT] IJ:147–148 — the first new case under-states its setup.
+- IJ:147 gives "an item with no current value", yet asserts that E43 lists TK-2 "among set-aside swatches no longer set aside". R6.9b lists only set-aside items, so a pending declaration fails a correct build.
+- Neither case's Given names Fixture T.
+- Fix: write "an item set aside by a Flag (Capture R5.6)", and start both Givens with "Fixture T;".
+
+[NIT] IFN:323 and DFF:802 — F87 and Data Foundation F69, the fences for the same-date tie, still say only "spectrum differs". N28's extension is recorded under F82 and F64. Fix: add a round-9 pointer line under each, or name F87 and F69 in IFN:293's N28 line.
+
+[NIT] IFN:188, IFN:213 and IFN:248 — the round-9 Clarified lines have no verb ("R6.10 into R6.10a–d"). Fix: "R6.10 is split into R6.10a–d…".
+
+[NIT] Status surfaces — IMP:3, DF:3, EX:3 and `docs/product/README.md`:15–17 still read "peer review closed … re-locked on merge". None records the 2026-09-27 N28 change or the split, while nine rows read ⌛️. Fix: add both to each status surface at re-close.
+
+[NIT] LOG:13236 and LOG:13278 — the lock record still names `c9af537` as the validated revision, which `docs/product` no longer equals. Its check-10 row still reads "50 cells, none over two sentences". Fix: the re-lock record names the new validated revision and restates check 10 over 238 cells, as the owner asked.
+
+**Suspected problems I checked and ruled out**
+- **Both new cases can be reached in the app.**
+  - Capture R1.10 (`capture-mode/prd-capture-mode.md`:147) allows a mode change between sessions and never alters a reading already taken.
+  - So each state can be reached by importing an M1 variant, flagging the item for IJ:147, then switching the collection to M2.
+  - Declaring it under DF R7.2 follows IJ:157's restore case. R6.10d's "derives from a synthetic export" holds, because the declared values are Fixture T's.
+- **R6.4c passes in both cases.** The target already uses M2, so the M1 reading raises no E46.
+- **Both cases catch the wrong builds:**
+  - **A build whose key omits mode:** R6.8f matches the history reading at IJ:147, counting it "already here" and leaving TK-2 set aside. At IJ:148 it matches the current reading.
+  - **A build that ties R6.8d on spectrum only:** it has no branch for the same date and spectrum in another mode, and IJ:148's "lists it among readings saved at the same moment" catches it.
+- **IC:29, E43's copy, needs no edit.** "saved at the same moment as a different reading already here" already covers a difference in mode alone. R6.9a's partition still holds, because R6.8f routes first.
+- **DJ6 (DFJ:124) needs no mode pairing.** Under R5.5d and R2.3j, a same-dated imported pair in another mode ends exactly as the same-reading pairing: the later reading kept behind, reason initial.
+- **IJ:157 still matches under the new key.** DF R2.3f's restore is "equal to H", mode included, and Fixture T is M2 throughout.
+- **Every clause carried over:**
+  - Each clause of the old R6.1, R6.2, R6.4, R6.9 and R6.10 maps to a lead row or a sub-row. R6.2's "none of these is stored as a column" is carried into R6.2b–e.
+  - R6.7's third sentence is merged in as "every failing column".
+  - At EX:66, "consumers treat empty as unknown" now covers both flags, which "follows the same rule" already implied.
+- **Sentence counts:** every Import §6 cell is two sentences or fewer. EX:66 is two, its count before the branch.
+- **Cites:** each sibling cite of Import R6.x names a lead row that still exists and points to its sub-rows. That covers Capture R1.10's R6.4, CM:211, DF:245, DF:282, Device UJ3-c, EX:205's R6.1 and PL:153. No cite names a lettered ID that does not exist.
+- **Fence-map counts:** the "clarified N times" counts for F71 (6), F73 (6), F76 (8) and F82 (4) match their Clarified lines.
+
+##### Biggest risks (if executed as-is)
+1. **The F45 map scope (IFN:388):** if it stays, the next amendment can put a §6 row over two sentences unnoticed.
+2. **IJ:147's missing "set aside":** it costs one fixture-debug cycle, and a correct build fails loudly.
+3. **A stale validated revision in the lock record:** if the re-lock record is never written, a builder that pins `c9af537` builds without N28.
+
+##### Plan strengths
+- **N28 is defined once and carried everywhere the rule appears:**
+  - IMP:23, the Vocabulary, holds the one definition. R6.8f inherits it through that term.
+  - IMP:216 extends R6.8d's tie.
+  - DF:137 (R2.3j) and DR:22 (the ADR-0003 row) carry it.
+  - IJ:147–148 are real oracles.
+  - It is recorded at IFN:293 and DFF:773.
+- **The split uses the house sub-table pattern:** R1.5a–e, R3.8a–q and R6.8a–g already use it. Lead rows keep their IDs and fence cites.
+- **The build order is unchanged:**
+  1. Device R1.21 and DF R2.3j first.
+  2. Then Import §6, with Collection Mode's R2.4j after both.
+  3. Then DF R7.7o with DJ6.
+  4. Then Export's goldens.
+
+  IMP:32, CM:211 and PL:153 are unchanged.
+
+##### Spec coverage gaps (requirements with no task)
+None. Each reopened row has a case or an obligation that carries it. The N28 behavior is exercised by IJ:147 (R6.8b over R6.8f) and IJ:148 (R6.8d's tie).
+
+| Row ID | disposition |
+|---|---|
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |
+
+#### database
+
+##### Verdict
+**The schema and queries are sound.** N28 is complete and consistent in every place the identity rule appears. The two new UJ 3 cases are real oracles: each fails a build that leaves measurement mode out of the identity. The split moves every clause across with no behaviour lost, added or changed. The round-9 diff introduces no Blocker, Major or Minor, and all nine reopened rows align.
+
+##### Schema & engine (brief)
+- **No DDL yet.** ADR-0003 is still queued (ADR:22), so the rows remain the data contract.
+- **What changed.** The same-reading key on an imported reading is now (item, measurement time = Date Saved to the millisecond, measurement mode, spectrum), compared exactly.
+- **What did not change:** at most one current reading per item, the imported/live/simulated snapshot kind, and the uniqueness backstop exemptions (restores, quarantined readings, and a same reading that salvage keeps behind).
+- **Engine settings still deferred.** SQLite's `foreign_keys`, journal mode and `busy_timeout` remain ADR-0003's work (FX4:39).
+- **What I read:**
+  - `git diff 60d9625 73f9fbe -- docs`;
+  - the Round 9 section and my own Round 8 section of the review log;
+  - in full, as they now stand: IMP:23, IMP:80 and IMP:163–233 (§6 with every sub-row); IMPJ:120–165 (UJ 3); IMPC:29 and IMPC:37 (E43); IMPF:280–293 and 321–325 plus the fence map at 405–440; DF:112–137 (R2.1–R2.9, R2.3a–j) and DF:187 (R5.5d); DFJ:124 (DJ6); DFF:750–815 (F64–F70); EX:66 (R1.2); ADR:22; PL:109;
+  - every sibling-PRD cite of Import R6.1, R6.3, R6.4 and R6.10.
+
+Path legend (… = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-import):
+- IMP = …/docs/product/import/prd-inventory-import.md
+- IMPJ = …/docs/product/import/prd-inventory-import-journeys.md
+- IMPC = …/docs/product/import/prd-inventory-import-copy.md
+- IMPF = …/docs/product/import/prd-inventory-import-fences.md
+- DF = …/docs/product/data-foundation/prd-data-foundation.md
+- DFJ = …/docs/product/data-foundation/prd-data-foundation-journeys.md
+- DFF = …/docs/product/data-foundation/prd-data-foundation-fences.md
+- EX = …/docs/product/export/prd-data-export.md
+- ADR = …/docs/decisions/README.md
+- PL = …/docs/product/post-lock.md
+
+##### Findings
+
+**Earlier findings.** DB7-n1 and DB7-n2 were resolved at round 8, and round 8 raised nothing new. R3.8k (IMP:126) is untouched by this diff, so both stay resolved. No finding of mine is open.
+
+**N28: where the rule appears, verified one by one**
+- **Vocabulary (IMP:23)** now adds "whose measurement mode is the same".
+- **R6.8f (IMP:211)** takes the rule through that term, so it needed no edit.
+- **R6.8d (IMP:216)** adds "or measurement mode" to the same-dated tie.
+- **R6.9a–b (IMP:223–224):**
+  - "same-dated" is worded independently of what differs, so it covers a different mode as well as a different spectrum.
+  - The partition stays exhaustive and disjoint, because R6.8f runs first: a same-dated record identical in every part never reaches R6.8d.
+- **E43 (IMPC:29)** says "saved at the same moment as a different reading already here". That is true under N28, so no copy change was needed.
+- **DF R2.3j (DF:137)** and **ADR-0003 (ADR:22)** both now read "same Date Saved, measurement mode and spectrum".
+- **Fences.** F82's round-9 line (IMPF:293) and DF F64's (DFF:773) record the change.
+- **DJ6 (DFJ:124)** and **R5.5d (DF:187)** take "same reading" from R2.3j, so they are consistent without an edit.
+  - DJ6 also needs no new different-mode pairing. In salvage, a same reading and a same-dated different reading both end kept behind with reason initial, so the mode key has no observable effect there.
+- **A restore.** A restore of an imported reading copies its mode (R2.3j's "Restoring B copies this state", R2.3f's "equal to H"). So IMPJ:157's restore-counts-as-held case still holds.
+
+**The two new UJ 3 cases are real oracles**
+- **IMPJ:147 (an M1 reading in history, then an M2 import)**
+  - A build without mode in the identity matches the history M1 reading under R6.8f: it adds nothing, counts TK-2 already here, and leaves it set aside.
+  - The case asserts the opposite: TK-2 counted now a swatch's colour, M2 current with reason initial, and TK-2 listed among set-aside swatches no longer set aside.
+  - It also fails a schema that keeps mode only on the collection, not per reading: the held reading would read as M2 and match.
+- **IMPJ:148 (a same-dated M1 current reading, then an M2 import)**
+  - A mode-blind build counts TK-1 already here. The case asserts "kept in history, not already here", so that build fails.
+  - A build that puts mode in the identity but lists only different-spectrum ties fails the listing assertion ("lists it among readings saved at the same moment as a different reading").
+- **The idempotency case beside them (IMPJ:146)** still passes with mode in the key, because the mode is unchanged.
+- **The state IMPJ:148 leaves is stable on re-import.** R6.8f matches the M2 reading held in history.
+
+**Two-sentence split: every clause carried across**
+- I compared each old cell with its new cells clause by clause:
+  - R6.1 → a–d;
+  - R6.2 → a–g, where "never stored as columns" is kept on b–e and `undefined`'s Note rule on f;
+  - R6.4 → a–c, where "this check" becomes "R6.4a's check", the same check;
+  - R6.7 → "listed with every failing column" absorbs its old third sentence;
+  - R6.9 → a–b;
+  - R6.10 → a–d, where "derives from one" becomes "derives from a synthetic export", only naming the antecedent.
+- No rule is lost, added or changed.
+- **Sentence count.** I ran a sentence count over every §6 cell and Export R1.2; none is over two.
+- **Export R1.2 (EX:66).** "Consumers treat empty as unknown" now follows both flags. The old "`sc_imported` follows the same rule" already carried that, so the file's meaning is unchanged: `sc_imported` is true only for an imported-kind snapshot, false for any other known snapshot, empty with no snapshot, and never true together with `sc_simulated`.
+- **Cites.** Every sibling cite still names a parent ID that exists, under the unchanged `#6-nix-toolkit-exports` anchor: Capture's R6.4 and R6.3/R6.4, Collection Mode's, Data Foundation's, Device's and post-lock's R6.10, and Export:205's R6.1.
+- **Fence map counts.** The counts in the fence map match the Clarified lines: F71 6, F73 6, F76 8, F82 4.
+
+**New Blocker, Major or Minor introduced by the round-9 diff:** none.
+
+- [NIT] IMPJ:147's Given — to add: "Fixture T;" and "set aside by a Flag", as IMPJ:144 does. Reason: E43's set-aside listing depends on the item's queue state, which "no current value" does not fix on its own.
+- [NIT] IMPF:323 (F87) and DFF:802 (DF F69) — still describe the tie as "whose spectrum differs"; N28's widening is recorded only in F82's and F64's round-9 lines. A one-line cross-reference Clarified line under each would stop a reader who starts from the fences from building a tie on spectrum alone. The rows themselves are correct.
+
+##### Biggest risks   (what corrupts or returns wrong data first as the data grows/ages)
+1. **Engine settings belong to ADR-0003.** These guarantees exist only if every connection turns on `foreign_keys` and ADR-0003 declares the constraints:
+   - the item→reading reference;
+   - the one-current partial unique index;
+   - the identity backstop, now also keyed on mode.
+2. **An item can have no colour in its own collection.** In the state IMPJ:148 leaves, an M2 collection's current reading is M1, so under DF R3.3d the item's working value is absent. Meanwhile an M2 reading of the same instant sits in history, never used as the colour. This is the owner's tie decision (N28), and the no-warning mode switch that leads there is already on the post-lock list (PL:109). I note it only so ADR-0003 and Collection Mode expect the state.
+3. **Toolkit format drift (OQ 3):** unchanged.
+
+##### Genuinely sound
+- **N28 draws the identity at the measurement condition, not the display reference.**
+  - Illuminant and observer are only the reference for the file's own Lab values, which are never stored (R6.2c). Keeping them out of the key means re-exporting under another display reference is correctly counted already here.
+  - Nix Device is also out of the key; the post-lock list (PL:13) records that the column may hold a name the user gave the device. Keying on it would break idempotency.
+- **Mode is a closed set compared exactly.** R6.7 reads "exactly M0, M1 or M2", and R6.4c forces the file's mode to equal the target's. So a mode mismatch can only come from a Capture R1.10 switch between sessions, which is exactly the scenario the new cases cover.
+- **Readings of the same instant still order deterministically.** The measured order breaks ties by record time (Collection Mode R5.3). One file never yields two readings for one item in a commit (R3.3, E10), so the two readings in IMPJ:148 always differ in record time.
+- **Lead rows with lettered sub-rows** repeat R6.8a–g's existing pattern. Status stays on the lead row, and no sub-row needs its own.
+
+##### Missing / over-engineered
+- **Missing:** nothing that holds a row. The two Nits above are the only gaps.
+- **Over-engineered:** nothing. Adding mode is the smallest key change that stops a reading taken under a different measurement condition from being thrown away as a duplicate, and nothing else needed to change.
+
+| Row ID | disposition |
+| :--- | :--- |
+| Import-R6.1 | ALIGN |
+| Import-R6.2 | ALIGN |
+| Import-R6.4 | ALIGN |
+| Import-R6.7 | ALIGN |
+| Import-R6.8 | ALIGN |
+| Import-R6.9 | ALIGN |
+| Import-R6.10 | ALIGN |
+| DF-R2.3 (with R2.3j) | ALIGN |
+| Export-R1.2 | ALIGN |

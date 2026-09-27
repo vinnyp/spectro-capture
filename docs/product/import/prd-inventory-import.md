@@ -1,6 +1,6 @@
 # PRD: Inventory Import
 
-Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review closed 2026-09-25 (PR #21)); Collection Mode one-writer mirror under F66 dated 2026-09-25 (R3.2 amended with alignment kept; E40 gains an another-collection variant; peer review closed 2026-09-25 (PR #21)); Collection Mode round-4 mirror under F67 dated 2026-09-25 (R3.2 and R3.8i amended with alignment kept; E40 reworded, ready for alignment; peer review closed 2026-09-25 (PR #21)); Collection Mode round-5 mirror under F68 dated 2026-09-25 (R4.1 amended with alignment kept; the Collection Mode obligation line names R2.3; peer review closed 2026-09-25 (PR #21)); Nix Toolkit export amendment under F69–F91 dated 2026-09-26 (§6 added; line 5, the Vocabulary, Build dependencies, R1.5, R3.2, R3.3, R3.5, R3.8, §4, M2, OQ 3 and the obligation lines amended; E5, E7, E9, E10, E14, E42 and E43 gain Toolkit variants, E13 a collection variant, E46–E49 new; peer review closed 2026-09-26 after eight rounds; re-locked on merge).
+Status: locked 2026-09-08; agent-build amendment with owner decisions F51–F64 dated 2026-09-17; PR #16; Collection Mode rename mirror under F65 dated 2026-09-24 (R2.6 amended with alignment kept; peer review closed 2026-09-25 (PR #21)); Collection Mode one-writer mirror under F66 dated 2026-09-25 (R3.2 amended with alignment kept; E40 gains an another-collection variant; peer review closed 2026-09-25 (PR #21)); Collection Mode round-4 mirror under F67 dated 2026-09-25 (R3.2 and R3.8i amended with alignment kept; E40 reworded, ready for alignment; peer review closed 2026-09-25 (PR #21)); Collection Mode round-5 mirror under F68 dated 2026-09-25 (R4.1 amended with alignment kept; the Collection Mode obligation line names R2.3; peer review closed 2026-09-25 (PR #21)); Nix Toolkit export amendment under F69–F91 dated 2026-09-26 (§6 added; line 5, the Vocabulary, Build dependencies, R1.5, R3.2, R3.3, R3.5, R3.8, §4, M2, OQ 3 and the obligation lines amended; E5, E7, E9, E10, E14, E42 and E43 gain Toolkit variants, E13 a collection variant, E46–E49 new; peer review closed 2026-09-26 after eight rounds; PR #22's review added measurement mode to the same-reading key (N28) and split §6's longer rows into lettered sub-rows, peer review closed 2026-09-27 at round 9; re-locked on merge).
 
 Import a CSV inventory into one collection without entering metadata between scans. Import never starts capture; only new items become pending and existing items keep their state, except a Nix Toolkit export's records, which arrive captured with their readings (§6).
 
@@ -33,7 +33,7 @@ All requirements are **v1 / P0**. Status and Commit PR track implementation: ⌛
 
 ### Traceability
 
-R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including the capture PRD's F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420); F65 mirrors the Collection Mode PRD's F9 (2026-09-24); F66 mirrors its F149 (2026-09-25); F67 mirrors its F155, F156 and F169 (2026-09-25); F68 mirrors its F188 (2026-09-25); F69–F91 record the Nix Toolkit export amendment (2026-09-26), from owner decisions N1–N23 in its review log.
+R, E, M, OQ, and UJ IDs are local to this PRD and never renumbered or reused. Requirements are normative; journeys exercise them and copy supplies their strings. Keep links to owning sibling rules rather than duplicating them; [fences and the historical ID map](prd-inventory-import-fences.md) preserve provenance, including the capture PRD's F24, F45 and F49. The 2026-09-16 R2.2 column-order amendment and Data Export obligation landed in PR #14 (Data Foundation’s outbound line); Commit PR is reserved for implementation PRs. F51–F61 record the owner’s [first-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723537817); F62–F64 record the [second-round decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420); F65 mirrors the Collection Mode PRD's F9 (2026-09-24); F66 mirrors its F149 (2026-09-25); F67 mirrors its F155, F156 and F169 (2026-09-25); F68 mirrors its F188 (2026-09-25); F69–F91 record the Nix Toolkit export amendment (2026-09-26), from owner decisions N1–N23 in its review log; F92 records the lock's accepted check results (N24–N27) and F82's round-9 line the same-reading key's mode (N28, 2026-09-27).
 
 ### Surfaces
 
@@ -163,16 +163,16 @@ A Nix Toolkit export — the vendor mobile app's collection CSV — imports thro
 
 | ID | Requirement | Status | Commit PR |
 | :--- | :--- | :--- | :--- |
-| R6.1 | A source is a Nix Toolkit export as R6.1a–d state; any other source follows §1–§3 unchanged (F73). | ⌛️ Ready for Alignment | |
-| R6.2 | A Toolkit export's mapping is fixed and shown, never chosen (E48), its columns treated as R6.2a–g state; its two L headers raise no E41 notice (F73, F81, F83). | ⌛️ Ready for Alignment | |
+| R6.1 | A source is a Nix Toolkit export when R6.1a's signature holds, and is then read as R6.1b–d state; any other source follows §1–§3 unchanged (F73). | 🤝 Aligned | |
+| R6.2 | A Toolkit export's mapping is fixed and shown, never chosen (E48), its columns treated as R6.2a–g state; its two L headers raise no E41 notice (F73, F81, F83). | 🤝 Aligned | |
 | R6.3 | Choosing or creating the target follows R2.1. Creating one pre-fills its name from the Custom Collection Name of the first record left after R6.4's exclusions, the user free to change it, and sets its scan mode to the file's, not editable in that creation and labelled as set by the export (R6.4); an existing target ignores that name (F76, F83). | 🤝 Aligned | |
-| R6.4 | A Toolkit export's measurement mode is checked as R6.4a–c state (F76). | ⌛️ Ready for Alignment | |
+| R6.4 | A Toolkit export's measurement mode is checked as R6.4a–c state (F76). | 🤝 Aligned | |
 | R6.5 | Each eligible record's reading is stored as [Data Foundation R2.3j](../data-foundation/prd-data-foundation.md#2-canonical-value-and-version-history) states: its reflectances as the finite numbers given, neither clamped nor rounded, values above 1.0 or below 0 included; its measurement mode; the file's illuminant and observer, as their text or absent where blank, as the reference the Toolkit's own values used, never a derived set's reference; Date Saved, read as an instant, as its measurement time to the millisecond, and the commit as its record time; its samples, averaging basis, agreement verdict and spread not recorded; an acquiring-device snapshot of the imported kind naming the Nix Device model — absent where the cell is blank — serial and firmware absent, unknown ([Device R1.21](../device-management/prd-device-management.md#1-device-pairing)); no raw payload, one never supplied; and every derived value worked out from its spectrum under the collection's reference at the current derivation version, the gamut-clipped flag included (F70, F77, F78). | 🤝 Aligned | |
 | R6.6 | Each record's Lab is worked out from its spectrum under the file's own illuminant and observer and compared with the file's first L, a and b. A record whose ΔE2000 exceeds [Data Foundation DERIVATION_TOLERANCE](../data-foundation/prd-data-foundation.md#open-questions) is listed in E43 as differing; one whose file L, a and b are not three readable numbers, or whose illuminant and observer are not a pair the app offers ([Capture R1.5 and OQ 21](../capture-mode/prd-capture-mode.md#1-collections)), is listed as not checked, never as matching; each still imports with the worked-out values (F81, F90). | 🤝 Aligned | |
-| R6.7 | A record whose Date Saved, Measurement Mode or any reflectance cannot be read is excluded and listed with every failing column (E47); the rest continue through R3.8c. A time is an RFC 3339 date-time with `Z` or a ±hh:mm offset, fractional seconds optional and truncated to the millisecond; a mode is exactly M0, M1 or M2; a number is an optional sign, digits, an optional `.` fraction and an optional `e` or `E` exponent with an optional sign, and finite — `NaN`, `Infinity`, an empty cell and a comma decimal cannot be read (F73). | ⌛️ Ready for Alignment | |
-| R6.8 | A Toolkit record's reading lands as R6.8a–g state: R6.8f first, then R6.8b for a match with no readable current value, then by the current reading's snapshot kind — a restore carrying its source's; its metadata follows R3.5/R3.6, E14 showing its Toolkit variant (F70, F74, F82, F86, F87, F88). | ⌛️ Ready for Alignment | |
-| R6.9 | E43's Toolkit variant names the export first and shows R6.9a–b; repeating a committed export with no intervening edits changes nothing (R3.3, F82). | ⌛️ Ready for Alignment | |
-| R6.10 | Tests and fixtures follow R6.10a–d (F71). | ⌛️ Ready for Alignment | |
+| R6.7 | A record whose Date Saved, Measurement Mode or any reflectance cannot be read is excluded and listed with every failing column (E47); the rest continue through R3.8c. A time is an RFC 3339 date-time with `Z` or a ±hh:mm offset, fractional seconds optional and truncated to the millisecond; a mode is exactly M0, M1 or M2; a number is an optional sign, digits, an optional `.` fraction and an optional `e` or `E` exponent with an optional sign, and finite — `NaN`, `Infinity`, an empty cell and a comma decimal cannot be read (F73). | 🤝 Aligned | |
+| R6.8 | A Toolkit record's reading lands as R6.8a–g state: R6.8f first, then R6.8b for a match with no readable current value, then by the current reading's snapshot kind — a restore carrying its source's; its metadata follows R3.5/R3.6, E14 showing its Toolkit variant (F70, F74, F82, F86, F87, F88). | 🤝 Aligned | |
+| R6.9 | E43's Toolkit variant names the export first and shows R6.9a–b; repeating a committed export with no intervening edits changes nothing (R3.3, F82). | 🤝 Aligned | |
+| R6.10 | Tests and fixtures follow R6.10a–d (F71). | 🤝 Aligned | |
 | R6.11 | Every record left after R6.4's exclusions has the same Custom Collection Name under R2.3, or E49 refuses the file, checked after R6.4's mixed-mode check, each Toolkit collection being exported and imported on its own (F89). | 🤝 Aligned | |
 
 **Toolkit recognition and reading — R6.1**
@@ -180,15 +180,15 @@ A Nix Toolkit export — the vendor mobile app's collection CSV — imports thro
 | ID | Aspect | Rule |
 | :--- | :--- | :--- |
 | R6.1a | Signature | The source's first record, under the encoding it is read with and split on the semicolon, the comma or the tab — tried in that order, the first that fits used — holds under R2.3 the headers Custom Collection Name, Color Name, Color Code, Nix Device, Date Saved, Illuminant, Observer, Measurement Mode and R400 nm through R700 nm at every 10 nm. |
-| R6.1b | Read settings | It is read as UTF-8 with that delimiter, both shown fixed, E43 offering neither "Choose an encoding" nor "Choose a separator"; mapping (E48) and preview (E43) name it a Toolkit export. |
-| R6.1c | An export that cannot be read | One not decoded as UTF-8 throughout reaches E5's Toolkit encoding variant, and one with a record it cannot parse under R1.5c's quoting E5's Toolkit quotes variant, naming that record; the encoding variant is checked first, and neither offers a read control. |
+| R6.1b | Read settings | A Toolkit export is read as UTF-8 with the delimiter R6.1a found, both shown fixed, E43 offering neither "Choose an encoding" nor "Choose a separator"; mapping (E48) and preview (E43) name it a Toolkit export. |
+| R6.1c | An export that cannot be read | A Toolkit export not decoded as UTF-8 throughout reaches E5's Toolkit encoding variant, and one with a record it cannot parse under R1.5c's quoting E5's Toolkit quotes variant, naming that record; the encoding variant is checked first, and neither offers a read control. |
 | R6.1d | Other states | For a Toolkit export, E5, E7, E9, E10 and E42 show their Toolkit variants. |
 
 **Toolkit column mapping — R6.2**
 
 | ID | Toolkit columns | Treatment |
 | :--- | :--- | :--- |
-| R6.2a | Color Code; Color Name | Swatch Code; Swatch Name. |
+| R6.2a | Color Code and Color Name | Color Code becomes Swatch Code and Color Name becomes Swatch Name. |
 | R6.2b | Nix Device, Date Saved, Illuminant, Observer, Measurement Mode and the reflectances | Each record's reading (R6.5), never stored as columns. |
 | R6.2c | The file's first L, a and b | Read for R6.6, never stored as columns. |
 | R6.2d | Custom Collection Name | Read for R6.3 and R6.11, never stored as a column. |
@@ -202,7 +202,7 @@ A Nix Toolkit export — the vendor mobile app's collection CSV — imports thro
 | :--- | :--- | :--- |
 | R6.4a | The file is read | §1–§3's file-level exclusions (E7, E9, E10) and R6.7's run first; then every remaining record's Measurement Mode is the same, or E46's mixed-modes variant refuses the file, listing the colours under each mode. |
 | R6.4b | A target is chosen | E11 applies and never reopens R6.4a's check or R6.11's. |
-| R6.4c | Target fit | A new target takes that mode as its chosen scan mode ([Capture R1.10](../capture-mode/prd-capture-mode.md#1-collections)); an existing target must already use it, or hold no reading — current or in history, QC records aside — and then adopt it, the adoption written by the commit and undone with it (R3.2) and named in E43; otherwise E46 refuses the import before mapping, naming both modes, and again at commit (R3.8k). |
+| R6.4c | A target is chosen, and again at commit | A new target takes the file's mode as its chosen scan mode ([Capture R1.10](../capture-mode/prd-capture-mode.md#1-collections)); an existing target must already use it, or hold no reading — current or in history, QC records aside — and then adopt it, the adoption written by the commit and undone with it (R3.2) and named in E43; otherwise E46 refuses the import before mapping, naming both modes, and again at commit (R3.8k). |
 
 **Toolkit commit outcomes — R6.8**
 
@@ -221,7 +221,7 @@ A Nix Toolkit export — the vendor mobile app's collection CSV — imports thro
 | ID | E43 shows | Content |
 | :--- | :--- | :--- |
 | R6.9a | Reading counts | Counts that partition the eligible records: readings becoming current (R6.8a, R6.8b, R6.8g and R6.8d's later), readings kept in history (R6.8c and R6.8d's earlier or same-dated) and readings already held (R6.8f). |
-| R6.9b | Named items | The file's measurement mode, a target mode change (R6.4), each set-aside item it captures (R6.8b), R6.6's differing and not-checked records, and each same-dated record R6.8d keeps. |
+| R6.9b | Also named | The file's measurement mode, a target mode change (R6.4), each set-aside item it captures (R6.8b), R6.6's differing and not-checked records, and each same-dated record R6.8d keeps. |
 
 **Toolkit tests and fixtures — R6.10**
 
