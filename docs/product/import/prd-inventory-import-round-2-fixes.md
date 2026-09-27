@@ -21,7 +21,7 @@ Resume point for round 2 (delta verification of f7cbde5; review log `docs/agent-
 - [x] **Bridge phrasing** — PMM2-n3. One form: "— the Toolkit's Measurement Mode —".
 - [x] **E46 mixed-modes path** — PM-R2-m2, PMM2-n4, PM round-1 m13 (first half). A pointer: keep each measurement condition's colours in their own Toolkit collection.
 - [x] **Mode switched away later** — PM round-1 m13 (second half). Post-lock item for Capture R1.10.
-- [x] **E5 on a Toolkit export** — PM-R2-m3, IF2-m1, TR2-m10, SSE2-m2, PL2-m4, IF round-1 M1 partial. R6.1 and E5's Toolkit variant: no read control, the Toolkit remedy; UJ 3 case with an unescaped quote. A file that fails UTF-8 decoding is never recognised, so it reaches E5's ordinary variants.
+- [x] **E5 on a Toolkit export** — PM-R2-m3, IF2-m1, TR2-m10, SSE2-m2, PL2-m4, IF round-1 M1 partial. R6.1 and E5's Toolkit variant: no read control, the Toolkit remedy; UJ 3 case with an unescaped quote. *(Corrected in round 3: that claim was wrong for a file whose header decodes; R6.1 now sends a Toolkit export not decoded as UTF-8 throughout to E5's Toolkit encoding variant.)*
 - [x] **M2's definition** — PM-R2-m5. Clean means no exclusion for any reason, no mixed-modes or E49 refusal, no differing record; not-checked tallied apart.
 - [x] **Exclusion order** — TR2-m9, SSE2-m3, PL2-m3, TR2-n2. §1–§3's and R6.7's exclusions run before R6.4, then R6.11; UJ 3's E47-then-E46 case names "Continue without them".
 - [x] **Quarantined readings** — AR2-m2, DB2-m1, SSE2-m12, TR2-m7. R6.8f: a quarantined reading is never the same; the ADR-0003 key exempts it; UJ 3 case.
@@ -45,6 +45,6 @@ Resume point for round 2 (delta verification of f7cbde5; review log `docs/agent-
 
 ## Recorded without change, each with its reason
 
-- [x] **J7's heading** — PM round-1 PM-n1 partial. "(cataloger; v2 candidate)" stays because five documents link its anchor, and its first bullet is marked "In part superseded — see the update".
+- [x] **J7's heading** — PM round-1 PM-n1 partial. "(cataloger; v2 candidate)" stays because three documents link its anchor, and its first bullet is marked "In part superseded — see the update".
 - [x] **`undefined` in other columns** — SSE2 round-1 m13 partial. Added to OQ 3's closer; until then only Note's `undefined` is special, and elsewhere the text is stored as given.
 - [x] **PRIV-7's home** — PRIV2 nit. The cross-model rule lives in the review log, a review-process rule, not a post-lock item.

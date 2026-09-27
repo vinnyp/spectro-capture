@@ -302,6 +302,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); editorial):** R1.21's imported snapshot names the model its file gives, if any; UJ3-c reads serial and firmware as absent. Peer review pending.
 
+**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26); editorial):** UJ3-c declares its imported reading directly under the Inventory Import PRD's R6.10; the importer's own side of R1.22 is that PRD's UJ 3 saved-device case.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.

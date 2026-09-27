@@ -143,7 +143,7 @@ Cross-document:
 
 Build-review items and the engineering plan's test matrix.
 
-- [ ] **Import / DF / Device / Collection Mode / Export** — the Nix Toolkit build order: the device PRD's R1.21 imported kind and the Data Foundation PRD's R2.3j first; then Import §6, Collection Mode's imported mark (its Build dependencies row) and Export's `sc_imported` goldens on R7.7o. Collection Mode, Device and Export cases may seed an imported reading directly (Import R6.10).
+- [ ] **Import / DF / Device / Collection Mode / Export** — the Nix Toolkit build order: the device PRD's R1.21 imported kind and the Data Foundation PRD's R2.3j first; then Import §6 and Collection Mode's imported rows (its Build dependencies row), whose cases, and Device's UJ3-c, seed an imported reading directly (Import R6.10); after Import §6, the Data Foundation PRD's R7.7o with its DJ6, and Export's `sc_imported` goldens cut from R7.7o. Import UJ 3's clauses that read Collection Mode's surfaces wait for those rows.
 
 - [ ] **DF** — the first build PR that runs DJ3 waits on the two DJ3 items under Data Foundation in the next pass above: the positive case, without which (i) alone passes a build that refuses every write while a clearing is stuck, and the added DJ3 runs and harness fixes (its round-19 interface review's IF19-m4; added in PR #21).
 - [ ] **DF** — implement the CSV → store → CSV passthrough-value case now specified by R7.7b; contract clarified in PR #17, build evidence pending.
@@ -169,7 +169,7 @@ Build-review items and the engineering plan's test matrix.
 
 ## ADR-0003
 
-- [ ] **Import / DF** — the Nix Toolkit import's schema inputs, recorded in [the ADR-0003 row](../decisions/README.md#decision-queue): a reading with no samples, basis, verdict or spread; the imported snapshot kind with serial and firmware stored empty; explicit current selection and predecessor, never inferred from sequence; the same-reading key excluding restores; and whether a reading's origin sits apart from its device kind (Import F70, F77, F82; DF R2.3h, R2.3j).
+- [ ] **Import / DF** — the Nix Toolkit import's schema inputs, as [the ADR-0003 row](../decisions/README.md#decision-queue) records them (Import F70, F77, F82; DF R2.3h, R2.3j).
 - [ ] **Import** — choose comparison-data version governance; re-check existing identifiers on table upgrades and verify the R2.3 comparator against the eventual ADR-0006 macOS floor (F57; [decision queue](../decisions/README.md#decision-queue)).
 
 - [ ] **DF** — the generated ROWS_CEILING corpus's determinism contract; M6, M8 and DE R4.1 read from it.
