@@ -179,7 +179,7 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); PRIV2-1, plan R2-M1, test TR2-m1):** "A report on one" means any data value from a real export; M2 and OQ 3 record only format facts and tallies by state across files. Another PRD's case may declare an imported reading directly, only Import's cases and the Data Foundation PRD's R7.7o running the importer. The file's own values come from the reference the Data Foundation PRD's R7.5 checks the build against, and UJ 3's offsets are multiples of DERIVATION_TOLERANCE. R6.10, M2 and OQ 3 carry it.
 
-**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** Fixture T's own values come from an independent implementation of CIE 15's calculation with ASTM E308's 10 nm tables, named in its provenance, and the Data Foundation PRD's R7.5 holds Fixture T's spectra so its bound covers them; R6.6's offset cases set the file's Lab from the build's; DJ6 is R7.7o's journey and runs the importer; from a single real file only format facts and whether it imported cleanly are recorded. R6.10, M2 and OQ 3 carry it.
+**Clarified 2026-09-26 ([round 3](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-3--delta-verification-2026-09-26)):** Fixture T's own values come from an independent implementation of CIE 15's calculation with ASTM E308's 10 nm tables, named in its provenance, and the Data Foundation PRD's R7.5 holds Fixture T's spectra so its bound covers them; R6.6's offset cases set the file's Lab from the build's; DJ6 is the Data Foundation PRD's R7.7o's journey and runs the importer; from a single real file only format facts and whether it imported cleanly are recorded. R6.10, M2 and OQ 3 carry it.
 
 **Clarified 2026-09-26 ([round 4](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-4--delta-verification-2026-09-26)):** Fixture T's own values use the CIE 15 tabulation the build's derivation uses — its ASTM E308 table and its 400–700 nm handling, named in the engineering plan — and the Data Foundation PRD's R7.5 reference, once named, governs, Fixture T regenerated to agree with it and the build never loosened. R6.10 and UJ 3 carry it.
 
@@ -366,6 +366,12 @@ Bringing these PRDs to the current template, and closing the three MISSes, is po
 
 **Why:** the checks came with a later template than these PRDs were locked under. Converting them is a pass of its own, and none of these results comes from this amendment. Source: owner decisions N24 and N25 in [the lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27).
 
+**Clarified 2026-09-27 (owner decision N27, in [the lock record](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#lock-record-2026-09-27)):** F92 also accepts two more results by name:
+- check 13 as NOT-RUN on this PRD and on the Data Foundation, Device, Data Export and Capture PRDs, whose copy companions are flat tables with no `- Actions:` or `- Variant:` fields;
+- check 1(c)'s hits on text in those five PRDs that predates this amendment, which locked under an earlier roster.
+
+The amendment's own lines were swept, and their seven cites that named no owning document were qualified. The post-lock conversion item gains a full check 1(c) and 13 sweep.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -414,7 +420,7 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F89** One Toolkit collection per file — R6.3, R6.11; E49; UJ 3.
 - **F90** Unchecked records import — R6.6, R6.9; E43; UJ 3.
 - **F91** Round-1 word budgets — governs no row here.
-- **F92** Lock checks accepted at the Nix Toolkit lock — governs no row here; post-lock carries the follow-up.
+- **F92** Lock checks accepted at the Nix Toolkit lock, as clarified — governs no row here; post-lock carries the follow-up.
 - Round-1 fixes under the fences above also reach R3.5 and E14 (F70, F74), R3.8b and R3.8q (F73, F89), M2 and OQ 3 (F71, F73), Build dependencies (F72), and the Data Export, Collection Mode and Capture Mode inherited-obligation lines (F72).
 
 ## Historical ID map

@@ -697,7 +697,7 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R1.10, Inventory import obligation line, Traceability.
 
-**Clarified 2026-09-26 ([round 1 of the Nix Toolkit import review](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); the Inventory Import PRD's F76 and F84–F91):** R1.10's adoption is written by the import's commit, the one R1.11 write that may carry it, and a Toolkit-created collection's mode is fixed in that creation. M8 leaves out an import whose items arrive captured. §12's placeholder list gains the Toolkit tokens the import copy uses. Carried by R1.10, M8 and §12's Placeholders paragraph as well. Peer review pending.
+**Clarified 2026-09-26 ([round 1 of the Nix Toolkit import review](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-1--nine-lenses-2026-09-26); the Inventory Import PRD's F76 and F84–F91):** R1.10's adoption is written by the import's commit, the one Data Foundation R1.11 write that may carry it, and a Toolkit-created collection's mode is fixed in that creation. M8 leaves out an import whose items arrive captured. §12's placeholder list gains the Toolkit tokens the import copy uses. Carried by R1.10, M8 and §12's Placeholders paragraph as well. Peer review pending.
 
 **Clarified 2026-09-26 ([round 2](../../agent-reviews/2026-09-26-nix-toolkit-import-peer-reviews.md#round-2--delta-verification-2026-09-26); editorial):** M8 leaves out a Nix Toolkit export's import, however many items it captures.
 

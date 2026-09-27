@@ -773,7 +773,7 @@ Source: the owner's decisions N1–N15 in [the Nix Toolkit import review log's R
 ### F65 — Word budget 8,600 (2026-09-26)
 
 - **Authority:** [the Inventory Import PRD's F80](../import/prd-inventory-import-fences.md) — owner decision N12, 2026-09-26.
-- **Decision:** This PRD's word budget is 8,600 words, counted by rule 14's method, recorded by the dated lines under F55 and beside F214's.
+- **Decision:** This PRD's word budget is 8,600 words, counted by rule 14's method, recorded by the dated lines under F55 and beside the Collection Mode PRD's F214's.
 - **Rows:** governs no rows.
 
 ### F66 — History order for an imported reading (2026-09-26)

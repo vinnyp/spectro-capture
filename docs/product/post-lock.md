@@ -134,7 +134,7 @@ Cross-document:
 
 ### Cross-document
 
-- [ ] **Import / DF / Device / Export / Capture** — bring each PRD to the current template's constructs (Carried by fields; the Legend's defer bullets; build-dependencies, Surfaces, constants and row-transition tables; copy states as sections with variant fields; journeys with case IDs and a named-defaults table), so that lock checks 2–7, 17 and 18 run on it; accepted as NOT-RUN at the Nix Toolkit lock (Import F92).
+- [ ] **Import / DF / Device / Export / Capture** — bring each PRD to the current template's constructs (Carried by fields; the Legend's defer bullets; build-dependencies, Surfaces, constants and row-transition tables; copy states as sections with variant fields; journeys with case IDs and a named-defaults table), so that lock checks 2–7, 13, 17 and 18 run on it, then a full check 1(c) and 13 sweep of each. The Nix Toolkit lock's adapted sweep already found single-word labels ("Import", "Cancel") left unquoted and curly quotes in Import's journeys. Accepted as NOT-RUN at that lock (Import F92).
 - [x] **Import / Capture** — round-2 owner fence F63: Capture §12’s token index includes Import’s preview counts/settings and generated-name placeholders; E43 follows its existing zero-count rule. — PR #16
 
 - [x] **Import / DF / DE** — 2026-09-17 owner fence F59: DF’s inbound Import line gains field preservation, decoded values directly queryable, and measurement preservation; both obligation tables carry Rows. DF R1.2 and Export’s inbound mirror use Import R2.5/R2.6’s first-seen resolved column names; Capture’s import line mirrors both E40 session routes. — PR #16
