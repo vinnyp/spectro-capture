@@ -2,20 +2,20 @@
 
 This directory holds the product definition: [`vision.md`](vision.md) sets scope, personas, journeys, and the feature list; each PRD below takes a slice of that and specifies it to the level a builder can work from. Direction lives one level up in [STRATEGY.md](../../STRATEGY.md).
 
-A PRD is not a decision about *how*. Architecture is decided only in [`docs/decisions/`](../decisions) ([AGENTS.md §2](../../AGENTS.md#2-read-before-changing-anything)) — but several ADRs are gated on a PRD answering the product question first. Those gates are tracked in the [ADR decision queue](../decisions/README.md#decision-queue) and restated in [PRD → ADR gates](#prd--adr-gates) below.
+A PRD is not a decision about *how*. Architecture is decided only in [`docs/decisions/`](../decisions) ([AGENTS.md §2](../../AGENTS.md#2-read-before-changing-anything)) — but several ADRs are gated on a PRD answering the product question first. Those gates are tracked in the [ADR decision queue](../decisions/README.md#decision-queue) and restated in [PRD → ADR gates](#prd--adr-gates) below. A locked PRD settles what gets built; building starts only once every stop its own Build dependencies table names has cleared.
 
 ## The PRD set
 
-Three PRDs remain to be written to cover v1 (five are locked). Priority is authoring order, not a cut line.
+Two PRDs remain to be written to cover v1 (six are locked). Priority is authoring order, not a cut line.
 
 | # | PRD | Use cases | Status |
 |---|---|---|---|
 | 1 | [Device Management](device-management/prd-device-management.md) | U3, U8, U9 | **Locked** — refactored under fence F9 to the capture PRD's shape (row IDs, two-sentence rows, four companion files) and re-locked 2026-09-08 after five review rounds; 2026-09-18 agent-build amendment F10–F31; peer review closed 2026-09-18 (PR #19); re-locked on merge |
 | 2 | [Capture Mode](capture-mode/prd-capture-mode.md) | U1, U2 | **Locked** — review gate closed 2026-09-07 after 24 rounds; cross-document amendment under Import F59 in PR #16; Device F16/F24/F28/F29/F31 / Capture F50 carries OQ 16, answered by PR #19; Capture agent-build amendment F51–F69 (2026-09-18), including individually ratified owner decisions D1–D14, peer review closed 2026-09-18 (PR #20); re-locked on merge |
 | 3 | [Inventory Import](import/prd-inventory-import.md) | — (the first step of U1, which Capture Mode owns) | **Locked** — F49 split verified in rounds 25–26; agent-build amendment and owner decisions F51–F64 (2026-09-17) in [PR #16](https://github.com/vinnyp/spectro-capture/pull/16) |
-| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; Import F59 amendment in PR #16; [PR #17](https://github.com/vinnyp/spectro-capture/pull/17) agent-build amendment under F33–F49 (2026-09-17), with OQ 17–21 retained; PR #18 Export-mirror amendment (R7.7a/e/i/l/n, Data Export obligation) |
+| 4 | [Data Foundation](data-foundation/prd-data-foundation.md) | U5, U6 | **Locked** — review gate closed 2026-09-16 after 12 rounds, both PRDs under one log; Import F59 amendment in PR #16; [PR #17](https://github.com/vinnyp/spectro-capture/pull/17) agent-build amendment under F33–F49 (2026-09-17), with OQ 17–21 retained; PR #18 Export-mirror amendment (R7.7a/e/i/l/n, Data Export obligation); PR #21 Collection Mode amendment (F50–F63), peer review closed 2026-09-26 |
 | 5 | [Data Export](export/prd-data-export.md) | U6 | **Locked** — split out of Data Foundation on 2026-09-09 under its fence F30 and locked with it 2026-09-16; cross-document amendment under Import F59 in PR #16; PR #17 fixture/export amendment under DE F14 (2026-09-17); [PR #18](https://github.com/vinnyp/spectro-capture/pull/18) agent-build amendment F15–F30 (2026-09-17–18), including Device/DF/Capture mirrors |
-| 6 | Collection Mode | U5, U7 | queued |
+| 6 | [Collection Mode](collection-mode/prd-collection-mode.md) | U5, U7 | **Locked** — review gate closed 2026-09-25 after nine rounds, the pre-lock round and a priority pass included; cross-document amendments to Data Foundation (F50–F63), Capture Mode (F70–F76), Inventory Import (F65–F68), Data Export (F31–F34) and Device Management (F32); first lock 2026-09-25 ([lock record](../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#lock-2026-09-25-record-written-2026-09-26)); amendment F202–F220 (2026-09-26), peer review closed 2026-09-26 (PR #21) ([re-lock record](../agent-reviews/2026-09-24-prd-collection-mode-peer-reviews.md#re-lock-2026-09-26-after-the-follow-up-review)); ready to build once ADR-0003, ADR-0005 and ADR-0006 are accepted (ADR-0004 for the capture seam), the first build PR that runs the Data Foundation PRD's DJ3 also waiting on post-lock's two DJ3 items; R1.7 waits on OQ 10; R8.11's row-confirmation half builds against the engineering plan's declared ROW_CONFIRM_BUDGET until the capture PRD's OQ 5 closes (F120) |
 | 7 | QC & Comparison | U4 | queued |
 | 8 | Color Visualization | U7 | queued |
 | 9 | Telemetry | — | queued — v1.x, gated on the provider spike |
@@ -56,9 +56,11 @@ The PRD is [prd-data-export.md](export/prd-data-export.md), with four companion 
 
 Its rows were split out of the Data Foundation PRD on 2026-09-09 under that document's fence F30 with no rule changed — only IDs, citations, and sections. The two share one review log and one fresh-lens ledger.
 
-### 6. Collection Mode
+### 6. Collection Mode — written
 
 Browsing and working with a collection after capture. Browse at scale · search, filter, facet, sort · editing surfaces · selection and bulk operations · the version-history UI · the gamut-aware swatch grid.
+
+The PRD is [prd-collection-mode.md](collection-mode/prd-collection-mode.md), with four companion files: the acceptance scenarios (stable UJ anchors) in [prd-collection-mode-journeys.md](collection-mode/prd-collection-mode-journeys.md), the shipping error and state copy in [prd-collection-mode-copy.md](collection-mode/prd-collection-mode-copy.md), the answers to closed open questions in [prd-collection-mode-oq-results.md](collection-mode/prd-collection-mode-oq-results.md), and the owner decisions in [prd-collection-mode-fences.md](collection-mode/prd-collection-mode-fences.md).
 
 ### 7. QC & Comparison
 

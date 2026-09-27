@@ -1,6 +1,6 @@
 # Capture Mode PRD — fences
 
-Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge.
+Owner decisions and owner-rejected findings for `prd-capture-mode.md`. Every entry is settled: it is carried into every review brief and editing dispatch, and is not re-litigated. F51–F55 record the initial agent-build amendment; F56–F69 individually ratify its WHAT choices under owner decisions D1–D14 (2026-09-18); peer review closed 2026-09-18 (PR #20); re-locked on merge. F70 mirrors the Collection Mode PRD's F10, F11 and F19, and is clarified by its F22 and F23 (2026-09-24); peer review closed 2026-09-25 (PR #21). F71 mirrors its F30, F55, F56, F80, F84 and F90 (2026-09-25); peer review closed 2026-09-25 (PR #21).
 
 Review log: docs/agent-reviews/2026-09-06-prd-capture-mode-peer-reviews.md (created round 1, 2026-09-06; later rounds append)
 Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 were Ready for Alignment. Current row statuses are in the PRD; the original review gate and the PR #19 amendment are closed. For F51–F69, peer review closed 2026-09-18 (PR #20); re-locked on merge (closure recorded under F51).
@@ -73,6 +73,10 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Why:** Flag-row is a P0 feature that was undefined on the state model; one place resolves all problem rows, and a suspect value is never live in the collection.
 
+**Clarified 2026-09-24 ([the Collection Mode PRD's F23](../collection-mode/prd-collection-mode-fences.md), owner decision D14):** A flagged row has no canonical value until it is re-scanned or until the operator restores a readable earlier reading of it, the flagged one included, through Collection Mode R5.5 — an out for a mistaken Flag (R5.6, F70 as clarified the same day). Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F30](../collection-mode/prd-collection-mode-fences.md), owner decision D16):** That restore is refused while a session on the collection is in flight, Collection Mode R8.3 refusing it with its E6 (R5.6, F71). Peer review pending.
+
 ### F10 — Accept average with the spread recorded (2026-09-06, round 1, R1-F8)
 
 **Decision:** When the N samples of one item disagree beyond SAMPLE_TOLERANCE, the operator has three choices at the caution and in the review: re-take, defer, or "Accept average", which writes the canonical measurement set with the sample spread recorded on the reading so Collection Mode can show it (inherited obligation). SAMPLE_TOLERANCE stays one provisional constant, not a per-collection setting. N = 1 skips the agreement check.
@@ -86,6 +90,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Why:** A re-export from Numbers or an Excel autocorrect must not double the queue on an idempotent re-import. The owner chose the forgiving rule over the research default (case-sensitive) because spreadsheet drift is the common case for this persona.
 
 **Clarification, 2026-09-17:** The owner-authorized Inventory Import agent-build amendment specifies the comparison in [Import R2.3](../import/prd-inventory-import.md#2-target-mapping-and-the-matching-rule), with equality examples in its journeys. [Import F56/F57](../import/prd-inventory-import-fences.md#f56--full-default-folding-without-locale-tailoring-2026-09-17) record the owner’s full-folding decision and transfer comparison-data governance to ADR-0003; the single comparison rule continues to apply to Capture's collection names, find and duplicate checks. PR #16 also extends §12’s placeholder index for Import E43/E45 and generated names, including ⟨filled⟩, under [Import F63](../import/prd-inventory-import-fences.md#f63--preview-follows-shared-zero-count-copy-rules-2026-09-17); the shared zero-count rule is unchanged.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F80](../collection-mode/prd-collection-mode-fences.md)):** E1 now says capitals and extra spaces don't count as a difference, which is what this rule does; the rule is unchanged (F71). Peer review pending.
 
 ### F12 — The session is a named entity; device binding is released at quit (2026-09-06, round 1, R1-F4, R1-F11)
 
@@ -116,6 +122,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 **Decision:** The remembered current row belongs to the collection, not only to an interrupted session. After a session ends early, is interrupted, or completes, the next session on that collection opens at the last remembered row, falling back to the next pending row in queue order if that row is no longer pending. Jumps and reorders made in an earlier session are honoured on day two. Selecting a row in the deferred-row review also updates the remembered row.
 
 **Why:** UJ3 step 2 ("a fresh session opens at the first pending row") and UJ3.4 step 4 ("the next session opens at the row the operator was on") contradicted each other after the round-1 fix. A hue-sorted run that stopped at row 150 must not restart at the first skipped row.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F55](../collection-mode/prd-collection-mode-fences.md)):** Where the remembered row has been deleted — Collection Mode lets an interrupted session's remembered row be deleted — the next session opens at the first pending row in queue order (R3.7, F71). Peer review pending.
 
 ### F16 — Flag targets the row that just landed until the next trigger press (2026-09-06, round-1 delta, NEW-C)
 
@@ -597,6 +605,90 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Carried by:** R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3, Capture/DF obligation mirrors; dated F57/F66 and DF F49 clarifications.
 
+### F70 — Mirror Collection Mode's Flag entry point and the unreadable set-aside cause (2026-09-24)
+
+**Authority:** owner decisions D10 and D11 in the Collection Mode PRD's post-fill adjudication of 2026-09-24, recorded as [the Collection Mode PRD's F10 and F11](../collection-mode/prd-collection-mode-fences.md); the editorial mirrors in (3) cite [its F19](../collection-mode/prd-collection-mode-fences.md) (its approved recommendation 8); peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F10, R9.9's "Flag" from the collection is that PRD's R4.9 entry point on a captured item, refused there while a session on the collection is in flight; what it does to the row is R5.6's Flag — set aside with the cause flagged after capture, its reading to version history. This PRD owns what a Flag does; Collection Mode owns the entry point. (2) Under the Collection Mode PRD's F11, a captured row whose current reading is quarantined ([Data Foundation R5.5b](../data-foundation/prd-data-foundation.md#damage-classification)) is set aside with the cause unreadable and counted as set aside, and a later session takes it as it takes other set-aside rows (R8.18, R8.2, the Vocabulary and the Row transitions). Data Foundation's quarantine and its offer of a re-scan or a restore are unchanged. (3) Editorial, with no change of meaning: R1.1 cites Collection Mode's "New collection"; the Surfaces collection-surface row notes Duplicate collection name on Collection Mode's rename and the reorder states E33/E34 from its reorder controls; R11.15g lists the capture-owned entry points on the collection surface. Rows amended in (1)–(3) keep their alignment.
+
+**Not decided (drafted for the owner):** R8.18's unsettled standing, its exclusion from N_CONSEC_HARD counting and from breaking a run, and a restore making the row captured again are least-surprising readings of the existing rules, not settled by D11; R8.18 is ✋ Needs Discussion until the owner rules on them.
+
+**Carried by:** R1.1, R8.2, R8.18, R9.9, R11.15g, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i, UJ4-f.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F22](../collection-mode/prd-collection-mode-fences.md), owner decision D13, second post-fill adjudication):** The owner approved R8.18's drafted clauses as drafted, closing the "Not decided" paragraph above: a row set aside as unreadable is unsettled, so the collection is not finished until the row is re-scanned, restored or deliberately left; it neither counts toward nor breaks a run of N_CONSEC_HARD; and restoring a readable earlier reading makes it captured again. The owner also decided that such a row is left out of M4's per-session deferred rate and does not reopen M3 once M3 has recorded the collection. R8.18 states all of these and moves from ✋ Needs Discussion to 🤝 Aligned on that authority; M3 and M4 gain the exclusion and keep their alignment; UJ3.3-h asserts it. Peer review pending.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F23](../collection-mode/prd-collection-mode-fences.md), owner decision D14, second post-fill adjudication):** A row set aside by a Flag — R5.6's, or Collection Mode R4.9's — is captured again when Collection Mode R5.5's "Use this reading" restores a readable earlier reading of it, the flagged reading included; it no longer waits only for a re-scan. R5.6 says so and keeps its alignment, the Row transitions gain that route, UJ3.3-j asserts it, and F9 carries a dated line saying the same; [Data Foundation F51](../data-foundation/prd-data-foundation-fences.md) names the Flag in Data Foundation R2.9. What a Flag does to the row is otherwise unchanged. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F30, F55, F56 and F84](../collection-mode/prd-collection-mode-fences.md)):** R8.18's set-aside count is the collection's tallies, never a session's own; its unreadable standing always follows Data Foundation's quarantine mark, and on a file open read-only its counts show whatever quarantine Data Foundation reports, nothing being written; its restore is refused while a session on the collection is in flight; R11.15g's pointer names Collection Mode's E3 Actions line and Surfaces row; and R1.1's "New collection" is one example of creating a collection. R1.1, R8.18 and R11.15g keep their alignment (F71). Peer review pending.
+
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F70–F76, peer review closed 2026-09-25 (PR #21); re-locked on merge.
+
+### F71 — Mirror Collection Mode's round-1 decisions: restores in flight, the unreadable row's counts, the resume fallback, and pointers (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F30, F55, F56, F80, F84 and F90](../collection-mode/prd-collection-mode-fences.md) — owner decision D16 in its round-1 adjudication of 2026-09-24 (F30), its approved recommendations 20 and 21 the same day (F55, F56), and its approved round-1 recommendations 23, 27 and 33 of 2026-09-25 (F80, F84, F90); peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F30, a restore that would make a set-aside row captured — R5.6's of a flagged row, R8.18's of an unreadable one — is refused while a session on the collection is in flight, Collection Mode R8.3 refusing it with its E6; answering a correction question is no restore and stays available. (2) Under its F55, what R8.18 counts as set aside is the collection's tallies, never a session's own; its unreadable standing always follows Data Foundation's quarantine mark; and R3.7's fallback where an interrupted session's remembered row was deleted is the first pending row in queue order. (3) Under its F84, on a file open read-only R8.18's counts show whatever quarantine Data Foundation reports for it, persisted or not, and nothing is written. (4) Under its F56, R11.15g points at Collection Mode's E3 Actions line and Surfaces row, and the Legend's stale note that Collection Mode is unwritten is corrected. (5) Under its F80, E1 says capitals and extra spaces don't count as a difference, as the one matching rule has it. (6) Under its F90, OQ 13's closer adds that FIND_BUDGET closes at or below Collection Mode's BROWSE_RESPONSE_BUDGET. (7) Editorial and testability only, with no change of meaning: R1.1 names Collection Mode's "New collection" as one example beside an import creating its target collection; UJ3.3-h names M3's readback; UJ3.3-k asserts R8.18's guard clause. Rows amended in (1)–(7) keep their alignment.
+
+**Not decided:** E30 carries the same phrase about spacing and capitals; the Collection Mode PRD's F80 names only E1, so E30 is unchanged and goes back to the owner.
+
+**Carried by:** R1.1, R3.7, R5.6, R8.18, R11.15g, E1, OQ 13, Legend, Collection Mode obligation line, UJ3.3-h, UJ3.3-k; dated F9, F11, F15 and F70 clarifications.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F95](../collection-mode/prd-collection-mode-fences.md)):** E30 now says capitals and extra spaces don't count as a difference, as E1 does under (5); this closes the E30 item under **Not decided**, and E30 keeps its alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F96](../collection-mode/prd-collection-mode-fences.md)):** the set-aside causes R8.2 names get one copy home, the copy file's [Set-aside cause labels](prd-capture-mode-copy.md#set-aside-cause-labels) table, each label R8.2's words; Collection Mode's R4.2b and its copy file's Detail lines cite that table rather than restating the causes. R8.2 and its cause set are unchanged and keep their alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F22, F84 and F122](../collection-mode/prd-collection-mode-fences.md)):** R5.8 and R6.6 now quote the cause "flagged as missing or damaged", R8.2's words and the Set-aside cause labels table's, and keep their alignment; UJ3.3-k declares its row's quarantine before the session, since Data Foundation R7.2 seeds it and Data Foundation disables re-reading in flight; and UJ3.3-l asserts (3)'s read-only clause. No rule changes. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F6, F20, F53 and F84](../collection-mode/prd-collection-mode-fences.md), F73):** UJ3.3-l's oracle for (3)'s "nothing is written" is the main file's bytes unchanged plus the same rows in every table read at SQLITE_READER_FLOOR, SQLite's own statistics tables aside, because a correct SQLite build may rewrite side files and statistics at open and close. No rule changes. Peer review pending.
+
+### F72 — Mirror Collection Mode's refusal of bulk writes while any session is in flight (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F100](../collection-mode/prd-collection-mode-fences.md) — owner decision D24 in its round-2 adjudication of 2026-09-25; peer review pending.
+
+**Decision:** Under the Collection Mode PRD's F100, while a session is in flight on any collection, Collection Mode refuses its bulk writes — "Set a field", "Delete selected", "Delete collection" and "Use as scan order" — with its E6, so no bulk write holds the file's writer while this PRD's saves need it (R4.8, R4.13); its single edits stay available. The Collection Mode obligation line records it, and Traceability's range reads F1–F72. Nothing in this PRD's rows changes.
+
+**Carried by:** Collection Mode obligation line, Traceability.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F136](../collection-mode/prd-collection-mode-fences.md), owner decision D29, F73):** the refusal also covers Collection Mode's undo of a bulk set or clear and E10's undo of a multi-item delete, on any collection, so none holds up a session's saves either; the obligation line says so. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F137](../collection-mode/prd-collection-mode-fences.md), owner decision D30, F73):** the reverse ordering holds too: while a Collection Mode bulk write or delete runs, no session starts or resumes, R3.5 showing each disabled until the write lands. Peer review pending.
+
+### F73 — Mirror Collection Mode's round-3 decisions: bulk undos refused in flight, sessions held while a bulk write runs, and a row-level read-only oracle (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F136 and F137](../collection-mode/prd-collection-mode-fences.md) — owner decisions D29 and D30 in its round-3 adjudication of 2026-09-25 — with the testability fix its round-3 fix pass makes under its F6, F20, F53 and F84; peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F136, Collection Mode's refusal of bulk writes while any session is in flight also covers its "Undo change" of a bulk set or clear and its E10 "Undo" of a multi-item delete, on any collection; the Collection Mode obligation line records it. (2) Under its F137, while a Collection Mode bulk write or delete runs — its R8.1f's and R8.1g's writes — no session starts or resumes: R3.5 shows each disabled until the write lands, citing Collection Mode's R8.1f, and T7 asserts it; Collection Mode's own writes held meanwhile are its R8.1f's, not an obligation here. (3) Testability only: UJ3.3-l asserts F71 (3)'s read-only clause through the main file's bytes and a row-level read, not the bytes of every file beside it. R3.5 keeps its alignment; Traceability's range reads F1–F73.
+
+**Carried by:** R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability; dated F71 and F72 clarifications.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** (2) widens: while a Collection Mode bulk write or delete runs, no other write anywhere in the app starts, so R1.1 creates no collection, creating one shown disabled until the write lands, citing Collection Mode's R8.1f, and T7 asserts it beside the held session start and resume. R1.1 keeps its alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F155](../collection-mode/prd-collection-mode-fences.md), owner decision D36, F74):** (2)'s hold, as widened above, now lives in Data Foundation R1.11, the one-writer rule R1.1 and R3.5 cite in place of Collection Mode's R8.1f; it also holds while an import commit or a file move runs. Peer review pending.
+
+### F74 — Mirror Collection Mode's round-4 decisions: one Data Foundation one-writer rule, and which delete's undo is refused in flight (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F155, F156 and F161](../collection-mode/prd-collection-mode-fences.md) — owner decisions D36 and D37 in its round-4 adjudication of 2026-09-25 (F155, F156), and its approved round-4 recommendation 1 the same day (F161); peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F155 and F156, the one-writer rule is Data Foundation R1.11's: while a Collection Mode bulk write or delete, an import commit or a file move runs, no capture starts or resumes and no other write to the file starts, each shown disabled. R1.1 and R3.5 cite it in place of Collection Mode's R8.1f, and every other writer here cites it too — R1.3's samples per row, R1.5's illuminant and observer ("editable at any time" now qualified), R1.10's scan mode, R7.13's ending an interrupted session from the collection, R8.5's "Leave it set aside" and R9.3's "Add a swatch" save; R8.15 settles under R8.5's terms and so needs no cite of its own. T7 asserts each while each of the three writes is held (Collection Mode R8.10a's held-write input). (2) Under its F161, the Collection Mode obligation line's undo refused in flight is that of "a selection or collection delete", whatever its item count, in place of "a multi-item delete"; F72's and F73's dated lines are history and stay. R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5 and R9.3 keep their alignment and stay at two sentences (F45); Traceability's range reads F1–F74.
+
+**Carried by:** R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5, R9.3, T7, Collection Mode obligation line, Traceability; the dated F73 clarification.
+
+### F75 — Mirror Collection Mode's round-5 decisions: R8.14 moves to P0, and the Collection Mode obligation line names every row that PRD's inbound lines cite (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F186 and F188](../collection-mode/prd-collection-mode-fences.md) — its approved round-5 recommendations 9 and 11, round-5 adjudication 2026-09-25; peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F186, R8.14 moves from P1 to P0, since Collection Mode builds the simulated, spread and non-spectral marks at P0 under its F1; R8.14 keeps its alignment. (2) Under its F188, the Collection Mode obligation line names every row Collection Mode's inbound lines cite — R1.2 beside R1.8, R4.8 beside R4.13, and the shared collection surface's R6.7, R7.8, R7.15, R7.19, R8.7, R8.16 and R10.3 — with their obligations; and, as F188 accepts, this document, whose format has no inbound-obligations table, carries what Collection Mode imposes on it by its rows' cites and the dated fences F70–F75, no table added. Traceability's range reads F1–F75.
+
+**Carried by:** R8.14, Collection Mode obligation line, Traceability.
+
+### F76 — Mirror Collection Mode's round-6 decision: the collection-side Flag entry is P0 (2026-09-25)
+
+**Authority:** [the Collection Mode PRD's F189](../collection-mode/prd-collection-mode-fences.md) — owner decision D47, its round-6 (pre-lock) adjudication 2026-09-25; peer review pending.
+
+**Decision:** (1) Under the Collection Mode PRD's F189, that PRD's R4.9 — the collection-side "Flag" entry point on a captured item — moves to P0; R9.9 names the entry point as P0 there, the rest of R9.9 staying P1, and keeps its alignment; the Collection Mode obligation line says the entry point is P0. What a Flag does stays R5.6's, P0 already, and R8.3 and R8.16, which the flagged item's re-scan and review use, are P0 already. (2) Editorial, no owner decision: the Collection Mode obligation line's "this document's states never hiding its entry points" reads "…the surface's entry points", as F43 states it. Traceability's range reads F1–F76.
+
+**Carried by:** R9.9, Collection Mode obligation line, Traceability.
+
 ## Fence → row map
 
 Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link. Letters `R8.1a`–`R8.1k` are the rows of the state-by-exit table in that document's [§8](prd-capture-mode.md#8-deferred-row-review-and-corrections), in the order they appear.
@@ -618,6 +710,13 @@ Which rows in [`prd-capture-mode.md`](prd-capture-mode.md) carry each fence. Whe
 - **F59** queued persistence — §10, Legend, ADR-0003 queue and product README. **F60** review entry — R8.1a–k, UJ3.3-a, OQ 18/results. **F61** Demo interim — R11.3, OQ 22 and Legend. **F62** row corrections — R4.15/R8.2/R11.8 and Device obligation mirror. **F63** structure — Build contract, transition index, Legend and UJ1–UJ5. **F64** file-count provenance — R1.9 and OQ 19/results. **F65** labels — §12, R8.15/E39 and UJ3.3-e.
 - **F66** summary bases — R7.5/R7.15/R7.18/R11.11, E24, UJ3.4-c/UJ3.5-g/g2 and DF mirrors. **F67** reference fixture — R11.6, UJ1-e, Device R6.9 and simulated-layer mirrors. **F68** P0 one-row carrier — R8.3/R3.5/R3.10/R3.11/R3.13, Legend and UJ3.1-l.
 - **F69** chain capture-rate numerator — R7.5/R7.15/R11.11, M2, session-summary Surfaces row, E24 note, UJ3.5-g3 and DF mirrors.
+- **F70** Collection Mode seam mirror, as clarified twice — R1.1, R5.6, R8.2, R8.18, R9.9, R11.15g, M3, M4, Vocabulary, Row transitions, Surfaces, Collection Mode obligation line, UJ3.3-h/i/j, UJ4-f and the dated F9 clarification.
+- **F71** Collection Mode round-1 mirror, as clarified four times — R1.1, R3.7, R5.6, R5.8, R6.6, R8.18, R11.15g, E1, E30, OQ 13, Legend, Collection Mode obligation line, the Set-aside cause labels table, UJ3.3-h, UJ3.3-k, UJ3.3-l and the dated F9, F11, F15 and F70 clarifications.
+- **F72** Collection Mode bulk-write refusal mirror, as clarified twice — Collection Mode obligation line, Traceability.
+- **F73** Collection Mode round-3 mirror, as clarified twice — R1.1, R3.5, T7, UJ3.3-l, Collection Mode obligation line, Traceability and the dated F71 and F72 clarifications.
+- **F74** Collection Mode round-4 mirror — R1.1, R1.3, R1.5, R1.10, R3.5, R7.13, R8.5, R9.3, T7, Collection Mode obligation line, Traceability and the dated F73 clarification.
+- **F75** Collection Mode round-5 mirror — R8.14, Collection Mode obligation line, Traceability.
+- **F76** Collection Mode round-6 mirror — R9.9, Collection Mode obligation line, Traceability.
 - Retired under F46, never reused: R4.25, R7.4, R7.6, R7.10, R8.11, R10.2, R11.1, R11.2, R11.4, R11.9.
 
 ## Rejected findings

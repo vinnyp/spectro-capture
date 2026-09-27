@@ -1,6 +1,6 @@
 # Device Management PRD — owner decisions (fences)
 
-Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
+Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it, and a row that names one does so for provenance only. F1–F8 are the load-bearing decisions from the review arc that locked the document on 2026-09-05 (PR #8), recorded here from the arc's decision record; the rows themselves carry the full set of that arc's adjudications. F9 is the refactor that produced this file. F10–F31 record the 2026-09-18 agent-build amendment and its individual owner decisions; peer review closed 2026-09-18 (PR #19); re-locked on merge. F32 records the Collection Mode mirror of 2026-09-24, clarified the same day under that PRD's F25; peer review closed 2026-09-25 (PR #21). Review log for rounds from F9 on: `../../agent-reviews/2026-09-08-prd-device-management-refactor-peer-reviews.md`.
 
 ### F1 — Calibration is strictly pre-flight (2026-09-05, review arc)
 
@@ -278,6 +278,18 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Carried by:** Capture R5.4/R5.9/R5.10; E45; UJ3.1 counter cases and flowchart; Device R6.22 and Device→Capture obligation; dated Device F29 and Capture F7/F8/F50 clarifications and F50 map; Capture OQ 16 Feeds and status/index. No counter question is added to Capture OQ 3 because D17 leaves no part of this policy open; existing threshold tuning remains there.
 
+### F32 — Point E22's action at Collection Mode (2026-09-24)
+
+**Authority:** [the Collection Mode PRD's F19](../collection-mode/prd-collection-mode-fences.md) — its approved recommendation 8, owner post-fill adjudication 2026-09-24, which has E22's "Show simulated readings" apply Collection Mode's simulated filter; peer review pending.
+
+**Decision:** Editorial, with no change of meaning: the Collection Mode obligation line records that what E22's action does on the collection surface is Collection Mode R2.6's. This PRD never specified that action's effect, and E22's copy, R6.5 and the per-item badge are unchanged.
+
+**Carried by:** the Device → Collection Mode obligation line.
+
+**Clarified 2026-09-24 ([the Collection Mode PRD's F25](../collection-mode/prd-collection-mode-fences.md), its approved loose end (ii), owner second post-fill adjudication; the behaviour itself is [its F5](../collection-mode/prd-collection-mode-fences.md)):** The Collection Mode obligation line also records that Collection Mode's All items view shows no E22 banner, each item there carrying its own simulated badge (Collection Mode R1.10). E22 is a collection's banner and the All items view spans every collection without being one, so R6.5, E22's copy and the per-item badge are unchanged; the same obligation line carries it. Peer review pending.
+
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F32, peer review closed 2026-09-25 (PR #21); re-locked on merge.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.
@@ -294,7 +306,7 @@ Where a fence is named in the PRD, for provenance only. A row not listed here ci
 | F8 | the [Legend](prd-device-management.md#legend)'s Priority paragraph, which every row's Pri cell inherits |
 | F9 | Scope: every row in [§1](prd-device-management.md#1-device-pairing)–[§6](prd-device-management.md#6-mock-device-layer), every [copy state](prd-device-management-copy.md#error--state-copy), every [metric](prd-device-management.md#success-metrics), and this document's [Legend](prd-device-management.md#legend) and [Traceability](prd-device-management.md#traceability) |
 
-F10–F31 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
+F10–F32 use their “Carried by” lists above; F1–F9's historical map remains unchanged.
 
 ## Rejected findings
 

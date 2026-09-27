@@ -1,6 +1,6 @@
 # Inventory Import PRD — fences
 
-Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F64 explicitly amend them; F50 records structural authorization.
+Owner decisions for `prd-inventory-import.md`. Existing owner decisions remain binding except where the later individual decisions F51–F68 explicitly amend them; F50 records structural authorization.
 
 F4 and F11 were copied under F49; their canonical text and original dates remain in the capture fence file. Import-local decisions start at F50; IDs are scoped to their document.
 
@@ -112,6 +112,42 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** Canceling import does not undo a separately completed collection creation. Accepted explicitly in the [round-2 owner decisions](https://github.com/vinnyp/spectro-capture/pull/16#issuecomment-5723905420).
 
+### F65 — A Collection Mode rename moves the stored column name (2026-09-24)
+
+**Decision:** Mirroring [the Collection Mode PRD's F9](../collection-mode/prd-collection-mode-fences.md) (owner decision D9, post-fill adjudication 2026-09-24): renaming an imported column in Collection Mode changes its stored name, keeping its position and values, and a later import matches the stored name; a source header equal only to the old name appends as a new column under R2.6's existing rule. Narrows F53's "first-seen spelling" to the stored spelling, first-seen unless renamed. No other import rule changes; R2.6 keeps its alignment.
+
+**Why:** Collection Mode's F9 closes the post-lock question of whether a rename moves the stored name, and both sides of that seam land in the same change. Source: the Collection Mode PRD's F9; peer review pending.
+
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F65–F68, peer review closed 2026-09-25 (PR #21), with the 2026-09-26 editorial Clarified line under F68; re-locked on merge.
+
+### F66 — An import commit waits while any capture session is in flight (2026-09-25)
+
+**Decision:** Mirroring [the Collection Mode PRD's F149](../collection-mode/prd-collection-mode-fences.md) (its approved round-3 recommendation 15, 2026-09-25): an import commit also waits while any capture session is running — active, paused or halted — on any collection, not only the target. R3.2 refuses the commit with E40, whose another-collection variant names the collection holding the session and offers the same actions; an interrupted session on another collection holds no writer and blocks nothing. R3.2 keeps its alignment; E40 gains the variant.
+
+**Not decided:** whether an import commit also waits while a Collection Mode bulk write or delete runs; the Collection Mode PRD's F137 holds only sessions and that PRD's own writes, so it goes back to the owner.
+
+**Why:** the file has one writer, and a commit landing during a session would hold up its saves, as the Collection Mode PRD's F100 and F137 rule for that PRD's bulk writes. Source: the Collection Mode PRD's F149; peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F152](../collection-mode/prd-collection-mode-fences.md), owner decision D33):** the **Not decided** point above is settled: while a Collection Mode bulk write or delete runs, no other write anywhere in the app starts, so R3.2's commit shows disabled until that write lands, citing Collection Mode's R8.1f, and a UJ 2.1 case asserts it. R3.2 keeps its alignment. Peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F155](../collection-mode/prd-collection-mode-fences.md), owner decision D36, F67):** the **Not decided** point's settlement now cites [Data Foundation R1.11](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns), the one-writer rule, in place of Collection Mode's R8.1f. Peer review pending.
+
+### F67 — The import commit follows Data Foundation's one-writer rule both ways; E40's another-collection variant reworded (2026-09-25)
+
+**Decision:** Mirroring [the Collection Mode PRD's F155, F156 and F169](../collection-mode/prd-collection-mode-fences.md) (owner decisions D36 and D37 and its approved round-4 recommendation 9, round-4 adjudication 2026-09-25): R3.2's commit follows [Data Foundation R1.11](../data-foundation/prd-data-foundation.md#1-the-file-the-user-owns)'s one-writer rule both ways — shown disabled while another write it names runs, and, while it commits, holding every other write to the file and a session's start or resume — and R3.8i's "End that session" is shown disabled while an R1.11 write runs. E40's another-collection variant drops "waits": a session in ⟨collection⟩ is active, paused or halted, and until it ends imports aren't available in any collection; its shared append asks the user to start the import again. E40 moves to ⌛️ Ready for Alignment; R3.2 and R3.8i keep their alignment, and R3.2 stays at two sentences. UJ 2.1 asserts the commit held behind a Collection Mode bulk write or delete or a Data Foundation move, and a capture start, Collection Mode's Set a field and the Data Foundation re-read held behind this import's commit, each held through Collection Mode R8.10a's held-write input.
+
+**Why:** the file has one writer, and the owner moved that rule's home to Data Foundation so each writer cites it rather than restating it. Source: the Collection Mode PRD's F155, F156 and F169; peer review pending.
+
+### F68 — The Collection Mode line names the matching rule, a commit's progress is listed, and UJ 2.1 holds a P0 write (2026-09-25)
+
+**Decision:** Mirroring [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11, round-5 adjudication 2026-09-25), with the testability halves its round-5 fix pass carries under its F155, F156 and F164: the outbound Collection Mode line names R2.3's one matching rule, which Collection Mode's rename, search and code change apply, beside R2.6; this document, whose format has no inbound-obligations table, carries what Collection Mode imposes on it by its rows' cites and the dated fences F65–F68, no table added. R4.1 lists a commit's progress, which Data Foundation R1.11 makes show while a close, switch or quit waits on it. UJ 2.1 holds Collection Mode's Rename collection, a P0 write, behind this import's commit in place of its P1 Set a field, and asserts R3.8i's End that session shown disabled while a Data Foundation R1.11 write runs. R4.1 keeps its alignment.
+
+**Why:** the lock checks pair each seam both ways, and a first-phase build offers no Set a field. Source: the Collection Mode PRD's F188; peer review pending.
+
+**Clarified 2026-09-25 ([the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md), its round-6 fix pass, editorial):** the Collection Mode obligation line's cite reads "Collection Mode R1.3, R3.1 and R4.4" as one label, so R3.1 no longer reads as this document's; UJ 2.1's held-write lines name a Collection Mode R8.1f/g write, as Data Foundation R1.11 does. No rule changes; peer review pending.
+
+**Clarified 2026-09-26 ([the Collection Mode PRD's F206](../collection-mode/prd-collection-mode-fences.md), owner decision D63, its re-lock checks, editorial):** the Collection Mode obligation line also names R2.5's collision order and the copy file's Collision template, which Collection Mode's R2.1 tagged-label collision form takes, so the seam its inbound line names (Collection Mode PRD, Inherited obligations) is stated on both sides. No rule of this document changes.
+
 ## Fence → row map
 
 Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fence. Where a row names a fence it is for provenance only and no row re-argues one; this map is the link.
@@ -133,6 +169,10 @@ Which rows in [`prd-inventory-import.md`](prd-inventory-import.md) carry each fe
 - **F62** absent-field fills — R3.1, R3.6g/j, R3.9; E43; UJ 2.1.
 - **F63** zero-count copy — R3.1; E43; Capture §12 placeholder index.
 - **F64** target lifecycle — R3.7, R3.8j; UJ 2.
+- **F65** Collection Mode rename mirror — R2.6; Collection Mode inherited-obligation line; UJ 2.1.
+- **F66** Collection Mode one-writer mirror, as clarified twice — R3.2; E40; UJ 2.1.
+- **F67** Collection Mode round-4 mirror — R3.2, R3.8i; E40; UJ 2.1.
+- **F68** Collection Mode round-5 mirror — R4.1; Collection Mode inherited-obligation line; UJ 2.1.
 
 ## Historical ID map
 

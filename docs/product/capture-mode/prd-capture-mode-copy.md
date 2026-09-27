@@ -9,7 +9,7 @@ The shipping copy for every error, waiting, choice, and confirmation state in th
 
 | ID | State | Headline | Body | Primary action | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| E1 | Duplicate collection name | You already have a collection called that | Collection names have to be different from each other. Spacing and capitals don't count as a difference, so "Copic Sketch" and "copic sketch" are the same name. | Change the name | 🤝 Aligned |
+| E1 | Duplicate collection name | You already have a collection called that | Collection names have to be different from each other. Capitals and extra spaces don't count as a difference, so "Copic Sketch" and "copic sketch" are the same name. | Change the name | 🤝 Aligned |
 | E2 | Nothing to capture | Empty: "There's nothing to scan in this collection yet" · Finished: "You're done with ⟨collection⟩" | Empty: "Import your swatch list from a spreadsheet, or add one swatch at a time." · Finished: "Every swatch here is scanned or set aside for good. Bring in more from a spreadsheet, add one at a time, or scan one again if something needs correcting. ⟨deferred⟩ swatches are set aside — you can look back over them whenever you like." | Empty: Import a file; Add a swatch ‹P1› · Finished: Import a file; Add a swatch ‹P1›; Re-scan a swatch ‹P1›; Review the set-aside swatches — only while any swatch is set aside | 🤝 Aligned |
 | E3 | Instrument held by another collection | ⟨collection⟩ is using the instrument | One session at a time. Finish or end the session in ⟨collection⟩, then come back here. | Go to ⟨collection⟩ | 🤝 Aligned |
 | E15 | Light leaked in | Light got in — try again | Press the instrument flat against the swatch and scan again. Your samples so far are safe. | Scan again | 🤝 Aligned |
@@ -27,7 +27,7 @@ The shipping copy for every error, waiting, choice, and confirmation state in th
 | E27 | Leave one swatch set aside | Leave ⟨code⟩ set aside? | Add a note if you like — missing, or damaged. It stays in your collection, marked, with everything already kept on it. The app won't send you back to it and it won't hold up finishing — you can scan it again whenever you like, from your collection or from the set-aside swatches. | Leave it set aside; Try again | 🤝 Aligned |
 | E28 | Re-scan offered | ⟨code⟩ already has a reading | Scanning it again makes the new reading its value and keeps the old one in its history. You won't see the old reading while you scan. If you'd started another swatch, the samples you took on it are still there — they're only let go if you go ahead. | Re-scan ‹P1›; Cancel | 🤝 Aligned |
 | E29 | QC or correction ‹QC & Comparison PRD› | Checking it, or correcting it? | Checking compares this scan against the reading you already have and changes nothing. Correcting replaces the value and keeps the old reading in its history. During capture, correcting never stops to ask whether the swatch has changed or the old reading was wrong — the new reading becomes the value, the old one is kept and marked as not yet settled, and you're asked that once after the session or the next time you look at that swatch, never while you're scanning. | Check it — the QC & Comparison PRD's; Correct it ‹P1› | 🤝 Aligned |
-| E30 | Duplicate code (adding an item) ‹P1› | ⟨code⟩ is already in this collection | Codes are unique here — spacing and capitals don't count as a difference. Scan the swatch you already have, or use a different code. | Re-scan that swatch; Use a different code | 🤝 Aligned |
+| E30 | Duplicate code (adding an item) ‹P1› | ⟨code⟩ is already in this collection | Codes are unique here — capitals and extra spaces don't count as a difference. Scan the swatch you already have, or use a different code. | Re-scan that swatch; Use a different code | 🤝 Aligned |
 | E31 | Code required ‹P1› | This swatch needs a code | The code is how you find the swatch later, so it can't be blank. | Enter a code | 🤝 Aligned |
 | E32 | Add a swatch cancelled ‹P1› | Nothing was added | You're back on ⟨code⟩. The ⟨n⟩ samples you'd taken on it are still there. | None | 🤝 Aligned |
 | E33 | Reorder refused ‹P1› | ⟨code⟩ isn't waiting to be scanned | Only swatches still waiting in the queue can be moved. This one is ⟨scanned / set aside⟩. | Scanned: Re-scan it; Cancel · Set aside: Review the set-aside swatches; Cancel | 🤝 Aligned |
@@ -41,3 +41,18 @@ The shipping copy for every error, waiting, choice, and confirmation state in th
 | E43 | Scanning without spectral data | These readings won't include spectral data | License: "Your license doesn't unlock spectral measurements, so scanning carries on without them. The app keeps the colour values the instrument reports rather than the full curve behind them, so these swatches can't be worked out later under a different light. Every swatch you scan now is marked, so you can tell these apart and scan them again once your license includes spectral data." · Demo Device: "This demo run is set up without spectral data, so scanning carries on without it. The app keeps the colour values it generates rather than the full curve behind them, so these swatches can't be worked out later under a different light. Every swatch you scan now is marked, so you can tell these apart and scan them again on a run that has it." | None (always visible while the session runs) | 🤝 Aligned |
 | E44 | Nothing to undo | Set aside: "⟨code⟩ is already set aside" · Still pending: "⟨code⟩ is still waiting in the queue" | Set aside: "The swatch you just left is waiting for you at the end, with everything already kept on it. There's nothing here to undo." · Still pending: "You'll come back to it when the queue comes round, and it starts fresh. There's nothing here to undo." | None | 🤝 Aligned |
 | E45 | Measurement drift | The reading drifted — try again | The instrument reported drift for this reading. Your samples so far are safe; scan this swatch again. | Scan again | 🤝 Aligned |
+
+## Set-aside cause labels
+
+Each set-aside cause [R8.2](prd-capture-mode.md#8-deferred-row-review-and-corrections) names is shown by its label below wherever a row's cause appears — the review, the set-aside list, and the [Collection Mode PRD's item detail](../collection-mode/prd-collection-mode.md#4-item-detail-and-editing) (its R4.2b), which cites this table rather than restating it (fence F71, clarified 2026-09-25). This table is the one place those labels are written; a test reads a row's cause through [R11.11](prd-capture-mode.md#11-demo-device-and-verifiability), never by its label.
+
+| Cause | Label |
+| :--- | :--- |
+| Light leak | light leak |
+| Temperature | temperature |
+| Measurement drift | measurement drift |
+| Samples disagreed | samples disagreed |
+| Skipped mid-set | skipped mid-set |
+| Flagged as missing or damaged | flagged as missing or damaged |
+| Flagged after capture | flagged after capture |
+| Unreadable ([R8.18](prd-capture-mode.md#8-deferred-row-review-and-corrections)) | unreadable |

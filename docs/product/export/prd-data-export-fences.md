@@ -190,6 +190,32 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** The exported archive is the instrument’s portable artifact, independent of its storage encoding; first-golden authors need one representation. Source: [owner decision 13](https://github.com/vinnyp/spectro-capture/pull/18#issuecomment-5732919975).
 
+### F31 — A selection delete's export first opens the collection export (2026-09-24)
+
+**Decision:** The Data Foundation PRD's E33 — its delete confirmation for a selection of swatches — joins E8 and E14 in §5's and the copy header's list of the delete confirmations that offer an export first, and its Export first opens this PRD's collection-scope export of the collection holding the selection ([R1.1a](prd-data-export.md#row-selection-and-fields)). No row changes: R1.1a's two scopes stay the whole collection and one item, and no selection scope is added.
+
+**Why:** This PRD has no selection scope, and the Collection Mode PRD's F3 excludes exporting a selection. Source: [the Collection Mode PRD's F24](../collection-mode/prd-collection-mode-fences.md) — its approved loose end (i), owner second post-fill adjudication 2026-09-24; mirrored by [the Data Foundation PRD's F50](../data-foundation/prd-data-foundation-fences.md) as clarified the same day; peer review pending.
+
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F31–F34, peer review closed 2026-09-25 (PR #21); re-locked on merge.
+
+### F32 — An export reads one snapshot (2026-09-25)
+
+**Decision:** An export is one snapshot: it reads the file as it stood when the export started, so an edit made while it runs saves at once and is not in it, and the text that edit removed is wiped when the export ends ([Data Foundation R6.2a](../data-foundation/prd-data-foundation.md#deletion-lifecycle), [DF F56](../data-foundation/prd-data-foundation-fences.md)). R1.1 says so and keeps its alignment; EJ1 asserts it, and the inbound Collection Mode line records it.
+
+**Why:** The Collection Mode PRD's owner decision D39 chose one snapshot over reading the file in short slices, which this PRD had never agreed to. Source: [the Collection Mode PRD's F158](../collection-mode/prd-collection-mode-fences.md), round-4 adjudication 2026-09-25; mirrored by [the Data Foundation PRD's F56](../data-foundation/prd-data-foundation-fences.md); peer review pending.
+
+### F33 — The Collection Mode lines both ways, and R1.1's no-change clause (2026-09-25)
+
+**Decision:** "What this PRD imposes on others" gains a Collection Mode line: its entries open an export at collection scope and at single-item scope ([its R1.8](../collection-mode/prd-collection-mode.md#1-collections-and-the-collection-list)), carried by R1.1. The inbound Collection Mode line cites that PRD's row, ([its R8.8](../collection-mode/prd-collection-mode.md#8-operating-envelope-and-quality-attributes), F158). R1.1's clause reads "itself changes no source value, mark or note, as read at SQLITE_READER_FLOOR after success or failure", so an edit made during an export (F32) no longer contradicts it; R1.1 keeps its alignment. EJ1's mid-export line asserts that Data Foundation E35 does not render for this app's own export. R4.3 gains a test-build input holding an export running until released, which EJ1's mid-export line declares; R4.3 keeps its alignment.
+
+**Why:** the lock checks pair each seam both ways, and F32's clause made R1.1 contradict itself. Source: [the Collection Mode PRD's F188](../collection-mode/prd-collection-mode-fences.md) (its approved round-5 recommendation 11), with the editorial and testability halves its round-5 fix pass carries under its F158; peer review pending.
+
+### F34 — R4.3's no-change clause and EJ1's timeout (2026-09-25)
+
+**Decision:** R4.3's read-back reads "it reads back at SQLITE_READER_FLOOR that the export itself changed no value, mark or note", as R1.1's clause does since F33, so its test-build hold and EJ1's mid-export edit no longer contradict it; R4.3 keeps its alignment. EJ1's mid-export line reads the file's bytes within 5 s of the export's end, a functional timeout.
+
+**Why:** the Collection Mode round-6 reviews found R4.3 still said "identical" beside a held export an edit changes, the contradiction F33 removed from R1.1, and EJ1's byte read without a tolerance. Source: [the Collection Mode PRD's F158](../collection-mode/prd-collection-mode-fences.md) and its round-6 fix pass, editorial and testability; peer review pending.
+
 ## Split-origin map
 
 **Where these rows came from.** Every row, state, metric, question and journey below moved out of the [Data Foundation PRD](../data-foundation/prd-data-foundation.md) on 2026-09-09 under that document's fence F30, transcribed here as [F1](prd-data-export-fences.md#f1--data-export-is-the-csv-contract-split-out-of-data-foundation-2026-09-09). No rule changed in the move: only the IDs, the citations, and which section a row sits in. The left-hand IDs are retired there and never reused ([its Legend](../data-foundation/prd-data-foundation.md#legend)).
@@ -259,6 +285,10 @@ A row "carries" a fence when the fence's decision is what the row now states; th
 | F28 | R1.1o–r/R4.4a; E1/E1a–g; EJ1. |
 | F29 | Legend/Traceability; E1 variant identity convention. |
 | F30 | R1.1d/R4.1a; DF outbound Data Export obligation; EJ1 payload assertion. |
+| F31 | §5's delete-confirmation sentence and the copy header, both naming DF E33 and R1.1a's collection scope; no requirement row. DF R6.2/R7.6o and DJ4 carry the Data Foundation half under DF F50 as clarified. |
+| F32 | R1.1; EJ1; the Collection Mode inbound line |
+| F33 | R1.1, R4.3; EJ1; the Collection Mode inbound and outbound lines |
+| F34 | R4.3; EJ1 |
 
 ## Rejected findings
 
