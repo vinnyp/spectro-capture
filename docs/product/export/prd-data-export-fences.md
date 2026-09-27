@@ -196,6 +196,8 @@ Inherited whole from the [Data Foundation PRD's Phase 0](../data-foundation/prd-
 
 **Why:** This PRD has no selection scope, and the Collection Mode PRD's F3 excludes exporting a selection. Source: [the Collection Mode PRD's F24](../collection-mode/prd-collection-mode-fences.md) — its approved loose end (i), owner second post-fill adjudication 2026-09-24; mirrored by [the Data Foundation PRD's F50](../data-foundation/prd-data-foundation-fences.md) as clarified the same day; peer review pending.
 
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F31–F34, peer review closed 2026-09-25 (PR #21); re-locked on merge.
+
 ### F32 — An export reads one snapshot (2026-09-25)
 
 **Decision:** An export is one snapshot: it reads the file as it stood when the export started, so an edit made while it runs saves at once and is not in it, and the text that edit removed is wiped when the export ends ([Data Foundation R6.2a](../data-foundation/prd-data-foundation.md#deletion-lifecycle), [DF F56](../data-foundation/prd-data-foundation-fences.md)). R1.1 says so and keeps its alignment; EJ1 asserts it, and the inbound Collection Mode line records it.

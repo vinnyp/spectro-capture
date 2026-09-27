@@ -118,6 +118,8 @@ F49 itself — the split that made this document, and its clarification (1) — 
 
 **Why:** Collection Mode's F9 closes the post-lock question of whether a rename moves the stored name, and both sides of that seam land in the same change. Source: the Collection Mode PRD's F9; peer review pending.
 
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F65–F68, peer review closed 2026-09-25 (PR #21), with the 2026-09-26 editorial Clarified line under F68; re-locked on merge.
+
 ### F66 — An import commit waits while any capture session is in flight (2026-09-25)
 
 **Decision:** Mirroring [the Collection Mode PRD's F149](../collection-mode/prd-collection-mode-fences.md) (its approved round-3 recommendation 15, 2026-09-25): an import commit also waits while any capture session is running — active, paused or halted — on any collection, not only the target. R3.2 refuses the commit with E40, whose another-collection variant names the collection holding the session and offers the same actions; an interrupted session on another collection holds no writer and blocks nothing. R3.2 keeps its alignment; E40 gains the variant.

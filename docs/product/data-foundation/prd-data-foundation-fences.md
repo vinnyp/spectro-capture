@@ -483,6 +483,8 @@ Source: the owner's decisions D7 and D9 in the Collection Mode PRD's post-fill a
 
 **Clarified 2026-09-25 (F54, under [the Collection Mode PRD's F147](../collection-mode/prd-collection-mode-fences.md)):** OQ 20's question now also asks what an undoable delete of ROWS_CEILING items holds in memory, or writes when the window ends, on the Collection Mode PRD's OQ 1 Mac; R6.3 stays gated and no row changes. Peer review pending.
 
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F50–F63, peer review closed 2026-09-26 (PR #21), F50–F58 at the Collection Mode PRD's first lock on 2026-09-25 and F59–F63 at its re-locks of 2026-09-26; re-locked on merge.
+
 ## Collection Mode seam amendment, second pass (2026-09-24)
 
 Source: the owner's decision D14 in the Collection Mode PRD's second post-fill adjudication of 2026-09-24, recorded there as [its F23](../collection-mode/prd-collection-mode-fences.md). This fence carries only the Data Foundation half of that seam; peer review pending.

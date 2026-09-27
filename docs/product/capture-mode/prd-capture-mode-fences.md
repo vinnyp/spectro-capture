@@ -621,6 +621,8 @@ Historical baseline at commit 6e0ec45: rows R1.1–R11.10, E1–E37, M1–M8 wer
 
 **Clarified 2026-09-25 ([the Collection Mode PRD's F30, F55, F56 and F84](../collection-mode/prd-collection-mode-fences.md)):** R8.18's set-aside count is the collection's tallies, never a session's own; its unreadable standing always follows Data Foundation's quarantine mark, and on a file open read-only its counts show whatever quarantine Data Foundation reports, nothing being written; its restore is refused while a session on the collection is in flight; R11.15g's pointer names Collection Mode's E3 Actions line and Surfaces row; and R1.1's "New collection" is one example of creating a collection. R1.1, R8.18 and R11.15g keep their alignment (F71). Peer review pending.
 
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F70–F76, peer review closed 2026-09-25 (PR #21); re-locked on merge.
+
 ### F71 — Mirror Collection Mode's round-1 decisions: restores in flight, the unreadable row's counts, the resume fallback, and pointers (2026-09-25)
 
 **Authority:** [the Collection Mode PRD's F30, F55, F56, F80, F84 and F90](../collection-mode/prd-collection-mode-fences.md) — owner decision D16 in its round-1 adjudication of 2026-09-24 (F30), its approved recommendations 20 and 21 the same day (F55, F56), and its approved round-1 recommendations 23, 27 and 33 of 2026-09-25 (F80, F84, F90); peer review pending.

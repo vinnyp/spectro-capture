@@ -288,6 +288,8 @@ Owner decisions on this PRD. A fence is settled: reviewers do not re-litigate it
 
 **Clarified 2026-09-24 ([the Collection Mode PRD's F25](../collection-mode/prd-collection-mode-fences.md), its approved loose end (ii), owner second post-fill adjudication; the behaviour itself is [its F5](../collection-mode/prd-collection-mode-fences.md)):** The Collection Mode obligation line also records that Collection Mode's All items view shows no E22 banner, each item there carrying its own simulated badge (Collection Mode R1.10). E22 is a collection's banner and the All items view spans every collection without being one, so R6.5, E22's copy and the per-item badge are unchanged; the same obligation line carries it. Peer review pending.
 
+**Closed 2026-09-26 ([final review](https://github.com/vinnyp/spectro-capture/pull/21#pullrequestreview-5328170977)):** For F32, peer review closed 2026-09-25 (PR #21); re-locked on merge.
+
 ## Fence → row map
 
 Where a fence is named in the PRD, for provenance only. A row not listed here cites no fence; F7, F8 and F9 bind every row by inheritance rather than by citation.
