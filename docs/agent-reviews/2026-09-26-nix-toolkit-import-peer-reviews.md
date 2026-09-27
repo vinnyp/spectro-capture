@@ -14416,3 +14416,38 @@ Path legend (… = /Users/vinnypasceri/Projects/.worktrees/spectro-capture-nix-i
 | Import-R6.10 | ALIGN |
 | DF-R2.3 (with R2.3j) | ALIGN |
 | Export-R1.2 | ALIGN |
+
+
+## Re-lock (2026-09-27, after PR #22's review)
+
+PR #22's review reopened nine rows with two findings. Round 9 re-aligned them unanimously: all nine lenses aligned or abstained on each reopened row, and none objected. The owner decided N28, which puts measurement mode in the same-reading identity. The validated revision now in force is **`c6a58f2a576f489da36d65aa177c1dcded1f7b01`**. `docs/product` and `docs/decisions` equal it at the commit that adds this record. The original lock record above, at `c9af537`, is superseded wherever this record differs from it. This PR carries the re-lock to an attended merge.
+
+### Correction to the lock record's check 10
+
+The lock record reported check 10 as "PASS — 50 cells, none over two sentences". That was wrong. The first lock-check run's cell extraction missed §6's main-table rows. At `c9af537` the reference pattern finds six Import cells over two sentences: R6.1, R6.4, R6.7 and R6.9 at three, R6.10 at four and R6.2 at five. It also finds Export R1.2 at three, from two before this branch. Each was a MISS on the amendment's own lines that the lock should have caught; PR #22's review caught them instead.
+
+### Mechanical checks re-run at `c6a58f2`
+
+These are the checks round 9's edits could touch. Every other check stands as the lock record reports it, with F92's accepted results unchanged.
+
+| # | Check | Verdict | Result |
+|---|---|---|---|
+| 1(c) | Cross-PRD cites named by owning document | PASS | The split moved text verbatim, and the interface lens traced every moved cite to the same owner. The new cites all name their document: the two new cases' Capture R1.10, Capture R5.6 and Data Foundation R7.2, and the ADR row's DF R2.3f and Import R6.8f. |
+| 8 | Fence map against content | PASS | Every line changed since `60d9625` traces to a round-9 Clarified line: Import F71, F73, F76, F82 and F87; Data Foundation F64 and F69; Data Export F35. The map counts match their Clarified lines: F71 6, F73 6, F76 8, F82 4, and F87 as clarified. F45's map entry now names §6, lettered sub-rows included. |
+| 9 | ID, Pri and status diff | PASS | Against `60d9625`, the only added IDs are the fenced sub-rows R6.1a–d, R6.2a–g, R6.4a–c, R6.9a–b and R6.10a–d. No ID is removed and no status changes. Against `6374538`, every file's pending-status count equals its base count. |
+| 10 | Two-sentence scan | PASS | The reference pattern ran over every cell of every ID row in the six PRDs. Import: 238 cells, none over two. Data Foundation R2.4 and M2, and Capture M8, are over two only at their pre-branch counts. The Data Foundation PRD binds no two-sentence rule, and M8 is a metric definition unchanged in count. Export and Device are at their pre-branch counts. |
+| 11 | Links | PASS | Every link resolves. The tree-wide residue equals the pre-branch baseline. |
+| 12 | Word count | PASS | Data Foundation 8,890 of 8,900 (F70), Data Export 3,994 of 4,000, Collection Mode 12,545 of 12,550 (F223). |
+| 15, 16 | Fill and guidance comments | PASS | 0 hits across the reopened PRDs and their companions. |
+
+**Totals.** No MISS, and no NOT-RUN beyond those F92 already accepts by name.
+
+### Lock conditions
+
+- [x] **Every row is aligned.** Round 9 flipped the nine reopened rows back unanimously. Each file's pending-status count equals its count at `6374538`.
+- [x] **The mechanical preconditions ran,** as recorded above and in the lock record, with F92's accepted results unchanged.
+- [x] **The OQ contract holds.** It is unchanged since the lock.
+- [x] **No "peer review pending" is left on a current status surface.** The Import, Data Foundation and Data Export status lines and the README rows name N28 and round 9's close.
+- [x] **The local-only real-value check found no hits** at `c6a58f2`.
+
+Re-locked on merge.
